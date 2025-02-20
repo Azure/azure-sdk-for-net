@@ -5,190 +5,212 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmBackupEngine : IUtf8JsonSerializable
+    public partial class DpmBackupEngine : IUtf8JsonSerializable, IJsonModel<DpmBackupEngine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DpmBackupEngine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DpmBackupEngine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName");
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType");
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(RegistrationStatus))
-            {
-                writer.WritePropertyName("registrationStatus");
-                writer.WriteStringValue(RegistrationStatus);
-            }
-            if (Optional.IsDefined(BackupEngineState))
-            {
-                writer.WritePropertyName("backupEngineState");
-                writer.WriteStringValue(BackupEngineState);
-            }
-            if (Optional.IsDefined(HealthStatus))
-            {
-                writer.WritePropertyName("healthStatus");
-                writer.WriteStringValue(HealthStatus);
-            }
-            writer.WritePropertyName("backupEngineType");
-            writer.WriteStringValue(BackupEngineType.ToString());
-            if (Optional.IsDefined(CanReRegister))
-            {
-                writer.WritePropertyName("canReRegister");
-                writer.WriteBooleanValue(CanReRegister.Value);
-            }
-            if (Optional.IsDefined(BackupEngineId))
-            {
-                writer.WritePropertyName("backupEngineId");
-                writer.WriteStringValue(BackupEngineId);
-            }
-            if (Optional.IsDefined(DpmVersion))
-            {
-                writer.WritePropertyName("dpmVersion");
-                writer.WriteStringValue(DpmVersion);
-            }
-            if (Optional.IsDefined(AzureBackupAgentVersion))
-            {
-                writer.WritePropertyName("azureBackupAgentVersion");
-                writer.WriteStringValue(AzureBackupAgentVersion);
-            }
-            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
-            {
-                writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable");
-                writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
-            }
-            if (Optional.IsDefined(IsDpmUpgradeAvailable))
-            {
-                writer.WritePropertyName("isDpmUpgradeAvailable");
-                writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
-            }
-            if (Optional.IsDefined(ExtendedInfo))
-            {
-                writer.WritePropertyName("extendedInfo");
-                writer.WriteObjectValue(ExtendedInfo);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DpmBackupEngine DeserializeDpmBackupEngine(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> backupEngineState = default;
-            Optional<string> healthStatus = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupEngine>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmBackupEngine)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        DpmBackupEngine IJsonModel<DpmBackupEngine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupEngine>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmBackupEngine)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDpmBackupEngine(document.RootElement, options);
+        }
+
+        internal static DpmBackupEngine DeserializeDpmBackupEngine(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string backupEngineState = default;
+            string healthStatus = default;
             BackupEngineType backupEngineType = default;
-            Optional<bool> canReRegister = default;
-            Optional<string> backupEngineId = default;
-            Optional<string> dpmVersion = default;
-            Optional<string> azureBackupAgentVersion = default;
-            Optional<bool> isAzureBackupAgentUpgradeAvailable = default;
-            Optional<bool> isDpmUpgradeAvailable = default;
-            Optional<BackupEngineExtendedInfo> extendedInfo = default;
+            bool? canReRegister = default;
+            string backupEngineId = default;
+            string dpmVersion = default;
+            string azureBackupAgentVersion = default;
+            bool? isAzureBackupAgentUpgradeAvailable = default;
+            bool? isDpmUpgradeAvailable = default;
+            BackupEngineExtendedInfo extendedInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registrationStatus"))
+                if (property.NameEquals("registrationStatus"u8))
                 {
                     registrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupEngineState"))
+                if (property.NameEquals("backupEngineState"u8))
                 {
                     backupEngineState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthStatus"))
+                if (property.NameEquals("healthStatus"u8))
                 {
                     healthStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupEngineType"))
+                if (property.NameEquals("backupEngineType"u8))
                 {
                     backupEngineType = new BackupEngineType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("canReRegister"))
+                if (property.NameEquals("canReRegister"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     canReRegister = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupEngineId"))
+                if (property.NameEquals("backupEngineId"u8))
                 {
                     backupEngineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dpmVersion"))
+                if (property.NameEquals("dpmVersion"u8))
                 {
                     dpmVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureBackupAgentVersion"))
+                if (property.NameEquals("azureBackupAgentVersion"u8))
                 {
                     azureBackupAgentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAzureBackupAgentUpgradeAvailable"))
+                if (property.NameEquals("isAzureBackupAgentUpgradeAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAzureBackupAgentUpgradeAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDpmUpgradeAvailable"))
+                if (property.NameEquals("isDpmUpgradeAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDpmUpgradeAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("extendedInfo"))
+                if (property.NameEquals("extendedInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value);
+                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DpmBackupEngine(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, backupEngineState.Value, healthStatus.Value, backupEngineType, Optional.ToNullable(canReRegister), backupEngineId.Value, dpmVersion.Value, azureBackupAgentVersion.Value, Optional.ToNullable(isAzureBackupAgentUpgradeAvailable), Optional.ToNullable(isDpmUpgradeAvailable), extendedInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DpmBackupEngine(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                backupEngineType,
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DpmBackupEngine>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupEngine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DpmBackupEngine)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DpmBackupEngine IPersistableModel<DpmBackupEngine>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupEngine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDpmBackupEngine(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DpmBackupEngine)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DpmBackupEngine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

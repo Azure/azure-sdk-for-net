@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,14 +14,30 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxFrontendIPConfiguration : IUtf8JsonSerializable
+    public partial class NginxFrontendIPConfiguration : IUtf8JsonSerializable, IJsonModel<NginxFrontendIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxFrontendIPConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NginxFrontendIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
-                writer.WritePropertyName("publicIPAddresses");
+                writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicIPAddresses)
                 {
@@ -29,28 +47,61 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             if (Optional.IsCollectionDefined(PrivateIPAddresses))
             {
-                writer.WritePropertyName("privateIPAddresses");
+                writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static NginxFrontendIPConfiguration DeserializeNginxFrontendIPConfiguration(JsonElement element)
+        NginxFrontendIPConfiguration IJsonModel<NginxFrontendIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<WritableSubResource>> publicIPAddresses = default;
-            Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNginxFrontendIPConfiguration(document.RootElement, options);
+        }
+
+        internal static NginxFrontendIPConfiguration DeserializeNginxFrontendIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<WritableSubResource> publicIPAddresses = default;
+            IList<NginxPrivateIPAddress> privateIPAddresses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPAddresses"))
+                if (property.NameEquals("publicIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -61,23 +112,58 @@ namespace Azure.ResourceManager.Nginx.Models
                     publicIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("privateIPAddresses"))
+                if (property.NameEquals("privateIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NginxPrivateIPAddress> array = new List<NginxPrivateIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxPrivateIPAddress.DeserializeNginxPrivateIPAddress(item));
+                        array.Add(NginxPrivateIPAddress.DeserializeNginxPrivateIPAddress(item, options));
                     }
                     privateIPAddresses = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NginxFrontendIPConfiguration(Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NginxFrontendIPConfiguration(publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(), privateIPAddresses ?? new ChangeTrackingList<NginxPrivateIPAddress>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NginxFrontendIPConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NginxFrontendIPConfiguration IPersistableModel<NginxFrontendIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNginxFrontendIPConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NginxFrontendIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,30 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabContainerExtendedInfo : IUtf8JsonSerializable
+    public partial class MabContainerExtendedInfo : IUtf8JsonSerializable, IJsonModel<MabContainerExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MabContainerExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MabContainerExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabContainerExtendedInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(LastRefreshedOn))
             {
-                writer.WritePropertyName("lastRefreshedAt");
+                writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
             if (Optional.IsDefined(BackupItemType))
             {
-                writer.WritePropertyName("backupItemType");
+                writer.WritePropertyName("backupItemType"u8);
                 writer.WriteStringValue(BackupItemType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(BackupItems))
             {
-                writer.WritePropertyName("backupItems");
+                writer.WritePropertyName("backupItems"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackupItems)
                 {
@@ -39,51 +56,82 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsDefined(LastBackupStatus))
             {
-                writer.WritePropertyName("lastBackupStatus");
+                writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MabContainerExtendedInfo DeserializeMabContainerExtendedInfo(JsonElement element)
+        MabContainerExtendedInfo IJsonModel<MabContainerExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<BackupItemType> backupItemType = default;
-            Optional<IList<string>> backupItems = default;
-            Optional<string> policyName = default;
-            Optional<string> lastBackupStatus = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MabContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabContainerExtendedInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabContainerExtendedInfo(document.RootElement, options);
+        }
+
+        internal static MabContainerExtendedInfo DeserializeMabContainerExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? lastRefreshedAt = default;
+            BackupItemType? backupItemType = default;
+            IList<string> backupItems = default;
+            string policyName = default;
+            string lastBackupStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastRefreshedAt"))
+                if (property.NameEquals("lastRefreshedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRefreshedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupItemType"))
+                if (property.NameEquals("backupItemType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupItemType = new BackupItemType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupItems"))
+                if (property.NameEquals("backupItems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -94,18 +142,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupItems = array;
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastBackupStatus"))
+                if (property.NameEquals("lastBackupStatus"u8))
                 {
                     lastBackupStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MabContainerExtendedInfo(
+                lastRefreshedAt,
+                backupItemType,
+                backupItems ?? new ChangeTrackingList<string>(),
+                policyName,
+                lastBackupStatus,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MabContainerExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MabContainerExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MabContainerExtendedInfo IPersistableModel<MabContainerExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMabContainerExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MabContainerExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MabContainerExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

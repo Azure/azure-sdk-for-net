@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string UppercaseValue = "Uppercase";
         private const string LowercaseValue = "Lowercase";
         private const string TrimValue = "Trim";
         private const string UrlDecodeValue = "UrlDecode";
@@ -29,6 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string RemoveNullsValue = "RemoveNulls";
         private const string HtmlEntityDecodeValue = "HtmlEntityDecode";
 
+        /// <summary> Uppercase. </summary>
+        public static WebApplicationFirewallTransform Uppercase { get; } = new WebApplicationFirewallTransform(UppercaseValue);
         /// <summary> Lowercase. </summary>
         public static WebApplicationFirewallTransform Lowercase { get; } = new WebApplicationFirewallTransform(LowercaseValue);
         /// <summary> Trim. </summary>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallTransform"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationFirewallTransform"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallTransform"/>. </summary>
         public static implicit operator WebApplicationFirewallTransform(string value) => new WebApplicationFirewallTransform(value);
 
         /// <inheritdoc />
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

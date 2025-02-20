@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,28 +17,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatMessageReceivedInThreadEventData DeserializeAcsChatMessageReceivedInThreadEventData(JsonElement element)
         {
-            Optional<string> messageBody = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
-            Optional<string> messageId = default;
-            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
-            Optional<string> senderDisplayName = default;
-            Optional<DateTimeOffset> composeTime = default;
-            Optional<string> type = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string messageBody = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            string messageId = default;
+            CommunicationIdentifierModel senderCommunicationIdentifier = default;
+            string senderDisplayName = default;
+            DateTimeOffset? composeTime = default;
+            string type = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageBody"))
+                if (property.NameEquals("messageBody"u8))
                 {
                     messageBody = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -50,63 +52,78 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderCommunicationIdentifier"))
+                if (property.NameEquals("senderCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("senderDisplayName"))
+                if (property.NameEquals("senderDisplayName"u8))
                 {
                     senderDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("composeTime"))
+                if (property.NameEquals("composeTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transactionId"))
+                if (property.NameEquals("transactionId"u8))
                 {
                     transactionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"))
+                if (property.NameEquals("threadId"u8))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatMessageReceivedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata));
+            return new AcsChatMessageReceivedInThreadEventData(
+                transactionId,
+                threadId,
+                messageId,
+                senderCommunicationIdentifier,
+                senderDisplayName,
+                composeTime,
+                type,
+                version,
+                messageBody,
+                metadata ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatMessageReceivedInThreadEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsChatMessageReceivedInThreadEventData(document.RootElement);
         }
 
         internal partial class AcsChatMessageReceivedInThreadEventDataConverter : JsonConverter<AcsChatMessageReceivedInThreadEventData>
@@ -115,6 +132,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsChatMessageReceivedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

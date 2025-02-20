@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,17 +17,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobErroredEventData DeserializeMediaJobErroredEventData(JsonElement element)
         {
-            Optional<IReadOnlyList<MediaJobOutput>> outputs = default;
-            Optional<MediaJobState> previousState = default;
-            Optional<MediaJobState> state = default;
-            Optional<IReadOnlyDictionary<string, string>> correlationData = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<MediaJobOutput> outputs = default;
+            MediaJobState? previousState = default;
+            MediaJobState? state = default;
+            IReadOnlyDictionary<string, string> correlationData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaJobOutput> array = new List<MediaJobOutput>();
@@ -39,31 +41,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     outputs = array;
                     continue;
                 }
-                if (property.NameEquals("previousState"))
+                if (property.NameEquals("previousState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     previousState = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
-                if (property.NameEquals("correlationData"))
+                if (property.NameEquals("correlationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -75,7 +74,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobErroredEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData), Optional.ToList(outputs));
+            return new MediaJobErroredEventData(previousState, state, correlationData ?? new ChangeTrackingDictionary<string, string>(), outputs ?? new ChangeTrackingList<MediaJobOutput>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MediaJobErroredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobErroredEventData(document.RootElement);
         }
 
         internal partial class MediaJobErroredEventDataConverter : JsonConverter<MediaJobErroredEventData>
@@ -84,6 +91,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaJobErroredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

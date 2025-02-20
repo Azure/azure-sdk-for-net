@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -14,16 +13,28 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberAreaCode DeserializePhoneNumberAreaCode(JsonElement element)
         {
-            Optional<string> areaCode = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string areaCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("areaCode"))
+                if (property.NameEquals("areaCode"u8))
                 {
                     areaCode = property.Value.GetString();
                     continue;
                 }
             }
-            return new PhoneNumberAreaCode(areaCode.Value);
+            return new PhoneNumberAreaCode(areaCode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumberAreaCode FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePhoneNumberAreaCode(document.RootElement);
         }
     }
 }

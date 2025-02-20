@@ -6,198 +6,415 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class MasterTargetServer
+    public partial class MasterTargetServer : IUtf8JsonSerializable, IJsonModel<MasterTargetServer>
     {
-        internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MasterTargetServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MasterTargetServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> id = default;
-            Optional<string> ipAddress = default;
-            Optional<string> name = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<RetentionVolume>> retentionVolumes = default;
-            Optional<IReadOnlyList<DataStore>> dataStores = default;
-            Optional<IReadOnlyList<HealthError>> validationErrors = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
-            Optional<int> diskCount = default;
-            Optional<string> osVersion = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
-            Optional<string> marsAgentVersion = default;
-            Optional<DateTimeOffset> marsAgentExpiryDate = default;
-            Optional<VersionDetails> agentVersionDetails = default;
-            Optional<VersionDetails> marsAgentVersionDetails = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(VersionStatus))
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (Optional.IsCollectionDefined(RetentionVolumes))
+            {
+                writer.WritePropertyName("retentionVolumes"u8);
+                writer.WriteStartArray();
+                foreach (var item in RetentionVolumes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DataStores))
+            {
+                writer.WritePropertyName("dataStores"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataStores)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValidationErrors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiskCount))
+            {
+                writer.WritePropertyName("diskCount"u8);
+                writer.WriteNumberValue(DiskCount.Value);
+            }
+            if (Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(MarsAgentVersion))
+            {
+                writer.WritePropertyName("marsAgentVersion"u8);
+                writer.WriteStringValue(MarsAgentVersion);
+            }
+            if (Optional.IsDefined(MarsAgentExpireOn))
+            {
+                writer.WritePropertyName("marsAgentExpiryDate"u8);
+                writer.WriteStringValue(MarsAgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                writer.WriteObjectValue(AgentVersionDetails, options);
+            }
+            if (Optional.IsDefined(MarsAgentVersionDetails))
+            {
+                writer.WritePropertyName("marsAgentVersionDetails"u8);
+                writer.WriteObjectValue(MarsAgentVersionDetails, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MasterTargetServer IJsonModel<MasterTargetServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMasterTargetServer(document.RootElement, options);
+        }
+
+        internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            IPAddress ipAddress = default;
+            string name = default;
+            string osType = default;
+            string agentVersion = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionStatus = default;
+            IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes = default;
+            IReadOnlyList<SiteRecoveryDataStore> dataStores = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            int? diskCount = default;
+            string osVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            string marsAgentVersion = default;
+            DateTimeOffset? marsAgentExpireOn = default;
+            SiteRecoveryVersionDetails agentVersionDetails = default;
+            SiteRecoveryVersionDetails marsAgentVersionDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionStatus"))
+                if (property.NameEquals("versionStatus"u8))
                 {
                     versionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionVolumes"))
+                if (property.NameEquals("retentionVolumes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RetentionVolume> array = new List<RetentionVolume>();
+                    List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RetentionVolume.DeserializeRetentionVolume(item));
+                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item, options));
                     }
                     retentionVolumes = array;
                     continue;
                 }
-                if (property.NameEquals("dataStores"))
+                if (property.NameEquals("dataStores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataStore> array = new List<DataStore>();
+                    List<SiteRecoveryDataStore> array = new List<SiteRecoveryDataStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStore.DeserializeDataStore(item));
+                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item, options));
                     }
                     dataStores = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("diskCount"))
+                if (property.NameEquals("diskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"))
+                if (property.NameEquals("agentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("marsAgentVersion"))
+                if (property.NameEquals("marsAgentVersion"u8))
                 {
                     marsAgentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsAgentExpiryDate"))
+                if (property.NameEquals("marsAgentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    marsAgentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    marsAgentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersionDetails"))
+                if (property.NameEquals("agentVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("marsAgentVersionDetails"))
+                if (property.NameEquals("marsAgentVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    marsAgentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpiryDate), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpiryDate), agentVersionDetails.Value, marsAgentVersionDetails.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MasterTargetServer(
+                id,
+                ipAddress,
+                name,
+                osType,
+                agentVersion,
+                lastHeartbeat,
+                versionStatus,
+                retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(),
+                dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                diskCount,
+                osVersion,
+                agentExpireOn,
+                marsAgentVersion,
+                marsAgentExpireOn,
+                agentVersionDetails,
+                marsAgentVersionDetails,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MasterTargetServer IPersistableModel<MasterTargetServer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMasterTargetServer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MasterTargetServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -29,7 +29,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: keyvault
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Security.KeyVault.Administration
@@ -40,3 +39,7 @@ extends:
       safeName: AzureSecurityKeyVaultKeys
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Security.KeyVault.Secrets
+      ExpectedWarningsFilepath: None

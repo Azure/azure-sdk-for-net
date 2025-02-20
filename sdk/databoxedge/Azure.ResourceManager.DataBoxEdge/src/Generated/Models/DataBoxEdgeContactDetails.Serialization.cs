@@ -5,57 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeContactDetails : IUtf8JsonSerializable
+    public partial class DataBoxEdgeContactDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeContactDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeContactDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxEdgeContactDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contactPerson");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("contactPerson"u8);
             writer.WriteStringValue(ContactPerson);
-            writer.WritePropertyName("companyName");
+            writer.WritePropertyName("companyName"u8);
             writer.WriteStringValue(CompanyName);
-            writer.WritePropertyName("phone");
+            writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            writer.WritePropertyName("emailList");
+            writer.WritePropertyName("emailList"u8);
             writer.WriteStartArray();
             foreach (var item in EmailList)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DataBoxEdgeContactDetails DeserializeDataBoxEdgeContactDetails(JsonElement element)
+        DataBoxEdgeContactDetails IJsonModel<DataBoxEdgeContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeContactDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeContactDetails DeserializeDataBoxEdgeContactDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contactPerson = default;
             string companyName = default;
             string phone = default;
             IList<string> emailList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contactPerson"))
+                if (property.NameEquals("contactPerson"u8))
                 {
                     contactPerson = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"))
+                if (property.NameEquals("companyName"u8))
                 {
                     companyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailList"))
+                if (property.NameEquals("emailList"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -65,8 +117,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     emailList = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeContactDetails(contactPerson, companyName, phone, emailList);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeContactDetails(contactPerson, companyName, phone, emailList, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeContactDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeContactDetails IPersistableModel<DataBoxEdgeContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeContactDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeContactDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

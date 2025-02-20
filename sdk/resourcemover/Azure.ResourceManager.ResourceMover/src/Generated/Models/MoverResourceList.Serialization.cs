@@ -5,65 +5,188 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoverResourceList
+    internal partial class MoverResourceList : IUtf8JsonSerializable, IJsonModel<MoverResourceList>
     {
-        internal static MoverResourceList DeserializeMoverResourceList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MoverResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<MoverResourceData>> value = default;
-            Optional<string> nextLink = default;
-            Optional<MoverSummaryList> summaryCollection = default;
-            Optional<long> totalCount = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverResourceList)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsDefined(SummaryCollection))
+            {
+                if (SummaryCollection != null)
+                {
+                    writer.WritePropertyName("summaryCollection"u8);
+                    writer.WriteObjectValue(SummaryCollection, options);
+                }
+                else
+                {
+                    writer.WriteNull("summaryCollection");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalCount))
+            {
+                writer.WritePropertyName("totalCount"u8);
+                writer.WriteNumberValue(TotalCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MoverResourceList IJsonModel<MoverResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverResourceList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverResourceList(document.RootElement, options);
+        }
+
+        internal static MoverResourceList DeserializeMoverResourceList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<MoverResourceData> value = default;
+            string nextLink = default;
+            MoverSummaryList summaryCollection = default;
+            long? totalCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MoverResourceData> array = new List<MoverResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceData.DeserializeMoverResourceData(item));
+                        array.Add(MoverResourceData.DeserializeMoverResourceData(item, options));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summaryCollection"))
+                if (property.NameEquals("summaryCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         summaryCollection = null;
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);
+                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("totalCount"))
+                if (property.NameEquals("totalCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MoverResourceList(value ?? new ChangeTrackingList<MoverResourceData>(), nextLink, summaryCollection, totalCount, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MoverResourceList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MoverResourceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MoverResourceList IPersistableModel<MoverResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMoverResourceList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MoverResourceList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MoverResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

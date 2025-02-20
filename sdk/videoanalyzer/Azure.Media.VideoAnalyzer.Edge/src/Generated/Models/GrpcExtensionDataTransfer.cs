@@ -10,15 +10,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Describes how media is transferred to the extension plugin. </summary>
     public partial class GrpcExtensionDataTransfer
     {
-        /// <summary> Initializes a new instance of GrpcExtensionDataTransfer. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrpcExtensionDataTransfer"/>. </summary>
         /// <param name="mode"> Data transfer mode: embedded or sharedMemory. </param>
         public GrpcExtensionDataTransfer(GrpcExtensionDataTransferMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Initializes a new instance of GrpcExtensionDataTransfer. </summary>
-        /// <param name="sharedMemorySizeMiB"> The share memory buffer for sample transfers, in mebibytes. It can only be used with the &apos;SharedMemory&apos; transfer mode. </param>
+        /// <summary> Initializes a new instance of <see cref="GrpcExtensionDataTransfer"/>. </summary>
+        /// <param name="sharedMemorySizeMiB"> The share memory buffer for sample transfers, in mebibytes. It can only be used with the 'SharedMemory' transfer mode. </param>
         /// <param name="mode"> Data transfer mode: embedded or sharedMemory. </param>
         internal GrpcExtensionDataTransfer(string sharedMemorySizeMiB, GrpcExtensionDataTransferMode mode)
         {
@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Mode = mode;
         }
 
-        /// <summary> The share memory buffer for sample transfers, in mebibytes. It can only be used with the &apos;SharedMemory&apos; transfer mode. </summary>
+        /// <summary> The share memory buffer for sample transfers, in mebibytes. It can only be used with the 'SharedMemory' transfer mode. </summary>
         public string SharedMemorySizeMiB { get; set; }
         /// <summary> Data transfer mode: embedded or sharedMemory. </summary>
         public GrpcExtensionDataTransferMode Mode { get; set; }

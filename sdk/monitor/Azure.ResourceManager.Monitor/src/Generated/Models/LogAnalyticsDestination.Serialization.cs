@@ -5,58 +5,151 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LogAnalyticsDestination : IUtf8JsonSerializable
+    public partial class LogAnalyticsDestination : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LogAnalyticsDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceResourceId))
-            {
-                writer.WritePropertyName("workspaceResourceId");
-                writer.WriteStringValue(WorkspaceResourceId);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static LogAnalyticsDestination DeserializeLogAnalyticsDestination(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> workspaceResourceId = default;
-            Optional<string> workspaceId = default;
-            Optional<string> name = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(WorkspaceResourceId))
+            {
+                writer.WritePropertyName("workspaceResourceId"u8);
+                writer.WriteStringValue(WorkspaceResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            {
+                writer.WritePropertyName("workspaceId"u8);
+                writer.WriteStringValue(WorkspaceId);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        LogAnalyticsDestination IJsonModel<LogAnalyticsDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogAnalyticsDestination(document.RootElement, options);
+        }
+
+        internal static LogAnalyticsDestination DeserializeLogAnalyticsDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier workspaceResourceId = default;
+            string workspaceId = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceResourceId"))
+                if (property.NameEquals("workspaceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogAnalyticsDestination(workspaceResourceId.Value, workspaceId.Value, name.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogAnalyticsDestination(workspaceResourceId, workspaceId, name, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogAnalyticsDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogAnalyticsDestination IPersistableModel<LogAnalyticsDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogAnalyticsDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogAnalyticsDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

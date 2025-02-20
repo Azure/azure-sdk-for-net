@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -30,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-09-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -53,7 +52,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Get call connection. </summary>
+        /// <summary> Get the detail properties of an ongoing call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -76,11 +75,11 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get call connection. </summary>
+        /// <summary> Get the detail properties of an ongoing call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -103,7 +102,7 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -122,7 +121,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Hangup the call. </summary>
+        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -140,11 +139,11 @@ namespace Azure.Communication.CallAutomation
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Hangup the call. </summary>
+        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -162,11 +161,11 @@ namespace Azure.Communication.CallAutomation
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateTerminateCallRequest(string callConnectionId, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateTerminateCallRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,67 +177,57 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":terminate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
         /// <param name="callConnectionId"> The terminate call request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> TerminateCallAsync(string callConnectionId, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response> TerminateCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTerminateCallRequest(callConnectionId, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTerminateCallRequest(callConnectionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
         /// <param name="callConnectionId"> The terminate call request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response TerminateCall(string callConnectionId, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response TerminateCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTerminateCallRequest(callConnectionId, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTerminateCallRequest(callConnectionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -250,41 +239,33 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":transferToParticipant", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transferToParticipantRequest);
+            content.JsonWriter.WriteObjectValue(transferToParticipantRequestInternal);
             request.Content = content;
             return message;
         }
 
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="transferToParticipantRequestInternal"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequestInternal"/> is null. </exception>
+        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (transferToParticipantRequest == null)
+            if (transferToParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(transferToParticipantRequest));
+                throw new ArgumentNullException(nameof(transferToParticipantRequestInternal));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -296,29 +277,27 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="transferToParticipantRequestInternal"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequestInternal"/> is null. </exception>
+        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (transferToParticipantRequest == null)
+            if (transferToParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(transferToParticipantRequest));
+                throw new ArgumentNullException(nameof(transferToParticipantRequestInternal));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -330,7 +309,7 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -350,7 +329,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Get participants from a call. </summary>
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -373,11 +352,11 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get participants from a call. </summary>
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -400,11 +379,11 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantRequestInternal addParticipantRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -416,91 +395,81 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:add", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addParticipantsRequest);
+            content.JsonWriter.WriteObjectValue(addParticipantRequestInternal);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="addParticipantsRequest"> The add participants request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="addParticipantRequestInternal"> The add participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
-        public async Task<Response<AddParticipantsResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequestInternal"/> is null. </exception>
+        public async Task<Response<AddParticipantResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantRequestInternal addParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (addParticipantsRequest == null)
+            if (addParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(addParticipantsRequest));
+                throw new ArgumentNullException(nameof(addParticipantRequestInternal));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        AddParticipantsResponseInternal value = default;
+                        AddParticipantResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddParticipantsResponseInternal.DeserializeAddParticipantsResponseInternal(document.RootElement);
+                        value = AddParticipantResponseInternal.DeserializeAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="addParticipantsRequest"> The add participants request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="addParticipantRequestInternal"> The add participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
-        public Response<AddParticipantsResponseInternal> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequestInternal"/> is null. </exception>
+        public Response<AddParticipantResponseInternal> AddParticipant(string callConnectionId, AddParticipantRequestInternal addParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (addParticipantsRequest == null)
+            if (addParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(addParticipantsRequest));
+                throw new ArgumentNullException(nameof(addParticipantRequestInternal));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        AddParticipantsResponseInternal value = default;
+                        AddParticipantResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddParticipantsResponseInternal.DeserializeAddParticipantsResponseInternal(document.RootElement);
+                        value = AddParticipantResponseInternal.DeserializeAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRemoveParticipantsRequest(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateRemoveParticipantRequest(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -512,283 +481,81 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:remove", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(removeParticipantsRequest);
+            content.JsonWriter.WriteObjectValue(removeParticipantRequestInternal);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Remove participant from the call using identifier. </summary>
+        /// <summary> Remove a participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="removeParticipantRequestInternal"> The participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
-        public async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequestInternal"/> is null. </exception>
+        public async Task<Response<RemoveParticipantResponseInternal>> RemoveParticipantAsync(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (removeParticipantsRequest == null)
+            if (removeParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(removeParticipantsRequest));
+                throw new ArgumentNullException(nameof(removeParticipantRequestInternal));
             }
 
-            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateRemoveParticipantRequest(callConnectionId, removeParticipantRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        RemoveParticipantsResult value = default;
+                        RemoveParticipantResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoveParticipantsResult.DeserializeRemoveParticipantsResult(document.RootElement);
+                        value = RemoveParticipantResponseInternal.DeserializeRemoveParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Remove participant from the call using identifier. </summary>
+        /// <summary> Remove a participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="removeParticipantRequestInternal"> The participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
-        public Response<RemoveParticipantsResult> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequestInternal"/> is null. </exception>
+        public Response<RemoveParticipantResponseInternal> RemoveParticipant(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (removeParticipantsRequest == null)
+            if (removeParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(removeParticipantsRequest));
+                throw new ArgumentNullException(nameof(removeParticipantRequestInternal));
             }
 
-            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateRemoveParticipantRequest(callConnectionId, removeParticipantRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        RemoveParticipantsResult value = default;
+                        RemoveParticipantResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoveParticipantsResult.DeserializeRemoveParticipantsResult(document.RootElement);
+                        value = RemoveParticipantResponseInternal.DeserializeRemoveParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateMuteAllRequest(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/calling/callConnections/", false);
-            uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:muteAll", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(muteAllParticipantsRequest);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Mute all participants from the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="muteAllParticipantsRequest"> The participant to be excluded from the mute all operation, if any. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteAllParticipantsRequest"/> is null. </exception>
-        public async Task<Response<MuteParticipantsResponse>> MuteAllAsync(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (muteAllParticipantsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(muteAllParticipantsRequest));
-            }
-
-            using var message = CreateMuteAllRequest(callConnectionId, muteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        MuteParticipantsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Mute all participants from the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="muteAllParticipantsRequest"> The participant to be excluded from the mute all operation, if any. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteAllParticipantsRequest"/> is null. </exception>
-        public Response<MuteParticipantsResponse> MuteAll(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (muteAllParticipantsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(muteAllParticipantsRequest));
-            }
-
-            using var message = CreateMuteAllRequest(callConnectionId, muteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        MuteParticipantsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUnmuteAllRequest(string callConnectionId, UnmuteAllParticipantsRequestInternal unmuteAllParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/calling/callConnections/", false);
-            uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:unmuteAll", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unmuteAllParticipantsRequest);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Unmute all participants from the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unmuteAllParticipantsRequest"> Operation context, if any. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteAllParticipantsRequest"/> is null. </exception>
-        public async Task<Response<UnmuteParticipantsResponse>> UnmuteAllAsync(string callConnectionId, UnmuteAllParticipantsRequestInternal unmuteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (unmuteAllParticipantsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(unmuteAllParticipantsRequest));
-            }
-
-            using var message = CreateUnmuteAllRequest(callConnectionId, unmuteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        UnmuteParticipantsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Unmute all participants from the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unmuteAllParticipantsRequest"> Operation context, if any. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteAllParticipantsRequest"/> is null. </exception>
-        public Response<UnmuteParticipantsResponse> UnmuteAll(string callConnectionId, UnmuteAllParticipantsRequestInternal unmuteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (unmuteAllParticipantsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(unmuteAllParticipantsRequest));
-            }
-
-            using var message = CreateUnmuteAllRequest(callConnectionId, unmuteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        UnmuteParticipantsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantRequestInternal muteParticipantRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -800,91 +567,81 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:mute", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(muteParticipantRequest);
+            content.JsonWriter.WriteObjectValue(muteParticipantsRequestInternal);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Mute participant from the call using identifier. </summary>
+        /// <summary> Mute participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="muteParticipantRequest"> The participant to be muted from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="muteParticipantsRequestInternal"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantRequest"/> is null. </exception>
-        public async Task<Response<MuteParticipantsResponse>> MuteAsync(string callConnectionId, MuteParticipantRequestInternal muteParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequestInternal"/> is null. </exception>
+        public async Task<Response<MuteParticipantResult>> MuteAsync(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (muteParticipantRequest == null)
+            if (muteParticipantsRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(muteParticipantRequest));
+                throw new ArgumentNullException(nameof(muteParticipantsRequestInternal));
             }
 
-            using var message = CreateMuteRequest(callConnectionId, muteParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateMuteRequest(callConnectionId, muteParticipantsRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                     {
-                        MuteParticipantsResponse value = default;
+                        MuteParticipantResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
+                        value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Mute participant from the call using identifier. </summary>
+        /// <summary> Mute participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="muteParticipantRequest"> The participant to be muted from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="muteParticipantsRequestInternal"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantRequest"/> is null. </exception>
-        public Response<MuteParticipantsResponse> Mute(string callConnectionId, MuteParticipantRequestInternal muteParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequestInternal"/> is null. </exception>
+        public Response<MuteParticipantResult> Mute(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (muteParticipantRequest == null)
+            if (muteParticipantsRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(muteParticipantRequest));
+                throw new ArgumentNullException(nameof(muteParticipantsRequestInternal));
             }
 
-            using var message = CreateMuteRequest(callConnectionId, muteParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateMuteRequest(callConnectionId, muteParticipantsRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                     {
-                        MuteParticipantsResponse value = default;
+                        MuteParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
+                        value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUnmuteRequest(string callConnectionId, UnmuteParticipantRequestInternal unmuteParticipantRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateUnmuteRequest(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -896,91 +653,167 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:unmute", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unmuteParticipantRequest);
+            content.JsonWriter.WriteObjectValue(unmuteParticipantsRequestInternal);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Unmute participant from the call using identifier. </summary>
+        /// <summary> Unmute participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unmuteParticipantRequest"> The participant to be unmuted from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="unmuteParticipantsRequestInternal"> The participants to be unmuted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantRequest"/> is null. </exception>
-        public async Task<Response<UnmuteParticipantsResponse>> UnmuteAsync(string callConnectionId, UnmuteParticipantRequestInternal unmuteParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequestInternal"/> is null. </exception>
+        public async Task<Response<UnmuteParticipantResult>> UnmuteAsync(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (unmuteParticipantRequest == null)
+            if (unmuteParticipantsRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(unmuteParticipantRequest));
+                throw new ArgumentNullException(nameof(unmuteParticipantsRequestInternal));
             }
 
-            using var message = CreateUnmuteRequest(callConnectionId, unmuteParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateUnmuteRequest(callConnectionId, unmuteParticipantsRequestInternal);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        UnmuteParticipantResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Unmute participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unmuteParticipantsRequestInternal"> The participants to be unmuted from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequestInternal"/> is null. </exception>
+        public Response<UnmuteParticipantResult> Unmute(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unmuteParticipantsRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(unmuteParticipantsRequestInternal));
+            }
+
+            using var message = CreateUnmuteRequest(callConnectionId, unmuteParticipantsRequestInternal);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        UnmuteParticipantResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCancelAddParticipantRequest(string callConnectionId, CancelAddParticipantRequestInternal cancelAddParticipantRequestInternal)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:cancelAddParticipant", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(cancelAddParticipantRequestInternal);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Cancel add participant operation. </summary>
+        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="cancelAddParticipantRequestInternal"> Cancellation request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="cancelAddParticipantRequestInternal"/> is null. </exception>
+        public async Task<Response<CancelAddParticipantResponseInternal>> CancelAddParticipantAsync(string callConnectionId, CancelAddParticipantRequestInternal cancelAddParticipantRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (cancelAddParticipantRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(cancelAddParticipantRequestInternal));
+            }
+
+            using var message = CreateCancelAddParticipantRequest(callConnectionId, cancelAddParticipantRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        UnmuteParticipantsResponse value = default;
+                        CancelAddParticipantResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
+                        value = CancelAddParticipantResponseInternal.DeserializeCancelAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Unmute participant from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unmuteParticipantRequest"> The participant to be unmuted from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <summary> Cancel add participant operation. </summary>
+        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="cancelAddParticipantRequestInternal"> Cancellation request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantRequest"/> is null. </exception>
-        public Response<UnmuteParticipantsResponse> Unmute(string callConnectionId, UnmuteParticipantRequestInternal unmuteParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="cancelAddParticipantRequestInternal"/> is null. </exception>
+        public Response<CancelAddParticipantResponseInternal> CancelAddParticipant(string callConnectionId, CancelAddParticipantRequestInternal cancelAddParticipantRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (unmuteParticipantRequest == null)
+            if (cancelAddParticipantRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(unmuteParticipantRequest));
+                throw new ArgumentNullException(nameof(cancelAddParticipantRequestInternal));
             }
 
-            using var message = CreateUnmuteRequest(callConnectionId, unmuteParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateCancelAddParticipantRequest(callConnectionId, cancelAddParticipantRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        UnmuteParticipantsResponse value = default;
+                        CancelAddParticipantResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
+                        value = CancelAddParticipantResponseInternal.DeserializeCancelAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetParticipantRequest(string callConnectionId, string participantMri)
+        internal HttpMessage CreateGetParticipantRequest(string callConnectionId, string participantRawId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -990,7 +823,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants/", false);
-            uri.AppendPath(participantMri, true);
+            uri.AppendPath(participantRawId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -999,65 +832,142 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Get participant from a call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participantMri"> MRI of the participant to retrieve. </param>
+        /// <param name="participantRawId"> Raw id of the participant to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
-        public async Task<Response<AcsCallParticipantInternal>> GetParticipantAsync(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantRawId"/> is null. </exception>
+        public async Task<Response<CallParticipantInternal>> GetParticipantAsync(string callConnectionId, string participantRawId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (participantMri == null)
+            if (participantRawId == null)
             {
-                throw new ArgumentNullException(nameof(participantMri));
+                throw new ArgumentNullException(nameof(participantRawId));
             }
 
-            using var message = CreateGetParticipantRequest(callConnectionId, participantMri);
+            using var message = CreateGetParticipantRequest(callConnectionId, participantRawId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AcsCallParticipantInternal value = default;
+                        CallParticipantInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(document.RootElement);
+                        value = CallParticipantInternal.DeserializeCallParticipantInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get participant from a call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participantMri"> MRI of the participant to retrieve. </param>
+        /// <param name="participantRawId"> Raw id of the participant to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
-        public Response<AcsCallParticipantInternal> GetParticipant(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantRawId"/> is null. </exception>
+        public Response<CallParticipantInternal> GetParticipant(string callConnectionId, string participantRawId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (participantMri == null)
+            if (participantRawId == null)
             {
-                throw new ArgumentNullException(nameof(participantMri));
+                throw new ArgumentNullException(nameof(participantRawId));
             }
 
-            using var message = CreateGetParticipantRequest(callConnectionId, participantMri);
+            using var message = CreateGetParticipantRequest(callConnectionId, participantRawId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AcsCallParticipantInternal value = default;
+                        CallParticipantInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(document.RootElement);
+                        value = CallParticipantInternal.DeserializeCallParticipantInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetParticipantsNextPageRequest(string nextLink, string callConnectionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="callConnectionId"/> is null. </exception>
+        public async Task<Response<GetParticipantsResponseInternal>> GetParticipantsNextPageAsync(string nextLink, string callConnectionId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+
+            using var message = CreateGetParticipantsNextPageRequest(nextLink, callConnectionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetParticipantsResponseInternal value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="callConnectionId"/> is null. </exception>
+        public Response<GetParticipantsResponseInternal> GetParticipantsNextPage(string nextLink, string callConnectionId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+
+            using var message = CreateGetParticipantsNextPageRequest(nextLink, callConnectionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetParticipantsResponseInternal value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

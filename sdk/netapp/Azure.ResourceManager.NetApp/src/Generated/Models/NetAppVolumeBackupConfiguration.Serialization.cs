@@ -5,89 +5,159 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBackupConfiguration : IUtf8JsonSerializable
+    public partial class NetAppVolumeBackupConfiguration : IUtf8JsonSerializable, IJsonModel<NetAppVolumeBackupConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeBackupConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NetAppVolumeBackupConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(BackupPolicyId))
             {
-                writer.WritePropertyName("backupPolicyId");
+                writer.WritePropertyName("backupPolicyId"u8);
                 writer.WriteStringValue(BackupPolicyId);
             }
             if (Optional.IsDefined(IsPolicyEnforced))
             {
-                writer.WritePropertyName("policyEnforced");
+                writer.WritePropertyName("policyEnforced"u8);
                 writer.WriteBooleanValue(IsPolicyEnforced.Value);
             }
-            if (Optional.IsDefined(VaultId))
+            if (Optional.IsDefined(BackupVaultId))
             {
-                writer.WritePropertyName("vaultId");
-                writer.WriteStringValue(VaultId);
+                writer.WritePropertyName("backupVaultId"u8);
+                writer.WriteStringValue(BackupVaultId);
             }
-            if (Optional.IsDefined(IsBackupEnabled))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("backupEnabled");
-                writer.WriteBooleanValue(IsBackupEnabled.Value);
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeBackupConfiguration DeserializeNetAppVolumeBackupConfiguration(JsonElement element)
+        NetAppVolumeBackupConfiguration IJsonModel<NetAppVolumeBackupConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> backupPolicyId = default;
-            Optional<bool> policyEnforced = default;
-            Optional<ResourceIdentifier> vaultId = default;
-            Optional<bool> backupEnabled = default;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeBackupConfiguration(document.RootElement, options);
+        }
+
+        internal static NetAppVolumeBackupConfiguration DeserializeNetAppVolumeBackupConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier backupPolicyId = default;
+            bool? policyEnforced = default;
+            ResourceIdentifier backupVaultId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupPolicyId"))
+                if (property.NameEquals("backupPolicyId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupPolicyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyEnforced"))
+                if (property.NameEquals("policyEnforced"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyEnforced = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("vaultId"))
+                if (property.NameEquals("backupVaultId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vaultId = new ResourceIdentifier(property.Value.GetString());
+                    backupVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupEnabled"))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    backupEnabled = property.Value.GetBoolean();
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), vaultId.Value, Optional.ToNullable(backupEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppVolumeBackupConfiguration(backupPolicyId, policyEnforced, backupVaultId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppVolumeBackupConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppVolumeBackupConfiguration IPersistableModel<NetAppVolumeBackupConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppVolumeBackupConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppVolumeBackupConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,57 +5,145 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetAzureDBForMySqlTaskInput : IUtf8JsonSerializable
+    public partial class ConnectToTargetAzureDBForMySqlTaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetAzureDBForMySqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectToTargetAzureDBForMySqlTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
-            writer.WriteObjectValue(SourceConnectionInfo);
-            writer.WritePropertyName("targetConnectionInfo");
-            writer.WriteObjectValue(TargetConnectionInfo);
-            if (Optional.IsDefined(IsOfflineMigration))
-            {
-                writer.WritePropertyName("isOfflineMigration");
-                writer.WriteBooleanValue(IsOfflineMigration.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ConnectToTargetAzureDBForMySqlTaskInput DeserializeConnectToTargetAzureDBForMySqlTaskInput(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("sourceConnectionInfo"u8);
+            writer.WriteObjectValue(SourceConnectionInfo, options);
+            writer.WritePropertyName("targetConnectionInfo"u8);
+            writer.WriteObjectValue(TargetConnectionInfo, options);
+            if (Optional.IsDefined(IsOfflineMigration))
+            {
+                writer.WritePropertyName("isOfflineMigration"u8);
+                writer.WriteBooleanValue(IsOfflineMigration.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ConnectToTargetAzureDBForMySqlTaskInput IJsonModel<ConnectToTargetAzureDBForMySqlTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetAzureDBForMySqlTaskInput(document.RootElement, options);
+        }
+
+        internal static ConnectToTargetAzureDBForMySqlTaskInput DeserializeConnectToTargetAzureDBForMySqlTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlConnectionInfo sourceConnectionInfo = default;
             MySqlConnectionInfo targetConnectionInfo = default;
-            Optional<bool> isOfflineMigration = default;
+            bool? isOfflineMigration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("isOfflineMigration"))
+                if (property.NameEquals("isOfflineMigration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOfflineMigration = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToTargetAzureDBForMySqlTaskInput(sourceConnectionInfo, targetConnectionInfo, Optional.ToNullable(isOfflineMigration));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToTargetAzureDBForMySqlTaskInput(sourceConnectionInfo, targetConnectionInfo, isOfflineMigration, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectToTargetAzureDBForMySqlTaskInput IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectToTargetAzureDBForMySqlTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

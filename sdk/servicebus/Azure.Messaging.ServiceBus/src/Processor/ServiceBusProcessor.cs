@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -200,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
 
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
@@ -253,15 +254,20 @@ namespace Azure.Messaging.ServiceBus
 
             if (isSessionEntity)
             {
-                Options.MaxConcurrentCalls = _sessionIds.Length > 0
+                Options.MaxConcurrentCalls = (_sessionIds.Length > 0
                     ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
-                    : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
+                    : _maxConcurrentSessions) * _maxConcurrentCallsPerSession;
             }
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
             IsSessionProcessor = isSessionEntity;
-            _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+           _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.ServiceBusServiceContext,
+                FullyQualifiedNamespace,
+                EntityPath);
         }
 
         /// <summary>
@@ -271,6 +277,7 @@ namespace Azure.Messaging.ServiceBus
         {
             // assign default options since some of the properties reach into the options
             Options = new ServiceBusProcessorOptions();
+            _sessionIds = Array.Empty<string>();
         }
 
         /// <summary>
@@ -333,8 +340,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
             Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessMessageEventArgs, Task> ProcessMessageAsync
@@ -372,8 +377,6 @@ namespace Azure.Messaging.ServiceBus
         /// The handler responsible for processing messages received from the Queue
         /// or Subscription. Implementation is mandatory.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
             Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionMessageEventArgs, Task> ProcessSessionMessageAsync
@@ -412,8 +415,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
             Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
@@ -450,8 +451,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Optional handler that can be set to be notified when a new session is about to be processed.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
             Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
@@ -485,8 +484,6 @@ namespace Azure.Messaging.ServiceBus
         /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out so there are currently no messages
         /// available to be received for the session.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
             Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
@@ -648,7 +645,7 @@ namespace Azure.Messaging.ServiceBus
                                 _sessionProcessor,
                                 sessionId,
                                 _maxConcurrentAcceptSessionsSemaphore,
-                                _scopeFactory,
+                                _clientDiagnostics,
                                 KeepOpenOnReceiveTimeout));
                     }
                 }
@@ -657,7 +654,7 @@ namespace Azure.Messaging.ServiceBus
                     _receiverManagers.Add(
                         new ReceiverManager(
                             this,
-                            _scopeFactory,
+                            _clientDiagnostics,
                             false));
                 }
             }
@@ -676,7 +673,7 @@ namespace Azure.Messaging.ServiceBus
                                     _sessionProcessor,
                                     null,
                                     _maxConcurrentAcceptSessionsSemaphore,
-                                    _scopeFactory,
+                                    _clientDiagnostics,
                                     KeepOpenOnReceiveTimeout));
                         }
                     }
@@ -1064,9 +1061,9 @@ namespace Azure.Messaging.ServiceBus
 
             lock (_optionsLock)
             {
-                Options.MaxConcurrentCalls = _sessionIds.Length > 0
+                Options.MaxConcurrentCalls = (_sessionIds.Length > 0
                     ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
-                    : maxConcurrentSessions * maxConcurrentCallsPerSession;
+                    : maxConcurrentSessions) * maxConcurrentCallsPerSession;
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
                 WakeLoop();

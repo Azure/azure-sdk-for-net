@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -15,21 +14,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentKeyValueElement DeserializeDocumentKeyValueElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingRegions"))
+                if (property.NameEquals("boundingRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BoundingRegion> array = new List<BoundingRegion>();
@@ -40,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     boundingRegions = array;
                     continue;
                 }
-                if (property.NameEquals("spans"))
+                if (property.NameEquals("spans"u8))
                 {
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -51,7 +53,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentKeyValueElement(content, Optional.ToList(boundingRegions), spans);
+            return new DocumentKeyValueElement(content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentKeyValueElement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentKeyValueElement(document.RootElement);
         }
     }
 }

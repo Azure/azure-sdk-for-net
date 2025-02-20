@@ -19,21 +19,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
-                writer.WritePropertyName("connectVia");
+                writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -44,133 +44,164 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionProperties))
             {
-                writer.WritePropertyName("connectionProperties");
-                writer.WriteObjectValue(ConnectionProperties);
+                writer.WritePropertyName("connectionProperties"u8);
+                writer.WriteObjectValue<object>(ConnectionProperties);
             }
             if (Optional.IsDefined(ClientCustomerID))
             {
-                writer.WritePropertyName("clientCustomerID");
-                writer.WriteObjectValue(ClientCustomerID);
+                writer.WritePropertyName("clientCustomerID"u8);
+                writer.WriteObjectValue<object>(ClientCustomerID);
             }
             if (Optional.IsDefined(DeveloperToken))
             {
-                writer.WritePropertyName("developerToken");
+                writer.WritePropertyName("developerToken"u8);
                 writer.WriteObjectValue(DeveloperToken);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(RefreshToken))
             {
-                writer.WritePropertyName("refreshToken");
+                writer.WritePropertyName("refreshToken"u8);
                 writer.WriteObjectValue(RefreshToken);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
-                writer.WriteObjectValue(ClientId);
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteObjectValue<object>(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
-                writer.WriteObjectValue(Email);
+                writer.WritePropertyName("email"u8);
+                writer.WriteObjectValue<object>(Email);
             }
             if (Optional.IsDefined(KeyFilePath))
             {
-                writer.WritePropertyName("keyFilePath");
-                writer.WriteObjectValue(KeyFilePath);
+                writer.WritePropertyName("keyFilePath"u8);
+                writer.WriteObjectValue<object>(KeyFilePath);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
-                writer.WritePropertyName("trustedCertPath");
-                writer.WriteObjectValue(TrustedCertPath);
+                writer.WritePropertyName("trustedCertPath"u8);
+                writer.WriteObjectValue<object>(TrustedCertPath);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
-                writer.WritePropertyName("useSystemTrustStore");
-                writer.WriteObjectValue(UseSystemTrustStore);
+                writer.WritePropertyName("useSystemTrustStore"u8);
+                writer.WriteObjectValue<object>(UseSystemTrustStore);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteObjectValue(PrivateKey);
+            }
+            if (Optional.IsDefined(LoginCustomerID))
+            {
+                writer.WritePropertyName("loginCustomerID"u8);
+                writer.WriteObjectValue<object>(LoginCustomerID);
+            }
+            if (Optional.IsDefined(GoogleAdsApiVersion))
+            {
+                writer.WritePropertyName("googleAdsApiVersion"u8);
+                writer.WriteObjectValue<object>(GoogleAdsApiVersion);
+            }
+            if (Optional.IsDefined(SupportLegacyDataTypes))
+            {
+                writer.WritePropertyName("supportLegacyDataTypes"u8);
+                writer.WriteObjectValue<object>(SupportLegacyDataTypes);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
-                writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WritePropertyName("encryptedCredential"u8);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static GoogleAdWordsLinkedService DeserializeGoogleAdWordsLinkedService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<object> connectionProperties = default;
-            Optional<object> clientCustomerID = default;
-            Optional<SecretBase> developerToken = default;
-            Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
-            Optional<SecretBase> refreshToken = default;
-            Optional<object> clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> email = default;
-            Optional<object> keyFilePath = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> useSystemTrustStore = default;
-            Optional<object> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            object connectionProperties = default;
+            object clientCustomerID = default;
+            SecretBase developerToken = default;
+            GoogleAdWordsAuthenticationType? authenticationType = default;
+            SecretBase refreshToken = default;
+            object clientId = default;
+            SecretBase clientSecret = default;
+            object email = default;
+            object keyFilePath = default;
+            object trustedCertPath = default;
+            object useSystemTrustStore = default;
+            SecretBase privateKey = default;
+            object loginCustomerID = default;
+            object googleAdsApiVersion = default;
+            object supportLegacyDataTypes = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
@@ -181,22 +212,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -205,121 +242,145 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("connectionProperties"))
+                        if (property0.NameEquals("connectionProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionProperties = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("clientCustomerID"))
+                        if (property0.NameEquals("clientCustomerID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientCustomerID = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("developerToken"))
+                        if (property0.NameEquals("developerToken"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             developerToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("authenticationType"))
+                        if (property0.NameEquals("authenticationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authenticationType = new GoogleAdWordsAuthenticationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("refreshToken"))
+                        if (property0.NameEquals("refreshToken"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientId = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecret"))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("email"))
+                        if (property0.NameEquals("email"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             email = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("keyFilePath"))
+                        if (property0.NameEquals("keyFilePath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keyFilePath = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("trustedCertPath"))
+                        if (property0.NameEquals("trustedCertPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trustedCertPath = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("useSystemTrustStore"))
+                        if (property0.NameEquals("useSystemTrustStore"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useSystemTrustStore = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("encryptedCredential"))
+                        if (property0.NameEquals("privateKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("loginCustomerID"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            loginCustomerID = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("googleAdsApiVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            googleAdsApiVersion = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("supportLegacyDataTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            supportLegacyDataTypes = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptedCredential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             encryptedCredential = property0.Value.GetObject();
@@ -331,7 +392,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, clientCustomerID.Value, developerToken.Value, Optional.ToNullable(authenticationType), refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);
+            return new GoogleAdWordsLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionProperties,
+                clientCustomerID,
+                developerToken,
+                authenticationType,
+                refreshToken,
+                clientId,
+                clientSecret,
+                email,
+                keyFilePath,
+                trustedCertPath,
+                useSystemTrustStore,
+                privateKey,
+                loginCustomerID,
+                googleAdsApiVersion,
+                supportLegacyDataTypes,
+                encryptedCredential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GoogleAdWordsLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGoogleAdWordsLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class GoogleAdWordsLinkedServiceConverter : JsonConverter<GoogleAdWordsLinkedService>
@@ -340,6 +439,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override GoogleAdWordsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         public static JobSupportedAction ToJobSupportedAction(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return JobSupportedAction.Invalid;
-            if (string.Equals(value, "Cancellable", StringComparison.InvariantCultureIgnoreCase)) return JobSupportedAction.Cancellable;
-            if (string.Equals(value, "Retriable", StringComparison.InvariantCultureIgnoreCase)) return JobSupportedAction.Retriable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return JobSupportedAction.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancellable")) return JobSupportedAction.Cancellable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Retriable")) return JobSupportedAction.Retriable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobSupportedAction value.");
         }
     }

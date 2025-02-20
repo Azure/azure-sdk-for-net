@@ -17,32 +17,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Encoding))
             {
-                writer.WritePropertyName("encoding");
+                writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
             if (Optional.IsDefined(Quality))
             {
-                writer.WritePropertyName("quality");
+                writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
             if (Optional.IsDefined(Resolution))
             {
-                writer.WritePropertyName("resolution");
+                writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(RateControl))
             {
-                writer.WritePropertyName("rateControl");
+                writer.WritePropertyName("rateControl"u8);
                 writer.WriteObjectValue(RateControl);
             }
             if (Optional.IsDefined(H264))
             {
-                writer.WritePropertyName("h264");
+                writer.WritePropertyName("h264"u8);
                 writer.WriteObjectValue(H264);
             }
             if (Optional.IsDefined(Mpeg4))
             {
-                writer.WritePropertyName("mpeg4");
+                writer.WritePropertyName("mpeg4"u8);
                 writer.WriteObjectValue(Mpeg4);
             }
             writer.WriteEndObject();
@@ -50,76 +50,96 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoEncoderConfiguration DeserializeVideoEncoderConfiguration(JsonElement element)
         {
-            Optional<VideoEncoding> encoding = default;
-            Optional<float> quality = default;
-            Optional<VideoResolution> resolution = default;
-            Optional<RateControl> rateControl = default;
-            Optional<H264Configuration> h264 = default;
-            Optional<Mpeg4Configuration> mpeg4 = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            VideoEncoding? encoding = default;
+            float? quality = default;
+            VideoResolution resolution = default;
+            RateControl rateControl = default;
+            H264Configuration h264 = default;
+            Mpeg4Configuration mpeg4 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encoding"))
+                if (property.NameEquals("encoding"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encoding = new VideoEncoding(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("quality"))
+                if (property.NameEquals("quality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quality = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("resolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolution = VideoResolution.DeserializeVideoResolution(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rateControl"))
+                if (property.NameEquals("rateControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rateControl = RateControl.DeserializeRateControl(property.Value);
                     continue;
                 }
-                if (property.NameEquals("h264"))
+                if (property.NameEquals("h264"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     h264 = H264Configuration.DeserializeH264Configuration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mpeg4"))
+                if (property.NameEquals("mpeg4"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mpeg4 = Mpeg4Configuration.DeserializeMpeg4Configuration(property.Value);
                     continue;
                 }
             }
-            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(
+                encoding,
+                quality,
+                resolution,
+                rateControl,
+                h264,
+                mpeg4);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VideoEncoderConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoEncoderConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

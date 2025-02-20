@@ -16,27 +16,27 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataTransfer");
+            writer.WritePropertyName("dataTransfer"u8);
             writer.WriteObjectValue(DataTransfer);
             if (Optional.IsDefined(ExtensionConfiguration))
             {
-                writer.WritePropertyName("extensionConfiguration");
+                writer.WritePropertyName("extensionConfiguration"u8);
                 writer.WriteStringValue(ExtensionConfiguration);
             }
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            writer.WritePropertyName("image");
+            writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
             if (Optional.IsDefined(SamplingOptions))
             {
-                writer.WritePropertyName("samplingOptions");
+                writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
@@ -48,57 +48,60 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static GrpcExtension DeserializeGrpcExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             GrpcExtensionDataTransfer dataTransfer = default;
-            Optional<string> extensionConfiguration = default;
+            string extensionConfiguration = default;
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataTransfer"))
+                if (property.NameEquals("dataTransfer"u8))
                 {
                     dataTransfer = GrpcExtensionDataTransfer.DeserializeGrpcExtensionDataTransfer(property.Value);
                     continue;
                 }
-                if (property.NameEquals("extensionConfiguration"))
+                if (property.NameEquals("extensionConfiguration"u8))
                 {
                     extensionConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("image"))
+                if (property.NameEquals("image"u8))
                 {
                     image = ImageProperties.DeserializeImageProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("samplingOptions"))
+                if (property.NameEquals("samplingOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingOptions = SamplingOptions.DeserializeSamplingOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -109,7 +112,31 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new GrpcExtension(type, name, inputs, endpoint, image, samplingOptions.Value, dataTransfer, extensionConfiguration.Value);
+            return new GrpcExtension(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions,
+                dataTransfer,
+                extensionConfiguration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GrpcExtension FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGrpcExtension(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

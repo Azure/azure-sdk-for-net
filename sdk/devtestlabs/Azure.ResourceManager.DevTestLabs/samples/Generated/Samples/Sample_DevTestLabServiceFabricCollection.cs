@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabServiceFabricCollection
     {
-        // ServiceFabrics_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ServiceFabricsList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ServiceFabricsCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_List.json
-            // this example is just showing the usage of "ServiceFabrics_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_CreateOrUpdate.json
+            // this example is just showing the usage of "ServiceFabrics_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -42,22 +39,29 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // get the collection of this DevTestLabServiceFabricResource
             DevTestLabServiceFabricCollection collection = devTestLabUser.GetDevTestLabServiceFabrics();
 
-            // invoke the operation and iterate over the result
-            await foreach (DevTestLabServiceFabricResource item in collection.GetAllAsync())
+            // invoke the operation
+            string name = "{serviceFabricName}";
+            DevTestLabServiceFabricData data = new DevTestLabServiceFabricData(new AzureLocation("{location}"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DevTestLabServiceFabricData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                ExternalServiceFabricId = "{serviceFabricId}",
+                EnvironmentId = "{environmentId}",
+                Tags =
+{
+["tagName1"] = "tagValue1"
+},
+            };
+            ArmOperation<DevTestLabServiceFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            DevTestLabServiceFabricResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabServiceFabricData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServiceFabrics_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServiceFabricsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_Get.json
@@ -91,9 +95,45 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServiceFabrics_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ServiceFabricsList()
+        {
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_List.json
+            // this example is just showing the usage of "ServiceFabrics_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabUserResource created on azure
+            // for more information of creating DevTestLabUserResource, please refer to the document of DevTestLabUserResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            string userName = "{userName}";
+            ResourceIdentifier devTestLabUserResourceId = DevTestLabUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName);
+            DevTestLabUserResource devTestLabUser = client.GetDevTestLabUserResource(devTestLabUserResourceId);
+
+            // get the collection of this DevTestLabServiceFabricResource
+            DevTestLabServiceFabricCollection collection = devTestLabUser.GetDevTestLabServiceFabrics();
+
+            // invoke the operation and iterate over the result
+            await foreach (DevTestLabServiceFabricResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DevTestLabServiceFabricData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ServiceFabricsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_Get.json
@@ -123,13 +163,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServiceFabrics_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ServiceFabricsCreateOrUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ServiceFabricsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_CreateOrUpdate.json
-            // this example is just showing the usage of "ServiceFabrics_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabrics_Get.json
+            // this example is just showing the usage of "ServiceFabrics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -150,23 +189,21 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // invoke the operation
             string name = "{serviceFabricName}";
-            DevTestLabServiceFabricData data = new DevTestLabServiceFabricData(new AzureLocation("{location}"))
-            {
-                ExternalServiceFabricId = "{serviceFabricId}",
-                EnvironmentId = "{environmentId}",
-                Tags =
-{
-["tagName1"] = "tagValue1",
-},
-            };
-            ArmOperation<DevTestLabServiceFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            DevTestLabServiceFabricResource result = lro.Value;
+            NullableResponse<DevTestLabServiceFabricResource> response = await collection.GetIfExistsAsync(name);
+            DevTestLabServiceFabricResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DevTestLabServiceFabricData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DevTestLabServiceFabricData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

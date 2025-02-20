@@ -6,135 +6,151 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class XmlReadSettings : IUtf8JsonSerializable
+    public partial class XmlReadSettings : IUtf8JsonSerializable, IJsonModel<XmlReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<XmlReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<XmlReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<XmlReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CompressionProperties))
             {
-                writer.WritePropertyName("compressionProperties");
-                writer.WriteObjectValue(CompressionProperties);
+                writer.WritePropertyName("compressionProperties"u8);
+                writer.WriteObjectValue(CompressionProperties, options);
             }
             if (Optional.IsDefined(ValidationMode))
             {
-                writer.WritePropertyName("validationMode");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ValidationMode);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationMode.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("validationMode"u8);
+                JsonSerializer.Serialize(writer, ValidationMode);
             }
             if (Optional.IsDefined(DetectDataType))
             {
-                writer.WritePropertyName("detectDataType");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DetectDataType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DetectDataType.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("detectDataType"u8);
+                JsonSerializer.Serialize(writer, DetectDataType);
             }
             if (Optional.IsDefined(Namespaces))
             {
-                writer.WritePropertyName("namespaces");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Namespaces);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Namespaces.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("namespaces"u8);
+                JsonSerializer.Serialize(writer, Namespaces);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
-                writer.WritePropertyName("namespacePrefixes");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NamespacePrefixes);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamespacePrefixes.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("namespacePrefixes"u8);
+                JsonSerializer.Serialize(writer, NamespacePrefixes);
             }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
+        XmlReadSettings IJsonModel<XmlReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<BinaryData> validationMode = default;
-            Optional<BinaryData> detectDataType = default;
-            Optional<BinaryData> namespaces = default;
-            Optional<BinaryData> namespacePrefixes = default;
+            var format = options.Format == "W" ? ((IPersistableModel<XmlReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeXmlReadSettings(document.RootElement, options);
+        }
+
+        internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CompressionReadSettings compressionProperties = default;
+            DataFactoryElement<string> validationMode = default;
+            DataFactoryElement<bool> detectDataType = default;
+            DataFactoryElement<bool> namespaces = default;
+            DataFactoryElement<IDictionary<string, string>> namespacePrefixes = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("compressionProperties"))
+                if (property.NameEquals("compressionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
+                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("validationMode"))
+                if (property.NameEquals("validationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    validationMode = BinaryData.FromString(property.Value.GetRawText());
+                    validationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("detectDataType"))
+                if (property.NameEquals("detectDataType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detectDataType = BinaryData.FromString(property.Value.GetRawText());
+                    detectDataType = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("namespaces"))
+                if (property.NameEquals("namespaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespaces = BinaryData.FromString(property.Value.GetRawText());
+                    namespaces = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("namespacePrefixes"))
+                if (property.NameEquals("namespacePrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespacePrefixes = BinaryData.FromString(property.Value.GetRawText());
+                    namespacePrefixes = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
@@ -142,7 +158,45 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
+            return new XmlReadSettings(
+                type,
+                additionalProperties,
+                compressionProperties,
+                validationMode,
+                detectDataType,
+                namespaces,
+                namespacePrefixes);
         }
+
+        BinaryData IPersistableModel<XmlReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<XmlReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(XmlReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        XmlReadSettings IPersistableModel<XmlReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<XmlReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeXmlReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(XmlReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<XmlReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

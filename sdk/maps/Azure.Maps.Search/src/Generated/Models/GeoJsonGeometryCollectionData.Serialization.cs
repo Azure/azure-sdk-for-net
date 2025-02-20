@@ -7,31 +7,21 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonGeometryCollectionData : IUtf8JsonSerializable
+    internal partial class GeoJsonGeometryCollectionData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("geometries");
-            writer.WriteStartArray();
-            foreach (var item in Geometries)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonGeometryCollectionData DeserializeGeoJsonGeometryCollectionData(JsonElement element)
         {
-            IList<GeoJsonGeometry> geometries = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<GeoJsonGeometry> geometries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("geometries"))
+                if (property.NameEquals("geometries"u8))
                 {
                     List<GeoJsonGeometry> array = new List<GeoJsonGeometry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -43,6 +33,14 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new GeoJsonGeometryCollectionData(geometries);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonGeometryCollectionData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonGeometryCollectionData(document.RootElement);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -109,8 +110,7 @@ namespace Azure.Maps.Routing.Models
                 _id = paths[paths.Length - 1];
             }
 
-            RouteMatrixResult result = null;
-            return Response.FromValue(result, response);
+            return await WaitForCompletionAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

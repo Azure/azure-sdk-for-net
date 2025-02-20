@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -14,34 +13,46 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static KeyValuePair DeserializeKeyValuePair(JsonElement element)
         {
-            Optional<string> label = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string label = default;
             KeyValueElement key = default;
             KeyValueElement value = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = KeyValueElement.DeserializeKeyValueElement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = KeyValueElement.DeserializeKeyValueElement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     confidence = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new KeyValuePair(label.Value, key, value, confidence);
+            return new KeyValuePair(label, key, value, confidence);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyValuePair FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyValuePair(document.RootElement);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -15,11 +14,15 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadsItemCollection DeserializeChatThreadsItemCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ChatThreadItem> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ChatThreadItem> array = new List<ChatThreadItem>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,13 +32,21 @@ namespace Azure.Communication.Chat
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ChatThreadsItemCollection(value, nextLink.Value);
+            return new ChatThreadsItemCollection(value, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatThreadsItemCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatThreadsItemCollection(document.RootElement);
         }
     }
 }

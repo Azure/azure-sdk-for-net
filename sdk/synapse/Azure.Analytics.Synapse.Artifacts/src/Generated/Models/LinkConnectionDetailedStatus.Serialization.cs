@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,111 +16,127 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LinkConnectionDetailedStatus DeserializeLinkConnectionDetailedStatus(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> isApplyingChanges = default;
-            Optional<bool> isPartiallyFailed = default;
-            Optional<object> startTime = default;
-            Optional<object> stopTime = default;
-            Optional<string> status = default;
-            Optional<string> continuousRunId = default;
-            Optional<object> error = default;
-            Optional<LinkConnectionRefreshStatus> refreshStatus = default;
-            Optional<DateTimeOffset> landingZoneCredentialExpireTime = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string name = default;
+            bool? isApplyingChanges = default;
+            bool? isPartiallyFailed = default;
+            object startTime = default;
+            object stopTime = default;
+            string status = default;
+            string continuousRunId = default;
+            object error = default;
+            LinkConnectionRefreshStatus refreshStatus = default;
+            DateTimeOffset? landingZoneCredentialExpireTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isApplyingChanges"))
+                if (property.NameEquals("isApplyingChanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isApplyingChanges = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPartiallyFailed"))
+                if (property.NameEquals("isPartiallyFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPartiallyFailed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("stopTime"))
+                if (property.NameEquals("stopTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stopTime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("continuousRunId"))
+                if (property.NameEquals("continuousRunId"u8))
                 {
                     continuousRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("refreshStatus"))
+                if (property.NameEquals("refreshStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshStatus = LinkConnectionRefreshStatus.DeserializeLinkConnectionRefreshStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("landingZoneCredentialExpireTime"))
+                if (property.NameEquals("landingZoneCredentialExpireTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     landingZoneCredentialExpireTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime));
+            return new LinkConnectionDetailedStatus(
+                id,
+                name,
+                isApplyingChanges,
+                isPartiallyFailed,
+                startTime,
+                stopTime,
+                status,
+                continuousRunId,
+                error,
+                refreshStatus,
+                landingZoneCredentialExpireTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionDetailedStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionDetailedStatus(document.RootElement);
         }
 
         internal partial class LinkConnectionDetailedStatusConverter : JsonConverter<LinkConnectionDetailedStatus>
@@ -130,6 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override LinkConnectionDetailedStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

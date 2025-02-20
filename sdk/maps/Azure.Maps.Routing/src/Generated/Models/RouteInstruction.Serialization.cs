@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,82 +15,80 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteInstruction DeserializeRouteInstruction(JsonElement element)
         {
-            Optional<int> routeOffsetInMeters = default;
-            Optional<int> travelTimeInSeconds = default;
-            Optional<LatLongPair> point = default;
-            Optional<int> pointIndex = default;
-            Optional<GuidanceInstructionType> instructionType = default;
-            Optional<IReadOnlyList<string>> roadNumbers = default;
-            Optional<string> exitNumber = default;
-            Optional<string> street = default;
-            Optional<string> signpostText = default;
-            Optional<string> countryCode = default;
-            Optional<string> stateCode = default;
-            Optional<JunctionType> junctionType = default;
-            Optional<int> turnAngleInDecimalDegrees = default;
-            Optional<string> roundaboutExitNumber = default;
-            Optional<bool> possibleCombineWithNext = default;
-            Optional<DrivingSide> drivingSide = default;
-            Optional<GuidanceManeuver> maneuver = default;
-            Optional<string> message = default;
-            Optional<string> combinedMessage = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? routeOffsetInMeters = default;
+            int? travelTimeInSeconds = default;
+            LatLongPair point = default;
+            int? pointIndex = default;
+            GuidanceInstructionType? instructionType = default;
+            IReadOnlyList<string> roadNumbers = default;
+            string exitNumber = default;
+            string street = default;
+            string signpostText = default;
+            string countryCode = default;
+            string stateCode = default;
+            JunctionType? junctionType = default;
+            int? turnAngleInDecimalDegrees = default;
+            long? roundaboutExitNumber = default;
+            bool? possibleCombineWithNext = default;
+            DrivingSide? drivingSide = default;
+            GuidanceManeuver? maneuver = default;
+            string message = default;
+            string combinedMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routeOffsetInMeters"))
+                if (property.NameEquals("routeOffsetInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routeOffsetInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("travelTimeInSeconds"))
+                if (property.NameEquals("travelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     travelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("point"))
+                if (property.NameEquals("point"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     point = LatLongPair.DeserializeLatLongPair(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pointIndex"))
+                if (property.NameEquals("pointIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pointIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instructionType"))
+                if (property.NameEquals("instructionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instructionType = new GuidanceInstructionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("roadNumbers"))
+                if (property.NameEquals("roadNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -101,98 +99,124 @@ namespace Azure.Maps.Routing.Models
                     roadNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("exitNumber"))
+                if (property.NameEquals("exitNumber"u8))
                 {
                     exitNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("street"))
+                if (property.NameEquals("street"u8))
                 {
                     street = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("signpostText"))
+                if (property.NameEquals("signpostText"u8))
                 {
                     signpostText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateCode"))
+                if (property.NameEquals("stateCode"u8))
                 {
                     stateCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("junctionType"))
+                if (property.NameEquals("junctionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     junctionType = new JunctionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("turnAngleInDecimalDegrees"))
+                if (property.NameEquals("turnAngleInDecimalDegrees"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     turnAngleInDecimalDegrees = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roundaboutExitNumber"))
-                {
-                    roundaboutExitNumber = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("possibleCombineWithNext"))
+                if (property.NameEquals("roundaboutExitNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    roundaboutExitNumber = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("possibleCombineWithNext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     possibleCombineWithNext = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("drivingSide"))
+                if (property.NameEquals("drivingSide"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     drivingSide = new DrivingSide(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maneuver"))
+                if (property.NameEquals("maneuver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maneuver = new GuidanceManeuver(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("combinedMessage"))
+                if (property.NameEquals("combinedMessage"u8))
                 {
                     combinedMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new RouteInstruction(Optional.ToNullable(routeOffsetInMeters), Optional.ToNullable(travelTimeInSeconds), point.Value, Optional.ToNullable(pointIndex), Optional.ToNullable(instructionType), Optional.ToList(roadNumbers), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Optional.ToNullable(junctionType), Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Optional.ToNullable(possibleCombineWithNext), Optional.ToNullable(drivingSide), Optional.ToNullable(maneuver), message.Value, combinedMessage.Value);
+            return new RouteInstruction(
+                routeOffsetInMeters,
+                travelTimeInSeconds,
+                point,
+                pointIndex,
+                instructionType,
+                roadNumbers ?? new ChangeTrackingList<string>(),
+                exitNumber,
+                street,
+                signpostText,
+                countryCode,
+                stateCode,
+                junctionType,
+                turnAngleInDecimalDegrees,
+                roundaboutExitNumber,
+                possibleCombineWithNext,
+                drivingSide,
+                maneuver,
+                message,
+                combinedMessage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteInstruction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteInstruction(document.RootElement);
         }
     }
 }

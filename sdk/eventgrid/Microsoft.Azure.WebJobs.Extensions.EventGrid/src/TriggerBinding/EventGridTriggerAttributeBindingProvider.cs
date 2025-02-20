@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;

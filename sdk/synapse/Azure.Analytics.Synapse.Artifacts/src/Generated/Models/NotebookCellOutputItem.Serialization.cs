@@ -20,96 +20,118 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ExecutionCount))
             {
-                writer.WritePropertyName("execution_count");
+                writer.WritePropertyName("execution_count"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            writer.WritePropertyName("output_type");
+            writer.WritePropertyName("output_type"u8);
             writer.WriteStringValue(OutputType.ToString());
             if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("text");
-                writer.WriteObjectValue(Text);
+                writer.WritePropertyName("text"u8);
+                writer.WriteObjectValue<object>(Text);
             }
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+                writer.WritePropertyName("data"u8);
+                writer.WriteObjectValue<object>(Data);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteObjectValue<object>(Metadata);
             }
             writer.WriteEndObject();
         }
 
         internal static NotebookCellOutputItem DeserializeNotebookCellOutputItem(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<int> executionCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            int? executionCount = default;
             CellOutputType outputType = default;
-            Optional<object> text = default;
-            Optional<object> data = default;
-            Optional<object> metadata = default;
+            object text = default;
+            object data = default;
+            object metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("execution_count"))
+                if (property.NameEquals("execution_count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     executionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("output_type"))
+                if (property.NameEquals("output_type"u8))
                 {
                     outputType = new CellOutputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     text = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     data = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = property.Value.GetObject();
                     continue;
                 }
             }
-            return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
+            return new NotebookCellOutputItem(
+                name,
+                executionCount,
+                outputType,
+                text,
+                data,
+                metadata);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookCellOutputItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookCellOutputItem(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class NotebookCellOutputItemConverter : JsonConverter<NotebookCellOutputItem>
@@ -118,6 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override NotebookCellOutputItem Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

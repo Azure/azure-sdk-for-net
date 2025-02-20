@@ -5,49 +5,150 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductDescription
+    public partial class ProductDescription : IUtf8JsonSerializable, IJsonModel<ProductDescription>
     {
-        internal static ProductDescription DeserializeProductDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProductDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ProductDescriptionType> descriptionType = default;
-            Optional<string> shortDescription = default;
-            Optional<string> longDescription = default;
-            Optional<IReadOnlyList<string>> keywords = default;
-            Optional<IReadOnlyList<string>> attributes = default;
-            Optional<IReadOnlyList<ProductLink>> links = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProductDescription)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(DescriptionType))
+            {
+                writer.WritePropertyName("descriptionType"u8);
+                writer.WriteStringValue(DescriptionType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ShortDescription))
+            {
+                writer.WritePropertyName("shortDescription"u8);
+                writer.WriteStringValue(ShortDescription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LongDescription))
+            {
+                writer.WritePropertyName("longDescription"u8);
+                writer.WriteStringValue(LongDescription);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Keywords))
+            {
+                writer.WritePropertyName("keywords"u8);
+                writer.WriteStartArray();
+                foreach (var item in Keywords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Attributes))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Attributes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links"u8);
+                writer.WriteStartArray();
+                foreach (var item in Links)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ProductDescription IJsonModel<ProductDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProductDescription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProductDescription(document.RootElement, options);
+        }
+
+        internal static ProductDescription DeserializeProductDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ProductDescriptionType? descriptionType = default;
+            string shortDescription = default;
+            string longDescription = default;
+            IReadOnlyList<string> keywords = default;
+            IReadOnlyList<string> attributes = default;
+            IReadOnlyList<ProductLink> links = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("descriptionType"))
+                if (property.NameEquals("descriptionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     descriptionType = new ProductDescriptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shortDescription"))
+                if (property.NameEquals("shortDescription"u8))
                 {
                     shortDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("longDescription"))
+                if (property.NameEquals("longDescription"u8))
                 {
                     longDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keywords"))
+                if (property.NameEquals("keywords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -58,11 +159,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     keywords = array;
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,23 +173,65 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     attributes = array;
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProductLink> array = new List<ProductLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductLink.DeserializeProductLink(item));
+                        array.Add(ProductLink.DeserializeProductLink(item, options));
                     }
                     links = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProductDescription(Optional.ToNullable(descriptionType), shortDescription.Value, longDescription.Value, Optional.ToList(keywords), Optional.ToList(attributes), Optional.ToList(links));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProductDescription(
+                descriptionType,
+                shortDescription,
+                longDescription,
+                keywords ?? new ChangeTrackingList<string>(),
+                attributes ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<ProductLink>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProductDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProductDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProductDescription IPersistableModel<ProductDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProductDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProductDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProductDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

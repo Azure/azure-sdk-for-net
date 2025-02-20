@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,15 +14,18 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetInstancesPage DeserializeGetInstancesPage(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesInstance>> instances = default;
-            Optional<string> continuationToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<TimeSeriesInstance> instances = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesInstance> array = new List<TimeSeriesInstance>();
@@ -34,13 +36,21 @@ namespace Azure.IoT.TimeSeriesInsights
                     instances = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new GetInstancesPage(continuationToken.Value, Optional.ToList(instances));
+            return new GetInstancesPage(continuationToken, instances ?? new ChangeTrackingList<TimeSeriesInstance>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GetInstancesPage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetInstancesPage(document.RootElement);
         }
     }
 }

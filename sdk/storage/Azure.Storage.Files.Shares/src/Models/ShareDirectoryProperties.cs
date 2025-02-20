@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -42,6 +43,12 @@ namespace Azure.Storage.Files.Shares.Models
         public FileSmbProperties SmbProperties { get; set; }
 
         /// <summary>
+        /// NFS properties.
+        /// Note that this property is only applicable to directories created in NFS shares.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareDirectoryProperties() { }
@@ -55,6 +62,28 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageDirectoryProperties instance for mocking.
         /// </summary>
+        public static ShareDirectoryProperties StorageDirectoryProperties(
+                IDictionary<string, string> metadata = default,
+                ETag eTag = default,
+                DateTimeOffset lastModified = default,
+                bool isServerEncrypted = default,
+                FileSmbProperties smbProperties = default,
+                FilePosixProperties posixProperties = default
+            )
+            => new ShareDirectoryProperties
+            {
+                Metadata = metadata,
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties
+            };
+
+        /// <summary>
+        /// Creates a new StorageDirectoryProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareDirectoryProperties StorageDirectoryProperties(
                 IDictionary<string, string> metadata,
                 ETag eTag,
@@ -78,7 +107,7 @@ namespace Azure.Storage.Files.Shares.Models
                 IsServerEncrypted = isServerEncrypted,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
                     FilePermissionKey = filePermissionKey,
                     FileCreatedOn = fileCreationTime,
                     FileLastWrittenOn = fileLastWriteTime,

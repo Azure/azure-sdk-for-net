@@ -15,33 +15,69 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targets");
+            writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("source");
-            writer.WriteObjectValue(Source);
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName"u8);
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source);
+            }
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            writer.WritePropertyName("callbackUri");
+            writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (Optional.IsDefined(MediaStreamingConfiguration))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("mediaStreamingConfiguration");
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(TeamsAppSource))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl");
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("teamsAppSource"u8);
+                writer.WriteObjectValue(TeamsAppSource);
+            }
+            if (Optional.IsDefined(CustomCallingContext))
+            {
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
+            }
+            if (Optional.IsDefined(MediaStreamingOptions))
+            {
+                writer.WritePropertyName("mediaStreamingOptions"u8);
+                writer.WriteObjectValue(MediaStreamingOptions);
+            }
+            if (Optional.IsDefined(TranscriptionOptions))
+            {
+                writer.WritePropertyName("transcriptionOptions"u8);
+                writer.WriteObjectValue(TranscriptionOptions);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

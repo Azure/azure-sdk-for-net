@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,45 +16,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static HealthcareDicomImageCreatedEventData DeserializeHealthcareDicomImageCreatedEventData(JsonElement element)
         {
-            Optional<string> imageStudyInstanceUid = default;
-            Optional<string> imageSeriesInstanceUid = default;
-            Optional<string> imageSopInstanceUid = default;
-            Optional<string> serviceHostName = default;
-            Optional<long> sequenceNumber = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string partitionName = default;
+            string imageStudyInstanceUid = default;
+            string imageSeriesInstanceUid = default;
+            string imageSopInstanceUid = default;
+            string serviceHostName = default;
+            long? sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageStudyInstanceUid"))
+                if (property.NameEquals("partitionName"u8))
+                {
+                    partitionName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("imageStudyInstanceUid"u8))
                 {
                     imageStudyInstanceUid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSeriesInstanceUid"))
+                if (property.NameEquals("imageSeriesInstanceUid"u8))
                 {
                     imageSeriesInstanceUid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSopInstanceUid"))
+                if (property.NameEquals("imageSopInstanceUid"u8))
                 {
                     imageSopInstanceUid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceHostName"))
+                if (property.NameEquals("serviceHostName"u8))
                 {
                     serviceHostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequenceNumber"))
+                if (property.NameEquals("sequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sequenceNumber = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new HealthcareDicomImageCreatedEventData(imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
+            return new HealthcareDicomImageCreatedEventData(
+                partitionName,
+                imageStudyInstanceUid,
+                imageSeriesInstanceUid,
+                imageSopInstanceUid,
+                serviceHostName,
+                sequenceNumber);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareDicomImageCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement);
         }
 
         internal partial class HealthcareDicomImageCreatedEventDataConverter : JsonConverter<HealthcareDicomImageCreatedEventData>
@@ -64,6 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override HealthcareDicomImageCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

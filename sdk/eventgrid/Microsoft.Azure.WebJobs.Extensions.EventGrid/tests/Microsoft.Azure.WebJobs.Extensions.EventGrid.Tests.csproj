@@ -16,11 +16,15 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.EventGrid.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGrid\src\Constants.cs" LinkBase="Shared" />
+    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGrid\tests\Infrastructure\EventGridLiveTestBase.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGrid\tests\Infrastructure\EventGridTestEnvironment.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

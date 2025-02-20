@@ -18,25 +18,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("referenceName");
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             writer.WriteEndObject();
         }
 
         internal static ManagedVirtualNetworkReference DeserializeManagedVirtualNetworkReference(JsonElement element)
         {
-            string type = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ManagedVirtualNetworkReferenceType type = default;
             string referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ManagedVirtualNetworkReferenceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("referenceName"))
+                if (property.NameEquals("referenceName"u8))
                 {
                     referenceName = property.Value.GetString();
                     continue;
@@ -45,12 +49,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ManagedVirtualNetworkReference(type, referenceName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedVirtualNetworkReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedVirtualNetworkReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ManagedVirtualNetworkReferenceConverter : JsonConverter<ManagedVirtualNetworkReference>
         {
             public override void Write(Utf8JsonWriter writer, ManagedVirtualNetworkReference model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ManagedVirtualNetworkReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

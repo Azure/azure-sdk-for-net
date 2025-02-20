@@ -5,74 +5,162 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TargetRestoreInfo : IUtf8JsonSerializable
+    public partial class TargetRestoreInfo : IUtf8JsonSerializable, IJsonModel<TargetRestoreInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRestoreInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<TargetRestoreInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(OverwriteOption))
             {
-                writer.WritePropertyName("overwriteOption");
+                writer.WritePropertyName("overwriteOption"u8);
                 writer.WriteStringValue(OverwriteOption.Value.ToString());
             }
             if (Optional.IsDefined(ContainerId))
             {
-                writer.WritePropertyName("containerId");
+                writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(TargetDirectoryForFileRestore))
             {
-                writer.WritePropertyName("targetDirectoryForFileRestore");
+                writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element)
+        TargetRestoreInfo IJsonModel<TargetRestoreInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<OverwriteOption> overwriteOption = default;
-            Optional<string> containerId = default;
-            Optional<string> databaseName = default;
-            Optional<string> targetDirectoryForFileRestore = default;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetRestoreInfo(document.RootElement, options);
+        }
+
+        internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RestoreOverwriteOption? overwriteOption = default;
+            string containerId = default;
+            string databaseName = default;
+            string targetDirectoryForFileRestore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("overwriteOption"))
+                if (property.NameEquals("overwriteOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    overwriteOption = new OverwriteOption(property.Value.GetString());
+                    overwriteOption = new RestoreOverwriteOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerId"))
+                if (property.NameEquals("containerId"u8))
                 {
                     containerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDirectoryForFileRestore"))
+                if (property.NameEquals("targetDirectoryForFileRestore"u8))
                 {
                     targetDirectoryForFileRestore = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TargetRestoreInfo(Optional.ToNullable(overwriteOption), containerId.Value, databaseName.Value, targetDirectoryForFileRestore.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TargetRestoreInfo(overwriteOption, containerId, databaseName, targetDirectoryForFileRestore, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TargetRestoreInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TargetRestoreInfo IPersistableModel<TargetRestoreInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTargetRestoreInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TargetRestoreInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

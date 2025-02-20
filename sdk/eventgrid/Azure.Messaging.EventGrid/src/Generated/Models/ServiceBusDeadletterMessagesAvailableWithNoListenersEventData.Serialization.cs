@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,46 +16,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(JsonElement element)
         {
-            Optional<string> namespaceName = default;
-            Optional<string> requestUri = default;
-            Optional<string> entityType = default;
-            Optional<string> queueName = default;
-            Optional<string> topicName = default;
-            Optional<string> subscriptionName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string namespaceName = default;
+            string requestUri = default;
+            string entityType = default;
+            string queueName = default;
+            string topicName = default;
+            string subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("namespaceName"))
+                if (property.NameEquals("namespaceName"u8))
                 {
                     namespaceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestUri"))
+                if (property.NameEquals("requestUri"u8))
                 {
                     requestUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityType"))
+                if (property.NameEquals("entityType"u8))
                 {
                     entityType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queueName"))
+                if (property.NameEquals("queueName"u8))
                 {
                     queueName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topicName"))
+                if (property.NameEquals("topicName"u8))
                 {
                     topicName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionName"))
+                if (property.NameEquals("subscriptionName"u8))
                 {
                     subscriptionName = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+            return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(
+                namespaceName,
+                requestUri,
+                entityType,
+                queueName,
+                topicName,
+                subscriptionName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(document.RootElement);
         }
 
         internal partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>
@@ -65,6 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override ServiceBusDeadletterMessagesAvailableWithNoListenersEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

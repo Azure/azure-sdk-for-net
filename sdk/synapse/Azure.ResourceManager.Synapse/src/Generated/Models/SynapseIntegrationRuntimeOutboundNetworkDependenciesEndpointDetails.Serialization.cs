@@ -5,30 +5,129 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
+    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>
     {
-        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<int> port = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? port = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Optional.ToNullable(port));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(port, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

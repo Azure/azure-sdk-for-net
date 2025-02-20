@@ -5,41 +5,162 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class PersonalComputeInstanceSettings : IUtf8JsonSerializable
+    internal partial class PersonalComputeInstanceSettings : IUtf8JsonSerializable, IJsonModel<PersonalComputeInstanceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersonalComputeInstanceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PersonalComputeInstanceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssignedUser))
-            {
-                writer.WritePropertyName("assignedUser");
-                writer.WriteObjectValue(AssignedUser);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PersonalComputeInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(AssignedUser))
+            {
+                writer.WritePropertyName("assignedUser"u8);
+                writer.WriteObjectValue(AssignedUser, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        PersonalComputeInstanceSettings IJsonModel<PersonalComputeInstanceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PersonalComputeInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePersonalComputeInstanceSettings(document.RootElement, options);
+        }
+
+        internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MachineLearningComputeInstanceAssignedUser assignedUser = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assignedUser"))
+                if (property.NameEquals("assignedUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value);
+                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PersonalComputeInstanceSettings(assignedUser.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PersonalComputeInstanceSettings(assignedUser, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignedUser), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assignedUser: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignedUser))
+                {
+                    builder.Append("  assignedUser: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AssignedUser, options, 2, false, "  assignedUser: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PersonalComputeInstanceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PersonalComputeInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PersonalComputeInstanceSettings IPersistableModel<PersonalComputeInstanceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PersonalComputeInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePersonalComputeInstanceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PersonalComputeInstanceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

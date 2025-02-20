@@ -5,105 +5,195 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable
+    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable, IJsonModel<SqlServerConfigurationsManagementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerConfigurationsManagementSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlServerConfigurationsManagementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlConnectivityUpdateSettings))
-            {
-                writer.WritePropertyName("sqlConnectivityUpdateSettings");
-                writer.WriteObjectValue(SqlConnectivityUpdateSettings);
-            }
-            if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
-            {
-                writer.WritePropertyName("sqlWorkloadTypeUpdateSettings");
-                writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings);
-            }
-            if (Optional.IsDefined(SqlStorageUpdateSettings))
-            {
-                writer.WritePropertyName("sqlStorageUpdateSettings");
-                writer.WriteObjectValue(SqlStorageUpdateSettings);
-            }
-            if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
-            {
-                writer.WritePropertyName("additionalFeaturesServerConfigurations");
-                writer.WriteObjectValue(AdditionalFeaturesServerConfigurations);
-            }
-            if (Optional.IsDefined(SqlInstanceSettings))
-            {
-                writer.WritePropertyName("sqlInstanceSettings");
-                writer.WriteObjectValue(SqlInstanceSettings);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<SqlConnectivityUpdateSettings> sqlConnectivityUpdateSettings = default;
-            Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
-            Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
-            Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
-            Optional<SqlInstanceSettings> sqlInstanceSettings = default;
-            foreach (var property in element.EnumerateObject())
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("sqlConnectivityUpdateSettings"))
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(SqlConnectivityUpdateSettings))
+            {
+                writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
+                writer.WriteObjectValue(SqlConnectivityUpdateSettings, options);
+            }
+            if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
+            {
+                writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
+                writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings, options);
+            }
+            if (Optional.IsDefined(SqlStorageUpdateSettings))
+            {
+                writer.WritePropertyName("sqlStorageUpdateSettings"u8);
+                writer.WriteObjectValue(SqlStorageUpdateSettings, options);
+            }
+            if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
+            {
+                writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
+                writer.WriteObjectValue(AdditionalFeaturesServerConfigurations, options);
+            }
+            if (Optional.IsDefined(SqlInstanceSettings))
+            {
+                writer.WritePropertyName("sqlInstanceSettings"u8);
+                writer.WriteObjectValue(SqlInstanceSettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sqlWorkloadTypeUpdateSettings"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sqlStorageUpdateSettings"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("additionalFeaturesServerConfigurations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sqlInstanceSettings"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value);
         }
+
+        SqlServerConfigurationsManagementSettings IJsonModel<SqlServerConfigurationsManagementSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
+        }
+
+        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings = default;
+            SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings = default;
+            SqlStorageUpdateSettings sqlStorageUpdateSettings = default;
+            AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations = default;
+            SqlInstanceSettings sqlInstanceSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sqlConnectivityUpdateSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sqlWorkloadTypeUpdateSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sqlStorageUpdateSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("additionalFeaturesServerConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sqlInstanceSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlServerConfigurationsManagementSettings(
+                sqlConnectivityUpdateSettings,
+                sqlWorkloadTypeUpdateSettings,
+                sqlStorageUpdateSettings,
+                additionalFeaturesServerConfigurations,
+                sqlInstanceSettings,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlServerConfigurationsManagementSettings IPersistableModel<SqlServerConfigurationsManagementSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlServerConfigurationsManagementSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

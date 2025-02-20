@@ -6,12 +6,11 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class BlobContainerTests : StorageTestBase
+    public class BlobContainerTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private StorageAccountResource _storageAccount;
@@ -511,11 +510,12 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 SourceAccount = sourceAccount.Id.Name,
                 DestinationAccount = destAccount.Id.Name,
+                IsMetricsEnabled = true,
                 Rules =
                 {
                     new ObjectReplicationPolicyRule(containerName1, containerName2)
                     {
-                        Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime),
+                        Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime, null),
                     },
                     new ObjectReplicationPolicyRule(containerName3, containerName4),
                 }
@@ -527,6 +527,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(objectReplicationPolicy);
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
 
             //get policy
             List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
@@ -534,6 +535,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(objectReplicationPolicy);
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
 
             //delete policy
             await objectReplicationPolicy.DeleteAsync(WaitUntil.Completed);

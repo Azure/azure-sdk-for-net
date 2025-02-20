@@ -9,23 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShareTrigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareTriggerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareTriggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource" /> using the GetDataShareTrigger method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareTriggerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareTriggerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource"/> using the GetDataShareTrigger method.
     /// </summary>
     public partial class DataShareTriggerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareTriggerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareSubscriptionName"> The shareSubscriptionName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly TriggersRestOperations _dataShareTriggerTriggersRestClient;
         private readonly DataShareTriggerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/triggers";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareTriggerResource"/> class for mocking. </summary>
         protected DataShareTriggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareTriggerResource(ArmClient client, DataShareTriggerData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/triggers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +101,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +141,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +180,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +223,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -220,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a Trigger 
+        /// Create a Trigger
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,6 +264,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +301,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a Trigger 
+        /// Create a Trigger
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,6 +310,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

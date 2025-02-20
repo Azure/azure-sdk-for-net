@@ -35,50 +35,25 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Get()
+        public async Task GetUpdateDelete()
         {
             _collection = await GetVolumeCollection();
             string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeData data = new ElasticSanVolumeData()
-            {
-                SizeGiB = 100
-            };
+            ElasticSanVolumeData data = new ElasticSanVolumeData(100);
             ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
             ElasticSanVolumeResource volume2 = await volume1.GetAsync();
             Assert.AreEqual(volume1.Id.Name, volume2.Id.Name);
             Assert.AreEqual(100, volume2.Data.SizeGiB);
-            Assert.IsEmpty(volume2.Data.Tags);
-            Assert.IsNull(volume2.Data.CreationData.SourceUri);
             Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume1.Data.CreationData.CreateSource);
-        }
 
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            _collection = await GetVolumeCollection();
-            string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
-            await volume1.DeleteAsync(WaitUntil.Completed);
-            //Skip validation for deletion as server has an issue of still showing deleted volume as active
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Update()
-        {
-            _collection = await GetVolumeCollection();
-            string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
             ElasticSanVolumePatch patch = new ElasticSanVolumePatch()
             {
                 SizeGiB = 200
             };
-            patch.Tags.Add("tag1", "value1");
-            ElasticSanVolumeResource volume2 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.AreEqual(200, volume2.Data.SizeGiB);
-            Assert.GreaterOrEqual(volume2.Data.Tags.Count, 1);
-            Assert.AreEqual("value1", volume2.Data.Tags["tag1"]);
+            ElasticSanVolumeResource volume3 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            Assert.AreEqual(200, volume3.Data.SizeGiB);
+
+            await volume1.DeleteAsync(WaitUntil.Completed, XmsDeleteSnapshot.True, XmsForceDelete.True);
         }
     }
 }

@@ -5,116 +5,217 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class AvailabilityGroupListenerLoadBalancerConfiguration : IUtf8JsonSerializable
+    public partial class AvailabilityGroupListenerLoadBalancerConfiguration : IUtf8JsonSerializable, IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIpAddress");
-                writer.WriteObjectValue(PrivateIPAddress);
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteObjectValue(PrivateIPAddress, options);
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {
-                writer.WritePropertyName("publicIpAddressResourceId");
+                writer.WritePropertyName("publicIpAddressResourceId"u8);
                 writer.WriteStringValue(PublicIPAddressResourceId);
             }
             if (Optional.IsDefined(LoadBalancerResourceId))
             {
-                writer.WritePropertyName("loadBalancerResourceId");
+                writer.WritePropertyName("loadBalancerResourceId"u8);
                 writer.WriteStringValue(LoadBalancerResourceId);
             }
             if (Optional.IsDefined(ProbePort))
             {
-                writer.WritePropertyName("probePort");
+                writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
             if (Optional.IsCollectionDefined(SqlVmInstances))
             {
-                writer.WritePropertyName("sqlVirtualMachineInstances");
+                writer.WritePropertyName("sqlVirtualMachineInstances"u8);
                 writer.WriteStartArray();
                 foreach (var item in SqlVmInstances)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AvailabilityGroupListenerLoadBalancerConfiguration DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(JsonElement element)
+        AvailabilityGroupListenerLoadBalancerConfiguration IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<AvailabilityGroupListenerPrivateIPAddress> privateIPAddress = default;
-            Optional<ResourceIdentifier> publicIPAddressResourceId = default;
-            Optional<ResourceIdentifier> loadBalancerResourceId = default;
-            Optional<int> probePort = default;
-            Optional<IList<ResourceIdentifier>> sqlVmInstances = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(document.RootElement, options);
+        }
+
+        internal static AvailabilityGroupListenerLoadBalancerConfiguration DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
+            ResourceIdentifier publicIPAddressResourceId = default;
+            ResourceIdentifier loadBalancerResourceId = default;
+            int? probePort = default;
+            IList<ResourceIdentifier> sqlVmInstances = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("publicIpAddressResourceId"))
+                if (property.NameEquals("publicIpAddressResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicIPAddressResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerResourceId"))
+                if (property.NameEquals("loadBalancerResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("probePort"))
+                if (property.NameEquals("probePort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probePort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sqlVirtualMachineInstances"))
+                if (property.NameEquals("sqlVirtualMachineInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     sqlVmInstances = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVmInstances));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(
+                privateIPAddress,
+                publicIPAddressResourceId,
+                loadBalancerResourceId,
+                probePort,
+                sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AvailabilityGroupListenerLoadBalancerConfiguration IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

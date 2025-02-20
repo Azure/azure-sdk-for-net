@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -17,33 +16,33 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("text");
+            writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("sentiment");
+            writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
-            writer.WritePropertyName("confidenceScores");
-            writer.WriteObjectValue(ConfidenceScores);
-            writer.WritePropertyName("offset");
+            writer.WritePropertyName("confidenceScores"u8);
+            writer.WriteObjectValue<SentimentConfidenceScores>(ConfidenceScores);
+            writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
-            writer.WritePropertyName("length");
+            writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
             if (Optional.IsCollectionDefined(Targets))
             {
-                writer.WritePropertyName("targets");
+                writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentenceTarget>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Assessments))
             {
-                writer.WritePropertyName("assessments");
+                writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentenceAssessment>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -57,40 +56,39 @@ namespace Azure.AI.TextAnalytics.Models
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            IReadOnlyList<SentenceTarget> targets = default;
+            IReadOnlyList<SentenceAssessment> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sentiment"))
+                if (property.NameEquals("sentiment"u8))
                 {
                     sentiment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SentenceTarget> array = new List<SentenceTarget>();
@@ -101,11 +99,10 @@ namespace Azure.AI.TextAnalytics.Models
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("assessments"))
+                if (property.NameEquals("assessments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SentenceAssessment> array = new List<SentenceAssessment>();
@@ -117,7 +114,30 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
+            return new SentenceSentimentInternal(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SentenceSentimentInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentenceSentimentInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

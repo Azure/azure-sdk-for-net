@@ -5,43 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary>
     /// The limited preview of Kubernetes Cluster Management from the Azure supports:
-    /// 1. Using a simple turn-key option in Azure Portal, deploy a Kubernetes cluster on your Azure Stack Edge device. 
-    /// 2. Configure Kubernetes cluster running on your device with Arc enabled Kubernetes with a click of a button in the Azure Portal. 
+    /// 1. Using a simple turn-key option in Azure Portal, deploy a Kubernetes cluster on your Azure Stack Edge device.
+    /// 2. Configure Kubernetes cluster running on your device with Arc enabled Kubernetes with a click of a button in the Azure Portal.
     ///  Azure Arc enables organizations to view, manage, and govern their on-premises Kubernetes clusters using the Azure Portal, command line tools, and APIs.
-    /// 3. Easily configure Persistent Volumes using SMB and NFS shares for storing container data. 
-    ///  For more information, refer to the document here: https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8-Cloud-Management-20210323.pdf 
+    /// 3. Easily configure Persistent Volumes using SMB and NFS shares for storing container data.
+    ///  For more information, refer to the document here: https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8-Cloud-Management-20210323.pdf
     ///  Or Demo: https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8S-Cloud-Management-20210323.mp4
     ///  By using this feature, you agree to the preview legal terms. See the https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
     /// </summary>
     public partial class EdgeKubernetesRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         public EdgeKubernetesRole()
         {
             Kind = DataBoxEdgeRoleType.Kubernetes;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostPlatform"> Host OS supported by the Kubernetes role. </param>
         /// <param name="provisioningState"> State of Kubernetes deployment. </param>
         /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
         /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;

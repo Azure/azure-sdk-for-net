@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Blueprint.Models;
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.Blueprint
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceScope, string assignmentName, AssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceScope, string assignmentName, AssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -53,14 +64,14 @@ namespace Azure.ResourceManager.Blueprint
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update a blueprint assignment. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="data"> Blueprint assignment object to save. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +100,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Create or update a blueprint assignment. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="data"> Blueprint assignment object to save. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,6 +128,18 @@ namespace Azure.ResourceManager.Blueprint
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceScope, string assignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceScope, string assignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -136,7 +159,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get a blueprint assignment. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="assignmentName"/> is null. </exception>
@@ -165,7 +188,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get a blueprint assignment. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="assignmentName"/> is null. </exception>
@@ -193,6 +216,22 @@ namespace Azure.ResourceManager.Blueprint
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceScope, string assignmentName, AssignmentDeleteBehavior? deleteBehavior)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (deleteBehavior != null)
+            {
+                uri.AppendQuery("deleteBehavior", deleteBehavior.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string resourceScope, string assignmentName, AssignmentDeleteBehavior? deleteBehavior)
         {
             var message = _pipeline.CreateMessage();
@@ -216,7 +255,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Delete a blueprint assignment. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="deleteBehavior"> When deleteBehavior=all, the resources that were created by the blueprint assignment will be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -246,7 +285,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Delete a blueprint assignment. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="deleteBehavior"> When deleteBehavior=all, the resources that were created by the blueprint assignment will be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,6 +314,19 @@ namespace Azure.ResourceManager.Blueprint
             }
         }
 
+        internal RequestUriBuilder CreateWhoIsBlueprintRequestUri(string resourceScope, string assignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendPath("/whoIsBlueprint", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateWhoIsBlueprintRequest(string resourceScope, string assignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -295,7 +347,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get Blueprints service SPN objectId. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="assignmentName"/> is null. </exception>
@@ -322,7 +374,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get Blueprints service SPN objectId. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="assignmentName"/> is null. </exception>
@@ -348,6 +400,17 @@ namespace Azure.ResourceManager.Blueprint
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceScope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceScope)
         {
             var message = _pipeline.CreateMessage();
@@ -366,7 +429,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> List blueprint assignments within a subscription or a management group. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<AssignmentList>> ListAsync(string resourceScope, CancellationToken cancellationToken = default)
@@ -390,7 +453,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> List blueprint assignments within a subscription or a management group. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public Response<AssignmentList> List(string resourceScope, CancellationToken cancellationToken = default)
@@ -413,6 +476,14 @@ namespace Azure.ResourceManager.Blueprint
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope)
         {
             var message = _pipeline.CreateMessage();
@@ -429,7 +500,7 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary> List blueprint assignments within a subscription or a management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<AssignmentList>> ListNextPageAsync(string nextLink, string resourceScope, CancellationToken cancellationToken = default)
@@ -455,7 +526,7 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary> List blueprint assignments within a subscription or a management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public Response<AssignmentList> ListNextPage(string nextLink, string resourceScope, CancellationToken cancellationToken = default)

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -15,36 +14,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal static TrackResponse DeserializeTrackResponse(JsonElement element)
         {
-            Optional<int> itemsReceived = default;
-            Optional<int> itemsAccepted = default;
-            Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? itemsReceived = default;
+            int? itemsAccepted = default;
+            IReadOnlyList<TelemetryErrorDetails> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("itemsReceived"))
+                if (property.NameEquals("itemsReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsReceived = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("itemsAccepted"))
+                if (property.NameEquals("itemsAccepted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsAccepted = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();
@@ -56,7 +56,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     continue;
                 }
             }
-            return new TrackResponse(Optional.ToNullable(itemsReceived), Optional.ToNullable(itemsAccepted), Optional.ToList(errors));
+            return new TrackResponse(itemsReceived, itemsAccepted, errors ?? new ChangeTrackingList<TelemetryErrorDetails>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TrackResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTrackResponse(document.RootElement);
         }
     }
 }

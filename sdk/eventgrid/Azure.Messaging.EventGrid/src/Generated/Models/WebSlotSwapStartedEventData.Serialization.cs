@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,57 +16,75 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static WebSlotSwapStartedEventData DeserializeWebSlotSwapStartedEventData(JsonElement element)
         {
-            Optional<AppEventTypeDetail> appEventTypeDetail = default;
-            Optional<string> name = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> correlationRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> address = default;
-            Optional<string> verb = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AppEventTypeDetail appEventTypeDetail = default;
+            string name = default;
+            string clientRequestId = default;
+            string correlationRequestId = default;
+            string requestId = default;
+            string address = default;
+            string verb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appEventTypeDetail"))
+                if (property.NameEquals("appEventTypeDetail"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationRequestId"))
+                if (property.NameEquals("correlationRequestId"u8))
                 {
                     correlationRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("verb"))
+                if (property.NameEquals("verb"u8))
                 {
                     verb = property.Value.GetString();
                     continue;
                 }
             }
-            return new WebSlotSwapStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebSlotSwapStartedEventData(
+                appEventTypeDetail,
+                name,
+                clientRequestId,
+                correlationRequestId,
+                requestId,
+                address,
+                verb);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebSlotSwapStartedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebSlotSwapStartedEventData(document.RootElement);
         }
 
         internal partial class WebSlotSwapStartedEventDataConverter : JsonConverter<WebSlotSwapStartedEventData>
@@ -76,6 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override WebSlotSwapStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

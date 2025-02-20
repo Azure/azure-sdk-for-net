@@ -5,76 +5,196 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzurePolicyDetails
+    public partial class HyperVReplicaAzurePolicyDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzurePolicyDetails>
     {
-        internal static HyperVReplicaAzurePolicyDetails DeserializeHyperVReplicaAzurePolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzurePolicyDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HyperVReplicaAzurePolicyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<int> recoveryPointHistoryDurationInHours = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<int> replicationInterval = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> encryption = default;
-            Optional<string> activeStorageAccountId = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzurePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(RecoveryPointHistoryDurationInHours))
+            {
+                writer.WritePropertyName("recoveryPointHistoryDurationInHours"u8);
+                writer.WriteNumberValue(RecoveryPointHistoryDurationInHours.Value);
+            }
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            {
+                writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
+                writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
+            }
+            if (Optional.IsDefined(ReplicationInterval))
+            {
+                writer.WritePropertyName("replicationInterval"u8);
+                writer.WriteNumberValue(ReplicationInterval.Value);
+            }
+            if (Optional.IsDefined(OnlineReplicationStartTime))
+            {
+                writer.WritePropertyName("onlineReplicationStartTime"u8);
+                writer.WriteStringValue(OnlineReplicationStartTime);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteStringValue(Encryption);
+            }
+            if (Optional.IsDefined(ActiveStorageAccountId))
+            {
+                writer.WritePropertyName("activeStorageAccountId"u8);
+                writer.WriteStringValue(ActiveStorageAccountId);
+            }
+        }
+
+        HyperVReplicaAzurePolicyDetails IJsonModel<HyperVReplicaAzurePolicyDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzurePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzurePolicyDetails(document.RootElement, options);
+        }
+
+        internal static HyperVReplicaAzurePolicyDetails DeserializeHyperVReplicaAzurePolicyDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? recoveryPointHistoryDurationInHours = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            int? replicationInterval = default;
+            string onlineReplicationStartTime = default;
+            string encryption = default;
+            ResourceIdentifier activeStorageAccountId = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointHistoryDurationInHours"))
+                if (property.NameEquals("recoveryPointHistoryDurationInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointHistoryDurationInHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"))
+                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("replicationInterval"))
+                if (property.NameEquals("replicationInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("onlineReplicationStartTime"))
+                if (property.NameEquals("onlineReplicationStartTime"u8))
                 {
                     onlineReplicationStartTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryption"))
+                if (property.NameEquals("encryption"u8))
                 {
                     encryption = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activeStorageAccountId"))
+                if (property.NameEquals("activeStorageAccountId"u8))
                 {
-                    activeStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    activeStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVReplicaAzurePolicyDetails(instanceType, Optional.ToNullable(recoveryPointHistoryDurationInHours), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, encryption.Value, activeStorageAccountId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HyperVReplicaAzurePolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointHistoryDurationInHours,
+                applicationConsistentSnapshotFrequencyInHours,
+                replicationInterval,
+                onlineReplicationStartTime,
+                encryption,
+                activeStorageAccountId);
         }
+
+        BinaryData IPersistableModel<HyperVReplicaAzurePolicyDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzurePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVReplicaAzurePolicyDetails IPersistableModel<HyperVReplicaAzurePolicyDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzurePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVReplicaAzurePolicyDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVReplicaAzurePolicyDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

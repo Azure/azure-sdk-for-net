@@ -5,109 +5,188 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RedirectConfiguration : IUtf8JsonSerializable
+    public partial class RedirectConfiguration : IUtf8JsonSerializable, IJsonModel<RedirectConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedirectConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RedirectConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RedirectType))
             {
-                writer.WritePropertyName("redirectType");
+                writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
             if (Optional.IsDefined(RedirectProtocol))
             {
-                writer.WritePropertyName("redirectProtocol");
+                writer.WritePropertyName("redirectProtocol"u8);
                 writer.WriteStringValue(RedirectProtocol.Value.ToString());
             }
             if (Optional.IsDefined(CustomHost))
             {
-                writer.WritePropertyName("customHost");
+                writer.WritePropertyName("customHost"u8);
                 writer.WriteStringValue(CustomHost);
             }
             if (Optional.IsDefined(CustomPath))
             {
-                writer.WritePropertyName("customPath");
+                writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
             if (Optional.IsDefined(CustomFragment))
             {
-                writer.WritePropertyName("customFragment");
+                writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
             if (Optional.IsDefined(CustomQueryString))
             {
-                writer.WritePropertyName("customQueryString");
+                writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            writer.WriteEndObject();
         }
 
-        internal static RedirectConfiguration DeserializeRedirectConfiguration(JsonElement element)
+        RedirectConfiguration IJsonModel<RedirectConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<FrontDoorRedirectType> redirectType = default;
-            Optional<FrontDoorRedirectProtocol> redirectProtocol = default;
-            Optional<string> customHost = default;
-            Optional<string> customPath = default;
-            Optional<string> customFragment = default;
-            Optional<string> customQueryString = default;
+            var format = options.Format == "W" ? ((IPersistableModel<RedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedirectConfiguration(document.RootElement, options);
+        }
+
+        internal static RedirectConfiguration DeserializeRedirectConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            FrontDoorRedirectType? redirectType = default;
+            FrontDoorRedirectProtocol? redirectProtocol = default;
+            string customHost = default;
+            string customPath = default;
+            string customFragment = default;
+            string customQueryString = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("redirectType"))
+                if (property.NameEquals("redirectType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     redirectType = new FrontDoorRedirectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("redirectProtocol"))
+                if (property.NameEquals("redirectProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     redirectProtocol = new FrontDoorRedirectProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customHost"))
+                if (property.NameEquals("customHost"u8))
                 {
                     customHost = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customPath"))
+                if (property.NameEquals("customPath"u8))
                 {
                     customPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customFragment"))
+                if (property.NameEquals("customFragment"u8))
                 {
                     customFragment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customQueryString"))
+                if (property.NameEquals("customQueryString"u8))
                 {
                     customQueryString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedirectConfiguration(odataType, Optional.ToNullable(redirectType), Optional.ToNullable(redirectProtocol), customHost.Value, customPath.Value, customFragment.Value, customQueryString.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RedirectConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                redirectType,
+                redirectProtocol,
+                customHost,
+                customPath,
+                customFragment,
+                customQueryString);
         }
+
+        BinaryData IPersistableModel<RedirectConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RedirectConfiguration IPersistableModel<RedirectConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRedirectConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RedirectConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

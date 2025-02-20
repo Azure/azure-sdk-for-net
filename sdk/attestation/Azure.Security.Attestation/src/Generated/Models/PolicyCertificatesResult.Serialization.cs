@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -17,21 +16,32 @@ namespace Azure.Security.Attestation
     {
         internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
         {
-            Optional<JsonWebKeySet> xMsPolicyCertificates = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            JsonWebKeySet xMsPolicyCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x-ms-policy-certificates"))
+                if (property.NameEquals("x-ms-policy-certificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicyCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);
                     continue;
                 }
             }
-            return new PolicyCertificatesResult(xMsPolicyCertificates.Value);
+            return new PolicyCertificatesResult(xMsPolicyCertificates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificatesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificatesResult(document.RootElement);
         }
 
         internal partial class PolicyCertificatesResultConverter : JsonConverter<PolicyCertificatesResult>
@@ -40,6 +50,7 @@ namespace Azure.Security.Attestation
             {
                 throw new NotImplementedException();
             }
+
             public override PolicyCertificatesResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

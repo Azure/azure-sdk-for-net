@@ -84,11 +84,6 @@ namespace Microsoft.Azure.Batch.Protocol
         IAccountOperations Account { get; }
 
         /// <summary>
-        /// Gets the IJobOperations.
-        /// </summary>
-        IJobOperations Job { get; }
-
-        /// <summary>
         /// Gets the ICertificateOperations.
         /// </summary>
         ICertificateOperations Certificate { get; }
@@ -102,6 +97,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Gets the IJobScheduleOperations.
         /// </summary>
         IJobScheduleOperations JobSchedule { get; }
+
+        /// <summary>
+        /// Gets the IJobOperations.
+        /// </summary>
+        IJobOperations Job { get; }
 
         /// <summary>
         /// Gets the ITaskOperations.

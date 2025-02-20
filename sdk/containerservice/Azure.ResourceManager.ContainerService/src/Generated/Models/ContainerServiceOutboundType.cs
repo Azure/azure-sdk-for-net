@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ManagedNatGatewayValue = "managedNATGateway";
         private const string UserAssignedNatGatewayValue = "userAssignedNATGateway";
 
-        /// <summary> The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type &apos;loadBalancer&apos;. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer). </summary>
+        /// <summary> The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type 'loadBalancer'. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer). </summary>
         public static ContainerServiceOutboundType LoadBalancer { get; } = new ContainerServiceOutboundType(LoadBalancerValue);
         /// <summary> Egress paths must be defined by the user. This is an advanced scenario and requires proper network configuration. For more information see [outbound type userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting). </summary>
         public static ContainerServiceOutboundType UserDefinedRouting { get; } = new ContainerServiceOutboundType(UserDefinedRoutingValue);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ContainerServiceOutboundType left, ContainerServiceOutboundType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceOutboundType left, ContainerServiceOutboundType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceOutboundType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOutboundType"/>. </summary>
         public static implicit operator ContainerServiceOutboundType(string value) => new ContainerServiceOutboundType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

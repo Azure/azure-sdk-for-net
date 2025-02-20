@@ -5,41 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationRunTasks
+    public partial class SoftwareUpdateConfigurationRunTasks : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationRunTasks>
     {
-        internal static SoftwareUpdateConfigurationRunTasks DeserializeSoftwareUpdateConfigurationRunTasks(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationRunTasks>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SoftwareUpdateConfigurationRunTasks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<SoftwareUpdateConfigurationRunTaskProperties> preTask = default;
-            Optional<SoftwareUpdateConfigurationRunTaskProperties> postTask = default;
-            foreach (var property in element.EnumerateObject())
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunTasks>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("preTask"))
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunTasks)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(PreTask))
+            {
+                writer.WritePropertyName("preTask"u8);
+                writer.WriteObjectValue(PreTask, options);
+            }
+            if (Optional.IsDefined(PostTask))
+            {
+                writer.WritePropertyName("postTask"u8);
+                writer.WriteObjectValue(PostTask, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    preTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("postTask"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    postTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new SoftwareUpdateConfigurationRunTasks(preTask.Value, postTask.Value);
         }
+
+        SoftwareUpdateConfigurationRunTasks IJsonModel<SoftwareUpdateConfigurationRunTasks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunTasks>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunTasks)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationRunTasks(document.RootElement, options);
+        }
+
+        internal static SoftwareUpdateConfigurationRunTasks DeserializeSoftwareUpdateConfigurationRunTasks(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SoftwareUpdateConfigurationRunTaskProperties preTask = default;
+            SoftwareUpdateConfigurationRunTaskProperties postTask = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("preTask"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("postTask"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SoftwareUpdateConfigurationRunTasks(preTask, postTask, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationRunTasks>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunTasks>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunTasks)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SoftwareUpdateConfigurationRunTasks IPersistableModel<SoftwareUpdateConfigurationRunTasks>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunTasks>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSoftwareUpdateConfigurationRunTasks(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunTasks)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SoftwareUpdateConfigurationRunTasks>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

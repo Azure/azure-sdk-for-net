@@ -1,6 +1,6 @@
 # Release History
 
-## 15.5.0-beta.1 (Unreleased)
+## 16.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,97 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 16.3.1 (2024-09-19)
+
+### Bugs Fixed
+
+- Fixed `ImageReference` constructor null reference exception.
+
+## 16.3.0 (2024-07-01)
+
+### Features Added
+
+- Compute node start/deallocate support.
+  - Added `Start` and `StartAsync` to ComputeNode
+  - Added `Deallocate` and `DeallocateAsync` to ComputeNode
+
+- Force delete/terminate job/jobSchedule.
+  - Added `force` of type Boolean to type `JobDeleteOptions`, `JobTerminateOptions`, `JobScheduleTerminateOptions`, and `JobScheduleDeleteOptions`.
+
+- Improved patch for pool/job
+  - Added `DisplayName`, `VmSize`, `TaskSlotsPerNode`, `TaskSchedulingPolicy`, `EnableInterNodeCommunication`, `VirtualMachineConfiguration`, `NetworkConfiguration`, `UserAccounts`, `MountConfiguration`, `UpgradePolicy`, and `ResourceTags` to type `PoolPatchParameter`.
+  - Added `JobNetworkConfiguration` to type `JobPatchParameter`.
+
+- Confidential VM support.
+  - Added `ConfidentialVM` value to type `SecurityTypes`.
+  - Added `securityProfile` of type `VMDiskSecurityProfile` to type `ManagedDisk`.
+
+- Added `sharedGalleryImageId` and `communityGalleryImageId` of type string to type `ImageReference`.
+
+### Breaking Changes
+- Removed `CloudServiceConfiguration` from pool models and operations, `VirtualMachineConfiguration` is the only supported pool configuration.
+- Removed `ApplicationLicenses` from pool models and operations.
+
+- Removed `GetRDPFile()` method, use `GetRemoteLoginSettings()` instead.
+  - Removed `GetRDPFile` and `GetRDPFileAsync` from PoolOperations 
+  - Removed `GetRDPFile` and `GetRDPFileAsync` from ComputeNode
+
+## 16.2.0 (2024-02-29)
+
+### Features Added
+
+- Add `UpgradePolicy` support to Pool Creation
+  - Added `upgradePolicy` property to `PoolSpecification`definition
+  - Added `upgradePolicy` property to `CloudPool`definition
+  - Added `upgradePolicy` property to `PoolAddParameter`definition
+  - Added `upgradingOS` value to `ComputeNodeState` enum
+  - Added `upgradingOS` property to `NodeCounts`definition
+  - Added `UpgradePolicy`definition
+  - Added `AutomaticOSUpgradePolicy`definition
+  - Added `RollingUpgradePolicy`definition
+
+## 16.1.0 (2024-01-01)
+
+### Features Added
+
+- Add `ResourceTags` support to Pool Creation
+  - Added `resourceTags` property to `PoolAddParameter` definition
+  - Added `resourceTags` property to `PoolSpecification` definition
+  - Added `resourceTags` property to `CloudPool` definition
+
+- Add `SecurityProfile` support to Pool Creation
+  - Added `serviceArtifactReference` property to `VirtualMachineConfiguration`definition
+  - Added `securityProfile` property to `VirtualMachineConfiguration` definition
+  - Added `ScaleSetVmResourceId` property to `VirtualMachineInfo` definition
+
+- Add `ServiceArtifactReference` and `OSDisk` support to Pool Creation
+  - Added `StandardSSDLRS` value to `StorageAccountType` enum
+  - Added `caching` property to `OSDisk` definition
+  - Added `managedDisk` property to `OSDisk` definition
+  - Added `diskSizeGB` property to `OSDisk` definition
+  - Added `writeAcceleratorEnabled` property to `OSDisk` definition
+
+## 16.0.0 (2023-05-01)
+
+### Features Added
+
+- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`. 
+    -  This property determines whether this pool should enable accelerated networking, with default value as False. 
+    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)). 
+- Added boolean property `enableAutomaticUpgrade` to `VMExtension`. 
+    - This property determines whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+- Added new property `Type` to `ContainerConfiguration`, which now supports two values: `DockerCompatible` and `CriCompatible`.
+
+### Breaking Changes
+
+- Removed lifetime statistics operations. The lifetime statistics APIs are no longer supported.
+    - Removed GetAllLifetimeStatistics in JobOperation.
+    - Removed GetAllLifetimeStatistics in PoolOperation.
+
+### Other Changes
+
+- Added deprecation warning to certificate operations.
 
 ## 15.4.0 (2022-10-01)
 
@@ -42,7 +133,7 @@
 
 - Fixed OutputFileBlobContainerDestination constructor null reference exception.
 
-## Features Added
+### Features Added
 
 ## 15.1.0 (2021-08-10)
 
@@ -200,7 +291,7 @@ This version of the Batch .NET client library targets version 2018-08-01.7.0 of 
 ### Features
 
 - Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.
-- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
+- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
   - This enables the often requested scenario of performing a server-side query to find all tasks which failed.
 - **[Breaking]** Added a default retry policy to `BatchClient`.
   - Note that this policy may not be sufficient for every case. If the old behavior (a `BatchClient` that doesn't perform any retries) is desired, the default policy can be removed from a `BatchClient` with `client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList()`.

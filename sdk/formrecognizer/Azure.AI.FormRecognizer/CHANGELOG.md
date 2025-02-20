@@ -1,6 +1,6 @@
 # Release History
 
-## 4.1.0-beta.1 (Unreleased)
+## 4.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,59 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.1.0 (2023-08-10)
+
+### Features Added
+- In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
+- Added class `DocumentContentSource` as a base class to `AzureBlobContentSource` (renamed to `BlobContentSource` in this SDK version) and `AzureBlobFileListSource` (renamed to `BlobFileListContentSource` in this SDK version).
+- In `DocumentModelAdministrationClient`, added a new overload to `BuildDocumentModel` that takes a `DocumentContentSource` object. It can be used to build a document model from alternative content sources.
+- Added property `ServiceVersion` to classes `AnalyzeResult`, `DocumentModelDetails`, `DocumentModelSummary`, `OperationDetails`, and `OperationSummary`.
+
+### Breaking Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-07-31` by default. Version `2023-02-28-preview` is not supported anymore.
+- In struct `DocumentAnalysisFeature`, properties `OcrFormula` and `OcrFont` were renamed to `Formulas` and `FontStyling`, respectively.
+- Removed query fields support. The properties `AnalyzeDocumentOptions.QueryFields` and `DocumentAnalysisFeature.QueryFieldsPremium` were removed.
+- Removed image extraction support. The class `DocumentImage` and the property `DocumentPage.Images` were removed.
+- Removed annotation extraction support. The types `DocumentAnnotation`, `DocumentAnnotationKind`, and the property `DocumentPage.Annotations` were removed.
+- Removed struct `DocumentPageKind` and property `DocumentPage.Kind`.
+- Removed property `DocumentKeyValuePair.CommonName`.
+- In `DocumentBarcodeKind`, renamed members `QRCode`, `PDF417`, `EAN8`, `EAN13`, `ITF`, and `MicroQRCode` to `QrCode`, `Pdf417`, `Ean8`, `Ean13`, `Itf`, and `MicroQrCode`, respectively.
+- Renamed class `AzureBlobContentSource` to `BlobContentSource`.
+- Renamed class `AzureBlobFileListSource` to `BlobFileListContentSource`.
+- In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataSource`.
+- In class `ClassifierDocumentTypeDetails`, all constructors have been replaced by a single constructor that takes a polymorphic parameter `trainingDataSource`.
+- In class `ResourceDetails`, renamed property `CustomNeuralDocumentModelBuilds` to `NeuralDocumentModelQuota`.
+- In class `DocumentClassifierDetails`, renamed property `ApiVersion` to `ServiceVersion`.
+- Renamed struct `FontStyle` to `DocumentFontStyle`.
+- Renamed struct `FontWeight` to `DocumentFontWeight`.
+- Renamed class `QuotaDetails` to `ResourceQuotaDetails`.
+
+### Bugs Fixed
+- Fixed a bug where calling the `GetResourceDetails` API while targeting service version `2022-08-31` would throw an `ArgumentNullException`.
+
+## 4.1.0-beta.1 (2023-04-13)
+
+### Features Added
+- Added property `QueryFields` to `AnalyzeDocumentOptions` to support field extraction without the need for added training.
+- Added property `Features` to `AnalyzeDocumentOptions` to support add-on capabilities.
+- Added properties `SimilarFontFamily`, `FontStyle`, `FontWeight`, `Color`, and `BackgroundColor` to `DocumentStyle`. These properties can only be populated when `DocumentAnalysisFeature.OcrFont` is enabled.
+- Added properties `Annotations`, `Barcodes`, `Formulas`, `Images`, and `Kind` to `DocumentPage`. `Formulas` can only be populated when `DocumentAnalysisFeature.OcrFormula` is enabled.
+- Added member `FormulaBlock` to `ParagraphRole`.
+- Added methods in `DocumentAnalysisClient` to support custom document classification: `ClassifyDocument` and `ClassifyDocumentFromUri`.
+- Added methods in `DocumentModelAdministrationClient` to support custom document classification: `BuildDocumentClassifier`, `GetDocumentClassifier`, `GetDocumentClassifiers`, and `DeleteDocumentClassifier`.
+- Added a new `DocumentClassifierBuildOperationDetails` class. Instances of this class can now be returned in calls to `DocumentModelAdministrationClient.GetOperation`.
+- Added member `DocumentClassifierBuild` to `DocumentOperationKind`.
+- Added member `Boolean` to `DocumentFieldType`.
+- Added method `AsBoolean` to `DocumentFieldValue` to support extracting values of boolean fields.
+- Added property `Code` to the `CurrencyValue` class.
+- Added properties `Unit`, `CityDistrict`, `StateDistrict`, `Suburb`, `House`, and `Level` to the `AddressValue` class.
+- Added property `CommonName` to the `DocumentKeyValuePair` class.
+- Added property `ExpiresOn` to the `DocumentModelDetails` and `DocumentModelSummary` classes.
+- Added property `CustomNeuralDocumentModelBuilds` to the `ResourceDetails` class.
+
+### Other Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-02-28-preview` by default. Version `2022-08-31` can still be targeted if specified in the `DocumentAnalysisClientOptions`.
 
 ## 4.0.0 (2022-09-08)
 

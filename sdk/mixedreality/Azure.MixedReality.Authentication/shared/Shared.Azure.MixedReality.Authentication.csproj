@@ -3,18 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
     <AzureCoreSharedSources>$(RepoRoot)/sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.MixedReality.Authentication.csproj" />
-  </ItemGroup>
-
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

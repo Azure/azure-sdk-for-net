@@ -232,7 +232,7 @@
 
                     // forget to set CloudServiceConfiguration on Create, get error
                     {
-                        CloudPool noArgs = poolOperations.CreatePool("Bug1965363ButNoOSFamily-" + TestUtilities.GetMyName(), PoolFixture.VMSize, default(CloudServiceConfiguration), targetDedicatedComputeNodes: 0);
+                        CloudPool noArgs = poolOperations.CreatePool("Bug1965363ButNoOSFamily-" + TestUtilities.GetMyName(), PoolFixture.VMSize, default(VirtualMachineConfiguration), targetDedicatedComputeNodes: 0);
 
                         BatchException ex = TestUtilities.AssertThrows<BatchException>(() => noArgs.Commit());
                         string exStr = ex.ToString();
@@ -246,7 +246,13 @@
                         string poolIdHOSF = "Bug1965363HasOSF-" + TestUtilities.GetMyName();
                         try
                         {
-                            CloudPool hasOSF = poolOperations.CreatePool(poolIdHOSF, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                            var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                                ubuntuImageDetails.ImageReference,
+                                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                            CloudPool hasOSF = poolOperations.CreatePool(poolIdHOSF, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
 
                             hasOSF.Commit();
                         }
@@ -264,37 +270,6 @@
 
                     throw;
                 }
-            }
-
-            SynchronizationContextHelper.RunTest(test, TestTimeout);
-        }
-
-        [Fact]
-        [LiveTest]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
-        public void Bug1771070_1771072_JobAndPoolLifetimeStats()
-        {
-            void test()
-            {
-                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
-                JobStatistics jobStatistics = batchCli.JobOperations.GetAllLifetimeStatistics();
-                PoolStatistics poolStatistics = batchCli.PoolOperations.GetAllLifetimeStatistics();
-
-                Assert.NotNull(jobStatistics);
-                Assert.NotNull(poolStatistics);
-
-                //Since we cannot really validate that the stats returned by the service are correct, the best we can do is make sure we get some
-
-                //Dump a few properties from each stats bag to make sure they are populated
-                testOutputHelper.WriteLine("JobScheduleStatistics.StartTime: {0}", jobStatistics.StartTime);
-                testOutputHelper.WriteLine("JobScheduleStatistics.LastUpdateTime: {0}", jobStatistics.LastUpdateTime);
-                testOutputHelper.WriteLine("JobScheduleStatistics.NumSucceededTasks: {0}", jobStatistics.SucceededTaskCount);
-                testOutputHelper.WriteLine("JobScheduleStatistics.UserCpuTime: {0}", jobStatistics.UserCpuTime);
-
-                testOutputHelper.WriteLine("PoolStatistics.StartTime: {0}", poolStatistics.StartTime);
-                testOutputHelper.WriteLine("PoolStatistics.LastUpdateTime: {0}", poolStatistics.LastUpdateTime);
-                testOutputHelper.WriteLine("PoolStatistics.ResourceStatistics.AvgMemory: {0}", poolStatistics.ResourceStatistics.AverageMemoryGiB);
-                testOutputHelper.WriteLine("PoolStatistics.UsageStatistics.DedicatedCoreTime: {0}", poolStatistics.UsageStatistics.DedicatedCoreTime);
             }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);

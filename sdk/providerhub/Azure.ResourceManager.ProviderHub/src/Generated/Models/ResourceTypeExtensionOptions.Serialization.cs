@@ -5,41 +5,129 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class ResourceTypeExtensionOptions : IUtf8JsonSerializable
+    internal partial class ResourceTypeExtensionOptions : IUtf8JsonSerializable, IJsonModel<ResourceTypeExtensionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeExtensionOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceTypeExtensionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceCreationBegin))
-            {
-                writer.WritePropertyName("resourceCreationBegin");
-                writer.WriteObjectValue(ResourceCreationBegin);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeExtensionOptions DeserializeResourceTypeExtensionOptions(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ResourceTypeExtensionOptionsResourceCreationBegin> resourceCreationBegin = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeExtensionOptions)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ResourceCreationBegin))
+            {
+                writer.WritePropertyName("resourceCreationBegin"u8);
+                writer.WriteObjectValue(ResourceCreationBegin, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ResourceTypeExtensionOptions IJsonModel<ResourceTypeExtensionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeExtensionOptions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeExtensionOptions(document.RootElement, options);
+        }
+
+        internal static ResourceTypeExtensionOptions DeserializeResourceTypeExtensionOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ExtensionOptions resourceCreationBegin = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceCreationBegin"))
+                if (property.NameEquals("resourceCreationBegin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceCreationBegin = ResourceTypeExtensionOptionsResourceCreationBegin.DeserializeResourceTypeExtensionOptionsResourceCreationBegin(property.Value);
+                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceTypeExtensionOptions(resourceCreationBegin.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceTypeExtensionOptions(resourceCreationBegin, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceTypeExtensionOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeExtensionOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeExtensionOptions IPersistableModel<ResourceTypeExtensionOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceTypeExtensionOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeExtensionOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeExtensionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

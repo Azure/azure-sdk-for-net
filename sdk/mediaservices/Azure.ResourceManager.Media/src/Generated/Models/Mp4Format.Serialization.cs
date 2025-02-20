@@ -5,68 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class Mp4Format : IUtf8JsonSerializable
+    public partial class Mp4Format : IUtf8JsonSerializable, IJsonModel<Mp4Format>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Mp4Format>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<Mp4Format>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(OutputFiles))
-            {
-                writer.WritePropertyName("outputFiles");
-                writer.WriteStartArray();
-                foreach (var item in OutputFiles)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("filenamePattern");
-            writer.WriteStringValue(FilenamePattern);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static Mp4Format DeserializeMp4Format(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            var format = options.Format == "W" ? ((IPersistableModel<Mp4Format>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Mp4Format)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        Mp4Format IJsonModel<Mp4Format>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Mp4Format>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Mp4Format)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMp4Format(document.RootElement, options);
+        }
+
+        internal static Mp4Format DeserializeMp4Format(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<MediaOutputFile> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("outputFiles"))
+                if (property.NameEquals("outputFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaOutputFile> array = new List<MediaOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
+                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filenamePattern"))
+                if (property.NameEquals("filenamePattern"u8))
                 {
                     filenamePattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Mp4Format(odataType, filenamePattern, Optional.ToList(outputFiles));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Mp4Format(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
+
+        BinaryData IPersistableModel<Mp4Format>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Mp4Format>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Mp4Format)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Mp4Format IPersistableModel<Mp4Format>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Mp4Format>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMp4Format(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Mp4Format)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Mp4Format>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

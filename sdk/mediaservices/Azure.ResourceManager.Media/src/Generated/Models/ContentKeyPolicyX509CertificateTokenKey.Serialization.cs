@@ -6,37 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyX509CertificateTokenKey : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyX509CertificateTokenKey : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyX509CertificateTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyX509CertificateTokenKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContentKeyPolicyX509CertificateTokenKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (RawBody != null)
             {
-                writer.WritePropertyName("rawBody");
+                writer.WritePropertyName("rawBody"u8);
                 writer.WriteBase64StringValue(RawBody, "D");
             }
             else
             {
                 writer.WriteNull("rawBody");
             }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element)
+        ContentKeyPolicyX509CertificateTokenKey IJsonModel<ContentKeyPolicyX509CertificateTokenKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyX509CertificateTokenKey(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] rawBody = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawBody"))
+                if (property.NameEquals("rawBody"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,13 +82,49 @@ namespace Azure.ResourceManager.Media.Models
                     rawBody = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyX509CertificateTokenKey(odataType, rawBody);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentKeyPolicyX509CertificateTokenKey(odataType, serializedAdditionalRawData, rawBody);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyX509CertificateTokenKey IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyX509CertificateTokenKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

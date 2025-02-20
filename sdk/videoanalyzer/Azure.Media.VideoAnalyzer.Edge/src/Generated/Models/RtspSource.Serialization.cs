@@ -17,53 +17,72 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Transport))
             {
-                writer.WritePropertyName("transport");
+                writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
             }
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static RtspSource DeserializeRtspSource(JsonElement element)
         {
-            Optional<RtspTransport> transport = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RtspTransport? transport = default;
             EndpointBase endpoint = default;
             string type = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transport"))
+                if (property.NameEquals("transport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transport = new RtspTransport(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new RtspSource(type, name, Optional.ToNullable(transport), endpoint);
+            return new RtspSource(type, name, transport, endpoint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RtspSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRtspSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

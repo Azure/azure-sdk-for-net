@@ -15,19 +15,27 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceType");
+            writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
             if (Optional.IsDefined(PlaySourceId))
             {
-                writer.WritePropertyName("playSourceId");
+                writer.WritePropertyName("playSourceId"u8);
                 writer.WriteStringValue(PlaySourceId);
             }
             if (Optional.IsDefined(FileSource))
             {
-                writer.WritePropertyName("fileSource");
+                writer.WritePropertyName("fileSource"u8);
                 writer.WriteObjectValue(FileSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

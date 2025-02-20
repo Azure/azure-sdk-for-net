@@ -21,10 +21,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             _logger = logger;
         }
 
-        public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)
-        {
-            return new EventDataBatchImpl(await _client.CreateBatchAsync(cancellationToken).ConfigureAwait(false));
-        }
+        public Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken) => CreateBatchAsync(null, cancellationToken);
+
+        public async Task<IEventDataBatch> CreateBatchAsync(CreateBatchOptions options, CancellationToken cancellationToken) =>
+            new EventDataBatchImpl(await _client.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false));
 
         public async Task SendAsync(IEventDataBatch batch, CancellationToken cancellationToken)
         {

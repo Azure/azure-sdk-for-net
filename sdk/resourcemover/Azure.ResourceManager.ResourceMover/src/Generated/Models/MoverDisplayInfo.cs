@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary>
@@ -16,18 +19,50 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// </summary>
     public partial class MoverDisplayInfo
     {
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverDisplayInfo"/>. </summary>
         internal MoverDisplayInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverDisplayInfo"/>. </summary>
         /// <param name="provider">
         /// Gets or sets the provider.
         /// The localized friendly form of the resource provider name – it is expected to also
         /// include the publisher/company responsible.
-        /// It should use Title Casing and begin with &quot;Microsoft&quot; for 1st party services.
-        /// e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute.&quot;.
+        /// It should use Title Casing and begin with "Microsoft" for 1st party services.
+        /// e.g. "Microsoft Monitoring Insights" or "Microsoft Compute.".
         /// </param>
         /// <param name="resource">
         /// Gets or sets the resource.
@@ -36,15 +71,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// It should use Title Casing.
         /// This value should be unique for a particular URL type (e.g. nested types should *not*
         /// reuse their parent’s display.resource field)
-        /// e.g. &quot;Virtual Machines&quot; or &quot;Scheduler Job Collections&quot;, or &quot;Virtual Machine VM Sizes&quot;
-        /// or &quot;Scheduler Jobs&quot;.
+        /// e.g. "Virtual Machines" or "Scheduler Job Collections", or "Virtual Machine VM Sizes"
+        /// or "Scheduler Jobs".
         /// </param>
         /// <param name="operation">
         /// Gets or sets the operation.
         /// The localized friendly name for the operation, as it should be shown to the user.
         /// It should be concise (to fit in drop downs) but clear (i.e. self-documenting).
         /// It should use Title Casing.
-        /// Prescriptive guidance: Read Create or Update Delete &apos;ActionName&apos;.
+        /// Prescriptive guidance: Read Create or Update Delete 'ActionName'.
         /// </param>
         /// <param name="description">
         /// Gets or sets the description.
@@ -52,28 +87,30 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// user.
         /// It should be thorough, yet concise – it will be used in tool tips and detailed views.
         /// Prescriptive guidance for namespace:
-        /// Read any &apos;display.provider&apos;  resource
-        /// Create or Update any  &apos;display.provider&apos;  resource
-        /// Delete any  &apos;display.provider&apos;  resource
-        /// Perform any other action on any  &apos;display.provider&apos;  resource
+        /// Read any 'display.provider'  resource
+        /// Create or Update any  'display.provider'  resource
+        /// Delete any  'display.provider'  resource
+        /// Perform any other action on any  'display.provider'  resource
         /// Prescriptive guidance for namespace:
-        /// Read any &apos;display.resource&apos; Create or Update any  &apos;display.resource&apos; Delete any
-        ///  &apos;display.resource&apos; &apos;ActionName&apos; any &apos;display.resources&apos;.
+        /// Read any 'display.resource' Create or Update any  'display.resource' Delete any
+        ///  'display.resource' 'ActionName' any 'display.resources'.
         /// </param>
-        internal MoverDisplayInfo(string provider, string resource, string operation, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverDisplayInfo(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
         /// Gets or sets the provider.
         /// The localized friendly form of the resource provider name – it is expected to also
         /// include the publisher/company responsible.
-        /// It should use Title Casing and begin with &quot;Microsoft&quot; for 1st party services.
-        /// e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute.&quot;.
+        /// It should use Title Casing and begin with "Microsoft" for 1st party services.
+        /// e.g. "Microsoft Monitoring Insights" or "Microsoft Compute.".
         /// </summary>
         public string Provider { get; }
         /// <summary>
@@ -83,8 +120,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// It should use Title Casing.
         /// This value should be unique for a particular URL type (e.g. nested types should *not*
         /// reuse their parent’s display.resource field)
-        /// e.g. &quot;Virtual Machines&quot; or &quot;Scheduler Job Collections&quot;, or &quot;Virtual Machine VM Sizes&quot;
-        /// or &quot;Scheduler Jobs&quot;.
+        /// e.g. "Virtual Machines" or "Scheduler Job Collections", or "Virtual Machine VM Sizes"
+        /// or "Scheduler Jobs".
         /// </summary>
         public string Resource { get; }
         /// <summary>
@@ -92,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// The localized friendly name for the operation, as it should be shown to the user.
         /// It should be concise (to fit in drop downs) but clear (i.e. self-documenting).
         /// It should use Title Casing.
-        /// Prescriptive guidance: Read Create or Update Delete &apos;ActionName&apos;.
+        /// Prescriptive guidance: Read Create or Update Delete 'ActionName'.
         /// </summary>
         public string Operation { get; }
         /// <summary>
@@ -101,13 +138,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// user.
         /// It should be thorough, yet concise – it will be used in tool tips and detailed views.
         /// Prescriptive guidance for namespace:
-        /// Read any &apos;display.provider&apos;  resource
-        /// Create or Update any  &apos;display.provider&apos;  resource
-        /// Delete any  &apos;display.provider&apos;  resource
-        /// Perform any other action on any  &apos;display.provider&apos;  resource
+        /// Read any 'display.provider'  resource
+        /// Create or Update any  'display.provider'  resource
+        /// Delete any  'display.provider'  resource
+        /// Perform any other action on any  'display.provider'  resource
         /// Prescriptive guidance for namespace:
-        /// Read any &apos;display.resource&apos; Create or Update any  &apos;display.resource&apos; Delete any
-        ///  &apos;display.resource&apos; &apos;ActionName&apos; any &apos;display.resources&apos;.
+        /// Read any 'display.resource' Create or Update any  'display.resource' Delete any
+        ///  'display.resource' 'ActionName' any 'display.resources'.
         /// </summary>
         public string Description { get; }
     }

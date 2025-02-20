@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Shares.Samples
             // Create a SharedKeyCredential that we can use to authenticate
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
 
-            // Create a client that can authenticate with a connection string
+            // Create a client that can authenticate with a SharedKeyCredential
             ShareServiceClient service = new ShareServiceClient(serviceUri, credential);
 
             // Make a service request to verify we've successfully authenticated
@@ -83,7 +83,7 @@ namespace Azure.Storage.Files.Shares.Samples
         }
 
         /// <summary>
-        /// Use a shared access signature to acces a Storage Account.
+        /// Use a shared access signature to access a Storage Account.
         ///
         /// A shared access signature (SAS) is a URI that grants restricted
         /// access rights to Azure Storage resources. You can provide a shared
@@ -132,6 +132,29 @@ namespace Azure.Storage.Files.Shares.Samples
                 Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateShareAsync(Randomize("sample-share")));
             Assert.AreEqual(403, ex.Status);
+        }
+
+        /// <summary>
+        /// Use a TokenCredential to access a Storage Account.
+        ///
+        /// TokenCredential represents credentials used to acquire
+        /// OAuth 2.0 access tokens for authenticating requests to Azure services.
+        /// </summary>
+        [Test]
+        public async Task TokenCredentialAuthAsync()
+        {
+            #region Snippet:ShareFile_TokenCredential
+            // Create a TokenCredential that we can use to authenticate
+            TokenCredential credential = new DefaultAzureCredential();
+
+            // Create a client that can authenticate with a TokenCredential
+            ShareServiceClient shareServiceClient = new ShareServiceClient(
+                StorageAccountFileUri,
+                credential);
+            #endregion
+
+            // Make a service request to verify we've successfully authenticated
+            await shareServiceClient.GetPropertiesAsync();
         }
     }
 }

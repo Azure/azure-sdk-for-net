@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,38 +13,48 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteRangeResult DeserializeRouteRangeResult(JsonElement element)
         {
-            Optional<string> formatVersion = default;
-            Optional<RouteRange> reachableRange = default;
-            Optional<RouteReport> report = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string formatVersion = default;
+            RouteRange reachableRange = default;
+            RouteReport report = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reachableRange"))
+                if (property.NameEquals("reachableRange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reachableRange = RouteRange.DeserializeRouteRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("report"))
+                if (property.NameEquals("report"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     report = RouteReport.DeserializeRouteReport(property.Value);
                     continue;
                 }
             }
-            return new RouteRangeResult(formatVersion.Value, reachableRange.Value, report.Value);
+            return new RouteRangeResult(formatVersion, reachableRange, report);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteRangeResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteRangeResult(document.RootElement);
         }
     }
 }

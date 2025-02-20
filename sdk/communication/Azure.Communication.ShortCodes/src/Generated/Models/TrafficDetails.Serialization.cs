@@ -17,32 +17,32 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TotalMonthlyVolume))
             {
-                writer.WritePropertyName("totalMonthlyVolume");
+                writer.WritePropertyName("totalMonthlyVolume"u8);
                 writer.WriteNumberValue(TotalMonthlyVolume.Value);
             }
             if (Optional.IsDefined(MonthlyAverageMessagesFromUser))
             {
-                writer.WritePropertyName("monthlyAverageMessagesFromUser");
+                writer.WritePropertyName("monthlyAverageMessagesFromUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesFromUser.Value);
             }
             if (Optional.IsDefined(MonthlyAverageMessagesToUser))
             {
-                writer.WritePropertyName("monthlyAverageMessagesToUser");
+                writer.WritePropertyName("monthlyAverageMessagesToUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesToUser.Value);
             }
             if (Optional.IsDefined(IsSpiky))
             {
-                writer.WritePropertyName("isSpiky");
+                writer.WritePropertyName("isSpiky"u8);
                 writer.WriteBooleanValue(IsSpiky.Value);
             }
             if (Optional.IsDefined(SpikeDetails))
             {
-                writer.WritePropertyName("spikeDetails");
+                writer.WritePropertyName("spikeDetails"u8);
                 writer.WriteStringValue(SpikeDetails);
             }
             if (Optional.IsDefined(EstimatedRampUpTimeInDays))
             {
-                writer.WritePropertyName("estimatedRampUpTimeInDays");
+                writer.WritePropertyName("estimatedRampUpTimeInDays"u8);
                 writer.WriteNumberValue(EstimatedRampUpTimeInDays.Value);
             }
             writer.WriteEndObject();
@@ -50,71 +50,92 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static TrafficDetails DeserializeTrafficDetails(JsonElement element)
         {
-            Optional<int> totalMonthlyVolume = default;
-            Optional<int> monthlyAverageMessagesFromUser = default;
-            Optional<int> monthlyAverageMessagesToUser = default;
-            Optional<bool> isSpiky = default;
-            Optional<string> spikeDetails = default;
-            Optional<int> estimatedRampUpTimeInDays = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? totalMonthlyVolume = default;
+            int? monthlyAverageMessagesFromUser = default;
+            int? monthlyAverageMessagesToUser = default;
+            bool? isSpiky = default;
+            string spikeDetails = default;
+            int? estimatedRampUpTimeInDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalMonthlyVolume"))
+                if (property.NameEquals("totalMonthlyVolume"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalMonthlyVolume = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monthlyAverageMessagesFromUser"))
+                if (property.NameEquals("monthlyAverageMessagesFromUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monthlyAverageMessagesFromUser = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monthlyAverageMessagesToUser"))
+                if (property.NameEquals("monthlyAverageMessagesToUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monthlyAverageMessagesToUser = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isSpiky"))
+                if (property.NameEquals("isSpiky"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSpiky = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("spikeDetails"))
+                if (property.NameEquals("spikeDetails"u8))
                 {
                     spikeDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("estimatedRampUpTimeInDays"))
+                if (property.NameEquals("estimatedRampUpTimeInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedRampUpTimeInDays = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new TrafficDetails(Optional.ToNullable(totalMonthlyVolume), Optional.ToNullable(monthlyAverageMessagesFromUser), Optional.ToNullable(monthlyAverageMessagesToUser), Optional.ToNullable(isSpiky), spikeDetails.Value, Optional.ToNullable(estimatedRampUpTimeInDays));
+            return new TrafficDetails(
+                totalMonthlyVolume,
+                monthlyAverageMessagesFromUser,
+                monthlyAverageMessagesToUser,
+                isSpiky,
+                spikeDetails,
+                estimatedRampUpTimeInDays);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TrafficDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTrafficDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

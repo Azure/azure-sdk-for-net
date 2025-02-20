@@ -17,10 +17,10 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceCallerId))
             {
-                writer.WritePropertyName("sourceCallerId");
+                writer.WritePropertyName("sourceCallerId"u8);
                 writer.WriteObjectValue(SourceCallerId);
             }
-            writer.WritePropertyName("participantsToAdd");
+            writer.WritePropertyName("participantsToAdd"u8);
             writer.WriteStartArray();
             foreach (var item in ParticipantsToAdd)
             {
@@ -29,15 +29,23 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndArray();
             if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
-                writer.WritePropertyName("invitationTimeoutInSeconds");
+                writer.WritePropertyName("invitationTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InvitationTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

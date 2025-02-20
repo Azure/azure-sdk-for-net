@@ -20,8 +20,8 @@ namespace Azure.AI.FormRecognizer.Models
 
         public static SelectionMarkState ToSelectionMarkState(this string value)
         {
-            if (string.Equals(value, "selected", StringComparison.InvariantCultureIgnoreCase)) return SelectionMarkState.Selected;
-            if (string.Equals(value, "unselected", StringComparison.InvariantCultureIgnoreCase)) return SelectionMarkState.Unselected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "selected")) return SelectionMarkState.Selected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unselected")) return SelectionMarkState.Unselected;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SelectionMarkState value.");
         }
     }

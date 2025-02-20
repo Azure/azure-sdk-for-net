@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -14,61 +13,76 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static UsageEvent DeserializeUsageEvent(JsonElement element)
         {
-            Optional<string> dimensionId = default;
-            Optional<string> dimensionName = default;
-            Optional<string> measureUnit = default;
-            Optional<float> amountBilled = default;
-            Optional<float> amountConsumed = default;
-            Optional<float> unitPrice = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string dimensionId = default;
+            string dimensionName = default;
+            string measureUnit = default;
+            float? amountBilled = default;
+            float? amountConsumed = default;
+            float? unitPrice = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensionId"))
+                if (property.NameEquals("dimensionId"u8))
                 {
                     dimensionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensionName"))
+                if (property.NameEquals("dimensionName"u8))
                 {
                     dimensionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("measureUnit"))
+                if (property.NameEquals("measureUnit"u8))
                 {
                     measureUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amountBilled"))
+                if (property.NameEquals("amountBilled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amountBilled = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("amountConsumed"))
+                if (property.NameEquals("amountConsumed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amountConsumed = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("unitPrice"))
+                if (property.NameEquals("unitPrice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unitPrice = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new UsageEvent(dimensionId.Value, dimensionName.Value, measureUnit.Value, Optional.ToNullable(amountBilled), Optional.ToNullable(amountConsumed), Optional.ToNullable(unitPrice));
+            return new UsageEvent(
+                dimensionId,
+                dimensionName,
+                measureUnit,
+                amountBilled,
+                amountConsumed,
+                unitPrice);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static UsageEvent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUsageEvent(document.RootElement);
         }
     }
 }

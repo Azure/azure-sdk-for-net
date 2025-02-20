@@ -287,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     {
                         if (!SendLink.TryGetOpenedObject(out _))
                         {
-                            await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         break;
@@ -366,7 +366,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (!SendLink.TryGetOpenedObject(out _))
                     {
-                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                        await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                     }
 
                     break;
@@ -484,7 +484,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!SendLink.TryGetOpenedObject(out link))
                         {
-                            link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            link = await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         // Validate that the batch of messages is not too large to send.  This is done after the link is created to ensure
@@ -592,19 +592,22 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, operationTimeout, timeout, producerIdentifier, cancellationToken).ConfigureAwait(false);
 
-                if (!MaximumMessageSize.HasValue)
-                {
-                    // This delay is necessary to prevent the link from causing issues for subsequent
-                    // operations after creating a batch.  Without it, operations using the link consistently
-                    // timeout.  The length of the delay does not appear significant, just the act of introducing
-                    // an asynchronous delay.
-                    //
-                    // For consistency the value used by the legacy Event Hubs client has been brought forward and
-                    // used here.
+                // Update the known maximum message size each time a link is opened, as the
+                // configuration can be changed on-the-fly and may not match the previously cached value.
+                //
+                // This delay is necessary to prevent the link from causing issues for subsequent
+                // operations after creating a batch.  Without it, operations using the link consistently
+                // timeout.  The length of the delay does not appear significant, just the act of introducing
+                // an asynchronous delay.
+                //
+                // For consistency the value used by the legacy Event Hubs client has been brought forward and
+                // used here.
 
-                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                    MaximumMessageSize = (long)link.Settings.MaxMessageSize;
-                }
+                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                MaximumMessageSize = (long)link.Settings.MaxMessageSize;
+
+                // Unlike the maximum message size, the publishing properties will not change arbitrarily, so
+                // there is no need to update them each time a link is opened.
 
                 if (InitializedPartitionProperties == null)
                 {
@@ -627,17 +630,5 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             return link;
         }
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

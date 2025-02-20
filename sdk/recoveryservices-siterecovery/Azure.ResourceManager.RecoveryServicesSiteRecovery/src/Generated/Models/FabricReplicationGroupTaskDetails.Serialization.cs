@@ -5,48 +5,138 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FabricReplicationGroupTaskDetails
+    public partial class FabricReplicationGroupTaskDetails : IUtf8JsonSerializable, IJsonModel<FabricReplicationGroupTaskDetails>
     {
-        internal static FabricReplicationGroupTaskDetails DeserializeFabricReplicationGroupTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricReplicationGroupTaskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FabricReplicationGroupTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> skippedReason = default;
-            Optional<string> skippedReasonString = default;
-            Optional<JobEntity> jobTask = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricReplicationGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FabricReplicationGroupTaskDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(SkippedReason))
+            {
+                writer.WritePropertyName("skippedReason"u8);
+                writer.WriteStringValue(SkippedReason);
+            }
+            if (Optional.IsDefined(SkippedReasonString))
+            {
+                writer.WritePropertyName("skippedReasonString"u8);
+                writer.WriteStringValue(SkippedReasonString);
+            }
+        }
+
+        FabricReplicationGroupTaskDetails IJsonModel<FabricReplicationGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricReplicationGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FabricReplicationGroupTaskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFabricReplicationGroupTaskDetails(document.RootElement, options);
+        }
+
+        internal static FabricReplicationGroupTaskDetails DeserializeFabricReplicationGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string skippedReason = default;
+            string skippedReasonString = default;
+            SiteRecoveryJobEntity jobTask = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skippedReason"))
+                if (property.NameEquals("skippedReason"u8))
                 {
                     skippedReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skippedReasonString"))
+                if (property.NameEquals("skippedReasonString"u8))
                 {
                     skippedReasonString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobTask"))
+                if (property.NameEquals("jobTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobTask = JobEntity.DeserializeJobEntity(property.Value);
+                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FabricReplicationGroupTaskDetails(instanceType, jobTask.Value, skippedReason.Value, skippedReasonString.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FabricReplicationGroupTaskDetails(instanceType, serializedAdditionalRawData, jobTask, skippedReason, skippedReasonString);
         }
+
+        BinaryData IPersistableModel<FabricReplicationGroupTaskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricReplicationGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FabricReplicationGroupTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FabricReplicationGroupTaskDetails IPersistableModel<FabricReplicationGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricReplicationGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFabricReplicationGroupTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FabricReplicationGroupTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FabricReplicationGroupTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

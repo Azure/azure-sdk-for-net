@@ -6,26 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentStatus
+    public partial class AssignmentStatus : IUtf8JsonSerializable, IJsonModel<AssignmentStatus>
     {
-        internal static AssignmentStatus DeserializeAssignmentStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AssignmentStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<string>> managedResources = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssignmentStatus)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedResources))
+            {
+                writer.WritePropertyName("managedResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedResources)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        AssignmentStatus IJsonModel<AssignmentStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssignmentStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssignmentStatus(document.RootElement, options);
+        }
+
+        internal static AssignmentStatus DeserializeAssignmentStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> managedResources = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? lastModified = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedResources"))
+                if (property.NameEquals("managedResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -36,28 +88,62 @@ namespace Azure.ResourceManager.Blueprint.Models
                     managedResources = array;
                     continue;
                 }
-                if (property.NameEquals("timeCreated"))
+                if (property.NameEquals("timeCreated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModified"))
+                if (property.NameEquals("lastModified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssignmentStatus(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), Optional.ToList(managedResources));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AssignmentStatus(timeCreated, lastModified, serializedAdditionalRawData, managedResources ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<AssignmentStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AssignmentStatus IPersistableModel<AssignmentStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssignmentStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssignmentStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

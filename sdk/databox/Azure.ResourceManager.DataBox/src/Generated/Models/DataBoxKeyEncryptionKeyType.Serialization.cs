@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxKeyEncryptionKeyType ToDataBoxKeyEncryptionKeyType(this string value)
         {
-            if (string.Equals(value, "MicrosoftManaged", StringComparison.InvariantCultureIgnoreCase)) return DataBoxKeyEncryptionKeyType.MicrosoftManaged;
-            if (string.Equals(value, "CustomerManaged", StringComparison.InvariantCultureIgnoreCase)) return DataBoxKeyEncryptionKeyType.CustomerManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftManaged")) return DataBoxKeyEncryptionKeyType.MicrosoftManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerManaged")) return DataBoxKeyEncryptionKeyType.CustomerManaged;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxKeyEncryptionKeyType value.");
         }
     }

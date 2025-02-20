@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Value to use for hierarchy node sorting. When it is set to &apos;CumulativeInstanceCount&apos;, the returned hierarchies are sorted based on the total instances belonging to the hierarchy node and its child hierarchy nodes. When it is set to &apos;Name&apos;, the returned hierarchies are sorted based on the hierarchy name. Optional, default is &apos;CumulativeInstanceCount&apos;. </summary>
+    /// <summary> Value to use for hierarchy node sorting. When it is set to 'CumulativeInstanceCount', the returned hierarchies are sorted based on the total instances belonging to the hierarchy node and its child hierarchy nodes. When it is set to 'Name', the returned hierarchies are sorted based on the hierarchy name. Optional, default is 'CumulativeInstanceCount'. </summary>
     internal readonly partial struct HierarchiesSortBy : IEquatable<HierarchiesSortBy>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static bool operator ==(HierarchiesSortBy left, HierarchiesSortBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HierarchiesSortBy"/> values are not the same. </summary>
         public static bool operator !=(HierarchiesSortBy left, HierarchiesSortBy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HierarchiesSortBy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HierarchiesSortBy"/>. </summary>
         public static implicit operator HierarchiesSortBy(string value) => new HierarchiesSortBy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

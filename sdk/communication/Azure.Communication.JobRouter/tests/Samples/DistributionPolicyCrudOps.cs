@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,7 +15,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public void DistributionPolicyCrud()
         {
             // create a client
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateDistributionPolicy
 
@@ -28,7 +24,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
-                    offerTtl: TimeSpan.FromMinutes(1),
+                    offerExpiresAfter: TimeSpan.FromMinutes(1),
                     mode: new LongestIdleMode())
                 {
                     Name = "My distribution policy"
@@ -50,7 +46,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy
 
             Response<DistributionPolicy> updatedDistributionPolicy = routerAdministrationClient.UpdateDistributionPolicy(
-                new UpdateDistributionPolicyOptions(distributionPolicyId)
+                new DistributionPolicy(distributionPolicyId)
                 {
                     // you can update one or more properties of distribution policy
                     Mode = new RoundRobinMode(),
@@ -62,12 +58,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies
 
-            Pageable<DistributionPolicyItem> distributionPolicies = routerAdministrationClient.GetDistributionPolicies();
-            foreach (Page<DistributionPolicyItem> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
+            Pageable<DistributionPolicy> distributionPolicies = routerAdministrationClient.GetDistributionPolicies(cancellationToken: default);
+            foreach (Page<DistributionPolicy> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
             {
-                foreach (DistributionPolicyItem? policy in asPage.Values)
+                foreach (DistributionPolicy? policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing distribution policy with id: {policy.DistributionPolicy.Id}");
+                    Console.WriteLine($"Listing distribution policy with id: {policy.Id}");
                 }
             }
 

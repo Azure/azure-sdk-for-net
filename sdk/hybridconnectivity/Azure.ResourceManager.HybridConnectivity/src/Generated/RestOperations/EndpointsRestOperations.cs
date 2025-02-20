@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridConnectivity.Models;
@@ -33,11 +32,22 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-06-preview";
+            _apiVersion = apiVersion ?? "2023-03-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string scope)
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -45,7 +55,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -55,14 +65,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> List of endpoints to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<EndpointsList>> ListAsync(string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        public async Task<Response<EndpointsList>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
-            using var message = CreateListRequest(scope);
+            using var message = CreateListRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -79,14 +89,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> List of endpoints to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<EndpointsList> List(string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        public Response<EndpointsList> List(string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
-            using var message = CreateListRequest(scope);
+            using var message = CreateListRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -102,7 +112,19 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateGetRequest(string scope, string endpointName)
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string endpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string resourceUri, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -110,7 +132,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
             uri.AppendPath(endpointName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -121,62 +143,74 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Gets the endpoint to the resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<EndpointResourceData>> GetAsync(string scope, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<HybridConnectivityEndpointData>> GetAsync(string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateGetRequest(scope, endpointName);
+            using var message = CreateGetRequest(resourceUri, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        EndpointResourceData value = default;
+                        HybridConnectivityEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointResourceData.DeserializeEndpointResourceData(document.RootElement);
+                        value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EndpointResourceData)null, message.Response);
+                    return Response.FromValue((HybridConnectivityEndpointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets the endpoint to the resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public Response<EndpointResourceData> Get(string scope, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public Response<HybridConnectivityEndpointData> Get(string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateGetRequest(scope, endpointName);
+            using var message = CreateGetRequest(resourceUri, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        EndpointResourceData value = default;
+                        HybridConnectivityEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointResourceData.DeserializeEndpointResourceData(document.RootElement);
+                        value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EndpointResourceData)null, message.Response);
+                    return Response.FromValue((HybridConnectivityEndpointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string endpointName, EndpointResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string endpointName, HybridConnectivityEndpointData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string endpointName, HybridConnectivityEndpointData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -184,7 +218,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
             uri.AppendPath(endpointName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -192,33 +226,33 @@ namespace Azure.ResourceManager.HybridConnectivity
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update the endpoint to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response<EndpointResourceData>> CreateOrUpdateAsync(string scope, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<HybridConnectivityEndpointData>> CreateOrUpdateAsync(string resourceUri, string endpointName, HybridConnectivityEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(scope, endpointName, data);
+            using var message = CreateCreateOrUpdateRequest(resourceUri, endpointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        EndpointResourceData value = default;
+                        HybridConnectivityEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointResourceData.DeserializeEndpointResourceData(document.RootElement);
+                        value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,26 +261,26 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Create or update the endpoint to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        public Response<EndpointResourceData> CreateOrUpdate(string scope, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public Response<HybridConnectivityEndpointData> CreateOrUpdate(string resourceUri, string endpointName, HybridConnectivityEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(scope, endpointName, data);
+            using var message = CreateCreateOrUpdateRequest(resourceUri, endpointName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        EndpointResourceData value = default;
+                        HybridConnectivityEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointResourceData.DeserializeEndpointResourceData(document.RootElement);
+                        value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,7 +288,19 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string scope, string endpointName, EndpointResourceData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string endpointName, HybridConnectivityEndpointData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string resourceUri, string endpointName, HybridConnectivityEndpointData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +308,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
             uri.AppendPath(endpointName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -270,33 +316,33 @@ namespace Azure.ResourceManager.HybridConnectivity
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update the endpoint to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response<EndpointResourceData>> UpdateAsync(string scope, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<HybridConnectivityEndpointData>> UpdateAsync(string resourceUri, string endpointName, HybridConnectivityEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(scope, endpointName, data);
+            using var message = CreateUpdateRequest(resourceUri, endpointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        EndpointResourceData value = default;
+                        HybridConnectivityEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointResourceData.DeserializeEndpointResourceData(document.RootElement);
+                        value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,26 +351,26 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Update the endpoint to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        public Response<EndpointResourceData> Update(string scope, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public Response<HybridConnectivityEndpointData> Update(string resourceUri, string endpointName, HybridConnectivityEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(scope, endpointName, data);
+            using var message = CreateUpdateRequest(resourceUri, endpointName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        EndpointResourceData value = default;
+                        HybridConnectivityEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointResourceData.DeserializeEndpointResourceData(document.RootElement);
+                        value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -332,7 +378,19 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string scope, string endpointName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string endpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string resourceUri, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -340,7 +398,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
             uri.AppendPath(endpointName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -351,16 +409,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Deletes the endpoint access to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string scope, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateDeleteRequest(scope, endpointName);
+            using var message = CreateDeleteRequest(resourceUri, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -373,16 +431,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Deletes the endpoint access to the target resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public Response Delete(string scope, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public Response Delete(string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateDeleteRequest(scope, endpointName);
+            using var message = CreateDeleteRequest(resourceUri, endpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -394,7 +452,24 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateListCredentialsRequest(string scope, string endpointName, long? expiresin)
+        internal RequestUriBuilder CreateListCredentialsRequestUri(string resourceUri, string endpointName, ListCredentialsContent content, long? expiresin)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendPath("/listCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expiresin != null)
+            {
+                uri.AppendQuery("expiresin", expiresin.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListCredentialsRequest(string resourceUri, string endpointName, ListCredentialsContent content, long? expiresin)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -402,10 +477,113 @@ namespace Azure.ResourceManager.HybridConnectivity
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
             uri.AppendPath(endpointName, false);
             uri.AppendPath("/listCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expiresin != null)
+            {
+                uri.AppendQuery("expiresin", expiresin.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
+            }
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the endpoint access credentials to the resource. </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<TargetResourceEndpointAccess>> ListCredentialsAsync(string resourceUri, string endpointName, ListCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+
+            using var message = CreateListCredentialsRequest(resourceUri, endpointName, content, expiresin);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TargetResourceEndpointAccess value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the endpoint access credentials to the resource. </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public Response<TargetResourceEndpointAccess> ListCredentials(string resourceUri, string endpointName, ListCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+
+            using var message = CreateListCredentialsRequest(resourceUri, endpointName, content, expiresin);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TargetResourceEndpointAccess value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListIngressGatewayCredentialsRequestUri(string resourceUri, string endpointName, long? expiresin)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendPath("/listIngressGatewayCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expiresin != null)
+            {
+                uri.AppendQuery("expiresin", expiresin.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListIngressGatewayCredentialsRequest(string resourceUri, string endpointName, long? expiresin)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendPath("/listIngressGatewayCredentials", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expiresin != null)
             {
@@ -417,26 +595,26 @@ namespace Azure.ResourceManager.HybridConnectivity
             return message;
         }
 
-        /// <summary> Gets the endpoint access credentials to the resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <summary> Gets the ingress gateway endpoint credentials. </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<TargetResourceEndpointAccess>> ListCredentialsAsync(string scope, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public async Task<Response<IngressGatewayAsset>> ListIngressGatewayCredentialsAsync(string resourceUri, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateListCredentialsRequest(scope, endpointName, expiresin);
+            using var message = CreateListIngressGatewayCredentialsRequest(resourceUri, endpointName, expiresin);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TargetResourceEndpointAccess value = default;
+                        IngressGatewayAsset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
+                        value = IngressGatewayAsset.DeserializeIngressGatewayAsset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -444,26 +622,26 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        /// <summary> Gets the endpoint access credentials to the resource. </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <summary> Gets the ingress gateway endpoint credentials. </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public Response<TargetResourceEndpointAccess> ListCredentials(string scope, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
+        public Response<IngressGatewayAsset> ListIngressGatewayCredentials(string resourceUri, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateListCredentialsRequest(scope, endpointName, expiresin);
+            using var message = CreateListIngressGatewayCredentialsRequest(resourceUri, endpointName, expiresin);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TargetResourceEndpointAccess value = default;
+                        IngressGatewayAsset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
+                        value = IngressGatewayAsset.DeserializeIngressGatewayAsset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -471,7 +649,107 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)
+        internal RequestUriBuilder CreateListManagedProxyDetailsRequestUri(string resourceUri, string endpointName, ManagedProxyContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendPath("/listManagedProxyDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListManagedProxyDetailsRequest(string resourceUri, string endpointName, ManagedProxyContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
+            uri.AppendPath(endpointName, false);
+            uri.AppendPath("/listManagedProxyDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Fetches the managed proxy details. </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
+        public async Task<Response<ManagedProxyAsset>> ListManagedProxyDetailsAsync(string resourceUri, string endpointName, ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateListManagedProxyDetailsRequest(resourceUri, endpointName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedProxyAsset value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ManagedProxyAsset.DeserializeManagedProxyAsset(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Fetches the managed proxy details. </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
+        public Response<ManagedProxyAsset> ListManagedProxyDetails(string resourceUri, string endpointName, ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateListManagedProxyDetailsRequest(resourceUri, endpointName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedProxyAsset value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ManagedProxyAsset.DeserializeManagedProxyAsset(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -487,15 +765,15 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary> List of endpoints to the target resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<EndpointsList>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
+        public async Task<Response<EndpointsList>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
-            using var message = CreateListNextPageRequest(nextLink, scope);
+            using var message = CreateListNextPageRequest(nextLink, resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -513,15 +791,15 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary> List of endpoints to the target resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<EndpointsList> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
+        public Response<EndpointsList> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
-            using var message = CreateListNextPageRequest(nextLink, scope);
+            using var message = CreateListNextPageRequest(nextLink, resourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

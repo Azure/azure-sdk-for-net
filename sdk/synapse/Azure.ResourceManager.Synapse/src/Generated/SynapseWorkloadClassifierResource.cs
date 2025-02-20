@@ -9,22 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseWorkloadClassifier along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseWorkloadClassifierResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseWorkloadClassifierResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkloadGroupResource" /> using the GetSynapseWorkloadClassifier method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseWorkloadClassifierResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseWorkloadClassifierResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkloadGroupResource"/> using the GetSynapseWorkloadClassifier method.
     /// </summary>
     public partial class SynapseWorkloadClassifierResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseWorkloadClassifierResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="workloadGroupName"> The workloadGroupName. </param>
+        /// <param name="workloadClassifierName"> The workloadClassifierName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolWorkloadClassifierRestOperations _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient;
         private readonly SynapseWorkloadClassifierData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseWorkloadClassifierResource"/> class for mocking. </summary>
         protected SynapseWorkloadClassifierResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseWorkloadClassifierResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseWorkloadClassifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseWorkloadClassifierResource(ArmClient client, SynapseWorkloadClassifierData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workload classifier of Sql pool&apos;s workload group.
+        /// Get a workload classifier of Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +131,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workload classifier of Sql pool&apos;s workload group.
+        /// Get a workload classifier of Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +171,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Remove workload classifier of a Sql pool&apos;s workload group.
+        /// Remove workload classifier of a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +213,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Remove workload classifier of a Sql pool&apos;s workload group.
+        /// Remove workload classifier of a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -194,6 +222,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +255,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update workload classifier for a Sql pool&apos;s workload group.
+        /// Create Or Update workload classifier for a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,7 +301,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update workload classifier for a Sql pool&apos;s workload group.
+        /// Create Or Update workload classifier for a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

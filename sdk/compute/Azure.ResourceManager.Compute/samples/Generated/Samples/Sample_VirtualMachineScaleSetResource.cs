@@ -6,61 +6,172 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetResource
     {
-        // Lists all the VM scale sets under the specified subscription for the specified location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineScaleSetsByLocation_ListsAllTheVMScaleSetsUnderTheSpecifiedSubscriptionForTheSpecifiedLocation()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVMScaleSetVMWithDiskControllerType()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListBySubscription_ByLocation.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
             string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("eastus");
-            await foreach (VirtualMachineScaleSetResource item in subscriptionResource.GetVirtualMachineScaleSetsByLocationAsync(location))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            VirtualMachineScaleSetGetExpand? expand = VirtualMachineScaleSetGetExpand.UserData;
+            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync(expand: expand);
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineScaleSets_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_VirtualMachineScaleSetsUpdateMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAVirtualMachineScaleSet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAVirtualMachineScaleSetWithUserData()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            VirtualMachineScaleSetGetExpand? expand = VirtualMachineScaleSetGetExpand.UserData;
+            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync(expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ForceDeleteAVMScaleSet()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Delete_Force.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "myvmScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            bool? forceDeletion = true;
+            await virtualMachineScaleSet.DeleteAsync(WaitUntil.Completed, forceDeletion: forceDeletion);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_VirtualMachineScaleSetUpdateMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,254 +188,215 @@ namespace Azure.ResourceManager.Compute.Samples
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetPatch patch = new VirtualMachineScaleSetPatch()
+            VirtualMachineScaleSetPatch patch = new VirtualMachineScaleSetPatch
             {
-                Sku = new ComputeSku()
+                Sku = new ComputeSku
                 {
                     Name = "DSv3-Type1",
                     Tier = "aaa",
-                    Capacity = 7,
+                    Capacity = 7L,
                 },
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                     PromotionCode = "aaaaaaaaaa",
                 },
-                Identity = new ManagedServiceIdentity("SystemAssigned")
+                Properties = new VirtualMachineScaleSetPatchProperties
                 {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("key3951")] = new UserAssignedIdentity(),
-},
-                },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
-                {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                    RollingUpgradePolicy = new RollingUpgradePolicy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy
                     {
-                        MaxBatchInstancePercent = 49,
-                        MaxUnhealthyInstancePercent = 81,
-                        MaxUnhealthyUpgradedInstancePercent = 98,
-                        PauseTimeBetweenBatches = "aaaaaaaaaaaaaaa",
-                        EnableCrossZoneUpgrade = true,
-                        PrioritizeUnhealthyInstances = true,
-                    },
-                    AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
-                    {
-                        EnableAutomaticOSUpgrade = true,
-                        DisableAutomaticRollback = true,
-                    },
-                },
-                AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
-                {
-                    Enabled = true,
-                    GracePeriod = "PT30M",
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetUpdateVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetUpdateOSProfile()
-                    {
-                        CustomData = "aaaaaaaaaaaaaaaaaaaaaaaaaa",
-                        WindowsConfiguration = new WindowsConfiguration()
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
+                        RollingUpgradePolicy = new RollingUpgradePolicy
                         {
-                            ProvisionVmAgent = true,
-                            IsAutomaticUpdatesEnabled = true,
-                            TimeZone = "aaaaaaaaaaaaaaaa",
-                            AdditionalUnattendContent =
-{
-new AdditionalUnattendContent()
+                            MaxBatchInstancePercent = 49,
+                            MaxUnhealthyInstancePercent = 81,
+                            MaxUnhealthyUpgradedInstancePercent = 98,
+                            PauseTimeBetweenBatches = "aaaaaaaaaaaaaaa",
+                            EnableCrossZoneUpgrade = true,
+                            PrioritizeUnhealthyInstances = true,
+                            RollbackFailedInstancesOnPolicyBreach = true,
+                            IsMaxSurgeEnabled = true,
+                        },
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy
+                        {
+                            EnableAutomaticOSUpgrade = true,
+                            DisableAutomaticRollback = true,
+                            OSRollingUpgradeDeferral = true,
+                        },
+                    },
+                    AutomaticRepairsPolicy = new AutomaticRepairsPolicy
+                    {
+                        Enabled = true,
+                        GracePeriod = "PT30M",
+                    },
+                    VirtualMachineProfile = new VirtualMachineScaleSetUpdateVmProfile
+                    {
+                        OSProfile = new VirtualMachineScaleSetUpdateOSProfile
+                        {
+                            CustomData = "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            WindowsConfiguration = new WindowsConfiguration
+                            {
+                                ProvisionVmAgent = true,
+                                IsAutomaticUpdatesEnabled = true,
+                                TimeZone = "aaaaaaaaaaaaaaaa",
+                                AdditionalUnattendContent = {new AdditionalUnattendContent
 {
 PassName = PassName.OobeSystem,
 ComponentName = ComponentName.MicrosoftWindowsShellSetup,
 SettingName = SettingName.AutoLogon,
 Content = "aaaaaaaaaaaaaaaaaaaa",
-}
-},
-                            PatchSettings = new PatchSettings()
-                            {
-                                PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
-                                EnableHotpatching = true,
-                                AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
-                                AutomaticByPlatformRebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
-                            },
-                            WinRMListeners =
-{
-new WinRMListener()
+}},
+                                PatchSettings = new PatchSettings
+                                {
+                                    PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
+                                    EnableHotpatching = true,
+                                    AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
+                                    AutomaticByPlatformSettings = new WindowsVmGuestPatchAutomaticByPlatformSettings
+                                    {
+                                        RebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
+                                    },
+                                },
+                                WinRMListeners = {new WinRMListener
 {
 Protocol = WinRMListenerProtocolType.Http,
 CertificateUri = new Uri("aaaaaaaaaaaaaaaaaaaaaa"),
-}
-},
-                        },
-                        LinuxConfiguration = new LinuxConfiguration()
-                        {
-                            IsPasswordAuthenticationDisabled = true,
-                            SshPublicKeys =
-{
-new SshPublicKeyConfiguration()
+}},
+                            },
+                            LinuxConfiguration = new LinuxConfiguration
+                            {
+                                IsPasswordAuthenticationDisabled = true,
+                                SshPublicKeys = {new SshPublicKeyConfiguration
 {
 Path = "/home/{your-username}/.ssh/authorized_keys",
 KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
-}
-},
-                            ProvisionVmAgent = true,
-                            PatchSettings = new LinuxPatchSettings()
-                            {
-                                PatchMode = LinuxVmGuestPatchMode.ImageDefault,
-                                AssessmentMode = LinuxPatchAssessmentMode.ImageDefault,
+}},
+                                ProvisionVmAgent = true,
+                                PatchSettings = new LinuxPatchSettings
+                                {
+                                    PatchMode = LinuxVmGuestPatchMode.ImageDefault,
+                                    AssessmentMode = LinuxPatchAssessmentMode.ImageDefault,
+                                },
                             },
-                        },
-                        Secrets =
-{
-new VaultSecretGroup()
+                            Secrets = {new VaultSecretGroup
 {
 SourceVaultId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
-VaultCertificates =
-{
-new VaultCertificate()
+VaultCertificates = {new VaultCertificate
 {
 CertificateUri = new Uri("aaaaaaa"),
 CertificateStore = "aaaaaaaaaaaaaaaaaaaaaaaaa",
-}
-},
-}
-},
-                    },
-                    StorageProfile = new VirtualMachineScaleSetUpdateStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
-                        {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
-                            SharedGalleryImageUniqueId = "aaaaaa",
-                            Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
+}},
+}},
                         },
-                        OSDisk = new VirtualMachineScaleSetUpdateOSDisk()
+                        StorageProfile = new VirtualMachineScaleSetUpdateStorageProfile
                         {
-                            Caching = CachingType.ReadWrite,
-                            WriteAcceleratorEnabled = true,
-                            DiskSizeGB = 6,
-                            ImageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
-                            VhdContainers =
-{
-"aa"
-},
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
-                                DiskEncryptionSetId = new ResourceIdentifier("aaaaaaaaaaaa"),
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                                SharedGalleryImageUniqueId = "aaaaaa",
+                                Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                             },
-                        },
-                        DataDisks =
-{
-new VirtualMachineScaleSetDataDisk(26,DiskCreateOptionType.Empty)
+                            OSDisk = new VirtualMachineScaleSetUpdateOSDisk
+                            {
+                                Caching = CachingType.ReadWrite,
+                                WriteAcceleratorEnabled = true,
+                                DiffDiskSettings = new DiffDiskSettings
+                                {
+                                    Option = DiffDiskOption.Local,
+                                    Placement = DiffDiskPlacement.CacheDisk,
+                                },
+                                DiskSizeGB = 6,
+                                ImageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
+                                VhdContainers = { "aa" },
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                    DiskEncryptionSetId = new ResourceIdentifier("aaaaaaaaaaaa"),
+                                },
+                            },
+                            DataDisks = {new VirtualMachineScaleSetDataDisk(26, DiskCreateOptionType.Empty)
 {
 Name = "aaaaaaaaaaaaaaaaaaaaaaaaaa",
 Caching = CachingType.None,
 WriteAcceleratorEnabled = true,
 DiskSizeGB = 1023,
-ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+ManagedDisk = new VirtualMachineScaleSetManagedDisk
 {
 StorageAccountType = StorageAccountType.StandardLrs,
 DiskEncryptionSetId = new ResourceIdentifier("aaaaaaaaaaaa"),
 },
-DiskIopsReadWrite = 28,
-DiskMBpsReadWrite = 15,
-}
-},
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetUpdateNetworkProfile()
-                    {
-                        HealthProbeId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
-                        NetworkInterfaceConfigurations =
-{
-new VirtualMachineScaleSetUpdateNetworkConfiguration()
+DiskIopsReadWrite = 28L,
+DiskMBpsReadWrite = 15L,
+}},
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetUpdateNetworkProfile
+                        {
+                            HealthProbeId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
+                            NetworkInterfaceConfigurations = {new VirtualMachineScaleSetUpdateNetworkConfiguration
 {
 Name = "aaaaaaaa",
 Primary = true,
 EnableAcceleratedNetworking = true,
 EnableFpga = true,
 NetworkSecurityGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-DnsServers =
-{
-},
-IPConfigurations =
-{
-new VirtualMachineScaleSetUpdateIPConfiguration()
+DnsServers = {},
+IPConfigurations = {new VirtualMachineScaleSetUpdateIPConfiguration
 {
 Name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
 Primary = true,
-PublicIPAddressConfiguration = new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration()
+PublicIPAddressConfiguration = new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration
 {
 Name = "a",
 IdleTimeoutInMinutes = 3,
-DnsDomainNameLabel = "aaaaaaaaaaaaaaaaaa",
+DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings("aaaaaaaaaaaaaaaaaa"),
 DeleteOption = ComputeDeleteOption.Delete,
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
-ApplicationGatewayBackendAddressPools =
-{
-new WritableSubResource()
+ApplicationGatewayBackendAddressPools = {new WritableSubResource
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-}
-},
-ApplicationSecurityGroups =
-{
-new WritableSubResource()
+}},
+ApplicationSecurityGroups = {new WritableSubResource
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-}
-},
-LoadBalancerBackendAddressPools =
-{
-new WritableSubResource()
+}},
+LoadBalancerBackendAddressPools = {new WritableSubResource
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-}
-},
-LoadBalancerInboundNatPools =
-{
-new WritableSubResource()
+}},
+LoadBalancerInboundNatPools = {new WritableSubResource
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-}
-},
-Id = new ResourceIdentifier("aaaaaaaaaaaaaaaa"),
-}
-},
+}},
+}},
 EnableIPForwarding = true,
 DeleteOption = ComputeDeleteOption.Delete,
-Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-}
-},
-                        NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
-                    },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        UefiSettings = new UefiSettings()
-                        {
-                            IsSecureBootEnabled = true,
-                            IsVirtualTpmEnabled = true,
+}},
+                            NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
                         },
-                        EncryptionAtHost = true,
-                        SecurityType = SecurityType.TrustedLaunch,
-                    },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                        StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
-                    },
-                    ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
-                    {
-                        Extensions =
-{
-new VirtualMachineScaleSetExtensionData()
+                        SecurityProfile = new SecurityProfile
+                        {
+                            UefiSettings = new UefiSettings
+                            {
+                                IsSecureBootEnabled = true,
+                                IsVirtualTpmEnabled = true,
+                            },
+                            EncryptionAtHost = true,
+                            SecurityType = SecurityType.TrustedLaunch,
+                        },
+                        BootDiagnostics = new BootDiagnostics
+                        {
+                            Enabled = true,
+                            StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
+                        },
+                        ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
+                        {
+                            Extensions = {new VirtualMachineScaleSetExtensionData
 {
 ForceUpdateTag = "aaaaaaaaa",
 Publisher = "{extension-Publisher}",
@@ -332,50 +404,51 @@ ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
-Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-}),
-ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-}),
-ProvisionAfterExtensions =
-{
-"aa"
-},
+Settings = BinaryData.FromObjectAsJson(new object()),
+ProtectedSettings = BinaryData.FromObjectAsJson(new object()),
+ProvisionAfterExtensions = {"aa"},
 SuppressFailures = true,
-}
-},
-                        ExtensionsTimeBudget = "PT1H20M",
+}},
+                            ExtensionsTimeBudget = "PT1H20M",
+                        },
+                        LicenseType = "aaaaaaaaaaaa",
+                        BillingMaxPrice = -1,
+                        ScheduledEventsProfile = new ComputeScheduledEventsProfile
+                        {
+                            TerminateNotificationProfile = new TerminateNotificationProfile
+                            {
+                                NotBeforeTimeout = "PT10M",
+                                Enable = true,
+                            },
+                        },
+                        UserData = "aaaaaaaaaaaaa",
                     },
-                    LicenseType = "aaaaaaaaaaaa",
-                    BillingMaxPrice = -1,
-                    ScheduledEventsTerminateNotificationProfile = new TerminateNotificationProfile()
+                    Overprovision = true,
+                    DoNotRunExtensionsOnOverprovisionedVms = true,
+                    SinglePlacementGroup = true,
+                    AdditionalCapabilities = new AdditionalCapabilities
                     {
-                        NotBeforeTimeout = "PT10M",
-                        Enable = true,
+                        UltraSsdEnabled = true,
+                        HibernationEnabled = true,
                     },
-                    UserData = "aaaaaaaaaaaaa",
+                    ScaleInPolicy = new ScaleInPolicy
+                    {
+                        Rules = { VirtualMachineScaleSetScaleInRule.OldestVm },
+                        ForceDeletion = true,
+                    },
+                    ProximityPlacementGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
                 },
-                Overprovision = true,
-                DoNotRunExtensionsOnOverprovisionedVms = true,
-                SinglePlacementGroup = true,
-                AdditionalCapabilities = new AdditionalCapabilities()
+                Identity = new ManagedServiceIdentity("SystemAssigned")
                 {
-                    UltraSsdEnabled = true,
-                    HibernationEnabled = true,
-                },
-                ScaleInPolicy = new ScaleInPolicy()
-                {
-                    Rules =
+                    UserAssignedIdentities =
 {
-VirtualMachineScaleSetScaleInRule.OldestVm
+[new ResourceIdentifier("key3951")] = new UserAssignedIdentity()
 },
-                    ForceDeletion = true,
                 },
-                ProximityPlacementGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+                Zones = { "1", "2", "3" },
                 Tags =
 {
-["key246"] = "aaaaaaaaaaaaaaaaaaaaaaaa",
+["key246"] = "aaaaaaaaaaaaaaaaaaaaaaaa"
 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await virtualMachineScaleSet.UpdateAsync(WaitUntil.Completed, patch);
@@ -388,12 +461,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineScaleSets_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_VirtualMachineScaleSetsUpdateMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_VirtualMachineScaleSetUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -421,166 +493,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Force Delete a VM scale set.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ForceDeleteAVMScaleSet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Deallocate_VirtualMachineScaleSetDeallocateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Delete_Force.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "myvmScaleSet";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // invoke the operation
-            bool? forceDeletion = true;
-            await virtualMachineScaleSet.DeleteAsync(WaitUntil.Completed, forceDeletion: forceDeletion);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVMScaleSetVMWithDiskControllerType()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // invoke the operation
-            VirtualMachineScaleSetGetExpand? expand = VirtualMachineScaleSetGetExpand.UserData;
-            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync(expand: expand);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachineScaleSet()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // invoke the operation
-            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // invoke the operation
-            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachineScaleSetWithUserData()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // invoke the operation
-            VirtualMachineScaleSetGetExpand? expand = VirtualMachineScaleSetGetExpand.UserData;
-            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync(expand: expand);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // VirtualMachineScaleSets_Deallocate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Deallocate_VirtualMachineScaleSetsDeallocateMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Deallocate_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Deallocate_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -597,24 +514,21 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
-            await virtualMachineScaleSet.DeallocateAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
+            bool? hibernate = true;
+            await virtualMachineScaleSet.DeallocateAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds, hibernate: hibernate);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Deallocate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Deallocate_VirtualMachineScaleSetsDeallocateMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Deallocate_VirtualMachineScaleSetDeallocateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Deallocate_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Deallocate_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -633,15 +547,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.DeallocateAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_DeleteInstances_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteInstances_VirtualMachineScaleSetsDeleteInstancesMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeleteInstances_VirtualMachineScaleSetDeleteInstancesMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_DeleteInstances_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_DeleteInstances_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_DeleteInstances" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -658,22 +571,18 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[]
-            {
-"aaaaaaaaaaaaaaaaaaaaaaaaa"
-            });
+            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[] { "aaaaaaaaaaaaaaaaaaaaaaaaa" });
             bool? forceDeletion = true;
             await virtualMachineScaleSet.DeleteInstancesAsync(WaitUntil.Completed, vmInstanceIds, forceDeletion: forceDeletion);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_DeleteInstances_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteInstances_VirtualMachineScaleSetsDeleteInstancesMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeleteInstances_VirtualMachineScaleSetDeleteInstancesMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_DeleteInstances_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_DeleteInstances_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_DeleteInstances" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -690,21 +599,17 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[]
-            {
-"aaaaaaaaaaaaaaaaaaaaaaaaa"
-            });
+            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[] { "aaaaaaaaaaaaaaaaaaaaaaaaa" });
             await virtualMachineScaleSet.DeleteInstancesAsync(WaitUntil.Completed, vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_GetInstanceView_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInstanceView_VirtualMachineScaleSetsGetInstanceViewMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetInstanceView_VirtualMachineScaleSetGetInstanceViewMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetInstanceView_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_GetInstanceView_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -726,12 +631,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineScaleSets_GetInstanceView_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInstanceView_VirtualMachineScaleSetsGetInstanceViewMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetInstanceView_VirtualMachineScaleSetGetInstanceViewMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetInstanceView_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_GetInstanceView_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -753,76 +657,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineScaleSets_ListAll_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineScaleSets_VirtualMachineScaleSetsListAllMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSkus_VirtualMachineScaleSetListSkusMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListAll_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineScaleSetResource item in subscriptionResource.GetVirtualMachineScaleSetsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineScaleSets_ListAll_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineScaleSets_VirtualMachineScaleSetsListAllMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListAll_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSets_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineScaleSetResource item in subscriptionResource.GetVirtualMachineScaleSetsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineScaleSets_ListSkus_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSkus_VirtualMachineScaleSetsListSkusMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListSkus_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ListSkus_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -844,15 +683,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_ListSkus_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSkus_VirtualMachineScaleSetsListSkusMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSkus_VirtualMachineScaleSetListSkusMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListSkus_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ListSkus_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -874,15 +712,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_GetOSUpgradeHistory_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOSUpgradeHistory_VirtualMachineScaleSetsGetOSUpgradeHistoryMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetOSUpgradeHistory_VirtualMachineScaleSetGetOSUpgradeHistoryMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetOSUpgradeHistory_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_GetOSUpgradeHistory_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetOSUpgradeHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -904,15 +741,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_GetOSUpgradeHistory_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOSUpgradeHistory_VirtualMachineScaleSetsGetOSUpgradeHistoryMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetOSUpgradeHistory_VirtualMachineScaleSetGetOSUpgradeHistoryMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetOSUpgradeHistory_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_GetOSUpgradeHistory_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetOSUpgradeHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -934,15 +770,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_PowerOff_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PowerOff_VirtualMachineScaleSetsPowerOffMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PowerOff_VirtualMachineScaleSetPowerOffMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PowerOff_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_PowerOff_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -959,25 +794,21 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
             bool? skipShutdown = true;
             await virtualMachineScaleSet.PowerOffAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds, skipShutdown: skipShutdown);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_PowerOff_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PowerOff_VirtualMachineScaleSetsPowerOffMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PowerOff_VirtualMachineScaleSetPowerOffMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PowerOff_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_PowerOff_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -996,15 +827,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.PowerOffAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Restart_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Restart_VirtualMachineScaleSetsRestartMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Restart_VirtualMachineScaleSetRestartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Restart_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Restart_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1021,24 +851,20 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
             await virtualMachineScaleSet.RestartAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Restart_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Restart_VirtualMachineScaleSetsRestartMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Restart_VirtualMachineScaleSetRestartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Restart_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Restart_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1057,15 +883,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.RestartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Start_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PowerOn_VirtualMachineScaleSetsStartMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PowerOn_VirtualMachineScaleSetStartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Start_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Start_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1082,24 +907,20 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
             await virtualMachineScaleSet.PowerOnAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Start_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PowerOn_VirtualMachineScaleSetsStartMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PowerOn_VirtualMachineScaleSetStartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Start_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Start_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1118,15 +939,66 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.PowerOnAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Redeploy_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Redeploy_VirtualMachineScaleSetsRedeployMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Reapply_VirtualMachineScaleSetsReapplyMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Redeploy_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Reapply_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Reapply" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "b4f1213b-cacc-4816-8bfb-f30f90643de8";
+            string resourceGroupName = "VirtualMachineScaleSetReapplyTestRG";
+            string virtualMachineScaleSetName = "VMSSReapply-Test-ScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            await virtualMachineScaleSet.ReapplyAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Reapply_VirtualMachineScaleSetsReapplyMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Reapply_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Reapply" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "b4f1213b-cacc-4816-8bfb-f30f90643de8";
+            string resourceGroupName = "VirtualMachineScaleSetReapplyTestRG";
+            string virtualMachineScaleSetName = "VMSSReapply-Test-ScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            await virtualMachineScaleSet.ReapplyAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Redeploy_VirtualMachineScaleSetRedeployMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Redeploy_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1143,24 +1015,20 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
             await virtualMachineScaleSet.RedeployAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Redeploy_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Redeploy_VirtualMachineScaleSetsRedeployMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Redeploy_VirtualMachineScaleSetRedeployMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Redeploy_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Redeploy_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1179,15 +1047,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.RedeployAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_PerformMaintenance_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PerformMaintenance_VirtualMachineScaleSetsPerformMaintenanceMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PerformMaintenance_VirtualMachineScaleSetPerformMaintenanceMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PerformMaintenance_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_PerformMaintenance_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1204,24 +1071,20 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
             await virtualMachineScaleSet.PerformMaintenanceAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_PerformMaintenance_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PerformMaintenance_VirtualMachineScaleSetsPerformMaintenanceMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PerformMaintenance_VirtualMachineScaleSetPerformMaintenanceMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PerformMaintenance_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_PerformMaintenance_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1240,15 +1103,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.PerformMaintenanceAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_UpdateInstances_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateInstances_VirtualMachineScaleSetsUpdateInstancesMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateInstances_VirtualMachineScaleSetUpdateInstancesMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_UpdateInstances_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_UpdateInstances_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_UpdateInstances" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1265,21 +1127,17 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[]
-            {
-"aaaaaaaaaaaaaaaaaaaaaaaaa"
-            });
+            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[] { "aaaaaaaaaaaaaaaaaaaaaaaaa" });
             await virtualMachineScaleSet.UpdateInstancesAsync(WaitUntil.Completed, vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_UpdateInstances_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateInstances_VirtualMachineScaleSetsUpdateInstancesMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateInstances_VirtualMachineScaleSetUpdateInstancesMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_UpdateInstances_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_UpdateInstances_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_UpdateInstances" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1296,21 +1154,17 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[]
-            {
-"aaaaaaaaaaaaaaaaaaaaaaaaa"
-            });
+            VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceRequiredIds(new string[] { "aaaaaaaaaaaaaaaaaaaaaaaaa" });
             await virtualMachineScaleSet.UpdateInstancesAsync(WaitUntil.Completed, vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Reimage_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Reimage_VirtualMachineScaleSetsReimageMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Reimage_VirtualMachineScaleSetReimageMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Reimage_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Reimage_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1327,25 +1181,22 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetReimageContent content = new VirtualMachineScaleSetReimageContent()
+            VirtualMachineScaleSetReimageContent content = new VirtualMachineScaleSetReimageContent
             {
-                InstanceIds =
-{
-"aaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaa" },
+                ForceUpdateOSDiskForEphemeral = true,
                 TempDisk = true,
             };
             await virtualMachineScaleSet.ReimageAsync(WaitUntil.Completed, content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_Reimage_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Reimage_VirtualMachineScaleSetsReimageMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Reimage_VirtualMachineScaleSetReimageMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Reimage_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Reimage_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1364,15 +1215,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.ReimageAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_ReimageAll_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ReimageAll_VirtualMachineScaleSetsReimageAllMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ReimageAll_VirtualMachineScaleSetReimageAllMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ReimageAll_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ReimageAll_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ReimageAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1389,24 +1239,20 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds()
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
             {
-                InstanceIds =
-{
-"aaaaaaaaaaaaaaaaa"
-},
+                InstanceIds = { "aaaaaaaaaaaaaaaaa" },
             };
             await virtualMachineScaleSet.ReimageAllAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_ReimageAll_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ReimageAll_VirtualMachineScaleSetsReimageAllMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ReimageAll_VirtualMachineScaleSetReimageAllMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ReimageAll_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ReimageAll_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ReimageAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1425,15 +1271,44 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.ReimageAllAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ForceRecoveryServiceFabricPlatformUpdateDomainWalk_VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ApproveRollingUpgrade_VirtualMachineScaleSetApproveRollingUpgrade()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ApproveRollingUpgrade.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_ApproveRollingUpgrade" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string virtualMachineScaleSetName = "vmssToApproveRollingUpgradeOn";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            VirtualMachineScaleSetVmInstanceIds vmInstanceIds = new VirtualMachineScaleSetVmInstanceIds
+            {
+                InstanceIds = { "0", "1", "2" },
+            };
+            await virtualMachineScaleSet.ApproveRollingUpgradeAsync(WaitUntil.Completed, vmInstanceIds: vmInstanceIds);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ForceRecoveryServiceFabricPlatformUpdateDomainWalk_VirtualMachineScaleSetForceRecoveryServiceFabricPlatformUpdateDomainWalkMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1456,12 +1331,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ForceRecoveryServiceFabricPlatformUpdateDomainWalk_VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ForceRecoveryServiceFabricPlatformUpdateDomainWalk_VirtualMachineScaleSetForceRecoveryServiceFabricPlatformUpdateDomainWalkMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1484,12 +1358,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ConvertToSinglePlacementGroup_VirtualMachineScaleSetsConvertToSinglePlacementGroupMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ConvertToSinglePlacementGroup_VirtualMachineScaleSetConvertToSinglePlacementGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ConvertToSinglePlacementGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ConvertToSinglePlacementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1506,21 +1379,20 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetConvertToSinglePlacementGroupContent content = new VirtualMachineScaleSetConvertToSinglePlacementGroupContent()
+            VirtualMachineScaleSetConvertToSinglePlacementGroupContent content = new VirtualMachineScaleSetConvertToSinglePlacementGroupContent
             {
                 ActivePlacementGroupId = "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
             };
             await virtualMachineScaleSet.ConvertToSinglePlacementGroupAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ConvertToSinglePlacementGroup_VirtualMachineScaleSetsConvertToSinglePlacementGroupMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ConvertToSinglePlacementGroup_VirtualMachineScaleSetConvertToSinglePlacementGroupMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_ConvertToSinglePlacementGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ConvertToSinglePlacementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1540,15 +1412,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetConvertToSinglePlacementGroupContent content = new VirtualMachineScaleSetConvertToSinglePlacementGroupContent();
             await virtualMachineScaleSet.ConvertToSinglePlacementGroupAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_SetOrchestrationServiceState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task SetOrchestrationServiceState_VirtualMachineScaleSetsSetOrchestrationServiceStateMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task SetOrchestrationServiceState_VirtualMachineScaleSetSetOrchestrationServiceStateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_SetOrchestrationServiceState_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_SetOrchestrationServiceState_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_SetOrchestrationServiceState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1568,15 +1439,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             OrchestrationServiceStateContent content = new OrchestrationServiceStateContent(OrchestrationServiceName.AutomaticRepairs, OrchestrationServiceStateAction.Resume);
             await virtualMachineScaleSet.SetOrchestrationServiceStateAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSets_SetOrchestrationServiceState_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task SetOrchestrationServiceState_VirtualMachineScaleSetsSetOrchestrationServiceStateMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task SetOrchestrationServiceState_VirtualMachineScaleSetSetOrchestrationServiceStateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_SetOrchestrationServiceState_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_SetOrchestrationServiceState_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_SetOrchestrationServiceState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1596,15 +1466,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             OrchestrationServiceStateContent content = new OrchestrationServiceStateContent(OrchestrationServiceName.AutomaticRepairs, OrchestrationServiceStateAction.Resume);
             await virtualMachineScaleSet.SetOrchestrationServiceStateAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSetRollingUpgrades_Cancel_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CancelVirtualMachineScaleSetRollingUpgrade_VirtualMachineScaleSetRollingUpgradesCancelMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CancelVirtualMachineScaleSetRollingUpgrade_VirtualMachineScaleSetRollingUpgradeCancelMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_Cancel_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrade_Cancel_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1623,15 +1492,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.CancelVirtualMachineScaleSetRollingUpgradeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSetRollingUpgrades_Cancel_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CancelVirtualMachineScaleSetRollingUpgrade_VirtualMachineScaleSetRollingUpgradesCancelMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CancelVirtualMachineScaleSetRollingUpgrade_VirtualMachineScaleSetRollingUpgradeCancelMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_Cancel_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrade_Cancel_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1650,15 +1518,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.CancelVirtualMachineScaleSetRollingUpgradeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task StartOSUpgrade_VirtualMachineScaleSetRollingUpgradesStartOSUpgradeMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StartOSUpgrade_VirtualMachineScaleSetRollingUpgradeStartOSUpgradeMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrade_StartOSUpgrade_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1677,15 +1544,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.StartOSUpgradeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task StartOSUpgrade_VirtualMachineScaleSetRollingUpgradesStartOSUpgradeMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StartOSUpgrade_VirtualMachineScaleSetRollingUpgradeStartOSUpgradeMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrade_StartOSUpgrade_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1704,15 +1570,14 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.StartOSUpgradeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start an extension rolling upgrade.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade_StartAnExtensionRollingUpgrade()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_RollingUpgrade.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_RollingUpgrade.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_StartExtensionUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1731,7 +1596,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             // invoke the operation
             await virtualMachineScaleSet.StartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

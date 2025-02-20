@@ -5,80 +5,154 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerReference : IUtf8JsonSerializable
+    public partial class LogicWorkflowTriggerReference : IUtf8JsonSerializable, IJsonModel<LogicWorkflowTriggerReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LogicWorkflowTriggerReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerReference)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FlowName))
             {
-                writer.WritePropertyName("flowName");
+                writer.WritePropertyName("flowName"u8);
                 writer.WriteStringValue(FlowName);
             }
             if (Optional.IsDefined(TriggerName))
             {
-                writer.WritePropertyName("triggerName");
+                writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowTriggerReference DeserializeLogicWorkflowTriggerReference(JsonElement element)
+        LogicWorkflowTriggerReference IJsonModel<LogicWorkflowTriggerReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> flowName = default;
-            Optional<string> triggerName = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowTriggerReference(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowTriggerReference DeserializeLogicWorkflowTriggerReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string flowName = default;
+            string triggerName = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("flowName"))
+                if (property.NameEquals("flowName"u8))
                 {
                     flowName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerName"))
+                if (property.NameEquals("triggerName"u8))
                 {
                     triggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowTriggerReference(id.Value, name.Value, Optional.ToNullable(type), flowName.Value, triggerName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogicWorkflowTriggerReference(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                flowName,
+                triggerName);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowTriggerReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogicWorkflowTriggerReference IPersistableModel<LogicWorkflowTriggerReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicWorkflowTriggerReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicWorkflowTriggerReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

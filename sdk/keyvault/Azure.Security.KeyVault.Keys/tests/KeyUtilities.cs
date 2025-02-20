@@ -27,8 +27,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case SignatureAlgorithm.ES256KValue:
                 case SignatureAlgorithm.ES384Value:
                 case SignatureAlgorithm.ES512Value:
-#if NET461
-                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net461.");
+#if NET462
+                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
                     KeyCurveName curveName = algorithm.GetEcKeyCurveName();
                     ECCurve curve = ECCurve.CreateFromOid(curveName.Oid);
@@ -46,10 +46,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         }
                     }
 #endif
-
-                case SignatureAlgorithm.EdDsaValue:
-                    // TODO: Support OKP keys and Ed25519 curves: https://github.com/Azure/azure-sdk-for-net/issues/32232
-                    throw new IgnoreException("Creating client-side OKP keys is not supported.");
 
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));

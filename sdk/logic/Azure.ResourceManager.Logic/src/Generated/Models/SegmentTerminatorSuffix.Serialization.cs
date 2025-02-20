@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Logic.Models
 
         public static SegmentTerminatorSuffix ToSegmentTerminatorSuffix(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return SegmentTerminatorSuffix.None;
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return SegmentTerminatorSuffix.NotSpecified;
-            if (string.Equals(value, "CR", StringComparison.InvariantCultureIgnoreCase)) return SegmentTerminatorSuffix.CR;
-            if (string.Equals(value, "LF", StringComparison.InvariantCultureIgnoreCase)) return SegmentTerminatorSuffix.LF;
-            if (string.Equals(value, "CRLF", StringComparison.InvariantCultureIgnoreCase)) return SegmentTerminatorSuffix.Crlf;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return SegmentTerminatorSuffix.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return SegmentTerminatorSuffix.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CR")) return SegmentTerminatorSuffix.CR;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LF")) return SegmentTerminatorSuffix.LF;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CRLF")) return SegmentTerminatorSuffix.Crlf;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SegmentTerminatorSuffix value.");
         }
     }

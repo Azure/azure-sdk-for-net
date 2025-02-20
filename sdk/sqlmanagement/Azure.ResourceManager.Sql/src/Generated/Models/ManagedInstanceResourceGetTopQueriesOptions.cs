@@ -10,30 +10,31 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The ManagedInstanceResourceGetTopQueriesOptions. </summary>
     public partial class ManagedInstanceResourceGetTopQueriesOptions
     {
-        /// <summary> Initializes a new instance of ManagedInstanceResourceGetTopQueriesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceResourceGetTopQueriesOptions"/>. </summary>
         public ManagedInstanceResourceGetTopQueriesOptions()
         {
         }
 
-        /// <summary> How many &apos;top queries&apos; to return. Default is 5. </summary>
-        public int? NumberOfQueries { get; set; } = null;
-
-        /// <summary> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </summary>
-        public string Databases { get; set; } = null;
-
+        /// <summary> How many 'top queries' to return. Default is 5. </summary>
+        [WirePath("numberOfQueries")]
+        public int? NumberOfQueries { get; set; }
+        /// <summary> Comma separated list of databases to be included into search. All DB's are included if this parameter is not specified. </summary>
+        [WirePath("databases")]
+        public string Databases { get; set; }
         /// <summary> Start time for observed period. </summary>
-        public string StartTime { get; set; } = null;
-
+        [WirePath("startTime")]
+        public string StartTime { get; set; }
         /// <summary> End time for observed period. </summary>
-        public string EndTime { get; set; } = null;
-
+        [WirePath("endTime")]
+        public string EndTime { get; set; }
         /// <summary> The time step to be used to summarize the metric values. Default value is PT1H. </summary>
-        public QueryTimeGrainType? Interval { get; set; } = null;
-
-        /// <summary> Aggregation function to be used, default value is &apos;sum&apos;. </summary>
-        public AggregationFunctionType? AggregationFunction { get; set; } = null;
-
-        /// <summary> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </summary>
-        public SqlMetricType? ObservationMetric { get; set; } = null;
+        [WirePath("interval")]
+        public QueryTimeGrainType? Interval { get; set; }
+        /// <summary> Aggregation function to be used, default value is 'sum'. </summary>
+        [WirePath("aggregationFunction")]
+        public AggregationFunctionType? AggregationFunction { get; set; }
+        /// <summary> Metric to be used for ranking top queries. Default is 'cpu'. </summary>
+        [WirePath("observationMetric")]
+        public SqlMetricType? ObservationMetric { get; set; }
     }
 }

@@ -6,98 +6,183 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeNodeMonitoringResult
+    public partial class SynapseIntegrationRuntimeNodeMonitoringResult : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>
     {
-        internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> nodeName = default;
-            Optional<int> availableMemoryInMB = default;
-            Optional<int> cpuUtilization = default;
-            Optional<int> concurrentJobsLimit = default;
-            Optional<int> concurrentJobsRunning = default;
-            Optional<int> maxConcurrentJobs = default;
-            Optional<float> sentBytes = default;
-            Optional<float> receivedBytes = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(NodeName))
+            {
+                writer.WritePropertyName("nodeName"u8);
+                writer.WriteStringValue(NodeName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryInMB))
+            {
+                writer.WritePropertyName("availableMemoryInMB"u8);
+                writer.WriteNumberValue(AvailableMemoryInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CpuUtilization))
+            {
+                writer.WritePropertyName("cpuUtilization"u8);
+                writer.WriteNumberValue(CpuUtilization.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
+            {
+                writer.WritePropertyName("concurrentJobsLimit"u8);
+                writer.WriteNumberValue(ConcurrentJobsLimit.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsRunning))
+            {
+                writer.WritePropertyName("concurrentJobsRunning"u8);
+                writer.WriteNumberValue(ConcurrentJobsRunning.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
+            {
+                writer.WritePropertyName("maxConcurrentJobs"u8);
+                writer.WriteNumberValue(MaxConcurrentJobs.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SentBytes))
+            {
+                writer.WritePropertyName("sentBytes"u8);
+                writer.WriteNumberValue(SentBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReceivedBytes))
+            {
+                writer.WritePropertyName("receivedBytes"u8);
+                writer.WriteNumberValue(ReceivedBytes.Value);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+        }
+
+        SynapseIntegrationRuntimeNodeMonitoringResult IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nodeName = default;
+            int? availableMemoryInMB = default;
+            int? cpuUtilization = default;
+            int? concurrentJobsLimit = default;
+            int? concurrentJobsRunning = default;
+            int? maxConcurrentJobs = default;
+            float? sentBytes = default;
+            float? receivedBytes = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInMB"))
+                if (property.NameEquals("availableMemoryInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableMemoryInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuUtilization"))
+                if (property.NameEquals("cpuUtilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuUtilization = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"))
+                if (property.NameEquals("concurrentJobsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     concurrentJobsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsRunning"))
+                if (property.NameEquals("concurrentJobsRunning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     concurrentJobsRunning = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"))
+                if (property.NameEquals("maxConcurrentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sentBytes"))
+                if (property.NameEquals("sentBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sentBytes = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("receivedBytes"))
+                if (property.NameEquals("receivedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     receivedBytes = property.Value.GetSingle();
@@ -106,7 +191,47 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeNodeMonitoringResult(nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), additionalProperties);
+            return new SynapseIntegrationRuntimeNodeMonitoringResult(
+                nodeName,
+                availableMemoryInMB,
+                cpuUtilization,
+                concurrentJobsLimit,
+                concurrentJobsRunning,
+                maxConcurrentJobs,
+                sentBytes,
+                receivedBytes,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseIntegrationRuntimeNodeMonitoringResult IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

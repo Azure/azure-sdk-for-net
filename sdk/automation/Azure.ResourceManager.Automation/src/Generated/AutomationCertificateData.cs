@@ -6,47 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationCertificate data model.
+    /// Definition of the certificate.
+    /// </summary>
     public partial class AutomationCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationCertificateData. </summary>
-        public AutomationCertificateData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of AutomationCertificateData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprint"> Gets the thumbprint of the certificate. </param>
-        /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
-        /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
-        /// <param name="createdOn"> Gets the creation time. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
-        /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData thumbprint, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
-        {
-            Thumbprint = thumbprint;
-            ExpireOn = expireOn;
-            IsExportable = isExportable;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            Description = description;
-        }
-
         /// <summary>
-        /// Gets the thumbprint of the certificate.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -70,7 +48,38 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Thumbprint { get; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificateData"/>. </summary>
+        public AutomationCertificateData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="thumbprintString"> Gets the thumbprint of the certificate. </param>
+        /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
+        /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintString, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        {
+            ThumbprintString = thumbprintString;
+            ExpireOn = expireOn;
+            IsExportable = isExportable;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
+            Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Gets the thumbprint of the certificate. </summary>
+        public string ThumbprintString { get; }
         /// <summary> Gets the expiry time of the certificate. </summary>
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Gets the is exportable flag of the certificate. </summary>

@@ -17,12 +17,12 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartObject();
             if (Optional.IsDefined(MetadataFilter))
             {
-                writer.WritePropertyName("metadataFilter");
+                writer.WritePropertyName("metadataFilter"u8);
                 writer.WriteObjectValue(MetadataFilter);
             }
             if (Optional.IsCollectionDefined(SourceFilter))
             {
-                writer.WritePropertyName("sourceFilter");
+                writer.WritePropertyName("sourceFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceFilter)
                 {
@@ -32,10 +32,18 @@ namespace Azure.AI.Language.QuestionAnswering
             }
             if (Optional.IsDefined(LogicalOperation))
             {
-                writer.WritePropertyName("logicalOperation");
+                writer.WritePropertyName("logicalOperation"u8);
                 writer.WriteStringValue(LogicalOperation.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

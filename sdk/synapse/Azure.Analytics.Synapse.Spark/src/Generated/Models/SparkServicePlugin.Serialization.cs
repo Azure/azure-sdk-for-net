@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -15,15 +14,19 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
         {
-            Optional<DateTimeOffset?> preparationStartedAt = default;
-            Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
-            Optional<DateTimeOffset?> submissionStartedAt = default;
-            Optional<DateTimeOffset?> monitoringStartedAt = default;
-            Optional<DateTimeOffset?> cleanupStartedAt = default;
-            Optional<PluginCurrentState> currentState = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? preparationStartedAt = default;
+            DateTimeOffset? resourceAcquisitionStartedAt = default;
+            DateTimeOffset? submissionStartedAt = default;
+            DateTimeOffset? monitoringStartedAt = default;
+            DateTimeOffset? cleanupStartedAt = default;
+            PluginCurrentState? currentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preparationStartedAt"))
+                if (property.NameEquals("preparationStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +36,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     preparationStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resourceAcquisitionStartedAt"))
+                if (property.NameEquals("resourceAcquisitionStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +46,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     resourceAcquisitionStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("submissionStartedAt"))
+                if (property.NameEquals("submissionStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +56,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     submissionStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("monitoringStartedAt"))
+                if (property.NameEquals("monitoringStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +66,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     monitoringStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cleanupStartedAt"))
+                if (property.NameEquals("cleanupStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,18 +76,31 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     cleanupStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentState = new PluginCurrentState(property.Value.GetString());
                     continue;
                 }
             }
-            return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
+            return new SparkServicePlugin(
+                preparationStartedAt,
+                resourceAcquisitionStartedAt,
+                submissionStartedAt,
+                monitoringStartedAt,
+                cleanupStartedAt,
+                currentState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkServicePlugin FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkServicePlugin(document.RootElement);
         }
     }
 }

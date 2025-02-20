@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
     /// Scheme to use for connecting to the host. Defaults to HTTP.
-    /// 
+    ///
     /// Possible enum values:
-    ///  - `&quot;HTTP&quot;` means that the scheme used will be http://
-    ///  - `&quot;HTTPS&quot;` means that the scheme used will be https://
+    ///  - `"HTTP"` means that the scheme used will be http://
+    ///  - `"HTTPS"` means that the scheme used will be https://
     /// </summary>
     public readonly partial struct AppInstanceHttpSchemeType : IEquatable<AppInstanceHttpSchemeType>
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppInstanceHttpSchemeType left, AppInstanceHttpSchemeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppInstanceHttpSchemeType"/> values are not the same. </summary>
         public static bool operator !=(AppInstanceHttpSchemeType left, AppInstanceHttpSchemeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppInstanceHttpSchemeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppInstanceHttpSchemeType"/>. </summary>
         public static implicit operator AppInstanceHttpSchemeType(string value) => new AppInstanceHttpSchemeType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

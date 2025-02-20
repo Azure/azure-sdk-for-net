@@ -18,11 +18,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("orderBy");
+            writer.WritePropertyName("orderBy"u8);
             writer.WriteStringValue(OrderBy.ToString());
-            writer.WritePropertyName("order");
+            writer.WritePropertyName("order"u8);
             writer.WriteStringValue(Order.ToString());
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class RunQueryOrderByConverter : JsonConverter<RunQueryOrderBy>
@@ -31,6 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RunQueryOrderBy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

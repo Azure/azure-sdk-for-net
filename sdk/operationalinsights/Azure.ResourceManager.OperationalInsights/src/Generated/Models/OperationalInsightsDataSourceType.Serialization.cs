@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         public static OperationalInsightsDataSourceType ToOperationalInsightsDataSourceType(this string value)
         {
-            if (string.Equals(value, "CustomLogs", StringComparison.InvariantCultureIgnoreCase)) return OperationalInsightsDataSourceType.CustomLogs;
-            if (string.Equals(value, "AzureWatson", StringComparison.InvariantCultureIgnoreCase)) return OperationalInsightsDataSourceType.AzureWatson;
-            if (string.Equals(value, "Query", StringComparison.InvariantCultureIgnoreCase)) return OperationalInsightsDataSourceType.Query;
-            if (string.Equals(value, "Ingestion", StringComparison.InvariantCultureIgnoreCase)) return OperationalInsightsDataSourceType.Ingestion;
-            if (string.Equals(value, "Alerts", StringComparison.InvariantCultureIgnoreCase)) return OperationalInsightsDataSourceType.Alerts;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomLogs")) return OperationalInsightsDataSourceType.CustomLogs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureWatson")) return OperationalInsightsDataSourceType.AzureWatson;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Query")) return OperationalInsightsDataSourceType.Query;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ingestion")) return OperationalInsightsDataSourceType.Ingestion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Alerts")) return OperationalInsightsDataSourceType.Alerts;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationalInsightsDataSourceType value.");
         }
     }

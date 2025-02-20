@@ -5,25 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityMLAnalyticsSettingsDataSource : IUtf8JsonSerializable
+    public partial class SecurityMLAnalyticsSettingsDataSource : IUtf8JsonSerializable, IJsonModel<SecurityMLAnalyticsSettingsDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityMLAnalyticsSettingsDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityMLAnalyticsSettingsDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ConnectorId))
             {
-                writer.WritePropertyName("connectorId");
+                writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
             if (Optional.IsCollectionDefined(DataTypes))
             {
-                writer.WritePropertyName("dataTypes");
+                writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataTypes)
                 {
@@ -31,25 +51,58 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element)
+        SecurityMLAnalyticsSettingsDataSource IJsonModel<SecurityMLAnalyticsSettingsDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> connectorId = default;
-            Optional<IList<string>> dataTypes = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityMLAnalyticsSettingsDataSource(document.RootElement, options);
+        }
+
+        internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string connectorId = default;
+            IList<string> dataTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectorId"))
+                if (property.NameEquals("connectorId"u8))
                 {
                     connectorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataTypes"))
+                if (property.NameEquals("dataTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -60,8 +113,120 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     dataTypes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityMLAnalyticsSettingsDataSource(connectorId.Value, Optional.ToList(dataTypes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityMLAnalyticsSettingsDataSource(connectorId, dataTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectorId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectorId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectorId))
+                {
+                    builder.Append("  connectorId: ");
+                    if (ConnectorId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConnectorId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConnectorId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataTypes))
+                {
+                    if (DataTypes.Any())
+                    {
+                        builder.Append("  dataTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataTypes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SecurityMLAnalyticsSettingsDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityMLAnalyticsSettingsDataSource IPersistableModel<SecurityMLAnalyticsSettingsDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityMLAnalyticsSettingsDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityMLAnalyticsSettingsDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

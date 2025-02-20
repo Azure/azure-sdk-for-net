@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,61 +14,70 @@ namespace Azure.Monitor.Query.Models
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<string> value = default;
-            Optional<IReadOnlyList<string>> resources = default;
-            Optional<object> additionalProperties = default;
+            string target = default;
+            IReadOnlyList<ErrorDetail> details = default;
+            IReadOnlyList<ErrorAdditionalInfo> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(DeserializeErrorDetail(item));
                     }
-                    resources = array;
+                    details = array;
                     continue;
                 }
-                if (property.NameEquals("additionalProperties"))
+                if (property.NameEquals("additionalInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalProperties = property.Value.GetObject();
+                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                    }
+                    additionalInfo = array;
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, target.Value, value.Value, Optional.ToList(resources), additionalProperties.Value);
+            return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorDetail(document.RootElement);
         }
     }
 }

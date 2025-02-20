@@ -5,79 +5,177 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class IotHubDefinitionDescription : IUtf8JsonSerializable
+    public partial class IotHubDefinitionDescription : IUtf8JsonSerializable, IJsonModel<IotHubDefinitionDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubDefinitionDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IotHubDefinitionDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ApplyAllocationPolicy))
             {
-                writer.WritePropertyName("applyAllocationPolicy");
+                writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
             if (Optional.IsDefined(AllocationWeight))
             {
-                writer.WritePropertyName("allocationWeight");
+                writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
             }
-            writer.WritePropertyName("connectionString");
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static IotHubDefinitionDescription DeserializeIotHubDefinitionDescription(JsonElement element)
+        IotHubDefinitionDescription IJsonModel<IotHubDefinitionDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> applyAllocationPolicy = default;
-            Optional<int> allocationWeight = default;
-            Optional<string> name = default;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubDefinitionDescription(document.RootElement, options);
+        }
+
+        internal static IotHubDefinitionDescription DeserializeIotHubDefinitionDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? applyAllocationPolicy = default;
+            int? allocationWeight = default;
+            string name = default;
             string connectionString = default;
             AzureLocation location = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applyAllocationPolicy"))
+                if (property.NameEquals("applyAllocationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applyAllocationPolicy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allocationWeight"))
+                if (property.NameEquals("allocationWeight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationWeight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubDefinitionDescription(Optional.ToNullable(applyAllocationPolicy), Optional.ToNullable(allocationWeight), name.Value, connectionString, location);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IotHubDefinitionDescription(
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
+                connectionString,
+                location,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubDefinitionDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IotHubDefinitionDescription IPersistableModel<IotHubDefinitionDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubDefinitionDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubDefinitionDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

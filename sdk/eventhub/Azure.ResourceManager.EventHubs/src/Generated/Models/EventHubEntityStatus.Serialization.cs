@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         public static EventHubEntityStatus ToEventHubEntityStatus(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Unknown;
-            if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Active;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Disabled;
-            if (string.Equals(value, "Restoring", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Restoring;
-            if (string.Equals(value, "SendDisabled", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.SendDisabled;
-            if (string.Equals(value, "ReceiveDisabled", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.ReceiveDisabled;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Creating;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Deleting;
-            if (string.Equals(value, "Renaming", StringComparison.InvariantCultureIgnoreCase)) return EventHubEntityStatus.Renaming;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return EventHubEntityStatus.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return EventHubEntityStatus.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return EventHubEntityStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Restoring")) return EventHubEntityStatus.Restoring;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SendDisabled")) return EventHubEntityStatus.SendDisabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReceiveDisabled")) return EventHubEntityStatus.ReceiveDisabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return EventHubEntityStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return EventHubEntityStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Renaming")) return EventHubEntityStatus.Renaming;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubEntityStatus value.");
         }
     }

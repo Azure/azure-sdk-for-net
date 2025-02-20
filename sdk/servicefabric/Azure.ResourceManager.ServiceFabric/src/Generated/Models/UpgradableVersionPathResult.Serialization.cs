@@ -5,24 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class UpgradableVersionPathResult
+    public partial class UpgradableVersionPathResult : IUtf8JsonSerializable, IJsonModel<UpgradableVersionPathResult>
     {
-        internal static UpgradableVersionPathResult DeserializeUpgradableVersionPathResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpgradableVersionPathResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<UpgradableVersionPathResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<string>> supportedPath = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionPathResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpgradableVersionPathResult)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedPath))
+            {
+                writer.WritePropertyName("supportedPath"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedPath)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        UpgradableVersionPathResult IJsonModel<UpgradableVersionPathResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionPathResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpgradableVersionPathResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpgradableVersionPathResult(document.RootElement, options);
+        }
+
+        internal static UpgradableVersionPathResult DeserializeUpgradableVersionPathResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> supportedPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedPath"))
+                if (property.NameEquals("supportedPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -33,8 +100,44 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     supportedPath = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpgradableVersionPathResult(Optional.ToList(supportedPath));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UpgradableVersionPathResult(supportedPath ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpgradableVersionPathResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionPathResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UpgradableVersionPathResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UpgradableVersionPathResult IPersistableModel<UpgradableVersionPathResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionPathResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpgradableVersionPathResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpgradableVersionPathResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpgradableVersionPathResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static ApiManagementSkuRestrictionsReasonCode ToApiManagementSkuRestrictionsReasonCode(this string value)
         {
-            if (string.Equals(value, "QuotaId", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuRestrictionsReasonCode.QuotaId;
-            if (string.Equals(value, "NotAvailableForSubscription", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId")) return ApiManagementSkuRestrictionsReasonCode.QuotaId;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription")) return ApiManagementSkuRestrictionsReasonCode.NotAvailableForSubscription;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuRestrictionsReasonCode value.");
         }
     }

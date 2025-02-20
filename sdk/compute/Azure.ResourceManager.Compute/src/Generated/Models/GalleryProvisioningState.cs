@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(GalleryProvisioningState left, GalleryProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(GalleryProvisioningState left, GalleryProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GalleryProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryProvisioningState"/>. </summary>
         public static implicit operator GalleryProvisioningState(string value) => new GalleryProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

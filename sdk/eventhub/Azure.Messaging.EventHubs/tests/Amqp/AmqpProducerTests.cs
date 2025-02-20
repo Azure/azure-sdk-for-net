@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
@@ -37,6 +38,12 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
             yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
         }
+
+        /// <summary>
+        ///   Mock client diagnostics instance to pass through to EventDataBatch constructor.
+        /// </summary>
+        ///
+        private static MessagingClientDiagnostics MockClientDiagnostics { get; } = new("mock", "mock", "mock", "mock", "mock");
 
         /// <summary>
         ///   Verifies functionality of the constructor.
@@ -1475,7 +1482,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
 
             await producer.Object.CloseAsync(CancellationToken.None);
-            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", new SendEventOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -1542,7 +1549,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verifiable();
 
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
-            await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", options), CancellationToken.None);
+            await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", options, MockClientDiagnostics), CancellationToken.None);
 
             producer.VerifyAll();
         }
@@ -1591,7 +1598,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options);
+            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options, MockClientDiagnostics);
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             var messages = batch.AsReadOnlyCollection<AmqpMessage>();
@@ -1644,7 +1651,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options);
+            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options, MockClientDiagnostics);
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             await producer.Object.SendAsync(batch, CancellationToken.None);
@@ -1685,7 +1692,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using CancellationTokenSource cancellationSource = new CancellationTokenSource();
 
             cancellationSource.Cancel();
-            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", options), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", options, MockClientDiagnostics), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>

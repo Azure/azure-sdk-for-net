@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,16 +16,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static GitHubAccessTokenResponse DeserializeGitHubAccessTokenResponse(JsonElement element)
         {
-            Optional<string> gitHubAccessToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string gitHubAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gitHubAccessToken"))
+                if (property.NameEquals("gitHubAccessToken"u8))
                 {
                     gitHubAccessToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new GitHubAccessTokenResponse(gitHubAccessToken.Value);
+            return new GitHubAccessTokenResponse(gitHubAccessToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GitHubAccessTokenResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGitHubAccessTokenResponse(document.RootElement);
         }
 
         internal partial class GitHubAccessTokenResponseConverter : JsonConverter<GitHubAccessTokenResponse>
@@ -35,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override GitHubAccessTokenResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

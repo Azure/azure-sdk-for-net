@@ -6,21 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEventHubProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventHubProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEventHubProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEventHubProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DigitalTwinsEventHubProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ConnectionStringPrimaryKey))
             {
                 if (ConnectionStringPrimaryKey != null)
                 {
-                    writer.WritePropertyName("connectionStringPrimaryKey");
+                    writer.WritePropertyName("connectionStringPrimaryKey"u8);
                     writer.WriteStringValue(ConnectionStringPrimaryKey);
                 }
                 else
@@ -32,7 +51,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (ConnectionStringSecondaryKey != null)
                 {
-                    writer.WritePropertyName("connectionStringSecondaryKey");
+                    writer.WritePropertyName("connectionStringSecondaryKey"u8);
                     writer.WriteStringValue(ConnectionStringSecondaryKey);
                 }
                 else
@@ -44,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (EndpointUri != null)
                 {
-                    writer.WritePropertyName("endpointUri");
+                    writer.WritePropertyName("endpointUri"u8);
                     writer.WriteStringValue(EndpointUri.AbsoluteUri);
                 }
                 else
@@ -56,7 +75,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (EntityPath != null)
                 {
-                    writer.WritePropertyName("entityPath");
+                    writer.WritePropertyName("entityPath"u8);
                     writer.WriteStringValue(EntityPath);
                 }
                 else
@@ -64,68 +83,44 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("entityPath");
                 }
             }
-            writer.WritePropertyName("endpointType");
-            writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType");
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
-            }
-            if (Optional.IsDefined(DeadLetterSecret))
-            {
-                if (DeadLetterSecret != null)
-                {
-                    writer.WritePropertyName("deadLetterSecret");
-                    writer.WriteStringValue(DeadLetterSecret);
-                }
-                else
-                {
-                    writer.WriteNull("deadLetterSecret");
-                }
-            }
-            if (Optional.IsDefined(DeadLetterUri))
-            {
-                if (DeadLetterUri != null)
-                {
-                    writer.WritePropertyName("deadLetterUri");
-                    writer.WriteStringValue(DeadLetterUri.AbsoluteUri);
-                }
-                else
-                {
-                    writer.WriteNull("deadLetterUri");
-                }
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity");
-                    writer.WriteObjectValue(Identity);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
-            writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element)
+        DigitalTwinsEventHubProperties IJsonModel<DigitalTwinsEventHubProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> connectionStringPrimaryKey = default;
-            Optional<string> connectionStringSecondaryKey = default;
-            Optional<Uri> endpointUri = default;
-            Optional<string> entityPath = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsEventHubProperties(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string connectionStringPrimaryKey = default;
+            string connectionStringSecondaryKey = default;
+            Uri endpointUri = default;
+            string entityPath = default;
             EndpointType endpointType = default;
-            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
-            Optional<DateTimeOffset?> createdTime = default;
-            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
-            Optional<string> deadLetterSecret = default;
-            Optional<Uri> deadLetterUri = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            DigitalTwinsEndpointProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DigitalTwinsAuthenticationType? authenticationType = default;
+            string deadLetterSecret = default;
+            Uri deadLetterUri = default;
+            DigitalTwinsManagedIdentityReference identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionStringPrimaryKey"))
+                if (property.NameEquals("connectionStringPrimaryKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +130,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     connectionStringPrimaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionStringSecondaryKey"))
+                if (property.NameEquals("connectionStringSecondaryKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +140,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     connectionStringSecondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointUri"))
+                if (property.NameEquals("endpointUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +150,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     endpointUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("entityPath"))
+                if (property.NameEquals("entityPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,12 +160,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     entityPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +175,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     provisioningState = new DigitalTwinsEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,17 +185,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deadLetterSecret"))
+                if (property.NameEquals("deadLetterSecret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,7 +204,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     deadLetterSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deadLetterUri"))
+                if (property.NameEquals("deadLetterUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -220,18 +214,66 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     deadLetterUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DigitalTwinsEventHubProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, connectionStringPrimaryKey.Value, connectionStringSecondaryKey.Value, endpointUri.Value, entityPath.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DigitalTwinsEventHubProperties(
+                endpointType,
+                provisioningState,
+                createdTime,
+                authenticationType,
+                deadLetterSecret,
+                deadLetterUri,
+                identity,
+                serializedAdditionalRawData,
+                connectionStringPrimaryKey,
+                connectionStringSecondaryKey,
+                endpointUri,
+                entityPath);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsEventHubProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DigitalTwinsEventHubProperties IPersistableModel<DigitalTwinsEventHubProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDigitalTwinsEventHubProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DigitalTwinsEventHubProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

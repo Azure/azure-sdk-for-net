@@ -6,49 +6,167 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class PrometheusOSProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class PrometheusOSProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<PrometheusOSProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrometheusOSProviderInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PrometheusOSProviderInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrometheusUri))
-            {
-                writer.WritePropertyName("prometheusUrl");
-                writer.WriteStringValue(PrometheusUri.AbsoluteUri);
-            }
-            writer.WritePropertyName("providerType");
-            writer.WriteStringValue(ProviderType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<Uri> prometheusUrl = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PrometheusOSProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PrometheusUri))
+            {
+                writer.WritePropertyName("prometheusUrl"u8);
+                writer.WriteStringValue(PrometheusUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SslPreference))
+            {
+                writer.WritePropertyName("sslPreference"u8);
+                writer.WriteStringValue(SslPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(SslCertificateUri))
+            {
+                writer.WritePropertyName("sslCertificateUri"u8);
+                writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SapSid))
+            {
+                writer.WritePropertyName("sapSid"u8);
+                writer.WriteStringValue(SapSid);
+            }
+        }
+
+        PrometheusOSProviderInstanceProperties IJsonModel<PrometheusOSProviderInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrometheusOSProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrometheusOSProviderInstanceProperties(document.RootElement, options);
+        }
+
+        internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri prometheusUrl = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
+            string sapSid = default;
             string providerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prometheusUrl"))
+                if (property.NameEquals("prometheusUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        prometheusUrl = null;
                         continue;
                     }
                     prometheusUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("sslPreference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslPreference = new SapSslPreference(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslCertificateUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslCertificateUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sapSid"u8))
+                {
+                    sapSid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrometheusOSProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                prometheusUrl,
+                sslPreference,
+                sslCertificateUri,
+                sapSid);
         }
+
+        BinaryData IPersistableModel<PrometheusOSProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrometheusOSProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrometheusOSProviderInstanceProperties IPersistableModel<PrometheusOSProviderInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrometheusOSProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrometheusOSProviderInstanceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrometheusOSProviderInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseBlobAuditingPolicyState ToSynapseBlobAuditingPolicyState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseBlobAuditingPolicyState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseBlobAuditingPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SynapseBlobAuditingPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SynapseBlobAuditingPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseBlobAuditingPolicyState value.");
         }
     }

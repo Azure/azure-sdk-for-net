@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderRegistrationProperties. </summary>
     public partial class ProviderRegistrationProperties : ResourceProviderManifestProperties
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationProperties"/>. </summary>
         public ProviderRegistrationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationProperties"/>. </summary>
         /// <param name="providerAuthentication"></param>
         /// <param name="providerAuthorizations"></param>
         /// <param name="namespace"></param>
@@ -31,10 +31,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="capabilities"></param>
         /// <param name="metadata"> Anything. </param>
         /// <param name="templateDeploymentOptions"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="providerHubMetadata"></param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
-        internal ProviderRegistrationProperties(ResourceProviderManifestPropertiesProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ResourceProviderManifestPropertiesFeaturesRule featuresRule, ResourceProviderManifestPropertiesRequestHeaderOptions requestHeaderOptions, ResourceProviderManifestPropertiesManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions, ProviderRegistrationPropertiesProviderHubMetadata providerHubMetadata, ProvisioningState? provisioningState, ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions)
+        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions, serializedAdditionalRawData)
         {
             ProviderHubMetadata = providerHubMetadata;
             ProvisioningState = provisioningState;
@@ -42,10 +43,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Gets or sets the provider hub metadata. </summary>
-        public ProviderRegistrationPropertiesProviderHubMetadata ProviderHubMetadata { get; set; }
-        /// <summary> The provisioned state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProviderHubMetadata ProviderHubMetadata { get; set; }
+        /// <summary> Gets or sets the provisioning state. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the subscription lifecycle notification specifications. </summary>
-        public ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
+        public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
     }
 }

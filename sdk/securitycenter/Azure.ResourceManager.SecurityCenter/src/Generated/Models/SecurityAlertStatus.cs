@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ResolvedValue = "Resolved";
         private const string DismissedValue = "Dismissed";
 
-        /// <summary> An alert which doesn&apos;t specify a value is assigned the status &apos;Active&apos;. </summary>
+        /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
         public static SecurityAlertStatus Active { get; } = new SecurityAlertStatus(ActiveValue);
         /// <summary> An alert which is in handling state. </summary>
         public static SecurityAlertStatus InProgress { get; } = new SecurityAlertStatus(InProgressValue);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityAlertStatus left, SecurityAlertStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are not the same. </summary>
         public static bool operator !=(SecurityAlertStatus left, SecurityAlertStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAlertStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertStatus"/>. </summary>
         public static implicit operator SecurityAlertStatus(string value) => new SecurityAlertStatus(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

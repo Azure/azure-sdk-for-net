@@ -7,20 +7,62 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationJobCollection
     {
-        // Get job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateJob()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/createJob.json
+            // this example is just showing the usage of "Job_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "ContoseAutomationAccount";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // get the collection of this AutomationJobResource
+            AutomationJobCollection collection = automationAccount.GetAutomationJobs();
+
+            // invoke the operation
+            string jobName = "foo";
+            AutomationJobCreateOrUpdateContent content = new AutomationJobCreateOrUpdateContent
+            {
+                RunbookName = "TestRunbook",
+                Parameters =
+{
+["key01"] = "value01",
+["key02"] = "value02"
+},
+                RunOn = "",
+            };
+            ArmOperation<AutomationJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, content);
+            AutomationJobResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutomationJobData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetJob()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJob.json
@@ -53,9 +95,40 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListJobsByAutomationAccount()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/listJobsByAutomationAccount.json
+            // this example is just showing the usage of "Job_ListByAutomationAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "ContoseAutomationAccount";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // get the collection of this AutomationJobResource
+            AutomationJobCollection collection = automationAccount.GetAutomationJobs();
+
+            // invoke the operation and iterate over the result
+            await foreach (AutomationJobCollectionItemData item in collection.GetAllAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetJob()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJob.json
@@ -84,13 +157,12 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Create job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateJob()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetJob()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/createJob.json
-            // this example is just showing the usage of "Job_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJob.json
+            // this example is just showing the usage of "Job_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,57 +182,21 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // invoke the operation
             string jobName = "foo";
-            AutomationJobCreateOrUpdateContent content = new AutomationJobCreateOrUpdateContent()
+            NullableResponse<AutomationJobResource> response = await collection.GetIfExistsAsync(jobName);
+            AutomationJobResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
             {
-                RunbookName = "TestRunbook",
-                Parameters =
-{
-["key01"] = "value01",
-["key02"] = "value02",
-},
-                RunOn = "",
-            };
-            ArmOperation<AutomationJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, content);
-            AutomationJobResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutomationJobData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // List jobs by automation account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListJobsByAutomationAccount()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/listJobsByAutomationAccount.json
-            // this example is just showing the usage of "Job_ListByAutomationAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountResource created on azure
-            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "ContoseAutomationAccount";
-            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
-            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
-
-            // get the collection of this AutomationJobResource
-            AutomationJobCollection collection = automationAccount.GetAutomationJobs();
-
-            // invoke the operation and iterate over the result
-            await foreach (AutomationJobCollectionItemData item in collection.GetAllAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
+                Console.WriteLine("Succeeded with null as result");
             }
-
-            Console.WriteLine($"Succeeded");
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutomationJobData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

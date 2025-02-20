@@ -15,9 +15,27 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("loop");
+            writer.WritePropertyName("loop"u8);
             writer.WriteBooleanValue(Loop);
+            if (Optional.IsDefined(InterruptCallMediaOperation))
+            {
+                writer.WritePropertyName("interruptCallMediaOperation"u8);
+                writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
+            }
+            if (Optional.IsDefined(InterruptHoldAudio))
+            {
+                writer.WritePropertyName("interruptHoldAudio"u8);
+                writer.WriteBooleanValue(InterruptHoldAudio.Value);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

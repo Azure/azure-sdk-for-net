@@ -5,37 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAddressInstructionResult
+    public partial class DataCenterAddressInstructionResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressInstructionResult>
     {
-        internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressInstructionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataCenterAddressInstructionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> communicationInstruction = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(CommunicationInstruction))
+            {
+                writer.WritePropertyName("communicationInstruction"u8);
+                writer.WriteStringValue(CommunicationInstruction);
+            }
+        }
+
+        DataCenterAddressInstructionResult IJsonModel<DataCenterAddressInstructionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCenterAddressInstructionResult(document.RootElement, options);
+        }
+
+        internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string communicationInstruction = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
+            AzureLocation? dataCenterAzureLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("communicationInstruction"))
+                if (property.NameEquals("communicationInstruction"u8))
                 {
                     communicationInstruction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datacenterAddressType"))
+                if (property.NameEquals("datacenterAddressType"u8))
                 {
                     dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
                     continue;
                 }
-                if (property.NameEquals("supportedCarriersForReturnShipment"))
+                if (property.NameEquals("supportedCarriersForReturnShipment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -46,18 +94,53 @@ namespace Azure.ResourceManager.DataBox.Models
                     supportedCarriersForReturnShipment = array;
                     continue;
                 }
-                if (property.NameEquals("dataCenterAzureLocation"))
+                if (property.NameEquals("dataCenterAzureLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataCenterAzureLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), communicationInstruction.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataCenterAddressInstructionResult(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData, communicationInstruction);
         }
+
+        BinaryData IPersistableModel<DataCenterAddressInstructionResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataCenterAddressInstructionResult IPersistableModel<DataCenterAddressInstructionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataCenterAddressInstructionResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataCenterAddressInstructionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

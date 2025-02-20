@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -14,16 +14,51 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the VirtualNetworkLink data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualNetworkLink data model.
+    /// Describes a link to virtual network for a Private DNS zone.
+    /// </summary>
     public partial class VirtualNetworkLinkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualNetworkLinkData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,22 +68,33 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="etag"> The ETag of the virtual network link. </param>
         /// <param name="virtualNetwork"> The reference of the virtual network. </param>
         /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
-        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="privateDnsResolutionPolicy"> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </param>
+        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, bool? registrationEnabled, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
             RegistrationEnabled = registrationEnabled;
+            PrivateDnsResolutionPolicy = privateDnsResolutionPolicy;
             VirtualNetworkLinkState = virtualNetworkLinkState;
             PrivateDnsProvisioningState = privateDnsProvisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkData"/> for deserialization. </summary>
+        internal VirtualNetworkLinkData()
+        {
         }
 
         /// <summary> The ETag of the virtual network link. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The reference of the virtual network. </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualNetwork.id")]
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
@@ -61,10 +107,16 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </summary>
+        [WirePath("properties.registrationEnabled")]
         public bool? RegistrationEnabled { get; set; }
-        /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        /// <summary> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </summary>
+        [WirePath("properties.resolutionPolicy")]
+        public PrivateDnsResolutionPolicy? PrivateDnsResolutionPolicy { get; set; }
+        /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.virtualNetworkLinkState")]
         public VirtualNetworkLinkState? VirtualNetworkLinkState { get; }
         /// <summary> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.provisioningState")]
         public PrivateDnsProvisioningState? PrivateDnsProvisioningState { get; }
     }
 }

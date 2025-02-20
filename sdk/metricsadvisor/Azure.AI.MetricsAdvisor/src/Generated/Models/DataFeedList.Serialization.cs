@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,20 +14,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataFeedList DeserializeDataFeedList(JsonElement element)
         {
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataFeedDetail>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextLink = default;
+            IReadOnlyList<DataFeedDetail> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataFeedDetail> array = new List<DataFeedDetail>();
@@ -40,7 +42,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedList(nextLink.Value, Optional.ToList(value));
+            return new DataFeedList(nextLink, value ?? new ChangeTrackingList<DataFeedDetail>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFeedList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFeedList(document.RootElement);
         }
     }
 }

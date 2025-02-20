@@ -17,45 +17,63 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
-                writer.WriteStringValue(ComputeType.Value.ToString());
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteObjectValue<object>(ComputeType);
             }
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
-                writer.WriteNumberValue(CoreCount.Value);
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteObjectValue<object>(CoreCount);
             }
             writer.WriteEndObject();
         }
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object computeType = default;
+            object coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    computeType = new DataFlowComputeType(property.Value.GetString());
+                    computeType = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    coreCount = property.Value.GetInt32();
+                    coreCount = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ExecuteDataFlowActivityTypePropertiesCompute(Optional.ToNullable(computeType), Optional.ToNullable(coreCount));
+            return new ExecuteDataFlowActivityTypePropertiesCompute(computeType, coreCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ExecuteDataFlowActivityTypePropertiesCompute FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteDataFlowActivityTypePropertiesCompute(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

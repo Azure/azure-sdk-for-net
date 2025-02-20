@@ -6,94 +6,190 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowDebugSessionInfo
+    public partial class DataFlowDebugSessionInfo : IUtf8JsonSerializable, IJsonModel<DataFlowDebugSessionInfo>
     {
-        internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowDebugSessionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataFlowDebugSessionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> dataFlowName = default;
-            Optional<string> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> nodeCount = default;
-            Optional<string> integrationRuntimeName = default;
-            Optional<Guid> sessionId = default;
-            Optional<string> startTime = default;
-            Optional<int> timeToLiveInMinutes = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(DataFlowName))
+            {
+                writer.WritePropertyName("dataFlowName"u8);
+                writer.WriteStringValue(DataFlowName);
+            }
+            if (Optional.IsDefined(ComputeType))
+            {
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteStringValue(ComputeType);
+            }
+            if (Optional.IsDefined(CoreCount))
+            {
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteNumberValue(CoreCount.Value);
+            }
+            if (Optional.IsDefined(NodeCount))
+            {
+                writer.WritePropertyName("nodeCount"u8);
+                writer.WriteNumberValue(NodeCount.Value);
+            }
+            if (Optional.IsDefined(IntegrationRuntimeName))
+            {
+                writer.WritePropertyName("integrationRuntimeName"u8);
+                writer.WriteStringValue(IntegrationRuntimeName);
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId.Value);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(TimeToLiveInMinutes))
+            {
+                writer.WritePropertyName("timeToLiveInMinutes"u8);
+                writer.WriteNumberValue(TimeToLiveInMinutes.Value);
+            }
+            if (Optional.IsDefined(LastActivityOn))
+            {
+                writer.WritePropertyName("lastActivityTime"u8);
+                writer.WriteStringValue(LastActivityOn.Value, "O");
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+        }
+
+        DataFlowDebugSessionInfo IJsonModel<DataFlowDebugSessionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugSessionInfo(document.RootElement, options);
+        }
+
+        internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string dataFlowName = default;
+            string computeType = default;
+            int? coreCount = default;
+            int? nodeCount = default;
+            string integrationRuntimeName = default;
+            Guid? sessionId = default;
+            DateTimeOffset? startTime = default;
+            int? timeToLiveInMinutes = default;
+            DateTimeOffset? lastActivityTime = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataFlowName"))
+                if (property.NameEquals("dataFlowName"u8))
                 {
                     dataFlowName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeCount"))
+                if (property.NameEquals("nodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("integrationRuntimeName"))
+                if (property.NameEquals("integrationRuntimeName"u8))
                 {
                     integrationRuntimeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
-                {
-                    startTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeToLiveInMinutes"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("timeToLiveInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     timeToLiveInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastActivityTime"))
+                if (property.NameEquals("lastActivityTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastActivityTime = property.Value.GetDateTimeOffset("O");
@@ -102,7 +198,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), startTime.Value, Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName,
+                computeType,
+                coreCount,
+                nodeCount,
+                integrationRuntimeName,
+                sessionId,
+                startTime,
+                timeToLiveInMinutes,
+                lastActivityTime,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFlowDebugSessionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFlowDebugSessionInfo IPersistableModel<DataFlowDebugSessionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowDebugSessionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowDebugSessionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

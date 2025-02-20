@@ -17,14 +17,14 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("documents");
+            writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("errors");
+            writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
@@ -33,59 +33,78 @@ namespace Azure.AI.TextAnalytics
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
-                writer.WritePropertyName("statistics");
+                writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
-            writer.WritePropertyName("modelVersion");
+            writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
             writer.WriteEndObject();
         }
 
         internal static PiiEntitiesResult DeserializePiiEntitiesResult(JsonElement element)
         {
-            IList<PIIResultWithDetectedLanguage> documents = default;
-            IList<InputError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<PiiResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documents"))
+                if (property.NameEquals("documents"u8))
                 {
-                    List<PIIResultWithDetectedLanguage> array = new List<PIIResultWithDetectedLanguage>();
+                    List<PiiResultDocumentsItem> array = new List<PiiResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PIIResultWithDetectedLanguage.DeserializePIIResultWithDetectedLanguage(item));
+                        array.Add(PiiResultDocumentsItem.DeserializePiiResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
-                    List<InputError> array = new List<InputError>();
+                    List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputError.DeserializeInputError(item));
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new PiiEntitiesResult(errors, statistics.Value, modelVersion, documents);
+            return new PiiEntitiesResult(errors, statistics, modelVersion, documents);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PiiEntitiesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePiiEntitiesResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

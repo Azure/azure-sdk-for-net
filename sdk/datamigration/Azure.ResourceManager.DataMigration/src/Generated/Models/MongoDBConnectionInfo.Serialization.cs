@@ -5,198 +5,271 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBConnectionInfo : IUtf8JsonSerializable
+    public partial class MongoDBConnectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MongoDBConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
             if (Optional.IsDefined(EncryptConnection))
             {
-                writer.WritePropertyName("encryptConnection");
+                writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
             if (Optional.IsDefined(ServerBrandVersion))
             {
-                writer.WritePropertyName("serverBrandVersion");
+                writer.WritePropertyName("serverBrandVersion"u8);
                 writer.WriteStringValue(ServerBrandVersion);
             }
             if (Optional.IsDefined(ServerVersion))
             {
-                writer.WritePropertyName("serverVersion");
+                writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
             if (Optional.IsDefined(ServerName))
             {
-                writer.WritePropertyName("serverName");
+                writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
-                writer.WritePropertyName("trustServerCertificate");
+                writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
             if (Optional.IsDefined(EnforceSSL))
             {
-                writer.WritePropertyName("enforceSSL");
+                writer.WritePropertyName("enforceSSL"u8);
                 writer.WriteBooleanValue(EnforceSSL.Value);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(AdditionalSettings))
             {
-                writer.WritePropertyName("additionalSettings");
+                writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(ConnectionInfoType);
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName");
-                writer.WriteStringValue(UserName);
-            }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password");
-                writer.WriteStringValue(Password);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static MongoDBConnectionInfo DeserializeMongoDBConnectionInfo(JsonElement element)
+        MongoDBConnectionInfo IJsonModel<MongoDBConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBConnectionInfo(document.RootElement, options);
+        }
+
+        internal static MongoDBConnectionInfo DeserializeMongoDBConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string connectionString = default;
-            Optional<string> dataSource = default;
-            Optional<bool> encryptConnection = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverName = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<bool> enforceSSL = default;
-            Optional<int> port = default;
-            Optional<string> additionalSettings = default;
-            Optional<AuthenticationType> authentication = default;
+            string dataSource = default;
+            bool? encryptConnection = default;
+            string serverBrandVersion = default;
+            string serverVersion = default;
+            string serverName = default;
+            bool? trustServerCertificate = default;
+            bool? enforceSSL = default;
+            int? port = default;
+            string additionalSettings = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptConnection"))
+                if (property.NameEquals("encryptConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptConnection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serverBrandVersion"))
+                if (property.NameEquals("serverBrandVersion"u8))
                 {
                     serverBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverVersion"))
+                if (property.NameEquals("serverVersion"u8))
                 {
                     serverVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trustServerCertificate"))
+                if (property.NameEquals("trustServerCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trustServerCertificate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enforceSSL"))
+                if (property.NameEquals("enforceSSL"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enforceSSL = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("additionalSettings"))
+                if (property.NameEquals("additionalSettings"u8))
                 {
                     additionalSettings = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authentication = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBConnectionInfo(type, userName.Value, password.Value, connectionString, dataSource.Value, Optional.ToNullable(encryptConnection), serverBrandVersion.Value, serverVersion.Value, serverName.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(enforceSSL), Optional.ToNullable(port), additionalSettings.Value, Optional.ToNullable(authentication));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                connectionString,
+                dataSource,
+                encryptConnection,
+                serverBrandVersion,
+                serverVersion,
+                serverName,
+                trustServerCertificate,
+                enforceSSL,
+                port,
+                additionalSettings,
+                authentication);
         }
+
+        BinaryData IPersistableModel<MongoDBConnectionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBConnectionInfo IPersistableModel<MongoDBConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBConnectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

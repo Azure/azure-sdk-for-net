@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidationResponse))
             {
-                writer.WritePropertyName("validationResponse");
+                writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);
             }
             writer.WriteEndObject();
@@ -28,16 +28,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         internal static SubscriptionValidationResponse DeserializeSubscriptionValidationResponse(JsonElement element)
         {
-            Optional<string> validationResponse = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string validationResponse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationResponse"))
+                if (property.NameEquals("validationResponse"u8))
                 {
                     validationResponse = property.Value.GetString();
                     continue;
                 }
             }
-            return new SubscriptionValidationResponse(validationResponse.Value);
+            return new SubscriptionValidationResponse(validationResponse);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SubscriptionValidationResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSubscriptionValidationResponse(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SubscriptionValidationResponseConverter : JsonConverter<SubscriptionValidationResponse>
@@ -46,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SubscriptionValidationResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

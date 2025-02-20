@@ -278,7 +278,7 @@ namespace Azure.Core
             return "Invalid resource id.";
         }
 
-        private static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining)
+        private static ReadOnlySpan<char> PopNextWord(scoped ref ReadOnlySpan<char> remaining)
         {
             int index = remaining.IndexOf(Separator);
             if (index < 0)
@@ -350,14 +350,13 @@ namespace Azure.Core
             StringBuilder builder = new StringBuilder(initial);
             if (!IsProviderResource)
             {
-                builder.Append($"/{ResourceType.GetLastType()}");
+                builder.Append('/').Append(ResourceType.GetLastType());
                 if (!string.IsNullOrWhiteSpace(Name))
-                    builder.Append($"/{Name}");
+                    builder.Append('/').Append(Name);
             }
             else
             {
-                builder.Append(ProviderStart)
-                    .Append($"{ResourceType}/{Name}");
+                builder.Append(ProviderStart).Append(ResourceType).Append('/').Append(Name);
             }
 
             return builder.ToString();
@@ -527,13 +526,13 @@ namespace Azure.Core
         /// If the method returns false, result will be null.
         /// </param>
         /// <returns> True if the parse operation was successful; otherwise, false. </returns>
-        public static bool TryParse(string input, out ResourceIdentifier? result)
+        public static bool TryParse(string? input, out ResourceIdentifier? result)
         {
             result = null;
             if (string.IsNullOrEmpty(input))
                 return false;
 
-            result = new ResourceIdentifier(input);
+            result = new ResourceIdentifier(input!);
             var error = result.Parse();
             if (error is null)
                 return true;

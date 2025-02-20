@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static BackupFrequencyUnit ToBackupFrequencyUnit(this string value)
         {
-            if (string.Equals(value, "Day", StringComparison.InvariantCultureIgnoreCase)) return BackupFrequencyUnit.Day;
-            if (string.Equals(value, "Hour", StringComparison.InvariantCultureIgnoreCase)) return BackupFrequencyUnit.Hour;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Day")) return BackupFrequencyUnit.Day;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hour")) return BackupFrequencyUnit.Hour;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupFrequencyUnit value.");
         }
     }

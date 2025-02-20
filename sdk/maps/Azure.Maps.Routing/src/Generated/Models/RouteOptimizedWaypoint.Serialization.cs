@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,32 +13,42 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteOptimizedWaypoint DeserializeRouteOptimizedWaypoint(JsonElement element)
         {
-            Optional<int> providedIndex = default;
-            Optional<int> optimizedIndex = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? providedIndex = default;
+            int? optimizedIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providedIndex"))
+                if (property.NameEquals("providedIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providedIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("optimizedIndex"))
+                if (property.NameEquals("optimizedIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optimizedIndex = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex));
+            return new RouteOptimizedWaypoint(providedIndex, optimizedIndex);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteOptimizedWaypoint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteOptimizedWaypoint(document.RootElement);
         }
     }
 }

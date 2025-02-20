@@ -29,12 +29,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Batch,
         /// <summary>
         /// The LOGON32_LOGON_INTERACTIVE Win32 login mode. UAC is enabled on
-        /// Windows VirtualMachineConfiguration Pools. If this option is used
-        /// with an elevated user identity in a Windows
-        /// VirtualMachineConfiguration Pool, the user session will not be
-        /// elevated unless the application executed by the Task command line
-        /// is configured to always require administrative privilege or to
-        /// always require maximum privilege.
+        /// Windows Pools. If this option is used with an elevated user
+        /// identity in a Windows Pool, the user session will not be elevated
+        /// unless the application executed by the Task command line is
+        /// configured to always require administrative privilege or to always
+        /// require maximum privilege.
         /// </summary>
         [EnumMember(Value = "interactive")]
         Interactive

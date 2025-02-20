@@ -14,12 +14,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct CategorizedEntity
     {
-        internal CategorizedEntity(EntityWithResolution entity)
-            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length, entity.Resolutions)
+        internal CategorizedEntity(Entity entity)
+            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length)
         {
         }
 
-        internal CategorizedEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length, IList<BaseResolution> resolutions)
+        internal CategorizedEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length)
         {
             // We shipped TA 5.0.0 Category == string.Empty if the service returned a null value for Category.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
@@ -29,9 +29,6 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScore = confidenceScore;
             Offset = offset;
             Length = length;
-            Resolutions = (resolutions is not null)
-                ? new ReadOnlyCollection<BaseResolution>(resolutions)
-                : new List<BaseResolution>();
         }
 
         /// <summary>
@@ -68,18 +65,5 @@ namespace Azure.AI.TextAnalytics
         /// The length of the matching text in the input document.
         /// </summary>
         public int Length { get; }
-
-        /// <summary>
-        /// The collection of entity resolutions. Please note <see cref="BaseResolution"/> is the base class. According
-        /// to the scenario, a derived class of the base class might need to be assigned here, or this property needs
-        /// to be casted to one of the possible derived classes. The available derived classes include
-        /// <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>,
-        /// <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>,
-        /// <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>,
-        /// <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>,
-        /// <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
-        /// To learn more, see <see href=" https://aka.ms/azsdk/language/ner-resolutions"/>
-        /// </summary>
-        public IReadOnlyCollection<BaseResolution> Resolutions { get; }
     }
 }

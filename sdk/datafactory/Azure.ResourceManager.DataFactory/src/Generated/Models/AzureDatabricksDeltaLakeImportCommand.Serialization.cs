@@ -6,79 +6,106 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDatabricksDeltaLakeImportCommand : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeImportCommand : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeImportCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeImportCommand>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureDatabricksDeltaLakeImportCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeImportCommand>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeImportCommand)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DateFormat))
             {
-                writer.WritePropertyName("dateFormat");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DateFormat);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFormat.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("dateFormat"u8);
+                JsonSerializer.Serialize(writer, DateFormat);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
-                writer.WritePropertyName("timestampFormat");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TimestampFormat);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TimestampFormat.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("timestampFormat"u8);
+                JsonSerializer.Serialize(writer, TimestampFormat);
             }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(ImportSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeImportCommand DeserializeAzureDatabricksDeltaLakeImportCommand(JsonElement element)
+        AzureDatabricksDeltaLakeImportCommand IJsonModel<AzureDatabricksDeltaLakeImportCommand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> dateFormat = default;
-            Optional<BinaryData> timestampFormat = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeImportCommand>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeImportCommand)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeImportCommand(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeImportCommand DeserializeAzureDatabricksDeltaLakeImportCommand(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> dateFormat = default;
+            DataFactoryElement<string> timestampFormat = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateFormat"))
+                if (property.NameEquals("dateFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFormat = BinaryData.FromString(property.Value.GetRawText());
+                    dateFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("timestampFormat"))
+                if (property.NameEquals("timestampFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timestampFormat = BinaryData.FromString(property.Value.GetRawText());
+                    timestampFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
@@ -86,7 +113,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);
+            return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeImportCommand>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeImportCommand>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeImportCommand)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureDatabricksDeltaLakeImportCommand IPersistableModel<AzureDatabricksDeltaLakeImportCommand>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeImportCommand>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDatabricksDeltaLakeImportCommand(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeImportCommand)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeImportCommand>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

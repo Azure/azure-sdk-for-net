@@ -15,29 +15,47 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("playSourceInfo");
-            writer.WriteObjectValue(PlaySourceInfo);
+            writer.WritePropertyName("playSources"u8);
+            writer.WriteStartArray();
+            foreach (var item in PlaySources)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PlayTo))
             {
-                writer.WritePropertyName("playTo");
+                writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlayOptions))
             {
-                writer.WritePropertyName("playOptions");
+                writer.WritePropertyName("playOptions"u8);
                 writer.WriteObjectValue(PlayOptions);
             }
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(OperationCallbackUri))
+            {
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

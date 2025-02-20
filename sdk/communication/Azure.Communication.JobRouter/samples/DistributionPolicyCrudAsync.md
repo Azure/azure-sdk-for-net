@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a distribution policy
@@ -24,7 +23,7 @@ string distributionPolicyId = "my-distribution-policy";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(1),
+        offerExpiresAfter: TimeSpan.FromMinutes(1),
         mode: new LongestIdleMode())
     {
         Name = "My distribution policy"
@@ -46,7 +45,7 @@ Console.WriteLine($"Successfully fetched distribution policy with id: {queriedDi
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy_Async
 Response<DistributionPolicy> updatedDistributionPolicy = await routerAdministrationClient.UpdateDistributionPolicyAsync(
-    new UpdateDistributionPolicyOptions(distributionPolicyId)
+    new DistributionPolicy(distributionPolicyId)
     {
         // you can update one or more properties of distribution policy
         Mode = new RoundRobinMode(),
@@ -58,12 +57,12 @@ Console.WriteLine($"Distribution policy successfully update with new distributio
 ## List distribution policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies_Async
-AsyncPageable<DistributionPolicyItem> distributionPolicies = routerAdministrationClient.GetDistributionPoliciesAsync();
-await foreach (Page<DistributionPolicyItem> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
+AsyncPageable<DistributionPolicy> distributionPolicies = routerAdministrationClient.GetDistributionPoliciesAsync(cancellationToken: default);
+await foreach (Page<DistributionPolicy> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (DistributionPolicyItem? policy in asPage.Values)
+    foreach (DistributionPolicy? policy in asPage.Values)
     {
-        Console.WriteLine($"Listing distribution policy with id: {policy.DistributionPolicy.Id}");
+        Console.WriteLine($"Listing distribution policy with id: {policy.Id}");
     }
 }
 ```

@@ -5,53 +5,165 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmentNetworkDependency
+    public partial class IntegrationServiceEnvironmentNetworkDependency : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentNetworkDependency>
     {
-        internal static IntegrationServiceEnvironmentNetworkDependency DeserializeIntegrationServiceEnvironmentNetworkDependency(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentNetworkDependency>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IntegrationServiceEnvironmentNetworkDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IntegrationServiceEnvironmentNetworkDependencyCategoryType> category = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint>> endpoints = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependency)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in Endpoints)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        IntegrationServiceEnvironmentNetworkDependency IJsonModel<IntegrationServiceEnvironmentNetworkDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependency)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentNetworkDependency(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceEnvironmentNetworkDependency DeserializeIntegrationServiceEnvironmentNetworkDependency(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IntegrationServiceEnvironmentNetworkDependencyCategoryType? category = default;
+            string displayName = default;
+            IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint> endpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     category = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IntegrationServiceEnvironmentNetworkEndpoint> array = new List<IntegrationServiceEnvironmentNetworkEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationServiceEnvironmentNetworkEndpoint.DeserializeIntegrationServiceEnvironmentNetworkEndpoint(item));
+                        array.Add(IntegrationServiceEnvironmentNetworkEndpoint.DeserializeIntegrationServiceEnvironmentNetworkEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceEnvironmentNetworkDependency(Optional.ToNullable(category), displayName.Value, Optional.ToList(endpoints));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IntegrationServiceEnvironmentNetworkDependency(category, displayName, endpoints ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkEndpoint>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependency)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationServiceEnvironmentNetworkDependency IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationServiceEnvironmentNetworkDependency(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependency)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationServiceEnvironmentNetworkDependency>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

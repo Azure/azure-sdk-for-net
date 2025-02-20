@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GovLength))
             {
-                writer.WritePropertyName("govLength");
+                writer.WritePropertyName("govLength"u8);
                 writer.WriteNumberValue(GovLength.Value);
             }
             if (Optional.IsDefined(Profile))
             {
-                writer.WritePropertyName("profile");
+                writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,32 +30,50 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static Mpeg4Configuration DeserializeMpeg4Configuration(JsonElement element)
         {
-            Optional<float> govLength = default;
-            Optional<Mpeg4Profile> profile = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            float? govLength = default;
+            Mpeg4Profile? profile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("govLength"))
+                if (property.NameEquals("govLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     govLength = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("profile"))
+                if (property.NameEquals("profile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     profile = new Mpeg4Profile(property.Value.GetString());
                     continue;
                 }
             }
-            return new Mpeg4Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new Mpeg4Configuration(govLength, profile);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Mpeg4Configuration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMpeg4Configuration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

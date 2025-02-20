@@ -1,38 +1,33 @@
-# Azure Cognitive Search client library for .NET
+# Azure AI Search client library for .NET
 
-[Azure Cognitive Search](https://docs.microsoft.com/azure/search/) is a
-search-as-a-service cloud solution that gives developers APIs and tools
-for adding a rich search experience over private, heterogeneous content
-in web, mobile, and enterprise applications.
+[Azure AI Search](https://learn.microsoft.com/azure/search/) (formerly known as "Azure Cognitive Search") is an AI-powered information retrieval platform that helps developers build rich search experiences and generative AI apps that combine large language models with enterprise data.
 
-The Azure Cognitive Search service is well suited for the following
- application scenarios:
+The Azure AI Search service is well suited for the following application scenarios:
 
 * Consolidate varied content types into a single searchable index.
   To populate an index, you can push JSON documents that contain your content,
   or if your data is already in Azure, create an indexer to pull in data
   automatically.
 * Attach skillsets to an indexer to create searchable content from images
-  and large text documents. A skillset leverages AI from Cognitive Services
+  and unstructured documents. A skillset leverages APIs from Azure AI Services
   for built-in OCR, entity recognition, key phrase extraction, language
   detection, text translation, and sentiment analysis. You can also add
   custom skills to integrate external processing of your content during
   data ingestion.
 * In a search client application, implement query logic and user experiences
-  similar to commercial web search engines.
+  similar to commercial web search engines and chat-style apps.
 
 Use the Azure.Search.Documents client library to:
 
-* Submit queries for simple and advanced query forms that include fuzzy
-  search, wildcard search, regular expressions.
-* Implement filtered queries for faceted navigation, geospatial search,
+* Submit queries using vector, keyword, and hybrid query forms.
+* Implement filtered queries for metadata, geospatial search, faceted navigation,
   or to narrow results based on filter criteria.
 * Create and manage search indexes.
 * Upload and update documents in the search index.
 * Create and manage indexers that pull data from Azure into an index.
 * Create and manage skillsets that add AI enrichment to data ingestion.
 * Create and manage analyzers for advanced text analysis or multi-lingual content.
-* Optimize results through scoring profiles to factor in business logic or freshness.
+* Optimize results through semantic ranking and scoring profiles to factor in business logic or freshness.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs] | [Samples][samples]
 
@@ -40,7 +35,7 @@ Use the Azure.Search.Documents client library to:
 
 ### Install the package
 
-Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
+Install the Azure AI Search client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.Search.Documents
@@ -59,16 +54,20 @@ Here's an example using the Azure CLI to create a free instance for getting star
 az search service create --name <mysearch> --resource-group <mysearch-rg> --sku free --location westus
 ```
 
-See [choosing a pricing tier](https://docs.microsoft.com/azure/search/search-sku-tier)
+See [choosing a pricing tier](https://learn.microsoft.com/azure/search/search-sku-tier)
  for more information about available options.
 
 ### Authenticate the client
 
-All requests to a search service need an api-key that was generated specifically
-for your service. [The api-key is the sole mechanism for authenticating access to
-your search service endpoint.](https://docs.microsoft.com/azure/search/search-security-api-keys)
-You can obtain your api-key from the
-[Azure portal](https://portal.azure.com/) or via the Azure CLI:
+To interact with the search service, you'll need to create an instance of the appropriate client class: `SearchClient` for searching indexed documents, `SearchIndexClient` for managing indexes, or `SearchIndexerClient` for crawling data sources and loading search documents into an index. To instantiate a client object, you'll need an **endpoint** and **Azure roles** or an **API key**. You can refer to the documentation for more information on [supported authenticating approaches](https://learn.microsoft.com/azure/search/search-security-overview#authentication) with the search service.
+
+#### Get an API Key
+
+An API key can be an easier approach to start with because it doesn't require pre-existing role assignments.
+
+You can get the **endpoint** and an **API key** from the search service in the [Azure portal](https://portal.azure.com/). Please refer the [documentation](https://learn.microsoft.com/azure/search/search-security-api-keys) for instructions on how to get an API key.
+
+Alternatively, you can use the following [Azure CLI](https://learn.microsoft.com/cli/azure/) command to retrieve the API key from the search service:
 
 ```Powershell
 az search admin-key show --service-name <mysearch> --resource-group <mysearch-rg>
@@ -83,7 +82,9 @@ originating from a client app.
 *Note: The example Azure CLI snippet above retrieves an admin key so it's easier
 to get started exploring APIs, but it should be managed carefully.*
 
-We can use the api-key to create a new `SearchClient`.
+#### Create a SearchClient
+
+To instantiate the `SearchClient`, you'll need the **endpoint**, **API key** and **index name**:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
 string indexName = "nycjobs";
@@ -96,6 +97,36 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
+
+#### Create a client using Microsoft Entra ID authentication
+
+You can also create a `SearchClient`, `SearchIndexClient`, or `SearchIndexerClient` using Microsoft Entra ID authentication. Your user or service principal must be assigned the "Search Index Data Reader" role.
+Using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential) you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code. Please refer the [documentation](https://learn.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Croles-portal%2Ctest-portal%2Ccustom-role-portal%2Cdisable-keys-portal) for instructions on how to connect to Azure AI Search using Azure role-based access control (Azure RBAC).
+
+Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md), you'll first need to [install the Azure.Identity package](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package).
+
+To use `DefaultAzureCredential` with a client ID and secret, you'll need to set the `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_CLIENT_SECRET` environment variables; alternatively, you can pass those values
+to the `ClientSecretCredential` also in Azure.Identity.
+
+Make sure you use the right namespace for `DefaultAzureCredential` at the top of your source file:
+
+```C# Snippet:Azure_Search_Readme_Identity_Namespace
+using Azure.Identity;
+```
+
+Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
+
+```C# Snippet:Azure_Search_Readme_CreateWithDefaultAzureCredential
+string indexName = "nycjobs";
+
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+DefaultAzureCredential credential = new DefaultAzureCredential();
+
+// Create a client
+SearchClient client = new SearchClient(endpoint, indexName, credential);
+```
+
 ### ASP.NET Core
 To inject `SearchClient` as a dependency in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`. Then register the client in the `Startup.ConfigureServices` method:
 
@@ -106,7 +137,7 @@ public void ConfigureServices(IServiceCollection services)
     {
         builder.AddSearchClient(Configuration.GetSection("SearchClient"));
     });
-  
+
     services.AddControllers();
 }
 ```
@@ -120,7 +151,7 @@ To use the preceding code, add this to your configuration:
     }
 }
 ```
-You'll also need to provide your resource key to authenticate the client, but you shouldn't be putting that information in the configuration. Instead, when in development, use [User-Secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#how-the-secret-manager-tool-works). Add the following to `secrets.json`:
+You'll also need to provide your resource key to authenticate the client, but you shouldn't be putting that information in the configuration. Instead, when in development, use [User-Secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#how-the-secret-manager-tool-works). Add the following to `secrets.json`:
 
 ```json
 {
@@ -129,49 +160,69 @@ You'll also need to provide your resource key to authenticate the client, but yo
     }
 }
 ```
-When running in production, it's preferable to use [environment variables](https://docs.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#environment-variables):
+When running in production, it's preferable to use [environment variables](https://learn.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#environment-variables):
 
 ```
 SEARCH__CREDENTIAL__KEY="..."
 ```
-Or use other secure ways of storing secrets like [Azure Key Vault](https://docs.microsoft.com/aspnet/core/security/key-vault-configuration?view=aspnetcore-5.0).
+Or use other secure ways of storing secrets like [Azure Key Vault](https://learn.microsoft.com/aspnet/core/security/key-vault-configuration?view=aspnetcore-5.0).
 
-For more details about Dependency Injection in ASP.NET Core apps, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
+For more details about Dependency Injection in ASP.NET Core apps, see [Dependency injection with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Key concepts
 
-An Azure Cognitive Search service contains one or more indexes that provide
+An Azure AI Search service contains one or more indexes that provide
 persistent storage of searchable data in the form of JSON documents.  _(If
 you're brand new to search, you can make a very rough analogy between
 indexes and database tables.)_  The Azure.Search.Documents client library
 exposes operations on these resources through three main client types.
 
 * `SearchClient` helps with:
-  * [Searching](https://docs.microsoft.com/azure/search/search-lucene-query-architecture)
-    your indexed documents using
-    [rich queries](https://docs.microsoft.com/azure/search/search-query-overview)
-    and [powerful data shaping](https://docs.microsoft.com/azure/search/search-filters)
-  * [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
+  * [Searching](https://learn.microsoft.com/azure/search/search-lucene-query-architecture)
+    your indexed documents using [vector queries](https://learn.microsoft.com/azure/search/vector-search-how-to-query),
+    [keyword queries](https://learn.microsoft.com/azure/search/search-query-create)
+    and [hybrid queries](https://learn.microsoft.com/azure/search/hybrid-search-how-to-query)
+  * [Vector query filters](https://learn.microsoft.com/azure/search/vector-search-filters) and [Text query filters](https://learn.microsoft.com/azure/search/search-filters)
+  * [Semantic ranking](https://learn.microsoft.com/azure/search/semantic-how-to-query-request) and [scoring profiles](https://learn.microsoft.com/azure/search/index-add-scoring-profiles) for boosting relevance
+  * [Autocompleting](https://learn.microsoft.com/rest/api/searchservice/autocomplete)
     partially typed search terms based on documents in the index
-  * [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
+  * [Suggesting](https://learn.microsoft.com/rest/api/searchservice/suggestions)
     the most likely matching text in documents as a user types
-  * [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
+  * [Adding, Updating or Deleting Documents](https://learn.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
     documents from an index
 
 * `SearchIndexClient` allows you to:
-  * [Create, delete, update, or configure a search index](https://docs.microsoft.com/rest/api/searchservice/index-operations)
-  * [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
+  * [Create, delete, update, or configure a search index](https://learn.microsoft.com/rest/api/searchservice/index-operations)
+  * [Declare custom synonym maps to expand or rewrite queries](https://learn.microsoft.com/rest/api/searchservice/synonym-map-operations)
 
 * `SearchIndexerClient` allows you to:
-  * [Create indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
-  * [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
+  * [Create indexers to automatically crawl data sources](https://learn.microsoft.com/rest/api/searchservice/indexer-operations)
+  * [Define AI powered Skillsets to transform and enrich your data](https://learn.microsoft.com/rest/api/searchservice/skillset-operations)
 
-_The `Azure.Search.Documents` client library (v11) is a brand new offering for
-.NET developers who want to use search technology in their applications.  There
-is an older, fully featured `Microsoft.Azure.Search` client library (v10) with
-many similar looking APIs, so please be careful to avoid confusion when
+Azure AI Search provides two powerful features:
+
+#### Semantic ranking
+
+Semantic ranking enhances the quality of search results for text-based queries. By enabling semantic ranking on your search service, you can improve the relevance of search results in two ways:
+- It applies secondary ranking to the initial result set, promoting the most semantically relevant results to the top.
+- It extracts and returns captions and answers in the response, which can be displayed on a search page to enhance the user's search experience.
+
+To learn more about Semantic Search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+
+Additionally, for more comprehensive information about Semantic Search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of Semantic Search in Azure Cognitive Search.
+
+#### Vector search
+
+**Vector search** is an information retrieval technique that uses numeric representations of searchable documents and query strings. By searching for numeric representations of content that are most similar to the numeric query, vector search can find relevant matches, even if the exact terms of the query are not present in the index. Moreover, vector search can be applied to various types of content, including images and videos and translated text, not just same-language text.
+
+To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
+
+Additionally, for more comprehensive information about vector search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of vector search in Azure AI Search.
+
+_The `Azure.Search.Documents` client library (v11) provides APIs for data plane operations. The
+previous `Microsoft.Azure.Search` client library (v10) is now retired. It has many similar looking APIs, so please be careful to avoid confusion when
 exploring online resources.  A good rule of thumb is to check for the namespace
-`using Azure.Search.Documents;` when you're looking for us._
+`using Azure.Search.Documents;` when you're looking for API reference._
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -183,14 +234,14 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
 The following examples all use a simple [Hotel data set](https://github.com/Azure-Samples/azure-search-sample-data)
-that you can [import into your own index from the Azure portal.](https://docs.microsoft.com/azure/search/search-get-started-portal#step-1---start-the-import-data-wizard-and-create-a-data-source)
+that you can [import into your own index from the Azure portal.](https://learn.microsoft.com/azure/search/search-get-started-portal#step-1---start-the-import-data-wizard-and-create-a-data-source)
 These are just a few of the basics - please [check out our Samples][samples] for
 much more.
 
@@ -204,7 +255,7 @@ much more.
 * [Async APIs](#async-apis)
 
 ### Advanced authentication
- 
+
 - [Create a client that can authenticate in a national cloud](#authenticate-in-a-national-cloud)
 
 ### Querying
@@ -212,7 +263,6 @@ much more.
 Let's start by importing our namespaces.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Namespace
-using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using Azure.Core.GeoJson;
@@ -236,7 +286,7 @@ Let's explore them with a search for a "luxury" hotel.
 
 #### Use C# types for search results
 
-We can decorate our own C# types with [attributes from `System.Text.Json`](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
+We can decorate our own C# types with [attributes from `System.Text.Json`](https://learn.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticType
 public class Hotel
@@ -301,7 +351,7 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
     SearchDocument doc = result.Document;
     string id = (string)doc["HotelId"];
     string name = (string)doc["HotelName"];
-    Console.WriteLine("{id}: {name}");
+    Console.WriteLine($"{id}: {name}");
 }
 ```
 
@@ -394,7 +444,7 @@ client.CreateIndex(index);
 
 You can `Upload`, `Merge`, `MergeOrUpload`, and `Delete` multiple documents from
 an index in a single batched request.  There are
-[a few special rules for merging](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents#document-actions)
+[a few special rules for merging](https://learn.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents#document-actions)
 to be aware of.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Index
@@ -439,7 +489,7 @@ await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 
 ### Authenticate in a National Cloud
 
-To authenticate in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
+To authenticate in a [National Cloud](https://learn.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
 
 - Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
 - Set the `Audience` in `SearchClientOptions`
@@ -487,8 +537,7 @@ See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/
 ## Next steps
 
 * Go further with Azure.Search.Documents and our [samples][samples]
-* Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
-* Read more about the [Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
+* Read more about the [Azure AI Search service](https://learn.microsoft.com/azure/search/search-what-is-azure-search)
 
 ## Contributing
 
@@ -505,22 +554,20 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FAzure.Search.Documents%2FREADME.png)
-
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Azure.Search.Documents/src
 [package]: https://www.nuget.org/packages/Azure.Search.Documents/
-[docs]: https://docs.microsoft.com/dotnet/api/Azure.Search.Documents
-[rest_docs]: https://docs.microsoft.com/rest/api/searchservice/
-[product_docs]: https://docs.microsoft.com/azure/search/
+[docs]: https://learn.microsoft.com/dotnet/api/Azure.Search.Documents
+[rest_docs]: https://learn.microsoft.com/rest/api/searchservice/
+[product_docs]: https://learn.microsoft.com/azure/search/
 [nuget]: https://www.nuget.org/
-[create_search_service_docs]: https://docs.microsoft.com/azure/search/search-create-service-portal
-[create_search_service_ps]: https://docs.microsoft.com/azure/search/search-manage-powershell#create-or-delete-a-service
-[create_search_service_cli]: https://docs.microsoft.com/cli/azure/search/service?view=azure-cli-latest#az-search-service-create
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[create_search_service_docs]: https://learn.microsoft.com/azure/search/search-create-service-portal
+[create_search_service_ps]: https://learn.microsoft.com/azure/search/search-manage-powershell#create-or-delete-a-service
+[create_search_service_cli]: https://learn.microsoft.com/cli/azure/search/service?view=azure-cli-latest#az-search-service-create
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
-[status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
+[status_codes]: https://learn.microsoft.com/rest/api/searchservice/http-status-codes
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/
 [search_contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

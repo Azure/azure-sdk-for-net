@@ -19,71 +19,72 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("query");
+            writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
             if (Optional.IsDefined(CurrentConnection))
             {
-                writer.WritePropertyName("currentConnection");
+                writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
             }
             if (Optional.IsDefined(ResultLimit))
             {
-                writer.WritePropertyName("resultLimit");
+                writer.WritePropertyName("resultLimit"u8);
                 writer.WriteNumberValue(ResultLimit.Value);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string query = default;
-            Optional<SqlConnection> currentConnection = default;
-            Optional<int> resultLimit = default;
-            Optional<SqlScriptMetadata> metadata = default;
+            SqlConnection currentConnection = default;
+            int? resultLimit = default;
+            SqlScriptMetadata metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentConnection"))
+                if (property.NameEquals("currentConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentConnection = SqlConnection.DeserializeSqlConnection(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resultLimit"))
+                if (property.NameEquals("resultLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = SqlScriptMetadata.DeserializeSqlScriptMetadata(property.Value);
@@ -92,7 +93,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection.Value, Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
+            return new SqlScriptContent(query, currentConnection, resultLimit, metadata, additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlScriptContent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlScriptContent(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>
@@ -101,6 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SqlScriptContent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

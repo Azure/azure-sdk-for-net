@@ -20,29 +20,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
-                writer.WriteObjectValue(PartitionColumnName);
+                writer.WritePropertyName("partitionColumnName"u8);
+                writer.WriteObjectValue<object>(PartitionColumnName);
             }
             writer.WriteEndObject();
         }
 
         internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
         {
-            Optional<object> partitionColumnName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionColumnName = property.Value.GetObject();
                     continue;
                 }
             }
-            return new SapHanaPartitionSettings(partitionColumnName.Value);
+            return new SapHanaPartitionSettings(partitionColumnName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SapHanaPartitionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapHanaPartitionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SapHanaPartitionSettingsConverter : JsonConverter<SapHanaPartitionSettings>
@@ -51,6 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SapHanaPartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

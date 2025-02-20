@@ -6,40 +6,59 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceExternalReference : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceExternalReference : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceExternalReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceExternalReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ThreatIntelligenceExternalReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceExternalReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ExternalId))
             {
-                writer.WritePropertyName("externalId");
+                writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
             if (Optional.IsDefined(SourceName))
             {
-                writer.WritePropertyName("sourceName");
+                writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Hashes))
             {
-                writer.WritePropertyName("hashes");
+                writer.WritePropertyName("hashes"u8);
                 writer.WriteStartObject();
                 foreach (var item in Hashes)
                 {
@@ -48,48 +67,80 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ThreatIntelligenceExternalReference DeserializeThreatIntelligenceExternalReference(JsonElement element)
+        ThreatIntelligenceExternalReference IJsonModel<ThreatIntelligenceExternalReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> description = default;
-            Optional<string> externalId = default;
-            Optional<string> sourceName = default;
-            Optional<Uri> url = default;
-            Optional<IDictionary<string, string>> hashes = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceExternalReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceExternalReference(document.RootElement, options);
+        }
+
+        internal static ThreatIntelligenceExternalReference DeserializeThreatIntelligenceExternalReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string description = default;
+            string externalId = default;
+            string sourceName = default;
+            Uri url = default;
+            IDictionary<string, string> hashes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalId"))
+                if (property.NameEquals("externalId"u8))
                 {
                     externalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceName"))
+                if (property.NameEquals("sourceName"u8))
                 {
                     sourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hashes"))
+                if (property.NameEquals("hashes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -100,8 +151,188 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     hashes = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThreatIntelligenceExternalReference(description.Value, externalId.Value, sourceName.Value, url.Value, Optional.ToDictionary(hashes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ThreatIntelligenceExternalReference(
+                description,
+                externalId,
+                sourceName,
+                url,
+                hashes ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  externalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExternalId))
+                {
+                    builder.Append("  externalId: ");
+                    if (ExternalId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExternalId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExternalId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceName))
+                {
+                    builder.Append("  sourceName: ");
+                    if (SourceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  url: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hashes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hashes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Hashes))
+                {
+                    if (Hashes.Any())
+                    {
+                        builder.Append("  hashes: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Hashes)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ThreatIntelligenceExternalReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceExternalReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ThreatIntelligenceExternalReference IPersistableModel<ThreatIntelligenceExternalReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceExternalReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeThreatIntelligenceExternalReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ThreatIntelligenceExternalReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

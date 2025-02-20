@@ -5,77 +5,162 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class CustomRolloutSpecification : IUtf8JsonSerializable
+    public partial class CustomRolloutSpecification : IUtf8JsonSerializable, IJsonModel<CustomRolloutSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRolloutSpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomRolloutSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("canary");
-            writer.WriteObjectValue(Canary);
-            if (Optional.IsDefined(ProviderRegistration))
-            {
-                writer.WritePropertyName("providerRegistration");
-                writer.WriteObjectValue(ProviderRegistration);
-            }
-            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
-            {
-                writer.WritePropertyName("resourceTypeRegistrations");
-                writer.WriteStartArray();
-                foreach (var item in ResourceTypeRegistrations)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static CustomRolloutSpecification DeserializeCustomRolloutSpecification(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            CustomRolloutSpecificationCanary canary = default;
-            Optional<CustomRolloutSpecificationProviderRegistration> providerRegistration = default;
-            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomRolloutSpecification)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("canary"u8);
+            writer.WriteObjectValue(Canary, options);
+            if (Optional.IsDefined(ProviderRegistration))
+            {
+                writer.WritePropertyName("providerRegistration"u8);
+                writer.WriteObjectValue(ProviderRegistration, options);
+            }
+            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            {
+                writer.WritePropertyName("resourceTypeRegistrations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceTypeRegistrations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        CustomRolloutSpecification IJsonModel<CustomRolloutSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomRolloutSpecification)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomRolloutSpecification(document.RootElement, options);
+        }
+
+        internal static CustomRolloutSpecification DeserializeCustomRolloutSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TrafficRegions canary = default;
+            ProviderRegistrationData providerRegistration = default;
+            IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("canary"))
+                if (property.NameEquals("canary"u8))
                 {
-                    canary = CustomRolloutSpecificationCanary.DeserializeCustomRolloutSpecificationCanary(property.Value);
+                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("providerRegistration"))
+                if (property.NameEquals("providerRegistration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerRegistration = CustomRolloutSpecificationProviderRegistration.DeserializeCustomRolloutSpecificationProviderRegistration(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceTypeRegistrations"))
+                if (property.NameEquals("resourceTypeRegistrations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomRolloutSpecification(canary, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomRolloutSpecification(canary, providerRegistration, resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomRolloutSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomRolloutSpecification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomRolloutSpecification IPersistableModel<CustomRolloutSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomRolloutSpecification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomRolloutSpecification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomRolloutSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

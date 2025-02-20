@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static UnauthenticatedClientAction ToUnauthenticatedClientAction(this string value)
         {
-            if (string.Equals(value, "RedirectToLoginPage", StringComparison.InvariantCultureIgnoreCase)) return UnauthenticatedClientAction.RedirectToLoginPage;
-            if (string.Equals(value, "AllowAnonymous", StringComparison.InvariantCultureIgnoreCase)) return UnauthenticatedClientAction.AllowAnonymous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage")) return UnauthenticatedClientAction.RedirectToLoginPage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous")) return UnauthenticatedClientAction.AllowAnonymous;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UnauthenticatedClientAction value.");
         }
     }

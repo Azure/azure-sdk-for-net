@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class ProximityPlacementGroupPropertiesIntent : IUtf8JsonSerializable
+    internal partial class ProximityPlacementGroupPropertiesIntent : IUtf8JsonSerializable, IJsonModel<ProximityPlacementGroupPropertiesIntent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProximityPlacementGroupPropertiesIntent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProximityPlacementGroupPropertiesIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupPropertiesIntent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProximityPlacementGroupPropertiesIntent)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(VmSizes))
             {
-                writer.WritePropertyName("vmSizes");
+                writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmSizes)
                 {
@@ -26,19 +44,52 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ProximityPlacementGroupPropertiesIntent DeserializeProximityPlacementGroupPropertiesIntent(JsonElement element)
+        ProximityPlacementGroupPropertiesIntent IJsonModel<ProximityPlacementGroupPropertiesIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> vmSizes = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupPropertiesIntent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProximityPlacementGroupPropertiesIntent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProximityPlacementGroupPropertiesIntent(document.RootElement, options);
+        }
+
+        internal static ProximityPlacementGroupPropertiesIntent DeserializeProximityPlacementGroupPropertiesIntent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> vmSizes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSizes"))
+                if (property.NameEquals("vmSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -49,8 +100,44 @@ namespace Azure.ResourceManager.Compute.Models
                     vmSizes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProximityPlacementGroupPropertiesIntent(Optional.ToList(vmSizes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProximityPlacementGroupPropertiesIntent(vmSizes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProximityPlacementGroupPropertiesIntent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupPropertiesIntent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProximityPlacementGroupPropertiesIntent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProximityPlacementGroupPropertiesIntent IPersistableModel<ProximityPlacementGroupPropertiesIntent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupPropertiesIntent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProximityPlacementGroupPropertiesIntent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProximityPlacementGroupPropertiesIntent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProximityPlacementGroupPropertiesIntent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

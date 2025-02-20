@@ -11,7 +11,7 @@ This sample discusses the metadata available for an Event Hub instance and demon
 
 # Client types
 
-Querying and inspecting metadata is a common scenario when publishing and reading events.  As a result, the core operations are available to the `EventHubProducerClient` and `EventHubConsumerClient`.  
+Querying and inspecting metadata is a common scenario when publishing and reading events.  As a result, the core operations are available to the `EventHubProducerClient` and `EventHubConsumerClient`.
 
 Both the `EventHubProducerClient` and `EventHubConsumerClient` are safe to cache and use for the lifetime of an application, which is best practice when the application publishes or reads events regularly or semi-regularly. The clients are responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. Calling either the `CloseAsync` or `DisposeAsync` method on a client as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
 
@@ -20,10 +20,14 @@ Both the `EventHubProducerClient` and `EventHubConsumerClient` are safe to cache
 Because the Event Hubs clients operate on a specific Event Hub, it is often helpful for them to have knowledge of its context.  In particular, it is common for clients to understand the partitions available.  The ability to query the Event Hub properties is available using the `EventHubProducerClient` and `EventHubConsumerClient`.  For illustration, the `EventHubProducerClient` is demonstrated, but the concept and form are common across both clients.
 
 ```C# Snippet:EventHubs_Sample03_InspectHub
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -45,10 +49,14 @@ finally
 Due to their importance, there is also a shorthand way to query the partitions of an Event Hub.  This capability is available using the `EventHubProducerClient` and `EventHubConsumerClient`.  For illustration, the `EventHubProducerClient` is demonstrated, but the concept and form are common across both clients.
 
 ```C# Snippet:EventHubs_Sample03_QueryPartitions
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -70,11 +78,16 @@ This query is useful for occasionally inspecting partitions, but should not be u
 For illustration, the `EventHubConsumerClient` is demonstrated, but the concept and form are common across both clients.
 
 ```C# Snippet:EventHubs_Sample03_InspectPartition
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
-var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
+var consumer = new EventHubConsumerClient(
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -87,7 +100,7 @@ try
     Debug.WriteLine($"\tThe partition contains no events: { partitionProperties.IsEmpty }");
     Debug.WriteLine($"\tThe first sequence number is: { partitionProperties.BeginningSequenceNumber }");
     Debug.WriteLine($"\tThe last sequence number is: { partitionProperties.LastEnqueuedSequenceNumber }");
-    Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffset }");
+    Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffsetString }");
     Debug.WriteLine($"\tThe last enqueued time is: { partitionProperties.LastEnqueuedTime }, in UTC.");
 }
 finally

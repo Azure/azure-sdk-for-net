@@ -5,57 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowEndpointsConfiguration : IUtf8JsonSerializable
+    public partial class FlowEndpointsConfiguration : IUtf8JsonSerializable, IJsonModel<FlowEndpointsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowEndpointsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FlowEndpointsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Workflow))
-            {
-                writer.WritePropertyName("workflow");
-                writer.WriteObjectValue(Workflow);
-            }
-            if (Optional.IsDefined(Connector))
-            {
-                writer.WritePropertyName("connector");
-                writer.WriteObjectValue(Connector);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static FlowEndpointsConfiguration DeserializeFlowEndpointsConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<FlowEndpoints> workflow = default;
-            Optional<FlowEndpoints> connector = default;
-            foreach (var property in element.EnumerateObject())
+            var format = options.Format == "W" ? ((IPersistableModel<FlowEndpointsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("workflow"))
+                throw new FormatException($"The model {nameof(FlowEndpointsConfiguration)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Workflow))
+            {
+                writer.WritePropertyName("workflow"u8);
+                writer.WriteObjectValue(Workflow, options);
+            }
+            if (Optional.IsDefined(Connector))
+            {
+                writer.WritePropertyName("connector"u8);
+                writer.WriteObjectValue(Connector, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("connector"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new FlowEndpointsConfiguration(workflow.Value, connector.Value);
         }
+
+        FlowEndpointsConfiguration IJsonModel<FlowEndpointsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowEndpointsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FlowEndpointsConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowEndpointsConfiguration(document.RootElement, options);
+        }
+
+        internal static FlowEndpointsConfiguration DeserializeFlowEndpointsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            FlowEndpoints workflow = default;
+            FlowEndpoints connector = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("workflow"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("connector"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FlowEndpointsConfiguration(workflow, connector, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<FlowEndpointsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowEndpointsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FlowEndpointsConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FlowEndpointsConfiguration IPersistableModel<FlowEndpointsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowEndpointsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFlowEndpointsConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FlowEndpointsConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FlowEndpointsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

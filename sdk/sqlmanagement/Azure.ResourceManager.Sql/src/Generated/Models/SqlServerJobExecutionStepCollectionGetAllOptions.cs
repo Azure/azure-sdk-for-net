@@ -12,30 +12,31 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The SqlServerJobExecutionStepCollectionGetAllOptions. </summary>
     public partial class SqlServerJobExecutionStepCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of SqlServerJobExecutionStepCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionStepCollectionGetAllOptions"/>. </summary>
         public SqlServerJobExecutionStepCollectionGetAllOptions()
         {
         }
 
         /// <summary> If specified, only job executions created at or after the specified time are included. </summary>
-        public DateTimeOffset? CreateTimeMin { get; set; } = null;
-
+        [WirePath("createTimeMin")]
+        public DateTimeOffset? CreateTimeMin { get; set; }
         /// <summary> If specified, only job executions created before the specified time are included. </summary>
-        public DateTimeOffset? CreateTimeMax { get; set; } = null;
-
+        [WirePath("createTimeMax")]
+        public DateTimeOffset? CreateTimeMax { get; set; }
         /// <summary> If specified, only job executions completed at or after the specified time are included. </summary>
-        public DateTimeOffset? EndTimeMin { get; set; } = null;
-
+        [WirePath("endTimeMin")]
+        public DateTimeOffset? EndTimeMin { get; set; }
         /// <summary> If specified, only job executions completed before the specified time are included. </summary>
-        public DateTimeOffset? EndTimeMax { get; set; } = null;
-
+        [WirePath("endTimeMax")]
+        public DateTimeOffset? EndTimeMax { get; set; }
         /// <summary> If specified, only active or only completed job executions are included. </summary>
-        public bool? IsActive { get; set; } = null;
-
+        [WirePath("isActive")]
+        public bool? IsActive { get; set; }
         /// <summary> The number of elements in the collection to skip. </summary>
-        public int? Skip { get; set; } = null;
-
+        [WirePath("skip")]
+        public int? Skip { get; set; }
         /// <summary> The number of elements to return from the collection. </summary>
-        public int? Top { get; set; } = null;
+        [WirePath("top")]
+        public int? Top { get; set; }
     }
 }

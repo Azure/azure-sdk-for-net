@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static TenantCategory ToTenantCategory(this string value)
         {
-            if (string.Equals(value, "Home", StringComparison.InvariantCultureIgnoreCase)) return TenantCategory.Home;
-            if (string.Equals(value, "ProjectedBy", StringComparison.InvariantCultureIgnoreCase)) return TenantCategory.ProjectedBy;
-            if (string.Equals(value, "ManagedBy", StringComparison.InvariantCultureIgnoreCase)) return TenantCategory.ManagedBy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Home")) return TenantCategory.Home;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ProjectedBy")) return TenantCategory.ProjectedBy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedBy")) return TenantCategory.ManagedBy;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TenantCategory value.");
         }
     }

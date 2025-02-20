@@ -26,7 +26,7 @@ namespace Azure.Data.Tables.Tests
         public EnableTenantDiscoveryLiveTests(bool isAsync, TableEndpointType endpointType) : base(
             isAsync,
             endpointType,
-            enableTenantDiscovery: true /* To record tests, add this argument, RecordedTestMode.Record */)
+            enableTenantDiscovery: true/* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [RecordedTest]

@@ -15,31 +15,51 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("prioritizedFields");
+            writer.WritePropertyName("prioritizedFields"u8);
             writer.WriteObjectValue(PrioritizedFields);
             writer.WriteEndObject();
         }
 
         internal static SemanticConfiguration DeserializeSemanticConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
-            PrioritizedFields prioritizedFields = default;
+            SemanticPrioritizedFields prioritizedFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("prioritizedFields"))
+                if (property.NameEquals("prioritizedFields"u8))
                 {
-                    prioritizedFields = PrioritizedFields.DeserializePrioritizedFields(property.Value);
+                    prioritizedFields = SemanticPrioritizedFields.DeserializeSemanticPrioritizedFields(property.Value);
                     continue;
                 }
             }
             return new SemanticConfiguration(name, prioritizedFields);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -5,160 +5,253 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineOSProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualMachineOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ComputerName))
             {
-                writer.WritePropertyName("computerName");
+                writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
             if (Optional.IsDefined(AdminUsername))
             {
-                writer.WritePropertyName("adminUsername");
+                writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("customData");
+                writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
             if (Optional.IsDefined(WindowsConfiguration))
             {
-                writer.WritePropertyName("windowsConfiguration");
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WritePropertyName("windowsConfiguration"u8);
+                writer.WriteObjectValue(WindowsConfiguration, options);
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
-                writer.WritePropertyName("linuxConfiguration");
-                writer.WriteObjectValue(LinuxConfiguration);
+                writer.WritePropertyName("linuxConfiguration"u8);
+                writer.WriteObjectValue(LinuxConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
-                writer.WritePropertyName("secrets");
+                writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AllowExtensionOperations))
             {
-                writer.WritePropertyName("allowExtensionOperations");
+                writer.WritePropertyName("allowExtensionOperations"u8);
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
             if (Optional.IsDefined(RequireGuestProvisionSignal))
             {
-                writer.WritePropertyName("requireGuestProvisionSignal");
+                writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static VirtualMachineOSProfile DeserializeVirtualMachineOSProfile(JsonElement element)
+        VirtualMachineOSProfile IJsonModel<VirtualMachineOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> computerName = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<string> customData = default;
-            Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<LinuxConfiguration> linuxConfiguration = default;
-            Optional<IList<VaultSecretGroup>> secrets = default;
-            Optional<bool> allowExtensionOperations = default;
-            Optional<bool> requireGuestProvisionSignal = default;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineOSProfile(document.RootElement, options);
+        }
+
+        internal static VirtualMachineOSProfile DeserializeVirtualMachineOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string computerName = default;
+            string adminUsername = default;
+            string adminPassword = default;
+            string customData = default;
+            WindowsConfiguration windowsConfiguration = default;
+            LinuxConfiguration linuxConfiguration = default;
+            IList<VaultSecretGroup> secrets = default;
+            bool? allowExtensionOperations = default;
+            bool? requireGuestProvisionSignal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computerName"))
+                if (property.NameEquals("computerName"u8))
                 {
                     computerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminPassword"))
+                if (property.NameEquals("adminPassword"u8))
                 {
                     adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customData"))
+                if (property.NameEquals("customData"u8))
                 {
                     customData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsConfiguration"))
+                if (property.NameEquals("windowsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("linuxConfiguration"))
+                if (property.NameEquals("linuxConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
+                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secrets"))
+                if (property.NameEquals("secrets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item));
+                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
                 }
-                if (property.NameEquals("allowExtensionOperations"))
+                if (property.NameEquals("allowExtensionOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowExtensionOperations = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requireGuestProvisionSignal"))
+                if (property.NameEquals("requireGuestProvisionSignal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireGuestProvisionSignal = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineOSProfile(
+                computerName,
+                adminUsername,
+                adminPassword,
+                customData,
+                windowsConfiguration,
+                linuxConfiguration,
+                secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
+                allowExtensionOperations,
+                requireGuestProvisionSignal,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineOSProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineOSProfile IPersistableModel<VirtualMachineOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineOSProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

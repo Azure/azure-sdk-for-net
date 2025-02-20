@@ -5,43 +5,150 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class GatewayRouteConfigResourceList
+    internal partial class GatewayRouteConfigResourceList : IUtf8JsonSerializable, IJsonModel<GatewayRouteConfigResourceList>
     {
-        internal static GatewayRouteConfigResourceList DeserializeGatewayRouteConfigResourceList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayRouteConfigResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GatewayRouteConfigResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<AppPlatformGatewayRouteConfigData>> value = default;
-            Optional<string> nextLink = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteConfigResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GatewayRouteConfigResourceList)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        GatewayRouteConfigResourceList IJsonModel<GatewayRouteConfigResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteConfigResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GatewayRouteConfigResourceList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGatewayRouteConfigResourceList(document.RootElement, options);
+        }
+
+        internal static GatewayRouteConfigResourceList DeserializeGatewayRouteConfigResourceList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<AppPlatformGatewayRouteConfigData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformGatewayRouteConfigData> array = new List<AppPlatformGatewayRouteConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(item));
+                        array.Add(AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(item, options));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GatewayRouteConfigResourceList(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GatewayRouteConfigResourceList(value ?? new ChangeTrackingList<AppPlatformGatewayRouteConfigData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GatewayRouteConfigResourceList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteConfigResourceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRouteConfigResourceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GatewayRouteConfigResourceList IPersistableModel<GatewayRouteConfigResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteConfigResourceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGatewayRouteConfigResourceList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRouteConfigResourceList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GatewayRouteConfigResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

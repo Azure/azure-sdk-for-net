@@ -18,28 +18,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
-                writer.WriteObjectValue(Serializer);
+                writer.WritePropertyName("serializer"u8);
+                writer.WriteObjectValue<object>(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
-                writer.WriteObjectValue(Deserializer);
+                writer.WritePropertyName("deserializer"u8);
+                writer.WriteObjectValue<object>(Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static DatasetStorageFormat DeserializeDatasetStorageFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -54,12 +58,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DatasetStorageFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatasetStorageFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DatasetStorageFormatConverter : JsonConverter<DatasetStorageFormat>
         {
             public override void Write(Utf8JsonWriter writer, DatasetStorageFormat model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DatasetStorageFormat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

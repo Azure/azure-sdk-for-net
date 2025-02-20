@@ -5,79 +5,94 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeature : IUtf8JsonSerializable
+    internal partial class GeoJsonFeature
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("geometry");
-            writer.WriteObjectValue(Geometry);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(FeatureType))
-            {
-                writer.WritePropertyName("featureType");
-                writer.WriteStringValue(FeatureType);
-            }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Boundary": return BoundaryInternal.DeserializeBoundaryInternal(element);
+                }
+            }
             GeoJsonGeometry geometry = default;
-            Optional<object> properties = default;
-            Optional<string> id = default;
-            Optional<string> featureType = default;
-            GeoJsonObjectType type = default;
+            object properties = default;
+            string id = default;
+            string featureType = default;
+            GeoJsonObjectType type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("geometry"))
+                if (property.NameEquals("geometry"u8))
                 {
                     geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("featureType"))
+                if (property.NameEquals("featureType"u8))
                 {
                     featureType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bbox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonFeature(type, geometry, properties.Value, id.Value, featureType.Value);
+            return new GeoJsonFeature(
+                type,
+                bbox ?? new ChangeTrackingList<double>(),
+                geometry,
+                properties,
+                id,
+                featureType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonFeature FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonFeature(document.RootElement);
         }
     }
 }

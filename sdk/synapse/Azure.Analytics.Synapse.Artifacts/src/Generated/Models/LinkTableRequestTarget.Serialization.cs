@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsDefined(SchemaName))
             {
-                writer.WritePropertyName("schemaName");
+                writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
             if (Optional.IsDefined(DistributionOptions))
             {
-                writer.WritePropertyName("distributionOptions");
+                writer.WritePropertyName("distributionOptions"u8);
                 writer.WriteObjectValue(DistributionOptions);
             }
             if (Optional.IsDefined(StructureOptions))
             {
-                writer.WritePropertyName("structureOptions");
+                writer.WritePropertyName("structureOptions"u8);
                 writer.WriteObjectValue(StructureOptions);
             }
             writer.WriteEndObject();
@@ -43,44 +43,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkTableRequestTarget DeserializeLinkTableRequestTarget(JsonElement element)
         {
-            Optional<string> tableName = default;
-            Optional<string> schemaName = default;
-            Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;
-            Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string tableName = default;
+            string schemaName = default;
+            LinkTableRequestTargetDistributionOptions distributionOptions = default;
+            LinkTableRequestTargetStructureOptions structureOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaName"))
+                if (property.NameEquals("schemaName"u8))
                 {
                     schemaName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("distributionOptions"))
+                if (property.NameEquals("distributionOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     distributionOptions = LinkTableRequestTargetDistributionOptions.DeserializeLinkTableRequestTargetDistributionOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("structureOptions"))
+                if (property.NameEquals("structureOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     structureOptions = LinkTableRequestTargetStructureOptions.DeserializeLinkTableRequestTargetStructureOptions(property.Value);
                     continue;
                 }
             }
-            return new LinkTableRequestTarget(tableName.Value, schemaName.Value, distributionOptions.Value, structureOptions.Value);
+            return new LinkTableRequestTarget(tableName, schemaName, distributionOptions, structureOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableRequestTarget FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkTableRequestTarget(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class LinkTableRequestTargetConverter : JsonConverter<LinkTableRequestTarget>
@@ -89,6 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LinkTableRequestTarget Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

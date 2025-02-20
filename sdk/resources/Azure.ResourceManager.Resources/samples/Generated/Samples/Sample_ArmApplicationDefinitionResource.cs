@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ArmApplicationDefinitionResource
     {
-        // Get managed application definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedApplicationDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/examples/getApplicationDefinition.json
@@ -49,9 +46,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update managed application definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateManagedApplicationDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/examples/createOrUpdateApplicationDefinition.json
@@ -74,10 +70,7 @@ namespace Azure.ResourceManager.Resources.Samples
             ArmApplicationDefinitionData data = new ArmApplicationDefinitionData(new AzureLocation("East US 2"), ArmApplicationLockLevel.None)
             {
                 DisplayName = "myManagedApplicationDef",
-                Authorizations =
-{
-new ArmApplicationAuthorization(Guid.Parse("validprincipalguid"),"validroleguid")
-},
+                Authorizations = { new ArmApplicationAuthorization(Guid.Parse("validprincipalguid"), "validroleguid") },
                 Description = "myManagedApplicationDef description",
                 PackageFileUri = new Uri("https://path/to/packagezipfile"),
             };

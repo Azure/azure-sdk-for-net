@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing
 {
@@ -41,7 +42,7 @@ namespace Azure.Maps.Routing
         /// The default sectionType refers to the travelMode input. By default travelMode is set to car.
         /// Allowed values: <c>SectionType.CarOrTrain</c>, <c>SectionType.Country</c>, <c>SectionType.Ferry</c>, <c>SectionType.MotorWay</c>, <c>SectionType.Pedestrian</c>, <c>SectionType.TollRoad</c>, <c>SectionType.TollVignette</c>, <c>SectionType.Traffic</c>, <c>SectionType.TravelModel</c>, <c>SectionType.Tunnel</c>, <c>SectionType.Carpool</c>, or <c>SectionType.Urban</c>
         /// </summary>
-        public SectionType? SectionFilter { get; set; }
+        public IList<SectionType> SectionFilter { get; } = new List<SectionType>();
 
         /// <summary> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with DepartAt, MinDeviationDistance or MinDeviationTime. </summary>
         public DateTimeOffset? ArriveAt { get; set; }
@@ -63,7 +64,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </description></item>
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
@@ -87,7 +88,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Possible values:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> <c>true</c> - Do consider all available traffic information during routing </description></item>
         /// <item><description> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </description></item>
         /// </list>
@@ -99,7 +100,7 @@ namespace Azure.Maps.Routing
         public RouteType? RouteType { get; set; }
 
         /// <summary>
-        /// Types of cargo that may be classified as hazardous materials and restricted from some roads. Available VehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. VehicleLoadType can be specified multiple times. This parameter is currently only considered for <c>travelMode=truck</c>.
+        /// Types of cargo that may be classified as hazardous materials and restricted from some roads. Available VehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. VehicleLoadType can be specified multiple times. This parameter is currently only considered for <c>travelMode=truck</c>.
         /// Allowed values: <c>VehicleLoadType.USHazmatClass1</c>, <c>VehicleLoadType.USHazmatClass2</c>, <c>VehicleLoadType.USHazmatClass3</c>, <c>VehicleLoadType.USHazmatClass4</c>, <c>VehicleLoadType.USHazmatClass5</c>, <c>VehicleLoadType.USHazmatClass6</c>, <c>VehicleLoadType.USHazmatClass7</c>, <c>VehicleLoadType.USHazmatClass8</c>, <c>VehicleLoadType.USHazmatClass9</c>, <c>VehicleLoadType.OtherHazmatExplosive</c>, <c>VehicleLoadType.OtherHazmatGeneral</c>, or <c>VehicleLoadType.OtherHazmatHarmfulToWater</c>.
         /// </summary>
         public VehicleLoadType? VehicleLoadType { get; set; }

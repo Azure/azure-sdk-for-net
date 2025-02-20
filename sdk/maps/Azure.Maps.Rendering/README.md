@@ -2,7 +2,7 @@
 
 Azure Maps Render is a library that can fetch image tiles and copyright information.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/render) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/src) | [API reference documentation](https://learn.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://learn.microsoft.com/rest/api/maps/render) | [Product documentation](https://learn.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -16,7 +16,7 @@ dotnet add package Azure.Maps.Rendering --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://learn.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
 
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
@@ -56,6 +56,64 @@ string clientId = "<Your Map ClientId>";
 MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 ```
 
+#### Shared Access Signature (SAS) Authentication
+
+Shared access signature (SAS) tokens are authentication tokens created using the JSON Web token (JWT) format and are cryptographically signed to prove authentication for an application to the Azure Maps REST API.
+
+Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0-beta.2` or higher):
+
+```powershell
+dotnet add package Azure.ResourceManager
+dotnet add package Azure.ResourceManager.Maps --prerelease
+```
+
+In the code, we need to import the following lines for both Azure Maps SDK and ResourceManager:
+
+```C# Snippet:RenderImportNamespaces
+using Azure.Maps.Rendering;
+```
+
+```C# Snippet:RenderSasAuthImportNamespaces
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
+using Azure.ResourceManager.Maps.Models;
+```
+
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsRenderingClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
+
+```C# Snippet:InstantiateRenderingClientViaSas
+// Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+TokenCredential cred = new DefaultAzureCredential();
+// Authenticate your client
+ArmClient armClient = new ArmClient(cred);
+
+string subscriptionId = "MyMapsSubscriptionId";
+string resourceGroupName = "MyMapsResourceGroupName";
+string accountName = "MyMapsAccountName";
+
+// Get maps account resource
+ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+MapsAccountResource mapsAccount = armClient.GetMapsAccountResource(mapsAccountResourceId);
+
+// Assign SAS token information
+// Every time you want to SAS token, update the principal ID, max rate, start and expiry time
+string principalId = "MyManagedIdentityObjectId";
+int maxRatePerSecond = 500;
+
+// Set start and expiry time for the SAS token in round-trip date/time format
+DateTime now = DateTime.Now;
+string start = now.ToString("O");
+string expiry = now.AddDays(1).ToString("O");
+
+MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
+Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
+
+// Create a SearchClient that will authenticate via SAS token
+AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
+MapsRenderingClient client = new MapsRenderingClient(sasCredential);
+```
+
 ## Key concepts
 
 MapsRenderingClient is designed for:
@@ -76,13 +134,13 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples). Rendering map tiles requires knowledge about zoom levels and tile grid system. Please refer to the [documentation](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for more information.
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples). Rendering map tiles requires knowledge about zoom levels and tile grid system. Please refer to the [documentation](https://learn.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for more information.
 
 ### Get Imagery Tiles
 
@@ -112,7 +170,7 @@ using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
 
 ### General
 
-When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/render).
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://learn.microsoft.com/rest/api/maps/render).
 
 For example, if you try to get an imagery tile with wrong tile index, an error is returned, indicating "Bad Request" (HTTP 400).
 
@@ -147,5 +205,3 @@ This project welcomes contributions and suggestions. Most contributions require 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Rendering/README.png)

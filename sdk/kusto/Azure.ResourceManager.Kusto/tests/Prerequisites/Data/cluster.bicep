@@ -11,11 +11,11 @@ var tableName = 'sdkScriptContentTable${id}'
 
 var tenantId = tenant().tenantId
 
-resource cluster 'Microsoft.Kusto/clusters@2022-11-11' = {
+resource cluster 'Microsoft.Kusto/clusters@2024-04-13' = {
     name: clusterName
     location: location
     sku: {
-        name: 'Standard_D13_v2'
+        name: 'Standard_E2d_v5'
         tier: 'Standard'
     }
     identity: {
@@ -57,11 +57,11 @@ output TABLE_NAME string = tableName
 
 var followingClusterName = 'sdkFollowingCluster${id}'
 
-resource followerCluster 'Microsoft.Kusto/clusters@2022-11-11' = {
+resource followerCluster 'Microsoft.Kusto/clusters@2024-04-13' = {
     name: followingClusterName
     location: location
     sku: {
-        name: 'Standard_D13_v2'
+        name: 'Standard_E2d_v5'
         tier: 'Standard'
     }
     identity: {

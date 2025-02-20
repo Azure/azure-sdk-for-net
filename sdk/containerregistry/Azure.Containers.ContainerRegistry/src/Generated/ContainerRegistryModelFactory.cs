@@ -11,10 +11,10 @@ using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRepositoryProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -28,10 +28,20 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="ContainerRegistry.ContainerRepositoryProperties"/> instance for mocking. </returns>
         public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
-            return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead);
+            return new ContainerRepositoryProperties(
+                registryLoginServer,
+                name,
+                createdOn,
+                lastUpdatedOn,
+                manifestCount,
+                tagCount,
+                canDelete,
+                canWrite,
+                canList,
+                canRead);
         }
 
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
@@ -45,10 +55,20 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="ContainerRegistry.ArtifactTagProperties"/> instance for mocking. </returns>
         public static ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
-            return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, canDelete, canWrite, canList, canRead);
+            return new ArtifactTagProperties(
+                registryLoginServer,
+                repositoryName,
+                name,
+                digest,
+                createdOn,
+                lastUpdatedOn,
+                canDelete,
+                canWrite,
+                canList,
+                canRead);
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
@@ -58,7 +78,7 @@ namespace Azure.Containers.ContainerRegistry
             return new ArtifactManifestPlatform(digest, architecture, operatingSystem);
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactManifestProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="digest"> Manifest. </param>
@@ -79,7 +99,21 @@ namespace Azure.Containers.ContainerRegistry
             relatedArtifacts ??= new List<ArtifactManifestPlatform>();
             tags ??= new List<string>();
 
-            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, sizeInBytes, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts?.ToList(), tags?.ToList(), canDelete, canWrite, canList, canRead);
+            return new ArtifactManifestProperties(
+                registryLoginServer,
+                repositoryName,
+                digest,
+                sizeInBytes,
+                createdOn,
+                lastUpdatedOn,
+                architecture,
+                operatingSystem,
+                relatedArtifacts?.ToList(),
+                tags?.ToList(),
+                canDelete,
+                canWrite,
+                canList,
+                canRead);
         }
     }
 }

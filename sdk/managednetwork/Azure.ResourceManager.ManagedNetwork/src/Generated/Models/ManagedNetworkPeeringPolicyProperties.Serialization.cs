@@ -5,29 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
-    public partial class ManagedNetworkPeeringPolicyProperties : IUtf8JsonSerializable
+    public partial class ManagedNetworkPeeringPolicyProperties : IUtf8JsonSerializable, IJsonModel<ManagedNetworkPeeringPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkPeeringPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedNetworkPeeringPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectivityType.ToString());
             if (Optional.IsDefined(Hub))
             {
-                writer.WritePropertyName("hub");
+                writer.WritePropertyName("hub"u8);
                 JsonSerializer.Serialize(writer, Hub);
             }
             if (Optional.IsCollectionDefined(Spokes))
             {
-                writer.WritePropertyName("spokes");
+                writer.WritePropertyName("spokes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Spokes)
                 {
@@ -37,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(Mesh))
             {
-                writer.WritePropertyName("mesh");
+                writer.WritePropertyName("mesh"u8);
                 writer.WriteStartArray();
                 foreach (var item in Mesh)
                 {
@@ -45,39 +63,56 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
         }
 
-        internal static ManagedNetworkPeeringPolicyProperties DeserializeManagedNetworkPeeringPolicyProperties(JsonElement element)
+        ManagedNetworkPeeringPolicyProperties IJsonModel<ManagedNetworkPeeringPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedNetworkPeeringPolicyProperties(document.RootElement, options);
+        }
+
+        internal static ManagedNetworkPeeringPolicyProperties DeserializeManagedNetworkPeeringPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ConnectivityType type = default;
-            Optional<WritableSubResource> hub = default;
-            Optional<IList<WritableSubResource>> spokes = default;
-            Optional<IList<WritableSubResource>> mesh = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
+            WritableSubResource hub = default;
+            IList<WritableSubResource> spokes = default;
+            IList<WritableSubResource> mesh = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ConnectivityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hub"))
+                if (property.NameEquals("hub"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hub = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("spokes"))
+                if (property.NameEquals("spokes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -88,11 +123,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     spokes = array;
                     continue;
                 }
-                if (property.NameEquals("mesh"))
+                if (property.NameEquals("mesh"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -103,28 +137,69 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     mesh = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedNetworkPeeringPolicyProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), type, hub, Optional.ToList(spokes), Optional.ToList(mesh));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedNetworkPeeringPolicyProperties(
+                provisioningState,
+                etag,
+                serializedAdditionalRawData,
+                type,
+                hub,
+                spokes ?? new ChangeTrackingList<WritableSubResource>(),
+                mesh ?? new ChangeTrackingList<WritableSubResource>());
         }
+
+        BinaryData IPersistableModel<ManagedNetworkPeeringPolicyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedNetworkPeeringPolicyProperties IPersistableModel<ManagedNetworkPeeringPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedNetworkPeeringPolicyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedNetworkPeeringPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

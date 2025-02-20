@@ -11,9 +11,13 @@ namespace: Azure.ResourceManager.AlertsManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/0077b4a8c5071d3ab33fd9f9ba013581c9a66b8f/specification/alertsmanagement/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 rename-mapping:
   AlertModification.modifiedAt: modifiedOn|date-time
@@ -87,7 +91,7 @@ override-operation-name:
   Alerts_MetaData: GetServiceAlertMetadata
   Alerts_GetSummary: GetServiceAlertSummary
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

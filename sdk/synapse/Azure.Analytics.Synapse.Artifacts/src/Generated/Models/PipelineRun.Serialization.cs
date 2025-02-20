@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,52 +17,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static PipelineRun DeserializePipelineRun(JsonElement element)
         {
-            Optional<string> runId = default;
-            Optional<string> runGroupId = default;
-            Optional<bool> isLatest = default;
-            Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<PipelineRunInvokedBy> invokedBy = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<DateTimeOffset> runStart = default;
-            Optional<DateTimeOffset?> runEnd = default;
-            Optional<int> durationInMs = default;
-            Optional<string> status = default;
-            Optional<string> message = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string runId = default;
+            string runGroupId = default;
+            bool? isLatest = default;
+            string pipelineName = default;
+            IReadOnlyDictionary<string, string> parameters = default;
+            PipelineRunInvokedBy invokedBy = default;
+            DateTimeOffset? lastUpdated = default;
+            DateTimeOffset? runStart = default;
+            DateTimeOffset? runEnd = default;
+            int? durationInMs = default;
+            string status = default;
+            string message = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runGroupId"))
+                if (property.NameEquals("runGroupId"u8))
                 {
                     runGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isLatest"))
+                if (property.NameEquals("isLatest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isLatest = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pipelineName"))
+                if (property.NameEquals("pipelineName"u8))
                 {
                     pipelineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -74,37 +75,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("invokedBy"))
+                if (property.NameEquals("invokedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     invokedBy = PipelineRunInvokedBy.DeserializePipelineRunInvokedBy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runStart"))
+                if (property.NameEquals("runStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runEnd"))
+                if (property.NameEquals("runEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,22 +112,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     runEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("durationInMs"))
+                if (property.NameEquals("durationInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
@@ -137,7 +134,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new PipelineRun(
+                runId,
+                runGroupId,
+                isLatest,
+                pipelineName,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                invokedBy,
+                lastUpdated,
+                runStart,
+                runEnd,
+                durationInMs,
+                status,
+                message,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineRun FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineRun(document.RootElement);
         }
 
         internal partial class PipelineRunConverter : JsonConverter<PipelineRun>
@@ -146,6 +164,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override PipelineRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

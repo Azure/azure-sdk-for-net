@@ -1,0 +1,31 @@
+{
+  "Name": "JobNetworkConfiguration",
+  "ProtocolName": "Models.JobNetworkConfiguration",
+  "SummaryComment": "The network configuration for a job.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "SubnetId",
+        "SummaryComment": "The ARM resource identifier of the virtual network subnet which nodes running tasks from the job will join for the duration of the task.",
+        "RemarksComment": "<para>The specified subnet should have enough free IP addresses to accommodate the number of nodes which will run tasks from the job. This can be up to the number of nodes in the pool.</para><para>This will only work on pools with the <see cref=\"CloudPool.VirtualMachineConfiguration\" /> property.</para><para>This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/{provider}/virtualNetworks/{network}/subnets/{subnet}.</para><para>The virtual network must be in the same region and subscription as the Azure Batch account. The 'MicrosoftAzureBatch' service principal must have the 'Classic Virtual Machine Contributor' Role-Based Access Control (RBAC) role for the specified VNet. The specified subnet must allow communication from the Azure Batch service to be able to schedule tasks on the compute nodes. This can be verified by checking if the specified VNet has any associated Network Security Groups (NSG). If communication to the compute nodes in the specified subnet is denied by an NSG, then the Batch service will set the state of the compute nodes to unusable. Only ARM virtual networks ('Microsoft.Network/virtualNetworks') are supported. If the specified VNet has any associated Network Security Groups (NSG), then a few reserved system ports must be enabled for inbound communication - ports 29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. Also enable outbound connections to Azure Storage on port 443. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration </para>",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "SkipWithdrawFromVNet",
+        "SummaryComment": "Gets or sets whether to withdraw Compute Nodes from the virtual network to DNC when the job is terminated or deleted.",
+        "RemarksComment": "If true, nodes will remain joined to the virtual network to DNC. If false, nodes will automatically withdraw when the job ends. Defaults to false.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional"
+      },
+      "Value": null
+    }
+  ]
+}

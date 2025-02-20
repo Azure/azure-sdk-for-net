@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
@@ -32,14 +33,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Sample03_InspectHub
 
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
 
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+            var producer = new EventHubProducerClient(
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             try
             {
@@ -70,14 +76,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Sample03_QueryPartitions
 
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
 
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+            var producer = new EventHubProducerClient(
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             try
             {
@@ -104,15 +115,21 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Sample03_InspectPartition
 
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
-            var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
+            var consumer = new EventHubConsumerClient(
+                consumerGroup,
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             try
             {
@@ -125,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 Debug.WriteLine($"\tThe partition contains no events: { partitionProperties.IsEmpty }");
                 Debug.WriteLine($"\tThe first sequence number is: { partitionProperties.BeginningSequenceNumber }");
                 Debug.WriteLine($"\tThe last sequence number is: { partitionProperties.LastEnqueuedSequenceNumber }");
-                Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffset }");
+                Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffsetString }");
                 Debug.WriteLine($"\tThe last enqueued time is: { partitionProperties.LastEnqueuedTime }, in UTC.");
             }
             finally

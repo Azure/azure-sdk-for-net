@@ -5,119 +5,211 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderForServersGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderForServersGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersGcpOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DefenderForServersGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefenderForServers))
-            {
-                writer.WritePropertyName("defenderForServers");
-                writer.WriteObjectValue(DefenderForServers);
-            }
-            if (Optional.IsDefined(ArcAutoProvisioning))
-            {
-                writer.WritePropertyName("arcAutoProvisioning");
-                writer.WriteObjectValue(ArcAutoProvisioning);
-            }
-            if (Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
-            {
-                writer.WritePropertyName("vaAutoProvisioning");
-                writer.WriteObjectValue(VulnerabilityAssessmentAutoProvisioning);
-            }
-            if (Optional.IsDefined(MdeAutoProvisioning))
-            {
-                writer.WritePropertyName("mdeAutoProvisioning");
-                writer.WriteObjectValue(MdeAutoProvisioning);
-            }
-            if (Optional.IsDefined(SubPlan))
-            {
-                writer.WritePropertyName("subPlan");
-                writer.WriteObjectValue(SubPlan);
-            }
-            writer.WritePropertyName("offeringType");
-            writer.WriteStringValue(OfferingType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<GcpDefenderForServersInfo> defenderForServers = default;
-            Optional<DefenderForServersGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingSubPlan> subPlan = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersGcpOffering)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(DefenderForServers))
+            {
+                writer.WritePropertyName("defenderForServers"u8);
+                writer.WriteObjectValue(DefenderForServers, options);
+            }
+            if (Optional.IsDefined(ArcAutoProvisioning))
+            {
+                writer.WritePropertyName("arcAutoProvisioning"u8);
+                writer.WriteObjectValue(ArcAutoProvisioning, options);
+            }
+            if (Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
+            {
+                writer.WritePropertyName("vaAutoProvisioning"u8);
+                writer.WriteObjectValue(VulnerabilityAssessmentAutoProvisioning, options);
+            }
+            if (Optional.IsDefined(MdeAutoProvisioning))
+            {
+                writer.WritePropertyName("mdeAutoProvisioning"u8);
+                writer.WriteObjectValue(MdeAutoProvisioning, options);
+            }
+            if (Optional.IsDefined(SubPlan))
+            {
+                writer.WritePropertyName("subPlan"u8);
+                writer.WriteObjectValue(SubPlan, options);
+            }
+            if (Optional.IsDefined(VmScanners))
+            {
+                writer.WritePropertyName("vmScanners"u8);
+                writer.WriteObjectValue(VmScanners, options);
+            }
+        }
+
+        DefenderForServersGcpOffering IJsonModel<DefenderForServersGcpOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersGcpOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersGcpOffering(document.RootElement, options);
+        }
+
+        internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            GcpDefenderForServersInfo defenderForServers = default;
+            DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = default;
+            DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = default;
+            DefenderForServersGcpOfferingSubPlan subPlan = default;
+            DefenderForServersGcpOfferingVmScanners vmScanners = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defenderForServers"))
+                if (property.NameEquals("defenderForServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value);
+                    defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("arcAutoProvisioning"))
+                if (property.NameEquals("arcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForServersGcpOfferingArcAutoProvisioning.DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForServersGcpOfferingArcAutoProvisioning.DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vaAutoProvisioning"))
+                if (property.NameEquals("vaAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
+                    vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mdeAutoProvisioning"))
+                if (property.NameEquals("mdeAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mdeAutoProvisioning = DefenderForServersGcpOfferingMdeAutoProvisioning.DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(property.Value);
+                    mdeAutoProvisioning = DefenderForServersGcpOfferingMdeAutoProvisioning.DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("subPlan"))
+                if (property.NameEquals("subPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value);
+                    subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("vmScanners"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmScanners = DefenderForServersGcpOfferingVmScanners.DeserializeDefenderForServersGcpOfferingVmScanners(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForServersGcpOffering(offeringType, description.Value, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderForServersGcpOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                defenderForServers,
+                arcAutoProvisioning,
+                vaAutoProvisioning,
+                mdeAutoProvisioning,
+                subPlan,
+                vmScanners);
         }
+
+        BinaryData IPersistableModel<DefenderForServersGcpOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersGcpOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefenderForServersGcpOffering IPersistableModel<DefenderForServersGcpOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderForServersGcpOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersGcpOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderForServersGcpOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

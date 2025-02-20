@@ -15,15 +15,38 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("transportUrl");
+            writer.WritePropertyName("transportUrl"u8);
             writer.WriteStringValue(TransportUrl);
-            writer.WritePropertyName("transportType");
+            writer.WritePropertyName("transportType"u8);
             writer.WriteStringValue(TransportType.ToString());
-            writer.WritePropertyName("contentType");
+            writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
-            writer.WritePropertyName("audioChannelType");
+            writer.WritePropertyName("audioChannelType"u8);
             writer.WriteStringValue(AudioChannelType.ToString());
+            if (Optional.IsDefined(StartMediaStreaming))
+            {
+                writer.WritePropertyName("startMediaStreaming"u8);
+                writer.WriteBooleanValue(StartMediaStreaming.Value);
+            }
+            if (Optional.IsDefined(EnableBidirectional))
+            {
+                writer.WritePropertyName("enableBidirectional"u8);
+                writer.WriteBooleanValue(EnableBidirectional.Value);
+            }
+            if (Optional.IsDefined(AudioFormat))
+            {
+                writer.WritePropertyName("audioFormat"u8);
+                writer.WriteStringValue(AudioFormat.Value.ToString());
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

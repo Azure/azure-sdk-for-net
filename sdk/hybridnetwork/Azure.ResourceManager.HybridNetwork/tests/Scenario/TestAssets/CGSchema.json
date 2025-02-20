@@ -1,0 +1,38 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "vnet_ConfigGroupSchema",
+    "type": "object",
+    "properties": {
+        "nfdvId": {
+            "description": "The ID of the VNET NFDV resource.",
+            "type": "string"
+        },
+        "vnetName": {
+            "description": "The name of the VNET you want to deploy",
+            "type": "string"
+        },
+        "vnetAddressPrefixes": {
+            "description": "An array of VNET address prefixes, e.g. [\"10.0.0.0/16\",\"11.0.0.0/16\"]",
+            "type": "array"
+        },
+        "subnets": {
+            "description": "Array of subnet objects to create under the vnet",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "Name for the subnet",
+                        "type": "string"
+                    },
+                    "addressPrefix": {
+                        "description": "addressPrefix for the subnet, must exist within one of the VNET address prefixes.",
+                        "type": "string"
+                    }
+                },
+                "required": [ "name", "addressPrefix" ]
+            }
+        }
+    },
+    "required": [ "nfdvId", "vnetName", "vnetAddressPrefixes", "subnets" ]
+}

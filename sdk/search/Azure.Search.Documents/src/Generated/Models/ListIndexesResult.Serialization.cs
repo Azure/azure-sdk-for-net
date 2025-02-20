@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,10 +14,14 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static ListIndexesResult DeserializeListIndexesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SearchIndex> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SearchIndex> array = new List<SearchIndex>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,6 +33,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new ListIndexesResult(value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ListIndexesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeListIndexesResult(document.RootElement);
         }
     }
 }

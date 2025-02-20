@@ -21,78 +21,79 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QuoteAllText))
             {
-                writer.WritePropertyName("quoteAllText");
-                writer.WriteObjectValue(QuoteAllText);
+                writer.WritePropertyName("quoteAllText"u8);
+                writer.WriteObjectValue<object>(QuoteAllText);
             }
-            writer.WritePropertyName("fileExtension");
-            writer.WriteObjectValue(FileExtension);
+            writer.WritePropertyName("fileExtension"u8);
+            writer.WriteObjectValue<object>(FileExtension);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
-                writer.WritePropertyName("maxRowsPerFile");
-                writer.WriteObjectValue(MaxRowsPerFile);
+                writer.WritePropertyName("maxRowsPerFile"u8);
+                writer.WriteObjectValue<object>(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
-                writer.WritePropertyName("fileNamePrefix");
-                writer.WriteObjectValue(FileNamePrefix);
+                writer.WritePropertyName("fileNamePrefix"u8);
+                writer.WriteObjectValue<object>(FileNamePrefix);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static DelimitedTextWriteSettings DeserializeDelimitedTextWriteSettings(JsonElement element)
         {
-            Optional<object> quoteAllText = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object quoteAllText = default;
             object fileExtension = default;
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            object maxRowsPerFile = default;
+            object fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quoteAllText"))
+                if (property.NameEquals("quoteAllText"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quoteAllText = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileExtension"))
+                if (property.NameEquals("fileExtension"u8))
                 {
                     fileExtension = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("maxRowsPerFile"))
+                if (property.NameEquals("maxRowsPerFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRowsPerFile = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileNamePrefix"))
+                if (property.NameEquals("fileNamePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileNamePrefix = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
@@ -100,7 +101,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText,
+                fileExtension,
+                maxRowsPerFile,
+                fileNamePrefix);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DelimitedTextWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDelimitedTextWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DelimitedTextWriteSettingsConverter : JsonConverter<DelimitedTextWriteSettings>
@@ -109,6 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DelimitedTextWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

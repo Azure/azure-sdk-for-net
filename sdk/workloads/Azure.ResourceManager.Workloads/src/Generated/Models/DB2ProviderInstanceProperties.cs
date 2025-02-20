@@ -6,20 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the DB2 provider properties. </summary>
     public partial class DB2ProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DB2ProviderInstanceProperties"/>. </summary>
         public DB2ProviderInstanceProperties()
         {
             ProviderType = "Db2";
         }
 
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DB2ProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
         /// <param name="dbName"> Gets or sets the db2 database name. </param>
         /// <param name="dbPort"> Gets or sets the db2 database sql port. </param>
@@ -27,7 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPassword"> Gets or sets the db2 database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
+        /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
+        /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB2 Database. </param>
+        internal DB2ProviderInstanceProperties(string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid, SapSslPreference? sslPreference, Uri sslCertificateUri) : base(providerType, serializedAdditionalRawData)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -36,6 +40,8 @@ namespace Azure.ResourceManager.Workloads.Models
             DBPassword = dbPassword;
             DBPasswordUri = dbPasswordUri;
             SapSid = sapSid;
+            SslPreference = sslPreference;
+            SslCertificateUri = sslCertificateUri;
             ProviderType = providerType ?? "Db2";
         }
 
@@ -53,5 +59,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
+        /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
+        public SapSslPreference? SslPreference { get; set; }
+        /// <summary> Gets or sets the blob URI to SSL certificate for the DB2 Database. </summary>
+        public Uri SslCertificateUri { get; set; }
     }
 }

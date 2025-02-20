@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class TriggerDependencyReference : DependencyReference
     {
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
-        public TriggerDependencyReference(FactoryTriggerReference referenceTrigger)
+        public TriggerDependencyReference(DataFactoryTriggerReference referenceTrigger)
         {
             Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
@@ -28,16 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependencyReferenceType = "TriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
-        internal TriggerDependencyReference(string dependencyReferenceType, FactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)
+        internal TriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType, serializedAdditionalRawData)
         {
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = dependencyReferenceType ?? "TriggerDependencyReference";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/> for deserialization. </summary>
+        internal TriggerDependencyReference()
+        {
+        }
+
         /// <summary> Referenced trigger. </summary>
-        public FactoryTriggerReference ReferenceTrigger { get; set; }
+        public DataFactoryTriggerReference ReferenceTrigger { get; set; }
     }
 }

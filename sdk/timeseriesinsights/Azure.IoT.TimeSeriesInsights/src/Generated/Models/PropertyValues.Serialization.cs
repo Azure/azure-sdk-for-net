@@ -17,17 +17,17 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(ValuesInternal))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 ValuesInternal.WriteTo(writer);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PropertyValueType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PropertyValueType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,33 +35,52 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static PropertyValues DeserializePropertyValues(JsonElement element)
         {
-            Optional<JsonElement> values = default;
-            Optional<string> name = default;
-            Optional<TimeSeriesPropertyType> type = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            JsonElement values = default;
+            string name = default;
+            TimeSeriesPropertyType? type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     values = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new TimeSeriesPropertyType(property.Value.GetString());
                     continue;
                 }
             }
-            return new PropertyValues(name.Value, Optional.ToNullable(type), values);
+            return new PropertyValues(name, type, values);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PropertyValues FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePropertyValues(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

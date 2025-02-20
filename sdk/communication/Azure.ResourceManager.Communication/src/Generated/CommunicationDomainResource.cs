@@ -10,23 +10,25 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A Class representing a CommunicationDomainResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunicationDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommunicationDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource" /> using the GetCommunicationDomainResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunicationDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunicationDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource"/> using the GetCommunicationDomainResource method.
     /// </summary>
     public partial class CommunicationDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunicationDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="emailServiceName"> The emailServiceName. </param>
+        /// <param name="domainName"> The domainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}";
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.Communication
         private readonly DomainsRestOperations _communicationDomainResourceDomainsRestClient;
         private readonly CommunicationDomainResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains";
+
         /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class for mocking. </summary>
         protected CommunicationDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommunicationDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunicationDomainResource(ArmClient client, CommunicationDomainResourceData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,6 +90,75 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SenderUsernameResources in the CommunicationDomainResource. </summary>
+        /// <returns> An object representing collection of SenderUsernameResources and their operations over a SenderUsernameResource. </returns>
+        public virtual SenderUsernameResourceCollection GetSenderUsernameResources()
+        {
+            return GetCachedClient(client => new SenderUsernameResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SenderUsernameResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SenderUsernameResource>> GetSenderUsernameResourceAsync(string senderUsername, CancellationToken cancellationToken = default)
+        {
+            return await GetSenderUsernameResources().GetAsync(senderUsername, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SenderUsernameResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SenderUsernameResource> GetSenderUsernameResource(string senderUsername, CancellationToken cancellationToken = default)
+        {
+            return GetSenderUsernameResources().Get(senderUsername, cancellationToken);
+        }
+
         /// <summary>
         /// Get the Domains resource and its properties.
         /// <list type="bullet">
@@ -98,6 +169,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +210,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +249,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +292,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +333,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +380,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -306,6 +425,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_InitiateVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,6 +472,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_InitiateVerification</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -382,6 +517,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_CancelVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,6 +564,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_CancelVerification</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -458,6 +609,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,6 +672,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -567,6 +734,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -616,6 +791,14 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -664,6 +847,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -716,6 +907,14 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

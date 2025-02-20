@@ -77,7 +77,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -108,7 +108,6 @@ Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
-string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
@@ -137,7 +136,6 @@ Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
-string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 
@@ -162,21 +160,21 @@ Let's define a new `TableEntity` so that we can add it to the table.
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-var entity = new TableEntity(partitionKey, rowKey)
+var tableEntity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
     { "Price", 5.00 },
     { "Quantity", 21 }
 };
 
-Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+Console.WriteLine($"{tableEntity.RowKey}: {tableEntity["Product"]} costs ${tableEntity.GetDouble("Price")}.");
 ```
 
 Using the `TableClient` we can now add our new entity to the table.
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-tableClient.AddEntity(entity);
+tableClient.AddEntity(tableEntity);
 ```
 
 ### Query table entities
@@ -290,18 +288,16 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[tables_rest]: https://docs.microsoft.com/rest/api/storageservices/table-service-rest-api
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[tables_rest]: https://learn.microsoft.com/rest/api/storageservices/table-service-rest-api
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [table_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.Tables
 [table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples
 [table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/src
 [table_change_log]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/CHANGELOG.md
-[api_reference]: https://docs.microsoft.com/dotnet/api/overview/azure/data.tables-readme
+[api_reference]: https://learn.microsoft.com/dotnet/api/overview/azure/data.tables-readme
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftables%2FAzure.Data.Tables%2FREADME.png)

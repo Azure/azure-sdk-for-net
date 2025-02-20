@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.AnomalyDetector.Tests.Infrastructure;
 using NUnit.Framework;
@@ -33,15 +34,16 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.DetectUnivariateEntireSeriesAsync(request);
+            var response = await client.GetUnivariateClient().DetectUnivariateEntireSeriesAsync(request.ToRequestContent());
 
-            Assert.IsNotNull(result.Value.ExpectedValues);
-            Assert.IsNotNull(result.Value.UpperMargins);
-            Assert.IsNotNull(result.Value.LowerMargins);
-            Assert.IsNotNull(result.Value.IsAnomaly);
-            Assert.IsNotNull(result.Value.IsPositiveAnomaly);
-            Assert.IsNotNull(result.Value.IsNegativeAnomaly);
-            Assert.IsNotNull(result.Value.Severity);
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Assert.IsNotNull(result.GetProperty("expectedValues"));
+            Assert.IsNotNull(result.GetProperty("upperMargins"));
+            Assert.IsNotNull(result.GetProperty("lowerMargins"));
+            Assert.IsNotNull(result.GetProperty("isAnomaly"));
+            Assert.IsNotNull(result.GetProperty("isPositiveAnomaly"));
+            Assert.IsNotNull(result.GetProperty("isNegativeAnomaly"));
+            Assert.IsNotNull(result.GetProperty("severity"));
         }
 
         [Test]
@@ -52,7 +54,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.DetectUnivariateLastPointAsync(request);
+            var result = await client.GetUnivariateClient().DetectUnivariateLastPointAsync(request);
 
             Assert.IsNotNull(result.Value.ExpectedValue);
             Assert.IsNotNull(result.Value.IsAnomaly);
@@ -75,7 +77,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            var result = await client.DetectUnivariateChangePointAsync(request);
+            var result = await client.GetUnivariateClient().DetectUnivariateChangePointAsync(request);
 
             Assert.IsNotNull(result.Value.Period);
             Assert.IsNotNull(result.Value.IsChangePoint);
@@ -88,7 +90,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var client = CreateAnomalyDetectorClient();
 
             int model_number = 0;
-            await foreach (var multivariateModel in client.GetMultivariateModelsAsync())
+            await foreach (var multivariateModel in client.GetMultivariateClient().GetMultivariateModelsAsync())
             {
                 model_number++;
             }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(GalleryExpand left, GalleryExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryExpand"/> values are not the same. </summary>
         public static bool operator !=(GalleryExpand left, GalleryExpand right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GalleryExpand"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryExpand"/>. </summary>
         public static implicit operator GalleryExpand(string value) => new GalleryExpand(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

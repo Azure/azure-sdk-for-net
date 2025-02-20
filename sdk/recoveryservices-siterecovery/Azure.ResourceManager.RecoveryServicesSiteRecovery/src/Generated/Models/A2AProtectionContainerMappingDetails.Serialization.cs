@@ -5,65 +5,180 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectionContainerMappingDetails
+    public partial class A2AProtectionContainerMappingDetails : IUtf8JsonSerializable, IJsonModel<A2AProtectionContainerMappingDetails>
     {
-        internal static A2AProtectionContainerMappingDetails DeserializeA2AProtectionContainerMappingDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectionContainerMappingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<A2AProtectionContainerMappingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<string> automationAccountArmId = default;
-            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
-            Optional<string> scheduleName = default;
-            Optional<string> jobScheduleName = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
+            {
+                writer.WritePropertyName("agentAutoUpdateStatus"u8);
+                writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(AutomationAccountArmId))
+            {
+                writer.WritePropertyName("automationAccountArmId"u8);
+                writer.WriteStringValue(AutomationAccountArmId);
+            }
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
+            {
+                writer.WritePropertyName("automationAccountAuthenticationType"u8);
+                writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(ScheduleName))
+            {
+                writer.WritePropertyName("scheduleName"u8);
+                writer.WriteStringValue(ScheduleName);
+            }
+            if (Optional.IsDefined(JobScheduleName))
+            {
+                writer.WritePropertyName("jobScheduleName"u8);
+                writer.WriteStringValue(JobScheduleName);
+            }
+        }
+
+        A2AProtectionContainerMappingDetails IJsonModel<A2AProtectionContainerMappingDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AProtectionContainerMappingDetails(document.RootElement, options);
+        }
+
+        internal static A2AProtectionContainerMappingDetails DeserializeA2AProtectionContainerMappingDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = default;
+            ResourceIdentifier automationAccountArmId = default;
+            AutomationAccountAuthenticationType? automationAccountAuthenticationType = default;
+            string scheduleName = default;
+            string jobScheduleName = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentAutoUpdateStatus"))
+                if (property.NameEquals("agentAutoUpdateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentAutoUpdateStatus = new AgentAutoUpdateStatus(property.Value.GetString());
+                    agentAutoUpdateStatus = new SiteRecoveryAgentAutoUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("automationAccountArmId"))
-                {
-                    automationAccountArmId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("automationAccountAuthenticationType"))
+                if (property.NameEquals("automationAccountArmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    automationAccountArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("automationAccountAuthenticationType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     automationAccountAuthenticationType = new AutomationAccountAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduleName"))
+                if (property.NameEquals("scheduleName"u8))
                 {
                     scheduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobScheduleName"))
+                if (property.NameEquals("jobScheduleName"u8))
                 {
                     jobScheduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AProtectionContainerMappingDetails(instanceType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType), scheduleName.Value, jobScheduleName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new A2AProtectionContainerMappingDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                agentAutoUpdateStatus,
+                automationAccountArmId,
+                automationAccountAuthenticationType,
+                scheduleName,
+                jobScheduleName);
         }
+
+        BinaryData IPersistableModel<A2AProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        A2AProtectionContainerMappingDetails IPersistableModel<A2AProtectionContainerMappingDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeA2AProtectionContainerMappingDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<A2AProtectionContainerMappingDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

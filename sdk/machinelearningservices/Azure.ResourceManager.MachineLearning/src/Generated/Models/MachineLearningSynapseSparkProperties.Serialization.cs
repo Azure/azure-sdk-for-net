@@ -5,150 +5,471 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSynapseSparkProperties : IUtf8JsonSerializable
+    public partial class MachineLearningSynapseSparkProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningSynapseSparkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSynapseSparkProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningSynapseSparkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(AutoScaleProperties))
             {
-                writer.WritePropertyName("autoScaleProperties");
-                writer.WriteObjectValue(AutoScaleProperties);
+                writer.WritePropertyName("autoScaleProperties"u8);
+                writer.WriteObjectValue(AutoScaleProperties, options);
             }
             if (Optional.IsDefined(AutoPauseProperties))
             {
-                writer.WritePropertyName("autoPauseProperties");
-                writer.WriteObjectValue(AutoPauseProperties);
+                writer.WritePropertyName("autoPauseProperties"u8);
+                writer.WriteObjectValue(AutoPauseProperties, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
-                writer.WritePropertyName("sparkVersion");
+                writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
             if (Optional.IsDefined(NodeCount))
             {
-                writer.WritePropertyName("nodeCount");
+                writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
             if (Optional.IsDefined(NodeSize))
             {
-                writer.WritePropertyName("nodeSize");
+                writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
             if (Optional.IsDefined(NodeSizeFamily))
             {
-                writer.WritePropertyName("nodeSizeFamily");
+                writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup");
+                writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             if (Optional.IsDefined(WorkspaceName))
             {
-                writer.WritePropertyName("workspaceName");
+                writer.WritePropertyName("workspaceName"u8);
                 writer.WriteStringValue(WorkspaceName);
             }
             if (Optional.IsDefined(PoolName))
             {
-                writer.WritePropertyName("poolName");
+                writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningSynapseSparkProperties DeserializeMachineLearningSynapseSparkProperties(JsonElement element)
+        MachineLearningSynapseSparkProperties IJsonModel<MachineLearningSynapseSparkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<MachineLearningAutoScaleProperties> autoScaleProperties = default;
-            Optional<MachineLearningAutoPauseProperties> autoPauseProperties = default;
-            Optional<string> sparkVersion = default;
-            Optional<int> nodeCount = default;
-            Optional<string> nodeSize = default;
-            Optional<string> nodeSizeFamily = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> workspaceName = default;
-            Optional<string> poolName = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSynapseSparkProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningSynapseSparkProperties DeserializeMachineLearningSynapseSparkProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MachineLearningAutoScaleProperties autoScaleProperties = default;
+            MachineLearningAutoPauseProperties autoPauseProperties = default;
+            string sparkVersion = default;
+            int? nodeCount = default;
+            string nodeSize = default;
+            string nodeSizeFamily = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string workspaceName = default;
+            string poolName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autoScaleProperties"))
+                if (property.NameEquals("autoScaleProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value);
+                    autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("autoPauseProperties"))
+                if (property.NameEquals("autoPauseProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value);
+                    autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sparkVersion"))
+                if (property.NameEquals("sparkVersion"u8))
                 {
                     sparkVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeCount"))
+                if (property.NameEquals("nodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeSize"))
+                if (property.NameEquals("nodeSize"u8))
                 {
                     nodeSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeSizeFamily"))
+                if (property.NameEquals("nodeSizeFamily"u8))
                 {
                     nodeSizeFamily = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceName"))
+                if (property.NameEquals("workspaceName"u8))
                 {
                     workspaceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poolName"))
+                if (property.NameEquals("poolName"u8))
                 {
                     poolName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningSynapseSparkProperties(
+                autoScaleProperties,
+                autoPauseProperties,
+                sparkVersion,
+                nodeCount,
+                nodeSize,
+                nodeSizeFamily,
+                subscriptionId,
+                resourceGroup,
+                workspaceName,
+                poolName,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoScaleProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  autoScaleProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoScaleProperties))
+                {
+                    builder.Append("  autoScaleProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoScaleProperties, options, 2, false, "  autoScaleProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoPauseProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  autoPauseProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoPauseProperties))
+                {
+                    builder.Append("  autoPauseProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoPauseProperties, options, 2, false, "  autoPauseProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SparkVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sparkVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SparkVersion))
+                {
+                    builder.Append("  sparkVersion: ");
+                    if (SparkVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SparkVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SparkVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeCount))
+                {
+                    builder.Append("  nodeCount: ");
+                    builder.AppendLine($"{NodeCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeSize))
+                {
+                    builder.Append("  nodeSize: ");
+                    if (NodeSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NodeSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NodeSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeSizeFamily), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeSizeFamily: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeSizeFamily))
+                {
+                    builder.Append("  nodeSizeFamily: ");
+                    if (NodeSizeFamily.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NodeSizeFamily}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NodeSizeFamily}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    builder.Append("  subscriptionId: ");
+                    if (SubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroup), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceGroup: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGroup))
+                {
+                    builder.Append("  resourceGroup: ");
+                    if (ResourceGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceGroup}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  workspaceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceName))
+                {
+                    builder.Append("  workspaceName: ");
+                    if (WorkspaceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkspaceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkspaceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoolName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  poolName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PoolName))
+                {
+                    builder.Append("  poolName: ");
+                    if (PoolName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PoolName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PoolName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningSynapseSparkProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningSynapseSparkProperties IPersistableModel<MachineLearningSynapseSparkProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningSynapseSparkProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningSynapseSparkProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class BatchEndpointDefaults : IUtf8JsonSerializable
+    internal partial class BatchEndpointDefaults : IUtf8JsonSerializable, IJsonModel<BatchEndpointDefaults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchEndpointDefaults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BatchEndpointDefaults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointDefaults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DeploymentName))
             {
                 if (DeploymentName != null)
                 {
-                    writer.WritePropertyName("deploymentName");
+                    writer.WritePropertyName("deploymentName"u8);
                     writer.WriteStringValue(DeploymentName);
                 }
                 else
@@ -27,15 +47,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("deploymentName");
                 }
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static BatchEndpointDefaults DeserializeBatchEndpointDefaults(JsonElement element)
+        BatchEndpointDefaults IJsonModel<BatchEndpointDefaults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> deploymentName = default;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointDefaults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchEndpointDefaults(document.RootElement, options);
+        }
+
+        internal static BatchEndpointDefaults DeserializeBatchEndpointDefaults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string deploymentName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentName"))
+                if (property.NameEquals("deploymentName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,8 +99,84 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     deploymentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchEndpointDefaults(deploymentName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchEndpointDefaults(deploymentName, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentName))
+                {
+                    builder.Append("  deploymentName: ");
+                    if (DeploymentName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<BatchEndpointDefaults>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointDefaults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchEndpointDefaults IPersistableModel<BatchEndpointDefaults>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointDefaults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchEndpointDefaults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchEndpointDefaults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

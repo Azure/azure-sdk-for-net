@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusAccessKeyType ToServiceBusAccessKeyType(this string value)
         {
-            if (string.Equals(value, "PrimaryKey", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusAccessKeyType.PrimaryKey;
-            if (string.Equals(value, "SecondaryKey", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusAccessKeyType.SecondaryKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryKey")) return ServiceBusAccessKeyType.PrimaryKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecondaryKey")) return ServiceBusAccessKeyType.SecondaryKey;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusAccessKeyType value.");
         }
     }

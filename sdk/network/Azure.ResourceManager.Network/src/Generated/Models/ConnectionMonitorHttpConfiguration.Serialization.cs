@@ -5,45 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorHttpConfiguration : IUtf8JsonSerializable
+    public partial class ConnectionMonitorHttpConfiguration : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorHttpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorHttpConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectionMonitorHttpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(RequestHeaders))
             {
-                writer.WritePropertyName("requestHeaders");
+                writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
-                writer.WritePropertyName("validStatusCodeRanges");
+                writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidStatusCodeRanges)
                 {
@@ -53,67 +71,97 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(PreferHttps))
             {
-                writer.WritePropertyName("preferHTTPS");
+                writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element)
+        ConnectionMonitorHttpConfiguration IJsonModel<ConnectionMonitorHttpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<int> port = default;
-            Optional<NetworkHttpConfigurationMethod> method = default;
-            Optional<string> path = default;
-            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
-            Optional<IList<string>> validStatusCodeRanges = default;
-            Optional<bool> preferHTTPS = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorHttpConfiguration(document.RootElement, options);
+        }
+
+        internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? port = default;
+            NetworkHttpConfigurationMethod? method = default;
+            string path = default;
+            IList<NetworkWatcherHttpHeader> requestHeaders = default;
+            IList<string> validStatusCodeRanges = default;
+            bool? preferHTTPS = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     method = new NetworkHttpConfigurationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestHeaders"))
+                if (property.NameEquals("requestHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item, options));
                     }
                     requestHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("validStatusCodeRanges"))
+                if (property.NameEquals("validStatusCodeRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -124,18 +172,60 @@ namespace Azure.ResourceManager.Network.Models
                     validStatusCodeRanges = array;
                     continue;
                 }
-                if (property.NameEquals("preferHTTPS"))
+                if (property.NameEquals("preferHTTPS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preferHTTPS = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectionMonitorHttpConfiguration(
+                port,
+                method,
+                path,
+                requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
+                validStatusCodeRanges ?? new ChangeTrackingList<string>(),
+                preferHTTPS,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectionMonitorHttpConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectionMonitorHttpConfiguration IPersistableModel<ConnectionMonitorHttpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectionMonitorHttpConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectionMonitorHttpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

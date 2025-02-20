@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningDeploymentProvisioningState left, MachineLearningDeploymentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningDeploymentProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningDeploymentProvisioningState left, MachineLearningDeploymentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
         public static implicit operator MachineLearningDeploymentProvisioningState(string value) => new MachineLearningDeploymentProvisioningState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

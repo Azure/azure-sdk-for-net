@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseWorkloadClassifierResource" /> and their operations.
-    /// Each <see cref="SynapseWorkloadClassifierResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkloadGroupResource" />.
-    /// To get a <see cref="SynapseWorkloadClassifierCollection" /> instance call the GetSynapseWorkloadClassifiers method from an instance of <see cref="SynapseWorkloadGroupResource" />.
+    /// A class representing a collection of <see cref="SynapseWorkloadClassifierResource"/> and their operations.
+    /// Each <see cref="SynapseWorkloadClassifierResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkloadGroupResource"/>.
+    /// To get a <see cref="SynapseWorkloadClassifierCollection"/> instance call the GetSynapseWorkloadClassifiers method from an instance of <see cref="SynapseWorkloadGroupResource"/>.
     /// </summary>
     public partial class SynapseWorkloadClassifierCollection : ArmCollection, IEnumerable<SynapseWorkloadClassifierResource>, IAsyncEnumerable<SynapseWorkloadClassifierResource>
     {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update workload classifier for a Sql pool&apos;s workload group.
+        /// Create Or Update workload classifier for a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -62,6 +61,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update workload classifier for a Sql pool&apos;s workload group.
+        /// Create Or Update workload classifier for a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,6 +110,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workload classifier of Sql pool&apos;s workload group.
+        /// Get a workload classifier of Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,6 +159,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workload classifier of Sql pool&apos;s workload group.
+        /// Get a workload classifier of Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,6 +204,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +240,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of  Sql pool&apos;s workload classifier for workload groups.
+        /// Get list of  Sql pool's workload classifier for workload groups.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,19 +250,27 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseWorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseWorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkloadClassifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get list of  Sql pool&apos;s workload classifier for workload groups.
+        /// Get list of  Sql pool's workload classifier for workload groups.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,15 +280,23 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseWorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseWorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkloadClassifierResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +309,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +353,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolWorkloadClassifier_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
@@ -314,6 +377,96 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseWorkloadClassifierResource>> GetIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+
+            using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseWorkloadClassifierResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseWorkloadClassifierResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolWorkloadClassifier_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkloadClassifierResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        public virtual NullableResponse<SynapseWorkloadClassifierResource> GetIfExists(string workloadClassifierName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+
+            using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseWorkloadClassifierResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseWorkloadClassifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

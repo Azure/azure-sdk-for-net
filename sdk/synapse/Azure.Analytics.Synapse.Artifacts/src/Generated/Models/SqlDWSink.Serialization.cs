@@ -21,197 +21,190 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
-                writer.WritePropertyName("preCopyScript");
-                writer.WriteObjectValue(PreCopyScript);
+                writer.WritePropertyName("preCopyScript"u8);
+                writer.WriteObjectValue<object>(PreCopyScript);
             }
             if (Optional.IsDefined(AllowPolyBase))
             {
-                writer.WritePropertyName("allowPolyBase");
-                writer.WriteObjectValue(AllowPolyBase);
+                writer.WritePropertyName("allowPolyBase"u8);
+                writer.WriteObjectValue<object>(AllowPolyBase);
             }
             if (Optional.IsDefined(PolyBaseSettings))
             {
-                writer.WritePropertyName("polyBaseSettings");
+                writer.WritePropertyName("polyBaseSettings"u8);
                 writer.WriteObjectValue(PolyBaseSettings);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
-                writer.WritePropertyName("allowCopyCommand");
-                writer.WriteObjectValue(AllowCopyCommand);
+                writer.WritePropertyName("allowCopyCommand"u8);
+                writer.WriteObjectValue<object>(AllowCopyCommand);
             }
             if (Optional.IsDefined(CopyCommandSettings))
             {
-                writer.WritePropertyName("copyCommandSettings");
+                writer.WritePropertyName("copyCommandSettings"u8);
                 writer.WriteObjectValue(CopyCommandSettings);
             }
             if (Optional.IsDefined(TableOption))
             {
-                writer.WritePropertyName("tableOption");
-                writer.WriteObjectValue(TableOption);
+                writer.WritePropertyName("tableOption"u8);
+                writer.WriteObjectValue<object>(TableOption);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
-                writer.WritePropertyName("writeBatchSize");
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WritePropertyName("writeBatchSize"u8);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
-                writer.WritePropertyName("writeBatchTimeout");
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WritePropertyName("writeBatchTimeout"u8);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
-                writer.WritePropertyName("sinkRetryCount");
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WritePropertyName("sinkRetryCount"u8);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
-                writer.WritePropertyName("sinkRetryWait");
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WritePropertyName("sinkRetryWait"u8);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WritePropertyName("maxConcurrentConnections"u8);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static SqlDWSink DeserializeSqlDWSink(JsonElement element)
         {
-            Optional<object> preCopyScript = default;
-            Optional<object> allowPolyBase = default;
-            Optional<PolybaseSettings> polyBaseSettings = default;
-            Optional<object> allowCopyCommand = default;
-            Optional<DWCopyCommandSettings> copyCommandSettings = default;
-            Optional<object> tableOption = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object preCopyScript = default;
+            object allowPolyBase = default;
+            PolybaseSettings polyBaseSettings = default;
+            object allowCopyCommand = default;
+            DWCopyCommandSettings copyCommandSettings = default;
+            object tableOption = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preCopyScript"))
+                if (property.NameEquals("preCopyScript"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preCopyScript = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("allowPolyBase"))
+                if (property.NameEquals("allowPolyBase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowPolyBase = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("polyBaseSettings"))
+                if (property.NameEquals("polyBaseSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     polyBaseSettings = PolybaseSettings.DeserializePolybaseSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("allowCopyCommand"))
+                if (property.NameEquals("allowCopyCommand"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowCopyCommand = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("copyCommandSettings"))
+                if (property.NameEquals("copyCommandSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tableOption"))
+                if (property.NameEquals("tableOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tableOption = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("writeBatchSize"))
+                if (property.NameEquals("writeBatchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     writeBatchSize = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("writeBatchTimeout"))
+                if (property.NameEquals("writeBatchTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     writeBatchTimeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("sinkRetryCount"))
+                if (property.NameEquals("sinkRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sinkRetryCount = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("sinkRetryWait"))
+                if (property.NameEquals("sinkRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sinkRetryWait = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -220,7 +213,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDWSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value, allowPolyBase.Value, polyBaseSettings.Value, allowCopyCommand.Value, copyCommandSettings.Value, tableOption.Value);
+            return new SqlDWSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                preCopyScript,
+                allowPolyBase,
+                polyBaseSettings,
+                allowCopyCommand,
+                copyCommandSettings,
+                tableOption);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SqlDWSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlDWSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SqlDWSinkConverter : JsonConverter<SqlDWSink>
@@ -229,6 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SqlDWSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

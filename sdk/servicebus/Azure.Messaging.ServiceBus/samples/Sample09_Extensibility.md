@@ -77,7 +77,7 @@ public class PluginProcessor : ServiceBusProcessor
         _plugins = plugins;
     }
 
-    protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+    protected override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
     {
         foreach (var plugin in _plugins)
         {
@@ -107,7 +107,7 @@ public class PluginSessionProcessor : ServiceBusSessionProcessor
         _plugins = plugins;
     }
 
-    protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+    protected override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
     {
         foreach (var plugin in _plugins)
         {
@@ -117,7 +117,7 @@ public class PluginSessionProcessor : ServiceBusSessionProcessor
         await base.OnProcessSessionMessageAsync(args);
     }
 
-    protected internal override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+    protected override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
     {
         return Task.CompletedTask;
     }
@@ -198,10 +198,10 @@ public static PluginSessionProcessor CreatePluginSessionProcessor(
 Finally, here is how consuming code might use these types. Since we have derived from the library types, the only thing that would need to be updated to use this pattern is the place where the derived types are created. All other usages can be left as is:
 
 ```C# Snippet:End2EndPluginReceiver
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
 {
     message =>
@@ -244,10 +244,10 @@ Console.WriteLine(message.Subject);
 And using the processor:
 
 ```C# Snippet:End2EndPluginProcessor
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
 {
     message =>
@@ -302,10 +302,10 @@ Console.ReadKey();
 
 And the session processor:
 ```C# Snippet:End2EndPluginSessionProcessor
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
 {
     message =>

@@ -219,7 +219,7 @@ namespace Azure.Security.KeyVault.Keys
         public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
-        /// Gets the X coordinate of the elliptic curve point, or the OKP public key.
+        /// Gets the X coordinate of the elliptic curve point.
         /// </summary>
         public byte[] X { get; set; }
 
@@ -233,7 +233,7 @@ namespace Azure.Security.KeyVault.Keys
         #region EC and RSA Private Key Parameters
 
         /// <summary>
-        /// Gets the RSA private exponent, EC private key, or OKP private key.
+        /// Gets the RSA private exponent or EC private key.
         /// </summary>
         public byte[] D { get; set; }
 
@@ -257,7 +257,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             get
             {
-                if (KeyType == KeyType.Rsa || KeyType == KeyType.Ec || KeyType == KeyType.Okp || KeyType == KeyType.RsaHsm || KeyType == KeyType.EcHsm || KeyType == KeyType.OkpHsm)
+                if (KeyType == KeyType.Rsa || KeyType == KeyType.Ec || KeyType == KeyType.RsaHsm || KeyType == KeyType.EcHsm)
                 {
                     return D != null;
                 }
@@ -509,12 +509,16 @@ namespace Azure.Security.KeyVault.Keys
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
         private static Func<RSAParameters, RSA> s_rsaFactory;
+
         private static RSA CreateRSAProvider(RSAParameters parameters)
         {
             if (s_rsaFactory is null)
             {
                 // On Framework 4.7.2 and newer, to create the CNG implementation of RSA that supports RSA-OAEP-256, we need to create it with RSAParameters.
-                MethodInfo createMethod = typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
+                [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Incorrectly identifies RSA.Create(String); see https://github.com/Azure/azure-sdk-for-net/issues/40175 for discussion.")]
+                static MethodInfo GetRsaCreateMethod() => typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
+
+                MethodInfo createMethod = GetRsaCreateMethod();
                 if (createMethod != null)
                 {
                     s_rsaFactory = (Func<RSAParameters, RSA>)createMethod.CreateDelegate(typeof(Func<RSAParameters, RSA>));

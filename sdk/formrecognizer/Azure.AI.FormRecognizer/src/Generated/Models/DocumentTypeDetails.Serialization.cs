@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -15,28 +14,31 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element)
         {
-            Optional<string> description = default;
-            Optional<DocumentBuildMode> buildMode = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string description = default;
+            DocumentBuildMode? buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
-            Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
+            IReadOnlyDictionary<string, float> fieldConfidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("buildMode"))
+                if (property.NameEquals("buildMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     buildMode = new DocumentBuildMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fieldSchema"))
+                if (property.NameEquals("fieldSchema"u8))
                 {
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -46,11 +48,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     fieldSchema = dictionary;
                     continue;
                 }
-                if (property.NameEquals("fieldConfidence"))
+                if (property.NameEquals("fieldConfidence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, float> dictionary = new Dictionary<string, float>();
@@ -62,7 +63,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentTypeDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentTypeDetails(document.RootElement);
         }
     }
 }

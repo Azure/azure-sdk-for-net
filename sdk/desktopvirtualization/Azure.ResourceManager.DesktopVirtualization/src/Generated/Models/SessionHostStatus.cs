@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Session Host has passed all the health checks and is available to handle connections. </summary>
         public static SessionHostStatus Available { get; } = new SessionHostStatus(AvailableValue);
-        /// <summary> Session Host is either turned off or has failed critical health checks which is causing service not to be able to route connections to this session host. Note this replaces previous &apos;NoHeartBeat&apos; status. </summary>
+        /// <summary> Session Host is either turned off or has failed critical health checks which is causing service not to be able to route connections to this session host. Note this replaces previous 'NoHeartBeat' status. </summary>
         public static SessionHostStatus Unavailable { get; } = new SessionHostStatus(UnavailableValue);
         /// <summary> Session Host is shutdown - RD Agent reported session host to be stopped or deallocated. </summary>
         public static SessionHostStatus Shutdown { get; } = new SessionHostStatus(ShutdownValue);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostStatus NoHeartbeat { get; } = new SessionHostStatus(NoHeartbeatValue);
         /// <summary> SessionHost is not joined to domain. </summary>
         public static SessionHostStatus NotJoinedToDomain { get; } = new SessionHostStatus(NotJoinedToDomainValue);
-        /// <summary> SessionHost&apos;s domain trust relationship lost. </summary>
+        /// <summary> SessionHost's domain trust relationship lost. </summary>
         public static SessionHostStatus DomainTrustRelationshipLost { get; } = new SessionHostStatus(DomainTrustRelationshipLostValue);
         /// <summary> SxS stack installed on the SessionHost is not ready to receive connections. </summary>
         public static SessionHostStatus SxsStackListenerNotReady { get; } = new SessionHostStatus(SxsStackListenerNotReadyValue);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(SessionHostStatus left, SessionHostStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostStatus"/> values are not the same. </summary>
         public static bool operator !=(SessionHostStatus left, SessionHostStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SessionHostStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHostStatus"/>. </summary>
         public static implicit operator SessionHostStatus(string value) => new SessionHostStatus(value);
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -19,71 +19,72 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("linkedServiceName");
+            writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
-                writer.WriteObjectValue(Path);
+                writer.WritePropertyName("path"u8);
+                writer.WriteObjectValue<object>(Path);
             }
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
-                writer.WriteObjectValue(LogLevel);
+                writer.WritePropertyName("logLevel"u8);
+                writer.WriteObjectValue<object>(LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
-                writer.WriteObjectValue(EnableReliableLogging);
+                writer.WritePropertyName("enableReliableLogging"u8);
+                writer.WriteObjectValue<object>(EnableReliableLogging);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> path = default;
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
+            object path = default;
+            object logLevel = default;
+            object enableReliableLogging = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     path = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logLevel = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableReliableLogging = property.Value.GetObject();
@@ -92,7 +93,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LogStorageSettings(linkedServiceName, path.Value, logLevel.Value, enableReliableLogging.Value, additionalProperties);
+            return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogStorageSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogStorageSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class LogStorageSettingsConverter : JsonConverter<LogStorageSettings>
@@ -101,6 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LogStorageSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

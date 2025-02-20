@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,10 +14,14 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricNamespaceCollection DeserializeMetricNamespaceCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MetricNamespace> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<MetricNamespace> array = new List<MetricNamespace>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,6 +33,14 @@ namespace Azure.Monitor.Query.Models
                 }
             }
             return new MetricNamespaceCollection(value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricNamespaceCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricNamespaceCollection(document.RootElement);
         }
     }
 }

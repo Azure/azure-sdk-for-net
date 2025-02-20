@@ -6,89 +6,168 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable
+    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceInitiatedSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceInitiatedSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceInitiatedSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bomUrl");
-            writer.WriteStringValue(BomUri.AbsoluteUri);
-            writer.WritePropertyName("softwareVersion");
-            writer.WriteStringValue(SoftwareVersion);
-            writer.WritePropertyName("sapBitsStorageAccountId");
-            writer.WriteStringValue(SapBitsStorageAccountId);
-            writer.WritePropertyName("sapFqdn");
-            writer.WriteStringValue(SapFqdn);
-            writer.WritePropertyName("sshPrivateKey");
-            writer.WriteStringValue(SshPrivateKey);
-            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
-            {
-                writer.WritePropertyName("highAvailabilitySoftwareConfiguration");
-                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
-            }
-            writer.WritePropertyName("softwareInstallationType");
-            writer.WriteStringValue(SoftwareInstallationType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceInitiatedSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("bomUrl"u8);
+            writer.WriteStringValue(BomUri.AbsoluteUri);
+            writer.WritePropertyName("softwareVersion"u8);
+            writer.WriteStringValue(SoftwareVersion);
+            writer.WritePropertyName("sapBitsStorageAccountId"u8);
+            writer.WriteStringValue(SapBitsStorageAccountId);
+            writer.WritePropertyName("sapFqdn"u8);
+            writer.WriteStringValue(SapFqdn);
+            writer.WritePropertyName("sshPrivateKey"u8);
+            writer.WriteStringValue(SshPrivateKey);
+            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
+            {
+                writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
+                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration, options);
+            }
+        }
+
+        ServiceInitiatedSoftwareConfiguration IJsonModel<ServiceInitiatedSoftwareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceInitiatedSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceInitiatedSoftwareConfiguration(document.RootElement, options);
+        }
+
+        internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri bomUrl = default;
             string softwareVersion = default;
             string sapBitsStorageAccountId = default;
             string sapFqdn = default;
             string sshPrivateKey = default;
-            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bomUrl"))
+                if (property.NameEquals("bomUrl"u8))
                 {
                     bomUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("softwareVersion"))
+                if (property.NameEquals("softwareVersion"u8))
                 {
                     softwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapBitsStorageAccountId"))
+                if (property.NameEquals("sapBitsStorageAccountId"u8))
                 {
                     sapBitsStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapFqdn"))
+                if (property.NameEquals("sapFqdn"u8))
                 {
                     sapFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sshPrivateKey"))
+                if (property.NameEquals("sshPrivateKey"u8))
                 {
                     sshPrivateKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highAvailabilitySoftwareConfiguration"))
+                if (property.NameEquals("highAvailabilitySoftwareConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    highAvailabilitySoftwareConfiguration = Models.HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value);
+                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("softwareInstallationType"))
+                if (property.NameEquals("softwareInstallationType"u8))
                 {
                     softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceInitiatedSoftwareConfiguration(softwareInstallationType, bomUrl, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceInitiatedSoftwareConfiguration(
+                softwareInstallationType,
+                serializedAdditionalRawData,
+                bomUrl,
+                softwareVersion,
+                sapBitsStorageAccountId,
+                sapFqdn,
+                sshPrivateKey,
+                highAvailabilitySoftwareConfiguration);
         }
+
+        BinaryData IPersistableModel<ServiceInitiatedSoftwareConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceInitiatedSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceInitiatedSoftwareConfiguration IPersistableModel<ServiceInitiatedSoftwareConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceInitiatedSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceInitiatedSoftwareConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceInitiatedSoftwareConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

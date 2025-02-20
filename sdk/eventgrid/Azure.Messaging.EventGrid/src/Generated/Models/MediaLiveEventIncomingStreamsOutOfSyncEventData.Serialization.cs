@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,46 +16,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(JsonElement element)
         {
-            Optional<string> minLastTimestamp = default;
-            Optional<string> typeOfStreamWithMinLastTimestamp = default;
-            Optional<string> maxLastTimestamp = default;
-            Optional<string> typeOfStreamWithMaxLastTimestamp = default;
-            Optional<string> timescaleOfMinLastTimestamp = default;
-            Optional<string> timescaleOfMaxLastTimestamp = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string minLastTimestamp = default;
+            string typeOfStreamWithMinLastTimestamp = default;
+            string maxLastTimestamp = default;
+            string typeOfStreamWithMaxLastTimestamp = default;
+            string timescaleOfMinLastTimestamp = default;
+            string timescaleOfMaxLastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minLastTimestamp"))
+                if (property.NameEquals("minLastTimestamp"u8))
                 {
                     minLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeOfStreamWithMinLastTimestamp"))
+                if (property.NameEquals("typeOfStreamWithMinLastTimestamp"u8))
                 {
                     typeOfStreamWithMinLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxLastTimestamp"))
+                if (property.NameEquals("maxLastTimestamp"u8))
                 {
                     maxLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeOfStreamWithMaxLastTimestamp"))
+                if (property.NameEquals("typeOfStreamWithMaxLastTimestamp"u8))
                 {
                     typeOfStreamWithMaxLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescaleOfMinLastTimestamp"))
+                if (property.NameEquals("timescaleOfMinLastTimestamp"u8))
                 {
                     timescaleOfMinLastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescaleOfMaxLastTimestamp"))
+                if (property.NameEquals("timescaleOfMaxLastTimestamp"u8))
                 {
                     timescaleOfMaxLastTimestamp = property.Value.GetString();
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(minLastTimestamp.Value, typeOfStreamWithMinLastTimestamp.Value, maxLastTimestamp.Value, typeOfStreamWithMaxLastTimestamp.Value, timescaleOfMinLastTimestamp.Value, timescaleOfMaxLastTimestamp.Value);
+            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(
+                minLastTimestamp,
+                typeOfStreamWithMinLastTimestamp,
+                maxLastTimestamp,
+                typeOfStreamWithMaxLastTimestamp,
+                timescaleOfMinLastTimestamp,
+                timescaleOfMaxLastTimestamp);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIncomingStreamsOutOfSyncEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(document.RootElement);
         }
 
         internal partial class MediaLiveEventIncomingStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamsOutOfSyncEventData>
@@ -65,6 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventIncomingStreamsOutOfSyncEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

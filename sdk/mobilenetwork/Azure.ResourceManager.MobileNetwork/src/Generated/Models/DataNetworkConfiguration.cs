@@ -13,13 +13,57 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Settings controlling data network use. </summary>
+    /// <summary>
+    /// Settings controlling data network use
+    /// Serialized Name: DataNetworkConfiguration
+    /// </summary>
     public partial class DataNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
-        /// <param name="dataNetwork"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
-        /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
-        /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/>. </summary>
+        /// <param name="dataNetwork">
+        /// A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy.
+        /// Serialized Name: DataNetworkConfiguration.dataNetwork
+        /// </param>
+        /// <param name="sessionAmbr">
+        /// Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR.
+        /// Serialized Name: DataNetworkConfiguration.sessionAmbr
+        /// </param>
+        /// <param name="allowedServices">
+        /// List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy.
+        /// Serialized Name: DataNetworkConfiguration.allowedServices
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetwork"/>, <paramref name="sessionAmbr"/> or <paramref name="allowedServices"/> is null. </exception>
         public DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, IEnumerable<WritableSubResource> allowedServices)
         {
@@ -29,22 +73,53 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
-            AdditionalAllowedSessionTypes = new ChangeTrackingList<PduSessionType>();
+            AdditionalAllowedSessionTypes = new ChangeTrackingList<MobileNetworkPduSessionType>();
             AllowedServices = allowedServices.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
-        /// <param name="dataNetwork"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
-        /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
-        /// <param name="fiveQi"> Default QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </param>
-        /// <param name="allocationAndRetentionPriorityLevel"> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionCapability"> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionVulnerability"> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="defaultSessionType"> The default PDU session type, which is used if the UE does not request a specific session type. </param>
-        /// <param name="additionalAllowedSessionTypes"> Allowed session types in addition to the default session type. Must not duplicate the default session type. </param>
-        /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
-        /// <param name="maximumNumberOfBufferedPackets"> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </param>
-        internal DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, int? fiveQi, int? allocationAndRetentionPriorityLevel, PreemptionCapability? preemptionCapability, PreemptionVulnerability? preemptionVulnerability, PduSessionType? defaultSessionType, IList<PduSessionType> additionalAllowedSessionTypes, IList<WritableSubResource> allowedServices, int? maximumNumberOfBufferedPackets)
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/>. </summary>
+        /// <param name="dataNetwork">
+        /// A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy.
+        /// Serialized Name: DataNetworkConfiguration.dataNetwork
+        /// </param>
+        /// <param name="sessionAmbr">
+        /// Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR.
+        /// Serialized Name: DataNetworkConfiguration.sessionAmbr
+        /// </param>
+        /// <param name="fiveQi">
+        /// Default 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values.
+        /// Serialized Name: DataNetworkConfiguration.5qi
+        /// </param>
+        /// <param name="allocationAndRetentionPriorityLevel">
+        /// Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters.
+        /// Serialized Name: DataNetworkConfiguration.allocationAndRetentionPriorityLevel
+        /// </param>
+        /// <param name="preemptionCapability">
+        /// Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters.
+        /// Serialized Name: DataNetworkConfiguration.preemptionCapability
+        /// </param>
+        /// <param name="preemptionVulnerability">
+        /// Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters.
+        /// Serialized Name: DataNetworkConfiguration.preemptionVulnerability
+        /// </param>
+        /// <param name="defaultSessionType">
+        /// The default PDU session type, which is used if the UE does not request a specific session type.
+        /// Serialized Name: DataNetworkConfiguration.defaultSessionType
+        /// </param>
+        /// <param name="additionalAllowedSessionTypes">
+        /// Allowed session types in addition to the default session type. Must not duplicate the default session type.
+        /// Serialized Name: DataNetworkConfiguration.additionalAllowedSessionTypes
+        /// </param>
+        /// <param name="allowedServices">
+        /// List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy.
+        /// Serialized Name: DataNetworkConfiguration.allowedServices
+        /// </param>
+        /// <param name="maximumNumberOfBufferedPackets">
+        /// The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions.
+        /// Serialized Name: DataNetworkConfiguration.maximumNumberOfBufferedPackets
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, int? fiveQi, int? allocationAndRetentionPriorityLevel, MobileNetworkPreemptionCapability? preemptionCapability, MobileNetworkPreemptionVulnerability? preemptionVulnerability, MobileNetworkPduSessionType? defaultSessionType, IList<MobileNetworkPduSessionType> additionalAllowedSessionTypes, IList<WritableSubResource> allowedServices, int? maximumNumberOfBufferedPackets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
@@ -56,11 +131,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             AdditionalAllowedSessionTypes = additionalAllowedSessionTypes;
             AllowedServices = allowedServices;
             MaximumNumberOfBufferedPackets = maximumNumberOfBufferedPackets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/> for deserialization. </summary>
+        internal DataNetworkConfiguration()
+        {
+        }
+
+        /// <summary>
+        /// A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy.
+        /// Serialized Name: DataNetworkConfiguration.dataNetwork
+        /// </summary>
         internal WritableSubResource DataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("dataNetwork.id")]
         public ResourceIdentifier DataNetworkId
         {
             get => DataNetwork is null ? default : DataNetwork.Id;
@@ -72,23 +157,59 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </summary>
+        /// <summary>
+        /// Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR.
+        /// Serialized Name: DataNetworkConfiguration.sessionAmbr
+        /// </summary>
+        [WirePath("sessionAmbr")]
         public Ambr SessionAmbr { get; set; }
-        /// <summary> Default QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </summary>
+        /// <summary>
+        /// Default 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values.
+        /// Serialized Name: DataNetworkConfiguration.5qi
+        /// </summary>
+        [WirePath("5qi")]
         public int? FiveQi { get; set; }
-        /// <summary> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        /// <summary>
+        /// Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters.
+        /// Serialized Name: DataNetworkConfiguration.allocationAndRetentionPriorityLevel
+        /// </summary>
+        [WirePath("allocationAndRetentionPriorityLevel")]
         public int? AllocationAndRetentionPriorityLevel { get; set; }
-        /// <summary> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
-        public PreemptionCapability? PreemptionCapability { get; set; }
-        /// <summary> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
-        public PreemptionVulnerability? PreemptionVulnerability { get; set; }
-        /// <summary> The default PDU session type, which is used if the UE does not request a specific session type. </summary>
-        public PduSessionType? DefaultSessionType { get; set; }
-        /// <summary> Allowed session types in addition to the default session type. Must not duplicate the default session type. </summary>
-        public IList<PduSessionType> AdditionalAllowedSessionTypes { get; }
-        /// <summary> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </summary>
+        /// <summary>
+        /// Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters.
+        /// Serialized Name: DataNetworkConfiguration.preemptionCapability
+        /// </summary>
+        [WirePath("preemptionCapability")]
+        public MobileNetworkPreemptionCapability? PreemptionCapability { get; set; }
+        /// <summary>
+        /// Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters.
+        /// Serialized Name: DataNetworkConfiguration.preemptionVulnerability
+        /// </summary>
+        [WirePath("preemptionVulnerability")]
+        public MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get; set; }
+        /// <summary>
+        /// The default PDU session type, which is used if the UE does not request a specific session type.
+        /// Serialized Name: DataNetworkConfiguration.defaultSessionType
+        /// </summary>
+        [WirePath("defaultSessionType")]
+        public MobileNetworkPduSessionType? DefaultSessionType { get; set; }
+        /// <summary>
+        /// Allowed session types in addition to the default session type. Must not duplicate the default session type.
+        /// Serialized Name: DataNetworkConfiguration.additionalAllowedSessionTypes
+        /// </summary>
+        [WirePath("additionalAllowedSessionTypes")]
+        public IList<MobileNetworkPduSessionType> AdditionalAllowedSessionTypes { get; }
+        /// <summary>
+        /// List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy.
+        /// Serialized Name: DataNetworkConfiguration.allowedServices
+        /// </summary>
+        [WirePath("allowedServices")]
         public IList<WritableSubResource> AllowedServices { get; }
-        /// <summary> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </summary>
+        /// <summary>
+        /// The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions.
+        /// Serialized Name: DataNetworkConfiguration.maximumNumberOfBufferedPackets
+        /// </summary>
+        [WirePath("maximumNumberOfBufferedPackets")]
         public int? MaximumNumberOfBufferedPackets { get; set; }
     }
 }

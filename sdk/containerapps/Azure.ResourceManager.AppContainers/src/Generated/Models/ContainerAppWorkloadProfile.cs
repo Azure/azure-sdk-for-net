@@ -6,32 +6,89 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Workload profile to scope container app execution. </summary>
     public partial class ContainerAppWorkloadProfile
     {
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/>. </summary>
+        /// <param name="name"> Workload profile type for the workloads to run on. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
-        /// <param name="minimumCount"> The minimum capacity. </param>
-        /// <param name="maximumCount"> The maximum capacity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadProfileType"/> is null. </exception>
-        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="workloadProfileType"/> is null. </exception>
+        public ContainerAppWorkloadProfile(string name, string workloadProfileType)
         {
+            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
 
+            Name = name;
             WorkloadProfileType = workloadProfileType;
-            MinimumCount = minimumCount;
-            MaximumCount = maximumCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/>. </summary>
+        /// <param name="name"> Workload profile type for the workloads to run on. </param>
+        /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
+        /// <param name="minimumNodeCount"> The minimum capacity. </param>
+        /// <param name="maximumNodeCount"> The maximum capacity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumNodeCount, int? maximumNodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            WorkloadProfileType = workloadProfileType;
+            MinimumNodeCount = minimumNodeCount;
+            MaximumNodeCount = maximumNodeCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/> for deserialization. </summary>
+        internal ContainerAppWorkloadProfile()
+        {
         }
 
         /// <summary> Workload profile type for the workloads to run on. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Workload profile type for the workloads to run on. </summary>
+        [WirePath("workloadProfileType")]
         public string WorkloadProfileType { get; set; }
         /// <summary> The minimum capacity. </summary>
-        public int MinimumCount { get; set; }
+        [WirePath("minimumCount")]
+        public int? MinimumNodeCount { get; set; }
         /// <summary> The maximum capacity. </summary>
-        public int MaximumCount { get; set; }
+        [WirePath("maximumCount")]
+        public int? MaximumNodeCount { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     public class EventHubProducerClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
@@ -25,6 +27,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   A unique name used to identify the consumer.  If <c>null</c> or empty, a GUID will be used as the
         ///   identifier.
         /// </summary>
+        ///
+        /// <value>If not specified, a random unique identifier will be generated.</value>
         ///
         public string Identifier { get; set; }
 
@@ -64,7 +68,10 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
         /// </summary>
         ///
-        /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
+        /// <value>
+        ///   <c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.  Idempotent partitions
+        ///   are disabled by default.
+        /// </value>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal bool EnableIdempotentPartitions { get; set; }
@@ -77,6 +84,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <para>It is highly recommended that these options only be specified if there is a proven need to do so; Incorrectly configuring these
         ///   values may result in an <see cref="EventHubProducerClient" /> instance that is unable to publish to the Event Hubs.</para>
         /// </summary>
+        ///
+        /// <value>The default partition options are an empty set.</value>
         ///
         /// <remarks>
         ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.

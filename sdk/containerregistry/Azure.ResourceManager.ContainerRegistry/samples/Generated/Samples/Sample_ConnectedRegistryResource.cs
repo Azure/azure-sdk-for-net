@@ -8,23 +8,20 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ConnectedRegistryResource
     {
-        // ConnectedRegistryGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConnectedRegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryGet.json
             // this example is just showing the usage of "ConnectedRegistries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConnectedRegistryDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConnectedRegistryDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryDelete.json
             // this example is just showing the usage of "ConnectedRegistries_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,15 +72,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             await connectedRegistry.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ConnectedRegistryUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConnectedRegistryUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryUpdate.json
             // this example is just showing the usage of "ConnectedRegistries_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,27 +97,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ConnectedRegistryResource connectedRegistry = client.GetConnectedRegistryResource(connectedRegistryResourceId);
 
             // invoke the operation
-            ConnectedRegistryPatch patch = new ConnectedRegistryPatch()
+            ConnectedRegistryPatch patch = new ConnectedRegistryPatch
             {
-                SyncProperties = new ConnectedRegistrySyncUpdateProperties()
+                SyncProperties = new ConnectedRegistrySyncUpdateProperties
                 {
                     Schedule = "0 0 */10 * *",
                     SyncWindow = XmlConvert.ToTimeSpan("P2D"),
                     MessageTtl = XmlConvert.ToTimeSpan("P30D"),
                 },
-                Logging = new ConnectedRegistryLogging()
+                Logging = new ConnectedRegistryLogging
                 {
                     LogLevel = ConnectedRegistryLogLevel.Debug,
                     AuditLogStatus = ConnectedRegistryAuditLogStatus.Enabled,
                 },
-                ClientTokenIds =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/client1Token"),new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/client2Token")
-},
-                NotificationsList =
-{
-"hello-world:*:*","sample/repo/*:1.0:*"
-},
+                ClientTokenIds = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/client1Token"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/client2Token") },
+                NotificationsList = { "hello-world:*:*", "sample/repo/*:1.0:*" },
+                GarbageCollection = new GarbageCollectionProperties
+                {
+                    Enabled = true,
+                    Schedule = "0 5 * * *",
+                },
             };
             ArmOperation<ConnectedRegistryResource> lro = await connectedRegistry.UpdateAsync(WaitUntil.Completed, patch);
             ConnectedRegistryResource result = lro.Value;
@@ -134,12 +128,11 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConnectedRegistryDeactivate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deactivate_ConnectedRegistryDeactivate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryDeactivate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryDeactivate.json
             // this example is just showing the usage of "ConnectedRegistries_Deactivate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +152,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             // invoke the operation
             await connectedRegistry.DeactivateAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion.Perf", "perf\Azure.Monitor.Ingestion.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion.Stress", "stress\Azure.Monitor.Ingestion.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion", "src\Azure.Monitor.Ingestion.csproj", "{A1B4A302-A3DB-403E-9057-6228755578DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion.Tests", "tests\Azure.Monitor.Ingestion.Tests.csproj", "{65C26497-57E3-44AE-A8A8-93E7671BABD2}"
@@ -29,10 +27,6 @@ Global
 		{30C5FF85-655A-49FC-A324-16438130FF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C5FF85-655A-49FC-A324-16438130FF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30C5FF85-655A-49FC-A324-16438130FF3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1B4A302-A3DB-403E-9057-6228755578DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1B4A302-A3DB-403E-9057-6228755578DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B4A302-A3DB-403E-9057-6228755578DD}.Release|Any CPU.ActiveCfg = Release|Any CPU

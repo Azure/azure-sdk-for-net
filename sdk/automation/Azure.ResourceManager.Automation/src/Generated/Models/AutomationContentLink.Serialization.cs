@@ -6,68 +6,154 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationContentLink : IUtf8JsonSerializable
+    public partial class AutomationContentLink : IUtf8JsonSerializable, IJsonModel<AutomationContentLink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationContentLink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AutomationContentLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationContentLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationContentLink)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ContentHash))
             {
-                writer.WritePropertyName("contentHash");
-                writer.WriteObjectValue(ContentHash);
+                writer.WritePropertyName("contentHash"u8);
+                writer.WriteObjectValue(ContentHash, options);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AutomationContentLink DeserializeAutomationContentLink(JsonElement element)
+        AutomationContentLink IJsonModel<AutomationContentLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<Uri> uri = default;
-            Optional<AutomationContentHash> contentHash = default;
-            Optional<string> version = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationContentLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationContentLink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationContentLink(document.RootElement, options);
+        }
+
+        internal static AutomationContentLink DeserializeAutomationContentLink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri uri = default;
+            AutomationContentHash contentHash = default;
+            string version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contentHash"))
+                if (property.NameEquals("contentHash"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
+                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationContentLink(uri.Value, contentHash.Value, version.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationContentLink(uri, contentHash, version, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationContentLink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationContentLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationContentLink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationContentLink IPersistableModel<AutomationContentLink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationContentLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationContentLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationContentLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationContentLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,16 +14,4 @@
 
   <!-- Import the common SDK build properties. -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
-
-  <!--
-    Force the language version in test projects to avoid overload resolution errors for
-    NUnit assertsions in the RC version of the compiler.  This should be fixed with the RC2
-    release of the .NET 6 SDK.  (see: https://github.com/dotnet/roslyn/issues/56167)
-
-    Because the common SDK build properties define this value and the intent is to override,
-    this needs to be set after the common properties import.
-  -->
-  <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Azure.')) and $(MSBuildProjectName.EndsWith('.Tests'))">
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
 </Project>

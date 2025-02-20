@@ -19,6 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class KeyResolver : IKeyEncryptionKeyResolver
     {
+        private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly HttpPipeline  _pipeline;
         private readonly string _apiVersion;
 
@@ -73,7 +74,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(keyId, nameof(keyId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
-            scope.AddAttribute("key", keyId);
+            scope.AddAttribute(OTelKeyIdKey, keyId.OriginalString);
             scope.Start();
 
             try
@@ -106,7 +107,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(keyId, nameof(keyId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
-            scope.AddAttribute("key", keyId);
+            scope.AddAttribute(OTelKeyIdKey, keyId.OriginalString);
             scope.Start();
 
             try
@@ -173,7 +174,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     // To use a key contained within a secret, the "get" permission is required to retrieve the key material.
                     return Response.FromValue<T>(default, response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(response);
+                    throw new RequestFailedException(response);
             }
         }
 

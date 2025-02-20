@@ -5,49 +5,137 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppLoadedCertificate : IUtf8JsonSerializable
+    public partial class AppLoadedCertificate : IUtf8JsonSerializable, IJsonModel<AppLoadedCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppLoadedCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppLoadedCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
-            writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(LoadTrustStore))
-            {
-                writer.WritePropertyName("loadTrustStore");
-                writer.WriteBooleanValue(LoadTrustStore.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AppLoadedCertificate DeserializeAppLoadedCertificate(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppLoadedCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppLoadedCertificate)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(LoadTrustStore))
+            {
+                writer.WritePropertyName("loadTrustStore"u8);
+                writer.WriteBooleanValue(LoadTrustStore.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AppLoadedCertificate IJsonModel<AppLoadedCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppLoadedCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppLoadedCertificate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppLoadedCertificate(document.RootElement, options);
+        }
+
+        internal static AppLoadedCertificate DeserializeAppLoadedCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier resourceId = default;
-            Optional<bool> loadTrustStore = default;
+            bool? loadTrustStore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadTrustStore"))
+                if (property.NameEquals("loadTrustStore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadTrustStore = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppLoadedCertificate(resourceId, Optional.ToNullable(loadTrustStore));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppLoadedCertificate(resourceId, loadTrustStore, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppLoadedCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppLoadedCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppLoadedCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppLoadedCertificate IPersistableModel<AppLoadedCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppLoadedCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppLoadedCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppLoadedCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppLoadedCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

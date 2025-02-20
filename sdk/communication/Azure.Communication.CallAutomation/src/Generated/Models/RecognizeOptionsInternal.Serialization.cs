@@ -17,24 +17,34 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             if (Optional.IsDefined(InterruptPrompt))
             {
-                writer.WritePropertyName("interruptPrompt");
+                writer.WritePropertyName("interruptPrompt"u8);
                 writer.WriteBooleanValue(InterruptPrompt.Value);
             }
             if (Optional.IsDefined(InitialSilenceTimeoutInSeconds))
             {
-                writer.WritePropertyName("initialSilenceTimeoutInSeconds");
+                writer.WritePropertyName("initialSilenceTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
-            writer.WritePropertyName("targetParticipant");
+            writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
+            if (Optional.IsDefined(SpeechLanguage))
+            {
+                writer.WritePropertyName("speechLanguage"u8);
+                writer.WriteStringValue(SpeechLanguage);
+            }
+            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
+            {
+                writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
+                writer.WriteStringValue(SpeechRecognitionModelEndpointId);
+            }
             if (Optional.IsDefined(DtmfOptions))
             {
-                writer.WritePropertyName("dtmfOptions");
+                writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
             if (Optional.IsCollectionDefined(Choices))
             {
-                writer.WritePropertyName("choices");
+                writer.WritePropertyName("choices"u8);
                 writer.WriteStartArray();
                 foreach (var item in Choices)
                 {
@@ -42,7 +52,20 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SpeechOptions))
+            {
+                writer.WritePropertyName("speechOptions"u8);
+                writer.WriteObjectValue(SpeechOptions);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

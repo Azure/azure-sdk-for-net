@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -15,32 +13,42 @@ namespace Azure.Communication.CallingServer
     {
         internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element)
         {
-            Optional<CommunicationIdentifierModel> identifier = default;
-            Optional<bool> isMuted = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CommunicationIdentifierModel identifier = default;
+            bool? isMuted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identifier"))
+                if (property.NameEquals("identifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isMuted"))
+                if (property.NameEquals("isMuted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMuted = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
+            return new AcsCallParticipantInternal(identifier, isMuted);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsCallParticipantInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsCallParticipantInternal(document.RootElement);
         }
     }
 }

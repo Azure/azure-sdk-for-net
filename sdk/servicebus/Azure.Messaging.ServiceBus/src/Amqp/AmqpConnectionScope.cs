@@ -36,7 +36,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private const string WebSocketsPathSuffix = "/$servicebus/websocket/";
 
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
-        private const string WebSocketsUriScheme = "wss";
+        private const string WebSocketsSecureUriScheme = "wss";
+
+        /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
+        private const string WebSocketsInsecureUriScheme = "ws";
 
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -51,12 +54,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The version of AMQP to use within the scope.
         /// </summary>
         private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
-
-        /// <summary>
-        ///   The amount of time to allow an AMQP connection to be idle before considering
-        ///   it to be timed out.
-        /// </summary>
-        private static TimeSpan ConnectionIdleTimeout { get; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
         ///   The amount of buffer to apply to account for clock skew when
@@ -189,6 +186,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private readonly object _syncLock = new();
         private readonly TimeSpan _operationTimeout;
+        private readonly uint _connectionIdleTimeoutMilliseconds;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -200,6 +198,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
         /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
+        /// <param name="idleTimeout">The amount of time to allow a connection to have no observed traffic before considering it idle.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             Uri connectionEndpoint,
@@ -207,13 +206,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusTransportType transport,
             IWebProxy proxy,
             bool useSingleSession,
-            TimeSpan operationTimeout)
+            TimeSpan operationTimeout,
+            TimeSpan idleTimeout)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNegative(idleTimeout, nameof(idleTimeout));
             ValidateTransport(transport);
 
             _operationTimeout = operationTimeout;
+            _connectionIdleTimeoutMilliseconds = (uint)idleTimeout.TotalMilliseconds;
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
@@ -232,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                async (timeout) =>
                {
                    var stopWatch = ValueStopwatch.StartNew();
-                   AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                   AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                    AmqpSession session = await CreateAndOpenSessionAsync(
                        connection,
                        timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
@@ -249,7 +251,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 async (timeout) =>
                 {
                     var stopWatch = ValueStopwatch.StartNew();
-                    AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                     AmqpSession session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                     return await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                 },
@@ -263,7 +265,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                controller = new Controller(amqpSession, timeout.CalculateRemaining(stopWatch.GetElapsedTime()));
+                controller = new Controller(amqpSession, timeout);
                 await controller.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -462,13 +464,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             var serviceHostName = serviceEndpoint.Host;
-            var connectionHostName = connectionEndpoint.Host;
             AmqpSettings amqpSettings = CreateAmpqSettings(AmqpVersion);
-            AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(serviceHostName, scopeIdentifier);
+            AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(serviceHostName, scopeIdentifier, _connectionIdleTimeoutMilliseconds);
 
             TransportSettings transportSettings = transportType.IsWebSocketTransport()
-                ? CreateTransportSettingsForWebSockets(connectionHostName, proxy)
-                : CreateTransportSettingsforTcp(connectionHostName, connectionEndpoint.Port);
+                ? CreateTransportSettingsForWebSockets(connectionEndpoint, proxy)
+                : CreateTransportSettingsforTcp(connectionEndpoint);
 
             // Create and open the connection, respecting the timeout constraint
             // that was received.
@@ -655,13 +656,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     endpoint: endpoint,
                     audience: audience,
                     requiredClaims: authClaims,
-                    timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    timeout: timeout,
                     identifier: identifier).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.
 
-                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
+                session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -829,7 +830,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     endpoint: destinationEndpoint,
                     audience: audience,
                     requiredClaims: authClaims,
-                    timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    timeout: timeout,
                     identifier: identifier)
                     .ConfigureAwait(false);
 
@@ -837,7 +838,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the AMQP session associated with the link.
 
-                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
+                session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.
@@ -1313,25 +1314,37 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  Creates the transport settings for use with TCP.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
-        /// <param name="port">The port to use for connecting to the endpoint.</param>
+        /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
-        private static TransportSettings CreateTransportSettingsforTcp(
-            string hostName,
-            int port)
+        private static TransportSettings CreateTransportSettingsforTcp(Uri connectionEndpoint)
         {
+            var useTls = ShouldUseTls(connectionEndpoint.Scheme);
+            var port = connectionEndpoint.Port < 0 ? (useTls ? AmqpConstants.DefaultSecurePort : AmqpConstants.DefaultPort) : connectionEndpoint.Port;
+
+            // Allow the host to control the size of the transport buffers for sending and
+            // receiving by setting the value to -1.  This results in much improved throughput
+            // across platforms, as different Linux distros have different needs to
+            // maximize efficiency, with Window having its own needs as well.
             var tcpSettings = new TcpTransportSettings
             {
-                Host = hostName,
-                Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
-                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
+                Host = connectionEndpoint.Host,
+                Port = port,
+                ReceiveBufferSize = -1,
+                SendBufferSize = -1
             };
 
-            return new TlsTransportSettings(tcpSettings)
+            // If TLS is explicitly disabled, then use the TCP settings as-is.  Otherwise,
+            // wrap them for TLS usage.
+
+            return useTls switch
             {
-                TargetHost = hostName,
+                false => tcpSettings,
+
+                _ => new TlsTransportSettings(tcpSettings)
+                {
+                    TargetHost = connectionEndpoint.Host
+                }
             };
         }
 
@@ -1339,19 +1352,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  Creates the transport settings for use with web sockets.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
+        /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         private static TransportSettings CreateTransportSettingsForWebSockets(
-            string hostName,
+            Uri connectionEndpoint,
             IWebProxy proxy)
         {
-            var uriBuilder = new UriBuilder(hostName)
+            var useTls = ShouldUseTls(connectionEndpoint.Scheme);
+
+            var uriBuilder = new UriBuilder(connectionEndpoint.Host)
             {
                 Path = WebSocketsPathSuffix,
-                Scheme = WebSocketsUriScheme,
-                Port = -1
+                Scheme = useTls ? WebSocketsSecureUriScheme : WebSocketsInsecureUriScheme,
+                Port = connectionEndpoint.Port < 0 ? -1 : connectionEndpoint.Port
             };
 
             return new WebSocketTransportSettings
@@ -1367,15 +1382,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
         /// <param name="identifier">unique identifier of the current Service Bus scope.</param>
+        /// <param name="idleTimeoutMilliseconds">The amount of time, in milliseconds, to allow a connection to have no observed traffic before considering it idle.</param>
         ///
         /// <returns>The settings to apply to the connection.</returns>
         private static AmqpConnectionSettings CreateAmqpConnectionSettings(
             string hostName,
-            string identifier)
+            string identifier,
+            uint idleTimeoutMilliseconds)
         {
             var connectionSettings = new AmqpConnectionSettings
             {
-                IdleTimeOut = (uint)ConnectionIdleTimeout.TotalMilliseconds,
+                IdleTimeOut = idleTimeoutMilliseconds,
                 MaxFrameSize = AmqpConstants.DefaultMaxFrameSize,
                 ContainerId = identifier,
                 HostName = hostName
@@ -1388,6 +1405,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             return connectionSettings;
         }
+
+        /// <summary>
+        ///   Determines if the specified URL scheme should use TLS when creating an AMQP connection.
+        /// </summary>
+        ///
+        /// <param name="urlScheme">The URL scheme to consider.</param>
+        ///
+        /// <returns><c>true</c> if the connection should use TLS; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool ShouldUseTls(string urlScheme) => urlScheme switch
+        {
+            "ws" => false,
+            "amqp" => false,
+            "http" => false,
+            _ => true
+        };
 
         /// <summary>
         ///   Validates the transport associated with the scope, throwing an argument exception
@@ -1403,22 +1436,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        internal void CloseLink(AmqpLink link)
+        internal void CloseLink(AmqpLink link, string identifier = default)
         {
+            ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
             {
                 link.Session?.SafeClose();
             }
             link.SafeClose();
+            ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
 
-        internal void CloseLink(RequestResponseAmqpLink link)
+        internal void CloseLink(RequestResponseAmqpLink link, string identifier = default)
         {
+            ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
             {
                 link.Session?.SafeClose();
             }
             link.SafeClose();
+            ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
     }
 }

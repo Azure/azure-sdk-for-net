@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PausedValue = "Paused";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Run hasn&apos;t started yet. </summary>
+        /// <summary> Run hasn't started yet. </summary>
         public static MachineLearningJobStatus NotStarted { get; } = new MachineLearningJobStatus(NotStartedValue);
         /// <summary> Run has started. The user has a run ID. </summary>
         public static MachineLearningJobStatus Starting { get; } = new MachineLearningJobStatus(StartingValue);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Following cancellation request, the job is now successfully canceled. </summary>
         public static MachineLearningJobStatus Canceled { get; } = new MachineLearningJobStatus(CanceledValue);
         /// <summary>
-        /// When heartbeat is enabled, if the run isn&apos;t updating any information to RunHistory then the run goes to NotResponding state.
+        /// When heartbeat is enabled, if the run isn't updating any information to RunHistory then the run goes to NotResponding state.
         /// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of the previous states.
         /// </summary>
         public static MachineLearningJobStatus NotResponding { get; } = new MachineLearningJobStatus(NotRespondingValue);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningJobStatus left, MachineLearningJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningJobStatus left, MachineLearningJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningJobStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningJobStatus"/>. </summary>
         public static implicit operator MachineLearningJobStatus(string value) => new MachineLearningJobStatus(value);
 
         /// <inheritdoc />
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

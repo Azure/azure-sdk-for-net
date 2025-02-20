@@ -6,59 +6,367 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class SubscriptionRenewalTermDetails
+    public partial class SubscriptionRenewalTermDetails : IUtf8JsonSerializable, IJsonModel<SubscriptionRenewalTermDetails>
     {
-        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionRenewalTermDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SubscriptionRenewalTermDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> billingFrequency = default;
-            Optional<string> productTypeId = default;
-            Optional<long> quantity = default;
-            Optional<string> skuId = default;
-            Optional<TimeSpan> termDuration = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
+            {
+                writer.WritePropertyName("billingFrequency"u8);
+                writer.WriteStringValue(BillingFrequency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
+            {
+                writer.WritePropertyName("productId"u8);
+                writer.WriteStringValue(ProductId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProductTypeId))
+            {
+                writer.WritePropertyName("productTypeId"u8);
+                writer.WriteStringValue(ProductTypeId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SkuId))
+            {
+                writer.WritePropertyName("skuId"u8);
+                writer.WriteStringValue(SkuId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TermDuration))
+            {
+                writer.WritePropertyName("termDuration"u8);
+                writer.WriteStringValue(TermDuration.Value, "P");
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TermEndOn))
+            {
+                writer.WritePropertyName("termEndDate"u8);
+                writer.WriteStringValue(TermEndOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        SubscriptionRenewalTermDetails IJsonModel<SubscriptionRenewalTermDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionRenewalTermDetails(document.RootElement, options);
+        }
+
+        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string billingFrequency = default;
+            string productId = default;
+            string productTypeId = default;
+            string skuId = default;
+            TimeSpan? termDuration = default;
+            long? quantity = default;
+            DateTimeOffset? termEndDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingFrequency"))
+                if (property.NameEquals("billingFrequency"u8))
                 {
                     billingFrequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productTypeId"))
+                if (property.NameEquals("productId"u8))
+                {
+                    productId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("productTypeId"u8))
                 {
                     productTypeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    quantity = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("skuId"))
+                if (property.NameEquals("skuId"u8))
                 {
                     skuId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termDuration"))
+                if (property.NameEquals("termDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     termDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("quantity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quantity = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("termEndDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termEndDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubscriptionRenewalTermDetails(
+                billingFrequency,
+                productId,
+                productTypeId,
+                skuId,
+                termDuration,
+                quantity,
+                termEndDate,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingFrequency))
+                {
+                    builder.Append("  billingFrequency: ");
+                    if (BillingFrequency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BillingFrequency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BillingFrequency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  productId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductId))
+                {
+                    builder.Append("  productId: ");
+                    if (ProductId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProductId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProductId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductTypeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  productTypeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductTypeId))
+                {
+                    builder.Append("  productTypeId: ");
+                    if (ProductTypeId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProductTypeId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProductTypeId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skuId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkuId))
+                {
+                    builder.Append("  skuId: ");
+                    if (SkuId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TermDuration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  termDuration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TermDuration))
+                {
+                    builder.Append("  termDuration: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(TermDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Quantity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  quantity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Quantity))
+                {
+                    builder.Append("  quantity: ");
+                    builder.AppendLine($"'{Quantity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TermEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  termEndDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TermEndOn))
+                {
+                    builder.Append("  termEndDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(TermEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SubscriptionRenewalTermDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubscriptionRenewalTermDetails IPersistableModel<SubscriptionRenewalTermDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubscriptionRenewalTermDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubscriptionRenewalTermDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

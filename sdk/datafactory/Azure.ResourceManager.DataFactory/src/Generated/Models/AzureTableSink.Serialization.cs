@@ -6,108 +6,55 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureTableSink : IUtf8JsonSerializable
+    public partial class AzureTableSink : IUtf8JsonSerializable, IJsonModel<AzureTableSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTableSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureTableSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
-                writer.WritePropertyName("azureTableDefaultPartitionKeyValue");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AzureTableDefaultPartitionKeyValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AzureTableDefaultPartitionKeyValue.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
+                JsonSerializer.Serialize(writer, AzureTableDefaultPartitionKeyValue);
             }
             if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
-                writer.WritePropertyName("azureTablePartitionKeyName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AzureTablePartitionKeyName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AzureTablePartitionKeyName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("azureTablePartitionKeyName"u8);
+                JsonSerializer.Serialize(writer, AzureTablePartitionKeyName);
             }
             if (Optional.IsDefined(AzureTableRowKeyName))
             {
-                writer.WritePropertyName("azureTableRowKeyName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AzureTableRowKeyName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AzureTableRowKeyName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("azureTableRowKeyName"u8);
+                JsonSerializer.Serialize(writer, AzureTableRowKeyName);
             }
             if (Optional.IsDefined(AzureTableInsertType))
             {
-                writer.WritePropertyName("azureTableInsertType");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AzureTableInsertType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AzureTableInsertType.ToString()).RootElement);
-#endif
-            }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
-            {
-                writer.WritePropertyName("writeBatchSize");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchSize);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(WriteBatchTimeout))
-            {
-                writer.WritePropertyName("writeBatchTimeout");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchTimeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("azureTableInsertType"u8);
+                JsonSerializer.Serialize(writer, AzureTableInsertType);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -115,138 +62,191 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzureTableSink DeserializeAzureTableSink(JsonElement element)
+        AzureTableSink IJsonModel<AzureTableSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> azureTableDefaultPartitionKeyValue = default;
-            Optional<BinaryData> azureTablePartitionKeyName = default;
-            Optional<BinaryData> azureTableRowKeyName = default;
-            Optional<BinaryData> azureTableInsertType = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureTableSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureTableSink(document.RootElement, options);
+        }
+
+        internal static AzureTableSink DeserializeAzureTableSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> azureTableDefaultPartitionKeyValue = default;
+            DataFactoryElement<string> azureTablePartitionKeyName = default;
+            DataFactoryElement<string> azureTableRowKeyName = default;
+            DataFactoryElement<string> azureTableInsertType = default;
             string type = default;
-            Optional<BinaryData> writeBatchSize = default;
-            Optional<BinaryData> writeBatchTimeout = default;
-            Optional<BinaryData> sinkRetryCount = default;
-            Optional<BinaryData> sinkRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureTableDefaultPartitionKeyValue"))
+                if (property.NameEquals("azureTableDefaultPartitionKeyValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureTableDefaultPartitionKeyValue = BinaryData.FromString(property.Value.GetRawText());
+                    azureTableDefaultPartitionKeyValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("azureTablePartitionKeyName"))
+                if (property.NameEquals("azureTablePartitionKeyName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureTablePartitionKeyName = BinaryData.FromString(property.Value.GetRawText());
+                    azureTablePartitionKeyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("azureTableRowKeyName"))
+                if (property.NameEquals("azureTableRowKeyName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureTableRowKeyName = BinaryData.FromString(property.Value.GetRawText());
+                    azureTableRowKeyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("azureTableInsertType"))
+                if (property.NameEquals("azureTableInsertType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureTableInsertType = BinaryData.FromString(property.Value.GetRawText());
+                    azureTableInsertType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("writeBatchSize"))
+                if (property.NameEquals("writeBatchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
+                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("writeBatchTimeout"))
+                if (property.NameEquals("writeBatchTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
+                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryCount"))
+                if (property.NameEquals("sinkRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryWait"))
+                if (property.NameEquals("sinkRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, azureTableDefaultPartitionKeyValue.Value, azureTablePartitionKeyName.Value, azureTableRowKeyName.Value, azureTableInsertType.Value);
+            return new AzureTableSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                azureTableDefaultPartitionKeyValue,
+                azureTablePartitionKeyName,
+                azureTableRowKeyName,
+                azureTableInsertType);
         }
+
+        BinaryData IPersistableModel<AzureTableSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureTableSink IPersistableModel<AzureTableSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureTableSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureTableSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

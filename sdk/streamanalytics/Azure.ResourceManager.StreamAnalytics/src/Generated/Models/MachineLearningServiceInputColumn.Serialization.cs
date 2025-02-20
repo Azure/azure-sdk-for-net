@@ -5,63 +5,151 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningServiceInputColumn : IUtf8JsonSerializable
+    public partial class MachineLearningServiceInputColumn : IUtf8JsonSerializable, IJsonModel<MachineLearningServiceInputColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServiceInputColumn>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningServiceInputColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceInputColumn>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServiceInputColumn)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
             if (Optional.IsDefined(MapTo))
             {
-                writer.WritePropertyName("mapTo");
+                writer.WritePropertyName("mapTo"u8);
                 writer.WriteNumberValue(MapTo.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningServiceInputColumn DeserializeMachineLearningServiceInputColumn(JsonElement element)
+        MachineLearningServiceInputColumn IJsonModel<MachineLearningServiceInputColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> name = default;
-            Optional<string> dataType = default;
-            Optional<int> mapTo = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceInputColumn>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServiceInputColumn)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServiceInputColumn(document.RootElement, options);
+        }
+
+        internal static MachineLearningServiceInputColumn DeserializeMachineLearningServiceInputColumn(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string dataType = default;
+            int? mapTo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mapTo"))
+                if (property.NameEquals("mapTo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mapTo = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningServiceInputColumn(name.Value, dataType.Value, Optional.ToNullable(mapTo));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningServiceInputColumn(name, dataType, mapTo, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningServiceInputColumn>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceInputColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningServiceInputColumn)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningServiceInputColumn IPersistableModel<MachineLearningServiceInputColumn>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceInputColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningServiceInputColumn(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningServiceInputColumn)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningServiceInputColumn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

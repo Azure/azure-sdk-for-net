@@ -6,49 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </summary>
     public partial class IotHubCertificatePropertiesWithNonce
     {
-        /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
-        internal IotHubCertificatePropertiesWithNonce()
-        {
-        }
-
-        /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
-        /// <param name="subject"> The certificate&apos;s subject name. </param>
-        /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
-        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
-        /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
-        /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
-        /// <param name="verificationCode"> The certificate&apos;s verification code that will be used for proof of possession. </param>
-        /// <param name="certificate"> The certificate content. </param>
-        internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, BinaryData thumbprint, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
-        {
-            Subject = subject;
-            ExpireOn = expireOn;
-            Thumbprint = thumbprint;
-            IsVerified = isVerified;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            VerificationCode = verificationCode;
-            Certificate = certificate;
-        }
-
-        /// <summary> The certificate&apos;s subject name. </summary>
-        public string Subject { get; }
-        /// <summary> The certificate&apos;s expiration date and time. </summary>
-        public DateTimeOffset? ExpireOn { get; }
         /// <summary>
-        /// The certificate&apos;s thumbprint.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -72,14 +43,49 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Thumbprint { get; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificatePropertiesWithNonce"/>. </summary>
+        internal IotHubCertificatePropertiesWithNonce()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificatePropertiesWithNonce"/>. </summary>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
+        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
+        /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
+        /// <param name="certificate"> The certificate content. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Subject = subject;
+            ExpireOn = expireOn;
+            ThumbprintString = thumbprintString;
+            IsVerified = isVerified;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            VerificationCode = verificationCode;
+            Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> The certificate's subject name. </summary>
+        public string Subject { get; }
+        /// <summary> The certificate's expiration date and time. </summary>
+        public DateTimeOffset? ExpireOn { get; }
+        /// <summary> The certificate's thumbprint. </summary>
+        public string ThumbprintString { get; }
         /// <summary> Determines whether certificate has been verified. </summary>
         public bool? IsVerified { get; }
-        /// <summary> The certificate&apos;s create date and time. </summary>
+        /// <summary> The certificate's create date and time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The certificate&apos;s last update date and time. </summary>
+        /// <summary> The certificate's last update date and time. </summary>
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> The certificate&apos;s verification code that will be used for proof of possession. </summary>
+        /// <summary> The certificate's verification code that will be used for proof of possession. </summary>
         public string VerificationCode { get; }
         /// <summary>
         /// The certificate content
@@ -87,7 +93,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -17,32 +17,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Trigger))
             {
-                writer.WritePropertyName("trigger");
+                writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger.Value.ToString());
             }
             if (Optional.IsDefined(OutputFrequency))
             {
-                writer.WritePropertyName("outputFrequency");
+                writer.WritePropertyName("outputFrequency"u8);
                 writer.WriteStringValue(OutputFrequency);
             }
             if (Optional.IsDefined(MinimumDistanceThreshold))
             {
-                writer.WritePropertyName("minimumDistanceThreshold");
+                writer.WritePropertyName("minimumDistanceThreshold"u8);
                 writer.WriteStringValue(MinimumDistanceThreshold);
             }
             if (Optional.IsDefined(MaximumDistanceThreshold))
             {
-                writer.WritePropertyName("maximumDistanceThreshold");
+                writer.WritePropertyName("maximumDistanceThreshold"u8);
                 writer.WriteStringValue(MaximumDistanceThreshold);
             }
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
+                writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
             if (Optional.IsDefined(Focus))
             {
-                writer.WritePropertyName("focus");
+                writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -50,56 +50,80 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonDistanceEvent DeserializeSpatialAnalysisPersonDistanceEvent(JsonElement element)
         {
-            Optional<SpatialAnalysisPersonDistanceEventTrigger> trigger = default;
-            Optional<string> outputFrequency = default;
-            Optional<string> minimumDistanceThreshold = default;
-            Optional<string> maximumDistanceThreshold = default;
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SpatialAnalysisPersonDistanceEventTrigger? trigger = default;
+            string outputFrequency = default;
+            string minimumDistanceThreshold = default;
+            string maximumDistanceThreshold = default;
+            string threshold = default;
+            SpatialAnalysisOperationFocus? focus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trigger = new SpatialAnalysisPersonDistanceEventTrigger(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outputFrequency"))
+                if (property.NameEquals("outputFrequency"u8))
                 {
                     outputFrequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minimumDistanceThreshold"))
+                if (property.NameEquals("minimumDistanceThreshold"u8))
                 {
                     minimumDistanceThreshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maximumDistanceThreshold"))
+                if (property.NameEquals("maximumDistanceThreshold"u8))
                 {
                     maximumDistanceThreshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("focus"))
+                if (property.NameEquals("focus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     focus = new SpatialAnalysisOperationFocus(property.Value.GetString());
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonDistanceEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value, minimumDistanceThreshold.Value, maximumDistanceThreshold.Value);
+            return new SpatialAnalysisPersonDistanceEvent(
+                threshold,
+                focus,
+                trigger,
+                outputFrequency,
+                minimumDistanceThreshold,
+                maximumDistanceThreshold);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonDistanceEvent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonDistanceEvent(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

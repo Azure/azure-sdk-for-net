@@ -8,19 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ProfileResourceGetWafLogAnalyticsRankingsOptions. </summary>
     public partial class ProfileResourceGetWafLogAnalyticsRankingsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetWafLogAnalyticsRankingsOptions. </summary>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsRankingsOptions"/>. </summary>
+        /// <param name="metrics"> The metrics. </param>
+        /// <param name="dateTimeBegin"> The dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> The dateTimeEnd. </param>
+        /// <param name="maxRanking"> The maxRanking. </param>
+        /// <param name="rankings"> The rankings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public ProfileResourceGetWafLogAnalyticsRankingsOptions(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings)
         {
@@ -36,20 +35,24 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleTypes = new ChangeTrackingList<WafRuleType>();
         }
 
-        /// <summary> The ArrayOfWafMetric to use. </summary>
-        public IList<WafMetric> Metrics { get; }
-        /// <summary> The DateTime to use. </summary>
-        public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> The DateTime to use. </summary>
-        public DateTimeOffset DateTimeEnd { get; }
-        /// <summary> The Integer to use. </summary>
-        public int MaxRanking { get; }
-        /// <summary> The ArrayOfWafRankingType to use. </summary>
-        public IList<WafRankingType> Rankings { get; }
-        /// <summary> The ArrayOfWafAction to use. </summary>
-        public IList<WafAction> Actions { get; } = null;
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetWafLogAnalyticsRankingsOptions()
+        {
+        }
 
-        /// <summary> The ArrayOfWafRuleType to use. </summary>
-        public IList<WafRuleType> RuleTypes { get; } = null;
+        /// <summary> The metrics. </summary>
+        public IList<WafMetric> Metrics { get; }
+        /// <summary> The dateTimeBegin. </summary>
+        public DateTimeOffset DateTimeBegin { get; }
+        /// <summary> The dateTimeEnd. </summary>
+        public DateTimeOffset DateTimeEnd { get; }
+        /// <summary> The maxRanking. </summary>
+        public int MaxRanking { get; }
+        /// <summary> The rankings. </summary>
+        public IList<WafRankingType> Rankings { get; }
+        /// <summary> The actions. </summary>
+        public IList<WafAction> Actions { get; }
+        /// <summary> The ruleTypes. </summary>
+        public IList<WafRuleType> RuleTypes { get; }
     }
 }

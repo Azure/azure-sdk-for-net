@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -163,8 +164,8 @@ namespace Azure.Core.Extensions.Tests
             // Assert.AreEqual(someLocalCert, clientCertificateCredential.ClientCertificate.Thumbprint);
             Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
 
-            var additionalTenants = (string[]) typeof(ClientCertificateCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+            var additionalTenants = (string[])typeof(ClientCertificateCredential)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientCertificateCredential);
             Assert.IsEmpty(additionalTenants);
         }
@@ -203,8 +204,8 @@ namespace Azure.Core.Extensions.Tests
             // Assert.AreEqual(someLocalCert, clientCertificateCredential.ClientCertificate.Thumbprint);
             Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
 
-            var actualTenants = (string[]) typeof(ClientCertificateCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+            var actualTenants = (string[])typeof(ClientCertificateCredential)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientCertificateCredential);
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
@@ -231,8 +232,8 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
 
-            var additionalTenants = (string[]) typeof(ClientSecretCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+            var additionalTenants = (string[])typeof(ClientSecretCredential)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientSecretCredential);
             Assert.IsEmpty(additionalTenants);
         }
@@ -262,7 +263,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
 
             var actualTenants = typeof(ClientSecretCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientSecretCredential);
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
@@ -271,25 +272,16 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual(expectedTenants, actualTenants);
         }
 
-        public static IEnumerable<object> DefaultAzureCredentialTestCases()
-        {
-            // enumerate all combinations of bits from 0 to 16 (thank you Copilot!)
-            for (int i = 0; i < 16; i++)
-            {
-                var environmentCredential = (i & 1) != 0;
-                var managedIdentityCredential = (i & 2) != 0;
-                var sharedTokenCacheCredential = (i & 4) != 0;
-                var visualStudioCredential = (i & 8) != 0;
-
-                yield return new TestCaseData(environmentCredential, managedIdentityCredential, sharedTokenCacheCredential, visualStudioCredential);
-            }
-        }
-
         [Test]
-        [TestCaseSource(nameof(DefaultAzureCredentialTestCases))]
-        public void CreatesDefaultAzureCredential(bool additionalTenants, bool clientId, bool tenantId, bool resourceId)
+        [NonParallelizable]
+        public void CreatesDefaultAzureCredential(
+            [Values(true, false)] bool additionalTenants,
+            [Values(true, false)] bool clientId,
+            [Values(true, false)] bool tenantId,
+            [Values(true, false)] bool objectId,
+            [Values(true, false)] bool resourceId)
         {
-            List<KeyValuePair<string, string>> configEntries= new();
+            List<KeyValuePair<string, string>> configEntries = new();
             string resourceIdValue = $"/subscriptions/{Guid.NewGuid()}";
 
             if (additionalTenants)
@@ -308,15 +300,20 @@ namespace Azure.Core.Extensions.Tests
             {
                 configEntries.Add(new KeyValuePair<string, string>("managedIdentityResourceId", resourceIdValue));
             }
+            if (objectId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("managedIdentityObjectId", "objectId"));
+            }
+
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(configEntries).Build();
 
             // if both clientId and resourceId set, we expect an ArgumentException
-            if (clientId && resourceId)
+            // We also expect an exception if objectId is set for DefaultAzureCredential, as it is only supported for ManagedIdentityCredential
+            if ((clientId && resourceId) || objectId)
             {
                 Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
                 return;
             }
-
             var credential = ClientFactory.CreateCredential(configuration);
 
             // if all parameters were false we expect null
@@ -329,27 +326,40 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<DefaultAzureCredential>(credential);
             var defaultAzureCredential = (DefaultAzureCredential)credential;
 
-            EnvironmentCredential firstCredentialInChain = (EnvironmentCredential)((TokenCredential[])typeof(DefaultAzureCredential)
+            TokenCredential[] credentialChain = (TokenCredential[])typeof(DefaultAzureCredential)
                 .GetField("_sources", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(defaultAzureCredential))[0];
-            DefaultAzureCredentialOptions actualOptions = (DefaultAzureCredentialOptions)typeof(EnvironmentCredential)
-                .GetField("_options", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(firstCredentialInChain);
+                .GetValue(defaultAzureCredential);
+            ManagedIdentityCredential miCredential = credentialChain.OfType<ManagedIdentityCredential>().Single();
+            AzurePowerShellCredential pwshCredential = credentialChain.OfType<AzurePowerShellCredential>().Single();
             if (additionalTenants)
             {
-                Assert.AreEqual("tenantId2", actualOptions.AdditionallyAllowedTenants.Single());
+                var actualTenants = (string[])typeof(AzurePowerShellCredential)
+                    .GetProperty("AdditionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(pwshCredential);
+                Assert.AreEqual("tenantId2", actualTenants.Single());
             }
             if (tenantId)
             {
-                Assert.AreEqual("tenantId", actualOptions.TenantId);
+                Assert.AreEqual("tenantId", pwshCredential.TenantId);
             }
+
+            string managedIdentityId;
+            int idType;
+            ReflectIdAndType(miCredential, out managedIdentityId, out idType);
             if (clientId)
             {
-                Assert.AreEqual("clientId", actualOptions.ManagedIdentityClientId);
+                Assert.AreEqual("clientId", managedIdentityId);
+                Assert.AreEqual(1, idType); // 1 is the value for ClientId
             }
             if (resourceId)
             {
-                Assert.AreEqual(resourceIdValue, actualOptions.ManagedIdentityResourceId.ToString());
+                Assert.AreEqual(resourceIdValue.ToString(), managedIdentityId);
+                Assert.AreEqual(2, idType); // 2 is the value for ResourceId
+            }
+            if (objectId)
+            {
+                Assert.AreEqual("objectId", managedIdentityId);
+                Assert.AreEqual(3, idType); // 3 is the value for ObjectId
             }
         }
 
@@ -366,10 +376,12 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
-            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetProperty("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
-            var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
+            string clientId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out clientId, out idType);
 
             Assert.AreEqual("ConfigurationClientId", clientId);
+            Assert.AreEqual(1, idType); // 1 is the value for ClientId
         }
 
         [Test]
@@ -384,10 +396,12 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
-            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetProperty("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
-            var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
+            string clientId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out clientId, out idType);
 
             Assert.Null(clientId);
+            Assert.AreEqual(0, idType); // 0 is the value for SystemAssigned
         }
 
         [Test]
@@ -403,9 +417,33 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
-            var resourceId = (string)typeof(ManagedIdentityCredential).GetField("_clientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            string resourceId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out resourceId, out idType);
 
             Assert.AreEqual("ConfigurationResourceId", resourceId);
+            Assert.AreEqual(2, idType); // 2 is the value for ResourceId
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsWithObjectId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityObjectId", "ConfigurationObjectId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            string objectId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out objectId, out idType);
+
+            Assert.AreEqual("ConfigurationObjectId", objectId);
+            Assert.AreEqual(3, idType); // 3 is the value for ObjectId
         }
 
         [Test]
@@ -419,7 +457,110 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.That(
                 () => ClientFactory.CreateCredential(configuration),
-                Throws.InstanceOf<ArgumentException>());
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsThrowsWhenClientIdAndObjectIdSpecified()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityObjectId", "ConfigurationObjectId"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsThrowsWhenResourceIdAndObjectIdSpecified()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityObjectId", "ConfigurationObjectId"),
+                new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
+        }
+
+        [Test]
+        public void CreatesWorkloadIdentityCredentialsWithOptions()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("tokenFilePath", "ConfigurationTokenFilePath"),
+                new KeyValuePair<string, string>("credential", "workloadidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
+
+            var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+
+            Assert.AreEqual("ConfigurationTenantId", credentialAssertion.TenantId);
+            Assert.AreEqual("ConfigurationClientId", credentialAssertion.ClientId);
+
+            Type fileCacheType = typeof(WorkloadIdentityCredential).Assembly.DefinedTypes.Single(x => x.FullName == "Azure.Identity.FileContentsCache");
+            var fileCache = typeof(WorkloadIdentityCredential).GetField("_tokenFileCache", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+            var actualTokenFilePath = fileCacheType.GetField("_tokenFilePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(fileCache);
+
+            Assert.AreEqual("ConfigurationTokenFilePath", actualTokenFilePath);
+        }
+
+        [Test]
+        public void CreatesWorkloadIdentityCredentialsWithEnvironmentVariables()
+        {
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("credential", "workloadidentity"));
+            using var envVariables = new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TENANT_ID", "EnvTenantId" },
+                { "AZURE_CLIENT_ID", "EnvClientId" },
+                { "AZURE_FEDERATED_TOKEN_FILE", "EnvTokenFilePath" },
+            });
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
+
+            var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+
+            Assert.AreEqual("EnvTenantId", credentialAssertion.TenantId);
+            Assert.AreEqual("EnvClientId", credentialAssertion.ClientId);
+
+            Type fileCacheType = typeof(WorkloadIdentityCredential).Assembly.DefinedTypes.Single(x => x.FullName == "Azure.Identity.FileContentsCache");
+            var fileCache = typeof(WorkloadIdentityCredential).GetField("_tokenFileCache", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+            var actualTokenFilePath = fileCacheType.GetField("_tokenFilePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(fileCache);
+
+            Assert.AreEqual("EnvTokenFilePath", actualTokenFilePath);
+        }
+
+        [TestCase(null, null, null)]
+        [TestCase(null, "ConfigurationClientId", "ConfigurationTokenFilePath")]
+        [TestCase("ConfigurationTenantId", null, "ConfigurationTokenFilePath")]
+        [TestCase("ConfigurationTenantId", "ConfigurationClientId", null)]
+        [TestCase("ConfigurationTenantId", null, null)]
+        [TestCase(null, "ConfigurationClientId", null)]
+        [TestCase(null, null, "ConfigurationTokenFilePath")]
+        [TestCase(null, "ConfigurationClientId", null)]
+        public void CreatesWorkloadIdentityCredentialsWithoutNecessaryOptions(string tenantId, string clientId, string tokenFilePath)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("tenantId", tenantId),
+                new KeyValuePair<string, string>("clientId", clientId),
+                new KeyValuePair<string, string>("tokenFilePath", tokenFilePath),
+                new KeyValuePair<string, string>("credential", "workloadidentity")
+            );
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
         }
 
         [Test]
@@ -488,6 +629,15 @@ namespace Azure.Core.Extensions.Tests
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();
+        }
+
+        private static void ReflectIdAndType(ManagedIdentityCredential managedIdentityCredential, out string clientId, out int idType)
+        {
+            var managedIdentityClient = typeof(ManagedIdentityCredential).GetProperty("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var managedIdentityClientOptions = managedIdentityClient.GetType().GetField("_options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityClient);
+            var managedIdentityId = managedIdentityClientOptions.GetType().GetProperty("ManagedIdentityId").GetValue(managedIdentityClientOptions);
+            clientId = (string)typeof(ManagedIdentityId).GetField("_userAssignedId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityId);
+            idType = (int)typeof(ManagedIdentityId).GetField("_idType", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityId);
         }
     }
 }

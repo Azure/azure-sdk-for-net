@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResponse = await Client.GetDevCenterResource(devCenterId).GetAsync();
             var devCenterResource = devCenterResponse.Value;
 
-            List<ImageResource> images = await devCenterResource.GetImagesAsync().ToEnumerableAsync();
+            List<DevCenterImageResource> images = await devCenterResource.GetImagesAsync().ToEnumerableAsync();
             Assert.IsTrue(images.Count > 0);
 
             // List image versions for one image

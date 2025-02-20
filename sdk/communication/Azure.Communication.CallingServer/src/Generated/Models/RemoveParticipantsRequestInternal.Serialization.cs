@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("participantsToRemove");
+            writer.WritePropertyName("participantsToRemove"u8);
             writer.WriteStartArray();
             foreach (var item in ParticipantsToRemove)
             {
@@ -24,10 +24,18 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

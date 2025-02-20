@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
@@ -60,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Deletes the specified SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simName"> The name of the SIM. </param>
@@ -88,7 +103,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Deletes the specified SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simName"> The name of the SIM. </param>
@@ -115,6 +130,22 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
         {
             var message = _pipeline.CreateMessage();
@@ -138,14 +169,14 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Gets information about the specified SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simName"> The name of the SIM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SimData>> GetAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkSimData>> GetAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,27 +189,27 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SimData value = default;
+                        MobileNetworkSimData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SimData.DeserializeSimData(document.RootElement);
+                        value = MobileNetworkSimData.DeserializeMobileNetworkSimData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SimData)null, message.Response);
+                    return Response.FromValue((MobileNetworkSimData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets information about the specified SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simName"> The name of the SIM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SimData> Get(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkSimData> Get(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -191,19 +222,35 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SimData value = default;
+                        MobileNetworkSimData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SimData.DeserializeSimData(document.RootElement);
+                        value = MobileNetworkSimData.DeserializeMobileNetworkSimData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SimData)null, message.Response);
+                    return Response.FromValue((MobileNetworkSimData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName, SimData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,14 +270,14 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates a SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simName"> The name of the SIM. </param>
@@ -238,7 +285,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/>, <paramref name="simName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, SimData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,7 +306,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Creates or updates a SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simName"> The name of the SIM. </param>
@@ -267,7 +314,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/>, <paramref name="simName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string simGroupName, string simName, SimData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -285,6 +332,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByGroupRequestUri(string subscriptionId, string resourceGroupName, string simGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByGroupRequest(string subscriptionId, string resourceGroupName, string simGroupName)
@@ -309,7 +371,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Gets all the SIMs in a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,7 +400,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Gets all the SIMs in a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -366,6 +428,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateBulkUploadRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/uploadSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBulkUploadRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
         {
             var message = _pipeline.CreateMessage();
@@ -385,14 +462,14 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simUploadList);
+            content.JsonWriter.WriteObjectValue(simUploadList, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Bulk upload SIMs to a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simUploadList"> Parameters supplied to the bulk SIM upload operation. </param>
@@ -419,7 +496,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk upload SIMs to a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simUploadList"> Parameters supplied to the bulk SIM upload operation. </param>
@@ -445,6 +522,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateBulkDeleteRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/deleteSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBulkDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
         {
             var message = _pipeline.CreateMessage();
@@ -464,14 +556,14 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simDeleteList);
+            content.JsonWriter.WriteObjectValue(simDeleteList, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Bulk delete SIMs from a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simDeleteList"> Parameters supplied to the bulk SIM delete operation. </param>
@@ -499,7 +591,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk delete SIMs from a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="simDeleteList"> Parameters supplied to the bulk SIM delete operation. </param>
@@ -526,6 +618,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateBulkUploadEncryptedRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/uploadEncryptedSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBulkUploadEncryptedRequest(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
         {
             var message = _pipeline.CreateMessage();
@@ -545,14 +652,14 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(encryptedSimUploadList);
+            content.JsonWriter.WriteObjectValue(encryptedSimUploadList, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Bulk upload SIMs in encrypted form to a SIM group. The SIM credentials must be encrypted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="encryptedSimUploadList"> Parameters supplied to the encrypted SIMs upload operation. </param>
@@ -579,7 +686,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk upload SIMs in encrypted form to a SIM group. The SIM credentials must be encrypted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="encryptedSimUploadList"> Parameters supplied to the encrypted SIMs upload operation. </param>
@@ -605,6 +712,202 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateMoveRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/moveSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateMoveRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/moveSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Move SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateMoveRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Move SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Move(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateMoveRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCloneRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/cloneSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCloneRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/cloneSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Clone SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CloneAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCloneRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Clone SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Clone(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCloneRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -621,7 +924,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Gets all the SIMs in a SIM group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -652,7 +955,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Gets all the SIMs in a SIM group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

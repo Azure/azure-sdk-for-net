@@ -17,15 +17,23 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinNumber))
             {
-                writer.WritePropertyName("minNumber");
+                writer.WritePropertyName("minNumber"u8);
                 writer.WriteNumberValue(MinNumber.Value);
             }
             if (Optional.IsDefined(MinRatio))
             {
-                writer.WritePropertyName("minRatio");
+                writer.WritePropertyName("minRatio"u8);
                 writer.WriteNumberValue(MinRatio.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

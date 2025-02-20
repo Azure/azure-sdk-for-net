@@ -15,23 +15,43 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authorizationType");
+            writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
         }
 
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string authorizationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authorizationType"))
+                if (property.NameEquals("authorizationType"u8))
                 {
                     authorizationType = property.Value.GetString();
                     continue;
                 }
             }
             return new UnknownLinkedIntegrationRuntimeType(authorizationType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownLinkedIntegrationRuntimeType FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownLinkedIntegrationRuntimeType(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkedIntegrationRuntimeType>(this);
+            return content;
         }
     }
 }

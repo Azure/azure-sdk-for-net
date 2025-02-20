@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,32 +13,42 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchItem DeserializeRouteDirectionsBatchItem(JsonElement element)
         {
-            Optional<RouteDirectionsBatchItemResponse> response = default;
-            Optional<int> statusCode = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RouteDirectionsBatchItemResponse response = default;
+            int? statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     response = RouteDirectionsBatchItemResponse.DeserializeRouteDirectionsBatchItemResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RouteDirectionsBatchItem(Optional.ToNullable(statusCode), response.Value);
+            return new RouteDirectionsBatchItem(statusCode, response);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RouteDirectionsBatchItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteDirectionsBatchItem(document.RootElement);
         }
     }
 }

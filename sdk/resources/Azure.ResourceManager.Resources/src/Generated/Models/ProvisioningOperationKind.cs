@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         Read,
         /// <summary> The provisioning operation is evaluate output. </summary>
         EvaluateDeploymentOutput,
-        /// <summary> The provisioning operation is cleanup. This operation is part of the &apos;complete&apos; mode deployment. </summary>
+        /// <summary> The provisioning operation is cleanup. This operation is part of the 'complete' mode deployment. </summary>
         DeploymentCleanup
     }
 }

@@ -9,23 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a ServiceProjectTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceProjectTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceProjectTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetServiceProjectTask method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceProjectTaskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceProjectTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectResource"/> using the GetServiceProjectTask method.
     /// </summary>
     public partial class ServiceProjectTaskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceProjectTaskResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="taskName"> The taskName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string projectName, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly TasksRestOperations _serviceProjectTaskTasksRestClient;
         private readonly ProjectTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/tasks";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceProjectTaskResource"/> class for mocking. </summary>
         protected ServiceProjectTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceProjectTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceProjectTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceProjectTaskResource(ArmClient client, ProjectTaskData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/tasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +142,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expand the response. </param>
@@ -154,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it&apos;s running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it's running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -163,6 +182,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +203,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceProjectTaskTasksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(response);
+                var uri = _serviceProjectTaskTasksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -189,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it&apos;s running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it's running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,6 +227,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +248,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceProjectTaskTasksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks, cancellationToken);
-                var operation = new DataMigrationArmOperation(response);
+                var uri = _serviceProjectTaskTasksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -233,6 +272,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +315,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Information about the task. </param>
@@ -292,7 +347,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it&apos;s currently queued or running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it's currently queued or running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -301,6 +356,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +385,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it&apos;s currently queued or running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it's currently queued or running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -331,6 +394,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,6 +432,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Command</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,6 +474,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Command</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

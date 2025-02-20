@@ -5,61 +5,162 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesClusterInfo : IUtf8JsonSerializable
+    public partial class EdgeKubernetesClusterInfo : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesClusterInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesClusterInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EdgeKubernetesClusterInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("version");
-            writer.WriteStringValue(Version);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
-            Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
+            {
+                writer.WritePropertyName("etcdInfo"u8);
+                writer.WriteObjectValue(EtcdInfo, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            {
+                writer.WritePropertyName("nodes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nodes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("version"u8);
+            writer.WriteStringValue(Version);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        EdgeKubernetesClusterInfo IJsonModel<EdgeKubernetesClusterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeKubernetesClusterInfo(document.RootElement, options);
+        }
+
+        internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataBoxEdgeEtcdInfo etcdInfo = default;
+            IReadOnlyList<EdgeKubernetesNodeInfo> nodes = default;
             string version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etcdInfo"))
+                if (property.NameEquals("etcdInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value);
+                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodes"))
+                if (property.NameEquals("nodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdgeKubernetesNodeInfo> array = new List<EdgeKubernetesNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item));
+                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item, options));
                     }
                     nodes = array;
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeKubernetesClusterInfo(etcdInfo, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeKubernetesClusterInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeKubernetesClusterInfo IPersistableModel<EdgeKubernetesClusterInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeKubernetesClusterInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeKubernetesClusterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

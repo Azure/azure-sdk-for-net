@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedAt))
             {
-                writer.WritePropertyName("createdAt");
+                writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedAt))
             {
-                writer.WritePropertyName("lastModifiedAt");
+                writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt.Value, "O");
             }
             writer.WriteEndObject();
@@ -31,32 +31,50 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SystemData DeserializeSystemData(JsonElement element)
         {
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedAt"))
+                if (property.NameEquals("lastModifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new SystemData(Optional.ToNullable(createdAt), Optional.ToNullable(lastModifiedAt));
+            return new SystemData(createdAt, lastModifiedAt);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SystemData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSystemData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -26,17 +26,20 @@ namespace Azure.Communication.CallAutomation
         }
 
         private const string DtmfValue = "dtmf";
+        private const string SpeechValue = "speech";
         private const string ChoicesValue = "choices";
 
         /// <summary> dtmf. </summary>
         public static CallMediaRecognitionType Dtmf { get; } = new CallMediaRecognitionType(DtmfValue);
+        /// <summary> speech. </summary>
+        public static CallMediaRecognitionType Speech { get; } = new CallMediaRecognitionType(SpeechValue);
         /// <summary> choices. </summary>
         public static CallMediaRecognitionType Choices { get; } = new CallMediaRecognitionType(ChoicesValue);
         /// <summary> Determines if two <see cref="CallMediaRecognitionType"/> values are the same. </summary>
         public static bool operator ==(CallMediaRecognitionType left, CallMediaRecognitionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallMediaRecognitionType"/> values are not the same. </summary>
         public static bool operator !=(CallMediaRecognitionType left, CallMediaRecognitionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CallMediaRecognitionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CallMediaRecognitionType"/>. </summary>
         public static implicit operator CallMediaRecognitionType(string value) => new CallMediaRecognitionType(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

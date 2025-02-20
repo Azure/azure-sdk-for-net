@@ -15,9 +15,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("@apiVersion");
+                writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
@@ -25,22 +27,42 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LivePipelineListRequest DeserializeLivePipelineListRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("methodName"))
+                if (property.NameEquals("methodName"u8))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@apiVersion"))
+                if (property.NameEquals("@apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new LivePipelineListRequest(methodName, apiVersion.Value);
+            return new LivePipelineListRequest(methodName, apiVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LivePipelineListRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLivePipelineListRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

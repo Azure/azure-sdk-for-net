@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -15,60 +14,61 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> sid = default;
-            Optional<string> templateUri = default;
-            Optional<SasTokenType> sasType = default;
-            Optional<string> validityPeriod = default;
-            Optional<SasDefinitionAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string sid = default;
+            string templateUri = default;
+            SasTokenType? sasType = default;
+            string validityPeriod = default;
+            SasDefinitionAttributes attributes = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sid"))
+                if (property.NameEquals("sid"u8))
                 {
                     sid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("templateUri"))
+                if (property.NameEquals("templateUri"u8))
                 {
                     templateUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasType"))
+                if (property.NameEquals("sasType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sasType = new SasTokenType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("validityPeriod"))
+                if (property.NameEquals("validityPeriod"u8))
                 {
                     validityPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attributes = SasDefinitionAttributes.DeserializeSasDefinitionAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -80,7 +80,22 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, Optional.ToDictionary(tags));
+            return new SasDefinitionBundle(
+                id,
+                sid,
+                templateUri,
+                sasType,
+                validityPeriod,
+                attributes,
+                tags ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SasDefinitionBundle FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSasDefinitionBundle(document.RootElement);
         }
     }
 }

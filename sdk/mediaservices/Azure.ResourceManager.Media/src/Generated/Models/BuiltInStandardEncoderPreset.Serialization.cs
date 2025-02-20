@@ -5,57 +5,129 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class BuiltInStandardEncoderPreset : IUtf8JsonSerializable
+    public partial class BuiltInStandardEncoderPreset : IUtf8JsonSerializable, IJsonModel<BuiltInStandardEncoderPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuiltInStandardEncoderPreset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BuiltInStandardEncoderPreset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Configurations))
-            {
-                writer.WritePropertyName("configurations");
-                writer.WriteObjectValue(Configurations);
-            }
-            writer.WritePropertyName("presetName");
-            writer.WriteStringValue(PresetName.ToString());
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static BuiltInStandardEncoderPreset DeserializeBuiltInStandardEncoderPreset(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<EncoderPresetConfigurations> configurations = default;
+            var format = options.Format == "W" ? ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Configurations))
+            {
+                writer.WritePropertyName("configurations"u8);
+                writer.WriteObjectValue(Configurations, options);
+            }
+            writer.WritePropertyName("presetName"u8);
+            writer.WriteStringValue(PresetName.ToString());
+        }
+
+        BuiltInStandardEncoderPreset IJsonModel<BuiltInStandardEncoderPreset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBuiltInStandardEncoderPreset(document.RootElement, options);
+        }
+
+        internal static BuiltInStandardEncoderPreset DeserializeBuiltInStandardEncoderPreset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            EncoderPresetConfigurations configurations = default;
             EncoderNamedPreset presetName = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurations"))
+                if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value);
+                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("presetName"))
+                if (property.NameEquals("presetName"u8))
                 {
                     presetName = new EncoderNamedPreset(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BuiltInStandardEncoderPreset(odataType, configurations.Value, presetName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BuiltInStandardEncoderPreset(odataType, serializedAdditionalRawData, configurations, presetName);
         }
+
+        BinaryData IPersistableModel<BuiltInStandardEncoderPreset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BuiltInStandardEncoderPreset IPersistableModel<BuiltInStandardEncoderPreset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBuiltInStandardEncoderPreset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BuiltInStandardEncoderPreset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

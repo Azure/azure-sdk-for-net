@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreAccountStatus ToDataLakeStoreAccountStatus(this string value)
         {
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Failed;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Creating;
-            if (string.Equals(value, "Running", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Running;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Succeeded;
-            if (string.Equals(value, "Patching", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Patching;
-            if (string.Equals(value, "Suspending", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Suspending;
-            if (string.Equals(value, "Resuming", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Resuming;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Deleting;
-            if (string.Equals(value, "Deleted", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Deleted;
-            if (string.Equals(value, "Undeleting", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Undeleting;
-            if (string.Equals(value, "Canceled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountStatus.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return DataLakeStoreAccountStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return DataLakeStoreAccountStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return DataLakeStoreAccountStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return DataLakeStoreAccountStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Patching")) return DataLakeStoreAccountStatus.Patching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Suspending")) return DataLakeStoreAccountStatus.Suspending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resuming")) return DataLakeStoreAccountStatus.Resuming;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return DataLakeStoreAccountStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return DataLakeStoreAccountStatus.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Undeleting")) return DataLakeStoreAccountStatus.Undeleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return DataLakeStoreAccountStatus.Canceled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreAccountStatus value.");
         }
     }

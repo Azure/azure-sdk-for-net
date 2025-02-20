@@ -7,20 +7,97 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabCostCollection
     {
-        // Costs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CostsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_CreateOrUpdate.json
+            // this example is just showing the usage of "Costs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // get the collection of this DevTestLabCostResource
+            DevTestLabCostCollection collection = devTestLab.GetDevTestLabCosts();
+
+            // invoke the operation
+            string name = "targetCost";
+            DevTestLabCostData data = new DevTestLabCostData(default)
+            {
+                TargetCost = new DevTestLabTargetCost
+                {
+                    Status = DevTestLabTargetCostStatus.Enabled,
+                    Target = 100,
+                    CostThresholds = {new DevTestLabCostThreshold
+{
+ThresholdId = "00000000-0000-0000-0000-000000000001",
+ThresholdValue = 25,
+DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
+SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
+}, new DevTestLabCostThreshold
+{
+ThresholdId = "00000000-0000-0000-0000-000000000002",
+ThresholdValue = 50,
+DisplayOnChart = DevTestLabCostThresholdStatus.Enabled,
+SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Enabled,
+}, new DevTestLabCostThreshold
+{
+ThresholdId = "00000000-0000-0000-0000-000000000003",
+ThresholdValue = 75,
+DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
+SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
+}, new DevTestLabCostThreshold
+{
+ThresholdId = "00000000-0000-0000-0000-000000000004",
+ThresholdValue = 100,
+DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
+SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
+}, new DevTestLabCostThreshold
+{
+ThresholdId = "00000000-0000-0000-0000-000000000005",
+ThresholdValue = 125,
+DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
+SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
+}},
+                    CycleStartOn = DateTimeOffset.Parse("2020-12-01T00:00:00.000Z"),
+                    CycleEndOn = DateTimeOffset.Parse("2020-12-31T00:00:00.000Z"),
+                    CycleType = DevTestLabReportingCycleType.CalendarMonth,
+                },
+                CurrencyCode = "USD",
+                StartOn = DateTimeOffset.Parse("2020-12-01T00:00:00Z"),
+                EndOn = DateTimeOffset.Parse("2020-12-31T23:59:59Z"),
+            };
+            ArmOperation<DevTestLabCostResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            DevTestLabCostResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabCostData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CostsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_Get.json
@@ -53,9 +130,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Costs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CostsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_Get.json
@@ -84,13 +160,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Costs_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CostsCreateOrUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_CostsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_CreateOrUpdate.json
-            // this example is just showing the usage of "Costs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_Get.json
+            // this example is just showing the usage of "Costs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,62 +185,21 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // invoke the operation
             string name = "targetCost";
-            DevTestLabCostData data = new DevTestLabCostData(new AzureLocation("placeholder"))
-            {
-                TargetCost = new DevTestLabTargetCost()
-                {
-                    Status = DevTestLabTargetCostStatus.Enabled,
-                    Target = 100,
-                    CostThresholds =
-{
-new DevTestLabCostThreshold()
-{
-ThresholdId = "00000000-0000-0000-0000-000000000001",
-ThresholdValue = 25,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
-{
-ThresholdId = "00000000-0000-0000-0000-000000000002",
-ThresholdValue = 50,
-DisplayOnChart = DevTestLabCostThresholdStatus.Enabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Enabled,
-},new DevTestLabCostThreshold()
-{
-ThresholdId = "00000000-0000-0000-0000-000000000003",
-ThresholdValue = 75,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
-{
-ThresholdId = "00000000-0000-0000-0000-000000000004",
-ThresholdValue = 100,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
-{
-ThresholdId = "00000000-0000-0000-0000-000000000005",
-ThresholdValue = 125,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}
-},
-                    CycleStartOn = DateTimeOffset.Parse("2020-12-01T00:00:00.000Z"),
-                    CycleEndOn = DateTimeOffset.Parse("2020-12-31T00:00:00.000Z"),
-                    CycleType = DevTestLabReportingCycleType.CalendarMonth,
-                },
-                CurrencyCode = "USD",
-                StartOn = DateTimeOffset.Parse("2020-12-01T00:00:00Z"),
-                EndOn = DateTimeOffset.Parse("2020-12-31T23:59:59Z"),
-            };
-            ArmOperation<DevTestLabCostResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            DevTestLabCostResource result = lro.Value;
+            NullableResponse<DevTestLabCostResource> response = await collection.GetIfExistsAsync(name);
+            DevTestLabCostResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DevTestLabCostData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DevTestLabCostData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

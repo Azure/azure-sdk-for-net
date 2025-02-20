@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ActiveValue = "Active";
         private const string ClosedValue = "Closed";
 
-        /// <summary> An active incident which isn&apos;t being handled currently. </summary>
+        /// <summary> An active incident which isn't being handled currently. </summary>
         public static SecurityInsightsIncidentStatus New { get; } = new SecurityInsightsIncidentStatus(NewValue);
         /// <summary> An active incident which is being handled. </summary>
         public static SecurityInsightsIncidentStatus Active { get; } = new SecurityInsightsIncidentStatus(ActiveValue);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsIncidentStatus left, SecurityInsightsIncidentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentStatus"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsIncidentStatus left, SecurityInsightsIncidentStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsIncidentStatus"/>. </summary>
         public static implicit operator SecurityInsightsIncidentStatus(string value) => new SecurityInsightsIncidentStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

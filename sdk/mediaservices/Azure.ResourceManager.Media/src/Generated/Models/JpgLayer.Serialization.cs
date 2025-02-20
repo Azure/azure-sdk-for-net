@@ -5,74 +5,133 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class JpgLayer : IUtf8JsonSerializable
+    public partial class JpgLayer : IUtf8JsonSerializable, IJsonModel<JpgLayer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JpgLayer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<JpgLayer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Quality))
-            {
-                writer.WritePropertyName("quality");
-                writer.WriteNumberValue(Quality.Value);
-            }
-            if (Optional.IsDefined(Width))
-            {
-                writer.WritePropertyName("width");
-                writer.WriteStringValue(Width);
-            }
-            if (Optional.IsDefined(Height))
-            {
-                writer.WritePropertyName("height");
-                writer.WriteStringValue(Height);
-            }
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label");
-                writer.WriteStringValue(Label);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static JpgLayer DeserializeJpgLayer(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<int> quality = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            var format = options.Format == "W" ? ((IPersistableModel<JpgLayer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JpgLayer)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Quality))
+            {
+                writer.WritePropertyName("quality"u8);
+                writer.WriteNumberValue(Quality.Value);
+            }
+        }
+
+        JpgLayer IJsonModel<JpgLayer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JpgLayer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JpgLayer)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJpgLayer(document.RootElement, options);
+        }
+
+        internal static JpgLayer DeserializeJpgLayer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? quality = default;
+            string width = default;
+            string height = default;
+            string label = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quality"))
+                if (property.NameEquals("quality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quality = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JpgLayer(width.Value, height.Value, label.Value, Optional.ToNullable(quality));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JpgLayer(width, height, label, serializedAdditionalRawData, quality);
         }
+
+        BinaryData IPersistableModel<JpgLayer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JpgLayer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JpgLayer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JpgLayer IPersistableModel<JpgLayer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JpgLayer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJpgLayer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JpgLayer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JpgLayer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

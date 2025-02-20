@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+    /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
     public readonly partial struct SynapseServerKeyType : IEquatable<SynapseServerKeyType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseServerKeyType left, SynapseServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseServerKeyType"/> values are not the same. </summary>
         public static bool operator !=(SynapseServerKeyType left, SynapseServerKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseServerKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseServerKeyType"/>. </summary>
         public static implicit operator SynapseServerKeyType(string value) => new SynapseServerKeyType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchServicePrivateLinkServiceConnectionStatus ToSearchServicePrivateLinkServiceConnectionStatus(this string value)
         {
-            if (string.Equals(value, "Pending", StringComparison.InvariantCultureIgnoreCase)) return SearchServicePrivateLinkServiceConnectionStatus.Pending;
-            if (string.Equals(value, "Approved", StringComparison.InvariantCultureIgnoreCase)) return SearchServicePrivateLinkServiceConnectionStatus.Approved;
-            if (string.Equals(value, "Rejected", StringComparison.InvariantCultureIgnoreCase)) return SearchServicePrivateLinkServiceConnectionStatus.Rejected;
-            if (string.Equals(value, "Disconnected", StringComparison.InvariantCultureIgnoreCase)) return SearchServicePrivateLinkServiceConnectionStatus.Disconnected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return SearchServicePrivateLinkServiceConnectionStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return SearchServicePrivateLinkServiceConnectionStatus.Approved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return SearchServicePrivateLinkServiceConnectionStatus.Rejected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return SearchServicePrivateLinkServiceConnectionStatus.Disconnected;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServicePrivateLinkServiceConnectionStatus value.");
         }
     }

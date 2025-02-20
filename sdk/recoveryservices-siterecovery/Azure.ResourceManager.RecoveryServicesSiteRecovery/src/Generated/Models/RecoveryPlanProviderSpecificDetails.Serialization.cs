@@ -5,22 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanProviderSpecificDetails
+    [PersistableModelProxy(typeof(UnknownRecoveryPlanProviderSpecificDetails))]
+    public partial class RecoveryPlanProviderSpecificDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanProviderSpecificDetails>
     {
-        internal static RecoveryPlanProviderSpecificDetails DeserializeRecoveryPlanProviderSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanProviderSpecificDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RecoveryPlanProviderSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        RecoveryPlanProviderSpecificDetails IJsonModel<RecoveryPlanProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanProviderSpecificDetails(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanProviderSpecificDetails DeserializeRecoveryPlanProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return RecoveryPlanA2ADetails.DeserializeRecoveryPlanA2ADetails(element);
+                    case "A2A": return RecoveryPlanA2ADetails.DeserializeRecoveryPlanA2ADetails(element, options);
                 }
             }
-            return UnknownRecoveryPlanProviderSpecificDetails.DeserializeUnknownRecoveryPlanProviderSpecificDetails(element);
+            return UnknownRecoveryPlanProviderSpecificDetails.DeserializeUnknownRecoveryPlanProviderSpecificDetails(element, options);
         }
+
+        BinaryData IPersistableModel<RecoveryPlanProviderSpecificDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryPlanProviderSpecificDetails IPersistableModel<RecoveryPlanProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryPlanProviderSpecificDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryPlanProviderSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

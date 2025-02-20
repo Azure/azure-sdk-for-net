@@ -3,10 +3,12 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -42,7 +44,7 @@ namespace Azure.Monitor.Query.Tests
             var response = await _pipeline.SendRequestAsync(request, default);
             if (response.Status != 200)
             {
-                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                throw new RequestFailedException(response);
             }
 
             return response;

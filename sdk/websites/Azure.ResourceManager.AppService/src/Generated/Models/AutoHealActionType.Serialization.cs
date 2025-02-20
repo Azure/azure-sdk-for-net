@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AutoHealActionType ToAutoHealActionType(this string value)
         {
-            if (string.Equals(value, "Recycle", StringComparison.InvariantCultureIgnoreCase)) return AutoHealActionType.Recycle;
-            if (string.Equals(value, "LogEvent", StringComparison.InvariantCultureIgnoreCase)) return AutoHealActionType.LogEvent;
-            if (string.Equals(value, "CustomAction", StringComparison.InvariantCultureIgnoreCase)) return AutoHealActionType.CustomAction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recycle")) return AutoHealActionType.Recycle;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogEvent")) return AutoHealActionType.LogEvent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomAction")) return AutoHealActionType.CustomAction;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoHealActionType value.");
         }
     }

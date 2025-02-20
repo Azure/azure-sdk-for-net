@@ -1,6 +1,6 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
+## 4.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,84 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.7.0 (2024-10-14)
+
+### Features Added
+
+- Support for Continuous Access Evaluation (CAE).
+
+## 4.6.0 (2024-02-14)
+
+Changes from both the last release and the last beta include:
+
+### Features Added
+
+- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM.
+  Use this anywhere an `RSA` or `AsymmetricAlgorithm` is required. ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+- Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
+
+### Breaking Changes
+
+- Renamed tags reported on `KeyClient`, `KeyResolver`, `CryptographyClient`, and `RemoteCryptographyClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `key` to `az.keyvault.key.id` or `az.keyvault.key.name` depending on the value being reported
+  - `version` to `az.keyvault.key.version`
+
+### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+- `KeyRotationPolicyAction` performs case-insensitive comparisons since Key Vault and Managed HSM return different cases for "rotate".
+
+### Other Changes
+
+- The default service version is now "7.5".
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 4.6.0-beta.2 (2023-11-13)
+
+### Other Changes
+
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 4.6.0-beta.1 (2023-11-09)
+
+### Features Added
+
+- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM.
+  Use this anywhere an `RSA` or `AsymmetricAlgorithm` is required. ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+- Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
+
+### Breaking Changes
+
+- Renamed tags reported on `KeyClient`, `KeyResolver`, `CryptographyClient`, and `RemoteCryptographyClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `key` to `az.keyvault.key.id` or `az.keyvault.key.name` depending on the value being reported
+  - `version` to `az.keyvault.key.version`
+
+### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+- `KeyRotationPolicyAction` performs case-insensitive comparisons since Key Vault and Managed HSM return different cases for "rotate".
+
+### Other Changes
+
+- The default service version is now "7.5-preview.1".
+
+## 4.5.0 (2023-03-14)
+
+### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 4.4.0 when those types and members did not exist.
+
+- Service version "7.4-preview.1" is not supported.
+- Removed `CreateOkpKeyOptions`.
+- Removed `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync`.
+- Removed `KeyType.Okp` and `KeyType.OkpHsm` from `JsonWebKey`.
+- Removed `KeyCurveName.Ed25519`.
+- Removed `SignatureAlgorithm.EdDsa`.
+
+### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.5.0-beta.1 (2022-11-09)
 

@@ -22,24 +22,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SucceededValue = "Succeeded";
+        private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
+        private const string SucceededValue = "Succeeded";
 
-        /// <summary> Succeeded. </summary>
-        public static ContainerServicePrivateEndpointConnectionProvisioningState Succeeded { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(SucceededValue);
+        /// <summary> Canceled. </summary>
+        public static ContainerServicePrivateEndpointConnectionProvisioningState Canceled { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(CanceledValue);
         /// <summary> Creating. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Creating { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(CreatingValue);
         /// <summary> Deleting. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Deleting { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Failed { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(FailedValue);
+        /// <summary> Succeeded. </summary>
+        public static ContainerServicePrivateEndpointConnectionProvisioningState Succeeded { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePrivateEndpointConnectionProvisioningState left, ContainerServicePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ContainerServicePrivateEndpointConnectionProvisioningState left, ContainerServicePrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator ContainerServicePrivateEndpointConnectionProvisioningState(string value) => new ContainerServicePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

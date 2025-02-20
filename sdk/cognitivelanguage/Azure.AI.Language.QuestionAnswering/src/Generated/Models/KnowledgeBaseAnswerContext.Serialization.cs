@@ -15,14 +15,22 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("previousQnaId");
+            writer.WritePropertyName("previousQnaId"u8);
             writer.WriteNumberValue(PreviousQnaId);
             if (Optional.IsDefined(PreviousQuestion))
             {
-                writer.WritePropertyName("previousUserQuery");
+                writer.WritePropertyName("previousUserQuery"u8);
                 writer.WriteStringValue(PreviousQuestion);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

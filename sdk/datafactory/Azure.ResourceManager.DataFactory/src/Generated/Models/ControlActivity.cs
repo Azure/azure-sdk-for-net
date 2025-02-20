@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class ControlActivity : PipelineActivity
     {
-        /// <summary> Initializes a new instance of ControlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ControlActivity(string name) : base(name)
@@ -28,16 +27,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Container";
         }
 
-        /// <summary> Initializes a new instance of ControlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ControlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ControlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Container";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/> for deserialization. </summary>
+        internal ControlActivity()
+        {
         }
     }
 }

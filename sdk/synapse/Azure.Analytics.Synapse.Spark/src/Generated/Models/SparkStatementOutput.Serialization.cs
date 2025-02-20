@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -15,35 +14,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatementOutput DeserializeSparkStatementOutput(JsonElement element)
         {
-            Optional<string> status = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string status = default;
             int executionCount = default;
-            Optional<object> data = default;
-            Optional<string> ename = default;
-            Optional<string> evalue = default;
-            Optional<IReadOnlyList<string>> traceback = default;
+            object data = default;
+            string ename = default;
+            string evalue = default;
+            IReadOnlyList<string> traceback = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("execution_count"))
+                if (property.NameEquals("execution_count"u8))
                 {
                     executionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     data = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("ename"))
+                if (property.NameEquals("ename"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +55,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     ename = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("evalue"))
+                if (property.NameEquals("evalue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,11 +65,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     evalue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("traceback"))
+                if (property.NameEquals("traceback"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        traceback = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -79,7 +80,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkStatementOutput(status.Value, executionCount, data.Value, ename.Value, evalue.Value, Optional.ToList(traceback));
+            return new SparkStatementOutput(
+                status,
+                executionCount,
+                data,
+                ename,
+                evalue,
+                traceback ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkStatementOutput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkStatementOutput(document.RootElement);
         }
     }
 }

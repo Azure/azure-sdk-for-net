@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,16 +16,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ApiManagementUserUpdatedEventData DeserializeApiManagementUserUpdatedEventData(JsonElement element)
         {
-            Optional<string> resourceUri = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     resourceUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApiManagementUserUpdatedEventData(resourceUri.Value);
+            return new ApiManagementUserUpdatedEventData(resourceUri);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiManagementUserUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiManagementUserUpdatedEventData(document.RootElement);
         }
 
         internal partial class ApiManagementUserUpdatedEventDataConverter : JsonConverter<ApiManagementUserUpdatedEventData>
@@ -35,6 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override ApiManagementUserUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

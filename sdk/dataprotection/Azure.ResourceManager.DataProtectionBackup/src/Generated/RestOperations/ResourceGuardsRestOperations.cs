@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataProtectionBackup.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetResourcesInSubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetResourcesInSubscriptionRequest(string subscriptionId)
@@ -55,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns ResourceGuards collection belonging to a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns ResourceGuards collection belonging to a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -104,6 +114,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetResourcesInResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourcesInResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -124,8 +147,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns ResourceGuards collection belonging to a ResourceGroup. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -151,8 +174,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns ResourceGuards collection belonging to a ResourceGroup. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -177,6 +200,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardData data)
         {
             var message = _pipeline.CreateMessage();
@@ -195,15 +232,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates a ResourceGuard resource belonging to a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -221,6 +258,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ResourceGuardData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -233,8 +271,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Creates or updates a ResourceGuard resource belonging to a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -252,6 +290,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ResourceGuardData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -261,6 +300,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
@@ -284,8 +337,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns a ResourceGuard belonging to a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
@@ -315,8 +368,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns a ResourceGuard belonging to a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
@@ -345,6 +398,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -366,8 +433,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Deletes a ResourceGuard resource from the resource group. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
@@ -391,8 +458,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Deletes a ResourceGuard resource from the resource group. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
@@ -415,7 +482,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, DataProtectionBackupPatch patch)
+        internal RequestUriBuilder CreatePatchRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -433,21 +514,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceGuardData>> PatchAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, DataProtectionBackupPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGuardData>> PatchAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -471,14 +552,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceGuardData> Patch(string subscriptionId, string resourceGroupName, string resourceGuardsName, DataProtectionBackupPatch patch, CancellationToken cancellationToken = default)
+        public Response<ResourceGuardData> Patch(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -499,6 +580,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/disableSoftDeleteRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
@@ -523,9 +619,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -552,9 +648,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -580,6 +676,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDeleteResourceGuardProxyRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteResourceGuardProxyRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -602,9 +713,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -631,9 +742,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -659,6 +770,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetBackupSecurityPinRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/getBackupSecurityPINRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -681,9 +807,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -710,9 +836,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -738,6 +864,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -760,9 +901,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -789,9 +930,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -817,6 +958,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -839,9 +995,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -868,9 +1024,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -896,6 +1052,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectedItemRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -918,9 +1089,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -947,9 +1118,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -975,6 +1146,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultDisableSoftDeleteRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/disableSoftDeleteRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -998,10 +1185,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1029,10 +1216,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1059,6 +1246,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -1082,10 +1285,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1113,10 +1316,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1143,6 +1346,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultBackupSecurityPinRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/getBackupSecurityPINRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultBackupSecurityPinRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -1166,10 +1385,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1197,10 +1416,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1227,6 +1446,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultDeleteProtectedItemRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -1250,10 +1485,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1281,10 +1516,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1311,6 +1546,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -1334,10 +1585,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1365,10 +1616,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1395,6 +1646,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultUpdateProtectedItemRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectedItemRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -1418,10 +1685,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1449,10 +1716,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1479,6 +1746,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetResourcesInSubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourcesInSubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1495,7 +1770,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns ResourceGuards collection belonging to a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1522,7 +1797,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns ResourceGuards collection belonging to a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1547,6 +1822,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetResourcesInResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourcesInResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -1563,8 +1846,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns ResourceGuards collection belonging to a ResourceGroup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1592,8 +1875,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns ResourceGuards collection belonging to a ResourceGroup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1619,6 +1902,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1635,9 +1926,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1666,9 +1957,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1695,6 +1986,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1711,9 +2010,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1742,9 +2041,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1771,6 +2070,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetBackupSecurityPinRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1787,9 +2094,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1818,9 +2125,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1847,6 +2154,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1863,9 +2178,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1894,9 +2209,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1923,6 +2238,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1939,9 +2262,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1970,9 +2293,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1999,6 +2322,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectedItemRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -2015,9 +2346,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2046,9 +2377,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
-        /// <param name="resourceGuardsName"> The String to use. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>

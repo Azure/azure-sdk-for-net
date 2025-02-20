@@ -5,25 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class KafkaRestProperties : IUtf8JsonSerializable
+    public partial class KafkaRestProperties : IUtf8JsonSerializable, IJsonModel<KafkaRestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaRestProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KafkaRestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaRestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ClientGroupInfo))
             {
-                writer.WritePropertyName("clientGroupInfo");
-                writer.WriteObjectValue(ClientGroupInfo);
+                writer.WritePropertyName("clientGroupInfo"u8);
+                writer.WriteObjectValue(ClientGroupInfo, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
-                writer.WritePropertyName("configurationOverride");
+                writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();
                 foreach (var item in ConfigurationOverride)
                 {
@@ -32,30 +50,62 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KafkaRestProperties DeserializeKafkaRestProperties(JsonElement element)
+        KafkaRestProperties IJsonModel<KafkaRestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ClientGroupInfo> clientGroupInfo = default;
-            Optional<IDictionary<string, string>> configurationOverride = default;
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaRestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKafkaRestProperties(document.RootElement, options);
+        }
+
+        internal static KafkaRestProperties DeserializeKafkaRestProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ClientGroupInfo clientGroupInfo = default;
+            IDictionary<string, string> configurationOverride = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientGroupInfo"))
+                if (property.NameEquals("clientGroupInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value);
+                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("configurationOverride"))
+                if (property.NameEquals("configurationOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -66,8 +116,44 @@ namespace Azure.ResourceManager.HDInsight.Models
                     configurationOverride = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KafkaRestProperties(clientGroupInfo.Value, Optional.ToDictionary(configurationOverride));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KafkaRestProperties(clientGroupInfo, configurationOverride ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KafkaRestProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaRestProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KafkaRestProperties IPersistableModel<KafkaRestProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaRestProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKafkaRestProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KafkaRestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

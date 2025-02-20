@@ -8,10 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityInsights.Mocking;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -19,279 +18,940 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityInsights. </summary>
     public static partial class SecurityInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        private static MockableSecurityInsightsArmClient GetMockableSecurityInsightsArmClient(ArmClient client)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+            return client.GetCachedClient(client0 => new MockableSecurityInsightsArmClient(client0));
         }
 
-        #region SecurityInsightsAlertRuleResource
+        private static MockableSecurityInsightsResourceGroupResource GetMockableSecurityInsightsResourceGroupResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableSecurityInsightsResourceGroupResource(client, resource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsAlertRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsAlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsAlertRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource"/> object. </returns>
         public static SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsAlertRuleResource>(() =>
-            {
-                SecurityInsightsAlertRuleResource.ValidateResourceId(id);
-                return new SecurityInsightsAlertRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsAlertRuleActionResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAlertRuleResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleActionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsAlertRuleActionResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsAlertRuleActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsAlertRuleActionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleActionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleActionResource"/> object. </returns>
         public static SecurityInsightsAlertRuleActionResource GetSecurityInsightsAlertRuleActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsAlertRuleActionResource.ValidateResourceId(id);
-                return new SecurityInsightsAlertRuleActionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsAlertRuleTemplateResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAlertRuleActionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleTemplateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsAlertRuleTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsAlertRuleTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsAlertRuleTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleTemplateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleTemplateResource"/> object. </returns>
         public static SecurityInsightsAlertRuleTemplateResource GetSecurityInsightsAlertRuleTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsAlertRuleTemplateResource>(() =>
-            {
-                SecurityInsightsAlertRuleTemplateResource.ValidateResourceId(id);
-                return new SecurityInsightsAlertRuleTemplateResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsAutomationRuleResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAlertRuleTemplateResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAutomationRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsAutomationRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsAutomationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsAutomationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsAutomationRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsAutomationRuleResource"/> object. </returns>
         public static SecurityInsightsAutomationRuleResource GetSecurityInsightsAutomationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsAutomationRuleResource>(() =>
-            {
-                SecurityInsightsAutomationRuleResource.ValidateResourceId(id);
-                return new SecurityInsightsAutomationRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsBookmarkResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsAutomationRuleResource(id);
+        }
+
         /// <summary>
-        /// Gets an object representing a <see cref="SecurityInsightsBookmarkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityInsightsBookmarkResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBookmarkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource" /> object. </returns>
-        public static SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(this ArmClient client, ResourceIdentifier id)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsEntityResource"/> object. </returns>
+        public static SecurityInsightsEntityResource GetSecurityInsightsEntityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsBookmarkResource>(() =>
-            {
-                SecurityInsightsBookmarkResource.ValidateResourceId(id);
-                return new SecurityInsightsBookmarkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsDataConnectorResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityInsightsDataConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityInsightsDataConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsDataConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource" /> object. </returns>
-        public static SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient<SecurityInsightsDataConnectorResource>(() =>
-            {
-                SecurityInsightsDataConnectorResource.ValidateResourceId(id);
-                return new SecurityInsightsDataConnectorResource(client, id);
-            }
-            );
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsEntityResource(id);
         }
-        #endregion
 
-        #region SecurityInsightsIncidentResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsIncidentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsIncidentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsIncidentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentResource"/> object. </returns>
         public static SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsIncidentResource>(() =>
-            {
-                SecurityInsightsIncidentResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsIncidentCommentResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentResource(id);
+        }
+
         /// <summary>
-        /// Gets an object representing a <see cref="SecurityInsightsIncidentCommentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityInsightsIncidentCommentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentCommentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsBillingStatisticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsBillingStatisticResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBillingStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsBillingStatisticResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentCommentResource" /> object. </returns>
-        public static SecurityInsightsIncidentCommentResource GetSecurityInsightsIncidentCommentResource(this ArmClient client, ResourceIdentifier id)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsBillingStatisticResource"/> object. </returns>
+        public static SecurityInsightsBillingStatisticResource GetSecurityInsightsBillingStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsIncidentCommentResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentCommentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsIncidentRelationResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsBillingStatisticResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsBookmarkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsBookmarkResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBookmarkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsBookmarkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource"/> object. </returns>
+        public static SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsBookmarkResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsBookmarkRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsBookmarkRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBookmarkRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsBookmarkRelationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsBookmarkRelationResource"/> object. </returns>
+        public static SecurityInsightsBookmarkRelationResource GetSecurityInsightsBookmarkRelationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsBookmarkRelationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsEntityRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsEntityRelationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsEntityRelationResource"/> object. </returns>
+        public static SecurityInsightsEntityRelationResource GetSecurityInsightsEntityRelationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsEntityRelationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsIncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsIncidentRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsIncidentRelationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource"/> object. </returns>
         public static SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsIncidentRelationResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentRelationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsSentinelOnboardingStateResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentRelationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsPackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsPackageResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsPackageResource"/> object. </returns>
+        public static SecurityInsightsPackageResource GetSecurityInsightsPackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsPackageResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsProductPackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsProductPackageResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsProductPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsProductPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsProductPackageResource"/> object. </returns>
+        public static SecurityInsightsProductPackageResource GetSecurityInsightsProductPackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsProductPackageResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsProductTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsProductTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsProductTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsProductTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsProductTemplateResource"/> object. </returns>
+        public static SecurityInsightsProductTemplateResource GetSecurityInsightsProductTemplateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsProductTemplateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsTemplateResource"/> object. </returns>
+        public static SecurityInsightsTemplateResource GetSecurityInsightsTemplateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsTemplateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsEntityQueryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityQueryResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsEntityQueryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsEntityQueryResource"/> object. </returns>
+        public static SecurityInsightsEntityQueryResource GetSecurityInsightsEntityQueryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsEntityQueryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsEntityQueryTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityQueryTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityQueryTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsEntityQueryTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsEntityQueryTemplateResource"/> object. </returns>
+        public static SecurityInsightsEntityQueryTemplateResource GetSecurityInsightsEntityQueryTemplateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsEntityQueryTemplateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsFileImportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsFileImportResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsFileImportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsFileImportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsFileImportResource"/> object. </returns>
+        public static SecurityInsightsFileImportResource GetSecurityInsightsFileImportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsFileImportResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsHuntResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsHuntResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsHuntResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsHuntResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsHuntResource"/> object. </returns>
+        public static SecurityInsightsHuntResource GetSecurityInsightsHuntResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsHuntResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsHuntRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsHuntRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsHuntRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsHuntRelationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsHuntRelationResource"/> object. </returns>
+        public static SecurityInsightsHuntRelationResource GetSecurityInsightsHuntRelationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsHuntRelationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsHuntCommentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsHuntCommentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsHuntCommentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsHuntCommentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsHuntCommentResource"/> object. </returns>
+        public static SecurityInsightsHuntCommentResource GetSecurityInsightsHuntCommentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsHuntCommentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsIncidentCommentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsIncidentCommentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentCommentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsIncidentCommentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentCommentResource"/> object. </returns>
+        public static SecurityInsightsIncidentCommentResource GetSecurityInsightsIncidentCommentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentCommentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsIncidentTaskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsIncidentTaskResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsIncidentTaskResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentTaskResource"/> object. </returns>
+        public static SecurityInsightsIncidentTaskResource GetSecurityInsightsIncidentTaskResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsIncidentTaskResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsMetadataResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsMetadataResource"/> object. </returns>
+        public static SecurityInsightsMetadataResource GetSecurityInsightsMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsOfficeConsentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsOfficeConsentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsOfficeConsentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsOfficeConsentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsOfficeConsentResource"/> object. </returns>
+        public static SecurityInsightsOfficeConsentResource GetSecurityInsightsOfficeConsentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsOfficeConsentResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsSentinelOnboardingStateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsSentinelOnboardingStateResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsSentinelOnboardingStateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsSentinelOnboardingStateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsSentinelOnboardingStateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsSentinelOnboardingStateResource"/> object. </returns>
         public static SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsSentinelOnboardingStateResource>(() =>
-            {
-                SecurityInsightsSentinelOnboardingStateResource.ValidateResourceId(id);
-                return new SecurityInsightsSentinelOnboardingStateResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityMLAnalyticsSettingResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsSentinelOnboardingStateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsRecommendationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsRecommendationResource"/> object. </returns>
+        public static SecurityInsightsRecommendationResource GetSecurityInsightsRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsRecommendationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityMLAnalyticsSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityMLAnalyticsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityMLAnalyticsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityMLAnalyticsSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource"/> object. </returns>
         public static SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityMLAnalyticsSettingResource>(() =>
-            {
-                SecurityMLAnalyticsSettingResource.ValidateResourceId(id);
-                return new SecurityMLAnalyticsSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsThreatIntelligenceIndicatorResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityMLAnalyticsSettingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsSettingResource"/> object. </returns>
+        public static SecurityInsightsSettingResource GetSecurityInsightsSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsSettingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsSourceControlResource"/> object. </returns>
+        public static SecurityInsightsSourceControlResource GetSecurityInsightsSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsSourceControlResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsThreatIntelligenceIndicatorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsThreatIntelligenceIndicatorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> object. </returns>
         public static SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsThreatIntelligenceIndicatorResource>(() =>
-            {
-                SecurityInsightsThreatIntelligenceIndicatorResource.ValidateResourceId(id);
-                return new SecurityInsightsThreatIntelligenceIndicatorResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsWatchlistResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsThreatIntelligenceIndicatorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TriggeredAnalyticsRuleRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TriggeredAnalyticsRuleRunResource.CreateResourceIdentifier" /> to create a <see cref="TriggeredAnalyticsRuleRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetTriggeredAnalyticsRuleRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TriggeredAnalyticsRuleRunResource"/> object. </returns>
+        public static TriggeredAnalyticsRuleRunResource GetTriggeredAnalyticsRuleRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetTriggeredAnalyticsRuleRunResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsWatchlistResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsWatchlistResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsWatchlistResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsWatchlistResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsWatchlistResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsWatchlistResource"/> object. </returns>
         public static SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SecurityInsightsWatchlistResource>(() =>
-            {
-                SecurityInsightsWatchlistResource.ValidateResourceId(id);
-                return new SecurityInsightsWatchlistResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SecurityInsightsWatchlistItemResource
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsWatchlistResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsWatchlistItemResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityInsightsWatchlistItemResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsWatchlistItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsWatchlistItemResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsWatchlistItemResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsWatchlistItemResource"/> object. </returns>
         public static SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsWatchlistItemResource.ValidateResourceId(id);
-                return new SecurityInsightsWatchlistItemResource(client, id);
-            }
-            );
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsWatchlistItemResource(id);
         }
-        #endregion
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceManagerAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceManagerAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceManagerAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetWorkspaceManagerAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceManagerAssignmentResource"/> object. </returns>
+        public static WorkspaceManagerAssignmentResource GetWorkspaceManagerAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetWorkspaceManagerAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceManagerAssignmentJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceManagerAssignmentJobResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceManagerAssignmentJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetWorkspaceManagerAssignmentJobResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceManagerAssignmentJobResource"/> object. </returns>
+        public static WorkspaceManagerAssignmentJobResource GetWorkspaceManagerAssignmentJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetWorkspaceManagerAssignmentJobResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceManagerConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceManagerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceManagerConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetWorkspaceManagerConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceManagerConfigurationResource"/> object. </returns>
+        public static WorkspaceManagerConfigurationResource GetWorkspaceManagerConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetWorkspaceManagerConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceManagerGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceManagerGroupResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceManagerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetWorkspaceManagerGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceManagerGroupResource"/> object. </returns>
+        public static WorkspaceManagerGroupResource GetWorkspaceManagerGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetWorkspaceManagerGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceManagerMemberResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceManagerMemberResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceManagerMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetWorkspaceManagerMemberResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceManagerMemberResource"/> object. </returns>
+        public static WorkspaceManagerMemberResource GetWorkspaceManagerMemberResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetWorkspaceManagerMemberResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsDataConnectorDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsDataConnectorDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsDataConnectorDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsDataConnectorDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> object. </returns>
+        public static SecurityInsightsDataConnectorDefinitionResource GetSecurityInsightsDataConnectorDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsDataConnectorDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsDataConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsDataConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsDataConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetSecurityInsightsDataConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource"/> object. </returns>
+        public static SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetSecurityInsightsDataConnectorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsWorkspaceSecurityInsightsResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetOperationalInsightsWorkspaceSecurityInsightsResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> object. </returns>
+        public static OperationalInsightsWorkspaceSecurityInsightsResource GetOperationalInsightsWorkspaceSecurityInsightsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSecurityInsightsArmClient(client).GetOperationalInsightsWorkspaceSecurityInsightsResource(id);
+        }
+
+        /// <summary>
+        /// Get geodata for a single IP address
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPGeodata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsResourceGroupResource.GetIPGeodatum(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipAddress"/> is null. </exception>
+        public static async Task<Response<EnrichmentIPGeodata>> GetIPGeodatumAsync(this ResourceGroupResource resourceGroupResource, string ipAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSecurityInsightsResourceGroupResource(resourceGroupResource).GetIPGeodatumAsync(ipAddress, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get geodata for a single IP address
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPGeodata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsResourceGroupResource.GetIPGeodatum(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipAddress"/> is null. </exception>
+        public static Response<EnrichmentIPGeodata> GetIPGeodatum(this ResourceGroupResource resourceGroupResource, string ipAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSecurityInsightsResourceGroupResource(resourceGroupResource).GetIPGeodatum(ipAddress, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get whois information for a single domain name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainWhois_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsResourceGroupResource.GetDomainWhoisInformation(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="domain"/> is null. </exception>
+        public static async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSecurityInsightsResourceGroupResource(resourceGroupResource).GetDomainWhoisInformationAsync(domain, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get whois information for a single domain name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainWhois_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityInsightsResourceGroupResource.GetDomainWhoisInformation(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="domain"/> is null. </exception>
+        public static Response<EnrichmentDomainWhois> GetDomainWhoisInformation(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSecurityInsightsResourceGroupResource(resourceGroupResource).GetDomainWhoisInformation(domain, cancellationToken);
+        }
     }
 }

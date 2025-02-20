@@ -5,32 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RouteConfiguration : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownRouteConfiguration))]
+    public partial class RouteConfiguration : IUtf8JsonSerializable, IJsonModel<RouteConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RouteConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static RouteConfiguration DeserializeRouteConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        RouteConfiguration IJsonModel<RouteConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteConfiguration(document.RootElement, options);
+        }
+
+        internal static RouteConfiguration DeserializeRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration": return ForwardingConfiguration.DeserializeForwardingConfiguration(element);
-                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element);
+                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration": return ForwardingConfiguration.DeserializeForwardingConfiguration(element, options);
+                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element, options);
                 }
             }
-            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element);
+            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element, options);
         }
+
+        BinaryData IPersistableModel<RouteConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RouteConfiguration IPersistableModel<RouteConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

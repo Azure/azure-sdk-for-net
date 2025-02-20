@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabServicesSkuTier ToLabServicesSkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return LabServicesSkuTier.Free;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return LabServicesSkuTier.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return LabServicesSkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return LabServicesSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return LabServicesSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return LabServicesSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return LabServicesSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return LabServicesSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabServicesSkuTier value.");
         }
     }

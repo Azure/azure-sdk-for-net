@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
+                writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
             if (Optional.IsDefined(Focus))
             {
-                writer.WritePropertyName("focus");
+                writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,27 +30,46 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisOperationEventBase DeserializeSpatialAnalysisOperationEventBase(JsonElement element)
         {
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string threshold = default;
+            SpatialAnalysisOperationFocus? focus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("focus"))
+                if (property.NameEquals("focus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     focus = new SpatialAnalysisOperationFocus(property.Value.GetString());
                     continue;
                 }
             }
-            return new SpatialAnalysisOperationEventBase(threshold.Value, Optional.ToNullable(focus));
+            return new SpatialAnalysisOperationEventBase(threshold, focus);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpatialAnalysisOperationEventBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisOperationEventBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

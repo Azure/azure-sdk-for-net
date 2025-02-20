@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </summary>
+    /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the 'Deny' or 'Disabled' policy is configured. </summary>
     public readonly partial struct DoubleEncryptionStatus : IEquatable<DoubleEncryptionStatus>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DoubleEncryptionStatus"/> values are not the same. </summary>
         public static bool operator !=(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DoubleEncryptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DoubleEncryptionStatus"/>. </summary>
         public static implicit operator DoubleEncryptionStatus(string value) => new DoubleEncryptionStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

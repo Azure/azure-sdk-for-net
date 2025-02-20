@@ -10,19 +10,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Options for changing video publishing behavior on the video sink and output video. </summary>
     public partial class VideoPublishingOptions
     {
-        /// <summary> Initializes a new instance of VideoPublishingOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoPublishingOptions"/>. </summary>
         public VideoPublishingOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of VideoPublishingOptions. </summary>
-        /// <param name="enableVideoPreviewImage"> When set to &apos;true&apos; the video will publish preview images. Default is &apos;false&apos;. </param>
+        /// <summary> Initializes a new instance of <see cref="VideoPublishingOptions"/>. </summary>
+        /// <param name="enableVideoPreviewImage"> When set to 'true' the video will publish preview images. Default is 'false'. </param>
         internal VideoPublishingOptions(string enableVideoPreviewImage)
         {
             EnableVideoPreviewImage = enableVideoPreviewImage;
         }
 
-        /// <summary> When set to &apos;true&apos; the video will publish preview images. Default is &apos;false&apos;. </summary>
+        /// <summary> When set to 'true' the video will publish preview images. Default is 'false'. </summary>
         public string EnableVideoPreviewImage { get; set; }
     }
 }

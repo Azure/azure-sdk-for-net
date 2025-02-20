@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Get notifications on new alerts. </summary>
         public static SecurityAlertNotificationState On { get; } = new SecurityAlertNotificationState(OnValue);
-        /// <summary> Don&apos;t get notifications on new alerts. </summary>
+        /// <summary> Don't get notifications on new alerts. </summary>
         public static SecurityAlertNotificationState Off { get; } = new SecurityAlertNotificationState(OffValue);
         /// <summary> Determines if two <see cref="SecurityAlertNotificationState"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertNotificationState left, SecurityAlertNotificationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertNotificationState"/> values are not the same. </summary>
         public static bool operator !=(SecurityAlertNotificationState left, SecurityAlertNotificationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAlertNotificationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertNotificationState"/>. </summary>
         public static implicit operator SecurityAlertNotificationState(string value) => new SecurityAlertNotificationState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

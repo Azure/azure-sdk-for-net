@@ -8,12 +8,17 @@ azure-arm: true
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7168ecde052e9797d31d74c40ad00ac68c74ec6a/specification/communication/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5a281cf0d538de6dad0c70eda7ee901c60a11e6b/specification/communication/resource-manager/readme.md#tag-package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
 override-operation-name:
   CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability
@@ -29,7 +34,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -70,5 +75,13 @@ rename-mapping:
   DnsRecord.ttl: TimeToLiveInSeconds
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
+  ProvisioningState: CommunicationServiceProvisioningState
+  SuppressionListResource.properties.createdTimeStamp: -|date-time
+  SuppressionListResource.properties.lastUpdatedTimeStamp: -|date-time
 
+directive:
+ - from: types.json
+   where: $.parameters.SubscriptionIdParameter
+   transform: >
+     delete $["format"];
 ```

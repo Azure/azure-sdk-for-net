@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,43 +14,52 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerLimits DeserializeSearchIndexerLimits(JsonElement element)
         {
-            Optional<TimeSpan> maxRunTime = default;
-            Optional<long> maxDocumentExtractionSize = default;
-            Optional<long> maxDocumentContentCharactersToExtract = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TimeSpan? maxRunTime = default;
+            long? maxDocumentExtractionSize = default;
+            long? maxDocumentContentCharactersToExtract = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxRunTime"))
+                if (property.NameEquals("maxRunTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRunTime = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("maxDocumentExtractionSize"))
+                if (property.NameEquals("maxDocumentExtractionSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDocumentExtractionSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxDocumentContentCharactersToExtract"))
+                if (property.NameEquals("maxDocumentContentCharactersToExtract"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDocumentContentCharactersToExtract = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SearchIndexerLimits(Optional.ToNullable(maxRunTime), Optional.ToNullable(maxDocumentExtractionSize), Optional.ToNullable(maxDocumentContentCharactersToExtract));
+            return new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerLimits FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerLimits(document.RootElement);
         }
     }
 }

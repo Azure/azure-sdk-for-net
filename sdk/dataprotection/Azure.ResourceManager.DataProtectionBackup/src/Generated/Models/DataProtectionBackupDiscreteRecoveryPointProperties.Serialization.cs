@@ -6,145 +6,258 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDiscreteRecoveryPointProperties : IUtf8JsonSerializable
+    public partial class DataProtectionBackupDiscreteRecoveryPointProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsCollectionDefined(RecoveryPointDataStoresDetails))
             {
-                writer.WritePropertyName("recoveryPointDataStoresDetails");
+                writer.WritePropertyName("recoveryPointDataStoresDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointDataStoresDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("recoveryPointTime");
+            writer.WritePropertyName("recoveryPointTime"u8);
             writer.WriteStringValue(RecoverOn, "O");
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsDefined(PolicyVersion))
             {
-                writer.WritePropertyName("policyVersion");
+                writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
             if (Optional.IsDefined(RecoveryPointId))
             {
-                writer.WritePropertyName("recoveryPointId");
+                writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
             if (Optional.IsDefined(RecoveryPointType))
             {
-                writer.WritePropertyName("recoveryPointType");
+                writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
             if (Optional.IsDefined(RetentionTagName))
             {
-                writer.WritePropertyName("retentionTagName");
+                writer.WritePropertyName("retentionTagName"u8);
                 writer.WriteStringValue(RetentionTagName);
             }
             if (Optional.IsDefined(RetentionTagVersion))
             {
-                writer.WritePropertyName("retentionTagVersion");
+                writer.WritePropertyName("retentionTagVersion"u8);
                 writer.WriteStringValue(RetentionTagVersion);
             }
-            writer.WritePropertyName("objectType");
-            writer.WriteStringValue(ObjectType);
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(RecoveryPointState))
+            {
+                writer.WritePropertyName("recoveryPointState"u8);
+                writer.WriteStringValue(RecoveryPointState.Value.ToString());
+            }
         }
 
-        internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element)
+        DataProtectionBackupDiscreteRecoveryPointProperties IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> friendlyName = default;
-            Optional<IList<RecoveryPointDataStoreDetail>> recoveryPointDataStoresDetails = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string friendlyName = default;
+            IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default;
             DateTimeOffset recoveryPointTime = default;
-            Optional<string> policyName = default;
-            Optional<string> policyVersion = default;
-            Optional<string> recoveryPointId = default;
-            Optional<string> recoveryPointType = default;
-            Optional<string> retentionTagName = default;
-            Optional<string> retentionTagVersion = default;
+            string policyName = default;
+            string policyVersion = default;
+            string recoveryPointId = default;
+            string recoveryPointType = default;
+            string retentionTagName = default;
+            string retentionTagVersion = default;
+            DateTimeOffset? expiryTime = default;
+            DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointDataStoresDetails"))
+                if (property.NameEquals("recoveryPointDataStoresDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecoveryPointDataStoreDetail> array = new List<RecoveryPointDataStoreDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointDataStoreDetail.DeserializeRecoveryPointDataStoreDetail(item));
+                        array.Add(RecoveryPointDataStoreDetail.DeserializeRecoveryPointDataStoreDetail(item, options));
                     }
                     recoveryPointDataStoresDetails = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyVersion"))
+                if (property.NameEquals("policyVersion"u8))
                 {
                     policyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"))
+                if (property.NameEquals("recoveryPointId"u8))
                 {
                     recoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     recoveryPointType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionTagName"))
+                if (property.NameEquals("retentionTagName"u8))
                 {
                     retentionTagName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionTagVersion"))
+                if (property.NameEquals("retentionTagVersion"u8))
                 {
                     retentionTagVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("expiryTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("recoveryPointState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPointState = new DataProtectionBackupRecoveryPointCompletionState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(
+                objectType,
+                serializedAdditionalRawData,
+                friendlyName,
+                recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>(),
+                recoveryPointTime,
+                policyName,
+                policyVersion,
+                recoveryPointId,
+                recoveryPointType,
+                retentionTagName,
+                retentionTagVersion,
+                expiryTime,
+                recoveryPointState);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataProtectionBackupDiscreteRecoveryPointProperties IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

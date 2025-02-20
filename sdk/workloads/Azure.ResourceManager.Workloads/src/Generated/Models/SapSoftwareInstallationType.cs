@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.Workloads.Models
 
         private const string ServiceInitiatedValue = "ServiceInitiated";
         private const string SapInstallWithoutOSConfigValue = "SAPInstallWithoutOSConfig";
+        private const string ExternalValue = "External";
 
         /// <summary> ServiceInitiated. </summary>
         public static SapSoftwareInstallationType ServiceInitiated { get; } = new SapSoftwareInstallationType(ServiceInitiatedValue);
         /// <summary> SAPInstallWithoutOSConfig. </summary>
         public static SapSoftwareInstallationType SapInstallWithoutOSConfig { get; } = new SapSoftwareInstallationType(SapInstallWithoutOSConfigValue);
+        /// <summary> External. </summary>
+        public static SapSoftwareInstallationType External { get; } = new SapSoftwareInstallationType(ExternalValue);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are the same. </summary>
         public static bool operator ==(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are not the same. </summary>
         public static bool operator !=(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapSoftwareInstallationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapSoftwareInstallationType"/>. </summary>
         public static implicit operator SapSoftwareInstallationType(string value) => new SapSoftwareInstallationType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

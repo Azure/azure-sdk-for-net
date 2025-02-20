@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,20 +15,23 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static CopyResult DeserializeCopyResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid modelId = default;
-            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
@@ -41,7 +43,15 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new CopyResult(modelId, Optional.ToList(errors));
+            return new CopyResult(modelId, errors ?? new ChangeTrackingList<FormRecognizerError>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopyResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyResult(document.RootElement);
         }
     }
 }

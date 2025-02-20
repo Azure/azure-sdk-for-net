@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.BotService.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.BotService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15-preview";
+            _apiVersion = apiVersion ?? "2022-09-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateSignInUrlRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/createEmailSignInUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSignInUrlRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -65,7 +79,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CreateEmailSignInUrlResponse>> CreateSignInUrlAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<BotCreateEmailSignInUriResult>> CreateSignInUrlAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +91,9 @@ namespace Azure.ResourceManager.BotService
             {
                 case 200:
                     {
-                        CreateEmailSignInUrlResponse value = default;
+                        BotCreateEmailSignInUriResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateEmailSignInUrlResponse.DeserializeCreateEmailSignInUrlResponse(document.RootElement);
+                        value = BotCreateEmailSignInUriResult.DeserializeBotCreateEmailSignInUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +108,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CreateEmailSignInUrlResponse> CreateSignInUrl(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<BotCreateEmailSignInUriResult> CreateSignInUrl(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +120,9 @@ namespace Azure.ResourceManager.BotService
             {
                 case 200:
                     {
-                        CreateEmailSignInUrlResponse value = default;
+                        BotCreateEmailSignInUriResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateEmailSignInUrlResponse.DeserializeCreateEmailSignInUrlResponse(document.RootElement);
+                        value = BotCreateEmailSignInUriResult.DeserializeBotCreateEmailSignInUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

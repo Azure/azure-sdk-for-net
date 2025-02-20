@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </summary>
+    /// <summary> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </summary>
     public readonly partial struct InstancePoolLicenseType : IEquatable<InstancePoolLicenseType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(InstancePoolLicenseType left, InstancePoolLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstancePoolLicenseType"/> values are not the same. </summary>
         public static bool operator !=(InstancePoolLicenseType left, InstancePoolLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InstancePoolLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InstancePoolLicenseType"/>. </summary>
         public static implicit operator InstancePoolLicenseType(string value) => new InstancePoolLicenseType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

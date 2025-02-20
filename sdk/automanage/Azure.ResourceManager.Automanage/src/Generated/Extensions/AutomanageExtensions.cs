@@ -8,9 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage.Mocking;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,145 +18,500 @@ namespace Azure.ResourceManager.Automanage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Automanage. </summary>
     public static partial class AutomanageExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static MockableAutomanageArmClient GetMockableAutomanageArmClient(ArmClient client)
         {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+            return client.GetCachedClient(client0 => new MockableAutomanageArmClient(client0));
         }
 
-        /// <summary> Gets a collection of BestPracticeResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BestPracticeResources and their operations over a BestPracticeResource. </returns>
-        public static BestPracticeCollection GetBestPractices(this TenantResource tenantResource)
+        private static MockableAutomanageResourceGroupResource GetMockableAutomanageResourceGroupResource(ArmResource resource)
         {
-            return GetExtensionClient(tenantResource).GetBestPractices();
+            return resource.GetCachedClient(client => new MockableAutomanageResourceGroupResource(client, resource.Id));
+        }
+
+        private static MockableAutomanageSubscriptionResource GetMockableAutomanageSubscriptionResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableAutomanageSubscriptionResource(client, resource.Id));
+        }
+
+        private static MockableAutomanageTenantResource GetMockableAutomanageTenantResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableAutomanageTenantResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Get information about a Automanage best practice
+        /// Gets a collection of AutomanageVmConfigurationProfileAssignmentResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Compute/virtualMachines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> An object representing collection of AutomanageVmConfigurationProfileAssignmentResources and their operations over a AutomanageVmConfigurationProfileAssignmentResource. </returns>
+        public static AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignments(scope);
+        }
+
+        /// <summary>
+        /// Get information about a configuration profile assignment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BestPractices_Get</description>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="bestPracticeName"> The Automanage best practice name. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Compute/virtualMachines. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BestPracticeResource>> GetBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageVmConfigurationProfileAssignmentResource>> GetAutomanageVmConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get information about a Automanage best practice
+        /// Get information about a configuration profile assignment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BestPractices_Get</description>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="bestPracticeName"> The Automanage best practice name. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Compute/virtualMachines. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<BestPracticeResource> GetBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageVmConfigurationProfileAssignmentResource> GetAutomanageVmConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBestPractices().Get(bestPracticeName, cancellationToken);
-        }
+            Argument.AssertNotNull(client, nameof(client));
 
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
-            {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets an object representing a ServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipal(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetServicePrincipal();
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of configuration profile within a subscription
-        /// <list type="bullet">
+        /// Gets a collection of AutomanageHcrpConfigurationProfileAssignmentResources in the ArmClient.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationProfiles_ListBySubscription</description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationProfileResource> GetConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.HybridCompute/machines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> An object representing collection of AutomanageHcrpConfigurationProfileAssignmentResources and their operations over a AutomanageHcrpConfigurationProfileAssignmentResource. </returns>
+        public static AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfilesAsync(cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignments(scope);
         }
 
         /// <summary>
-        /// Retrieve a list of configuration profile within a subscription
+        /// Get information about a configuration profile assignment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// <description>ConfigurationProfileHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.HybridCompute/machines. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationProfileResource> GetConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AutomanageHcrpConfigurationProfileAssignmentResource>> GetAutomanageHcrpConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfiles(cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        /// <summary>
+        /// Get information about a configuration profile assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.HybridCompute/machines. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<AutomanageHcrpConfigurationProfileAssignmentResource> GetAutomanageHcrpConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of AutomanageHciClusterConfigurationProfileAssignmentResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.AzureStackHci/clusters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> An object representing collection of AutomanageHciClusterConfigurationProfileAssignmentResources and their operations over a AutomanageHciClusterConfigurationProfileAssignmentResource. </returns>
+        public static AutomanageHciClusterConfigurationProfileAssignmentCollection GetAutomanageHciClusterConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignments(scope);
+        }
+
+        /// <summary>
+        /// Get information about a configuration profile assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.AzureStackHci/clusters. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentResource>> GetAutomanageHciClusterConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get information about a configuration profile assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.AzureStackHci/clusters. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<AutomanageHciClusterConfigurationProfileAssignmentResource> GetAutomanageHciClusterConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageBestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageBestPracticeResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageBestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageBestPracticeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageBestPracticeResource"/> object. </returns>
+        public static AutomanageBestPracticeResource GetAutomanageBestPracticeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageBestPracticeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageConfigurationProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource"/> object. </returns>
+        public static AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageConfigurationProfileResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageConfigurationProfileVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource"/> object. </returns>
+        public static AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageConfigurationProfileVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> object. </returns>
+        public static AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> object. </returns>
+        public static AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> object. </returns>
+        public static AutomanageHciClusterConfigurationProfileAssignmentResource GetAutomanageHciClusterConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> object. </returns>
+        public static AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentReportResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> object. </returns>
+        public static AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentReportResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> object. </returns>
+        public static AutomanageHciClusterConfigurationProfileAssignmentReportResource GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of AutomanageConfigurationProfileResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageResourceGroupResource.GetAutomanageConfigurationProfiles()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConfigurationProfileResources and their operations over a ConfigurationProfileResource. </returns>
-        public static ConfigurationProfileCollection GetConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
+        public static AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationProfiles();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfiles();
         }
 
         /// <summary>
@@ -171,17 +525,31 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageConfigurationProfileResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageResourceGroupResource.GetAutomanageConfigurationProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configurationProfileName"> The configuration profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configurationProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationProfileResource>> GetConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConfigurationProfiles().GetAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfileAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,357 +563,322 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageConfigurationProfileResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageResourceGroupResource.GetAutomanageConfigurationProfile(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configurationProfileName"> The configuration profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configurationProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationProfileResource> GetConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConfigurationProfiles().Get(configurationProfileName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfile(configurationProfileName, cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Retrieve a list of configuration profile within a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>reports_ListByConfigurationProfileAssignments</description>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageConfigurationProfileResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetAutomanageConfigurationProfiles(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Report> GetReportsByConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetExtensionClient(resourceGroupResource).GetReportsByConfigurationProfileAssignmentsAsync(vmName, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Retrieve a list of configuration profile within a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>reports_ListByConfigurationProfileAssignments</description>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageConfigurationProfileResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetAutomanageConfigurationProfiles(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Report> GetReportsByConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetExtensionClient(resourceGroupResource).GetReportsByConfigurationProfileAssignments(vmName, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HCRPReports_ListByConfigurationProfileAssignments</description>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipals(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="machineName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Report> GetHCRPReportsByConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetExtensionClient(resourceGroupResource).GetHCRPReportsByConfigurationProfileAssignmentsAsync(machineName, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HCRPReports_ListByConfigurationProfileAssignments</description>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipals(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="machineName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Report> GetHCRPReportsByConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetExtensionClient(resourceGroupResource).GetHCRPReportsByConfigurationProfileAssignments(machineName, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipals(cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HCIReports_ListByConfigurationProfileAssignments</description>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipal(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="clusterName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Report> GetHCIReportsByConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetExtensionClient(resourceGroupResource).GetHCIReportsByConfigurationProfileAssignmentsAsync(clusterName, configurationProfileAssignmentName, cancellationToken);
+            return await GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HCIReports_ListByConfigurationProfileAssignments</description>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipal(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="clusterName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Report> GetHCIReportsByConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AutomanageServicePrincipalData> GetServicePrincipal(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetExtensionClient(resourceGroupResource).GetHCIReportsByConfigurationProfileAssignments(clusterName, configurationProfileAssignmentName, cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            }
-            );
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
-        {
-            return armResource.GetCachedClient((client) =>
-            {
-                return new ArmResourceExtensionClient(client, armResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of ConfigurationProfileAssignmentResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ConfigurationProfileAssignmentResources and their operations over a ConfigurationProfileAssignmentResource. </returns>
-        public static ConfigurationProfileAssignmentCollection GetConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetExtensionClient(client, scope).GetConfigurationProfileAssignments();
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipal(cancellationToken);
         }
 
         /// <summary>
-        /// Get information about a configuration profile assignment
+        /// Gets a collection of AutomanageBestPracticeResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageTenantResource.GetAutomanageBestPractices()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
+        public static AutomanageBestPracticeCollection GetAutomanageBestPractices(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPractices();
+        }
+
+        /// <summary>
+        /// Get information about a Automanage best practice
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageBestPracticeResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageTenantResource.GetAutomanageBestPracticeAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationProfileAssignmentResource>> GetConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return await client.GetConfigurationProfileAssignments(scope).GetAsync(configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get information about a configuration profile assignment
+        /// Get information about a Automanage best practice
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageBestPracticeResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageTenantResource.GetAutomanageBestPractice(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageBestPracticeResource> GetAutomanageBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return client.GetConfigurationProfileAssignments(scope).Get(configurationProfileAssignmentName, cancellationToken);
-        }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-        #region BestPracticeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="BestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BestPracticeResource.CreateResourceIdentifier" /> to create a <see cref="BestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BestPracticeResource" /> object. </returns>
-        public static BestPracticeResource GetBestPracticeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                BestPracticeResource.ValidateResourceId(id);
-                return new BestPracticeResource(client, id);
-            }
-            );
+            return GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPractice(bestPracticeName, cancellationToken);
         }
-        #endregion
-
-        #region ConfigurationProfileResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileResource" /> object. </returns>
-        public static ConfigurationProfileResource GetConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConfigurationProfileResource.ValidateResourceId(id);
-                return new ConfigurationProfileResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConfigurationProfileVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileVersionResource" /> object. </returns>
-        public static ConfigurationProfileVersionResource GetConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConfigurationProfileVersionResource.ValidateResourceId(id);
-                return new ConfigurationProfileVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConfigurationProfileAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileAssignmentResource" /> object. </returns>
-        public static ConfigurationProfileAssignmentResource GetConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConfigurationProfileAssignmentResource.ValidateResourceId(id);
-                return new ConfigurationProfileAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServicePrincipalResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServicePrincipalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePrincipalResource.CreateResourceIdentifier" /> to create a <see cref="ServicePrincipalResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipalResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServicePrincipalResource.ValidateResourceId(id);
-                return new ServicePrincipalResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

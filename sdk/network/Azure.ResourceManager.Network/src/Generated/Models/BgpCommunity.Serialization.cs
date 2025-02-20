@@ -5,35 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpCommunity : IUtf8JsonSerializable
+    public partial class BgpCommunity : IUtf8JsonSerializable, IJsonModel<BgpCommunity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpCommunity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BgpCommunity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ServiceSupportedRegion))
             {
-                writer.WritePropertyName("serviceSupportedRegion");
+                writer.WritePropertyName("serviceSupportedRegion"u8);
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
             if (Optional.IsDefined(CommunityName))
             {
-                writer.WritePropertyName("communityName");
+                writer.WritePropertyName("communityName"u8);
                 writer.WriteStringValue(CommunityName);
             }
             if (Optional.IsDefined(CommunityValue))
             {
-                writer.WritePropertyName("communityValue");
+                writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
             if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
-                writer.WritePropertyName("communityPrefixes");
+                writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CommunityPrefixes)
                 {
@@ -43,47 +61,80 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(IsAuthorizedToUse))
             {
-                writer.WritePropertyName("isAuthorizedToUse");
+                writer.WritePropertyName("isAuthorizedToUse"u8);
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
             if (Optional.IsDefined(ServiceGroup))
             {
-                writer.WritePropertyName("serviceGroup");
+                writer.WritePropertyName("serviceGroup"u8);
                 writer.WriteStringValue(ServiceGroup);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static BgpCommunity DeserializeBgpCommunity(JsonElement element)
+        BgpCommunity IJsonModel<BgpCommunity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> serviceSupportedRegion = default;
-            Optional<string> communityName = default;
-            Optional<string> communityValue = default;
-            Optional<IList<string>> communityPrefixes = default;
-            Optional<bool> isAuthorizedToUse = default;
-            Optional<string> serviceGroup = default;
+            var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpCommunity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBgpCommunity(document.RootElement, options);
+        }
+
+        internal static BgpCommunity DeserializeBgpCommunity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string serviceSupportedRegion = default;
+            string communityName = default;
+            string communityValue = default;
+            IList<string> communityPrefixes = default;
+            bool? isAuthorizedToUse = default;
+            string serviceGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceSupportedRegion"))
+                if (property.NameEquals("serviceSupportedRegion"u8))
                 {
                     serviceSupportedRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityName"))
+                if (property.NameEquals("communityName"u8))
                 {
                     communityName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityValue"))
+                if (property.NameEquals("communityValue"u8))
                 {
                     communityValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityPrefixes"))
+                if (property.NameEquals("communityPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -94,23 +145,65 @@ namespace Azure.ResourceManager.Network.Models
                     communityPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("isAuthorizedToUse"))
+                if (property.NameEquals("isAuthorizedToUse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAuthorizedToUse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serviceGroup"))
+                if (property.NameEquals("serviceGroup"u8))
                 {
                     serviceGroup = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BgpCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BgpCommunity(
+                serviceSupportedRegion,
+                communityName,
+                communityValue,
+                communityPrefixes ?? new ChangeTrackingList<string>(),
+                isAuthorizedToUse,
+                serviceGroup,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BgpCommunity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BgpCommunity IPersistableModel<BgpCommunity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBgpCommunity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BgpCommunity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

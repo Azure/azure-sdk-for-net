@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static bool operator ==(DigestConfigState left, DigestConfigState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigestConfigState"/> values are not the same. </summary>
         public static bool operator !=(DigestConfigState left, DigestConfigState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DigestConfigState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DigestConfigState"/>. </summary>
         public static implicit operator DigestConfigState(string value) => new DigestConfigState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

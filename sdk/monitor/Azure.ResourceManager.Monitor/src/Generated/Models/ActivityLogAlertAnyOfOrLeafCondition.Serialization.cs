@@ -5,88 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ActivityLogAlertAnyOfOrLeafCondition : IUtf8JsonSerializable
+    public partial class ActivityLogAlertAnyOfOrLeafCondition : IUtf8JsonSerializable, IJsonModel<ActivityLogAlertAnyOfOrLeafCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActivityLogAlertAnyOfOrLeafCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ActivityLogAlertAnyOfOrLeafCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AnyOf))
-            {
-                writer.WritePropertyName("anyOf");
-                writer.WriteStartArray();
-                foreach (var item in AnyOf)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Field))
-            {
-                writer.WritePropertyName("field");
-                writer.WriteStringValue(Field);
-            }
-            if (Optional.IsDefined(EqualsValue))
-            {
-                writer.WritePropertyName("equals");
-                writer.WriteStringValue(EqualsValue);
-            }
-            if (Optional.IsCollectionDefined(ContainsAny))
-            {
-                writer.WritePropertyName("containsAny");
-                writer.WriteStartArray();
-                foreach (var item in ContainsAny)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ActivityLogAlertAnyOfOrLeafCondition DeserializeActivityLogAlertAnyOfOrLeafCondition(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IList<AlertRuleLeafCondition>> anyOf = default;
-            Optional<string> field = default;
-            Optional<string> @equals = default;
-            Optional<IList<string>> containsAny = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(AnyOf))
+            {
+                writer.WritePropertyName("anyOf"u8);
+                writer.WriteStartArray();
+                foreach (var item in AnyOf)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        ActivityLogAlertAnyOfOrLeafCondition IJsonModel<ActivityLogAlertAnyOfOrLeafCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeActivityLogAlertAnyOfOrLeafCondition(document.RootElement, options);
+        }
+
+        internal static ActivityLogAlertAnyOfOrLeafCondition DeserializeActivityLogAlertAnyOfOrLeafCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<AlertRuleLeafCondition> anyOf = default;
+            string field = default;
+            string @equals = default;
+            IList<string> containsAny = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anyOf"))
+                if (property.NameEquals("anyOf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AlertRuleLeafCondition> array = new List<AlertRuleLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeAlertRuleLeafCondition(item));
+                        array.Add(DeserializeAlertRuleLeafCondition(item, options));
                     }
                     anyOf = array;
                     continue;
                 }
-                if (property.NameEquals("field"))
+                if (property.NameEquals("field"u8))
                 {
                     field = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("equals"))
+                if (property.NameEquals("equals"u8))
                 {
                     @equals = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containsAny"))
+                if (property.NameEquals("containsAny"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -97,8 +113,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     containsAny = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), Optional.ToList(anyOf));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ActivityLogAlertAnyOfOrLeafCondition(field, @equals, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
         }
+
+        BinaryData IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ActivityLogAlertAnyOfOrLeafCondition IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeActivityLogAlertAnyOfOrLeafCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

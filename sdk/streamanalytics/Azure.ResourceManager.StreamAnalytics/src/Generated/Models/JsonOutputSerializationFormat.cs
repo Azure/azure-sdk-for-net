@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. </summary>
+    /// <summary> Specifies the format of the JSON the output will be written in. The currently supported values are 'lineSeparated' indicating the output will be formatted by having each JSON object separated by a new line and 'array' indicating the output will be formatted as an array of JSON objects. </summary>
     public readonly partial struct JsonOutputSerializationFormat : IEquatable<JsonOutputSerializationFormat>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(JsonOutputSerializationFormat left, JsonOutputSerializationFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonOutputSerializationFormat"/> values are not the same. </summary>
         public static bool operator !=(JsonOutputSerializationFormat left, JsonOutputSerializationFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JsonOutputSerializationFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JsonOutputSerializationFormat"/>. </summary>
         public static implicit operator JsonOutputSerializationFormat(string value) => new JsonOutputSerializationFormat(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

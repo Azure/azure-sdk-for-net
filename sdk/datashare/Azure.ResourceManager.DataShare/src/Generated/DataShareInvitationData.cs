@@ -6,21 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    /// <summary> A class representing the DataShareInvitation data model. </summary>
+    /// <summary>
+    /// A class representing the DataShareInvitation data model.
+    /// A Invitation data transfer object.
+    /// </summary>
     public partial class DataShareInvitationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareInvitationData"/>. </summary>
         public DataShareInvitationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +66,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="invitationStatus"> The status of the invitation. </param>
         /// <param name="respondedOn"> The time the recipient responded to the invitation. </param>
         /// <param name="sentOn"> Gets the time at which the invitation was sent. </param>
-        /// <param name="targetActiveDirectoryId"> The target Azure AD Id. Can&apos;t be combined with email. </param>
+        /// <param name="targetActiveDirectoryId"> The target Azure AD Id. Can't be combined with email. </param>
         /// <param name="targetEmail"> The email the invitation is directed to. </param>
         /// <param name="targetObjectId">
         /// The target user or application Id that invitation is being sent to.
@@ -39,7 +75,8 @@ namespace Azure.ResourceManager.DataShare
         /// </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>
         /// <param name="userName"> Name of the user who created the resource. </param>
-        internal DataShareInvitationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, Guid? invitationId, DataShareInvitationStatus? invitationStatus, DateTimeOffset? respondedOn, DateTimeOffset? sentOn, string targetActiveDirectoryId, string targetEmail, string targetObjectId, string userEmail, string userName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareInvitationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, Guid? invitationId, DataShareInvitationStatus? invitationStatus, DateTimeOffset? respondedOn, DateTimeOffset? sentOn, string targetActiveDirectoryId, string targetEmail, string targetObjectId, string userEmail, string userName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExpireOn = expireOn;
             InvitationId = invitationId;
@@ -51,6 +88,7 @@ namespace Azure.ResourceManager.DataShare
             TargetObjectId = targetObjectId;
             UserEmail = userEmail;
             UserName = userName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The expiration date for the invitation and share subscription. </summary>
@@ -63,7 +101,7 @@ namespace Azure.ResourceManager.DataShare
         public DateTimeOffset? RespondedOn { get; }
         /// <summary> Gets the time at which the invitation was sent. </summary>
         public DateTimeOffset? SentOn { get; }
-        /// <summary> The target Azure AD Id. Can&apos;t be combined with email. </summary>
+        /// <summary> The target Azure AD Id. Can't be combined with email. </summary>
         public string TargetActiveDirectoryId { get; set; }
         /// <summary> The email the invitation is directed to. </summary>
         public string TargetEmail { get; set; }

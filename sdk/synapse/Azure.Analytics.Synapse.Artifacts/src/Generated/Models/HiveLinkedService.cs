@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Hive Server linked service. </summary>
     public partial class HiveLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HiveLinkedService. </summary>
-        /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/>. </summary>
+        /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HiveLinkedService(object host, HiveAuthenticationType authenticationType)
@@ -27,14 +26,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Hive";
         }
 
-        /// <summary> Initializes a new instance of HiveLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
+        /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="port"> The TCP port that the Hive server uses to listen for client connections. </param>
         /// <param name="serverType"> The type of Hive server. </param>
         /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer. </param>
@@ -77,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Hive";
         }
 
-        /// <summary> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
+        /// <summary> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
         public object Host { get; set; }
         /// <summary> The TCP port that the Hive server uses to listen for client connections. </summary>
         public object Port { get; set; }

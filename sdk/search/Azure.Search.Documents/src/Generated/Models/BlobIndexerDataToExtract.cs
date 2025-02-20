@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when &quot;imageAction&quot; is set to a value other than &quot;none&quot;.  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </summary>
+    /// <summary> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when "imageAction" is set to a value other than "none".  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </summary>
     public readonly partial struct BlobIndexerDataToExtract : IEquatable<BlobIndexerDataToExtract>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are not the same. </summary>
         public static bool operator !=(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobIndexerDataToExtract"/>. </summary>
         public static implicit operator BlobIndexerDataToExtract(string value) => new BlobIndexerDataToExtract(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

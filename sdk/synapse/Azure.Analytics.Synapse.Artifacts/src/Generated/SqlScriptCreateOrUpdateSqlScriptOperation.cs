@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal SqlScriptCreateOrUpdateSqlScriptOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<SqlScriptResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<SqlScriptResource>(clientDiagnostics, nextLinkOperation, response, "SqlScriptCreateOrUpdateSqlScriptOperation");
+            _operation = new OperationInternal<SqlScriptResource>(nextLinkOperation, clientDiagnostics, response, "SqlScriptCreateOrUpdateSqlScriptOperation");
         }
 
         /// <inheritdoc />

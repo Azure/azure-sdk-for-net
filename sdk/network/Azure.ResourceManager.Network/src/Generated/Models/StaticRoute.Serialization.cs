@@ -5,25 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class StaticRoute : IUtf8JsonSerializable
+    public partial class StaticRoute : IUtf8JsonSerializable, IJsonModel<StaticRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StaticRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StaticRoute)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(AddressPrefixes))
             {
-                writer.WritePropertyName("addressPrefixes");
+                writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddressPrefixes)
                 {
@@ -33,29 +51,62 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(NextHopIPAddress))
             {
-                writer.WritePropertyName("nextHopIpAddress");
+                writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static StaticRoute DeserializeStaticRoute(JsonElement element)
+        StaticRoute IJsonModel<StaticRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> name = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<string> nextHopIPAddress = default;
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StaticRoute)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticRoute(document.RootElement, options);
+        }
+
+        internal static StaticRoute DeserializeStaticRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            IList<string> addressPrefixes = default;
+            string nextHopIPAddress = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressPrefixes"))
+                if (property.NameEquals("addressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,13 +117,49 @@ namespace Azure.ResourceManager.Network.Models
                     addressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("nextHopIpAddress"))
+                if (property.NameEquals("nextHopIpAddress"u8))
                 {
                     nextHopIPAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StaticRoute(name, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIPAddress, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StaticRoute>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StaticRoute)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StaticRoute IPersistableModel<StaticRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStaticRoute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StaticRoute)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StaticRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

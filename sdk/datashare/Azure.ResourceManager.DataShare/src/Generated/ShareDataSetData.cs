@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -13,27 +15,60 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A class representing the ShareDataSet data model.
-    /// Please note <see cref="ShareDataSetData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AdlsGen1FileDataSet"/>, <see cref="AdlsGen1FolderDataSet"/>, <see cref="AdlsGen2FileDataSet"/>, <see cref="AdlsGen2FileSystemDataSet"/>, <see cref="AdlsGen2FolderDataSet"/>, <see cref="BlobDataSet"/>, <see cref="BlobFolderDataSet"/>, <see cref="BlobContainerDataSet"/>, <see cref="KustoClusterDataSet"/>, <see cref="KustoDatabaseDataSet"/>, <see cref="KustoTableDataSet"/>, <see cref="SqlDBTableDataSet"/>, <see cref="SqlDWTableDataSet"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSet"/>.
+    /// A DataSet data transfer object.
     /// Please note <see cref="ShareDataSetData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AdlsGen1FileDataSet"/>, <see cref="AdlsGen1FolderDataSet"/>, <see cref="AdlsGen2FileDataSet"/>, <see cref="AdlsGen2FileSystemDataSet"/>, <see cref="AdlsGen2FolderDataSet"/>, <see cref="BlobDataSet"/>, <see cref="BlobFolderDataSet"/>, <see cref="BlobContainerDataSet"/>, <see cref="KustoClusterDataSet"/>, <see cref="KustoDatabaseDataSet"/>, <see cref="KustoTableDataSet"/>, <see cref="SqlDBTableDataSet"/>, <see cref="SqlDWTableDataSet"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSet"/>.
     /// </summary>
     public partial class ShareDataSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetData"/>. </summary>
         public ShareDataSetData()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
-        internal ShareDataSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareDataSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of data set. </summary>

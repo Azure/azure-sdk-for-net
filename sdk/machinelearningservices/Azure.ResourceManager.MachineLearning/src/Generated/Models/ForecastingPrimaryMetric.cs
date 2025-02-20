@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string R2ScoreValue = "R2Score";
         private const string NormalizedMeanAbsoluteErrorValue = "NormalizedMeanAbsoluteError";
 
-        /// <summary> The Spearman&apos;s rank coefficient of correlation is a non-parametric measure of rank correlation. </summary>
+        /// <summary> The Spearman's rank coefficient of correlation is a non-parametric measure of rank correlation. </summary>
         public static ForecastingPrimaryMetric SpearmanCorrelation { get; } = new ForecastingPrimaryMetric(SpearmanCorrelationValue);
         /// <summary> The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates the comparison between models with different scales. </summary>
         public static ForecastingPrimaryMetric NormalizedRootMeanSquaredError { get; } = new ForecastingPrimaryMetric(NormalizedRootMeanSquaredErrorValue);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ForecastingPrimaryMetric left, ForecastingPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastingPrimaryMetric"/> values are not the same. </summary>
         public static bool operator !=(ForecastingPrimaryMetric left, ForecastingPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ForecastingPrimaryMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastingPrimaryMetric"/>. </summary>
         public static implicit operator ForecastingPrimaryMetric(string value) => new ForecastingPrimaryMetric(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

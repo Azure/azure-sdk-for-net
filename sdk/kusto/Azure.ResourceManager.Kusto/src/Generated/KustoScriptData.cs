@@ -6,21 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoScript data model. </summary>
+    /// <summary>
+    /// A class representing the KustoScript data model.
+    /// Class representing a database script.
+    /// </summary>
     public partial class KustoScriptData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoScriptData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoScriptData"/>. </summary>
         public KustoScriptData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +67,10 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="forceUpdateTag"> A unique string. If changed the script will be applied again. </param>
         /// <param name="shouldContinueOnErrors"> Flag that indicates whether to continue if one of the command fails. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="scriptLevel"> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </param>
+        /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, KustoScriptLevel? scriptLevel, PrincipalPermissionsAction? principalPermissionsAction, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ScriptUri = scriptUri;
             ScriptUriSasToken = scriptUriSasToken;
@@ -39,6 +78,9 @@ namespace Azure.ResourceManager.Kusto
             ForceUpdateTag = forceUpdateTag;
             ShouldContinueOnErrors = shouldContinueOnErrors;
             ProvisioningState = provisioningState;
+            ScriptLevel = scriptLevel;
+            PrincipalPermissionsAction = principalPermissionsAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The url to the KQL script blob file. Must not be used together with scriptContent property. </summary>
@@ -53,5 +95,9 @@ namespace Azure.ResourceManager.Kusto
         public bool? ShouldContinueOnErrors { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
         public KustoProvisioningState? ProvisioningState { get; }
+        /// <summary> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </summary>
+        public KustoScriptLevel? ScriptLevel { get; set; }
+        /// <summary> Indicates if the permissions for the script caller are kept following completion of the script. </summary>
+        public PrincipalPermissionsAction? PrincipalPermissionsAction { get; set; }
     }
 }

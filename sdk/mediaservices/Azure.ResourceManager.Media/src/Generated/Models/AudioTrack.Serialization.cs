@@ -5,46 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioTrack : IUtf8JsonSerializable
+    public partial class AudioTrack : IUtf8JsonSerializable, IJsonModel<AudioTrack>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTrack>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AudioTrack>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AudioTrack)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(LanguageCode))
             {
-                writer.WritePropertyName("languageCode");
+                writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
             if (Optional.IsDefined(HlsSettings))
             {
-                writer.WritePropertyName("hlsSettings");
-                writer.WriteObjectValue(HlsSettings);
+                writer.WritePropertyName("hlsSettings"u8);
+                writer.WriteObjectValue(HlsSettings, options);
             }
             if (Optional.IsDefined(DashSettings))
             {
-                writer.WritePropertyName("dashSettings");
-                writer.WriteObjectValue(DashSettings);
+                writer.WritePropertyName("dashSettings"u8);
+                writer.WriteObjectValue(DashSettings, options);
             }
             if (Optional.IsDefined(Mpeg4TrackId))
             {
                 if (Mpeg4TrackId != null)
                 {
-                    writer.WritePropertyName("mpeg4TrackId");
+                    writer.WritePropertyName("mpeg4TrackId"u8);
                     writer.WriteNumberValue(Mpeg4TrackId.Value);
                 }
                 else
@@ -52,59 +72,79 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("mpeg4TrackId");
                 }
             }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(BitRate))
+            {
+                writer.WritePropertyName("bitRate"u8);
+                writer.WriteNumberValue(BitRate.Value);
+            }
         }
 
-        internal static AudioTrack DeserializeAudioTrack(JsonElement element)
+        AudioTrack IJsonModel<AudioTrack>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> fileName = default;
-            Optional<string> displayName = default;
-            Optional<string> languageCode = default;
-            Optional<HlsSettings> hlsSettings = default;
-            Optional<TrackDashSettings> dashSettings = default;
-            Optional<int?> mpeg4TrackId = default;
-            Optional<int> bitRate = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AudioTrack)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAudioTrack(document.RootElement, options);
+        }
+
+        internal static AudioTrack DeserializeAudioTrack(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string fileName = default;
+            string displayName = default;
+            string languageCode = default;
+            HlsSettings hlsSettings = default;
+            TrackDashSettings dashSettings = default;
+            int? mpeg4TrackId = default;
+            int? bitRate = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     fileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("languageCode"))
+                if (property.NameEquals("languageCode"u8))
                 {
                     languageCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hlsSettings"))
+                if (property.NameEquals("hlsSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dashSettings"))
+                if (property.NameEquals("dashSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mpeg4TrackId"))
+                if (property.NameEquals("mpeg4TrackId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,23 +154,67 @@ namespace Azure.ResourceManager.Media.Models
                     mpeg4TrackId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bitRate"))
+                if (property.NameEquals("bitRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitRate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AudioTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AudioTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName,
+                displayName,
+                languageCode,
+                hlsSettings,
+                dashSettings,
+                mpeg4TrackId,
+                bitRate);
         }
+
+        BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AudioTrack)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AudioTrack IPersistableModel<AudioTrack>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAudioTrack(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AudioTrack)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AudioTrack>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

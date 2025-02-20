@@ -5,35 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2ProtocolSettings : IUtf8JsonSerializable
+    public partial class AS2ProtocolSettings : IUtf8JsonSerializable, IJsonModel<AS2ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AS2ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageConnectionSettings");
-            writer.WriteObjectValue(MessageConnectionSettings);
-            writer.WritePropertyName("acknowledgementConnectionSettings");
-            writer.WriteObjectValue(AcknowledgementConnectionSettings);
-            writer.WritePropertyName("mdnSettings");
-            writer.WriteObjectValue(MdnSettings);
-            writer.WritePropertyName("securitySettings");
-            writer.WriteObjectValue(SecuritySettings);
-            writer.WritePropertyName("validationSettings");
-            writer.WriteObjectValue(ValidationSettings);
-            writer.WritePropertyName("envelopeSettings");
-            writer.WriteObjectValue(EnvelopeSettings);
-            writer.WritePropertyName("errorSettings");
-            writer.WriteObjectValue(ErrorSettings);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AS2ProtocolSettings DeserializeAS2ProtocolSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("messageConnectionSettings"u8);
+            writer.WriteObjectValue(MessageConnectionSettings, options);
+            writer.WritePropertyName("acknowledgementConnectionSettings"u8);
+            writer.WriteObjectValue(AcknowledgementConnectionSettings, options);
+            writer.WritePropertyName("mdnSettings"u8);
+            writer.WriteObjectValue(MdnSettings, options);
+            writer.WritePropertyName("securitySettings"u8);
+            writer.WriteObjectValue(SecuritySettings, options);
+            writer.WritePropertyName("validationSettings"u8);
+            writer.WriteObjectValue(ValidationSettings, options);
+            writer.WritePropertyName("envelopeSettings"u8);
+            writer.WriteObjectValue(EnvelopeSettings, options);
+            writer.WritePropertyName("errorSettings"u8);
+            writer.WriteObjectValue(ErrorSettings, options);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AS2ProtocolSettings IJsonModel<AS2ProtocolSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2ProtocolSettings(document.RootElement, options);
+        }
+
+        internal static AS2ProtocolSettings DeserializeAS2ProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AS2MessageConnectionSettings messageConnectionSettings = default;
             AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings = default;
             AS2MdnSettings mdnSettings = default;
@@ -41,45 +92,91 @@ namespace Azure.ResourceManager.Logic.Models
             AS2ValidationSettings validationSettings = default;
             AS2EnvelopeSettings envelopeSettings = default;
             AS2ErrorSettings errorSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageConnectionSettings"))
+                if (property.NameEquals("messageConnectionSettings"u8))
                 {
-                    messageConnectionSettings = AS2MessageConnectionSettings.DeserializeAS2MessageConnectionSettings(property.Value);
+                    messageConnectionSettings = AS2MessageConnectionSettings.DeserializeAS2MessageConnectionSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("acknowledgementConnectionSettings"))
+                if (property.NameEquals("acknowledgementConnectionSettings"u8))
                 {
-                    acknowledgementConnectionSettings = AS2AcknowledgementConnectionSettings.DeserializeAS2AcknowledgementConnectionSettings(property.Value);
+                    acknowledgementConnectionSettings = AS2AcknowledgementConnectionSettings.DeserializeAS2AcknowledgementConnectionSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mdnSettings"))
+                if (property.NameEquals("mdnSettings"u8))
                 {
-                    mdnSettings = AS2MdnSettings.DeserializeAS2MdnSettings(property.Value);
+                    mdnSettings = AS2MdnSettings.DeserializeAS2MdnSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("securitySettings"))
+                if (property.NameEquals("securitySettings"u8))
                 {
-                    securitySettings = AS2SecuritySettings.DeserializeAS2SecuritySettings(property.Value);
+                    securitySettings = AS2SecuritySettings.DeserializeAS2SecuritySettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("validationSettings"))
+                if (property.NameEquals("validationSettings"u8))
                 {
-                    validationSettings = AS2ValidationSettings.DeserializeAS2ValidationSettings(property.Value);
+                    validationSettings = AS2ValidationSettings.DeserializeAS2ValidationSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("envelopeSettings"))
+                if (property.NameEquals("envelopeSettings"u8))
                 {
-                    envelopeSettings = AS2EnvelopeSettings.DeserializeAS2EnvelopeSettings(property.Value);
+                    envelopeSettings = AS2EnvelopeSettings.DeserializeAS2EnvelopeSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("errorSettings"))
+                if (property.NameEquals("errorSettings"u8))
                 {
-                    errorSettings = AS2ErrorSettings.DeserializeAS2ErrorSettings(property.Value);
+                    errorSettings = AS2ErrorSettings.DeserializeAS2ErrorSettings(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AS2ProtocolSettings(messageConnectionSettings, acknowledgementConnectionSettings, mdnSettings, securitySettings, validationSettings, envelopeSettings, errorSettings);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AS2ProtocolSettings(
+                messageConnectionSettings,
+                acknowledgementConnectionSettings,
+                mdnSettings,
+                securitySettings,
+                validationSettings,
+                envelopeSettings,
+                errorSettings,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AS2ProtocolSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AS2ProtocolSettings IPersistableModel<AS2ProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAS2ProtocolSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AS2ProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

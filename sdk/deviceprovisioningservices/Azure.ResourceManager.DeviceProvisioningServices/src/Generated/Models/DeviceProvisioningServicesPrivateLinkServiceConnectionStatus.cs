@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static bool operator ==(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus left, DeviceProvisioningServicesPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus left, DeviceProvisioningServicesPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesPrivateLinkServiceConnectionStatus"/>. </summary>
         public static implicit operator DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(string value) => new DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

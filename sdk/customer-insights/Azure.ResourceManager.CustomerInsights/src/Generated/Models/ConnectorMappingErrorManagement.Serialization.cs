@@ -5,49 +5,137 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingErrorManagement : IUtf8JsonSerializable
+    public partial class ConnectorMappingErrorManagement : IUtf8JsonSerializable, IJsonModel<ConnectorMappingErrorManagement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorMappingErrorManagement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectorMappingErrorManagement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("errorManagementType");
-            writer.WriteStringValue(ErrorManagementType.ToSerialString());
-            if (Optional.IsDefined(ErrorLimit))
-            {
-                writer.WritePropertyName("errorLimit");
-                writer.WriteNumberValue(ErrorLimit.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ConnectorMappingErrorManagement DeserializeConnectorMappingErrorManagement(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingErrorManagement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("errorManagementType"u8);
+            writer.WriteStringValue(ErrorManagementType.ToSerialString());
+            if (Optional.IsDefined(ErrorLimit))
+            {
+                writer.WritePropertyName("errorLimit"u8);
+                writer.WriteNumberValue(ErrorLimit.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ConnectorMappingErrorManagement IJsonModel<ConnectorMappingErrorManagement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingErrorManagement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectorMappingErrorManagement(document.RootElement, options);
+        }
+
+        internal static ConnectorMappingErrorManagement DeserializeConnectorMappingErrorManagement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorManagementType errorManagementType = default;
-            Optional<int> errorLimit = default;
+            int? errorLimit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorManagementType"))
+                if (property.NameEquals("errorManagementType"u8))
                 {
                     errorManagementType = property.Value.GetString().ToErrorManagementType();
                     continue;
                 }
-                if (property.NameEquals("errorLimit"))
+                if (property.NameEquals("errorLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorLimit = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectorMappingErrorManagement(errorManagementType, Optional.ToNullable(errorLimit));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectorMappingErrorManagement(errorManagementType, errorLimit, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectorMappingErrorManagement>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingErrorManagement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectorMappingErrorManagement IPersistableModel<ConnectorMappingErrorManagement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingErrorManagement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectorMappingErrorManagement(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectorMappingErrorManagement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

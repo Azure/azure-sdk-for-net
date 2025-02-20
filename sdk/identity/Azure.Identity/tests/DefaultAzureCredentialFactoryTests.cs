@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -42,9 +39,14 @@ namespace Azure.Identity.Tests
                 else
                 {
                     ManagedIdentityCredential cred = (ManagedIdentityCredential)factory.CreateManagedIdentityCredential();
-
-                    Assert.AreEqual(expResourceId?.ToString(), cred.Client.ResourceIdentifier?.ToString());
-                    Assert.AreEqual(expClientId, cred.Client.ClientId);
+                    if (setResourceId)
+                    {
+                        Assert.AreEqual(expResourceId.ToString(), cred.Client.ManagedIdentityId._userAssignedId);
+                    }
+                    if (setClientId)
+                    {
+                        Assert.AreEqual(expClientId, cred.Client.ManagedIdentityId._userAssignedId);
+                    }
                 }
             }
         }
@@ -94,7 +96,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants, [Values]bool setDeveloperCredentialTimeout)
+        public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setCredentialProcessTimeout)
         {
             // ignore when both setTenantId and setVisualStudioTenantId are true since we cannot set both
             if (setTenantId && setVisualStudioTenantId)
@@ -113,10 +115,10 @@ namespace Azure.Identity.Tests
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
                 string expVisualStudioTenantId = setVisualStudioTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
-                TimeSpan? expTimeout = setDeveloperCredentialTimeout ? TimeSpan.FromMinutes(777) : null;
+                TimeSpan? expTimeout = setCredentialProcessTimeout ? TimeSpan.FromMinutes(777) : null;
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions
                 {
-                    DeveloperCredentialTimeout = expTimeout
+                    CredentialProcessTimeout = expTimeout
                 };
 
                 if (setTenantId)
@@ -138,9 +140,10 @@ namespace Azure.Identity.Tests
 
                 VisualStudioCredential cred = (VisualStudioCredential)factory.CreateVisualStudioCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.VisualStudioProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.ProcessTimeout);
                 Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.True(cred._isChainedCredential);
             }
         }
 
@@ -192,7 +195,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateCliOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setDeveloperCredentialTimeout)
+        public void ValidateCliOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setCredentialProcessTimeout)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -204,12 +207,12 @@ namespace Azure.Identity.Tests
             {
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
-                TimeSpan? expTimeout = setDeveloperCredentialTimeout ? TimeSpan.FromMinutes(777) : null;
+                TimeSpan? expTimeout = setCredentialProcessTimeout ? TimeSpan.FromMinutes(777) : null;
 
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
                 {
                     TenantId = expTenantId,
-                    DeveloperCredentialTimeout = expTimeout
+                    CredentialProcessTimeout = expTimeout
                 };
 
                 foreach (var tenantId in expAdditionallyAllowedTenants)
@@ -221,14 +224,22 @@ namespace Azure.Identity.Tests
 
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.CliProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.True(cred._isChainedCredential);
+
+                AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
+
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.ProcessTimeout);
+                Assert.AreEqual(expTenantId, credAzd.TenantId);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
+                Assert.True(credAzd._isChainedCredential);
             }
         }
 
         [Test]
-        public void ValidatePowerShellOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setDeveloperCredentialTimeout)
+        public void ValidatePowerShellOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setCredentialProcessTimeout)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -240,12 +251,12 @@ namespace Azure.Identity.Tests
             {
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
-                TimeSpan? expTimeout = setDeveloperCredentialTimeout ? TimeSpan.FromMinutes(777) : null;
+                TimeSpan? expTimeout = setCredentialProcessTimeout ? TimeSpan.FromMinutes(777) : null;
 
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
                 {
                     TenantId = expTenantId,
-                    DeveloperCredentialTimeout = expTimeout
+                    CredentialProcessTimeout = expTimeout
                 };
 
                 foreach (var tenantId in expAdditionallyAllowedTenants)
@@ -257,9 +268,10 @@ namespace Azure.Identity.Tests
 
                 AzurePowerShellCredential cred = (AzurePowerShellCredential)factory.CreateAzurePowerShellCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.PowerShellProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                Assert.True(cred._isChainedCredential);
             }
         }
 
@@ -317,15 +329,32 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public static IEnumerable<object[]> ExcludeCredOptions()
+        {
+            yield return new object[] { false, true, false, false, false, false, false, false, false, false };
+            yield return new object[] { false, false, true, false, false, false, false, false, false, false };
+            yield return new object[] { true, false, false, false, false, false, false, false, false, false };
+            yield return new object[] { false, false, false, true, false, false, false, false, false, false };
+            yield return new object[] { false, false, false, false, true, false, false, false, false, false };
+            yield return new object[] { false, false, false, false, false, true, false, false, false, false };
+            yield return new object[] { false, false, false, false, false, false, true, false, false, false };
+            yield return new object[] { false, false, false, false, false, false, false, true, false, false };
+            yield return new object[] { false, false, false, false, false, false, false, false, true, false };
+            yield return new object[] { false, false, false, false, false, false, false, false, false, true };
+        }
+
         [Test]
-        public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeEnvironmentCredential,
-                                                   [Values(true, false)] bool excludeManagedIdentityCredential,
-                                                   [Values(true, false)] bool excludeSharedTokenCacheCredential,
-                                                   [Values(true, false)] bool excludeVisualStudioCredential,
-                                                   [Values(true, false)] bool excludeVisualStudioCodeCredential,
-                                                   [Values(true, false)] bool excludeCliCredential,
-                                                   [Values(true, false)] bool excludeAzurePowerShellCredential,
-                                                   [Values(true, false)] bool excludeInteractiveBrowserCredential)
+        [TestCaseSource(nameof(ExcludeCredOptions))]
+        public void ValidateExcludeOptionsHonored(bool excludeEnvironmentCredential,
+                                                  bool excludeWorkloadIdentityCredential,
+                                                  bool excludeManagedIdentityCredential,
+                                                  bool excludeDeveloperCliCredential,
+                                                  bool excludeSharedTokenCacheCredential,
+                                                  bool excludeVisualStudioCredential,
+                                                  bool excludeVisualStudioCodeCredential,
+                                                  bool excludeCliCredential,
+                                                  bool excludeAzurePowerShellCredential,
+                                                  bool excludeInteractiveBrowserCredential)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -337,18 +366,22 @@ namespace Azure.Identity.Tests
             {
                 var expCredentialTypes = new List<Type>();
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
+                expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
                 expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
+                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
 
                 var options = new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                    ExcludeWorkloadIdentityCredential = excludeWorkloadIdentityCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
+                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
                     ExcludeAzureCliCredential = excludeCliCredential,
                     ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Advisor.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.Advisor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGenerateRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/generateRecommendations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateRequest(string subscriptionId)
@@ -92,6 +102,18 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetGenerateStatusRequestUri(string subscriptionId, Guid operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/generateRecommendations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetGenerateStatusRequest(string subscriptionId, Guid operationId)
@@ -156,6 +178,29 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string filter, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -187,7 +232,7 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary> Obtains cached recommendations for a subscription. The recommendations are generated or computed by invoking generateRecommendations. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid', '[Category](#category)'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and ResourceGroup eq 'MyResourceGroup'. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,7 +260,7 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary> Obtains cached recommendations for a subscription. The recommendations are generated or computed by invoking generateRecommendations. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid', '[Category](#category)'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and ResourceGroup eq 'MyResourceGroup'. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,6 +284,18 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string recommendationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceUri, string recommendationId)
@@ -317,6 +374,14 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -334,7 +399,7 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Obtains cached recommendations for a subscription. The recommendations are generated or computed by invoking generateRecommendations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid', '[Category](#category)'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and ResourceGroup eq 'MyResourceGroup'. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -364,7 +429,7 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Obtains cached recommendations for a subscription. The recommendations are generated or computed by invoking generateRecommendations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid', '[Category](#category)'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and ResourceGroup eq 'MyResourceGroup'. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

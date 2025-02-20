@@ -17,30 +17,28 @@ namespace Azure.Communication.Rooms
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidFrom))
             {
-                writer.WritePropertyName("validFrom");
+                writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
             if (Optional.IsDefined(ValidUntil))
             {
-                writer.WritePropertyName("validUntil");
+                writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(RoomJoinPolicy))
+            if (Optional.IsDefined(PstnDialOutEnabled))
             {
-                writer.WritePropertyName("roomJoinPolicy");
-                writer.WriteStringValue(RoomJoinPolicy.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Participants))
-            {
-                writer.WritePropertyName("participants");
-                writer.WriteStartArray();
-                foreach (var item in Participants)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("pstnDialOutEnabled"u8);
+                writer.WriteBooleanValue(PstnDialOutEnabled.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

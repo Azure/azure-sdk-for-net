@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class IisLogsDataSource : IUtf8JsonSerializable
+    public partial class IisLogsDataSource : IUtf8JsonSerializable, IJsonModel<IisLogsDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IisLogsDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IisLogsDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("streams");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IisLogsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IisLogsDataSource)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("streams"u8);
             writer.WriteStartArray();
             foreach (var item in Streams)
             {
@@ -25,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(LogDirectories))
             {
-                writer.WritePropertyName("logDirectories");
+                writer.WritePropertyName("logDirectories"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogDirectories)
                 {
@@ -35,20 +53,54 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static IisLogsDataSource DeserializeIisLogsDataSource(JsonElement element)
+        IisLogsDataSource IJsonModel<IisLogsDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IisLogsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IisLogsDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIisLogsDataSource(document.RootElement, options);
+        }
+
+        internal static IisLogsDataSource DeserializeIisLogsDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> streams = default;
-            Optional<IList<string>> logDirectories = default;
-            Optional<string> name = default;
+            IList<string> logDirectories = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -58,11 +110,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("logDirectories"))
+                if (property.NameEquals("logDirectories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,13 +124,49 @@ namespace Azure.ResourceManager.Monitor.Models
                     logDirectories = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IisLogsDataSource(streams, Optional.ToList(logDirectories), name.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IisLogsDataSource(streams, logDirectories ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IisLogsDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IisLogsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IisLogsDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IisLogsDataSource IPersistableModel<IisLogsDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IisLogsDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIisLogsDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IisLogsDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IisLogsDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

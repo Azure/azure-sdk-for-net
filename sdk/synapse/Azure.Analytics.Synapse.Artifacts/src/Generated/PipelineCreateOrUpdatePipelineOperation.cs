@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal PipelineCreateOrUpdatePipelineOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<PipelineResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<PipelineResource>(clientDiagnostics, nextLinkOperation, response, "PipelineCreateOrUpdatePipelineOperation");
+            _operation = new OperationInternal<PipelineResource>(nextLinkOperation, clientDiagnostics, response, "PipelineCreateOrUpdatePipelineOperation");
         }
 
         /// <inheritdoc />

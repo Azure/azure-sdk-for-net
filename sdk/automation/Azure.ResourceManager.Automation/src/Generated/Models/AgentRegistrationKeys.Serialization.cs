@@ -5,31 +5,136 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AgentRegistrationKeys
+    public partial class AgentRegistrationKeys : IUtf8JsonSerializable, IJsonModel<AgentRegistrationKeys>
     {
-        internal static AgentRegistrationKeys DeserializeAgentRegistrationKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentRegistrationKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AgentRegistrationKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> primary = default;
-            Optional<string> secondary = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentRegistrationKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentRegistrationKeys)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Primary))
+            {
+                writer.WritePropertyName("primary"u8);
+                writer.WriteStringValue(Primary);
+            }
+            if (Optional.IsDefined(Secondary))
+            {
+                writer.WritePropertyName("secondary"u8);
+                writer.WriteStringValue(Secondary);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AgentRegistrationKeys IJsonModel<AgentRegistrationKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentRegistrationKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentRegistrationKeys)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentRegistrationKeys(document.RootElement, options);
+        }
+
+        internal static AgentRegistrationKeys DeserializeAgentRegistrationKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string primary = default;
+            string secondary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primary"))
+                if (property.NameEquals("primary"u8))
                 {
                     primary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondary"))
+                if (property.NameEquals("secondary"u8))
                 {
                     secondary = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentRegistrationKeys(primary.Value, secondary.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AgentRegistrationKeys(primary, secondary, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentRegistrationKeys>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentRegistrationKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AgentRegistrationKeys)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AgentRegistrationKeys IPersistableModel<AgentRegistrationKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentRegistrationKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgentRegistrationKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentRegistrationKeys)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgentRegistrationKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

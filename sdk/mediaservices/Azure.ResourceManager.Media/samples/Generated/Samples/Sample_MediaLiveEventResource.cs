@@ -9,23 +9,20 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaLiveEventResource
     {
-        // Get a LiveEvent by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetALiveEventByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-list-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-list-by-name.json
             // this example is just showing the usage of "LiveEvents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,12 +49,38 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteALiveEvent()
+        {
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-delete.json
+            // this example is just showing the usage of "LiveEvents_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MediaLiveEventResource created on azure
+            // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
+            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string resourceGroupName = "mediaresources";
+            string accountName = "slitestmedia10";
+            string liveEventName = "myLiveEvent1";
+            ResourceIdentifier mediaLiveEventResourceId = MediaLiveEventResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, liveEventName);
+            MediaLiveEventResource mediaLiveEvent = client.GetMediaLiveEventResource(mediaLiveEventResourceId);
+
+            // invoke the operation
+            await mediaLiveEvent.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateALiveEvent()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-update.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-update.json
             // this example is just showing the usage of "LiveEvents_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,32 +103,26 @@ namespace Azure.ResourceManager.Media.Samples
                 Description = "test event updated",
                 Input = new LiveEventInput(LiveEventInputProtocol.FragmentedMp4)
                 {
-                    IPAllowedIPs =
-{
-new IPRange()
+                    IPAllowedIPs = {new IPRange
 {
 Name = "AllowOne",
 Address = IPAddress.Parse("192.1.1.0"),
-}
-},
+}},
                     KeyFrameIntervalDuration = XmlConvert.ToTimeSpan("PT6S"),
                 },
-                Preview = new LiveEventPreview()
+                Preview = new LiveEventPreview
                 {
-                    IPAllowedIPs =
-{
-new IPRange()
+                    IPAllowedIPs = {new IPRange
 {
 Name = "AllowOne",
 Address = IPAddress.Parse("192.1.1.0"),
-}
-},
+}},
                 },
                 Tags =
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<MediaLiveEventResource> lro = await mediaLiveEvent.UpdateAsync(WaitUntil.Completed, data);
@@ -118,40 +135,11 @@ Address = IPAddress.Parse("192.1.1.0"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteALiveEvent()
-        {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-delete.json
-            // this example is just showing the usage of "LiveEvents_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MediaLiveEventResource created on azure
-            // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
-            string resourceGroupName = "mediaresources";
-            string accountName = "slitestmedia10";
-            string liveEventName = "myLiveEvent1";
-            ResourceIdentifier mediaLiveEventResourceId = MediaLiveEventResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, liveEventName);
-            MediaLiveEventResource mediaLiveEvent = client.GetMediaLiveEventResource(mediaLiveEventResourceId);
-
-            // invoke the operation
-            await mediaLiveEvent.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Allocate a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Allocate_AllocateALiveEvent()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-allocate.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-allocate.json
             // this example is just showing the usage of "LiveEvents_Allocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,15 +159,14 @@ Address = IPAddress.Parse("192.1.1.0"),
             // invoke the operation
             await mediaLiveEvent.AllocateAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_StartALiveEvent()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-start.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-start.json
             // this example is just showing the usage of "LiveEvents_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,15 +186,14 @@ Address = IPAddress.Parse("192.1.1.0"),
             // invoke the operation
             await mediaLiveEvent.StartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Stop a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_StopALiveEvent()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-stop.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-stop.json
             // this example is just showing the usage of "LiveEvents_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,21 +211,20 @@ Address = IPAddress.Parse("192.1.1.0"),
             MediaLiveEventResource mediaLiveEvent = client.GetMediaLiveEventResource(mediaLiveEventResourceId);
 
             // invoke the operation
-            LiveEventActionContent content = new LiveEventActionContent()
+            LiveEventActionContent content = new LiveEventActionContent
             {
                 RemoveOutputsOnStop = false,
             };
             await mediaLiveEvent.StopAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Reset a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reset_ResetALiveEvent()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/stable/2022-08-01/examples/liveevent-reset.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-reset.json
             // this example is just showing the usage of "LiveEvents_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +244,7 @@ Address = IPAddress.Parse("192.1.1.0"),
             // invoke the operation
             await mediaLiveEvent.ResetAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

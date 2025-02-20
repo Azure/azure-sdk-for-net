@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +8,7 @@ using System.Diagnostics.Metrics;
 using Azure.Core;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
 {
@@ -18,14 +17,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
         private const string meterName = "MyCompany.MyProduct.MyLibrary";
         private static readonly Meter meter = new(meterName);
 
-        private readonly MeterProvider meterProvider;
+        private readonly MeterProvider? meterProvider;
 
-        public MetricDemo(string connectionString, TokenCredential credential = null)
+        public MetricDemo(string connectionString, TokenCredential? credential = null)
         {
+            var resourceAttributes = new Dictionary<string, object>
+            {
+                { "service.name", "my-service" },
+                { "service.namespace", "my-namespace" },
+                { "service.instance.id", "my-instance" },
+                { "service.version", "1.0.0-demo" },
+            };
+
+            var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
+
             this.meterProvider = Sdk.CreateMeterProviderBuilder()
-                                .AddMeter(meterName)
-                                .AddAzureMonitorMetricExporter(o => o.ConnectionString = connectionString, credential)
-                                .Build();
+                .SetResourceBuilder(resourceBuilder)
+                .AddMeter(meterName)
+                .AddAzureMonitorMetricExporter(o => o.ConnectionString = connectionString, credential)
+                .Build();
         }
 
         /// <remarks>
@@ -54,15 +64,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
             myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
             myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
 
-            // Guage Example
+            // Gauge Example
             var process = Process.GetCurrentProcess();
 
-            ObservableGauge<int> myOservableGauge = meter.CreateObservableGauge("Thread.State", () => GetThreadState(process));
+            ObservableGauge<int> myObservableGauge = meter.CreateObservableGauge("Thread.State", () => GetThreadState(process));
         }
 
         public void Dispose()
         {
-            this.meterProvider.Dispose();
+            this.meterProvider?.Dispose();
         }
 
         private static IEnumerable<Measurement<int>> GetThreadState(Process process)

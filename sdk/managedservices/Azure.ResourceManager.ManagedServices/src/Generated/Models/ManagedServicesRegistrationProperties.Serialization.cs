@@ -6,134 +6,248 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationProperties : IUtf8JsonSerializable
+    public partial class ManagedServicesRegistrationProperties : IUtf8JsonSerializable, IJsonModel<ManagedServicesRegistrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesRegistrationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedServicesRegistrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("authorizations");
+            writer.WritePropertyName("authorizations"u8);
             writer.WriteStartArray();
             foreach (var item in Authorizations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(EligibleAuthorizations))
             {
-                writer.WritePropertyName("eligibleAuthorizations");
+                writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in EligibleAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RegistrationDefinitionName))
             {
-                writer.WritePropertyName("registrationDefinitionName");
+                writer.WritePropertyName("registrationDefinitionName"u8);
                 writer.WriteStringValue(RegistrationDefinitionName);
             }
-            writer.WritePropertyName("managedByTenantId");
+            writer.WritePropertyName("managedByTenantId"u8);
             writer.WriteStringValue(ManagedByTenantId);
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ManageeTenantId))
+            {
+                writer.WritePropertyName("manageeTenantId"u8);
+                writer.WriteStringValue(ManageeTenantId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ManageeTenantName))
+            {
+                writer.WritePropertyName("manageeTenantName"u8);
+                writer.WriteStringValue(ManageeTenantName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ManagedByTenantName))
+            {
+                writer.WritePropertyName("managedByTenantName"u8);
+                writer.WriteStringValue(ManagedByTenantName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ManagedServicesRegistrationProperties DeserializeManagedServicesRegistrationProperties(JsonElement element)
+        ManagedServicesRegistrationProperties IJsonModel<ManagedServicesRegistrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> description = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesRegistrationProperties(document.RootElement, options);
+        }
+
+        internal static ManagedServicesRegistrationProperties DeserializeManagedServicesRegistrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string description = default;
             IList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> registrationDefinitionName = default;
+            IList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
+            string registrationDefinitionName = default;
             Guid managedByTenantId = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<Guid> manageeTenantId = default;
-            Optional<string> manageeTenantName = default;
-            Optional<string> managedByTenantName = default;
+            ManagedServicesProvisioningState? provisioningState = default;
+            Guid? manageeTenantId = default;
+            string manageeTenantName = default;
+            string managedByTenantName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizations"))
+                if (property.NameEquals("authorizations"u8))
                 {
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item));
+                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
                 }
-                if (property.NameEquals("eligibleAuthorizations"))
+                if (property.NameEquals("eligibleAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item));
+                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item, options));
                     }
                     eligibleAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("registrationDefinitionName"))
+                if (property.NameEquals("registrationDefinitionName"u8))
                 {
                     registrationDefinitionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByTenantId"))
+                if (property.NameEquals("managedByTenantId"u8))
                 {
                     managedByTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ManagedServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manageeTenantId"))
+                if (property.NameEquals("manageeTenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     manageeTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("manageeTenantName"))
+                if (property.NameEquals("manageeTenantName"u8))
                 {
                     manageeTenantName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByTenantName"))
+                if (property.NameEquals("managedByTenantName"u8))
                 {
                     managedByTenantName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServicesRegistrationProperties(description.Value, authorizations, Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, managedByTenantId, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedServicesRegistrationProperties(
+                description,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                registrationDefinitionName,
+                managedByTenantId,
+                provisioningState,
+                manageeTenantId,
+                manageeTenantName,
+                managedByTenantName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServicesRegistrationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedServicesRegistrationProperties IPersistableModel<ManagedServicesRegistrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedServicesRegistrationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedServicesRegistrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

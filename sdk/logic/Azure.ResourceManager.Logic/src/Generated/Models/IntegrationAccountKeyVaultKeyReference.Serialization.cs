@@ -5,54 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountKeyVaultKeyReference : IUtf8JsonSerializable
+    public partial class IntegrationAccountKeyVaultKeyReference : IUtf8JsonSerializable, IJsonModel<IntegrationAccountKeyVaultKeyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountKeyVaultKeyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IntegrationAccountKeyVaultKeyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyName");
-            writer.WriteStringValue(KeyName);
-            if (Optional.IsDefined(KeyVersion))
-            {
-                writer.WritePropertyName("keyVersion");
-                writer.WriteStringValue(KeyVersion);
-            }
-            writer.WritePropertyName("keyVault");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(ResourceId);
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountKeyVaultKeyReference DeserializeIntegrationAccountKeyVaultKeyReference(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKeyReference)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("keyName"u8);
+            writer.WriteStringValue(KeyName);
+            if (Optional.IsDefined(KeyVersion))
+            {
+                writer.WritePropertyName("keyVersion"u8);
+                writer.WriteStringValue(KeyVersion);
+            }
+            writer.WritePropertyName("keyVault"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        IntegrationAccountKeyVaultKeyReference IJsonModel<IntegrationAccountKeyVaultKeyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKeyReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountKeyVaultKeyReference(document.RootElement, options);
+        }
+
+        internal static IntegrationAccountKeyVaultKeyReference DeserializeIntegrationAccountKeyVaultKeyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string keyVersion = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVault"))
+                if (property.NameEquals("keyVault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,26 +124,24 @@ namespace Azure.ResourceManager.Logic.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type = new ResourceType(property0.Value.GetString());
@@ -89,8 +150,50 @@ namespace Azure.ResourceManager.Logic.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion.Value, id.Value, name.Value, Optional.ToNullable(type));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IntegrationAccountKeyVaultKeyReference(
+                keyName,
+                keyVersion,
+                id,
+                name,
+                type,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationAccountKeyVaultKeyReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKeyReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationAccountKeyVaultKeyReference IPersistableModel<IntegrationAccountKeyVaultKeyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationAccountKeyVaultKeyReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKeyReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationAccountKeyVaultKeyReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

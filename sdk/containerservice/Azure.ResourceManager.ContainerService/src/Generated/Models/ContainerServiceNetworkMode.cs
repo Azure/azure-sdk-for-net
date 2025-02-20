@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> This cannot be specified if networkPlugin is anything other than &apos;azure&apos;. </summary>
+    /// <summary> This cannot be specified if networkPlugin is anything other than 'azure'. </summary>
     public readonly partial struct ContainerServiceNetworkMode : IEquatable<ContainerServiceNetworkMode>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ContainerServiceNetworkMode left, ContainerServiceNetworkMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkMode"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceNetworkMode left, ContainerServiceNetworkMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceNetworkMode"/>. </summary>
         public static implicit operator ContainerServiceNetworkMode(string value) => new ContainerServiceNetworkMode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

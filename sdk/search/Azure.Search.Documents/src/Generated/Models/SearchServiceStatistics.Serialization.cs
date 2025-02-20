@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,22 +13,34 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SearchServiceCounters counters = default;
             SearchServiceLimits limits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("counters"))
+                if (property.NameEquals("counters"u8))
                 {
                     counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
                     continue;
                 }
-                if (property.NameEquals("limits"))
+                if (property.NameEquals("limits"u8))
                 {
                     limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
                     continue;
                 }
             }
             return new SearchServiceStatistics(counters, limits);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchServiceStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchServiceStatistics(document.RootElement);
         }
     }
 }

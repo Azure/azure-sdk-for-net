@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,96 +13,115 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element)
         {
-            Optional<string> authenticationType = default;
-            Optional<float> cloudToDeviceMessageCount = default;
-            Optional<string> connectionState = default;
-            Optional<string> deviceId = default;
-            Optional<string> etag = default;
-            Optional<string> lastActivityTime = default;
-            Optional<DeviceTwinInfoProperties> properties = default;
-            Optional<string> status = default;
-            Optional<string> statusUpdateTime = default;
-            Optional<float> version = default;
-            Optional<DeviceTwinInfoX509Thumbprint> x509Thumbprint = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string authenticationType = default;
+            float? cloudToDeviceMessageCount = default;
+            string connectionState = default;
+            string deviceId = default;
+            string etag = default;
+            string lastActivityTime = default;
+            DeviceTwinInfoProperties properties = default;
+            string status = default;
+            string statusUpdateTime = default;
+            float? version = default;
+            DeviceTwinInfoX509Thumbprint x509Thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloudToDeviceMessageCount"))
+                if (property.NameEquals("cloudToDeviceMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudToDeviceMessageCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     connectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastActivityTime"))
+                if (property.NameEquals("lastActivityTime"u8))
                 {
                     lastActivityTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DeviceTwinInfoProperties.DeserializeDeviceTwinInfoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusUpdateTime"))
+                if (property.NameEquals("statusUpdateTime"u8))
                 {
                     statusUpdateTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("x509Thumbprint"))
+                if (property.NameEquals("x509Thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(property.Value);
                     continue;
                 }
             }
-            return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value);
+            return new DeviceTwinInfo(
+                authenticationType,
+                cloudToDeviceMessageCount,
+                connectionState,
+                deviceId,
+                etag,
+                lastActivityTime,
+                properties,
+                status,
+                statusUpdateTime,
+                version,
+                x509Thumbprint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceTwinInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceTwinInfo(document.RootElement);
         }
     }
 }

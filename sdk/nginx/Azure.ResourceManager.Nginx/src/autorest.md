@@ -8,15 +8,47 @@ azure-arm: true
 csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/nginx/resource-manager/readme.md
-tag: package-2022-08-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/7a3f210cf6924c6139e2493f5fd0625919af1f32/specification/nginx/resource-manager/readme.md
+#tag: package-2024-11-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
- 
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  NginxNetworkInterfaceConfiguration.subnetId: -|arm-id
+  NginxPrivateIPAddress.privateIPAddress: -|ip-address
+  NginxPrivateIPAddress.subnetId: -|arm-id
+  AnalysisCreate : NginxAnalysisContent
+  AnalysisCreateConfig: NginxAnalysisConfig
+  NginxCertificateErrorResponseBody: NginxCertificateError
+  ActivationState : WebApplicationFirewallActivationState
+  AnalysisResultData: NginxAnalysisResultDetails
+  Level: NginxDiagnosticLevel
+  NginxConfigurationResponse: NginxConfiguration
+  NginxConfigurationResponseProperties: NginxConfigurationProperties
+  NginxDeploymentApiKeyResponse: NginxDeploymentApiKey
+  NginxDeploymentApiKeyResponseProperties: NginxDeploymentApiKeyProperties
+  NginxConfigurationRequestProperties: NginxConfigurationCreateOrUpdateProperties
+  NginxConfigurationProtectedFileRequest: NginxConfigurationProtectedFileContent
+  NginxConfigurationProtectedFileResponse: NginxConfigurationProtectedFileResult
+
+prepend-rp-prefix:
+  - AnalysisDiagnostic
+  - AnalysisResult
+  - DiagnosticItem
+  - ProvisioningState
+  - ResourceSku
+  - ScaleProfile
+  - ScaleProfileCapacity
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -25,7 +57,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -47,5 +79,4 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
 ```

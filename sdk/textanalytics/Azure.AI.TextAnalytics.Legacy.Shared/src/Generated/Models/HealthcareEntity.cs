@@ -8,18 +8,17 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The HealthcareEntity. </summary>
     internal partial class HealthcareEntity : HealthcareEntityProperties
     {
-        /// <summary> Initializes a new instance of HealthcareEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal HealthcareEntity(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
@@ -29,15 +28,15 @@ namespace Azure.AI.TextAnalytics.Legacy
             Links = new ChangeTrackingList<HealthcareEntityLink>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="assertion"></param>
-        /// <param name="name"> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </param>
+        /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
         internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links) : base(text, category, subcategory, offset, length, confidenceScore)
         {
@@ -48,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Legacy
 
         /// <summary> Gets the assertion. </summary>
         public HealthcareAssertion Assertion { get; }
-        /// <summary> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </summary>
+        /// <summary> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </summary>
         public string Name { get; }
         /// <summary> Entity references in known data sources. </summary>
         public IReadOnlyList<HealthcareEntityLink> Links { get; }

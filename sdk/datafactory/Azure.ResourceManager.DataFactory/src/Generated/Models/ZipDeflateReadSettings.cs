@@ -7,58 +7,30 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The ZipDeflate compression read settings. </summary>
     public partial class ZipDeflateReadSettings : CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZipDeflateReadSettings"/>. </summary>
         public ZipDeflateReadSettings()
         {
             CompressionReadSettingsType = "ZipDeflateReadSettings";
         }
 
-        /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZipDeflateReadSettings"/>. </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveZipFileNameAsFolder"> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal ZipDeflateReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData preserveZipFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
+        internal ZipDeflateReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveZipFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveZipFileNameAsFolder = preserveZipFileNameAsFolder;
             CompressionReadSettingsType = compressionReadSettingsType ?? "ZipDeflateReadSettings";
         }
 
-        /// <summary>
-        /// Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData PreserveZipFileNameAsFolder { get; set; }
+        /// <summary> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> PreserveZipFileNameAsFolder { get; set; }
     }
 }

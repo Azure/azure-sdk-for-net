@@ -5,8 +5,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     internal static class Constants
     {
-        public static readonly char[] HeaderSeparator = { ',' };
+        public static readonly char[] HeaderSeparator = { ',', ' ' };
         public const string AllowedAllOrigins = "*";
+
+        public const string MqttWebSocketSubprotocolValue = "mqtt";
 
         public static class ContentTypes
         {
@@ -45,6 +47,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
                 public const string TypeSystemPrefix = "azure.webpubsub.sys.";
                 public const string TypeUserPrefix = "azure.webpubsub.user.";
+
+                public const string Subprotocol = Prefix + "subprotocol";
+
+                #region MQTT
+                public const string MqttPhysicalConnectionId = Prefix + "physicalConnectionId";
+                public const string MqttSessionId = Prefix + "sessionId";
+                #endregion
             }
 
             public const string WebHookRequestOrigin = "WebHook-Request-Origin";

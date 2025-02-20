@@ -5,64 +5,223 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationCatalog
+    public partial class ReservationCatalog : IUtf8JsonSerializable, IJsonModel<ReservationCatalog>
     {
-        internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ReservationCatalog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
-            Optional<IReadOnlyList<ReservationTerm>> terms = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
-            Optional<CatalogMsrp> msrp = default;
-            Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<IReadOnlyList<SkuCapability>> capabilities = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationCatalog)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(AppliedResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(AppliedResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SkuName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(SkuName);
+            }
+            if (Optional.IsCollectionDefined(BillingPlans))
+            {
+                writer.WritePropertyName("billingPlans"u8);
+                writer.WriteStartObject();
+                foreach (var item in BillingPlans)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartArray();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WriteStringValue(item0.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Terms))
+            {
+                writer.WritePropertyName("terms"u8);
+                writer.WriteStartArray();
+                foreach (var item in Terms)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SkuProperties))
+            {
+                writer.WritePropertyName("skuProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in SkuProperties)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Msrp))
+            {
+                writer.WritePropertyName("msrp"u8);
+                writer.WriteObjectValue(Msrp, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            {
+                writer.WritePropertyName("restrictions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Restrictions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteStringValue(Size);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ReservationCatalog IJsonModel<ReservationCatalog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationCatalog)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationCatalog(document.RootElement, options);
+        }
+
+        internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string resourceType = default;
+            string name = default;
+            IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = default;
+            IReadOnlyList<ReservationTerm> terms = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<SkuProperty> skuProperties = default;
+            ReservationCatalogMsrp msrp = default;
+            IReadOnlyList<SkuRestriction> restrictions = default;
+            string tier = default;
+            string size = default;
+            IReadOnlyList<SkuCapability> capabilities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingPlans"))
+                if (property.NameEquals("billingPlans"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, IList<ReservationBillingPlan>> dictionary = new Dictionary<string, IList<ReservationBillingPlan>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<ReservationBillingPlan> array = new List<ReservationBillingPlan>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(new ReservationBillingPlan(item.GetString()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<ReservationBillingPlan> array = new List<ReservationBillingPlan>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ReservationBillingPlan(item.GetString()));
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     billingPlans = dictionary;
                     continue;
                 }
-                if (property.NameEquals("terms"))
+                if (property.NameEquals("terms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReservationTerm> array = new List<ReservationTerm>();
@@ -73,11 +232,10 @@ namespace Azure.ResourceManager.Reservations.Models
                     terms = array;
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -88,73 +246,117 @@ namespace Azure.ResourceManager.Reservations.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("skuProperties"))
+                if (property.NameEquals("skuProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuProperty> array = new List<SkuProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuProperty.DeserializeSkuProperty(item));
+                        array.Add(SkuProperty.DeserializeSkuProperty(item, options));
                     }
                     skuProperties = array;
                     continue;
                 }
-                if (property.NameEquals("msrp"))
+                if (property.NameEquals("msrp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    msrp = CatalogMsrp.DeserializeCatalogMsrp(property.Value);
+                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuRestriction> array = new List<SkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuRestriction.DeserializeSkuRestriction(item));
+                        array.Add(SkuRestriction.DeserializeSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuCapability> array = new List<SkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        array.Add(SkuCapability.DeserializeSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationCatalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReservationCatalog(
+                resourceType,
+                name,
+                billingPlans ?? new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>(),
+                terms ?? new ChangeTrackingList<ReservationTerm>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                skuProperties ?? new ChangeTrackingList<SkuProperty>(),
+                msrp,
+                restrictions ?? new ChangeTrackingList<SkuRestriction>(),
+                tier,
+                size,
+                capabilities ?? new ChangeTrackingList<SkuCapability>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationCatalog>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationCatalog)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReservationCatalog IPersistableModel<ReservationCatalog>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationCatalog(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationCatalog)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationCatalog>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

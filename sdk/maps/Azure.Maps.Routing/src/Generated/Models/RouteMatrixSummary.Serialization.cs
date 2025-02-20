@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,32 +13,42 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrixSummary DeserializeRouteMatrixSummary(JsonElement element)
         {
-            Optional<int> successfulRoutes = default;
-            Optional<int> totalRoutes = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? successfulRoutes = default;
+            int? totalRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("successfulRoutes"))
+                if (property.NameEquals("successfulRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successfulRoutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalRoutes"))
+                if (property.NameEquals("totalRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalRoutes = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RouteMatrixSummary(Optional.ToNullable(successfulRoutes), Optional.ToNullable(totalRoutes));
+            return new RouteMatrixSummary(successfulRoutes, totalRoutes);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteMatrixSummary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteMatrixSummary(document.RootElement);
         }
     }
 }

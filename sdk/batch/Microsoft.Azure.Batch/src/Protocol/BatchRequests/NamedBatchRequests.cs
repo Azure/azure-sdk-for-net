@@ -394,6 +394,47 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     }
 
     /// <summary>
+    /// An <see cref="IBatchRequest"/> for the ComputeNodeStart operation.
+    /// </summary>
+    public class ComputeNodeStartBatchRequest : Protocol.BatchRequest<
+        ComputeNodeStartOptions,
+        AzureOperationHeaderResponse<ComputeNodeStartHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComputeNodeStartBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public ComputeNodeStartBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the ComputeNodeDeallocate operation.
+    /// </summary>
+    public class ComputeNodeDeallocateBatchRequest : Protocol.BatchRequest<
+        ComputeNodeDeallocateOption?,
+        ComputeNodeDeallocateOptions,
+        AzureOperationHeaderResponse<ComputeNodeDeallocateHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComputeNodeDeallocateBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="parameters">The parameters to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public ComputeNodeDeallocateBatchRequest(
+            BatchServiceClient serviceClient,
+            ComputeNodeDeallocateOption? parameters,
+            CancellationToken cancellationToken) : base(serviceClient, parameters, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
     /// An <see cref="IBatchRequest"/> for the ComputeNodeReimage operation.
     /// </summary>
     public class ComputeNodeReimageBatchRequest : Protocol.BatchRequest<
@@ -475,24 +516,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
         }
     }
 
-    /// <summary>
-    /// An <see cref="IBatchRequest"/> for the ComputeNodeGetRemoteDesktop operation.
-    /// </summary>
-    public class ComputeNodeGetRemoteDesktopBatchRequest : Protocol.BatchRequest<
-        ComputeNodeGetRemoteDesktopOptions,
-        AzureOperationResponse<System.IO.Stream, ComputeNodeGetRemoteDesktopHeaders>>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComputeNodeGetRemoteDesktopBatchRequest" /> class.
-        /// </summary>
-        /// <param name="serviceClient">The service client to use.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public ComputeNodeGetRemoteDesktopBatchRequest(
-            BatchServiceClient serviceClient,
-            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
-        {
-        }
-    }
+
 
     /// <summary>
     /// An <see cref="IBatchRequest"/> for the ComputeNodeList operation.
@@ -800,25 +824,6 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     #endregion
 
     #region Job
-
-    /// <summary>
-    /// An <see cref="IBatchRequest"/> for the JobGetAllJobsLifetimeStatistics operation.
-    /// </summary>
-    public class JobGetAllJobsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
-        JobGetAllLifetimeStatisticsOptions,
-        AzureOperationResponse<JobStatistics, JobGetAllLifetimeStatisticsHeaders>>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobGetAllJobsLifetimeStatisticsBatchRequest" /> class.
-        /// </summary>
-        /// <param name="serviceClient">The service client to use.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public JobGetAllJobsLifetimeStatisticsBatchRequest(
-            BatchServiceClient serviceClient,
-            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
-        {
-        }
-    }
 
     /// <summary>
     /// An <see cref="IBatchRequest"/> for the JobDelete operation.
@@ -1359,25 +1364,6 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
         /// <param name="serviceClient">The service client to use.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public PoolListPoolUsageMetricsBatchRequest(
-            BatchServiceClient serviceClient,
-            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
-        {
-        }
-    }
-
-    /// <summary>
-    /// An <see cref="IBatchRequest"/> for the PoolGetAllPoolsLifetimeStatistics operation.
-    /// </summary>
-    public class PoolGetAllPoolsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
-        PoolGetAllLifetimeStatisticsOptions,
-        AzureOperationResponse<PoolStatistics, PoolGetAllLifetimeStatisticsHeaders>>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PoolGetAllPoolsLifetimeStatisticsBatchRequest" /> class.
-        /// </summary>
-        /// <param name="serviceClient">The service client to use.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public PoolGetAllPoolsLifetimeStatisticsBatchRequest(
             BatchServiceClient serviceClient,
             CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {

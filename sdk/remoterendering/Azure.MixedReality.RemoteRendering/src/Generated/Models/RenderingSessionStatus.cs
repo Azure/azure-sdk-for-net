@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </summary>
+    /// <summary> The status of the rendering session. Terminal states are 'Error', 'Expired', and 'Stopped'. </summary>
     public readonly partial struct RenderingSessionStatus : IEquatable<RenderingSessionStatus>
     {
         private readonly string _value;
@@ -30,19 +30,19 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> The rendering session has encountered an error, and is unusable. This is a terminal state. </summary>
         public static RenderingSessionStatus Error { get; } = new RenderingSessionStatus(ErrorValue);
-        /// <summary> The rendering session enters the &apos;Expired&apos; state when it has been in the &apos;Ready&apos; state longer than its lease time. This is a terminal state. </summary>
+        /// <summary> The rendering session enters the 'Expired' state when it has been in the 'Ready' state longer than its lease time. This is a terminal state. </summary>
         public static RenderingSessionStatus Expired { get; } = new RenderingSessionStatus(ExpiredValue);
         /// <summary> The rendering session is starting, but not accepting incoming connections yet. </summary>
         public static RenderingSessionStatus Starting { get; } = new RenderingSessionStatus(StartingValue);
         /// <summary> The rendering session is ready for incoming connections. </summary>
         public static RenderingSessionStatus Ready { get; } = new RenderingSessionStatus(ReadyValue);
-        /// <summary> The rendering session has been stopped with the &apos;Stop Session&apos; operation. This is a terminal state. </summary>
+        /// <summary> The rendering session has been stopped with the 'Stop Session' operation. This is a terminal state. </summary>
         public static RenderingSessionStatus Stopped { get; } = new RenderingSessionStatus(StoppedValue);
         /// <summary> Determines if two <see cref="RenderingSessionStatus"/> values are the same. </summary>
         public static bool operator ==(RenderingSessionStatus left, RenderingSessionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RenderingSessionStatus"/> values are not the same. </summary>
         public static bool operator !=(RenderingSessionStatus left, RenderingSessionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RenderingSessionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RenderingSessionStatus"/>. </summary>
         public static implicit operator RenderingSessionStatus(string value) => new RenderingSessionStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

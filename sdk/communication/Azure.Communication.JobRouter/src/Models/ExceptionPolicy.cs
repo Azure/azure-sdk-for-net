@@ -3,24 +3,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExceptionPolicy")]
-    [CodeGenSuppress("ExceptionPolicy")]
     public partial class ExceptionPolicy
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        internal ExceptionPolicy()
+        /// <summary> Initializes a new instance of an exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        public ExceptionPolicy(string exceptionPolicyId)
         {
-            ExceptionRules = new ChangeTrackingDictionary<string, ExceptionRule>();
+            Argument.AssertNotNullOrWhiteSpace(exceptionPolicyId, nameof(exceptionPolicyId));
+
+            Id = exceptionPolicyId;
         }
-        /// <summary> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </summary>
-        [CodeGenMember("ExceptionRules")]
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, ExceptionRule> ExceptionRules { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+
+        /// <summary> A collection of exception rules on the exception policy. </summary>
+        public IList<ExceptionRule> ExceptionRules { get; } = new List<ExceptionRule>();
+
+        /// <summary> Friendly name of this policy. </summary>
+        public string Name { get; set; }
+
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; internal set; }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

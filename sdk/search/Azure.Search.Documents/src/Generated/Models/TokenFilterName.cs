@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Defines the names of all token filters supported by Azure Cognitive Search. </summary>
+    /// <summary> Defines the names of all token filters supported by the search engine. </summary>
     public readonly partial struct TokenFilterName : IEquatable<TokenFilterName>
     {
         private readonly string _value;
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName ArabicNormalization { get; } = new TokenFilterName(ArabicNormalizationValue);
         /// <summary> Strips all characters after an apostrophe (including the apostrophe itself). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/tr/ApostropheFilter.html. </summary>
         public static TokenFilterName Apostrophe { get; } = new TokenFilterName(ApostropheValue);
-        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the &quot;Basic Latin&quot; Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
+        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
         public static TokenFilterName AsciiFolding { get; } = new TokenFilterName(AsciiFoldingValue);
         /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html. </summary>
         public static TokenFilterName CjkBigram { get; } = new TokenFilterName(CjkBigramValue);
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName CommonGram { get; } = new TokenFilterName(CommonGramValue);
         /// <summary> Generates n-grams of the given size(s) starting from the front or the back of an input token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html. </summary>
         public static TokenFilterName EdgeNGram { get; } = new TokenFilterName(EdgeNGramValue);
-        /// <summary> Removes elisions. For example, &quot;l&apos;avion&quot; (the plane) will be converted to &quot;avion&quot; (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
+        /// <summary> Removes elisions. For example, "l'avion" (the plane) will be converted to "avion" (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
         public static TokenFilterName Elision { get; } = new TokenFilterName(ElisionValue);
         /// <summary> Normalizes German characters according to the heuristics of the German2 snowball algorithm. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/de/GermanNormalizationFilter.html. </summary>
         public static TokenFilterName GermanNormalization { get; } = new TokenFilterName(GermanNormalizationValue);
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName Reverse { get; } = new TokenFilterName(ReverseValue);
         /// <summary> Normalizes use of the interchangeable Scandinavian characters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianNormalizationFilter.html. </summary>
         public static TokenFilterName ScandinavianNormalization { get; } = new TokenFilterName(ScandinavianNormalizationValue);
-        /// <summary> Folds Scandinavian characters åÅäæÄÆ-&amp;gt;a and öÖøØ-&amp;gt;o. It also discriminates against use of double vowels aa, ae, ao, oe and oo, leaving just the first one. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianFoldingFilter.html. </summary>
+        /// <summary> Folds Scandinavian characters åÅäæÄÆ-&gt;a and öÖøØ-&gt;o. It also discriminates against use of double vowels aa, ae, ao, oe and oo, leaving just the first one. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianFoldingFilter.html. </summary>
         public static TokenFilterName ScandinavianFoldingNormalization { get; } = new TokenFilterName(ScandinavianFoldingNormalizationValue);
         /// <summary> Creates combinations of tokens as a single token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/shingle/ShingleFilter.html. </summary>
         public static TokenFilterName Shingle { get; } = new TokenFilterName(ShingleValue);
@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName Snowball { get; } = new TokenFilterName(SnowballValue);
         /// <summary> Normalizes the Unicode representation of Sorani text. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ckb/SoraniNormalizationFilter.html. </summary>
         public static TokenFilterName SoraniNormalization { get; } = new TokenFilterName(SoraniNormalizationValue);
-        /// <summary> Language specific stemming filter. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters. </summary>
+        /// <summary> Language specific stemming filter. See https://learn.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters. </summary>
         public static TokenFilterName Stemmer { get; } = new TokenFilterName(StemmerValue);
         /// <summary> Removes stop words from a token stream. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html. </summary>
         public static TokenFilterName Stopwords { get; } = new TokenFilterName(StopwordsValue);
@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(TokenFilterName left, TokenFilterName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TokenFilterName"/> values are not the same. </summary>
         public static bool operator !=(TokenFilterName left, TokenFilterName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TokenFilterName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TokenFilterName"/>. </summary>
         public static implicit operator TokenFilterName(string value) => new TokenFilterName(value);
 
         /// <inheritdoc />
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

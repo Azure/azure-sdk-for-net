@@ -6,41 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Log location settings. </summary>
     public partial class LogLocationSettings
     {
-        /// <summary> Initializes a new instance of LogLocationSettings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public LogLocationSettings(FactoryLinkedServiceReference linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            LinkedServiceName = linkedServiceName;
-        }
-
-        /// <summary> Initializes a new instance of LogLocationSettings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
-        /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
-        internal LogLocationSettings(FactoryLinkedServiceReference linkedServiceName, BinaryData path)
-        {
-            LinkedServiceName = linkedServiceName;
-            Path = path;
-        }
-
-        /// <summary> Log storage linked service reference. </summary>
-        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
-        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -64,6 +44,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Path { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
+        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+            LinkedServiceName = linkedServiceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
+        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LinkedServiceName = linkedServiceName;
+            Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/> for deserialization. </summary>
+        internal LogLocationSettings()
+        {
+        }
+
+        /// <summary> Log storage linked service reference. </summary>
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Path { get; set; }
     }
 }

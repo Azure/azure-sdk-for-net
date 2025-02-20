@@ -21,197 +21,190 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
-                writer.WriteObjectValue(ColumnDelimiter);
+                writer.WritePropertyName("columnDelimiter"u8);
+                writer.WriteObjectValue<object>(ColumnDelimiter);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
-                writer.WritePropertyName("rowDelimiter");
-                writer.WriteObjectValue(RowDelimiter);
+                writer.WritePropertyName("rowDelimiter"u8);
+                writer.WriteObjectValue<object>(RowDelimiter);
             }
             if (Optional.IsDefined(EscapeChar))
             {
-                writer.WritePropertyName("escapeChar");
-                writer.WriteObjectValue(EscapeChar);
+                writer.WritePropertyName("escapeChar"u8);
+                writer.WriteObjectValue<object>(EscapeChar);
             }
             if (Optional.IsDefined(QuoteChar))
             {
-                writer.WritePropertyName("quoteChar");
-                writer.WriteObjectValue(QuoteChar);
+                writer.WritePropertyName("quoteChar"u8);
+                writer.WriteObjectValue<object>(QuoteChar);
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
-                writer.WriteObjectValue(NullValue);
+                writer.WritePropertyName("nullValue"u8);
+                writer.WriteObjectValue<object>(NullValue);
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
-                writer.WriteObjectValue(EncodingName);
+                writer.WritePropertyName("encodingName"u8);
+                writer.WriteObjectValue<object>(EncodingName);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
-                writer.WritePropertyName("treatEmptyAsNull");
-                writer.WriteObjectValue(TreatEmptyAsNull);
+                writer.WritePropertyName("treatEmptyAsNull"u8);
+                writer.WriteObjectValue<object>(TreatEmptyAsNull);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
-                writer.WritePropertyName("skipLineCount");
-                writer.WriteObjectValue(SkipLineCount);
+                writer.WritePropertyName("skipLineCount"u8);
+                writer.WriteObjectValue<object>(SkipLineCount);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
-                writer.WriteObjectValue(FirstRowAsHeader);
+                writer.WritePropertyName("firstRowAsHeader"u8);
+                writer.WriteObjectValue<object>(FirstRowAsHeader);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
-                writer.WriteObjectValue(Serializer);
+                writer.WritePropertyName("serializer"u8);
+                writer.WriteObjectValue<object>(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
-                writer.WriteObjectValue(Deserializer);
+                writer.WritePropertyName("deserializer"u8);
+                writer.WriteObjectValue<object>(Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static TextFormat DeserializeTextFormat(JsonElement element)
         {
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> escapeChar = default;
-            Optional<object> quoteChar = default;
-            Optional<object> nullValue = default;
-            Optional<object> encodingName = default;
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipLineCount = default;
-            Optional<object> firstRowAsHeader = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object columnDelimiter = default;
+            object rowDelimiter = default;
+            object escapeChar = default;
+            object quoteChar = default;
+            object nullValue = default;
+            object encodingName = default;
+            object treatEmptyAsNull = default;
+            object skipLineCount = default;
+            object firstRowAsHeader = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columnDelimiter"))
+                if (property.NameEquals("columnDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     columnDelimiter = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("rowDelimiter"))
+                if (property.NameEquals("rowDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowDelimiter = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("escapeChar"))
+                if (property.NameEquals("escapeChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     escapeChar = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("quoteChar"))
+                if (property.NameEquals("quoteChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quoteChar = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("nullValue"))
+                if (property.NameEquals("nullValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nullValue = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("encodingName"))
+                if (property.NameEquals("encodingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encodingName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("treatEmptyAsNull"))
+                if (property.NameEquals("treatEmptyAsNull"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     treatEmptyAsNull = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("skipLineCount"))
+                if (property.NameEquals("skipLineCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skipLineCount = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("firstRowAsHeader"))
+                if (property.NameEquals("firstRowAsHeader"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstRowAsHeader = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serializer = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deserializer = property.Value.GetObject();
@@ -220,7 +213,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
+            return new TextFormat(
+                type,
+                serializer,
+                deserializer,
+                additionalProperties,
+                columnDelimiter,
+                rowDelimiter,
+                escapeChar,
+                quoteChar,
+                nullValue,
+                encodingName,
+                treatEmptyAsNull,
+                skipLineCount,
+                firstRowAsHeader);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TextFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class TextFormatConverter : JsonConverter<TextFormat>
@@ -229,6 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override TextFormat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct EnabledState : IEquatable<EnabledState>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(EnabledState left, EnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnabledState"/> values are not the same. </summary>
         public static bool operator !=(EnabledState left, EnabledState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnabledState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnabledState"/>. </summary>
         public static implicit operator EnabledState(string value) => new EnabledState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

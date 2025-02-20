@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static MonitorPublicNetworkAccess Enabled { get; } = new MonitorPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MonitorPublicNetworkAccess Disabled { get; } = new MonitorPublicNetworkAccess(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static MonitorPublicNetworkAccess SecuredByPerimeter { get; } = new MonitorPublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorPublicNetworkAccess"/>. </summary>
         public static implicit operator MonitorPublicNetworkAccess(string value) => new MonitorPublicNetworkAccess(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -35,7 +35,10 @@ namespace Azure.Storage.Files.Shares
             _writeIndex = position;
         }
 
-        protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -46,7 +49,7 @@ namespace Azure.Storage.Files.Shares
                await _fileClient.UploadRangeInternal(
                     range: httpRange,
                     content: _buffer,
-                    _validationOptions,
+                    validationOptions,
                     _progressHandler,
                     _conditions,
                     fileLastWrittenMode: null,
@@ -55,12 +58,8 @@ namespace Azure.Storage.Files.Shares
                     .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
-                _buffer.Clear();
             }
         }
-
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
-            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
         protected override void ValidateBufferSize(long bufferSize)
         {

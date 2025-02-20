@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         public static ServerLevelPermissionsGroup ToServerLevelPermissionsGroup(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.Default;
-            if (string.Equals(value, "MigrationFromSqlServerToAzureDB", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB;
-            if (string.Equals(value, "MigrationFromSqlServerToAzureMI", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI;
-            if (string.Equals(value, "MigrationFromMySQLToAzureDBForMySQL", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromMySqlToAzureDBForMySql;
-            if (string.Equals(value, "MigrationFromSqlServerToAzureVM", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVm;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return ServerLevelPermissionsGroup.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MigrationFromSqlServerToAzureDB")) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MigrationFromSqlServerToAzureMI")) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MigrationFromMySQLToAzureDBForMySQL")) return ServerLevelPermissionsGroup.MigrationFromMySqlToAzureDBForMySql;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MigrationFromSqlServerToAzureVM")) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVm;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServerLevelPermissionsGroup value.");
         }
     }

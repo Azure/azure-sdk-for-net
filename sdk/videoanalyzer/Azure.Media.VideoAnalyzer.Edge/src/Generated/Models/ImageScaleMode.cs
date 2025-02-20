@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Describes the image scaling mode to be applied. Default mode is &apos;pad&apos;. </summary>
+    /// <summary> Describes the image scaling mode to be applied. Default mode is 'pad'. </summary>
     public readonly partial struct ImageScaleMode : IEquatable<ImageScaleMode>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(ImageScaleMode left, ImageScaleMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageScaleMode"/> values are not the same. </summary>
         public static bool operator !=(ImageScaleMode left, ImageScaleMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageScaleMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageScaleMode"/>. </summary>
         public static implicit operator ImageScaleMode(string value) => new ImageScaleMode(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

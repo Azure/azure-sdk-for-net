@@ -17,16 +17,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+                DefaultAzureCredential credential = new();
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
+                var credential = TestEnvironment.Credential;
 #endif
 
                 #region Snippet:ServiceBusSendValueBody
 
-                var client = new ServiceBusClient(connectionString);
+                var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 var message = new ServiceBusMessage();
@@ -68,15 +70,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+                DefaultAzureCredential credential = new();
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
+                var credential = TestEnvironment.Credential;
 #endif
 
                 #region Snippet:ServiceBusSetMiscellaneousProperties
-                var client = new ServiceBusClient(connectionString);
+                var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 var message = new ServiceBusMessage("message with AMQP properties set");

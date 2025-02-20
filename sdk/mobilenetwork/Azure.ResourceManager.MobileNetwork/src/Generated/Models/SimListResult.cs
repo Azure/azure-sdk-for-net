@@ -5,33 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for list SIMs API service call. </summary>
+    /// <summary>
+    /// Response for list SIMs API service call.
+    /// Serialized Name: SimListResult
+    /// </summary>
     internal partial class SimListResult
     {
-        /// <summary> Initializes a new instance of SimListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SimListResult"/>. </summary>
         internal SimListResult()
         {
-            Value = new ChangeTrackingList<SimData>();
+            Value = new ChangeTrackingList<MobileNetworkSimData>();
         }
 
-        /// <summary> Initializes a new instance of SimListResult. </summary>
-        /// <param name="value"> A list of SIMs in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SimListResult(IReadOnlyList<SimData> value, string nextLink)
+        /// <summary> Initializes a new instance of <see cref="SimListResult"/>. </summary>
+        /// <param name="value">
+        /// A list of SIMs in a resource group.
+        /// Serialized Name: SimListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: SimListResult.nextLink
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimListResult(IReadOnlyList<MobileNetworkSimData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SIMs in a resource group. </summary>
-        public IReadOnlyList<SimData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// A list of SIMs in a resource group.
+        /// Serialized Name: SimListResult.value
+        /// </summary>
+        public IReadOnlyList<MobileNetworkSimData> Value { get; }
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: SimListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

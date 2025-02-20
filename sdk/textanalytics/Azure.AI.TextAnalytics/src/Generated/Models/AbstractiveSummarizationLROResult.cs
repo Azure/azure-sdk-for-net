@@ -6,17 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> An object representing the results for an Abstractive Summarization task. </summary>
     internal partial class AbstractiveSummarizationLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of AbstractiveSummarizationLROResult. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROResult"/>. </summary>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <param name="results"> An object representing the pre-build summarization results of each document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         public AbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AbstractiveSummarizationResult results) : base(lastUpdateDateTime, status)
@@ -27,9 +25,9 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults;
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummarizationLROResult. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROResult"/>. </summary>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"> An object representing the pre-build summarization results of each document. </param>

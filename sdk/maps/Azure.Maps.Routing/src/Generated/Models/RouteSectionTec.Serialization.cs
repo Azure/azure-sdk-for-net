@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,25 +15,27 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSectionTec DeserializeRouteSectionTec(JsonElement element)
         {
-            Optional<int> effectCode = default;
-            Optional<IReadOnlyList<RouteSectionTecCause>> causes = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? effectCode = default;
+            IReadOnlyList<RouteSectionTecCause> causes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("effectCode"))
+                if (property.NameEquals("effectCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("causes"))
+                if (property.NameEquals("causes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteSectionTecCause> array = new List<RouteSectionTecCause>();
@@ -45,7 +47,15 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSectionTec(Optional.ToNullable(effectCode), Optional.ToList(causes));
+            return new RouteSectionTec(effectCode, causes ?? new ChangeTrackingList<RouteSectionTecCause>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteSectionTec FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteSectionTec(document.RootElement);
         }
     }
 }

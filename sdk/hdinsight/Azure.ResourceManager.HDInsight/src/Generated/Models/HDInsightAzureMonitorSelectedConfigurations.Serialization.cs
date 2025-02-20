@@ -5,25 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAzureMonitorSelectedConfigurations : IUtf8JsonSerializable
+    public partial class HDInsightAzureMonitorSelectedConfigurations : IUtf8JsonSerializable, IJsonModel<HDInsightAzureMonitorSelectedConfigurations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAzureMonitorSelectedConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HDInsightAzureMonitorSelectedConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ConfigurationVersion))
             {
-                writer.WritePropertyName("configurationVersion");
+                writer.WritePropertyName("configurationVersion"u8);
                 writer.WriteStringValue(ConfigurationVersion);
             }
             if (Optional.IsCollectionDefined(GlobalConfigurations))
             {
-                writer.WritePropertyName("globalConfigurations");
+                writer.WritePropertyName("globalConfigurations"u8);
                 writer.WriteStartObject();
                 foreach (var item in GlobalConfigurations)
                 {
@@ -34,34 +52,67 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(TableList))
             {
-                writer.WritePropertyName("tableList");
+                writer.WritePropertyName("tableList"u8);
                 writer.WriteStartArray();
                 foreach (var item in TableList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static HDInsightAzureMonitorSelectedConfigurations DeserializeHDInsightAzureMonitorSelectedConfigurations(JsonElement element)
+        HDInsightAzureMonitorSelectedConfigurations IJsonModel<HDInsightAzureMonitorSelectedConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> configurationVersion = default;
-            Optional<IDictionary<string, string>> globalConfigurations = default;
-            Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightAzureMonitorSelectedConfigurations(document.RootElement, options);
+        }
+
+        internal static HDInsightAzureMonitorSelectedConfigurations DeserializeHDInsightAzureMonitorSelectedConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string configurationVersion = default;
+            IDictionary<string, string> globalConfigurations = default;
+            IList<HDInsightAzureMonitorTableConfiguration> tableList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationVersion"))
+                if (property.NameEquals("configurationVersion"u8))
                 {
                     configurationVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("globalConfigurations"))
+                if (property.NameEquals("globalConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -72,23 +123,58 @@ namespace Azure.ResourceManager.HDInsight.Models
                     globalConfigurations = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tableList"))
+                if (property.NameEquals("tableList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightAzureMonitorTableConfiguration> array = new List<HDInsightAzureMonitorTableConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightAzureMonitorTableConfiguration.DeserializeHDInsightAzureMonitorTableConfiguration(item));
+                        array.Add(HDInsightAzureMonitorTableConfiguration.DeserializeHDInsightAzureMonitorTableConfiguration(item, options));
                     }
                     tableList = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, Optional.ToDictionary(globalConfigurations), Optional.ToList(tableList));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion, globalConfigurations ?? new ChangeTrackingDictionary<string, string>(), tableList ?? new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HDInsightAzureMonitorSelectedConfigurations IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightAzureMonitorSelectedConfigurations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

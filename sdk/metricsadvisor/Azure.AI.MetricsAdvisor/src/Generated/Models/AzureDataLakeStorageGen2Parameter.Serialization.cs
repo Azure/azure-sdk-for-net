@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (AccountName != null)
                 {
-                    writer.WritePropertyName("accountName");
+                    writer.WritePropertyName("accountName"u8);
                     writer.WriteStringValue(AccountName);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (AccountKey != null)
                 {
-                    writer.WritePropertyName("accountKey");
+                    writer.WritePropertyName("accountKey"u8);
                     writer.WriteStringValue(AccountKey);
                 }
                 else
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (FileSystemName != null)
             {
-                writer.WritePropertyName("fileSystemName");
+                writer.WritePropertyName("fileSystemName"u8);
                 writer.WriteStringValue(FileSystemName);
             }
             else
@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (DirectoryTemplate != null)
             {
-                writer.WritePropertyName("directoryTemplate");
+                writer.WritePropertyName("directoryTemplate"u8);
                 writer.WriteStringValue(DirectoryTemplate);
             }
             else
@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (FileTemplate != null)
             {
-                writer.WritePropertyName("fileTemplate");
+                writer.WritePropertyName("fileTemplate"u8);
                 writer.WriteStringValue(FileTemplate);
             }
             else
@@ -71,14 +71,18 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureDataLakeStorageGen2Parameter DeserializeAzureDataLakeStorageGen2Parameter(JsonElement element)
         {
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string accountName = default;
+            string accountKey = default;
             string fileSystemName = default;
             string directoryTemplate = default;
             string fileTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     accountKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileSystemName"))
+                if (property.NameEquals("fileSystemName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     fileSystemName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("directoryTemplate"))
+                if (property.NameEquals("directoryTemplate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +122,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     directoryTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileTemplate"))
+                if (property.NameEquals("fileTemplate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +133,23 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureDataLakeStorageGen2Parameter(accountName.Value, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate);
+            return new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AzureDataLakeStorageGen2Parameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataLakeStorageGen2Parameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

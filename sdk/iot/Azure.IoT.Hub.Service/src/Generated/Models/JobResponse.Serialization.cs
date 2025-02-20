@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -15,133 +14,149 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static JobResponse DeserializeJobResponse(JsonElement element)
         {
-            Optional<string> jobId = default;
-            Optional<string> queryCondition = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<long> maxExecutionTimeInSeconds = default;
-            Optional<JobResponseType> type = default;
-            Optional<CloudToDeviceMethodRequest> cloudToDeviceMethod = default;
-            Optional<TwinData> updateTwin = default;
-            Optional<JobResponseStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> statusMessage = default;
-            Optional<DeviceJobStatistics> deviceJobStatistics = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string jobId = default;
+            string queryCondition = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            long? maxExecutionTimeInSeconds = default;
+            JobResponseType? type = default;
+            CloudToDeviceMethodRequest cloudToDeviceMethod = default;
+            TwinData updateTwin = default;
+            JobResponseStatus? status = default;
+            string failureReason = default;
+            string statusMessage = default;
+            DeviceJobStatistics deviceJobStatistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryCondition"))
+                if (property.NameEquals("queryCondition"u8))
                 {
                     queryCondition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("maxExecutionTimeInSeconds"))
+                if (property.NameEquals("maxExecutionTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxExecutionTimeInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new JobResponseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cloudToDeviceMethod"))
+                if (property.NameEquals("cloudToDeviceMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
                     continue;
                 }
-                if (property.NameEquals("updateTwin"))
+                if (property.NameEquals("updateTwin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateTwin = TwinData.DeserializeTwinData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new JobResponseStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failureReason"))
+                if (property.NameEquals("failureReason"u8))
                 {
                     failureReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceJobStatistics"))
+                if (property.NameEquals("deviceJobStatistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deviceJobStatistics = DeviceJobStatistics.DeserializeDeviceJobStatistics(property.Value);
                     continue;
                 }
             }
-            return new JobResponse(jobId.Value, queryCondition.Value, Optional.ToNullable(createdTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(maxExecutionTimeInSeconds), Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, Optional.ToNullable(status), failureReason.Value, statusMessage.Value, deviceJobStatistics.Value);
+            return new JobResponse(
+                jobId,
+                queryCondition,
+                createdTime,
+                startTime,
+                endTime,
+                maxExecutionTimeInSeconds,
+                type,
+                cloudToDeviceMethod,
+                updateTwin,
+                status,
+                failureReason,
+                statusMessage,
+                deviceJobStatistics);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JobResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJobResponse(document.RootElement);
         }
     }
 }

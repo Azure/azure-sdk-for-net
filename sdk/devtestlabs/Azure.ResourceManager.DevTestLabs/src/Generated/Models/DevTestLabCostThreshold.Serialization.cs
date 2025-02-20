@@ -5,95 +5,187 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCostThreshold : IUtf8JsonSerializable
+    public partial class DevTestLabCostThreshold : IUtf8JsonSerializable, IJsonModel<DevTestLabCostThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCostThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevTestLabCostThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ThresholdId))
             {
-                writer.WritePropertyName("thresholdId");
+                writer.WritePropertyName("thresholdId"u8);
                 writer.WriteStringValue(ThresholdId);
             }
             if (Optional.IsDefined(PercentageThreshold))
             {
-                writer.WritePropertyName("percentageThreshold");
-                writer.WriteObjectValue(PercentageThreshold);
+                writer.WritePropertyName("percentageThreshold"u8);
+                writer.WriteObjectValue(PercentageThreshold, options);
             }
             if (Optional.IsDefined(DisplayOnChart))
             {
-                writer.WritePropertyName("displayOnChart");
+                writer.WritePropertyName("displayOnChart"u8);
                 writer.WriteStringValue(DisplayOnChart.Value.ToString());
             }
             if (Optional.IsDefined(SendNotificationWhenExceeded))
             {
-                writer.WritePropertyName("sendNotificationWhenExceeded");
+                writer.WritePropertyName("sendNotificationWhenExceeded"u8);
                 writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToString());
             }
             if (Optional.IsDefined(NotificationSent))
             {
-                writer.WritePropertyName("notificationSent");
+                writer.WritePropertyName("notificationSent"u8);
                 writer.WriteStringValue(NotificationSent);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element)
+        DevTestLabCostThreshold IJsonModel<DevTestLabCostThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> thresholdId = default;
-            Optional<PercentageCostThresholdProperties> percentageThreshold = default;
-            Optional<DevTestLabCostThresholdStatus> displayOnChart = default;
-            Optional<DevTestLabCostThresholdStatus> sendNotificationWhenExceeded = default;
-            Optional<string> notificationSent = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabCostThreshold(document.RootElement, options);
+        }
+
+        internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string thresholdId = default;
+            PercentageCostThresholdProperties percentageThreshold = default;
+            DevTestLabCostThresholdStatus? displayOnChart = default;
+            DevTestLabCostThresholdStatus? sendNotificationWhenExceeded = default;
+            string notificationSent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("thresholdId"))
+                if (property.NameEquals("thresholdId"u8))
                 {
                     thresholdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("percentageThreshold"))
+                if (property.NameEquals("percentageThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value);
+                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("displayOnChart"))
+                if (property.NameEquals("displayOnChart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     displayOnChart = new DevTestLabCostThresholdStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendNotificationWhenExceeded"))
+                if (property.NameEquals("sendNotificationWhenExceeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendNotificationWhenExceeded = new DevTestLabCostThresholdStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationSent"))
+                if (property.NameEquals("notificationSent"u8))
                 {
                     notificationSent = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabCostThreshold(thresholdId.Value, percentageThreshold.Value, Optional.ToNullable(displayOnChart), Optional.ToNullable(sendNotificationWhenExceeded), notificationSent.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabCostThreshold(
+                thresholdId,
+                percentageThreshold,
+                displayOnChart,
+                sendNotificationWhenExceeded,
+                notificationSent,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabCostThreshold>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabCostThreshold IPersistableModel<DevTestLabCostThreshold>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabCostThreshold(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabCostThreshold>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

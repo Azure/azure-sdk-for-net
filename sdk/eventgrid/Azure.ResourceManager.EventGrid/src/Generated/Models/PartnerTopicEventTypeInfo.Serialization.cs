@@ -5,69 +5,213 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerTopicEventTypeInfo : IUtf8JsonSerializable
+    public partial class PartnerTopicEventTypeInfo : IUtf8JsonSerializable, IJsonModel<PartnerTopicEventTypeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerTopicEventTypeInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PartnerTopicEventTypeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicEventTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(InlineEventTypes))
             {
-                writer.WritePropertyName("inlineEventTypes");
+                writer.WritePropertyName("inlineEventTypes"u8);
                 writer.WriteStartObject();
                 foreach (var item in InlineEventTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static PartnerTopicEventTypeInfo DeserializePartnerTopicEventTypeInfo(JsonElement element)
+        PartnerTopicEventTypeInfo IJsonModel<PartnerTopicEventTypeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<EventDefinitionKind> kind = default;
-            Optional<IDictionary<string, InlineEventProperties>> inlineEventTypes = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicEventTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerTopicEventTypeInfo(document.RootElement, options);
+        }
+
+        internal static PartnerTopicEventTypeInfo DeserializePartnerTopicEventTypeInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            EventDefinitionKind? kind = default;
+            IDictionary<string, InlineEventProperties> inlineEventTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new EventDefinitionKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("inlineEventTypes"))
+                if (property.NameEquals("inlineEventTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, InlineEventProperties> dictionary = new Dictionary<string, InlineEventProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value));
+                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value, options));
                     }
                     inlineEventTypes = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PartnerTopicEventTypeInfo(Optional.ToNullable(kind), Optional.ToDictionary(inlineEventTypes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PartnerTopicEventTypeInfo(kind, inlineEventTypes ?? new ChangeTrackingDictionary<string, InlineEventProperties>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InlineEventTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inlineEventTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(InlineEventTypes))
+                {
+                    if (InlineEventTypes.Any())
+                    {
+                        builder.Append("  inlineEventTypes: ");
+                        builder.AppendLine("{");
+                        foreach (var item in InlineEventTypes)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  inlineEventTypes: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PartnerTopicEventTypeInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicEventTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PartnerTopicEventTypeInfo IPersistableModel<PartnerTopicEventTypeInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicEventTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePartnerTopicEventTypeInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PartnerTopicEventTypeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

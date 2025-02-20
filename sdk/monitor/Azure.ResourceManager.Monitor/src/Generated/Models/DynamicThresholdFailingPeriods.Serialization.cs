@@ -5,41 +5,130 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable
+    public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable, IJsonModel<DynamicThresholdFailingPeriods>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicThresholdFailingPeriods>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DynamicThresholdFailingPeriods>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("numberOfEvaluationPeriods");
-            writer.WriteNumberValue(NumberOfEvaluationPeriods);
-            writer.WritePropertyName("minFailingPeriodsToAlert");
-            writer.WriteNumberValue(MinFailingPeriodsToAlert);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DynamicThresholdFailingPeriods DeserializeDynamicThresholdFailingPeriods(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("numberOfEvaluationPeriods"u8);
+            writer.WriteNumberValue(NumberOfEvaluationPeriods);
+            writer.WritePropertyName("minFailingPeriodsToAlert"u8);
+            writer.WriteNumberValue(MinFailingPeriodsToAlert);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DynamicThresholdFailingPeriods IJsonModel<DynamicThresholdFailingPeriods>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicThresholdFailingPeriods(document.RootElement, options);
+        }
+
+        internal static DynamicThresholdFailingPeriods DeserializeDynamicThresholdFailingPeriods(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             float numberOfEvaluationPeriods = default;
             float minFailingPeriodsToAlert = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfEvaluationPeriods"))
+                if (property.NameEquals("numberOfEvaluationPeriods"u8))
                 {
                     numberOfEvaluationPeriods = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("minFailingPeriodsToAlert"))
+                if (property.NameEquals("minFailingPeriodsToAlert"u8))
                 {
                     minFailingPeriodsToAlert = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynamicThresholdFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DynamicThresholdFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DynamicThresholdFailingPeriods>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DynamicThresholdFailingPeriods IPersistableModel<DynamicThresholdFailingPeriods>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynamicThresholdFailingPeriods(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynamicThresholdFailingPeriods>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

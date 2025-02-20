@@ -5,37 +5,118 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformSkuRestrictions
+    public partial class AppPlatformSkuRestrictions : IUtf8JsonSerializable, IJsonModel<AppPlatformSkuRestrictions>
     {
-        internal static AppPlatformSkuRestrictions DeserializeAppPlatformSkuRestrictions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformSkuRestrictions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformSkuRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AppPlatformSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<AppPlatformSkuRestrictionInfo> restrictionInfo = default;
-            Optional<AppPlatformSkuRestrictionsReasonCode> reasonCode = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(RestrictionsType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RestrictionsType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RestrictionInfo))
+            {
+                writer.WritePropertyName("restrictionInfo"u8);
+                writer.WriteObjectValue(RestrictionInfo, options);
+            }
+            if (Optional.IsDefined(ReasonCode))
+            {
+                writer.WritePropertyName("reasonCode"u8);
+                writer.WriteStringValue(ReasonCode.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AppPlatformSkuRestrictions IJsonModel<AppPlatformSkuRestrictions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformSkuRestrictions(document.RootElement, options);
+        }
+
+        internal static AppPlatformSkuRestrictions DeserializeAppPlatformSkuRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AppPlatformSkuRestrictionsType? type = default;
+            IReadOnlyList<string> values = default;
+            AppPlatformSkuRestrictionInfo restrictionInfo = default;
+            AppPlatformSkuRestrictionsReasonCode? reasonCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new AppPlatformSkuRestrictionsType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -46,28 +127,62 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("restrictionInfo"))
+                if (property.NameEquals("restrictionInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restrictionInfo = AppPlatformSkuRestrictionInfo.DeserializeAppPlatformSkuRestrictionInfo(property.Value);
+                    restrictionInfo = AppPlatformSkuRestrictionInfo.DeserializeAppPlatformSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonCode = new AppPlatformSkuRestrictionsReasonCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformSkuRestrictions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformSkuRestrictions IPersistableModel<AppPlatformSkuRestrictions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformSkuRestrictions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformSkuRestrictions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

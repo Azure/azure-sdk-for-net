@@ -5,117 +5,227 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class MonitorProperties : IUtf8JsonSerializable
+    public partial class MonitorProperties : IUtf8JsonSerializable, IJsonModel<MonitorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitoringStatus))
-            {
-                writer.WritePropertyName("monitoringStatus");
-                writer.WriteStringValue(MonitoringStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(DatadogOrganizationProperties))
-            {
-                writer.WritePropertyName("datadogOrganizationProperties");
-                writer.WriteObjectValue(DatadogOrganizationProperties);
-            }
-            if (Optional.IsDefined(UserInfo))
-            {
-                writer.WritePropertyName("userInfo");
-                writer.WriteObjectValue(UserInfo);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DatadogOrganizationProperties> datadogOrganizationProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(MonitoringStatus))
+            {
+                writer.WritePropertyName("monitoringStatus"u8);
+                writer.WriteStringValue(MonitoringStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
+            {
+                writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
+                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(DatadogOrganizationProperties))
+            {
+                writer.WritePropertyName("datadogOrganizationProperties"u8);
+                writer.WriteObjectValue(DatadogOrganizationProperties, options);
+            }
+            if (Optional.IsDefined(UserInfo))
+            {
+                writer.WritePropertyName("userInfo"u8);
+                writer.WriteObjectValue(UserInfo, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
+            {
+                writer.WritePropertyName("liftrResourceCategory"u8);
+                writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
+            {
+                writer.WritePropertyName("liftrResourcePreference"u8);
+                writer.WriteNumberValue(LiftrResourcePreference.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MonitorProperties IJsonModel<MonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorProperties(document.RootElement, options);
+        }
+
+        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ProvisioningState? provisioningState = default;
+            MonitoringStatus? monitoringStatus = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            DatadogOrganizationProperties datadogOrganizationProperties = default;
+            UserInfo userInfo = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitoringStatus"))
+                if (property.NameEquals("monitoringStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringStatus = new MonitoringStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("marketplaceSubscriptionStatus"))
+                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("datadogOrganizationProperties"))
+                if (property.NameEquals("datadogOrganizationProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value);
+                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userInfo"))
+                if (property.NameEquals("userInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("liftrResourceCategory"))
+                if (property.NameEquals("liftrResourceCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     liftrResourceCategory = new LiftrResourceCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("liftrResourcePreference"))
+                if (property.NameEquals("liftrResourcePreference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     liftrResourcePreference = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                datadogOrganizationProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorProperties IPersistableModel<MonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

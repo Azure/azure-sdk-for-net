@@ -15,31 +15,51 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minAlertSeverity");
+            writer.WritePropertyName("minAlertSeverity"u8);
             writer.WriteStringValue(MinimumAlertSeverity.ToString());
-            writer.WritePropertyName("maxAlertSeverity");
+            writer.WritePropertyName("maxAlertSeverity"u8);
             writer.WriteStringValue(MaximumAlertSeverity.ToString());
             writer.WriteEndObject();
         }
 
         internal static SeverityCondition DeserializeSeverityCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnomalySeverity minAlertSeverity = default;
             AnomalySeverity maxAlertSeverity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minAlertSeverity"))
+                if (property.NameEquals("minAlertSeverity"u8))
                 {
                     minAlertSeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxAlertSeverity"))
+                if (property.NameEquals("maxAlertSeverity"u8))
                 {
                     maxAlertSeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
             }
             return new SeverityCondition(minAlertSeverity, maxAlertSeverity);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SeverityCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSeverityCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

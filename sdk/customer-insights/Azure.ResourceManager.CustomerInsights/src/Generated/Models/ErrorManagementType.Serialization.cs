@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static ErrorManagementType ToErrorManagementType(this string value)
         {
-            if (string.Equals(value, "RejectAndContinue", StringComparison.InvariantCultureIgnoreCase)) return ErrorManagementType.RejectAndContinue;
-            if (string.Equals(value, "StopImport", StringComparison.InvariantCultureIgnoreCase)) return ErrorManagementType.StopImport;
-            if (string.Equals(value, "RejectUntilLimit", StringComparison.InvariantCultureIgnoreCase)) return ErrorManagementType.RejectUntilLimit;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RejectAndContinue")) return ErrorManagementType.RejectAndContinue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StopImport")) return ErrorManagementType.StopImport;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RejectUntilLimit")) return ErrorManagementType.RejectUntilLimit;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorManagementType value.");
         }
     }

@@ -11,9 +11,13 @@ namespace: Azure.ResourceManager.ExtendedLocations
 require: https://github.com/Azure/azure-rest-api-specs/blob/691920cda83cc0b89a8c821d0bb285100fad22b4/specification/extendedlocation/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 rename-mapping:
   CustomLocationPropertiesAuthentication: CustomLocationAuthentication
@@ -32,7 +36,7 @@ format-by-name-rules:
   'clusterExtensionId': 'arm-id'
   'HostResourceId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

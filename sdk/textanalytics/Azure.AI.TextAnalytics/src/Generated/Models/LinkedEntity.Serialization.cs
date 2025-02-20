@@ -17,29 +17,29 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("matches");
+            writer.WritePropertyName("matches"u8);
             writer.WriteStartArray();
             foreach (var item in Matches)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LinkedEntityMatch>(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("language");
+            writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
             if (Optional.IsDefined(DataSourceEntityId))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(DataSourceEntityId);
             }
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url.AbsoluteUri);
-            writer.WritePropertyName("dataSource");
+            writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
             if (Optional.IsDefined(BingEntitySearchApiId))
             {
-                writer.WritePropertyName("bingId");
+                writer.WritePropertyName("bingId"u8);
                 writer.WriteStringValue(BingEntitySearchApiId);
             }
             writer.WriteEndObject();
@@ -50,18 +50,18 @@ namespace Azure.AI.TextAnalytics
             string name = default;
             IEnumerable<LinkedEntityMatch> matches = default;
             string language = default;
-            Optional<string> id = default;
+            string id = default;
             Uri url = default;
             string dataSource = default;
-            Optional<string> bingId = default;
+            string bingId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("matches"))
+                if (property.NameEquals("matches"u8))
                 {
                     List<LinkedEntityMatch> array = new List<LinkedEntityMatch>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -71,33 +71,56 @@ namespace Azure.AI.TextAnalytics
                     matches = array;
                     continue;
                 }
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bingId"))
+                if (property.NameEquals("bingId"u8))
                 {
                     bingId = property.Value.GetString();
                     continue;
                 }
             }
-            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
+            return new LinkedEntity(
+                name,
+                matches,
+                language,
+                id,
+                url,
+                dataSource,
+                bingId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkedEntity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkedEntity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -5,43 +5,150 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    internal partial class ServicesDescriptionListResult
+    internal partial class ServicesDescriptionListResult : IUtf8JsonSerializable, IJsonModel<ServicesDescriptionListResult>
     {
-        internal static ServicesDescriptionListResult DeserializeServicesDescriptionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicesDescriptionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServicesDescriptionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<HealthcareApisServiceData>> value = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicesDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServicesDescriptionListResult)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ServicesDescriptionListResult IJsonModel<ServicesDescriptionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicesDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServicesDescriptionListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicesDescriptionListResult(document.RootElement, options);
+        }
+
+        internal static ServicesDescriptionListResult DeserializeServicesDescriptionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextLink = default;
+            IReadOnlyList<HealthcareApisServiceData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareApisServiceData> array = new List<HealthcareApisServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisServiceData.DeserializeHealthcareApisServiceData(item));
+                        array.Add(HealthcareApisServiceData.DeserializeHealthcareApisServiceData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServicesDescriptionListResult(nextLink.Value, Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServicesDescriptionListResult(nextLink, value ?? new ChangeTrackingList<HealthcareApisServiceData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServicesDescriptionListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicesDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServicesDescriptionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServicesDescriptionListResult IPersistableModel<ServicesDescriptionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicesDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServicesDescriptionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServicesDescriptionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServicesDescriptionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

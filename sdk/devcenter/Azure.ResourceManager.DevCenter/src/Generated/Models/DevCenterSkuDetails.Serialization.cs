@@ -5,64 +5,108 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterSkuDetails : IUtf8JsonSerializable
+    public partial class DevCenterSkuDetails : IUtf8JsonSerializable, IJsonModel<DevCenterSkuDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterSkuDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevCenterSkuDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
-            {
-                writer.WritePropertyName("tier");
-                writer.WriteStringValue(Tier.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size");
-                writer.WriteStringValue(Size);
-            }
-            if (Optional.IsDefined(Family))
-            {
-                writer.WritePropertyName("family");
-                writer.WriteStringValue(Family);
-            }
-            if (Optional.IsDefined(Capacity))
-            {
-                writer.WritePropertyName("capacity");
-                writer.WriteNumberValue(Capacity.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DevCenterSkuDetails DeserializeDevCenterSkuDetails(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<Capability>> capabilities = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterSkuDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        DevCenterSkuDetails IJsonModel<DevCenterSkuDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterSkuDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterSkuDetails(document.RootElement, options);
+        }
+
+        internal static DevCenterSkuDetails DeserializeDevCenterSkuDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceType? resourceType = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<DevCenterCapability> capabilities = default;
             string name = default;
-            Optional<DevCenterSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            DevCenterSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("locations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,58 +117,100 @@ namespace Azure.ResourceManager.DevCenter.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<DevCenterCapability> array = new List<DevCenterCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item));
+                        array.Add(DevCenterCapability.DeserializeDevCenterCapability(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToDevCenterSkuTier();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), resourceType.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevCenterSkuDetails(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData,
+                resourceType,
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<DevCenterCapability>());
         }
+
+        BinaryData IPersistableModel<DevCenterSkuDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterSkuDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevCenterSkuDetails IPersistableModel<DevCenterSkuDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevCenterSkuDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterSkuDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevCenterSkuDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

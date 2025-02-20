@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static AutomaticTuningOptionModeActual ToAutomaticTuningOptionModeActual(this string value)
         {
-            if (string.Equals(value, "Off", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningOptionModeActual.Off;
-            if (string.Equals(value, "On", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningOptionModeActual.On;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off")) return AutomaticTuningOptionModeActual.Off;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "On")) return AutomaticTuningOptionModeActual.On;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningOptionModeActual value.");
         }
     }

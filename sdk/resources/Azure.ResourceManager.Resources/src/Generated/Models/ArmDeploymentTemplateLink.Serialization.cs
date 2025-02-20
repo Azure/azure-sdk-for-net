@@ -6,85 +6,303 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentTemplateLink : IUtf8JsonSerializable
+    public partial class ArmDeploymentTemplateLink : IUtf8JsonSerializable, IJsonModel<ArmDeploymentTemplateLink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentTemplateLink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ArmDeploymentTemplateLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentTemplateLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmDeploymentTemplateLink)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(RelativePath))
             {
-                writer.WritePropertyName("relativePath");
+                writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             if (Optional.IsDefined(ContentVersion))
             {
-                writer.WritePropertyName("contentVersion");
+                writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
             if (Optional.IsDefined(QueryString))
             {
-                writer.WritePropertyName("queryString");
+                writer.WritePropertyName("queryString"u8);
                 writer.WriteStringValue(QueryString);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element)
+        ArmDeploymentTemplateLink IJsonModel<ArmDeploymentTemplateLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<Uri> uri = default;
-            Optional<string> id = default;
-            Optional<string> relativePath = default;
-            Optional<string> contentVersion = default;
-            Optional<string> queryString = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentTemplateLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmDeploymentTemplateLink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentTemplateLink(document.RootElement, options);
+        }
+
+        internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri uri = default;
+            string id = default;
+            string relativePath = default;
+            string contentVersion = default;
+            string queryString = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentVersion"))
+                if (property.NameEquals("contentVersion"u8))
                 {
                     contentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryString"))
+                if (property.NameEquals("queryString"u8))
                 {
                     queryString = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmDeploymentTemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ArmDeploymentTemplateLink(
+                uri,
+                id,
+                relativePath,
+                contentVersion,
+                queryString,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  uri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  uri: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  relativePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelativePath))
+                {
+                    builder.Append("  relativePath: ");
+                    if (RelativePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RelativePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RelativePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentVersion))
+                {
+                    builder.Append("  contentVersion: ");
+                    if (ContentVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryString: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryString))
+                {
+                    builder.Append("  queryString: ");
+                    if (QueryString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QueryString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QueryString}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ArmDeploymentTemplateLink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentTemplateLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentTemplateLink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArmDeploymentTemplateLink IPersistableModel<ArmDeploymentTemplateLink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentTemplateLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArmDeploymentTemplateLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentTemplateLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmDeploymentTemplateLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

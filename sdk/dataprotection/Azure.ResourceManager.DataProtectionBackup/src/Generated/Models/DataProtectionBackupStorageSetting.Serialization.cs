@@ -5,57 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupStorageSetting : IUtf8JsonSerializable
+    public partial class DataProtectionBackupStorageSetting : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupStorageSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupStorageSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataProtectionBackupStorageSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupStorageSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DataStoreType))
             {
-                writer.WritePropertyName("datastoreType");
+                writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
             if (Optional.IsDefined(StorageSettingType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DataProtectionBackupStorageSetting DeserializeDataProtectionBackupStorageSetting(JsonElement element)
+        DataProtectionBackupStorageSetting IJsonModel<DataProtectionBackupStorageSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<StorageSettingStoreType> datastoreType = default;
-            Optional<StorageSettingType> type = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupStorageSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupStorageSetting(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupStorageSetting DeserializeDataProtectionBackupStorageSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            StorageSettingStoreType? datastoreType = default;
+            StorageSettingType? type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datastoreType"))
+                if (property.NameEquals("datastoreType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     datastoreType = new StorageSettingStoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new StorageSettingType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupStorageSetting(Optional.ToNullable(datastoreType), Optional.ToNullable(type));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProtectionBackupStorageSetting(datastoreType, type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupStorageSetting>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupStorageSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataProtectionBackupStorageSetting IPersistableModel<DataProtectionBackupStorageSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupStorageSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProtectionBackupStorageSetting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProtectionBackupStorageSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

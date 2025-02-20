@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -15,15 +14,18 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static AnalyzeJobErrorsAndStatistics DeserializeAnalyzeJobErrorsAndStatistics(JsonElement element)
         {
-            Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
-            Optional<RequestStatistics> statistics = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<TextAnalyticsError> errors = default;
+            RequestStatistics statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TextAnalyticsError> array = new List<TextAnalyticsError>();
@@ -34,18 +36,25 @@ namespace Azure.AI.TextAnalytics.Legacy
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
                     continue;
                 }
             }
-            return new AnalyzeJobErrorsAndStatistics(Optional.ToList(errors), statistics.Value);
+            return new AnalyzeJobErrorsAndStatistics(errors ?? new ChangeTrackingList<TextAnalyticsError>(), statistics);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnalyzeJobErrorsAndStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeJobErrorsAndStatistics(document.RootElement);
         }
     }
 }

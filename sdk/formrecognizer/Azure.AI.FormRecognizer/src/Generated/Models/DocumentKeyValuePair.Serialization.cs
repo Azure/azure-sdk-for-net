@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -14,33 +13,44 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentKeyValuePair DeserializeDocumentKeyValuePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentKeyValueElement key = default;
-            Optional<DocumentKeyValueElement> value = default;
+            DocumentKeyValueElement value = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     confidence = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new DocumentKeyValuePair(key, value.Value, confidence);
+            return new DocumentKeyValuePair(key, value, confidence);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentKeyValuePair FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentKeyValuePair(document.RootElement);
         }
     }
 }

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static PolicyScopeContract ToPolicyScopeContract(this string value)
         {
-            if (string.Equals(value, "Tenant", StringComparison.InvariantCultureIgnoreCase)) return PolicyScopeContract.Tenant;
-            if (string.Equals(value, "Product", StringComparison.InvariantCultureIgnoreCase)) return PolicyScopeContract.Product;
-            if (string.Equals(value, "Api", StringComparison.InvariantCultureIgnoreCase)) return PolicyScopeContract.Api;
-            if (string.Equals(value, "Operation", StringComparison.InvariantCultureIgnoreCase)) return PolicyScopeContract.Operation;
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return PolicyScopeContract.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tenant")) return PolicyScopeContract.Tenant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Product")) return PolicyScopeContract.Product;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Api")) return PolicyScopeContract.Api;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Operation")) return PolicyScopeContract.Operation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return PolicyScopeContract.All;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PolicyScopeContract value.");
         }
     }

@@ -5,52 +5,140 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingQuotaBucketDimensions : IUtf8JsonSerializable
+    public partial class LoadTestingQuotaBucketDimensions : IUtf8JsonSerializable, IJsonModel<LoadTestingQuotaBucketDimensions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingQuotaBucketDimensions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoadTestingQuotaBucketDimensions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketDimensions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LoadTestingQuotaBucketDimensions DeserializeLoadTestingQuotaBucketDimensions(JsonElement element)
+        LoadTestingQuotaBucketDimensions IJsonModel<LoadTestingQuotaBucketDimensions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> subscriptionId = default;
-            Optional<AzureLocation> location = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketDimensions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadTestingQuotaBucketDimensions(document.RootElement, options);
+        }
+
+        internal static LoadTestingQuotaBucketDimensions DeserializeLoadTestingQuotaBucketDimensions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string subscriptionId = default;
+            AzureLocation? location = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadTestingQuotaBucketDimensions(subscriptionId.Value, Optional.ToNullable(location));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoadTestingQuotaBucketDimensions(subscriptionId, location, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoadTestingQuotaBucketDimensions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketDimensions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoadTestingQuotaBucketDimensions IPersistableModel<LoadTestingQuotaBucketDimensions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketDimensions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoadTestingQuotaBucketDimensions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadTestingQuotaBucketDimensions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

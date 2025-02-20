@@ -9,23 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabArtifact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabArtifactResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabArtifactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource" /> using the GetDevTestLabArtifact method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArtifactResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabArtifactResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource"/> using the GetDevTestLabArtifact method.
     /// </summary>
     public partial class DevTestLabArtifactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabArtifactResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly ArtifactsRestOperations _devTestLabArtifactArtifactsRestClient;
         private readonly DevTestLabArtifactData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources/artifacts";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class for mocking. </summary>
         protected DevTestLabArtifactResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabArtifactResource(ArmClient client, DevTestLabArtifactData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources/artifacts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,9 +101,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Artifacts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArtifactResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=title)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabArtifactResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -131,9 +142,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Artifacts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArtifactResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=title)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabArtifactResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -163,6 +182,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Artifacts_GenerateArmTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArtifactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +224,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Artifacts_GenerateArmTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArtifactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

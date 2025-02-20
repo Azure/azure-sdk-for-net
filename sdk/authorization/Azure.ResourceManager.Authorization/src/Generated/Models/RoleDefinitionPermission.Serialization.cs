@@ -5,20 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleDefinitionPermission : IUtf8JsonSerializable
+    public partial class RoleDefinitionPermission : IUtf8JsonSerializable, IJsonModel<RoleDefinitionPermission>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionPermission>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RoleDefinitionPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionPermission>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
@@ -28,7 +48,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsCollectionDefined(NotActions))
             {
-                writer.WritePropertyName("notActions");
+                writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotActions)
                 {
@@ -38,7 +58,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsCollectionDefined(DataActions))
             {
-                writer.WritePropertyName("dataActions");
+                writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataActions)
                 {
@@ -48,7 +68,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsCollectionDefined(NotDataActions))
             {
-                writer.WritePropertyName("notDataActions");
+                writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotDataActions)
                 {
@@ -56,22 +76,55 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RoleDefinitionPermission DeserializeRoleDefinitionPermission(JsonElement element)
+        RoleDefinitionPermission IJsonModel<RoleDefinitionPermission>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> actions = default;
-            Optional<IList<string>> notActions = default;
-            Optional<IList<string>> dataActions = default;
-            Optional<IList<string>> notDataActions = default;
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionPermission>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleDefinitionPermission(document.RootElement, options);
+        }
+
+        internal static RoleDefinitionPermission DeserializeRoleDefinitionPermission(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> actions = default;
+            IList<string> notActions = default;
+            IList<string> dataActions = default;
+            IList<string> notDataActions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -82,11 +135,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     actions = array;
                     continue;
                 }
-                if (property.NameEquals("notActions"))
+                if (property.NameEquals("notActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -97,11 +149,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     notActions = array;
                     continue;
                 }
-                if (property.NameEquals("dataActions"))
+                if (property.NameEquals("dataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -112,11 +163,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     dataActions = array;
                     continue;
                 }
-                if (property.NameEquals("notDataActions"))
+                if (property.NameEquals("notDataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -127,8 +177,205 @@ namespace Azure.ResourceManager.Authorization.Models
                     notDataActions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleDefinitionPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoleDefinitionPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<string>(), notDataActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Actions))
+                {
+                    if (Actions.Any())
+                    {
+                        builder.Append("  actions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Actions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotActions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotActions))
+                {
+                    if (NotActions.Any())
+                    {
+                        builder.Append("  notActions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NotActions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataActions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataActions))
+                {
+                    if (DataActions.Any())
+                    {
+                        builder.Append("  dataActions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataActions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotDataActions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotDataActions))
+                {
+                    if (NotDataActions.Any())
+                    {
+                        builder.Append("  notDataActions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NotDataActions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RoleDefinitionPermission>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionPermission>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoleDefinitionPermission IPersistableModel<RoleDefinitionPermission>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionPermission>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleDefinitionPermission(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleDefinitionPermission>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

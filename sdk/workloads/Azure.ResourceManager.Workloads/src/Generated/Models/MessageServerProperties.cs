@@ -5,25 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the SAP message server properties. </summary>
+    /// <summary> Defines the SAP Message Server properties. </summary>
     public partial class MessageServerProperties
     {
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
         public MessageServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
-        /// <param name="msPort"> The message server port. </param>
-        /// <param name="internalMsPort"> The message server internal MS port. </param>
-        /// <param name="httpPort"> The message server http port. </param>
-        /// <param name="httpsPort"> The message server https port. </param>
-        /// <param name="hostname"> The message server SAP host name. </param>
-        /// <param name="ipAddress"> The message server IP Address. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
-        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health)
+        /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
+        /// <param name="msPort"> Message Server port. </param>
+        /// <param name="internalMsPort"> Message Server internal MS port. </param>
+        /// <param name="httpPort"> Message Server HTTP Port. </param>
+        /// <param name="httpsPort"> Message Server HTTPS Port. </param>
+        /// <param name="hostname"> Message Server SAP Hostname. </param>
+        /// <param name="ipAddress"> Message server IP Address. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MsPort = msPort;
             InternalMsPort = internalMsPort;
@@ -32,21 +68,22 @@ namespace Azure.ResourceManager.Workloads.Models
             Hostname = hostname;
             IPAddress = ipAddress;
             Health = health;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The message server port. </summary>
+        /// <summary> Message Server port. </summary>
         public long? MsPort { get; }
-        /// <summary> The message server internal MS port. </summary>
+        /// <summary> Message Server internal MS port. </summary>
         public long? InternalMsPort { get; }
-        /// <summary> The message server http port. </summary>
+        /// <summary> Message Server HTTP Port. </summary>
         public long? HttpPort { get; }
-        /// <summary> The message server https port. </summary>
+        /// <summary> Message Server HTTPS Port. </summary>
         public long? HttpsPort { get; }
-        /// <summary> The message server SAP host name. </summary>
+        /// <summary> Message Server SAP Hostname. </summary>
         public string Hostname { get; }
-        /// <summary> The message server IP Address. </summary>
+        /// <summary> Message server IP Address. </summary>
         public string IPAddress { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }
 }

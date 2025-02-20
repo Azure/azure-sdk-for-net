@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 
@@ -26,9 +25,9 @@ namespace Azure.Storage.Files.Shares
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;
         /// <summary> Returns the type File. Reserved for future use. </summary>
         public string FileType => _response.Headers.TryGetValue("x-ms-type", out string value) ? value : null;
-        /// <summary> The size of the file in bytes. This header returns the value of the &apos;x-ms-content-length&apos; header that is stored with the file. </summary>
+        /// <summary> The size of the file in bytes. This header returns the value of the 'x-ms-content-length' header that is stored with the file. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
-        /// <summary> The content type specified for the file. The default content type is &apos;application/octet-stream&apos;. </summary>
+        /// <summary> The content type specified for the file. The default content type is 'application/octet-stream'. </summary>
         public string ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? value : null;
         /// <summary> If the Content-MD5 header has been set for the file, the Content-MD5 response header is returned so that the client can check for message content integrity. </summary>
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
@@ -36,7 +35,7 @@ namespace Azure.Storage.Files.Shares
         public string ContentEncoding => _response.Headers.TryGetValue("Content-Encoding", out string value) ? value : null;
         /// <summary> If the Cache-Control request header has previously been set for the file, the Cache-Control value is returned in this header. </summary>
         public string CacheControl => _response.Headers.TryGetValue("Cache-Control", out string value) ? value : null;
-        /// <summary> Returns the value that was specified for the &apos;x-ms-content-disposition&apos; header and specifies how to process the response. </summary>
+        /// <summary> Returns the value that was specified for the 'x-ms-content-disposition' header and specifies how to process the response. </summary>
         public string ContentDisposition => _response.Headers.TryGetValue("Content-Disposition", out string value) ? value : null;
         /// <summary> Returns the value that was specified for the Content-Language request header. </summary>
         public string ContentLanguage => _response.Headers.TryGetValue("Content-Language", out string value) ? value : null;
@@ -52,7 +51,7 @@ namespace Azure.Storage.Files.Shares
         public string CopyProgress => _response.Headers.TryGetValue("x-ms-copy-progress", out string value) ? value : null;
         /// <summary> URL up to 2KB in length that specifies the source file used in the last attempted Copy File operation where this file was the destination file. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
-        /// <summary> State of the copy operation identified by &apos;x-ms-copy-id&apos;. </summary>
+        /// <summary> State of the copy operation identified by 'x-ms-copy-id'. </summary>
         public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : null;
         /// <summary> The value of this header is set to true if the file data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the file is unencrypted, or if only parts of the file/application metadata are encrypted). </summary>
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-server-encrypted", out bool? value) ? value : null;
@@ -76,5 +75,15 @@ namespace Azure.Storage.Files.Shares
         public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : null;
         /// <summary> The current lease status of the file. </summary>
         public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : null;
+        /// <summary> NFS only. The mode of the file or directory. </summary>
+        public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
+        /// <summary> NFS only. The owner of the file or directory. </summary>
+        public string Owner => _response.Headers.TryGetValue("x-ms-owner", out string value) ? value : null;
+        /// <summary> NFS only. The owning group of the file or directory. </summary>
+        public string Group => _response.Headers.TryGetValue("x-ms-group", out string value) ? value : null;
+        /// <summary> NFS only. The link count of the file or directory. </summary>
+        public long? LinkCount => _response.Headers.TryGetValue("x-ms-link-count", out long? value) ? value : null;
+        /// <summary> NFS only. Type of the file or directory. </summary>
+        public NfsFileType? NfsFileType => _response.Headers.TryGetValue("x-ms-file-file-type", out string value) ? new NfsFileType(value) : (NfsFileType?)null;
     }
 }

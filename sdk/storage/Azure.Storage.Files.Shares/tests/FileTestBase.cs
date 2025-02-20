@@ -45,8 +45,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,
             string shareName = default,
-            IDictionary<string, string> metadata = default)
-            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata);
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
+            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata, options);
 
         public ShareClientOptions GetOptions()
         {
@@ -80,6 +81,14 @@ namespace Azure.Storage.Files.Shares.Tests
             return options;
         }
 
+        public ShareClientOptions GetOptionsWithAudience(ShareAudience audience)
+        {
+            ShareClientOptions options = SharesClientBuilder.GetOptions(false);
+            options.Audience = audience;
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            return options;
+        }
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
@@ -97,6 +106,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 new ShareServiceClient(
                     new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
                     GetOptions()));
+
+        public ShareServiceClient GetServiceClient_OAuth()
+            => SharesClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+
+        public ShareServiceClient GetServiceClient_PremiumFileOAuth()
+            => SharesClientBuilder.GetServiceClient_PremiumFileOAuth(TestEnvironment.Credential);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default,
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container,

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,15 +14,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyDetectionConfigurationList DeserializeAnomalyDetectionConfigurationList(JsonElement element)
         {
-            Optional<IReadOnlyList<AnomalyDetectionConfiguration>> value = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<AnomalyDetectionConfiguration> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnomalyDetectionConfiguration> array = new List<AnomalyDetectionConfiguration>();
@@ -34,13 +36,21 @@ namespace Azure.AI.MetricsAdvisor.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AnomalyDetectionConfigurationList(Optional.ToList(value), nextLink.Value);
+            return new AnomalyDetectionConfigurationList(value ?? new ChangeTrackingList<AnomalyDetectionConfiguration>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyDetectionConfigurationList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyDetectionConfigurationList(document.RootElement);
         }
     }
 }

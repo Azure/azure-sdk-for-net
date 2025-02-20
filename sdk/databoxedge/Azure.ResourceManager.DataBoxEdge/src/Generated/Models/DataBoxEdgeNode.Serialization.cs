@@ -6,64 +6,136 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeNode : IUtf8JsonSerializable
+    public partial class DataBoxEdgeNode : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeNode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxEdgeNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeNode DeserializeDataBoxEdgeNode(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeNode)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NodeStatus))
+            {
+                writer.WritePropertyName("nodeStatus"u8);
+                writer.WriteStringValue(NodeStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeChassisSerialNumber))
+            {
+                writer.WritePropertyName("nodeChassisSerialNumber"u8);
+                writer.WriteStringValue(NodeChassisSerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeSerialNumber))
+            {
+                writer.WritePropertyName("nodeSerialNumber"u8);
+                writer.WriteStringValue(NodeSerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeDisplayName))
+            {
+                writer.WritePropertyName("nodeDisplayName"u8);
+                writer.WriteStringValue(NodeDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeFriendlySoftwareVersion))
+            {
+                writer.WritePropertyName("nodeFriendlySoftwareVersion"u8);
+                writer.WriteStringValue(NodeFriendlySoftwareVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeHcsVersion))
+            {
+                writer.WritePropertyName("nodeHcsVersion"u8);
+                writer.WriteStringValue(NodeHcsVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeInstanceId))
+            {
+                writer.WritePropertyName("nodeInstanceId"u8);
+                writer.WriteStringValue(NodeInstanceId.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeNode IJsonModel<DataBoxEdgeNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeNode)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeNode(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeNode DeserializeDataBoxEdgeNode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeNodeStatus> nodeStatus = default;
-            Optional<string> nodeChassisSerialNumber = default;
-            Optional<string> nodeSerialNumber = default;
-            Optional<string> nodeDisplayName = default;
-            Optional<string> nodeFriendlySoftwareVersion = default;
-            Optional<string> nodeHcsVersion = default;
-            Optional<Guid> nodeInstanceId = default;
+            SystemData systemData = default;
+            DataBoxEdgeNodeStatus? nodeStatus = default;
+            string nodeChassisSerialNumber = default;
+            string nodeSerialNumber = default;
+            string nodeDisplayName = default;
+            string nodeFriendlySoftwareVersion = default;
+            string nodeHcsVersion = default;
+            Guid? nodeInstanceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,46 +144,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("nodeStatus"))
+                        if (property0.NameEquals("nodeStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeStatus = new DataBoxEdgeNodeStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("nodeChassisSerialNumber"))
+                        if (property0.NameEquals("nodeChassisSerialNumber"u8))
                         {
                             nodeChassisSerialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeSerialNumber"))
+                        if (property0.NameEquals("nodeSerialNumber"u8))
                         {
                             nodeSerialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeDisplayName"))
+                        if (property0.NameEquals("nodeDisplayName"u8))
                         {
                             nodeDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeFriendlySoftwareVersion"))
+                        if (property0.NameEquals("nodeFriendlySoftwareVersion"u8))
                         {
                             nodeFriendlySoftwareVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeHcsVersion"))
+                        if (property0.NameEquals("nodeHcsVersion"u8))
                         {
                             nodeHcsVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeInstanceId"))
+                        if (property0.NameEquals("nodeInstanceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeInstanceId = property0.Value.GetGuid();
@@ -120,8 +190,56 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeNode(id, name, type, systemData.Value, Optional.ToNullable(nodeStatus), nodeChassisSerialNumber.Value, nodeSerialNumber.Value, nodeDisplayName.Value, nodeFriendlySoftwareVersion.Value, nodeHcsVersion.Value, Optional.ToNullable(nodeInstanceId));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeNode(
+                id,
+                name,
+                type,
+                systemData,
+                nodeStatus,
+                nodeChassisSerialNumber,
+                nodeSerialNumber,
+                nodeDisplayName,
+                nodeFriendlySoftwareVersion,
+                nodeHcsVersion,
+                nodeInstanceId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeNode>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeNode)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeNode IPersistableModel<DataBoxEdgeNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeNode(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeNode)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

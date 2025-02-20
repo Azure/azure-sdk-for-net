@@ -13,10 +13,10 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
-string datasource = TestEnvironment.DataSource;
-Console.WriteLine(endpoint);
-var endpointUri = new Uri(endpoint);
-var credential = new AzureKeyCredential(apiKey);
+Uri dataSource = new Uri(TestEnvironment.DataSource);
+
+Uri endpointUri = new Uri(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 
 //create client
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
@@ -51,7 +51,7 @@ Call the client's `DetectUnivariateChangePoint` method with the `ChangePointDete
 //detect
 Console.WriteLine("Detecting the change point in the series.");
 
-UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
+UnivariateChangePointDetectionResult result = client.GetUnivariateClient().DetectUnivariateChangePoint(request);
 
 if (result.IsChangePoint.Contains(true))
 {

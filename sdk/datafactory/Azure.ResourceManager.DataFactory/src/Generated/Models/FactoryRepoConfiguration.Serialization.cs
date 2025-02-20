@@ -5,45 +5,132 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryRepoConfiguration : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFactoryRepoConfiguration))]
+    public partial class FactoryRepoConfiguration : IUtf8JsonSerializable, IJsonModel<FactoryRepoConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FactoryRepoConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FactoryRepoConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(FactoryRepoConfigurationType);
-            writer.WritePropertyName("accountName");
-            writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("repositoryName");
-            writer.WriteStringValue(RepositoryName);
-            writer.WritePropertyName("collaborationBranch");
-            writer.WriteStringValue(CollaborationBranch);
-            writer.WritePropertyName("rootFolder");
-            writer.WriteStringValue(RootFolder);
-            if (Optional.IsDefined(LastCommitId))
-            {
-                writer.WritePropertyName("lastCommitId");
-                writer.WriteStringValue(LastCommitId);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static FactoryRepoConfiguration DeserializeFactoryRepoConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FactoryRepoConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FactoryRepoConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(FactoryRepoConfigurationType);
+            writer.WritePropertyName("accountName"u8);
+            writer.WriteStringValue(AccountName);
+            writer.WritePropertyName("repositoryName"u8);
+            writer.WriteStringValue(RepositoryName);
+            writer.WritePropertyName("collaborationBranch"u8);
+            writer.WriteStringValue(CollaborationBranch);
+            writer.WritePropertyName("rootFolder"u8);
+            writer.WriteStringValue(RootFolder);
+            if (Optional.IsDefined(LastCommitId))
+            {
+                writer.WritePropertyName("lastCommitId"u8);
+                writer.WriteStringValue(LastCommitId);
+            }
+            if (Optional.IsDefined(DisablePublish))
+            {
+                writer.WritePropertyName("disablePublish"u8);
+                writer.WriteBooleanValue(DisablePublish.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        FactoryRepoConfiguration IJsonModel<FactoryRepoConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FactoryRepoConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FactoryRepoConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFactoryRepoConfiguration(document.RootElement, options);
+        }
+
+        internal static FactoryRepoConfiguration DeserializeFactoryRepoConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element);
-                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element);
+                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element, options);
+                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element, options);
                 }
             }
-            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element);
+            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element, options);
         }
+
+        BinaryData IPersistableModel<FactoryRepoConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FactoryRepoConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FactoryRepoConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FactoryRepoConfiguration IPersistableModel<FactoryRepoConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FactoryRepoConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFactoryRepoConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FactoryRepoConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FactoryRepoConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

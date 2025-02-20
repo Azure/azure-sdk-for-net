@@ -5,91 +5,179 @@
 
 #nullable disable
 
-using System.Net;
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class LoadBalancerFrontendIPConfigurationResourceSettings : IUtf8JsonSerializable
+    public partial class LoadBalancerFrontendIPConfigurationResourceSettings : IUtf8JsonSerializable, IJsonModel<LoadBalancerFrontendIPConfigurationResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
-                writer.WritePropertyName("privateIpAddress");
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIPAddressStringValue);
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
-                writer.WritePropertyName("privateIpAllocationMethod");
+                writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                writer.WritePropertyName("subnet"u8);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LoadBalancerFrontendIPConfigurationResourceSettings DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(JsonElement element)
+        LoadBalancerFrontendIPConfigurationResourceSettings IJsonModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> name = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReferenceInfo> subnet = default;
-            Optional<string> zones = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(document.RootElement, options);
+        }
+
+        internal static LoadBalancerFrontendIPConfigurationResourceSettings DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string privateIPAddress = default;
+            string privateIPAllocationMethod = default;
+            SubnetReferenceInfo subnet = default;
+            string zones = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAllocationMethod"))
+                if (property.NameEquals("privateIpAllocationMethod"u8))
                 {
                     privateIPAllocationMethod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
+                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     zones = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerFrontendIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, zones.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoadBalancerFrontendIPConfigurationResourceSettings(
+                name,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                zones,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoadBalancerFrontendIPConfigurationResourceSettings IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,53 +16,73 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageContainerUri");
+            writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             if (Optional.IsDefined(StorageContainerReadListSas))
             {
-                writer.WritePropertyName("storageContainerReadListSas");
+                writer.WritePropertyName("storageContainerReadListSas"u8);
                 writer.WriteStringValue(StorageContainerReadListSas);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
-                writer.WritePropertyName("blobPrefix");
+                writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            writer.WritePropertyName("relativeInputAssetPath");
+            writer.WritePropertyName("relativeInputAssetPath"u8);
             writer.WriteStringValue(RelativeInputAssetPath);
             writer.WriteEndObject();
         }
 
         internal static AssetConversionInputOptions DeserializeAssetConversionInputOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri storageContainerUri = default;
-            Optional<string> storageContainerReadListSas = default;
-            Optional<string> blobPrefix = default;
+            string storageContainerReadListSas = default;
+            string blobPrefix = default;
             string relativeInputAssetPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageContainerUri"))
+                if (property.NameEquals("storageContainerUri"u8))
                 {
                     storageContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageContainerReadListSas"))
+                if (property.NameEquals("storageContainerReadListSas"u8))
                 {
                     storageContainerReadListSas = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobPrefix"))
+                if (property.NameEquals("blobPrefix"u8))
                 {
                     blobPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeInputAssetPath"))
+                if (property.NameEquals("relativeInputAssetPath"u8))
                 {
                     relativeInputAssetPath = property.Value.GetString();
                     continue;
                 }
             }
-            return new AssetConversionInputOptions(storageContainerUri, storageContainerReadListSas.Value, blobPrefix.Value, relativeInputAssetPath);
+            return new AssetConversionInputOptions(storageContainerUri, storageContainerReadListSas, blobPrefix, relativeInputAssetPath);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionInputOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetConversionInputOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

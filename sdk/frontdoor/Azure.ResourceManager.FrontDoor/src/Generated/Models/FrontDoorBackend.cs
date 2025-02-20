@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -12,25 +14,58 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Backend address of a frontDoor load balancer. </summary>
     public partial class FrontDoorBackend
     {
-        /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackend"/>. </summary>
         public FrontDoorBackend()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackend"/>. </summary>
         /// <param name="address"> Location of the backend (IP address or FQDN). </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
         /// <param name="privateEndpointStatus"> The Approval status for the connection to the Private Link. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="httpPort"> The HTTP TCP port number. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The HTTPS TCP port number. Must be between 1 and 65535. </param>
-        /// <param name="enabledState"> Whether to enable use of this backend. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="priority"> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </param>
         /// <param name="weight"> Weight of this endpoint for load balancing purposes. </param>
         /// <param name="backendHostHeader"> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </param>
-        internal FrontDoorBackend(string address, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, AzureLocation? privateLinkLocation, BackendPrivateEndpointStatus? privateEndpointStatus, string privateLinkApprovalMessage, int? httpPort, int? httpsPort, BackendEnabledState? enabledState, int? priority, int? weight, string backendHostHeader)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorBackend(string address, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, AzureLocation? privateLinkLocation, BackendPrivateEndpointStatus? privateEndpointStatus, string privateLinkApprovalMessage, int? httpPort, int? httpsPort, BackendEnabledState? enabledState, int? priority, int? weight, string backendHostHeader, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             PrivateLinkAlias = privateLinkAlias;
@@ -44,15 +79,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Priority = priority;
             Weight = weight;
             BackendHostHeader = backendHostHeader;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the backend (IP address or FQDN). </summary>
         public string Address { get; set; }
-        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </summary>
+        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
         public string PrivateLinkAlias { get; set; }
-        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </summary>
+        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </summary>
+        /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
         public AzureLocation? PrivateLinkLocation { get; set; }
         /// <summary> The Approval status for the connection to the Private Link. </summary>
         public BackendPrivateEndpointStatus? PrivateEndpointStatus { get; }
@@ -62,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public int? HttpPort { get; set; }
         /// <summary> The HTTPS TCP port number. Must be between 1 and 65535. </summary>
         public int? HttpsPort { get; set; }
-        /// <summary> Whether to enable use of this backend. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public BackendEnabledState? EnabledState { get; set; }
         /// <summary> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </summary>
         public int? Priority { get; set; }

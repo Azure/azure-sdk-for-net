@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Value to use for sorting of the time series instances before being returned by search instances call. When it is set to &apos;Rank&apos;, the returned instances are sorted based on the relevance. When it is set to &apos;DisplayName&apos;, the returned results are sorted based on the display name. Display name is the name of the instance if it exists, otherwise, display name is the time series ID. Default is &apos;Rank&apos;. </summary>
+    /// <summary> Value to use for sorting of the time series instances before being returned by search instances call. When it is set to 'Rank', the returned instances are sorted based on the relevance. When it is set to 'DisplayName', the returned results are sorted based on the display name. Display name is the name of the instance if it exists, otherwise, display name is the time series ID. Default is 'Rank'. </summary>
     internal readonly partial struct InstancesSortBy : IEquatable<InstancesSortBy>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static bool operator ==(InstancesSortBy left, InstancesSortBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstancesSortBy"/> values are not the same. </summary>
         public static bool operator !=(InstancesSortBy left, InstancesSortBy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InstancesSortBy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InstancesSortBy"/>. </summary>
         public static implicit operator InstancesSortBy(string value) => new InstancesSortBy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

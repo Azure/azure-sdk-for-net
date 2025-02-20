@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayCorsProperties : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayCorsProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformGatewayCorsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayCorsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformGatewayCorsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayCorsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayCorsProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(AllowedOrigins))
             {
-                writer.WritePropertyName("allowedOrigins");
+                writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedOrigins)
                 {
@@ -28,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(AllowedMethods))
             {
-                writer.WritePropertyName("allowedMethods");
+                writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedMethods)
                 {
@@ -38,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(AllowedHeaders))
             {
-                writer.WritePropertyName("allowedHeaders");
+                writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedHeaders)
                 {
@@ -48,17 +66,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(MaxAge))
             {
-                writer.WritePropertyName("maxAge");
+                writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
             if (Optional.IsDefined(AreCredentialsAllowed))
             {
-                writer.WritePropertyName("allowCredentials");
+                writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AreCredentialsAllowed.Value);
             }
             if (Optional.IsCollectionDefined(ExposedHeaders))
             {
-                writer.WritePropertyName("exposedHeaders");
+                writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExposedHeaders)
                 {
@@ -66,24 +84,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppPlatformGatewayCorsProperties DeserializeAppPlatformGatewayCorsProperties(JsonElement element)
+        AppPlatformGatewayCorsProperties IJsonModel<AppPlatformGatewayCorsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> allowedOrigins = default;
-            Optional<IList<string>> allowedMethods = default;
-            Optional<IList<string>> allowedHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
-            Optional<IList<string>> exposedHeaders = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayCorsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayCorsProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayCorsProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformGatewayCorsProperties DeserializeAppPlatformGatewayCorsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> allowedOrigins = default;
+            IList<string> allowedMethods = default;
+            IList<string> allowedHeaders = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
+            IList<string> exposedHeaders = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -94,11 +145,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     allowedOrigins = array;
                     continue;
                 }
-                if (property.NameEquals("allowedMethods"))
+                if (property.NameEquals("allowedMethods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -109,11 +159,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     allowedMethods = array;
                     continue;
                 }
-                if (property.NameEquals("allowedHeaders"))
+                if (property.NameEquals("allowedHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -124,31 +173,28 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     allowedHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("maxAge"))
+                if (property.NameEquals("maxAge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAge = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowCredentials"))
+                if (property.NameEquals("allowCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowCredentials = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("exposedHeaders"))
+                if (property.NameEquals("exposedHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -159,8 +205,51 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     exposedHeaders = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformGatewayCorsProperties(Optional.ToList(allowedOrigins), Optional.ToList(allowedMethods), Optional.ToList(allowedHeaders), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), Optional.ToList(exposedHeaders));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformGatewayCorsProperties(
+                allowedOrigins ?? new ChangeTrackingList<string>(),
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                exposedHeaders ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformGatewayCorsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayCorsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayCorsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformGatewayCorsProperties IPersistableModel<AppPlatformGatewayCorsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayCorsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformGatewayCorsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayCorsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformGatewayCorsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

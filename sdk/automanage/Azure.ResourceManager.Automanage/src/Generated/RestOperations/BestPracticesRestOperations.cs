@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automanage.Models;
@@ -37,6 +36,16 @@ namespace Azure.ResourceManager.Automanage
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string bestPracticeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Automanage/bestPractices/", false);
+            uri.AppendPath(bestPracticeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string bestPracticeName)
         {
             var message = _pipeline.CreateMessage();
@@ -58,7 +67,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BestPracticeData>> GetAsync(string bestPracticeName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomanageBestPracticeData>> GetAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
@@ -68,13 +77,13 @@ namespace Azure.ResourceManager.Automanage
             {
                 case 200:
                     {
-                        BestPracticeData value = default;
+                        AutomanageBestPracticeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BestPracticeData.DeserializeBestPracticeData(document.RootElement);
+                        value = AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BestPracticeData)null, message.Response);
+                    return Response.FromValue((AutomanageBestPracticeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -85,7 +94,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BestPracticeData> Get(string bestPracticeName, CancellationToken cancellationToken = default)
+        public Response<AutomanageBestPracticeData> Get(string bestPracticeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
@@ -95,16 +104,25 @@ namespace Azure.ResourceManager.Automanage
             {
                 case 200:
                     {
-                        BestPracticeData value = default;
+                        AutomanageBestPracticeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BestPracticeData.DeserializeBestPracticeData(document.RootElement);
+                        value = AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BestPracticeData)null, message.Response);
+                    return Response.FromValue((AutomanageBestPracticeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Automanage/bestPractices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantRequest()

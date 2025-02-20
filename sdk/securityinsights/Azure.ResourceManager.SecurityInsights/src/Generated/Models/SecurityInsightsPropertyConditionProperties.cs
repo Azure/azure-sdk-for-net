@@ -5,27 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes an automation rule condition that evaluates a property&apos;s value. </summary>
+    /// <summary> Describes an automation rule condition that evaluates a property's value. </summary>
     public partial class SecurityInsightsPropertyConditionProperties : SecurityInsightsAutomationRuleCondition
     {
-        /// <summary> Initializes a new instance of SecurityInsightsPropertyConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyConditionProperties"/>. </summary>
         public SecurityInsightsPropertyConditionProperties()
         {
             ConditionType = ConditionType.Property;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsPropertyConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyConditionProperties"/>. </summary>
         /// <param name="conditionType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conditionProperties"></param>
-        internal SecurityInsightsPropertyConditionProperties(ConditionType conditionType, AutomationRulePropertyValuesCondition conditionProperties) : base(conditionType)
+        internal SecurityInsightsPropertyConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRulePropertyValuesCondition conditionProperties) : base(conditionType, serializedAdditionalRawData)
         {
             ConditionProperties = conditionProperties;
             ConditionType = conditionType;
         }
 
         /// <summary> Gets or sets the condition properties. </summary>
+        [WirePath("conditionProperties")]
         public AutomationRulePropertyValuesCondition ConditionProperties { get; set; }
     }
 }

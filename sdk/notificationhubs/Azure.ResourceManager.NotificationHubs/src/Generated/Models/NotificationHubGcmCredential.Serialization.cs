@@ -6,39 +6,88 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubGcmCredential : IUtf8JsonSerializable
+    public partial class NotificationHubGcmCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubGcmCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubGcmCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NotificationHubGcmCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(GcmEndpoint))
-            {
-                writer.WritePropertyName("gcmEndpoint");
-                writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(GcmApiKey))
-            {
-                writer.WritePropertyName("googleApiKey");
-                writer.WriteStringValue(GcmApiKey);
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubGcmCredential DeserializeNotificationHubGcmCredential(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<Uri> gcmEndpoint = default;
-            Optional<string> googleApiKey = default;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubGcmCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NotificationHubGcmCredential)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(GcmEndpoint))
+            {
+                writer.WritePropertyName("gcmEndpoint"u8);
+                writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
+            }
+            writer.WritePropertyName("googleApiKey"u8);
+            writer.WriteStringValue(GcmApiKey);
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        NotificationHubGcmCredential IJsonModel<NotificationHubGcmCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubGcmCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NotificationHubGcmCredential)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubGcmCredential(document.RootElement, options);
+        }
+
+        internal static NotificationHubGcmCredential DeserializeNotificationHubGcmCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri gcmEndpoint = default;
+            string googleApiKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,17 +96,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("gcmEndpoint"))
+                        if (property0.NameEquals("gcmEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                gcmEndpoint = null;
                                 continue;
                             }
                             gcmEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("googleApiKey"))
+                        if (property0.NameEquals("googleApiKey"u8))
                         {
                             googleApiKey = property0.Value.GetString();
                             continue;
@@ -65,8 +113,44 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotificationHubGcmCredential(gcmEndpoint.Value, googleApiKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NotificationHubGcmCredential(gcmEndpoint, googleApiKey, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationHubGcmCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubGcmCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubGcmCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NotificationHubGcmCredential IPersistableModel<NotificationHubGcmCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubGcmCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNotificationHubGcmCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubGcmCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NotificationHubGcmCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

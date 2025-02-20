@@ -6,78 +6,126 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<WebHookEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookEventSubscriptionDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WebHookEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
-            writer.WriteStringValue(EndpointType.ToString());
-            writer.WritePropertyName("properties");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpointUrl");
+                writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BaseEndpoint))
+            {
+                writer.WritePropertyName("endpointBaseUrl"u8);
+                writer.WriteStringValue(BaseEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(MaxEventsPerBatch))
             {
-                writer.WritePropertyName("maxEventsPerBatch");
+                writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
             if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
             {
-                writer.WritePropertyName("preferredBatchSizeInKilobytes");
+                writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
             if (Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
-                writer.WritePropertyName("azureActiveDirectoryTenantId");
+                writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
             if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
             {
-                writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri");
+                writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
             if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
-                writer.WritePropertyName("deliveryAttributeMappings");
+                writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            {
+                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
+                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element)
+        WebHookEventSubscriptionDestination IJsonModel<WebHookEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
+        }
+
+        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = default;
-            Optional<Uri> endpointUri = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
-            Optional<Guid> azureActiveDirectoryTenantId = default;
-            Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            Uri endpointUri = default;
+            Uri endpointBaseUri = default;
+            int? maxEventsPerBatch = default;
+            int? preferredBatchSizeInKilobytes = default;
+            Guid? azureActiveDirectoryTenantId = default;
+            string azureActiveDirectoryApplicationIdOrUri = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,81 +134,298 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpointUrl"))
+                        if (property0.NameEquals("endpointUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointUri = null;
                                 continue;
                             }
                             endpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("endpointBaseUrl"))
+                        if (property0.NameEquals("endpointBaseUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointBaseUri = null;
                                 continue;
                             }
                             endpointBaseUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maxEventsPerBatch"))
+                        if (property0.NameEquals("maxEventsPerBatch"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxEventsPerBatch = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("preferredBatchSizeInKilobytes"))
+                        if (property0.NameEquals("preferredBatchSizeInKilobytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             preferredBatchSizeInKilobytes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("azureActiveDirectoryTenantId"))
+                        if (property0.NameEquals("azureActiveDirectoryTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureActiveDirectoryTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("azureActiveDirectoryApplicationIdOrUri"))
+                        if (property0.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))
                         {
                             azureActiveDirectoryApplicationIdOrUri = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryAttributeMappings"))
+                        if (property0.NameEquals("deliveryAttributeMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
                             }
                             deliveryAttributeMappings = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("minimumTlsVersionAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimumTlsVersionAllowed = new TlsVersion(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WebHookEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                endpointUri,
+                endpointBaseUri,
+                maxEventsPerBatch,
+                preferredBatchSizeInKilobytes,
+                azureActiveDirectoryTenantId,
+                azureActiveDirectoryApplicationIdOrUri,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
+                minimumTlsVersionAllowed);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  endpointType: ");
+                builder.AppendLine($"'{EndpointType.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpointUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    builder.Append("    endpointUrl: ");
+                    builder.AppendLine($"'{Endpoint.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpointBaseUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BaseEndpoint))
+                {
+                    builder.Append("    endpointBaseUrl: ");
+                    builder.AppendLine($"'{BaseEndpoint.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxEventsPerBatch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxEventsPerBatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxEventsPerBatch))
+                {
+                    builder.Append("    maxEventsPerBatch: ");
+                    builder.AppendLine($"{MaxEventsPerBatch.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredBatchSizeInKilobytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    preferredBatchSizeInKilobytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
+                {
+                    builder.Append("    preferredBatchSizeInKilobytes: ");
+                    builder.AppendLine($"{PreferredBatchSizeInKilobytes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectoryTenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureActiveDirectoryTenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+                {
+                    builder.Append("    azureActiveDirectoryTenantId: ");
+                    builder.AppendLine($"'{AzureActiveDirectoryTenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UriOrAzureActiveDirectoryApplicationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureActiveDirectoryApplicationIdOrUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
+                {
+                    builder.Append("    azureActiveDirectoryApplicationIdOrUri: ");
+                    if (UriOrAzureActiveDirectoryApplicationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UriOrAzureActiveDirectoryApplicationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UriOrAzureActiveDirectoryApplicationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeliveryAttributeMappings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deliveryAttributeMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+                {
+                    if (DeliveryAttributeMappings.Any())
+                    {
+                        builder.Append("    deliveryAttributeMappings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DeliveryAttributeMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    deliveryAttributeMappings: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersionAllowed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    minimumTlsVersionAllowed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumTlsVersionAllowed))
+                {
+                    builder.Append("    minimumTlsVersionAllowed: ");
+                    builder.AppendLine($"'{MinimumTlsVersionAllowed.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebHookEventSubscriptionDestination IPersistableModel<WebHookEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebHookEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

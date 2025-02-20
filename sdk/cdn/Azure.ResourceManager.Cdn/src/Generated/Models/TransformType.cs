@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(TransformType left, TransformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransformType"/> values are not the same. </summary>
         public static bool operator !=(TransformType left, TransformType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TransformType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TransformType"/>. </summary>
         public static implicit operator TransformType(string value) => new TransformType(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

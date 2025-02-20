@@ -24,16 +24,19 @@ namespace Azure.Communication.CallAutomation
 
         private const string FileValue = "file";
         private const string TextValue = "text";
+        private const string SsmlValue = "ssml";
 
         /// <summary> file. </summary>
         public static PlaySourceTypeInternal File { get; } = new PlaySourceTypeInternal(FileValue);
         /// <summary> text. </summary>
         public static PlaySourceTypeInternal Text { get; } = new PlaySourceTypeInternal(TextValue);
+        /// <summary> ssml. </summary>
+        public static PlaySourceTypeInternal Ssml { get; } = new PlaySourceTypeInternal(SsmlValue);
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are the same. </summary>
         public static bool operator ==(PlaySourceTypeInternal left, PlaySourceTypeInternal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are not the same. </summary>
         public static bool operator !=(PlaySourceTypeInternal left, PlaySourceTypeInternal right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlaySourceTypeInternal"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlaySourceTypeInternal"/>. </summary>
         public static implicit operator PlaySourceTypeInternal(string value) => new PlaySourceTypeInternal(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

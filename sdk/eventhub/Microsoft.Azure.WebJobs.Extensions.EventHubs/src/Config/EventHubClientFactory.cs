@@ -52,6 +52,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             if (!string.IsNullOrWhiteSpace(connection))
             {
                 var info = ResolveConnectionInformation(connection);
+                eventHubName = NormalizeEventHubName(info.ConnectionString, eventHubName);
+
                 var eventHubProducerClientOptions = new EventHubProducerClientOptions
                 {
                     RetryOptions = _options.ClientRetryOptions,
@@ -67,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 }
                 else
                 {
-                    eventHubConnection = new EventHubConnection(NormalizeConnectionString(info.ConnectionString, eventHubName), eventHubProducerClientOptions.ConnectionOptions);
+                    eventHubConnection = new EventHubConnection(info.ConnectionString, eventHubName, eventHubProducerClientOptions.ConnectionOptions);
                 }
 
                 return _producerCache.GetOrAdd(GenerateCacheKey(eventHubConnection), key =>
@@ -92,6 +94,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             if (!string.IsNullOrEmpty(connection))
             {
                 var info = ResolveConnectionInformation(connection);
+                eventHubName = NormalizeEventHubName(info.ConnectionString, eventHubName);
+
                 var maxEventBatchSize = singleDispatch ? 1 : _options.MaxEventBatchSize;
                 if (info.FullyQualifiedEndpoint != null &&
                     info.TokenCredential != null)
@@ -106,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 }
 
                 return new EventProcessorHost(consumerGroup: consumerGroup,
-                    connectionString: NormalizeConnectionString(info.ConnectionString, eventHubName),
+                    connectionString: info.ConnectionString,
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: maxEventBatchSize,
@@ -126,6 +130,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             if (!string.IsNullOrEmpty(connection))
             {
                 var info = ResolveConnectionInformation(connection);
+                eventHubName = NormalizeEventHubName(info.ConnectionString, eventHubName);
+
                 var eventHubConsumerClientOptions = new EventHubConsumerClientOptions
                 {
                     RetryOptions = _options.ClientRetryOptions,
@@ -141,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 }
                 else
                 {
-                    eventHubConnection = new EventHubConnection(NormalizeConnectionString(info.ConnectionString, eventHubName), eventHubConsumerClientOptions.ConnectionOptions);
+                    eventHubConnection = new EventHubConnection(info.ConnectionString, eventHubName, eventHubConsumerClientOptions.ConnectionOptions);
                 }
 
                 return _consumerCache.GetOrAdd(GenerateCacheKey(eventHubConnection, consumerGroup), key =>
@@ -161,16 +167,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return client.GetBlobContainerClient(_options.CheckpointContainer);
         }
 
-        internal static string NormalizeConnectionString(string originalConnectionString, string eventHubName)
+        internal static string NormalizeEventHubName(string connectionString, string configuredEventHubName)
         {
-            var connectionString = ConnectionString.Parse(originalConnectionString);
+            // If an Event Hub was specified as the entity path for the connection string, it
+            // should take precedence over the configuration-specified value.
 
-            if (!connectionString.ContainsSegmentKey("EntityPath"))
+            if (string.IsNullOrEmpty(connectionString))
             {
-                connectionString.Add("EntityPath", eventHubName);
+                return configuredEventHubName;
             }
 
-            return connectionString.ToString();
+            var connectionStringProperties = EventHubsConnectionStringProperties.Parse(connectionString);
+
+            if (!string.IsNullOrEmpty(connectionStringProperties.EventHubName))
+            {
+                return connectionStringProperties.EventHubName;
+            }
+
+            return configuredEventHubName;
         }
 
         private EventHubsConnectionInformation ResolveConnectionInformation(string connection)
@@ -178,8 +192,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(connection);
             if (!connectionSection.Exists())
             {
+                // A common mistake is for developers to set their `connection` to a full connection string rather
+                // than an informational name.  If the value validates as a connection string, redact it to prevent
+                // leaking sensitive information.
+                if (IsEventHubsConnectionString(connection))
+                {
+                    connection =  "<< REDACTED >> (a full connection string was incorrectly used instead of a connection setting name)";
+                }
+
                 // Not found
-                throw new InvalidOperationException($"EventHub account connection string '{connection}' does not exist." +
+                throw new InvalidOperationException($"EventHub account connection string with name '{connection}' does not exist in the settings. " +
                                                     $"Make sure that it is a defined App Setting.");
             }
 
@@ -198,6 +220,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             var credential = _componentFactory.CreateTokenCredential(connectionSection);
 
             return new EventHubsConnectionInformation(fullyQualifiedNamespace, credential);
+        }
+
+        private static bool IsEventHubsConnectionString(string connectionString)
+        {
+            try
+            {
+                var properties = EventHubsConnectionStringProperties.Parse(connectionString);
+
+                return (!string.IsNullOrEmpty(properties.FullyQualifiedNamespace))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessKeyName))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessKey))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessSignature))
+                    || (!string.IsNullOrEmpty(properties.EventHubName));
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static string GenerateCacheKey(EventHubConnection eventHubConnection, string consumerGroup = null) =>

@@ -5,47 +5,136 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class NonAzureQueryProperties : IUtf8JsonSerializable
+    public partial class NonAzureQueryProperties : IUtf8JsonSerializable, IJsonModel<NonAzureQueryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NonAzureQueryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NonAzureQueryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NonAzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(FunctionAlias))
             {
-                writer.WritePropertyName("functionAlias");
+                writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
             if (Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("workspaceId");
+                writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static NonAzureQueryProperties DeserializeNonAzureQueryProperties(JsonElement element)
+        NonAzureQueryProperties IJsonModel<NonAzureQueryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> functionAlias = default;
-            Optional<string> workspaceId = default;
+            var format = options.Format == "W" ? ((IPersistableModel<NonAzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNonAzureQueryProperties(document.RootElement, options);
+        }
+
+        internal static NonAzureQueryProperties DeserializeNonAzureQueryProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string functionAlias = default;
+            string workspaceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("functionAlias"))
+                if (property.NameEquals("functionAlias"u8))
                 {
                     functionAlias = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NonAzureQueryProperties(functionAlias.Value, workspaceId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NonAzureQueryProperties(functionAlias, workspaceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NonAzureQueryProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NonAzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NonAzureQueryProperties IPersistableModel<NonAzureQueryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NonAzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNonAzureQueryProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NonAzureQueryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

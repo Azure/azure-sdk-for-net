@@ -7,19 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The AnalyzeTextJobState. </summary>
     internal partial class AnalyzeTextJobState : JobState
     {
-        /// <summary> Initializes a new instance of AnalyzeTextJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="status"></param>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
         internal AnalyzeTextJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdatedDateTime, status)
@@ -30,13 +28,13 @@ namespace Azure.AI.TextAnalytics.Models
             Tasks = tasks;
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
         /// <param name="displayName"></param>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="status"></param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
         /// <param name="tasks"></param>

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,14 +14,17 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static InstancesSuggestResponse DeserializeInstancesSuggestResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<InstancesSearchStringSuggestion>> suggestions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<InstancesSearchStringSuggestion> suggestions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("suggestions"))
+                if (property.NameEquals("suggestions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InstancesSearchStringSuggestion> array = new List<InstancesSearchStringSuggestion>();
@@ -34,7 +36,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstancesSuggestResponse(Optional.ToList(suggestions));
+            return new InstancesSuggestResponse(suggestions ?? new ChangeTrackingList<InstancesSearchStringSuggestion>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InstancesSuggestResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInstancesSuggestResponse(document.RootElement);
         }
     }
 }

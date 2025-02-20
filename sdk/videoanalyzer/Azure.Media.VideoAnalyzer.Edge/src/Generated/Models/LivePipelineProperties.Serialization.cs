@@ -18,17 +18,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(TopologyName))
             {
-                writer.WritePropertyName("topologyName");
+                writer.WritePropertyName("topologyName"u8);
                 writer.WriteStringValue(TopologyName);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,27 +46,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LivePipelineProperties DeserializeLivePipelineProperties(JsonElement element)
         {
-            Optional<string> description = default;
-            Optional<string> topologyName = default;
-            Optional<IList<ParameterDefinition>> parameters = default;
-            Optional<LivePipelineState> state = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string description = default;
+            string topologyName = default;
+            IList<ParameterDefinition> parameters = default;
+            LivePipelineState? state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topologyName"))
+                if (property.NameEquals("topologyName"u8))
                 {
                     topologyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParameterDefinition> array = new List<ParameterDefinition>();
@@ -77,18 +80,33 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new LivePipelineState(property.Value.GetString());
                     continue;
                 }
             }
-            return new LivePipelineProperties(description.Value, topologyName.Value, Optional.ToList(parameters), Optional.ToNullable(state));
+            return new LivePipelineProperties(description, topologyName, parameters ?? new ChangeTrackingList<ParameterDefinition>(), state);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LivePipelineProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLivePipelineProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

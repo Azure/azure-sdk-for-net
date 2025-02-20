@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,33 +16,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static IotHubDeviceCreatedEventData DeserializeIotHubDeviceCreatedEventData(JsonElement element)
         {
-            Optional<string> deviceId = default;
-            Optional<string> hubName = default;
-            Optional<DeviceTwinInfo> twin = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string deviceId = default;
+            string hubName = default;
+            DeviceTwinInfo twin = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hubName"))
+                if (property.NameEquals("hubName"u8))
                 {
                     hubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("twin"))
+                if (property.NameEquals("twin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value);
                     continue;
                 }
             }
-            return new IotHubDeviceCreatedEventData(deviceId.Value, hubName.Value, twin.Value);
+            return new IotHubDeviceCreatedEventData(deviceId, hubName, twin);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubDeviceCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceCreatedEventData(document.RootElement);
         }
 
         internal partial class IotHubDeviceCreatedEventDataConverter : JsonConverter<IotHubDeviceCreatedEventData>
@@ -52,6 +62,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override IotHubDeviceCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

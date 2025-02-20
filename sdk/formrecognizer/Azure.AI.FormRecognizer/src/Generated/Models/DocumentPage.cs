@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Content and layout elements extracted from a page from the input. </summary>
     public partial class DocumentPage
     {
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
@@ -28,6 +27,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = new ChangeTrackingList<DocumentWord>();
             SelectionMarks = new ChangeTrackingList<DocumentSelectionMark>();
             Lines = new ChangeTrackingList<DocumentLine>();
+            Barcodes = new ChangeTrackingList<DocumentBarcode>();
+            Formulas = new ChangeTrackingList<DocumentFormula>();
         }
 
         /// <summary> 1-based page number in the input document. </summary>
@@ -46,5 +47,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public IReadOnlyList<DocumentSelectionMark> SelectionMarks { get; }
         /// <summary> Extracted lines from the page, potentially containing both textual and visual elements. </summary>
         public IReadOnlyList<DocumentLine> Lines { get; }
+        /// <summary> Extracted barcodes from the page. </summary>
+        public IReadOnlyList<DocumentBarcode> Barcodes { get; }
+        /// <summary> Extracted formulas from the page. </summary>
+        public IReadOnlyList<DocumentFormula> Formulas { get; }
     }
 }

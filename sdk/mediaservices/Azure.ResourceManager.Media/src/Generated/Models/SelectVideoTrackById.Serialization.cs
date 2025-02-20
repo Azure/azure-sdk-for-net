@@ -5,41 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectVideoTrackById : IUtf8JsonSerializable
+    public partial class SelectVideoTrackById : IUtf8JsonSerializable, IJsonModel<SelectVideoTrackById>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelectVideoTrackById>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SelectVideoTrackById>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("trackId");
-            writer.WriteNumberValue(TrackId);
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SelectVideoTrackById DeserializeSelectVideoTrackById(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SelectVideoTrackById>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SelectVideoTrackById)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("trackId"u8);
+            writer.WriteNumberValue(TrackId);
+        }
+
+        SelectVideoTrackById IJsonModel<SelectVideoTrackById>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelectVideoTrackById>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SelectVideoTrackById)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelectVideoTrackById(document.RootElement, options);
+        }
+
+        internal static SelectVideoTrackById DeserializeSelectVideoTrackById(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long trackId = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackId"))
+                if (property.NameEquals("trackId"u8))
                 {
                     trackId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SelectVideoTrackById(odataType, trackId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SelectVideoTrackById(odataType, serializedAdditionalRawData, trackId);
         }
+
+        BinaryData IPersistableModel<SelectVideoTrackById>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelectVideoTrackById>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SelectVideoTrackById)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SelectVideoTrackById IPersistableModel<SelectVideoTrackById>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelectVideoTrackById>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSelectVideoTrackById(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SelectVideoTrackById)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SelectVideoTrackById>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

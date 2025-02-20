@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<SparkJobDefinitionResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<SparkJobDefinitionResource>(clientDiagnostics, nextLinkOperation, response, "SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation");
+            _operation = new OperationInternal<SparkJobDefinitionResource>(nextLinkOperation, clientDiagnostics, response, "SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation");
         }
 
         /// <inheritdoc />

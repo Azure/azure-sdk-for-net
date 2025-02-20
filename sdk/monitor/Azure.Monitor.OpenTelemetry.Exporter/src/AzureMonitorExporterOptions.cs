@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
+#nullable disable
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -17,20 +17,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// The latest service version supported by this library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_09_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.v2_1;
 
         /// <summary>
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
         /// </summary>
         /// <remarks>
-        /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
+        /// <see href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string"/>.
         /// </remarks>
         public string ConnectionString { get; set; }
 
         /// <summary>
+        /// Get or sets the value of <see cref="TokenCredential" />.
+        /// </summary>
+        public TokenCredential Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
+        /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
+        /// The default value is 1.0F, indicating that all telemetry items are sampled.
+        /// </summary>
+        public float SamplingRatio { get; set; } = 1.0F;
+
+        /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
-        public ServiceVersion Version { get; set; } = ServiceVersion.V2020_09_15_Preview;
+        public ServiceVersion Version { get; set; } = LatestVersion;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
+        /// </summary>
+        public AzureMonitorExporterOptions() : this(LatestVersion)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
@@ -39,6 +58,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public AzureMonitorExporterOptions(ServiceVersion version = LatestVersion)
         {
             this.Version = version;
+            // users can explicitly change it, but by default we don't want exporter internal logs to be reported to Azure Monitor.
+            this.Diagnostics.IsDistributedTracingEnabled = false;
+            this.Diagnostics.IsLoggingEnabled = false;
         }
 
         /// <summary>
@@ -48,9 +70,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public enum ServiceVersion
         {
             /// <summary>
-            /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/2020-09-15_Preview/swagger.json).
+            /// <see href="https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json" />.
             /// </summary>
-            V2020_09_15_Preview = 1,
+            v2_1 = 1,
         }
 
         /// <summary>
@@ -62,5 +84,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Disable offline storage.
         /// </summary>
         public bool DisableOfflineStorage { get; set; }
+
+        /// <summary>
+        /// Internal flag to control if Statsbeat is enabled.
+        /// </summary>
+        internal bool EnableStatsbeat { get; set; } = true;
     }
 }

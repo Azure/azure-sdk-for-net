@@ -35,6 +35,10 @@ namespace Azure.Storage.Blobs
 
         public bool TrimBlobNameSlashes { get; internal set; }
 
+        /// <summary>
+        /// Create a <see cref="BlobClientConfiguration"/> with token authentication.
+        /// </summary>
+
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             TokenCredential tokenCredential,
@@ -53,6 +57,9 @@ namespace Azure.Storage.Blobs
             TrimBlobNameSlashes = trimBlobNameSlashes;
         }
 
+        /// <summary>
+        /// Create a <see cref="BlobClientConfiguration"/> with shared key authentication.
+        /// </summary>
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
@@ -71,10 +78,78 @@ namespace Azure.Storage.Blobs
             TrimBlobNameSlashes = trimBlobNameSlashes;
         }
 
+        /// <summary>
+        /// Create a <see cref="BlobClientConfiguration"/> with SAS authentication.
+        /// </summary>
+        public BlobClientConfiguration(
+            HttpPipeline pipeline,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            BlobClientOptions.ServiceVersion version,
+            CustomerProvidedKey? customerProvidedKey,
+            TransferValidationOptions transferValidation,
+            string encryptionScope,
+            bool trimBlobNameSlashes)
+            : base(pipeline, sasCredential, clientDiagnostics)
+        {
+            Version = version;
+            CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = transferValidation;
+            EncryptionScope = encryptionScope;
+            TrimBlobNameSlashes = trimBlobNameSlashes;
+        }
+
+        /// <summary>
+        /// Create a <see cref="BlobClientConfiguration"/> without authentication,
+        /// or with SAS that was provided as part of the URL.
+        /// </summary>
+
+        public BlobClientConfiguration(
+            HttpPipeline pipeline,
+            ClientDiagnostics clientDiagnostics,
+            BlobClientOptions.ServiceVersion version,
+            CustomerProvidedKey? customerProvidedKey,
+            TransferValidationOptions transferValidation,
+            string encryptionScope,
+            bool trimBlobNameSlashes)
+            : base(pipeline, clientDiagnostics)
+        {
+            Version = version;
+            CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = transferValidation;
+            EncryptionScope = encryptionScope;
+            TrimBlobNameSlashes = trimBlobNameSlashes;
+        }
+
+        /// <summary>
+        /// Used for internal Client Constructors that accept multiple types of authentication.
+        /// </summary>
+        internal BlobClientConfiguration(
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            TokenCredential tokenCredential,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            BlobClientOptions.ServiceVersion version,
+            CustomerProvidedKey? customerProvidedKey,
+            TransferValidationOptions transferValidation,
+            string encryptionScope,
+            bool trimBlobNameSlashes)
+            : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
+        {
+            Version = version;
+            CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = transferValidation;
+            EncryptionScope = encryptionScope;
+            TrimBlobNameSlashes = trimBlobNameSlashes;
+        }
+
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
             => new BlobClientConfiguration(
                 pipeline: originalClientConfiguration.Pipeline,
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
+                tokenCredential: originalClientConfiguration.TokenCredential,
+                sasCredential: originalClientConfiguration.SasCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,

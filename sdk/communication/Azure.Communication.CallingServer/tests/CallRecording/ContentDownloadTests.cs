@@ -47,6 +47,7 @@ namespace Azure.Communication.CallingServer
             };
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadMetadata_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(200, DummyRecordingMetadata);
@@ -57,6 +58,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DownloadMetadataAsync_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(200, DummyRecordingMetadata);
@@ -67,6 +69,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadRecording_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(200, _dummyRecordingStream);
@@ -77,6 +80,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadRecordingByRanges_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
@@ -87,6 +91,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DownloadRecordingAsync_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(200, _dummyRecordingStream);
@@ -97,6 +102,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DownloadRecordingByRangesAsync_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
@@ -107,6 +113,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadRecordingToStream_Test()
         {
             HttpHeader[] rangeHeaderResponse = new HttpHeader[]
@@ -127,6 +134,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadRecordingToStream_ContentTransferOptions_Test()
         {
             ContentTransferOptions options = new()
@@ -158,6 +166,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadNotExistentContent_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
@@ -167,6 +176,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DownloadNotExistentContentAsync_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
@@ -176,6 +186,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AccessDenied_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
@@ -185,6 +196,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AccessDeniedAsync_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
@@ -194,6 +206,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void ParallelDownloadWithInvalidRangeFirst()
         {
             MockResponse invalidResponse = new(416); // Invalid range
@@ -221,6 +234,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task ParallelDownloadWithInvalidRangeFirstAsync()
         {
             MockResponse invalidResponse = new(416); // Invalid range

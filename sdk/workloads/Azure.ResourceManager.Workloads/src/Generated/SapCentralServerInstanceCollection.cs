@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SapCentralServerInstanceResource" /> and their operations.
-    /// Each <see cref="SapCentralServerInstanceResource" /> in the collection will belong to the same instance of <see cref="SapVirtualInstanceResource" />.
-    /// To get a <see cref="SapCentralServerInstanceCollection" /> instance call the GetSapCentralServerInstances method from an instance of <see cref="SapVirtualInstanceResource" />.
+    /// A class representing a collection of <see cref="SapCentralServerInstanceResource"/> and their operations.
+    /// Each <see cref="SapCentralServerInstanceResource"/> in the collection will belong to the same instance of <see cref="SapVirtualInstanceResource"/>.
+    /// To get a <see cref="SapCentralServerInstanceCollection"/> instance call the GetSapCentralServerInstances method from an instance of <see cref="SapVirtualInstanceResource"/>.
     /// </summary>
     public partial class SapCentralServerInstanceCollection : ArmCollection, IEnumerable<SapCentralServerInstanceResource>, IAsyncEnumerable<SapCentralServerInstanceResource>
     {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Central Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error.
+        /// Creates the SAP Central Services Instance resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT operation on this resource by end user will return a Bad Request error.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -63,11 +62,19 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> The SAP Central Server instance request body. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> The SAP Central Services Instance request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> or <paramref name="data"/> is null. </exception>
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Central Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error.
+        /// Creates the SAP Central Services Instance resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT operation on this resource by end user will return a Bad Request error.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -104,11 +111,19 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> The SAP Central Server instance request body. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> The SAP Central Services Instance request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> or <paramref name="data"/> is null. </exception>
@@ -135,7 +150,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Central Instance.
+        /// Gets the SAP Central Services Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -145,9 +160,17 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
@@ -172,7 +195,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Central Instance.
+        /// Gets the SAP Central Services Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,9 +205,17 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
@@ -209,7 +240,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Lists the SAP Central Instances in an SVI.
+        /// Lists the SAP Central Services Instance resource for the given Virtual Instance for SAP solutions resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,19 +250,27 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapCentralServerInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapCentralServerInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapCentralServerInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapCentralServerInstanceResource(Client, SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e)), _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapCentralServerInstanceResource(Client, SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e)), _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists the SAP Central Instances in an SVI.
+        /// Lists the SAP Central Services Instance resource for the given Virtual Instance for SAP solutions resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,15 +280,23 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapCentralServerInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapCentralServerInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapCentralServerInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapCentralServerInstanceResource(Client, SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e)), _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapCentralServerInstanceResource(Client, SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e)), _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,9 +310,17 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
@@ -298,9 +353,17 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
@@ -314,6 +377,96 @@ namespace Azure.ResourceManager.Workloads
             {
                 var response = _sapCentralServerInstanceSapCentralInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, centralInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/centralInstances/{centralInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPCentralInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SapCentralServerInstanceResource>> GetIfExistsAsync(string centralInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+
+            using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sapCentralServerInstanceSapCentralInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, centralInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SapCentralServerInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SapCentralServerInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/centralInstances/{centralInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPCentralInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
+        public virtual NullableResponse<SapCentralServerInstanceResource> GetIfExists(string centralInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+
+            using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sapCentralServerInstanceSapCentralInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, centralInstanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SapCentralServerInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SapCentralServerInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

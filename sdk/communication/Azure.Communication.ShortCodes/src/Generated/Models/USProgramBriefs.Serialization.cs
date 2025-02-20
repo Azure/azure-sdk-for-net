@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -15,15 +14,18 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static USProgramBriefs DeserializeUSProgramBriefs(JsonElement element)
         {
-            Optional<IReadOnlyList<USProgramBrief>> programBriefs = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<USProgramBrief> programBriefs = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("programBriefs"))
+                if (property.NameEquals("programBriefs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<USProgramBrief> array = new List<USProgramBrief>();
@@ -34,13 +36,21 @@ namespace Azure.Communication.ShortCodes.Models
                     programBriefs = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new USProgramBriefs(Optional.ToList(programBriefs), nextLink.Value);
+            return new USProgramBriefs(programBriefs ?? new ChangeTrackingList<USProgramBrief>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static USProgramBriefs FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUSProgramBriefs(document.RootElement);
         }
     }
 }

@@ -2,36 +2,25 @@
 // Licensed under the MIT License.
 
 #nullable enable
+
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExceptionRule")]
     public partial class ExceptionRule
     {
-        /// <summary> Initializes a new instance of ExceptionRule. </summary>
+        /// <summary> Initializes a new instance of an exception rule. </summary>
+        /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
-        /// <param name="actions"> A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trigger"/> or <paramref name="actions"/> is null. </exception>
-        public ExceptionRule(JobExceptionTrigger trigger, IDictionary<string, ExceptionAction?> actions)
+        /// <exception cref="ArgumentNullException"> <paramref name="trigger"/>. </exception>
+        public ExceptionRule(string id, ExceptionTrigger trigger)
         {
-            if (trigger == null)
-            {
-                throw new ArgumentNullException(nameof(trigger));
-            }
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
-
-            Trigger = trigger;
-            Actions = actions;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
+            Trigger = trigger ?? throw new ArgumentNullException(nameof(trigger));
         }
 
-        /// <summary> A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action. </summary>
-        public IDictionary<string, ExceptionAction?> Actions { get; }
+        /// <summary> A collection of actions to perform once the exception is triggered. </summary>
+        public IList<ExceptionAction> Actions { get; } = new List<ExceptionAction>();
     }
 }

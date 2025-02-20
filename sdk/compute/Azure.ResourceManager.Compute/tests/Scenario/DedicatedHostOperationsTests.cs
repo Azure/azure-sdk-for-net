@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
@@ -68,6 +69,24 @@ namespace Azure.ResourceManager.Compute.Tests
             DedicatedHostResource updatedHost = lro.Value;
 
             Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("testHost-");
+            var host = await CreateDedicatedHostAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            DedicatedHostResource updated = await host.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -14,22 +13,34 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static TargetConfidenceScoreLabel DeserializeTargetConfidenceScoreLabel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double positive = default;
             double negative = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("positive"))
+                if (property.NameEquals("positive"u8))
                 {
                     positive = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("negative"))
+                if (property.NameEquals("negative"u8))
                 {
                     negative = property.Value.GetDouble();
                     continue;
                 }
             }
             return new TargetConfidenceScoreLabel(positive, negative);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TargetConfidenceScoreLabel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTargetConfidenceScoreLabel(document.RootElement);
         }
     }
 }

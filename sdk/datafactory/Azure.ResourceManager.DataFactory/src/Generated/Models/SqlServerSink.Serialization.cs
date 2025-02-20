@@ -6,151 +6,87 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlServerSink : IUtf8JsonSerializable
+    public partial class SqlServerSink : IUtf8JsonSerializable, IJsonModel<SqlServerSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlServerSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerSink)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
-                writer.WritePropertyName("sqlWriterStoredProcedureName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SqlWriterStoredProcedureName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SqlWriterStoredProcedureName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
+                JsonSerializer.Serialize(writer, SqlWriterStoredProcedureName);
             }
             if (Optional.IsDefined(SqlWriterTableType))
             {
-                writer.WritePropertyName("sqlWriterTableType");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SqlWriterTableType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SqlWriterTableType.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sqlWriterTableType"u8);
+                JsonSerializer.Serialize(writer, SqlWriterTableType);
             }
             if (Optional.IsDefined(PreCopyScript))
             {
-                writer.WritePropertyName("preCopyScript");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PreCopyScript);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreCopyScript.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("preCopyScript"u8);
+                JsonSerializer.Serialize(writer, PreCopyScript);
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParameters))
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
-                writer.WritePropertyName("storedProcedureParameters");
-                writer.WriteStartObject();
-                foreach (var item in StoredProcedureParameters)
+                writer.WritePropertyName("storedProcedureParameters"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StoredProcedureParameters);
+#else
+                using (JsonDocument document = JsonDocument.Parse(StoredProcedureParameters))
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
             if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
-                writer.WritePropertyName("storedProcedureTableTypeParameterName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(StoredProcedureTableTypeParameterName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(StoredProcedureTableTypeParameterName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
+                JsonSerializer.Serialize(writer, StoredProcedureTableTypeParameterName);
             }
             if (Optional.IsDefined(TableOption))
             {
-                writer.WritePropertyName("tableOption");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TableOption);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TableOption.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("tableOption"u8);
+                JsonSerializer.Serialize(writer, TableOption);
             }
             if (Optional.IsDefined(SqlWriterUseTableLock))
             {
-                writer.WritePropertyName("sqlWriterUseTableLock");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SqlWriterUseTableLock);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SqlWriterUseTableLock.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sqlWriterUseTableLock"u8);
+                JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
-                writer.WritePropertyName("writeBehavior");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBehavior);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBehavior.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("writeBehavior"u8);
+                JsonSerializer.Serialize(writer, WriteBehavior);
             }
             if (Optional.IsDefined(UpsertSettings))
             {
-                writer.WritePropertyName("upsertSettings");
-                writer.WriteObjectValue(UpsertSettings);
-            }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
-            {
-                writer.WritePropertyName("writeBatchSize");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchSize);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(WriteBatchTimeout))
-            {
-                writer.WritePropertyName("writeBatchTimeout");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchTimeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("upsertSettings"u8);
+                writer.WriteObjectValue(UpsertSettings, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -158,198 +94,246 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static SqlServerSink DeserializeSqlServerSink(JsonElement element)
+        SqlServerSink IJsonModel<SqlServerSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> sqlWriterStoredProcedureName = default;
-            Optional<BinaryData> sqlWriterTableType = default;
-            Optional<BinaryData> preCopyScript = default;
-            Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
-            Optional<BinaryData> storedProcedureTableTypeParameterName = default;
-            Optional<BinaryData> tableOption = default;
-            Optional<BinaryData> sqlWriterUseTableLock = default;
-            Optional<BinaryData> writeBehavior = default;
-            Optional<SqlUpsertSettings> upsertSettings = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerSink(document.RootElement, options);
+        }
+
+        internal static SqlServerSink DeserializeSqlServerSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> sqlWriterStoredProcedureName = default;
+            DataFactoryElement<string> sqlWriterTableType = default;
+            DataFactoryElement<string> preCopyScript = default;
+            BinaryData storedProcedureParameters = default;
+            DataFactoryElement<string> storedProcedureTableTypeParameterName = default;
+            DataFactoryElement<string> tableOption = default;
+            DataFactoryElement<bool> sqlWriterUseTableLock = default;
+            DataFactoryElement<string> writeBehavior = default;
+            SqlUpsertSettings upsertSettings = default;
             string type = default;
-            Optional<BinaryData> writeBatchSize = default;
-            Optional<BinaryData> writeBatchTimeout = default;
-            Optional<BinaryData> sinkRetryCount = default;
-            Optional<BinaryData> sinkRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlWriterStoredProcedureName"))
+                if (property.NameEquals("sqlWriterStoredProcedureName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlWriterStoredProcedureName = BinaryData.FromString(property.Value.GetRawText());
+                    sqlWriterStoredProcedureName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sqlWriterTableType"))
+                if (property.NameEquals("sqlWriterTableType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlWriterTableType = BinaryData.FromString(property.Value.GetRawText());
+                    sqlWriterTableType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("preCopyScript"))
+                if (property.NameEquals("preCopyScript"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preCopyScript = BinaryData.FromString(property.Value.GetRawText());
+                    preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("storedProcedureParameters"))
+                if (property.NameEquals("storedProcedureParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, StoredProcedureParameter> dictionary = new Dictionary<string, StoredProcedureParameter>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, StoredProcedureParameter.DeserializeStoredProcedureParameter(property0.Value));
-                    }
-                    storedProcedureParameters = dictionary;
+                    storedProcedureParameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("storedProcedureTableTypeParameterName"))
+                if (property.NameEquals("storedProcedureTableTypeParameterName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storedProcedureTableTypeParameterName = BinaryData.FromString(property.Value.GetRawText());
+                    storedProcedureTableTypeParameterName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tableOption"))
+                if (property.NameEquals("tableOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tableOption = BinaryData.FromString(property.Value.GetRawText());
+                    tableOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sqlWriterUseTableLock"))
+                if (property.NameEquals("sqlWriterUseTableLock"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlWriterUseTableLock = BinaryData.FromString(property.Value.GetRawText());
+                    sqlWriterUseTableLock = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("writeBehavior"))
+                if (property.NameEquals("writeBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBehavior = BinaryData.FromString(property.Value.GetRawText());
+                    writeBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("upsertSettings"))
+                if (property.NameEquals("upsertSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(property.Value);
+                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("writeBatchSize"))
+                if (property.NameEquals("writeBatchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
+                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("writeBatchTimeout"))
+                if (property.NameEquals("writeBatchTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
+                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryCount"))
+                if (property.NameEquals("sinkRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryWait"))
+                if (property.NameEquals("sinkRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlServerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, Optional.ToDictionary(storedProcedureParameters), storedProcedureTableTypeParameterName.Value, tableOption.Value, sqlWriterUseTableLock.Value, writeBehavior.Value, upsertSettings.Value);
+            return new SqlServerSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                sqlWriterStoredProcedureName,
+                sqlWriterTableType,
+                preCopyScript,
+                storedProcedureParameters,
+                storedProcedureTableTypeParameterName,
+                tableOption,
+                sqlWriterUseTableLock,
+                writeBehavior,
+                upsertSettings);
         }
+
+        BinaryData IPersistableModel<SqlServerSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlServerSink IPersistableModel<SqlServerSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlServerSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlServerSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

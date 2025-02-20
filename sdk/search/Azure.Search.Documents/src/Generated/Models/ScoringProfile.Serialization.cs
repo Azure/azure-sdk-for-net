@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(TextWeights))
             {
                 if (TextWeights != null)
                 {
-                    writer.WritePropertyName("text");
+                    writer.WritePropertyName("text"u8);
                     writer.WriteObjectValue(TextWeights);
                 }
                 else
@@ -32,11 +32,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Functions))
             {
-                writer.WritePropertyName("functions");
+                writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringFunction>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (FunctionAggregation != null)
                 {
-                    writer.WritePropertyName("functionAggregation");
+                    writer.WritePropertyName("functionAggregation"u8);
                     writer.WriteStringValue(FunctionAggregation.Value.ToSerialString());
                 }
                 else
@@ -57,18 +57,22 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ScoringProfile DeserializeScoringProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
-            Optional<TextWeights> text = default;
-            Optional<IList<ScoringFunction>> functions = default;
-            Optional<ScoringFunctionAggregation?> functionAggregation = default;
+            TextWeights text = default;
+            IList<ScoringFunction> functions = default;
+            ScoringFunctionAggregation? functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,11 +82,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     text = TextWeights.DeserializeTextWeights(property.Value);
                     continue;
                 }
-                if (property.NameEquals("functions"))
+                if (property.NameEquals("functions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScoringFunction> array = new List<ScoringFunction>();
@@ -93,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     functions = array;
                     continue;
                 }
-                if (property.NameEquals("functionAggregation"))
+                if (property.NameEquals("functionAggregation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +107,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScoringProfile(name, text.Value, Optional.ToList(functions), Optional.ToNullable(functionAggregation));
+            return new ScoringProfile(name, text, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScoringProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScoringProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static HostNameBindingSslState ToHostNameBindingSslState(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return HostNameBindingSslState.Disabled;
-            if (string.Equals(value, "SniEnabled", StringComparison.InvariantCultureIgnoreCase)) return HostNameBindingSslState.SniEnabled;
-            if (string.Equals(value, "IpBasedEnabled", StringComparison.InvariantCultureIgnoreCase)) return HostNameBindingSslState.IPBasedEnabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return HostNameBindingSslState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SniEnabled")) return HostNameBindingSslState.SniEnabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IpBasedEnabled")) return HostNameBindingSslState.IPBasedEnabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostNameBindingSslState value.");
         }
     }

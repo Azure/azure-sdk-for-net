@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Square Service linked service. </summary>
     public partial class SquareLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SquareLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
         /// <param name="clientId"> The client ID associated with your Square application. </param>
         /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
@@ -31,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Square";
         }
 
-        /// <summary> Initializes a new instance of SquareLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -48,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
+        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal SquareLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object host, object clientId, SecretBase clientSecret, object redirectUri, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
@@ -81,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object RedirectUri { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }
-        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
         public object UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
         public object UsePeerVerification { get; set; }

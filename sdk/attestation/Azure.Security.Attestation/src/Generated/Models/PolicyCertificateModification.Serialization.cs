@@ -20,29 +20,48 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(InternalPolicyCertificate))
             {
-                writer.WritePropertyName("policyCertificate");
-                writer.WriteObjectValue(InternalPolicyCertificate);
+                writer.WritePropertyName("policyCertificate"u8);
+                writer.WriteObjectValue<JsonWebKey>(InternalPolicyCertificate);
             }
             writer.WriteEndObject();
         }
 
         internal static PolicyCertificateModification DeserializePolicyCertificateModification(JsonElement element)
         {
-            Optional<JsonWebKey> policyCertificate = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            JsonWebKey policyCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyCertificate"))
+                if (property.NameEquals("policyCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyCertificate = JsonWebKey.DeserializeJsonWebKey(property.Value);
                     continue;
                 }
             }
-            return new PolicyCertificateModification(policyCertificate.Value);
+            return new PolicyCertificateModification(policyCertificate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificateModification FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificateModification(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class PolicyCertificateModificationConverter : JsonConverter<PolicyCertificateModification>
@@ -51,6 +70,7 @@ namespace Azure.Security.Attestation
             {
                 writer.WriteObjectValue(model);
             }
+
             public override PolicyCertificateModification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

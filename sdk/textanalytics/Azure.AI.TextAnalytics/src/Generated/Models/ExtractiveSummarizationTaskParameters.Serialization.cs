@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,27 +17,27 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SentenceCount))
             {
-                writer.WritePropertyName("sentenceCount");
+                writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
             if (Optional.IsDefined(SortBy))
             {
-                writer.WritePropertyName("sortBy");
+                writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy.Value.ToString());
             }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion");
+                writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
@@ -46,60 +45,76 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractiveSummarizationTaskParameters DeserializeExtractiveSummarizationTaskParameters(JsonElement element)
         {
-            Optional<int> sentenceCount = default;
-            Optional<SummarySentencesOrder> sortBy = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? sentenceCount = default;
+            ExtractiveSummarySentencesOrder? sortBy = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sentenceCount"))
+                if (property.NameEquals("sentenceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sentenceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sortBy"))
+                if (property.NameEquals("sortBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sortBy = new SummarySentencesOrder(property.Value.GetString());
+                    sortBy = new ExtractiveSummarySentencesOrder(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loggingOptOut"))
+                if (property.NameEquals("loggingOptOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ExtractiveSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(sentenceCount), Optional.ToNullable(sortBy), Optional.ToNullable(stringIndexType));
+            return new ExtractiveSummarizationTaskParameters(loggingOptOut, modelVersion, sentenceCount, sortBy, stringIndexType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExtractiveSummarizationTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExtractiveSummarizationTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

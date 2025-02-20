@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -15,20 +14,23 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableQueryResponse DeserializeTableQueryResponse(JsonElement element)
         {
-            Optional<string> odataMetadata = default;
-            Optional<IReadOnlyList<TableItem>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string odataMetadata = default;
+            IReadOnlyList<TableItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("odata.metadata"))
+                if (property.NameEquals("odata.metadata"u8))
                 {
                     odataMetadata = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TableItem> array = new List<TableItem>();
@@ -40,7 +42,15 @@ namespace Azure.Data.Tables.Models
                     continue;
                 }
             }
-            return new TableQueryResponse(odataMetadata.Value, Optional.ToList(value));
+            return new TableQueryResponse(odataMetadata, value ?? new ChangeTrackingList<TableItem>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TableQueryResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTableQueryResponse(document.RootElement);
         }
     }
 }

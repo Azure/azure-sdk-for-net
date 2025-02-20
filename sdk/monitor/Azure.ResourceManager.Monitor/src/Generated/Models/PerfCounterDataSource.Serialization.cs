@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PerfCounterDataSource : IUtf8JsonSerializable
+    public partial class PerfCounterDataSource : IUtf8JsonSerializable, IJsonModel<PerfCounterDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerfCounterDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PerfCounterDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerfCounterDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Streams))
             {
-                writer.WritePropertyName("streams");
+                writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
@@ -28,12 +46,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(SamplingFrequencyInSeconds))
             {
-                writer.WritePropertyName("samplingFrequencyInSeconds");
+                writer.WritePropertyName("samplingFrequencyInSeconds"u8);
                 writer.WriteNumberValue(SamplingFrequencyInSeconds.Value);
             }
             if (Optional.IsCollectionDefined(CounterSpecifiers))
             {
-                writer.WritePropertyName("counterSpecifiers");
+                writer.WritePropertyName("counterSpecifiers"u8);
                 writer.WriteStartArray();
                 foreach (var item in CounterSpecifiers)
                 {
@@ -43,25 +61,58 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element)
+        PerfCounterDataSource IJsonModel<PerfCounterDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<PerfCounterDataSourceStream>> streams = default;
-            Optional<int> samplingFrequencyInSeconds = default;
-            Optional<IList<string>> counterSpecifiers = default;
-            Optional<string> name = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PerfCounterDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePerfCounterDataSource(document.RootElement, options);
+        }
+
+        internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<PerfCounterDataSourceStream> streams = default;
+            int? samplingFrequencyInSeconds = default;
+            IList<string> counterSpecifiers = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PerfCounterDataSourceStream> array = new List<PerfCounterDataSourceStream>();
@@ -72,21 +123,19 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("samplingFrequencyInSeconds"))
+                if (property.NameEquals("samplingFrequencyInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingFrequencyInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("counterSpecifiers"))
+                if (property.NameEquals("counterSpecifiers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -97,13 +146,49 @@ namespace Azure.ResourceManager.Monitor.Models
                     counterSpecifiers = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PerfCounterDataSource(Optional.ToList(streams), Optional.ToNullable(samplingFrequencyInSeconds), Optional.ToList(counterSpecifiers), name.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PerfCounterDataSource(streams ?? new ChangeTrackingList<PerfCounterDataSourceStream>(), samplingFrequencyInSeconds, counterSpecifiers ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PerfCounterDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerfCounterDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PerfCounterDataSource IPersistableModel<PerfCounterDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerfCounterDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePerfCounterDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PerfCounterDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

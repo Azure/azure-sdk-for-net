@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,15 +15,18 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteGuidance DeserializeRouteGuidance(JsonElement element)
         {
-            Optional<IReadOnlyList<RouteInstruction>> instructions = default;
-            Optional<IReadOnlyList<RouteInstructionGroup>> instructionGroups = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<RouteInstruction> instructions = default;
+            IReadOnlyList<RouteInstructionGroup> instructionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instructions"))
+                if (property.NameEquals("instructions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteInstruction> array = new List<RouteInstruction>();
@@ -34,11 +37,10 @@ namespace Azure.Maps.Routing.Models
                     instructions = array;
                     continue;
                 }
-                if (property.NameEquals("instructionGroups"))
+                if (property.NameEquals("instructionGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteInstructionGroup> array = new List<RouteInstructionGroup>();
@@ -50,7 +52,15 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteGuidance(Optional.ToList(instructions), Optional.ToList(instructionGroups));
+            return new RouteGuidance(instructions ?? new ChangeTrackingList<RouteInstruction>(), instructionGroups ?? new ChangeTrackingList<RouteInstructionGroup>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteGuidance FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteGuidance(document.RootElement);
         }
     }
 }

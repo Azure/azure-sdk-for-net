@@ -5,40 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class NumaNodeInfo : IUtf8JsonSerializable
+    public partial class NumaNodeInfo : IUtf8JsonSerializable, IJsonModel<NumaNodeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumaNodeInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NumaNodeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(NumaNodeIndex))
             {
-                writer.WritePropertyName("numaNodeIndex");
+                writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
             if (Optional.IsDefined(TotalMemoryInMB))
             {
-                writer.WritePropertyName("totalMemoryInMb");
+                writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(LogicalCoreCountPerCore))
             {
-                writer.WritePropertyName("logicalCoreCountPerCore");
+                writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
             if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
-                writer.WritePropertyName("effectiveAvailableMemoryInMb");
+                writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
             if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {
-                writer.WritePropertyName("freeVCpuIndexesForHpn");
+                writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
                 foreach (var item in FreeVCpuIndexesForHpn)
                 {
@@ -48,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
             {
-                writer.WritePropertyName("vCpuIndexesForHpn");
+                writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
                 foreach (var item in VCpuIndexesForHpn)
                 {
@@ -58,7 +76,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
             {
-                writer.WritePropertyName("vCpuIndexesForRoot");
+                writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();
                 foreach (var item in VCpuIndexesForRoot)
                 {
@@ -66,65 +84,94 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static NumaNodeInfo DeserializeNumaNodeInfo(JsonElement element)
+        NumaNodeInfo IJsonModel<NumaNodeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<int> numaNodeIndex = default;
-            Optional<long> totalMemoryInMb = default;
-            Optional<int> logicalCoreCountPerCore = default;
-            Optional<long> effectiveAvailableMemoryInMb = default;
-            Optional<IList<int>> freeVCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForRoot = default;
+            var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNumaNodeInfo(document.RootElement, options);
+        }
+
+        internal static NumaNodeInfo DeserializeNumaNodeInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? numaNodeIndex = default;
+            long? totalMemoryInMb = default;
+            int? logicalCoreCountPerCore = default;
+            long? effectiveAvailableMemoryInMb = default;
+            IList<int> freeVCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForRoot = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numaNodeIndex"))
+                if (property.NameEquals("numaNodeIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numaNodeIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalMemoryInMb"))
+                if (property.NameEquals("totalMemoryInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalMemoryInMb = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("logicalCoreCountPerCore"))
+                if (property.NameEquals("logicalCoreCountPerCore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logicalCoreCountPerCore = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("effectiveAvailableMemoryInMb"))
+                if (property.NameEquals("effectiveAvailableMemoryInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveAvailableMemoryInMb = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("freeVCpuIndexesForHpn"))
+                if (property.NameEquals("freeVCpuIndexesForHpn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -135,11 +182,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     freeVCpuIndexesForHpn = array;
                     continue;
                 }
-                if (property.NameEquals("vCpuIndexesForHpn"))
+                if (property.NameEquals("vCpuIndexesForHpn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -150,11 +196,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     vCpuIndexesForHpn = array;
                     continue;
                 }
-                if (property.NameEquals("vCpuIndexesForRoot"))
+                if (property.NameEquals("vCpuIndexesForRoot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -165,8 +210,52 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     vCpuIndexesForRoot = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), Optional.ToList(freeVCpuIndexesForHpn), Optional.ToList(vCpuIndexesForHpn), Optional.ToList(vCpuIndexesForRoot));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NumaNodeInfo(
+                numaNodeIndex,
+                totalMemoryInMb,
+                logicalCoreCountPerCore,
+                effectiveAvailableMemoryInMb,
+                freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForRoot ?? new ChangeTrackingList<int>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NumaNodeInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NumaNodeInfo IPersistableModel<NumaNodeInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNumaNodeInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NumaNodeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

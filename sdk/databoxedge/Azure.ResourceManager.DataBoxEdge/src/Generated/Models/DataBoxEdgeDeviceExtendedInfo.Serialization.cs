@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,101 +14,182 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceExtendedInfo : IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceExtendedInfo : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxEdgeDeviceExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionKeyThumbprint))
             {
-                writer.WritePropertyName("encryptionKeyThumbprint");
+                writer.WritePropertyName("encryptionKeyThumbprint"u8);
                 writer.WriteStringValue(EncryptionKeyThumbprint);
             }
             if (Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey");
+                writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteStringValue(EncryptionKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceKey))
+            {
+                writer.WritePropertyName("resourceKey"u8);
+                writer.WriteStringValue(ResourceKey);
             }
             if (Optional.IsDefined(ClientSecretStoreId))
             {
-                writer.WritePropertyName("clientSecretStoreId");
+                writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
             if (Optional.IsDefined(ClientSecretStoreUri))
             {
-                writer.WritePropertyName("clientSecretStoreUrl");
+                writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ChannelIntegrityKeyName))
             {
-                writer.WritePropertyName("channelIntegrityKeyName");
+                writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
             if (Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
-                writer.WritePropertyName("channelIntegrityKeyVersion");
+                writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
             if (Optional.IsDefined(KeyVaultSyncStatus))
             {
-                writer.WritePropertyName("keyVaultSyncStatus");
+                writer.WritePropertyName("keyVaultSyncStatus"u8);
                 writer.WriteStringValue(KeyVaultSyncStatus.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceSecrets))
+            {
+                writer.WritePropertyName("deviceSecrets"u8);
+                writer.WriteStartObject();
+                foreach (var item in DeviceSecrets)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClusterWitnessType))
+            {
+                writer.WritePropertyName("clusterWitnessType"u8);
+                writer.WriteStringValue(ClusterWitnessType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FileShareWitnessLocation))
+            {
+                writer.WritePropertyName("fileShareWitnessLocation"u8);
+                writer.WriteStringValue(FileShareWitnessLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FileShareWitnessUsername))
+            {
+                writer.WritePropertyName("fileShareWitnessUsername"u8);
+                writer.WriteStringValue(FileShareWitnessUsername);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CloudWitnessStorageAccountName))
+            {
+                writer.WritePropertyName("cloudWitnessStorageAccountName"u8);
+                writer.WriteStringValue(CloudWitnessStorageAccountName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CloudWitnessContainerName))
+            {
+                writer.WritePropertyName("cloudWitnessContainerName"u8);
+                writer.WriteStringValue(CloudWitnessContainerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CloudWitnessStorageEndpoint))
+            {
+                writer.WritePropertyName("cloudWitnessStorageEndpoint"u8);
+                writer.WriteStringValue(CloudWitnessStorageEndpoint);
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeDeviceExtendedInfo DeserializeDataBoxEdgeDeviceExtendedInfo(JsonElement element)
+        DataBoxEdgeDeviceExtendedInfo IJsonModel<DataBoxEdgeDeviceExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeDeviceExtendedInfo DeserializeDataBoxEdgeDeviceExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> encryptionKeyThumbprint = default;
-            Optional<string> encryptionKey = default;
-            Optional<string> resourceKey = default;
-            Optional<ResourceIdentifier> clientSecretStoreId = default;
-            Optional<Uri> clientSecretStoreUrl = default;
-            Optional<string> channelIntegrityKeyName = default;
-            Optional<string> channelIntegrityKeyVersion = default;
-            Optional<EdgeKeyVaultSyncStatus> keyVaultSyncStatus = default;
-            Optional<IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret>> deviceSecrets = default;
-            Optional<EdgeClusterWitnessType> clusterWitnessType = default;
-            Optional<string> fileShareWitnessLocation = default;
-            Optional<string> fileShareWitnessUsername = default;
-            Optional<string> cloudWitnessStorageAccountName = default;
-            Optional<string> cloudWitnessContainerName = default;
-            Optional<string> cloudWitnessStorageEndpoint = default;
+            SystemData systemData = default;
+            string encryptionKeyThumbprint = default;
+            string encryptionKey = default;
+            string resourceKey = default;
+            ResourceIdentifier clientSecretStoreId = default;
+            Uri clientSecretStoreUrl = default;
+            string channelIntegrityKeyName = default;
+            string channelIntegrityKeyVersion = default;
+            EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default;
+            IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = default;
+            EdgeClusterWitnessType? clusterWitnessType = default;
+            string fileShareWitnessLocation = default;
+            string fileShareWitnessUsername = default;
+            string cloudWitnessStorageAccountName = default;
+            string cloudWitnessContainerName = default;
+            string cloudWitnessStorageEndpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,107 +198,102 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("encryptionKeyThumbprint"))
+                        if (property0.NameEquals("encryptionKeyThumbprint"u8))
                         {
                             encryptionKeyThumbprint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encryptionKey"))
+                        if (property0.NameEquals("encryptionKey"u8))
                         {
                             encryptionKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceKey"))
+                        if (property0.NameEquals("resourceKey"u8))
                         {
                             resourceKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecretStoreId"))
+                        if (property0.NameEquals("clientSecretStoreId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientSecretStoreId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("clientSecretStoreUrl"))
+                        if (property0.NameEquals("clientSecretStoreUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clientSecretStoreUrl = null;
                                 continue;
                             }
                             clientSecretStoreUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("channelIntegrityKeyName"))
+                        if (property0.NameEquals("channelIntegrityKeyName"u8))
                         {
                             channelIntegrityKeyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("channelIntegrityKeyVersion"))
+                        if (property0.NameEquals("channelIntegrityKeyVersion"u8))
                         {
                             channelIntegrityKeyVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultSyncStatus"))
+                        if (property0.NameEquals("keyVaultSyncStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keyVaultSyncStatus = new EdgeKeyVaultSyncStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deviceSecrets"))
+                        if (property0.NameEquals("deviceSecrets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, DataBoxEdgeDeviceSecret> dictionary = new Dictionary<string, DataBoxEdgeDeviceSecret>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataBoxEdgeDeviceSecret.DeserializeDataBoxEdgeDeviceSecret(property1.Value));
+                                dictionary.Add(property1.Name, DataBoxEdgeDeviceSecret.DeserializeDataBoxEdgeDeviceSecret(property1.Value, options));
                             }
                             deviceSecrets = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("clusterWitnessType"))
+                        if (property0.NameEquals("clusterWitnessType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterWitnessType = new EdgeClusterWitnessType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("fileShareWitnessLocation"))
+                        if (property0.NameEquals("fileShareWitnessLocation"u8))
                         {
                             fileShareWitnessLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fileShareWitnessUsername"))
+                        if (property0.NameEquals("fileShareWitnessUsername"u8))
                         {
                             fileShareWitnessUsername = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cloudWitnessStorageAccountName"))
+                        if (property0.NameEquals("cloudWitnessStorageAccountName"u8))
                         {
                             cloudWitnessStorageAccountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cloudWitnessContainerName"))
+                        if (property0.NameEquals("cloudWitnessContainerName"u8))
                         {
                             cloudWitnessContainerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cloudWitnessStorageEndpoint"))
+                        if (property0.NameEquals("cloudWitnessStorageEndpoint"u8))
                         {
                             cloudWitnessStorageEndpoint = property0.Value.GetString();
                             continue;
@@ -224,8 +301,64 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeDeviceExtendedInfo(id, name, type, systemData.Value, encryptionKeyThumbprint.Value, encryptionKey.Value, resourceKey.Value, clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(keyVaultSyncStatus), Optional.ToDictionary(deviceSecrets), Optional.ToNullable(clusterWitnessType), fileShareWitnessLocation.Value, fileShareWitnessUsername.Value, cloudWitnessStorageAccountName.Value, cloudWitnessContainerName.Value, cloudWitnessStorageEndpoint.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeDeviceExtendedInfo(
+                id,
+                name,
+                type,
+                systemData,
+                encryptionKeyThumbprint,
+                encryptionKey,
+                resourceKey,
+                clientSecretStoreId,
+                clientSecretStoreUrl,
+                channelIntegrityKeyName,
+                channelIntegrityKeyVersion,
+                keyVaultSyncStatus,
+                deviceSecrets ?? new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>(),
+                clusterWitnessType,
+                fileShareWitnessLocation,
+                fileShareWitnessUsername,
+                cloudWitnessStorageAccountName,
+                cloudWitnessContainerName,
+                cloudWitnessStorageEndpoint,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeDeviceExtendedInfo IPersistableModel<DataBoxEdgeDeviceExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeDeviceExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

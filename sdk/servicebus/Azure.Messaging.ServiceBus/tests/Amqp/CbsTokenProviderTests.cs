@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetTokenAsyncSynchonizesMultipleRefreshAttemptsForJwtTokens()
+        public async Task GetTokenAsyncSynchronizesMultipleRefreshAttemptsForJwtTokens()
         {
             var tokenValue = "ValuE_oF_tHE_tokEn";
             var buffer = TimeSpan.FromMinutes(5);

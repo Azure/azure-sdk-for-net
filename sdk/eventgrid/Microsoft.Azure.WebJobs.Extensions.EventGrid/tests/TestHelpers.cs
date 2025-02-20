@@ -2,20 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Common;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using Azure.Core.TestFramework;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 {
     internal static class TestHelpers
     {
-        public static IHost NewHost<T>(EventGridExtensionConfigProvider ext = null, Dictionary<string, string> configuration = null)
+        public static IHost NewHost<T>(EventGridExtensionConfigProvider ext = null, Dictionary<string, string> configuration = null, RecordedTestBase recording = null)
+        {
+            return NewHost<T>(ext == null ? null : provider => ext, configuration, recording);
+        }
+
+        public static IHost NewHost<T>(Func<IServiceProvider, EventGridExtensionConfigProvider> ext, Dictionary<string, string> configuration = null, RecordedTestBase recording = null)
         {
             var builder = new HostBuilder()
            .ConfigureServices(services =>
@@ -25,12 +31,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                {
                    services.AddSingleton<IExtensionConfigProvider>(ext);
                }
+
                services.AddSingleton<IExtensionConfigProvider>(new TestExtensionConfig());
            })
            .ConfigureWebJobs(webJobsBuilder =>
            {
                webJobsBuilder.AddEventGrid();
                webJobsBuilder.UseHostId(Guid.NewGuid().ToString("n"));
+               if (recording is { Mode: RecordedTestMode.Record } or { Mode: RecordedTestMode.Playback })
+               {
+                   webJobsBuilder.Services.AddSingleton(recording);
+                   webJobsBuilder.Services.AddSingleton<EventGridAsyncCollectorFactory, InstrumentedCollectorFactory>();
+               }
            })
            .ConfigureLogging(logging =>
            {

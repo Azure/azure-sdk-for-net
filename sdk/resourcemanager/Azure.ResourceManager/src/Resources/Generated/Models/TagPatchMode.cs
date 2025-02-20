@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
         private const string MergeValue = "Merge";
         private const string DeleteValue = "Delete";
 
-        /// <summary> The &apos;replace&apos; option replaces the entire set of existing tags with a new set. </summary>
+        /// <summary> The 'replace' option replaces the entire set of existing tags with a new set. </summary>
         public static TagPatchMode Replace { get; } = new TagPatchMode(ReplaceValue);
-        /// <summary> The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. </summary>
+        /// <summary> The 'merge' option allows adding tags with new names and updating the values of tags with existing names. </summary>
         public static TagPatchMode Merge { get; } = new TagPatchMode(MergeValue);
-        /// <summary> The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <summary> The 'delete' option allows selectively deleting tags based on given names or name/value pairs. </summary>
         public static TagPatchMode Delete { get; } = new TagPatchMode(DeleteValue);
         /// <summary> Determines if two <see cref="TagPatchMode"/> values are the same. </summary>
         public static bool operator ==(TagPatchMode left, TagPatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TagPatchMode"/> values are not the same. </summary>
         public static bool operator !=(TagPatchMode left, TagPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TagPatchMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TagPatchMode"/>. </summary>
         public static implicit operator TagPatchMode(string value) => new TagPatchMode(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

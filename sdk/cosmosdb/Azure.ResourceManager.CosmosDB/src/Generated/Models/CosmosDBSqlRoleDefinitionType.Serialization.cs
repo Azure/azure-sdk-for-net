@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         public static CosmosDBSqlRoleDefinitionType ToCosmosDBSqlRoleDefinitionType(this string value)
         {
-            if (string.Equals(value, "BuiltInRole", StringComparison.InvariantCultureIgnoreCase)) return CosmosDBSqlRoleDefinitionType.BuiltInRole;
-            if (string.Equals(value, "CustomRole", StringComparison.InvariantCultureIgnoreCase)) return CosmosDBSqlRoleDefinitionType.CustomRole;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BuiltInRole")) return CosmosDBSqlRoleDefinitionType.BuiltInRole;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomRole")) return CosmosDBSqlRoleDefinitionType.CustomRole;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CosmosDBSqlRoleDefinitionType value.");
         }
     }

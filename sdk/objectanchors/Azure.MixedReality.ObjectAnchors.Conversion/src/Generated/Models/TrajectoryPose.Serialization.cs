@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -16,10 +17,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rotation");
-            writer.WriteObjectValue(RotationWrapper);
-            writer.WritePropertyName("translation");
-            writer.WriteObjectValue(TranslationWrapper);
+            writer.WritePropertyName("rotation"u8);
+            writer.WriteObjectValue<Quaternion>(RotationWrapper);
+            writer.WritePropertyName("translation"u8);
+            writer.WriteObjectValue<Vector3>(TranslationWrapper);
             writer.WriteEndObject();
         }
 
@@ -29,18 +30,34 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Vector3 translation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rotation"))
+                if (property.NameEquals("rotation"u8))
                 {
                     rotation = Quaternion.DeserializeQuaternion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("translation"))
+                if (property.NameEquals("translation"u8))
                 {
                     translation = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
             }
             return new TrajectoryPose(rotation, translation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TrajectoryPose FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTrajectoryPose(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

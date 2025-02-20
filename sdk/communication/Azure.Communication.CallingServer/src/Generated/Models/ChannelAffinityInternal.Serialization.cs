@@ -17,15 +17,23 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             if (Optional.IsDefined(Channel))
             {
-                writer.WritePropertyName("channel");
+                writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
             if (Optional.IsDefined(Participant))
             {
-                writer.WritePropertyName("participant");
-                writer.WriteObjectValue(Participant);
+                writer.WritePropertyName("participant"u8);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(Participant);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

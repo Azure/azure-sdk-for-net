@@ -14,7 +14,9 @@ namespace Azure.Communication.Pipeline
             string stringSign = new Uri(connectionString.GetRequired("endpoint")).Host;
 
             var authPolicy = new CustomHMACAuthenticationPolicy(new AzureKeyCredential(connectionString.GetRequired("accesskey")), stringSign);
-            return HttpPipelineBuilder.Build(options, authPolicy);
+            HttpPipelineOptions httpPipelineOptions = new(options) { PerRetryPolicies = { authPolicy } };
+            HttpPipelineTransportOptions httpPipelineTransportOptions = new() { IsClientRedirectEnabled = true };
+            return HttpPipelineBuilder.Build(httpPipelineOptions, httpPipelineTransportOptions);
         }
     }
 }

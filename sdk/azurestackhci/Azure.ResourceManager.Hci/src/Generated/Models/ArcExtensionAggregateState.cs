@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string PartiallySucceededValue = "PartiallySucceeded";
         private const string PartiallyConnectedValue = "PartiallyConnected";
         private const string InProgressValue = "InProgress";
+        private const string AcceptedValue = "Accepted";
+        private const string ProvisioningValue = "Provisioning";
+        private const string UpgradeFailedRollbackSucceededValue = "UpgradeFailedRollbackSucceeded";
 
         /// <summary> NotSpecified. </summary>
         public static ArcExtensionAggregateState NotSpecified { get; } = new ArcExtensionAggregateState(NotSpecifiedValue);
@@ -68,11 +71,17 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcExtensionAggregateState PartiallyConnected { get; } = new ArcExtensionAggregateState(PartiallyConnectedValue);
         /// <summary> InProgress. </summary>
         public static ArcExtensionAggregateState InProgress { get; } = new ArcExtensionAggregateState(InProgressValue);
+        /// <summary> Accepted. </summary>
+        public static ArcExtensionAggregateState Accepted { get; } = new ArcExtensionAggregateState(AcceptedValue);
+        /// <summary> Provisioning. </summary>
+        public static ArcExtensionAggregateState Provisioning { get; } = new ArcExtensionAggregateState(ProvisioningValue);
+        /// <summary> UpgradeFailedRollbackSucceeded. </summary>
+        public static ArcExtensionAggregateState UpgradeFailedRollbackSucceeded { get; } = new ArcExtensionAggregateState(UpgradeFailedRollbackSucceededValue);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are not the same. </summary>
         public static bool operator !=(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArcExtensionAggregateState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcExtensionAggregateState"/>. </summary>
         public static implicit operator ArcExtensionAggregateState(string value) => new ArcExtensionAggregateState(value);
 
         /// <inheritdoc />
@@ -83,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

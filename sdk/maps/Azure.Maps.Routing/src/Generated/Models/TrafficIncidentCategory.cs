@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Maps.Routing.Models
 {
-    /// <summary> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See &quot;tec&quot; for detailed information. </summary>
+    /// <summary> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See "tec" for detailed information. </summary>
     public readonly partial struct TrafficIncidentCategory : IEquatable<TrafficIncidentCategory>
     {
         private readonly string _value;
@@ -39,7 +39,7 @@ namespace Azure.Maps.Routing.Models
         public static bool operator ==(TrafficIncidentCategory left, TrafficIncidentCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficIncidentCategory"/> values are not the same. </summary>
         public static bool operator !=(TrafficIncidentCategory left, TrafficIncidentCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrafficIncidentCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficIncidentCategory"/>. </summary>
         public static implicit operator TrafficIncidentCategory(string value) => new TrafficIncidentCategory(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.Maps.Routing.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

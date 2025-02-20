@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The default is &apos;standard&apos;. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </summary>
+    /// <summary> The default is 'standard'. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </summary>
     public readonly partial struct ContainerServiceLoadBalancerSku : IEquatable<ContainerServiceLoadBalancerSku>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ContainerServiceLoadBalancerSku left, ContainerServiceLoadBalancerSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceLoadBalancerSku"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceLoadBalancerSku left, ContainerServiceLoadBalancerSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
         public static implicit operator ContainerServiceLoadBalancerSku(string value) => new ContainerServiceLoadBalancerSku(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

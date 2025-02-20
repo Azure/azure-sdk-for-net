@@ -9,22 +9,22 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
     /// A Class representing a PolicyAttestation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyAttestationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPolicyAttestationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyAttestation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyAttestationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPolicyAttestationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetPolicyAttestation method.
     /// </summary>
     public partial class PolicyAttestationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyAttestationResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="attestationName"> The attestationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string attestationName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}";
@@ -35,12 +35,15 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly AttestationsRestOperations _policyAttestationAttestationsRestClient;
         private readonly PolicyAttestationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/attestations";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyAttestationResource"/> class for mocking. </summary>
         protected PolicyAttestationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyAttestationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyAttestationResource(ArmClient client, PolicyAttestationData data) : this(client, data.Id)
@@ -61,9 +64,6 @@ namespace Azure.ResourceManager.PolicyInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/attestations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +97,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +136,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Attestations_DeleteAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -172,7 +196,9 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = await _policyAttestationAttestationsRestClient.DeleteAtResourceAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation(response);
+                var uri = _policyAttestationAttestationsRestClient.CreateDeleteAtResourceRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PolicyInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -195,6 +221,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Attestations_DeleteAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -206,7 +240,9 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = _policyAttestationAttestationsRestClient.DeleteAtResource(Id.Parent, Id.Name, cancellationToken);
-                var operation = new PolicyInsightsArmOperation(response);
+                var uri = _policyAttestationAttestationsRestClient.CreateDeleteAtResourceRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PolicyInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Attestations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Attestations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

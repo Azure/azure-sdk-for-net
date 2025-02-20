@@ -17,61 +17,79 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LowerBound))
             {
-                writer.WritePropertyName("lowerBound");
+                writer.WritePropertyName("lowerBound"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
             if (Optional.IsDefined(UpperBound))
             {
-                writer.WritePropertyName("upperBound");
+                writer.WritePropertyName("upperBound"u8);
                 writer.WriteNumberValue(UpperBound.Value);
             }
-            writer.WritePropertyName("anomalyDetectorDirection");
+            writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
-            writer.WritePropertyName("suppressCondition");
-            writer.WriteObjectValue(SuppressCondition);
+            writer.WritePropertyName("suppressCondition"u8);
+            writer.WriteObjectValue<SuppressCondition>(SuppressCondition);
             writer.WriteEndObject();
         }
 
         internal static HardThresholdCondition DeserializeHardThresholdCondition(JsonElement element)
         {
-            Optional<double> lowerBound = default;
-            Optional<double> upperBound = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            double? lowerBound = default;
+            double? upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lowerBound"))
+                if (property.NameEquals("lowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lowerBound = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("upperBound"))
+                if (property.NameEquals("upperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upperBound = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectorDirection"))
+                if (property.NameEquals("anomalyDetectorDirection"u8))
                 {
                     anomalyDetectorDirection = new AnomalyDetectorDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("suppressCondition"))
+                if (property.NameEquals("suppressCondition"u8))
                 {
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;
                 }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HardThresholdCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHardThresholdCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

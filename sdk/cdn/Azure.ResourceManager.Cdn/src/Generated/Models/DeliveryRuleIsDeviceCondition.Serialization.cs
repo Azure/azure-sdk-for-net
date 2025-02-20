@@ -5,41 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRuleIsDeviceCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleIsDeviceCondition : IUtf8JsonSerializable, IJsonModel<DeliveryRuleIsDeviceCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleIsDeviceCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DeliveryRuleIsDeviceCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Properties);
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DeliveryRuleIsDeviceCondition DeserializeDeliveryRuleIsDeviceCondition(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleIsDeviceCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryRuleIsDeviceCondition)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("parameters"u8);
+            writer.WriteObjectValue(Properties, options);
+        }
+
+        DeliveryRuleIsDeviceCondition IJsonModel<DeliveryRuleIsDeviceCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleIsDeviceCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryRuleIsDeviceCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeliveryRuleIsDeviceCondition(document.RootElement, options);
+        }
+
+        internal static DeliveryRuleIsDeviceCondition DeserializeDeliveryRuleIsDeviceCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IsDeviceMatchCondition parameters = default;
             MatchVariable name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
-                    parameters = IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(property.Value);
+                    parameters = IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new MatchVariable(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeliveryRuleIsDeviceCondition(name, parameters);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeliveryRuleIsDeviceCondition(name, serializedAdditionalRawData, parameters);
         }
+
+        BinaryData IPersistableModel<DeliveryRuleIsDeviceCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleIsDeviceCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleIsDeviceCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeliveryRuleIsDeviceCondition IPersistableModel<DeliveryRuleIsDeviceCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleIsDeviceCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeliveryRuleIsDeviceCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleIsDeviceCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeliveryRuleIsDeviceCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

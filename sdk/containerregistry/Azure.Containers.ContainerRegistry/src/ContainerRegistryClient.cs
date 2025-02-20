@@ -12,6 +12,8 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The Azure Container Registry service client. </summary>
     public partial class ContainerRegistryClient
     {
+        internal const string DefaultScope = "https://containerregistry.azure.net";
+
         private readonly Uri _endpoint;
         private readonly string _registryName;
         private readonly HttpPipeline _pipeline;
@@ -72,11 +74,6 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            if (options.Audience == null)
-            {
-                throw new InvalidOperationException($"{nameof(ContainerRegistryClientOptions.Audience)} property must be set to initialize a {nameof(ContainerRegistryClient)}.");
-            }
-
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -84,8 +81,13 @@ namespace Azure.Containers.ContainerRegistry
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
             _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            string defaultScope = options.Audience + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            string defaultScope = (options.Audience?.ToString() ?? DefaultScope) + "/.default";
+            HttpPipelineOptions pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new ContainerRegistryRequestFailedDetailsParser()
+            };
+            pipelineOptions.PerRetryPolicies.Add(new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
@@ -116,7 +118,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,7 +135,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -157,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositories(last: null, n: pageSizeHint, cancellationToken);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,7 +176,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: null, cancellationToken);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -5,101 +5,195 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlConnectionInformation : IUtf8JsonSerializable
+    public partial class SqlConnectionInformation : IUtf8JsonSerializable, IJsonModel<SqlConnectionInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlConnectionInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlConnectionInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlConnectionInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
             }
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(EncryptConnection))
             {
-                writer.WritePropertyName("encryptConnection");
+                writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
-                writer.WritePropertyName("trustServerCertificate");
+                writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SqlConnectionInformation DeserializeSqlConnectionInformation(JsonElement element)
+        SqlConnectionInformation IJsonModel<SqlConnectionInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> dataSource = default;
-            Optional<string> authentication = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<bool> encryptConnection = default;
-            Optional<bool> trustServerCertificate = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlConnectionInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlConnectionInformation(document.RootElement, options);
+        }
+
+        internal static SqlConnectionInformation DeserializeSqlConnectionInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string dataSource = default;
+            string authentication = default;
+            string userName = default;
+            string password = default;
+            bool? encryptConnection = default;
+            bool? trustServerCertificate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     authentication = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptConnection"))
+                if (property.NameEquals("encryptConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptConnection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("trustServerCertificate"))
+                if (property.NameEquals("trustServerCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trustServerCertificate = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlConnectionInformation(
+                dataSource,
+                authentication,
+                userName,
+                password,
+                encryptConnection,
+                trustServerCertificate,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlConnectionInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlConnectionInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlConnectionInformation IPersistableModel<SqlConnectionInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlConnectionInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlConnectionInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlConnectionInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

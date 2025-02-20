@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure CLI to obtain an access token.
+    /// Enables authentication to Microsoft Entra ID using Azure CLI to obtain an access token.
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
@@ -28,7 +28,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
-        internal TimeSpan CliProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
@@ -48,41 +48,48 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
+        internal string Subscription { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
+        internal bool _isChainedCredential;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of <see cref="AzureCliCredential"/> class.
         /// </summary>
         public AzureCliCredential()
             : this(CredentialPipeline.GetInstance(null), default)
         { }
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of <see cref="AzureCliCredential"/> class.
         /// </summary>
-        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        /// <param name="options"> The Microsoft Entra tenant (directory) ID of the service principal. </param>
         public AzureCliCredential(AzureCliCredentialOptions options)
             : this(CredentialPipeline.GetInstance(null), default, options)
         { }
 
         internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureCliCredentialOptions options = null)
         {
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            TenantId = options?.TenantId;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
-            CliProcessTimeout = options?.CliProcessTimeout ?? TimeSpan.FromSeconds(13);
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
+            Subscription = options?.Subscription;
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
+            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
         /// Obtains a access token from Azure CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -91,9 +98,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure CLI service, using the access token to authenticate. This method id called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -110,7 +118,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 
@@ -119,11 +127,12 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
             string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
             ScopeUtilities.ValidateScope(resource);
 
-            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
+            GetFileNameAndArguments(resource, tenantId, Subscription, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), CliProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
 
             string output;
             try
@@ -132,7 +141,14 @@ namespace Azure.Identity
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                throw new AuthenticationFailedException(AzureCliTimeoutError);
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException(AzureCliTimeoutError);
+                }
+                else
+                {
+                    throw new AuthenticationFailedException(AzureCliTimeoutError);
+                }
             }
             catch (InvalidOperationException exception)
             {
@@ -163,7 +179,14 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                }
+                else
+                {
+                    throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                }
             }
 
             AccessToken token = DeserializeOutput(output);
@@ -188,7 +211,7 @@ namespace Azure.Identity
                 Environment = { { "PATH", _path } }
             };
 
-        private static void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
+        private static void GetFileNameAndArguments(string resource, string tenantId, string subscriptionId, out string fileName, out string argument)
         {
             string command = tenantId switch
             {
@@ -196,10 +219,15 @@ namespace Azure.Identity
                 _ => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}"
             };
 
+            if (!string.IsNullOrEmpty(subscriptionId))
+            {
+                command += $" --subscription \"{subscriptionId}\"";
+            }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
-                argument = $"/c \"{command}\"";
+                argument = $"/d /c \"{command}\"";
             }
             else
             {
@@ -214,8 +242,8 @@ namespace Azure.Identity
 
             JsonElement root = document.RootElement;
             string accessToken = root.GetProperty("accessToken").GetString();
-            DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
-                ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
+            DateTimeOffset expiresOn = root.TryGetProperty("expires_on", out JsonElement expires_on)
+                ? DateTimeOffset.FromUnixTimeSeconds(expires_on.GetInt64())
                 : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
 
             return new AccessToken(accessToken, expiresOn);

@@ -5,96 +5,128 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorHealthProbeSettingsData : IUtf8JsonSerializable
+    public partial class FrontDoorHealthProbeSettingsData : IUtf8JsonSerializable, IJsonModel<FrontDoorHealthProbeSettingsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorHealthProbeSettingsData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FrontDoorHealthProbeSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorHealthProbeSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(FrontDoorHealthProbeSettingsData)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("properties");
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             if (Optional.IsDefined(HealthProbeMethod))
             {
-                writer.WritePropertyName("healthProbeMethod");
+                writer.WritePropertyName("healthProbeMethod"u8);
                 writer.WriteStringValue(HealthProbeMethod.Value.ToString());
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            {
+                writer.WritePropertyName("resourceState"u8);
+                writer.WriteStringValue(ResourceState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorHealthProbeSettingsData DeserializeFrontDoorHealthProbeSettingsData(JsonElement element)
+        FrontDoorHealthProbeSettingsData IJsonModel<FrontDoorHealthProbeSettingsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> path = default;
-            Optional<FrontDoorProtocol> protocol = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<FrontDoorHealthProbeMethod> healthProbeMethod = default;
-            Optional<HealthProbeEnabled> enabledState = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorHealthProbeSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorHealthProbeSettingsData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorHealthProbeSettingsData(document.RootElement, options);
+        }
+
+        internal static FrontDoorHealthProbeSettingsData DeserializeFrontDoorHealthProbeSettingsData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string path = default;
+            FrontDoorProtocol? protocol = default;
+            int? intervalInSeconds = default;
+            FrontDoorHealthProbeMethod? healthProbeMethod = default;
+            HealthProbeEnabled? enabledState = default;
+            FrontDoorResourceState? resourceState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,56 +135,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("path"))
+                        if (property0.NameEquals("path"u8))
                         {
                             path = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("protocol"))
+                        if (property0.NameEquals("protocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new FrontDoorProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("intervalInSeconds"))
+                        if (property0.NameEquals("intervalInSeconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("healthProbeMethod"))
+                        if (property0.NameEquals("healthProbeMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             healthProbeMethod = new FrontDoorHealthProbeMethod(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledState = new HealthProbeEnabled(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new FrontDoorResourceState(property0.Value.GetString());
@@ -161,8 +188,54 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorHealthProbeSettingsData(id.Value, name.Value, Optional.ToNullable(type), path.Value, Optional.ToNullable(protocol), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(healthProbeMethod), Optional.ToNullable(enabledState), Optional.ToNullable(resourceState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorHealthProbeSettingsData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                path,
+                protocol,
+                intervalInSeconds,
+                healthProbeMethod,
+                enabledState,
+                resourceState);
         }
+
+        BinaryData IPersistableModel<FrontDoorHealthProbeSettingsData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorHealthProbeSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorHealthProbeSettingsData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FrontDoorHealthProbeSettingsData IPersistableModel<FrontDoorHealthProbeSettingsData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorHealthProbeSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFrontDoorHealthProbeSettingsData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorHealthProbeSettingsData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontDoorHealthProbeSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

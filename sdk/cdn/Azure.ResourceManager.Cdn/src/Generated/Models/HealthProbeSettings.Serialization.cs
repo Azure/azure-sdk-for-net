@@ -5,84 +5,170 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HealthProbeSettings : IUtf8JsonSerializable
+    public partial class HealthProbeSettings : IUtf8JsonSerializable, IJsonModel<HealthProbeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthProbeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HealthProbeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ProbePath))
             {
-                writer.WritePropertyName("probePath");
+                writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
             if (Optional.IsDefined(ProbeRequestType))
             {
-                writer.WritePropertyName("probeRequestType");
+                writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProbeProtocol))
             {
-                writer.WritePropertyName("probeProtocol");
+                writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProbeIntervalInSeconds))
             {
-                writer.WritePropertyName("probeIntervalInSeconds");
+                writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static HealthProbeSettings DeserializeHealthProbeSettings(JsonElement element)
+        HealthProbeSettings IJsonModel<HealthProbeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> probePath = default;
-            Optional<HealthProbeRequestType> probeRequestType = default;
-            Optional<HealthProbeProtocol> probeProtocol = default;
-            Optional<int> probeIntervalInSeconds = default;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthProbeSettings(document.RootElement, options);
+        }
+
+        internal static HealthProbeSettings DeserializeHealthProbeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string probePath = default;
+            HealthProbeRequestType? probeRequestType = default;
+            HealthProbeProtocol? probeProtocol = default;
+            int? probeIntervalInSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("probePath"))
+                if (property.NameEquals("probePath"u8))
                 {
                     probePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("probeRequestType"))
+                if (property.NameEquals("probeRequestType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probeRequestType = property.Value.GetString().ToHealthProbeRequestType();
                     continue;
                 }
-                if (property.NameEquals("probeProtocol"))
+                if (property.NameEquals("probeProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probeProtocol = property.Value.GetString().ToHealthProbeProtocol();
                     continue;
                 }
-                if (property.NameEquals("probeIntervalInSeconds"))
+                if (property.NameEquals("probeIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probeIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthProbeSettings(probePath.Value, Optional.ToNullable(probeRequestType), Optional.ToNullable(probeProtocol), Optional.ToNullable(probeIntervalInSeconds));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HealthProbeSettings(probePath, probeRequestType, probeProtocol, probeIntervalInSeconds, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthProbeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HealthProbeSettings IPersistableModel<HealthProbeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHealthProbeSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HealthProbeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> List of Cache health states. </summary>
+    /// <summary> List of cache health states. Down is when the cluster is not responding.  Degraded is when its functioning but has some alerts. Transitioning when it is creating or deleting. Unknown will be returned in old api versions when a new value is added in future versions. WaitingForKey is when the create is waiting for the system assigned identity to be given access to the encryption key in the encryption settings. </summary>
     public readonly partial struct StorageCacheHealthStateType : IEquatable<StorageCacheHealthStateType>
     {
         private readonly string _value;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(StorageCacheHealthStateType left, StorageCacheHealthStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheHealthStateType"/> values are not the same. </summary>
         public static bool operator !=(StorageCacheHealthStateType left, StorageCacheHealthStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCacheHealthStateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheHealthStateType"/>. </summary>
         public static implicit operator StorageCacheHealthStateType(string value) => new StorageCacheHealthStateType(value);
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

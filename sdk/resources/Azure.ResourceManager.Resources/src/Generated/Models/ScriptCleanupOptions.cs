@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
+    /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </summary>
     public readonly partial struct ScriptCleanupOptions : IEquatable<ScriptCleanupOptions>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ScriptCleanupOptions left, ScriptCleanupOptions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptCleanupOptions"/> values are not the same. </summary>
         public static bool operator !=(ScriptCleanupOptions left, ScriptCleanupOptions right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptCleanupOptions"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptCleanupOptions"/>. </summary>
         public static implicit operator ScriptCleanupOptions(string value) => new ScriptCleanupOptions(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

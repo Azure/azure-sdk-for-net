@@ -31,11 +31,11 @@ In order to interact with the Azure Schema Registry service, you'll need to crea
 
 #### Get credentials
 
-To acquire authenicated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
+To acquire authenticated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
 
 #### Get Event Hubs namespace hostname
 
-The simpliest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
+The simplest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
 
 #### Create SchemaRegistryClient
 
@@ -94,6 +94,11 @@ Console.WriteLine(eventData.EventBody);
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 await producer.SendAsync(new EventData[] { eventData });
 ```
@@ -101,6 +106,11 @@ await producer.SendAsync(new EventData[] { eventData });
 To deserialize an `EventData` event that you are consuming:
 ```C# Snippet:SchemaRegistryAvroDecodeEventData
 // construct a consumer and consume the event from our event hub
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
 await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
 {
@@ -158,13 +168,11 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
-
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
-[azure_powershell]: https://docs.microsoft.com/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
+[azure_powershell]: https://learn.microsoft.com/powershell/azure/
+[create_event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
 [schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
@@ -176,10 +184,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [email_opencode]: mailto:opencode@microsoft.com
 [schema_registry_avro_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroSerializer.cs
 [employee]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/Models/Employee.cs
-[avro_csharp_documentation]: https://avro.apache.org/docs/current/api/csharp/html/index.html
+[avro_csharp_documentation]: https://avro.apache.org/docs/++version++/api/csharp/html/index.html
 [apache_avro_library]: https://www.nuget.org/packages/Apache.Avro/
-[generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
-[specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
+[generic_record]: https://avro.apache.org/docs/++version++/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
+[specific_record]: https://avro.apache.org/docs/++version++/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry
-[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
+[request_failed_exception]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

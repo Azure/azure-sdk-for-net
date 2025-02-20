@@ -23,7 +23,22 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, keyPolicy);
 
             Assert.True(transport.SingleRequest.TryGetHeader(header, out var key));
-            Assert.AreEqual(key, keyValue);
+            Assert.AreEqual(keyValue, key);
+        }
+
+        [Test]
+        public async Task SetsKeyWithPrefix()
+        {
+            string keyValue = "test_key";
+            string header = "api_key";
+            string prefix = "prefix";
+            var transport = new MockTransport(new MockResponse(200));
+            var keyPolicy = new AzureKeyCredentialPolicy(new AzureKeyCredential(keyValue), header, prefix);
+
+            await SendGetRequest(transport, keyPolicy);
+
+            Assert.True(transport.SingleRequest.TryGetHeader(header, out var key));
+            Assert.AreEqual($"{prefix} {keyValue}", key);
         }
 
         [Test]
@@ -43,7 +58,28 @@ namespace Azure.Core.Tests
             }
 
             Assert.True(transport.Requests[0].TryGetHeader(header, out var key));
-            Assert.AreEqual(key, keyValue);
+            Assert.AreEqual(keyValue, key);
+        }
+
+        [Test]
+        public async Task VerifyRetrySetsPrefix()
+        {
+            string keyValue = "test_key";
+            string header = "api_key";
+            string prefix = "prefix";
+            var transport = new MockTransport(new MockResponse(200), new MockResponse(200));
+            var keyPolicy = new AzureKeyCredentialPolicy(new AzureKeyCredential(keyValue), header, prefix);
+
+            using (Request request = transport.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                var pipeline = new HttpPipeline(transport, new[] { keyPolicy });
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
+
+            Assert.True(transport.Requests[0].TryGetHeader(header, out var key));
+            Assert.AreEqual($"{prefix} {keyValue}", key);
         }
     }
 }

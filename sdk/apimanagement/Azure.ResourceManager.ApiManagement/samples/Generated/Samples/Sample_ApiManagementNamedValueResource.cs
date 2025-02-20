@@ -7,51 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementNamedValueResource
     {
-        // ApiManagementHeadNamedValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadNamedValue()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadNamedValue.json
-            // this example is just showing the usage of "NamedValue_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNamedValueResource created on azure
-            // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string namedValueId = "testarmTemplateproperties2";
-            ResourceIdentifier apiManagementNamedValueResourceId = ApiManagementNamedValueResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, namedValueId);
-            ApiManagementNamedValueResource apiManagementNamedValue = client.GetApiManagementNamedValueResource(apiManagementNamedValueResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementNamedValue.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetNamedValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetNamedValue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetNamedValue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetNamedValue.json
             // this example is just showing the usage of "NamedValue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementNamedValueResource created on azure
             // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string namedValueId = "testarmTemplateproperties2";
@@ -78,12 +47,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementGetNamedValueWithKeyVault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetNamedValueWithKeyVault()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetNamedValueWithKeyVault.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetNamedValueWithKeyVault.json
             // this example is just showing the usage of "NamedValue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementNamedValueResource created on azure
             // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string namedValueId = "testprop6";
@@ -110,12 +78,39 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateNamedValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteNamedValue()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteNamedValue.json
+            // this example is just showing the usage of "NamedValue_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNamedValueResource created on azure
+            // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string namedValueId = "testprop2";
+            ResourceIdentifier apiManagementNamedValueResourceId = ApiManagementNamedValueResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, namedValueId);
+            ApiManagementNamedValueResource apiManagementNamedValue = client.GetApiManagementNamedValueResource(apiManagementNamedValueResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            await apiManagementNamedValue.DeleteAsync(WaitUntil.Completed, ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateNamedValue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateNamedValue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateNamedValue.json
             // this example is just showing the usage of "NamedValue_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementNamedValueResource created on azure
             // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string namedValueId = "testprop2";
@@ -134,12 +129,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            ApiManagementNamedValuePatch patch = new ApiManagementNamedValuePatch()
+            ApiManagementNamedValuePatch patch = new ApiManagementNamedValuePatch
             {
-                Tags =
-{
-"foo","bar2"
-},
+                Tags = { "foo", "bar2" },
                 IsSecret = false,
                 DisplayName = "prop3name",
                 Value = "propValue",
@@ -154,41 +146,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteNamedValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ApiManagementDeleteNamedValue()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteNamedValue.json
-            // this example is just showing the usage of "NamedValue_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementNamedValueResource created on azure
-            // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string namedValueId = "testprop2";
-            ResourceIdentifier apiManagementNamedValueResourceId = ApiManagementNamedValueResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, namedValueId);
-            ApiManagementNamedValueResource apiManagementNamedValue = client.GetApiManagementNamedValueResource(apiManagementNamedValueResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            await apiManagementNamedValue.DeleteAsync(WaitUntil.Completed, ifMatch);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ApiManagementNamedValueListValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetValue_ApiManagementNamedValueListValue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementNamedValueListValue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementNamedValueListValue.json
             // this example is just showing the usage of "NamedValue_ListValue" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementNamedValueResource created on azure
             // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string namedValueId = "testarmTemplateproperties2";
@@ -211,12 +173,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementRefreshNamedValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshSecret_ApiManagementRefreshNamedValue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementRefreshNamedValue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementRefreshNamedValue.json
             // this example is just showing the usage of "NamedValue_RefreshSecret" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementNamedValueResource created on azure
             // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string namedValueId = "testprop2";
@@ -242,6 +203,33 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementNamedValueData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadNamedValue()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadNamedValue.json
+            // this example is just showing the usage of "NamedValue_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementNamedValueResource created on azure
+            // for more information of creating ApiManagementNamedValueResource, please refer to the document of ApiManagementNamedValueResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string namedValueId = "testarmTemplateproperties2";
+            ResourceIdentifier apiManagementNamedValueResourceId = ApiManagementNamedValueResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, namedValueId);
+            ApiManagementNamedValueResource apiManagementNamedValue = client.GetApiManagementNamedValueResource(apiManagementNamedValueResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementNamedValue.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

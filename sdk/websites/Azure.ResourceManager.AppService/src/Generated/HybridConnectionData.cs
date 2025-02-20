@@ -6,27 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the HybridConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HybridConnection data model.
+    /// Hybrid Connection contract. This is used to configure a Hybrid Connection.
+    /// </summary>
     public partial class HybridConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         public HybridConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
         /// <param name="relayName"> The name of the Service Bus relay. </param>
-        /// <param name="relayArmUri"> The ARM URI to the Service Bus relay. </param>
+        /// <param name="relayArmId"> The ARM URI to the Service Bus relay. </param>
         /// <param name="hostname"> The hostname of the endpoint. </param>
         /// <param name="port"> The port of the endpoint. </param>
         /// <param name="sendKeyName"> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </param>
@@ -36,39 +72,50 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceBusNamespace, string relayName, Uri relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;
-            RelayArmUri = relayArmUri;
+            RelayArmId = relayArmId;
             Hostname = hostname;
             Port = port;
             SendKeyName = sendKeyName;
             SendKeyValue = sendKeyValue;
             ServiceBusSuffix = serviceBusSuffix;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Service Bus namespace. </summary>
+        [WirePath("properties.serviceBusNamespace")]
         public string ServiceBusNamespace { get; set; }
         /// <summary> The name of the Service Bus relay. </summary>
+        [WirePath("properties.relayName")]
         public string RelayName { get; set; }
         /// <summary> The ARM URI to the Service Bus relay. </summary>
-        public Uri RelayArmUri { get; set; }
+        [WirePath("properties.relayArmUri")]
+        public ResourceIdentifier RelayArmId { get; set; }
         /// <summary> The hostname of the endpoint. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname { get; set; }
         /// <summary> The port of the endpoint. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; set; }
         /// <summary> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </summary>
+        [WirePath("properties.sendKeyName")]
         public string SendKeyName { get; set; }
         /// <summary>
         /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
         /// normally, use the POST /listKeys API instead.
         /// </summary>
+        [WirePath("properties.sendKeyValue")]
         public string SendKeyValue { get; set; }
         /// <summary> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </summary>
+        [WirePath("properties.serviceBusSuffix")]
         public string ServiceBusSuffix { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

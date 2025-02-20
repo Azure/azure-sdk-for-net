@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
     /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-    /// 
+    ///
     ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
     ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
     ///   - Silver - Run the System services with a target replica set count of 5.
     ///   - Gold - Run the System services with a target replica set count of 7.
     ///   - Platinum - Run the System services with a target replica set count of 9.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ClusterReliabilityLevel : IEquatable<ClusterReliabilityLevel>
     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are not the same. </summary>
         public static bool operator !=(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterReliabilityLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterReliabilityLevel"/>. </summary>
         public static implicit operator ClusterReliabilityLevel(string value) => new ClusterReliabilityLevel(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         public static ResultTruncated ToResultTruncated(this string value)
         {
-            if (string.Equals(value, "true", StringComparison.InvariantCultureIgnoreCase)) return ResultTruncated.True;
-            if (string.Equals(value, "false", StringComparison.InvariantCultureIgnoreCase)) return ResultTruncated.False;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "true")) return ResultTruncated.True;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "false")) return ResultTruncated.False;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultTruncated value.");
         }
     }

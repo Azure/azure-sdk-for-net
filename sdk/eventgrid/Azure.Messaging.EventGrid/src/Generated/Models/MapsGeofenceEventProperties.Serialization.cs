@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,17 +14,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MapsGeofenceEventProperties DeserializeMapsGeofenceEventProperties(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> expiredGeofenceGeometryId = default;
-            Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
-            Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;
-            Optional<bool> isEventPublished = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> expiredGeofenceGeometryId = default;
+            IReadOnlyList<MapsGeofenceGeometry> geometries = default;
+            IReadOnlyList<string> invalidPeriodGeofenceGeometryId = default;
+            bool? isEventPublished = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expiredGeofenceGeometryId"))
+                if (property.NameEquals("expiredGeofenceGeometryId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -36,11 +38,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     expiredGeofenceGeometryId = array;
                     continue;
                 }
-                if (property.NameEquals("geometries"))
+                if (property.NameEquals("geometries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MapsGeofenceGeometry> array = new List<MapsGeofenceGeometry>();
@@ -51,11 +52,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     geometries = array;
                     continue;
                 }
-                if (property.NameEquals("invalidPeriodGeofenceGeometryId"))
+                if (property.NameEquals("invalidPeriodGeofenceGeometryId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,18 +66,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     invalidPeriodGeofenceGeometryId = array;
                     continue;
                 }
-                if (property.NameEquals("isEventPublished"))
+                if (property.NameEquals("isEventPublished"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEventPublished = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new MapsGeofenceEventProperties(Optional.ToList(expiredGeofenceGeometryId), Optional.ToList(geometries), Optional.ToList(invalidPeriodGeofenceGeometryId), Optional.ToNullable(isEventPublished));
+            return new MapsGeofenceEventProperties(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries ?? new ChangeTrackingList<MapsGeofenceGeometry>(), invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), isEventPublished);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapsGeofenceEventProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsGeofenceEventProperties(document.RootElement);
         }
     }
 }

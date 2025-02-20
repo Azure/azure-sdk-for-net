@@ -3,8 +3,9 @@ page_type: sample
 languages:
 - csharp
 products:
-# Including relevant stubs from https://review.docs.microsoft.com/help/contribute/metadata-taxonomies#product
+# Including relevant stubs from https://review.learn.microsoft.com/help/contribute/metadata-taxonomies#product
 - azure
+- microsoft-defender
 name: Azure.Template samples for .NET
 description: Samples for the Azure.Template client library.
 ---

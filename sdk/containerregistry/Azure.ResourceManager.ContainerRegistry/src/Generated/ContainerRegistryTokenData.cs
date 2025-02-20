@@ -6,21 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryToken data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryToken data model.
+    /// An object that represents a token for a container registry.
+    /// </summary>
     public partial class ContainerRegistryTokenData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenData"/>. </summary>
         public ContainerRegistryTokenData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,24 +66,31 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="scopeMapId"> The resource ID of the scope map to which the token will be associated with. </param>
         /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
         /// <param name="status"> The status of the token example enabled or disabled. </param>
-        internal ContainerRegistryTokenData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ResourceIdentifier scopeMapId, ContainerRegistryTokenCredentials credentials, ContainerRegistryTokenStatus? status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTokenData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ResourceIdentifier scopeMapId, ContainerRegistryTokenCredentials credentials, ContainerRegistryTokenStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             ScopeMapId = scopeMapId;
             Credentials = credentials;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The creation date of scope map. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
+        [WirePath("properties.scopeMapId")]
         public ResourceIdentifier ScopeMapId { get; set; }
         /// <summary> The credentials that can be used for authenticating the token. </summary>
+        [WirePath("properties.credentials")]
         public ContainerRegistryTokenCredentials Credentials { get; set; }
         /// <summary> The status of the token example enabled or disabled. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryTokenStatus? Status { get; set; }
     }
 }

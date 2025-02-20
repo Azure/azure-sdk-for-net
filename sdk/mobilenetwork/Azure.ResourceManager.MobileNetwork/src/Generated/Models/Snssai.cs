@@ -5,30 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Single-network slice selection assistance information (S-NSSAI). </summary>
+    /// <summary>
+    /// Single-network slice selection assistance information (S-NSSAI).
+    /// Serialized Name: Snssai
+    /// </summary>
     public partial class Snssai
     {
-        /// <summary> Initializes a new instance of Snssai. </summary>
-        /// <param name="sst"> Slice/service type (SST). </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Snssai"/>. </summary>
+        /// <param name="sst">
+        /// Slice/service type (SST).
+        /// Serialized Name: Snssai.sst
+        /// </param>
         public Snssai(int sst)
         {
             Sst = sst;
         }
 
-        /// <summary> Initializes a new instance of Snssai. </summary>
-        /// <param name="sst"> Slice/service type (SST). </param>
-        /// <param name="sd"> Slice differentiator (SD). </param>
-        internal Snssai(int sst, string sd)
+        /// <summary> Initializes a new instance of <see cref="Snssai"/>. </summary>
+        /// <param name="sst">
+        /// Slice/service type (SST).
+        /// Serialized Name: Snssai.sst
+        /// </param>
+        /// <param name="sd">
+        /// Slice differentiator (SD).
+        /// Serialized Name: Snssai.sd
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Snssai(int sst, string sd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sst = sst;
             Sd = sd;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Slice/service type (SST). </summary>
+        /// <summary> Initializes a new instance of <see cref="Snssai"/> for deserialization. </summary>
+        internal Snssai()
+        {
+        }
+
+        /// <summary>
+        /// Slice/service type (SST).
+        /// Serialized Name: Snssai.sst
+        /// </summary>
+        [WirePath("sst")]
         public int Sst { get; set; }
-        /// <summary> Slice differentiator (SD). </summary>
+        /// <summary>
+        /// Slice differentiator (SD).
+        /// Serialized Name: Snssai.sd
+        /// </summary>
+        [WirePath("sd")]
         public string Sd { get; set; }
     }
 }

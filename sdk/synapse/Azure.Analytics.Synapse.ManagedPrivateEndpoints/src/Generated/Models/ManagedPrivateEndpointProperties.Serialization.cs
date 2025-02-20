@@ -18,27 +18,27 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
+                writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("connectionState");
+                writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
-                writer.WritePropertyName("fqdns");
+                writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Fqdns)
                 {
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             }
             if (Optional.IsDefined(IsCompliant))
             {
-                writer.WritePropertyName("isCompliant");
+                writer.WritePropertyName("isCompliant"u8);
                 writer.WriteBooleanValue(IsCompliant.Value);
             }
             writer.WriteEndObject();
@@ -56,61 +56,62 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 
         internal static ManagedPrivateEndpointProperties DeserializeManagedPrivateEndpointProperties(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> privateLinkResourceId = default;
-            Optional<string> groupId = default;
-            Optional<string> provisioningState = default;
-            Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
-            Optional<bool> isReserved = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<bool> isCompliant = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string privateLinkResourceId = default;
+            string groupId = default;
+            string provisioningState = default;
+            ManagedPrivateEndpointConnectionState connectionState = default;
+            bool? isReserved = default;
+            IList<string> fqdns = default;
+            bool? isCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateLinkResourceId"))
+                if (property.NameEquals("privateLinkResourceId"u8))
                 {
                     privateLinkResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isReserved"))
+                if (property.NameEquals("isReserved"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isReserved = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fqdns"))
+                if (property.NameEquals("fqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -121,18 +122,41 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     fqdns = array;
                     continue;
                 }
-                if (property.NameEquals("isCompliant"))
+                if (property.NameEquals("isCompliant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCompliant = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
+            return new ManagedPrivateEndpointProperties(
+                name,
+                privateLinkResourceId,
+                groupId,
+                provisioningState,
+                connectionState,
+                isReserved,
+                fqdns ?? new ChangeTrackingList<string>(),
+                isCompliant);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedPrivateEndpointProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedPrivateEndpointProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

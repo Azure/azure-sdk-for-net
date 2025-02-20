@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static NodeCommunicationMode ToNodeCommunicationMode(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return NodeCommunicationMode.Default;
-            if (string.Equals(value, "Classic", StringComparison.InvariantCultureIgnoreCase)) return NodeCommunicationMode.Classic;
-            if (string.Equals(value, "Simplified", StringComparison.InvariantCultureIgnoreCase)) return NodeCommunicationMode.Simplified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return NodeCommunicationMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Classic")) return NodeCommunicationMode.Classic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Simplified")) return NodeCommunicationMode.Simplified;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NodeCommunicationMode value.");
         }
     }

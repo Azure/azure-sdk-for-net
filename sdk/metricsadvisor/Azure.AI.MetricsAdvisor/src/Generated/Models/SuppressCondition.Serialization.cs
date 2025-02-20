@@ -15,31 +15,51 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minNumber");
+            writer.WritePropertyName("minNumber"u8);
             writer.WriteNumberValue(MinimumNumber);
-            writer.WritePropertyName("minRatio");
+            writer.WritePropertyName("minRatio"u8);
             writer.WriteNumberValue(MinimumRatio);
             writer.WriteEndObject();
         }
 
         internal static SuppressCondition DeserializeSuppressCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minNumber = default;
             double minRatio = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minNumber"))
+                if (property.NameEquals("minNumber"u8))
                 {
                     minNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minRatio"))
+                if (property.NameEquals("minRatio"u8))
                 {
                     minRatio = property.Value.GetDouble();
                     continue;
                 }
             }
             return new SuppressCondition(minNumber, minRatio);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SuppressCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSuppressCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

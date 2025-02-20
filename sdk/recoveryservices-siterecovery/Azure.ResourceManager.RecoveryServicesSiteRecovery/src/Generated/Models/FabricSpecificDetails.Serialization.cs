@@ -5,27 +5,118 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FabricSpecificDetails
+    [PersistableModelProxy(typeof(UnknownFabricSpecificDetails))]
+    public partial class FabricSpecificDetails : IUtf8JsonSerializable, IJsonModel<FabricSpecificDetails>
     {
-        internal static FabricSpecificDetails DeserializeFabricSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSpecificDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FabricSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        FabricSpecificDetails IJsonModel<FabricSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFabricSpecificDetails(document.RootElement, options);
+        }
+
+        internal static FabricSpecificDetails DeserializeFabricSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return AzureFabricSpecificDetails.DeserializeAzureFabricSpecificDetails(element);
-                    case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element);
-                    case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element);
-                    case "VMM": return VmmDetails.DeserializeVmmDetails(element);
-                    case "VMware": return VMwareDetails.DeserializeVMwareDetails(element);
-                    case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element);
+                    case "Azure": return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element, options);
+                    case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element, options);
+                    case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element, options);
+                    case "VMM": return VmmFabricDetails.DeserializeVmmFabricDetails(element, options);
+                    case "VMware": return VMwareDetails.DeserializeVMwareDetails(element, options);
+                    case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element, options);
                 }
             }
-            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element);
+            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element, options);
         }
+
+        BinaryData IPersistableModel<FabricSpecificDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FabricSpecificDetails IPersistableModel<FabricSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFabricSpecificDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FabricSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

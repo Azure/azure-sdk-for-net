@@ -13,16 +13,51 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary> A class representing the ReservationOrder data model. </summary>
+    /// <summary>
+    /// A class representing the ReservationOrder data model.
+    /// Details of a reservation order being returned.
+    /// </summary>
     public partial class ReservationOrderData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReservationOrderData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderData"/>. </summary>
         internal ReservationOrderData()
         {
             Reservations = new ChangeTrackingList<ReservationDetailData>();
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,21 +66,25 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="displayName"> Friendly name for user to easily identified the reservation. </param>
         /// <param name="requestOn"> This is the DateTime when the reservation was initially requested for purchase. </param>
         /// <param name="createdOn"> This is the DateTime when the reservation was created. </param>
-        /// <param name="expireOn"> This is the date when the Reservation will expire. </param>
+        /// <param name="expireOn"> This is the date when the reservation will expire. </param>
+        /// <param name="reservationExpireOn"> This is the date-time when the reservation will expire. </param>
         /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
-        /// <param name="originalQuantity"> Total Quantity of the SKUs purchased in the Reservation. </param>
-        /// <param name="term"> Represent the term of Reservation. </param>
+        /// <param name="originalQuantity"> Total Quantity of the skus purchased in the reservation. </param>
+        /// <param name="term"> Represent the term of reservation. </param>
         /// <param name="provisioningState"> Current state of the reservation. </param>
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="planInformation"> Information describing the type of billing plan for this reservation. </param>
         /// <param name="reservations"></param>
-        internal ReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? version, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IReadOnlyList<ReservationDetailData> reservations) : base(id, name, resourceType, systemData)
+        /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? version, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IReadOnlyList<ReservationDetailData> reservations, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Version = version;
             DisplayName = displayName;
             RequestOn = requestOn;
             CreatedOn = createdOn;
             ExpireOn = expireOn;
+            ReservationExpireOn = reservationExpireOn;
             BenefitStartOn = benefitStartOn;
             OriginalQuantity = originalQuantity;
             Term = term;
@@ -53,6 +92,8 @@ namespace Azure.ResourceManager.Reservations
             BillingPlan = billingPlan;
             PlanInformation = planInformation;
             Reservations = reservations;
+            ReviewOn = reviewOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the version. </summary>
@@ -63,13 +104,15 @@ namespace Azure.ResourceManager.Reservations
         public DateTimeOffset? RequestOn { get; }
         /// <summary> This is the DateTime when the reservation was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> This is the date when the Reservation will expire. </summary>
+        /// <summary> This is the date when the reservation will expire. </summary>
         public DateTimeOffset? ExpireOn { get; }
+        /// <summary> This is the date-time when the reservation will expire. </summary>
+        public DateTimeOffset? ReservationExpireOn { get; }
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
         public DateTimeOffset? BenefitStartOn { get; }
-        /// <summary> Total Quantity of the SKUs purchased in the Reservation. </summary>
+        /// <summary> Total Quantity of the skus purchased in the reservation. </summary>
         public int? OriginalQuantity { get; }
-        /// <summary> Represent the term of Reservation. </summary>
+        /// <summary> Represent the term of reservation. </summary>
         public ReservationTerm? Term { get; }
         /// <summary> Current state of the reservation. </summary>
         public ReservationProvisioningState? ProvisioningState { get; }
@@ -79,5 +122,7 @@ namespace Azure.ResourceManager.Reservations
         public ReservationOrderBillingPlanInformation PlanInformation { get; }
         /// <summary> Gets the reservations. </summary>
         public IReadOnlyList<ReservationDetailData> Reservations { get; }
+        /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
+        public DateTimeOffset? ReviewOn { get; }
     }
 }

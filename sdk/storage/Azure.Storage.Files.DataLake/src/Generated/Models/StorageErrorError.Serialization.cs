@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -30,22 +29,34 @@ namespace Azure.Storage.Files.DataLake.Models
 
         internal static StorageErrorError DeserializeStorageErrorError(JsonElement element)
         {
-            Optional<string> code = default;
-            Optional<string> message = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string code = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Code"))
+                if (property.NameEquals("Code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Message"))
+                if (property.NameEquals("Message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new StorageErrorError(code.Value, message.Value);
+            return new StorageErrorError(code, message);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageErrorError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageErrorError(document.RootElement);
         }
     }
 }

@@ -5,42 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DenylistCustomAlertRule : IUtf8JsonSerializable
+    public partial class DenylistCustomAlertRule : IUtf8JsonSerializable, IJsonModel<DenylistCustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DenylistCustomAlertRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DenylistCustomAlertRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("denylistValues");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("denylistValues"u8);
             writer.WriteStartArray();
             foreach (var item in DenylistValues)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("isEnabled");
-            writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType");
-            writer.WriteStringValue(RuleType);
-            writer.WriteEndObject();
         }
 
-        internal static DenylistCustomAlertRule DeserializeDenylistCustomAlertRule(JsonElement element)
+        DenylistCustomAlertRule IJsonModel<DenylistCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDenylistCustomAlertRule(document.RootElement, options);
+        }
+
+        internal static DenylistCustomAlertRule DeserializeDenylistCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> denylistValues = default;
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("denylistValues"))
+                if (property.NameEquals("denylistValues"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -50,38 +84,80 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     denylistValues = array;
                     continue;
                 }
-                if (property.NameEquals("valueType"))
+                if (property.NameEquals("valueType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueType = new SecurityValueType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DenylistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType), denylistValues);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DenylistCustomAlertRule(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                valueType,
+                denylistValues);
         }
+
+        BinaryData IPersistableModel<DenylistCustomAlertRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DenylistCustomAlertRule IPersistableModel<DenylistCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDenylistCustomAlertRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DenylistCustomAlertRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

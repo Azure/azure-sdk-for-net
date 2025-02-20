@@ -6,41 +6,130 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheEncryptionKeyVaultKeyReference : IUtf8JsonSerializable
+    public partial class StorageCacheEncryptionKeyVaultKeyReference : IUtf8JsonSerializable, IJsonModel<StorageCacheEncryptionKeyVaultKeyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheEncryptionKeyVaultKeyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StorageCacheEncryptionKeyVaultKeyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyUrl");
-            writer.WriteStringValue(KeyUri.AbsoluteUri);
-            writer.WritePropertyName("sourceVault");
-            JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
-        internal static StorageCacheEncryptionKeyVaultKeyReference DeserializeStorageCacheEncryptionKeyVaultKeyReference(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheEncryptionKeyVaultKeyReference)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("keyUrl"u8);
+            writer.WriteStringValue(KeyUri.AbsoluteUri);
+            writer.WritePropertyName("sourceVault"u8);
+            JsonSerializer.Serialize(writer, SourceVault);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        StorageCacheEncryptionKeyVaultKeyReference IJsonModel<StorageCacheEncryptionKeyVaultKeyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheEncryptionKeyVaultKeyReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheEncryptionKeyVaultKeyReference(document.RootElement, options);
+        }
+
+        internal static StorageCacheEncryptionKeyVaultKeyReference DeserializeStorageCacheEncryptionKeyVaultKeyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri keyUrl = default;
             WritableSubResource sourceVault = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyUrl"))
+                if (property.NameEquals("keyUrl"u8))
                 {
                     keyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceVault"))
+                if (property.NameEquals("sourceVault"u8))
                 {
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageCacheEncryptionKeyVaultKeyReference(keyUrl, sourceVault);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageCacheEncryptionKeyVaultKeyReference(keyUrl, sourceVault, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheEncryptionKeyVaultKeyReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageCacheEncryptionKeyVaultKeyReference IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageCacheEncryptionKeyVaultKeyReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheEncryptionKeyVaultKeyReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageCacheEncryptionKeyVaultKeyReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

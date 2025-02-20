@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -16,23 +17,23 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hookType");
+            writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
-            writer.WritePropertyName("hookName");
+            writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(InternalExternalLink))
             {
-                writer.WritePropertyName("externalLink");
+                writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
             if (Optional.IsCollectionDefined(Administrators))
             {
-                writer.WritePropertyName("admins");
+                writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Administrators)
                 {
@@ -45,44 +46,47 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownHookInfo DeserializeUnknownHookInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NotificationHookKind hookType = "Unknown";
-            Optional<string> hookId = default;
+            string hookId = default;
             string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            string description = default;
+            string externalLink = default;
+            IList<string> admins = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hookType"))
+                if (property.NameEquals("hookType"u8))
                 {
                     hookType = new NotificationHookKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hookId"))
+                if (property.NameEquals("hookId"u8))
                 {
                     hookId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hookName"))
+                if (property.NameEquals("hookName"u8))
                 {
                     hookName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalLink"))
+                if (property.NameEquals("externalLink"u8))
                 {
                     externalLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("admins"))
+                if (property.NameEquals("admins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -94,7 +98,29 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownHookInfo(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            return new UnknownHookInfo(
+                hookType,
+                hookId,
+                hookName,
+                description,
+                externalLink,
+                admins ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownHookInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownHookInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotificationHook>(this);
+            return content;
         }
     }
 }

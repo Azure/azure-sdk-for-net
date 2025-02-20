@@ -7,24 +7,512 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Samples
 {
     public partial class Sample_TrafficManagerProfileCollection
     {
-        // ListProfilesByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ProfilePUTMultiValue()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-MultiValue.json
+            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azsmnet6386";
+            TrafficManagerProfileData data = new TrafficManagerProfileData
+            {
+                ProfileStatus = TrafficManagerProfileStatus.Enabled,
+                TrafficRoutingMethod = TrafficRoutingMethod.MultiValue,
+                DnsConfig = new TrafficManagerDnsConfig
+                {
+                    RelativeName = "azsmnet6386",
+                    Ttl = 35L,
+                },
+                MonitorConfig = new TrafficManagerMonitorConfig
+                {
+                    Protocol = TrafficManagerMonitorProtocol.Http,
+                    Port = 80L,
+                    Path = "/testpath.aspx",
+                },
+                TrafficViewEnrollmentStatus = TrafficViewEnrollmentStatus.Disabled,
+                MaxReturn = 2L,
+                Location = new AzureLocation("global"),
+            };
+            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrafficManagerProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ProfilePUTNoEndpoints()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-NoEndpoints.json
+            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azsmnet6386";
+            TrafficManagerProfileData data = new TrafficManagerProfileData
+            {
+                ProfileStatus = TrafficManagerProfileStatus.Enabled,
+                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
+                DnsConfig = new TrafficManagerDnsConfig
+                {
+                    RelativeName = "azsmnet6386",
+                    Ttl = 35L,
+                },
+                MonitorConfig = new TrafficManagerMonitorConfig
+                {
+                    Protocol = TrafficManagerMonitorProtocol.Http,
+                    Port = 80L,
+                    Path = "/testpath.aspx",
+                },
+                Location = new AzureLocation("global"),
+            };
+            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrafficManagerProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ProfilePUTWithAliasing()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithAliasing.json
+            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager2583";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azuresdkfornetautoresttrafficmanager6192";
+            TrafficManagerProfileData data = new TrafficManagerProfileData
+            {
+                ProfileStatus = TrafficManagerProfileStatus.Enabled,
+                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
+                DnsConfig = new TrafficManagerDnsConfig
+                {
+                    RelativeName = "azuresdkfornetautoresttrafficmanager6192",
+                    Ttl = 35L,
+                },
+                MonitorConfig = new TrafficManagerMonitorConfig
+                {
+                    Protocol = TrafficManagerMonitorProtocol.Http,
+                    Port = 80L,
+                    Path = "/testpath.aspx",
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
+                },
+                Endpoints = {new TrafficManagerEndpointData
+{
+Target = "foobar.contoso.com",
+EndpointStatus = TrafficManagerEndpointStatus.Enabled,
+EndpointLocation = "North Europe",
+Name = "My external endpoint",
+ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
+}},
+                AllowedEndpointRecordTypes = { AllowedEndpointRecordType.DomainName },
+                Location = new AzureLocation("global"),
+            };
+            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrafficManagerProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ProfilePUTWithCustomHeaders()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithCustomHeaders.json
+            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager2583";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azuresdkfornetautoresttrafficmanager6192";
+            TrafficManagerProfileData data = new TrafficManagerProfileData
+            {
+                ProfileStatus = TrafficManagerProfileStatus.Enabled,
+                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
+                DnsConfig = new TrafficManagerDnsConfig
+                {
+                    RelativeName = "azuresdkfornetautoresttrafficmanager6192",
+                    Ttl = 35L,
+                },
+                MonitorConfig = new TrafficManagerMonitorConfig
+                {
+                    Protocol = TrafficManagerMonitorProtocol.Http,
+                    Port = 80L,
+                    Path = "/testpath.aspx",
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
+                    CustomHeaders = {new TrafficManagerMonitorConfigCustomHeaderInfo
+{
+Name = "header-1",
+Value = "value-1",
+}, new TrafficManagerMonitorConfigCustomHeaderInfo
+{
+Name = "header-2",
+Value = "value-2",
+}},
+                    ExpectedStatusCodeRanges = {new ExpectedStatusCodeRangeInfo
+{
+Min = 200,
+Max = 205,
+}, new ExpectedStatusCodeRangeInfo
+{
+Min = 400,
+Max = 410,
+}},
+                },
+                Endpoints = {new TrafficManagerEndpointData
+{
+Target = "foobar.contoso.com",
+EndpointStatus = TrafficManagerEndpointStatus.Enabled,
+EndpointLocation = "North Europe",
+CustomHeaders = {new TrafficManagerEndpointCustomHeaderInfo
+{
+Name = "header-2",
+Value = "value-2-overridden",
+}},
+Name = "My external endpoint",
+ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
+}},
+                TrafficViewEnrollmentStatus = TrafficViewEnrollmentStatus.Disabled,
+                Location = new AzureLocation("global"),
+            };
+            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrafficManagerProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ProfilePUTWithEndpoints()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithEndpoints.json
+            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager2583";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azuresdkfornetautoresttrafficmanager6192";
+            TrafficManagerProfileData data = new TrafficManagerProfileData
+            {
+                ProfileStatus = TrafficManagerProfileStatus.Enabled,
+                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
+                DnsConfig = new TrafficManagerDnsConfig
+                {
+                    RelativeName = "azuresdkfornetautoresttrafficmanager6192",
+                    Ttl = 35L,
+                },
+                MonitorConfig = new TrafficManagerMonitorConfig
+                {
+                    Protocol = TrafficManagerMonitorProtocol.Http,
+                    Port = 80L,
+                    Path = "/testpath.aspx",
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
+                },
+                Endpoints = {new TrafficManagerEndpointData
+{
+Target = "foobar.contoso.com",
+EndpointStatus = TrafficManagerEndpointStatus.Enabled,
+EndpointLocation = "North Europe",
+Name = "My external endpoint",
+ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
+}},
+                Location = new AzureLocation("global"),
+            };
+            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrafficManagerProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ProfilePUTWithNestedEndpoints()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PUT-WithNestedEndpoints.json
+            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myresourcegroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "parentprofile";
+            TrafficManagerProfileData data = new TrafficManagerProfileData
+            {
+                ProfileStatus = TrafficManagerProfileStatus.Enabled,
+                TrafficRoutingMethod = TrafficRoutingMethod.Priority,
+                DnsConfig = new TrafficManagerDnsConfig
+                {
+                    RelativeName = "parentprofile",
+                    Ttl = 35L,
+                },
+                MonitorConfig = new TrafficManagerMonitorConfig
+                {
+                    Protocol = TrafficManagerMonitorProtocol.Http,
+                    Port = 80L,
+                    Path = "/testpath.aspx",
+                    IntervalInSeconds = 10L,
+                    TimeoutInSeconds = 5L,
+                    ToleratedNumberOfFailures = 2L,
+                },
+                Endpoints = {new TrafficManagerEndpointData
+{
+Target = "firstnestedprofile.tmpreview.watmtest.azure-test.net",
+EndpointStatus = TrafficManagerEndpointStatus.Enabled,
+Weight = 1L,
+Priority = 1L,
+MinChildEndpoints = 2L,
+MinChildEndpointsIPv4 = 1L,
+MinChildEndpointsIPv6 = 2L,
+Name = "MyFirstNestedEndpoint",
+ResourceType = new ResourceType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints"),
+}, new TrafficManagerEndpointData
+{
+Target = "secondnestedprofile.tmpreview.watmtest.azure-test.net",
+EndpointStatus = TrafficManagerEndpointStatus.Enabled,
+Weight = 1L,
+Priority = 2L,
+MinChildEndpoints = 2L,
+MinChildEndpointsIPv4 = 2L,
+MinChildEndpointsIPv6 = 1L,
+Name = "MySecondNestedEndpoint",
+ResourceType = new ResourceType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints"),
+}},
+                Location = new AzureLocation("global"),
+            };
+            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrafficManagerProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ProfileGETWithEndpoints()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
+            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azuresdkfornetautoresttrafficmanager3880";
+            TrafficManagerProfileResource result = await collection.GetAsync(profileName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ProfileGETWithTrafficViewDisabled()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
+            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azuresdkfornetautoresttrafficmanager3880";
+            TrafficManagerProfileResource result = await collection.GetAsync(profileName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ProfileGETWithTrafficViewEnabled()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
+            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this TrafficManagerProfileResource
+            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
+
+            // invoke the operation
+            string profileName = "azuresdkfornetautoresttrafficmanager3880";
+            TrafficManagerProfileResource result = await collection.GetAsync(profileName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TrafficManagerProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListProfilesByResourceGroup()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-ByResourceGroup.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-ByResourceGroup.json
             // this example is just showing the usage of "Profiles_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,49 +540,14 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Profile-GET-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ProfileGETWithEndpoints()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-WithEndpoints.json
-            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this TrafficManagerProfileResource
-            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
-
-            // invoke the operation
-            string profileName = "azuresdkfornetautoresttrafficmanager3880";
-            TrafficManagerProfileResource result = await collection.GetAsync(profileName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Profile-GET-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProfileGETWithEndpoints()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-WithEndpoints.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,46 +572,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Profile-GET-WithTrafficViewDisabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ProfileGETWithTrafficViewDisabled()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-WithTrafficViewDisabled.json
-            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this TrafficManagerProfileResource
-            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
-
-            // invoke the operation
-            string profileName = "azuresdkfornetautoresttrafficmanager3880";
-            TrafficManagerProfileResource result = await collection.GetAsync(profileName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Profile-GET-WithTrafficViewDisabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProfileGETWithTrafficViewDisabled()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-WithTrafficViewDisabled.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,46 +601,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Profile-GET-WithTrafficViewEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ProfileGETWithTrafficViewEnabled()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-WithTrafficViewEnabled.json
-            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this TrafficManagerProfileResource
-            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
-
-            // invoke the operation
-            string profileName = "azuresdkfornetautoresttrafficmanager3880";
-            TrafficManagerProfileResource result = await collection.GetAsync(profileName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Profile-GET-WithTrafficViewEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProfileGETWithTrafficViewEnabled()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-GET-WithTrafficViewEnabled.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,13 +630,12 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Profile-PUT-MultiValue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ProfilePUTMultiValue()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ProfileGETWithEndpoints()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-PUT-MultiValue.json
-            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
+            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -263,7 +645,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -271,43 +653,30 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
 
             // invoke the operation
-            string profileName = "azsmnet6386";
-            TrafficManagerProfileData data = new TrafficManagerProfileData()
-            {
-                ProfileStatus = TrafficManagerProfileStatus.Enabled,
-                TrafficRoutingMethod = TrafficRoutingMethod.MultiValue,
-                DnsConfig = new TrafficManagerDnsConfig()
-                {
-                    RelativeName = "azsmnet6386",
-                    Ttl = 35,
-                },
-                MonitorConfig = new TrafficManagerMonitorConfig()
-                {
-                    Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
-                    Path = "/testpath.aspx",
-                },
-                TrafficViewEnrollmentStatus = TrafficViewEnrollmentStatus.Disabled,
-                MaxReturn = 2,
-                Location = new AzureLocation("global"),
-            };
-            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            TrafficManagerProfileResource result = lro.Value;
+            string profileName = "azuresdkfornetautoresttrafficmanager3880";
+            NullableResponse<TrafficManagerProfileResource> response = await collection.GetIfExistsAsync(profileName);
+            TrafficManagerProfileResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                TrafficManagerProfileData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
-        // Profile-PUT-NoEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ProfilePUTNoEndpoints()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ProfileGETWithTrafficViewDisabled()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-PUT-NoEndpoints.json
-            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
+            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -317,7 +686,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -325,41 +694,30 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
 
             // invoke the operation
-            string profileName = "azsmnet6386";
-            TrafficManagerProfileData data = new TrafficManagerProfileData()
-            {
-                ProfileStatus = TrafficManagerProfileStatus.Enabled,
-                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
-                DnsConfig = new TrafficManagerDnsConfig()
-                {
-                    RelativeName = "azsmnet6386",
-                    Ttl = 35,
-                },
-                MonitorConfig = new TrafficManagerMonitorConfig()
-                {
-                    Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
-                    Path = "/testpath.aspx",
-                },
-                Location = new AzureLocation("global"),
-            };
-            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            TrafficManagerProfileResource result = lro.Value;
+            string profileName = "azuresdkfornetautoresttrafficmanager3880";
+            NullableResponse<TrafficManagerProfileResource> response = await collection.GetIfExistsAsync(profileName);
+            TrafficManagerProfileResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                TrafficManagerProfileData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
-        // Profile-PUT-WithAliasing
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ProfilePUTWithAliasing()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ProfileGETWithTrafficViewEnabled()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-PUT-WithAliasing.json
-            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
+            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -369,7 +727,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager2583";
+            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -377,296 +735,22 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
 
             // invoke the operation
-            string profileName = "azuresdkfornetautoresttrafficmanager6192";
-            TrafficManagerProfileData data = new TrafficManagerProfileData()
+            string profileName = "azuresdkfornetautoresttrafficmanager3880";
+            NullableResponse<TrafficManagerProfileResource> response = await collection.GetIfExistsAsync(profileName);
+            TrafficManagerProfileResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
             {
-                ProfileStatus = TrafficManagerProfileStatus.Enabled,
-                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
-                DnsConfig = new TrafficManagerDnsConfig()
-                {
-                    RelativeName = "azuresdkfornetautoresttrafficmanager6192",
-                    Ttl = 35,
-                },
-                MonitorConfig = new TrafficManagerMonitorConfig()
-                {
-                    Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
-                    Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
-                },
-                Endpoints =
-{
-new TrafficManagerEndpointData()
-{
-Target = "foobar.contoso.com",
-EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-EndpointLocation = "North Europe",
-Name = "My external endpoint",
-ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
-}
-},
-                AllowedEndpointRecordTypes =
-{
-AllowedEndpointRecordType.DomainName
-},
-                Location = new AzureLocation("global"),
-            };
-            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            TrafficManagerProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Profile-PUT-WithCustomHeaders
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ProfilePUTWithCustomHeaders()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-PUT-WithCustomHeaders.json
-            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager2583";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this TrafficManagerProfileResource
-            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
-
-            // invoke the operation
-            string profileName = "azuresdkfornetautoresttrafficmanager6192";
-            TrafficManagerProfileData data = new TrafficManagerProfileData()
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
             {
-                ProfileStatus = TrafficManagerProfileStatus.Enabled,
-                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
-                DnsConfig = new TrafficManagerDnsConfig()
-                {
-                    RelativeName = "azuresdkfornetautoresttrafficmanager6192",
-                    Ttl = 35,
-                },
-                MonitorConfig = new TrafficManagerMonitorConfig()
-                {
-                    Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
-                    Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
-                    CustomHeaders =
-{
-new TrafficManagerMonitorConfigCustomHeaderInfo()
-{
-Name = "header-1",
-Value = "value-1",
-},new TrafficManagerMonitorConfigCustomHeaderInfo()
-{
-Name = "header-2",
-Value = "value-2",
-}
-},
-                    ExpectedStatusCodeRanges =
-{
-new ExpectedStatusCodeRangeInfo()
-{
-Min = 200,
-Max = 205,
-},new ExpectedStatusCodeRangeInfo()
-{
-Min = 400,
-Max = 410,
-}
-},
-                },
-                Endpoints =
-{
-new TrafficManagerEndpointData()
-{
-Target = "foobar.contoso.com",
-EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-EndpointLocation = "North Europe",
-CustomHeaders =
-{
-new TrafficManagerEndpointCustomHeaderInfo()
-{
-Name = "header-2",
-Value = "value-2-overridden",
-}
-},
-Name = "My external endpoint",
-ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
-}
-},
-                TrafficViewEnrollmentStatus = TrafficViewEnrollmentStatus.Disabled,
-                Location = new AzureLocation("global"),
-            };
-            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            TrafficManagerProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Profile-PUT-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ProfilePUTWithEndpoints()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-PUT-WithEndpoints.json
-            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager2583";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this TrafficManagerProfileResource
-            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
-
-            // invoke the operation
-            string profileName = "azuresdkfornetautoresttrafficmanager6192";
-            TrafficManagerProfileData data = new TrafficManagerProfileData()
-            {
-                ProfileStatus = TrafficManagerProfileStatus.Enabled,
-                TrafficRoutingMethod = TrafficRoutingMethod.Performance,
-                DnsConfig = new TrafficManagerDnsConfig()
-                {
-                    RelativeName = "azuresdkfornetautoresttrafficmanager6192",
-                    Ttl = 35,
-                },
-                MonitorConfig = new TrafficManagerMonitorConfig()
-                {
-                    Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
-                    Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
-                },
-                Endpoints =
-{
-new TrafficManagerEndpointData()
-{
-Target = "foobar.contoso.com",
-EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-EndpointLocation = "North Europe",
-Name = "My external endpoint",
-ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
-}
-},
-                Location = new AzureLocation("global"),
-            };
-            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            TrafficManagerProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Profile-PUT-WithNestedEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ProfilePUTWithNestedEndpoints()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/Profile-PUT-WithNestedEndpoints.json
-            // this example is just showing the usage of "Profiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myresourcegroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this TrafficManagerProfileResource
-            TrafficManagerProfileCollection collection = resourceGroupResource.GetTrafficManagerProfiles();
-
-            // invoke the operation
-            string profileName = "parentprofile";
-            TrafficManagerProfileData data = new TrafficManagerProfileData()
-            {
-                ProfileStatus = TrafficManagerProfileStatus.Enabled,
-                TrafficRoutingMethod = TrafficRoutingMethod.Priority,
-                DnsConfig = new TrafficManagerDnsConfig()
-                {
-                    RelativeName = "parentprofile",
-                    Ttl = 35,
-                },
-                MonitorConfig = new TrafficManagerMonitorConfig()
-                {
-                    Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
-                    Path = "/testpath.aspx",
-                    IntervalInSeconds = 10,
-                    TimeoutInSeconds = 5,
-                    ToleratedNumberOfFailures = 2,
-                },
-                Endpoints =
-{
-new TrafficManagerEndpointData()
-{
-Target = "firstnestedprofile.tmpreview.watmtest.azure-test.net",
-EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-Weight = 1,
-Priority = 1,
-MinChildEndpoints = 2,
-MinChildEndpointsIPv4 = 1,
-MinChildEndpointsIPv6 = 2,
-Name = "MyFirstNestedEndpoint",
-ResourceType = new ResourceType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints"),
-},new TrafficManagerEndpointData()
-{
-Target = "secondnestedprofile.tmpreview.watmtest.azure-test.net",
-EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-Weight = 1,
-Priority = 2,
-MinChildEndpoints = 2,
-MinChildEndpointsIPv4 = 2,
-MinChildEndpointsIPv6 = 1,
-Name = "MySecondNestedEndpoint",
-ResourceType = new ResourceType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints"),
-}
-},
-                Location = new AzureLocation("global"),
-            };
-            ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            TrafficManagerProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                TrafficManagerProfileData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -80,30 +80,18 @@ namespace Azure.AI.TextAnalytics
             return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
-        internal static DetectedLanguage? ConvertToDetectedLanguage(DetectedLanguageInternal? detectedLanguageInternal)
-        {
-            return (detectedLanguageInternal is not null)
-                ? new DetectedLanguage(
-                    detectedLanguageInternal.Value.Name,
-                    detectedLanguageInternal.Value.Iso6391Name,
-                    detectedLanguageInternal.Value.ConfidenceScore,
-                    detectedLanguageInternal.Value.Script,
-                    default)
-                : null;
-        }
-
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionResult results, IDictionary<string, int> idToIndexMap)
         {
             var detectedLanguages = new List<DetectLanguageResult>(results.Documents.Count);
 
-            //Read errors
-            foreach (InputError error in results.Errors)
+            // Read errors.
+            foreach (DocumentError error in results.Errors)
             {
                 detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
             }
 
-            //Read languages
-            foreach (var language in results.Documents)
+            // Read languages.
+            foreach (LanguageDetectionDocumentResult language in results.Documents)
             {
                 detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
             }
@@ -121,21 +109,20 @@ namespace Azure.AI.TextAnalytics
         {
             var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Documents.Count);
 
-            //Read errors
-            foreach (InputError error in results.Errors)
+            // Read errors.
+            foreach (DocumentError error in results.Errors)
             {
                 analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
             }
 
-            //Read sentiments
-            foreach (var document in results.Documents)
+            // Read sentiments.
+            foreach (SentimentResponseDocumentsItem document in results.Documents)
             {
                 analyzedSentiments.Add(
                     new AnalyzeSentimentResult(
                         document.Id,
                         document.Statistics ?? default,
-                        new DocumentSentiment(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        new DocumentSentiment(document)));
             }
 
             analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
@@ -155,21 +142,20 @@ namespace Azure.AI.TextAnalytics
         {
             var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Documents.Count);
 
-            //Read errors
-            foreach (InputError error in results.Errors)
+            // Read errors.
+            foreach (DocumentError error in results.Errors)
             {
                 keyPhrases.Add(new ExtractKeyPhrasesResult(error.Id, ConvertToError(error.Error)));
             }
 
-            //Read Key phrases
+            // Read key phrases.
             foreach (KeyPhraseResultDocumentsItem document in results.Documents)
             {
                 keyPhrases.Add(
                     new ExtractKeyPhrasesResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToKeyPhraseCollection(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        ConvertToKeyPhraseCollection(document)));
             }
 
             keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
@@ -180,10 +166,10 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<EntityWithResolution> entities)
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
             => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
 
-        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultWithDetectedLanguage documentEntities)
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
         {
             return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
         }
@@ -192,21 +178,20 @@ namespace Azure.AI.TextAnalytics
         {
             var recognizeEntities = new List<RecognizeEntitiesResult>(results.Documents.Count);
 
-            //Read errors
-            foreach (InputError error in results.Errors)
+            // Read errors.
+            foreach (DocumentError error in results.Errors)
             {
                 recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
-            //Read document entities
+            // Read document entities.
             foreach (var document in results.Documents)
             {
                 recognizeEntities.Add(
                     new RecognizeEntitiesResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToCategorizedEntityCollection(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        ConvertToCategorizedEntityCollection(document)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -239,8 +224,7 @@ namespace Azure.AI.TextAnalytics
                     new RecognizeEntitiesResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToCategorizedEntityCollection(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        ConvertToCategorizedEntityCollection(document)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -274,7 +258,7 @@ namespace Azure.AI.TextAnalytics
             return entityList;
         }
 
-        internal static PiiEntityCollection ConvertToPiiEntityCollection(PIIResultWithDetectedLanguage piiResult)
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
         {
             var entities = new List<PiiEntity>(piiResult.Entities.Count);
             foreach (var entity in piiResult.Entities)
@@ -291,7 +275,7 @@ namespace Azure.AI.TextAnalytics
             var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Documents.Count);
 
             // Read errors.
-            foreach (InputError error in results.Errors)
+            foreach (DocumentError error in results.Errors)
             {
                 recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
@@ -303,8 +287,7 @@ namespace Azure.AI.TextAnalytics
                     new RecognizePiiEntitiesResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToPiiEntityCollection(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        ConvertToPiiEntityCollection(document)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -315,7 +298,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Linked Entities
 
-        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(EntityLinkingResultWithDetectedLanguage documentEntities)
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(EntityLinkingResultDocumentsItem documentEntities)
         {
             return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
         }
@@ -325,20 +308,19 @@ namespace Azure.AI.TextAnalytics
             var recognizeLinkedEntities = new List<RecognizeLinkedEntitiesResult>(results.Documents.Count);
 
             // Read errors.
-            foreach (InputError error in results.Errors)
+            foreach (DocumentError error in results.Errors)
             {
                 recognizeLinkedEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
             // Read document entities.
-            foreach (EntityLinkingResultWithDetectedLanguage document in results.Documents)
+            foreach (EntityLinkingResultDocumentsItem document in results.Documents)
             {
                 recognizeLinkedEntities.Add(
                     new RecognizeLinkedEntitiesResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToLinkedEntityCollection(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        ConvertToLinkedEntityCollection(document)));
             }
 
             recognizeLinkedEntities = SortHeterogeneousCollection(recognizeLinkedEntities, idToIndexMap);
@@ -348,6 +330,14 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region Healthcare
+
+        internal static BinaryData ConvertToFhirBundle(JsonElement fhirBundle) =>
+            fhirBundle.ValueKind switch
+            {
+                JsonValueKind.Undefined => null, // A FHIR bundle was not included in the response.
+                JsonValueKind.Object => new BinaryData(fhirBundle),
+                _ => throw new InvalidOperationException($"This value's ValueKind is not Object.")
+            };
 
         internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities)
         {
@@ -359,7 +349,7 @@ namespace Azure.AI.TextAnalytics
             var healthcareEntitiesResults = new List<AnalyzeHealthcareEntitiesResult>(results.Documents.Count);
 
             // Read errors.
-            foreach (InputError error in results.Errors)
+            foreach (DocumentError error in results.Errors)
             {
                 healthcareEntitiesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
@@ -372,8 +362,6 @@ namespace Azure.AI.TextAnalytics
                     document.Statistics ?? default,
                     ConvertToHealthcareEntityCollection(document.Entities),
                     ConvertToHealthcareEntityRelationsCollection(document.Entities, document.Relations),
-                    document.FhirBundle,
-                    document.DetectedLanguage,
                     ConvertToWarnings(document.Warnings)));
             }
 
@@ -456,14 +444,13 @@ namespace Azure.AI.TextAnalytics
             }
 
             // Read classifications.
-            foreach (var document in results.Documents)
+            foreach (CustomLabelClassificationResultDocumentsItem document in results.Documents)
             {
                 classifiedCustomCategoryResults.Add(
                     new ClassifyDocumentResult(
                         document.Id,
                         document.Statistics ?? default,
                         ConvertToClassificationCategoryCollection(document),
-                        ConvertToDetectedLanguage(document.DetectedLanguage),
                         ConvertToWarnings(document.Warnings)));
             }
 
@@ -489,131 +476,94 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Dynamic Classify
+        #region Extractive Summarize
 
-        internal static ClassificationCategoryCollection ConvertToClassificationCategoryCollection(DynamicClassificationResultDocumentsItem document)
-        {
-            return new ClassificationCategoryCollection(ConvertToClassificationCategoryList(document.Classifications.ToList()), ConvertToWarnings(document.Warnings));
-        }
+        internal static List<ExtractiveSummarySentence> ConvertToExtractiveSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
+            => sentences.Select((sentence) => new ExtractiveSummarySentence(sentence)).ToList();
 
-        internal static DynamicClassifyDocumentResultCollection ConvertToDynamicClassifyDocumentResultCollection(DynamicClassificationResult result, IDictionary<string, int> idToIndexMap)
-        {
-            var documentResults = new List<ClassifyDocumentResult>(result.Documents.Count);
-
-            // Read errors.
-            foreach (InputError error in result.Errors)
-            {
-                documentResults.Add(new ClassifyDocumentResult(error.Id, ConvertToError(error.Error)));
-            }
-
-            // Read results.
-            foreach (DynamicClassificationResultDocumentsItem document in result.Documents)
-            {
-                documentResults.Add(
-                    new ClassifyDocumentResult(
-                        document.Id,
-                        document.Statistics ?? default,
-                        ConvertToClassificationCategoryCollection(document),
-                        detectedLanguage: default,
-                        ConvertToWarnings(document.Warnings)));
-            }
-
-            documentResults = SortHeterogeneousCollection(documentResults, idToIndexMap);
-            return new DynamicClassifyDocumentResultCollection(documentResults, result.Statistics, result.ModelVersion);
-        }
-
-        #endregion
-
-        #region Extract Summary
-
-        internal static List<SummarySentence> ConvertToSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
-            => sentences.Select((sentence) => new SummarySentence(sentence)).ToList();
-
-        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
+        internal static ExtractiveSummarizeResultCollection ConvertToExtractiveSummarizeResultCollection(
             ExtractiveSummarizationResult results,
             IDictionary<string, int> idToIndexMap)
         {
-            List<ExtractSummaryResult> extractSummaryResults = new(results.Documents.Count);
+            List<ExtractiveSummarizeResult> extractiveSummarizeResults = new(results.Documents.Count);
 
             // Read errors.
-            foreach (InputError error in results.Errors)
+            foreach (DocumentError error in results.Errors)
             {
-                extractSummaryResults.Add(new ExtractSummaryResult(error.Id, ConvertToError(error.Error)));
+                extractiveSummarizeResults.Add(new ExtractiveSummarizeResult(error.Id, ConvertToError(error.Error)));
             }
 
             // Read results.
-            foreach (ExtractedSummaryDocumentResultWithDetectedLanguage document in results.Documents)
+            foreach (ExtractedSummaryDocumentResult document in results.Documents)
             {
-                extractSummaryResults.Add(
-                    new ExtractSummaryResult(
+                extractiveSummarizeResults.Add(
+                    new ExtractiveSummarizeResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToSummarySentenceList(document.Sentences),
-                        ConvertToDetectedLanguage(document.DetectedLanguage),
+                        ConvertToExtractiveSummarySentenceList(document.Sentences),
                         ConvertToWarnings(document.Warnings)));
             }
 
-            extractSummaryResults = SortHeterogeneousCollection(extractSummaryResults, idToIndexMap);
+            extractiveSummarizeResults = SortHeterogeneousCollection(extractiveSummarizeResults, idToIndexMap);
 
-            return new ExtractSummaryResultCollection(extractSummaryResults, results.Statistics, results.ModelVersion);
+            return new ExtractiveSummarizeResultCollection(extractiveSummarizeResults, results.Statistics, results.ModelVersion);
         }
 
-        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
+        internal static ExtractiveSummarizeResultCollection ConvertToExtractiveSummarizeResultCollection(
             AnalyzeTextJobState jobState,
             IDictionary<string, int> idToIndexMap)
         {
             AnalyzeTextLROResult task = jobState.Tasks.Items[0];
             if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
             {
-                return ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
+                return ConvertToExtractiveSummarizeResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
             }
             throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} but instead got {task.Kind}.");
         }
 
         #endregion
 
-        #region Abstract Summary
+        #region Abstractive Summarize
 
-        internal static List<AbstractiveSummary> ConvertToSummaryList(IEnumerable<AbstractiveSummaryInternal> summaries)
+        internal static List<AbstractiveSummary> ConvertToAbstractiveSummaryList(IEnumerable<AbstractiveSummaryInternal> summaries)
             => summaries.Select((summary) => new AbstractiveSummary(summary)).ToList();
 
-        internal static AbstractSummaryResultCollection ConvertToAbstractSummaryResultCollection(
+        internal static AbstractiveSummarizeResultCollection ConvertToAbstractiveSummarizeResultCollection(
             AbstractiveSummarizationResult results,
             IDictionary<string, int> idToIndexMap)
         {
-            List<AbstractSummaryResult> abstractSummaryResults = new(results.Documents.Count);
+            List<AbstractiveSummarizeResult> abstractiveSummarizeResults = new(results.Documents.Count);
 
             // Read errors.
-            foreach (InputError error in results.Errors)
+            foreach (DocumentError error in results.Errors)
             {
-                abstractSummaryResults.Add(new AbstractSummaryResult(error.Id, ConvertToError(error.Error)));
+                abstractiveSummarizeResults.Add(new AbstractiveSummarizeResult(error.Id, ConvertToError(error.Error)));
             }
 
             // Read results.
-            foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage document in results.Documents)
+            foreach (AbstractiveSummaryDocumentResult document in results.Documents)
             {
-                abstractSummaryResults.Add(
-                    new AbstractSummaryResult(
+                abstractiveSummarizeResults.Add(
+                    new AbstractiveSummarizeResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToSummaryList(document.Summaries),
-                        ConvertToDetectedLanguage(document.DetectedLanguage),
+                        ConvertToAbstractiveSummaryList(document.Summaries),
                         ConvertToWarnings(document.Warnings)));
             }
 
-            abstractSummaryResults = SortHeterogeneousCollection(abstractSummaryResults, idToIndexMap);
+            abstractiveSummarizeResults = SortHeterogeneousCollection(abstractiveSummarizeResults, idToIndexMap);
 
-            return new AbstractSummaryResultCollection(abstractSummaryResults, results.Statistics, results.ModelVersion);
+            return new AbstractiveSummarizeResultCollection(abstractiveSummarizeResults, results.Statistics, results.ModelVersion);
         }
 
-        internal static AbstractSummaryResultCollection ConvertToAbstractSummaryResultCollection(
+        internal static AbstractiveSummarizeResultCollection ConvertToAbstractiveSummarizeResultCollection(
             AnalyzeTextJobState jobState,
             IDictionary<string, int> idToIndexMap)
         {
             AnalyzeTextLROResult task = jobState.Tasks.Items[0];
             if (task.Kind == AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)
             {
-                return ConvertToAbstractSummaryResultCollection((task as AbstractiveSummarizationLROResult).Results, idToIndexMap);
+                return ConvertToAbstractiveSummarizeResultCollection((task as AbstractiveSummarizationLROResult).Results, idToIndexMap);
             }
             throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)} but instead got {task.Kind}.");
         }
@@ -709,8 +659,6 @@ namespace Azure.AI.TextAnalytics
                     ModelVersion = action.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs,
-                    FhirVersion = action.FhirVersion,
-                    DocumentType = action.DocumentType,
                 },
                 TaskName = action.ActionName,
             };
@@ -752,7 +700,7 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static ExtractiveSummarizationLROTask ConvertToExtractiveSummarizationTask(ExtractSummaryAction action)
+        internal static ExtractiveSummarizationLROTask ConvertToExtractiveSummarizationTask(ExtractiveSummarizeAction action)
         {
             return new ExtractiveSummarizationLROTask()
             {
@@ -768,14 +716,14 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static AbstractiveSummarizationLROTask ConvertToAbstractiveSummarizationTask(AbstractSummaryAction action)
+        internal static AbstractiveSummarizationLROTask ConvertToAbstractiveSummarizationTask(AbstractiveSummarizeAction action)
         {
             AbstractiveSummarizationTaskParameters parameters = new()
             {
                 ModelVersion = action.ModelVersion,
                 StringIndexType = Constants.DefaultStringIndexType,
                 LoggingOptOut = action.DisableServiceLogs,
-                SentenceCount = action.MaxSentenceCount,
+                SentenceCount = action.SentenceCount,
             };
 
             return new AbstractiveSummarizationLROTask(parameters)
@@ -892,11 +840,11 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
-        internal static IList<ExtractiveSummarizationLROTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
+        internal static IList<ExtractiveSummarizationLROTask> ConvertFromExtractiveSummarizeActionsToTasks(IReadOnlyCollection<ExtractiveSummarizeAction> extractiveSummarizeActions)
         {
-            List<ExtractiveSummarizationLROTask> list = new(extractSummaryActions.Count);
+            List<ExtractiveSummarizationLROTask> list = new(extractiveSummarizeActions.Count);
 
-            foreach (ExtractSummaryAction action in extractSummaryActions)
+            foreach (ExtractiveSummarizeAction action in extractiveSummarizeActions)
             {
                 list.Add(ConvertToExtractiveSummarizationTask(action));
             }
@@ -904,11 +852,11 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
-        internal static IList<AbstractiveSummarizationLROTask> ConvertFromAbstractSummaryActionsToTasks(IReadOnlyCollection<AbstractSummaryAction> abstractSummaryActions)
+        internal static IList<AbstractiveSummarizationLROTask> ConvertFromAbstractiveSummarizeActionsToTasks(IReadOnlyCollection<AbstractiveSummarizeAction> abstractiveSummarizeActions)
         {
-            List<AbstractiveSummarizationLROTask> list = new(abstractSummaryActions.Count);
+            List<AbstractiveSummarizationLROTask> list = new(abstractiveSummarizeActions.Count);
 
-            foreach (AbstractSummaryAction action in abstractSummaryActions)
+            foreach (AbstractiveSummarizeAction action in abstractiveSummarizeActions)
             {
                 list.Add(ConvertToAbstractiveSummarizationTask(action));
             }
@@ -927,8 +875,8 @@ namespace Azure.AI.TextAnalytics
             List<SingleLabelClassifyActionResult> singleLabelClassify = new();
             List<MultiLabelClassifyActionResult> multiLabelClassify = new();
             List<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntities = new();
-            List<ExtractSummaryActionResult> extractSummary = new();
-            List<AbstractSummaryActionResult> abstractSummary = new();
+            List<ExtractiveSummarizeActionResult> extractiveSummarize = new();
+            List<AbstractiveSummarizeActionResult> abstractiveSummarize = new();
 
             foreach (AnalyzeTextLROResult task in jobState.Tasks.Items)
             {
@@ -970,11 +918,11 @@ namespace Azure.AI.TextAnalytics
                 }
                 else if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
                 {
-                    extractSummary.Add(new ExtractSummaryActionResult(ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                    extractiveSummarize.Add(new ExtractiveSummarizeActionResult(ConvertToExtractiveSummarizeResultCollection((task as ExtractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
                 else if (task.Kind == AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)
                 {
-                    abstractSummary.Add(new AbstractSummaryActionResult(ConvertToAbstractSummaryResultCollection((task as AbstractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                    abstractiveSummarize.Add(new AbstractiveSummarizeActionResult(ConvertToAbstractiveSummarizeResultCollection((task as AbstractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
             }
 
@@ -988,8 +936,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassify,
                 multiLabelClassify,
                 analyzeHealthcareEntities,
-                extractSummary,
-                abstractSummary);
+                extractiveSummarize,
+                abstractiveSummarize);
         }
 
         #endregion

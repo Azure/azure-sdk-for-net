@@ -19,12 +19,12 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsVanity))
             {
-                writer.WritePropertyName("isVanity");
+                writer.WritePropertyName("isVanity"u8);
                 writer.WriteBooleanValue(IsVanity.Value);
             }
             if (Optional.IsCollectionDefined(PreferredVanityNumbers))
             {
-                writer.WritePropertyName("preferredVanityNumbers");
+                writer.WritePropertyName("preferredVanityNumbers"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreferredVanityNumbers)
                 {
@@ -34,32 +34,32 @@ namespace Azure.Communication.ShortCodes.Models
             }
             if (Optional.IsDefined(NumberType))
             {
-                writer.WritePropertyName("numberType");
+                writer.WritePropertyName("numberType"u8);
                 writer.WriteStringValue(NumberType.Value.ToString());
             }
             if (Optional.IsDefined(IsPoliticalCampaign))
             {
-                writer.WritePropertyName("isPoliticalCampaign");
+                writer.WritePropertyName("isPoliticalCampaign"u8);
                 writer.WriteBooleanValue(IsPoliticalCampaign.Value);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Url))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SignUpTypes))
             {
-                writer.WritePropertyName("signUpTypes");
+                writer.WritePropertyName("signUpTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SignUpTypes)
                 {
@@ -69,22 +69,22 @@ namespace Azure.Communication.ShortCodes.Models
             }
             if (Optional.IsDefined(SignUpUrl))
             {
-                writer.WritePropertyName("signUpUrl");
+                writer.WritePropertyName("signUpUrl"u8);
                 writer.WriteStringValue(SignUpUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(TermsOfServiceUrl))
             {
-                writer.WritePropertyName("termsOfServiceUrl");
+                writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(PrivacyPolicyUrl))
             {
-                writer.WritePropertyName("privacyPolicyUrl");
+                writer.WritePropertyName("privacyPolicyUrl"u8);
                 writer.WriteStringValue(PrivacyPolicyUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(ExpectedDateOfService))
             {
-                writer.WritePropertyName("expectedDateOfService");
+                writer.WritePropertyName("expectedDateOfService"u8);
                 writer.WriteStringValue(ExpectedDateOfService.Value, "O");
             }
             writer.WriteEndObject();
@@ -92,35 +92,37 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static ProgramDetails DeserializeProgramDetails(JsonElement element)
         {
-            Optional<bool> isVanity = default;
-            Optional<IList<string>> preferredVanityNumbers = default;
-            Optional<NumberType> numberType = default;
-            Optional<bool> isPoliticalCampaign = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<Uri> url = default;
-            Optional<IList<ProgramSignUpType>> signUpTypes = default;
-            Optional<Uri> signUpUrl = default;
-            Optional<Uri> termsOfServiceUrl = default;
-            Optional<Uri> privacyPolicyUrl = default;
-            Optional<DateTimeOffset> expectedDateOfService = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? isVanity = default;
+            IList<string> preferredVanityNumbers = default;
+            NumberType? numberType = default;
+            bool? isPoliticalCampaign = default;
+            string name = default;
+            string description = default;
+            Uri url = default;
+            IList<ProgramSignUpType> signUpTypes = default;
+            Uri signUpUrl = default;
+            Uri termsOfServiceUrl = default;
+            Uri privacyPolicyUrl = default;
+            DateTimeOffset? expectedDateOfService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isVanity"))
+                if (property.NameEquals("isVanity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isVanity = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("preferredVanityNumbers"))
+                if (property.NameEquals("preferredVanityNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -131,51 +133,47 @@ namespace Azure.Communication.ShortCodes.Models
                     preferredVanityNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("numberType"))
+                if (property.NameEquals("numberType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberType = new NumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isPoliticalCampaign"))
+                if (property.NameEquals("isPoliticalCampaign"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPoliticalCampaign = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signUpTypes"))
+                if (property.NameEquals("signUpTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProgramSignUpType> array = new List<ProgramSignUpType>();
@@ -186,48 +184,72 @@ namespace Azure.Communication.ShortCodes.Models
                     signUpTypes = array;
                     continue;
                 }
-                if (property.NameEquals("signUpUrl"))
+                if (property.NameEquals("signUpUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     signUpUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("termsOfServiceUrl"))
+                if (property.NameEquals("termsOfServiceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     termsOfServiceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privacyPolicyUrl"))
+                if (property.NameEquals("privacyPolicyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privacyPolicyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expectedDateOfService"))
+                if (property.NameEquals("expectedDateOfService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expectedDateOfService = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ProgramDetails(Optional.ToNullable(isVanity), Optional.ToList(preferredVanityNumbers), Optional.ToNullable(numberType), Optional.ToNullable(isPoliticalCampaign), name.Value, description.Value, url.Value, Optional.ToList(signUpTypes), signUpUrl.Value, termsOfServiceUrl.Value, privacyPolicyUrl.Value, Optional.ToNullable(expectedDateOfService));
+            return new ProgramDetails(
+                isVanity,
+                preferredVanityNumbers ?? new ChangeTrackingList<string>(),
+                numberType,
+                isPoliticalCampaign,
+                name,
+                description,
+                url,
+                signUpTypes ?? new ChangeTrackingList<ProgramSignUpType>(),
+                signUpUrl,
+                termsOfServiceUrl,
+                privacyPolicyUrl,
+                expectedDateOfService);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ProgramDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeProgramDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

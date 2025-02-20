@@ -5,130 +5,226 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class AcsClusterProperties : IUtf8JsonSerializable
+    public partial class AcsClusterProperties : IUtf8JsonSerializable, IJsonModel<AcsClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AcsClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("orchestratorType");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(ClusterFqdn))
+            {
+                writer.WritePropertyName("clusterFqdn"u8);
+                writer.WriteStringValue(ClusterFqdn);
+            }
+            writer.WritePropertyName("orchestratorType"u8);
             writer.WriteStringValue(OrchestratorType.ToString());
             if (Optional.IsDefined(OrchestratorProperties))
             {
-                writer.WritePropertyName("orchestratorProperties");
-                writer.WriteObjectValue(OrchestratorProperties);
+                writer.WritePropertyName("orchestratorProperties"u8);
+                writer.WriteObjectValue(OrchestratorProperties, options);
             }
             if (Optional.IsCollectionDefined(SystemServices))
             {
-                writer.WritePropertyName("systemServices");
+                writer.WritePropertyName("systemServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in SystemServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MasterCount))
             {
-                writer.WritePropertyName("masterCount");
+                writer.WritePropertyName("masterCount"u8);
                 writer.WriteNumberValue(MasterCount.Value);
             }
             if (Optional.IsDefined(AgentCount))
             {
-                writer.WritePropertyName("agentCount");
+                writer.WritePropertyName("agentCount"u8);
                 writer.WriteNumberValue(AgentCount.Value);
             }
             if (Optional.IsDefined(AgentVmSize))
             {
-                writer.WritePropertyName("agentVmSize");
+                writer.WritePropertyName("agentVmSize"u8);
                 writer.WriteStringValue(AgentVmSize.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element)
+        AcsClusterProperties IJsonModel<AcsClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> clusterFqdn = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsClusterProperties(document.RootElement, options);
+        }
+
+        internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string clusterFqdn = default;
             OrchestratorType orchestratorType = default;
-            Optional<KubernetesClusterProperties> orchestratorProperties = default;
-            Optional<IList<SystemService>> systemServices = default;
-            Optional<int> masterCount = default;
-            Optional<int> agentCount = default;
-            Optional<AgentVmSizeType> agentVmSize = default;
+            KubernetesClusterProperties orchestratorProperties = default;
+            IList<SystemService> systemServices = default;
+            int? masterCount = default;
+            int? agentCount = default;
+            AgentVmSizeType? agentVmSize = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterFqdn"))
+                if (property.NameEquals("clusterFqdn"u8))
                 {
                     clusterFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("orchestratorType"))
+                if (property.NameEquals("orchestratorType"u8))
                 {
                     orchestratorType = new OrchestratorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("orchestratorProperties"))
+                if (property.NameEquals("orchestratorProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value);
+                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("systemServices"))
+                if (property.NameEquals("systemServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SystemService> array = new List<SystemService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SystemService.DeserializeSystemService(item));
+                        array.Add(SystemService.DeserializeSystemService(item, options));
                     }
                     systemServices = array;
                     continue;
                 }
-                if (property.NameEquals("masterCount"))
+                if (property.NameEquals("masterCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     masterCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("agentCount"))
+                if (property.NameEquals("agentCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("agentVmSize"))
+                if (property.NameEquals("agentVmSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentVmSize = new AgentVmSizeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AcsClusterProperties(
+                clusterFqdn,
+                orchestratorType,
+                orchestratorProperties,
+                systemServices ?? new ChangeTrackingList<SystemService>(),
+                masterCount,
+                agentCount,
+                agentVmSize,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AcsClusterProperties IPersistableModel<AcsClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> JSON web key parameter. </summary>
     internal partial class JWKHeader
     {
-        /// <summary> Initializes a new instance of JWKHeader. </summary>
-        public JWKHeader()
+        /// <summary> Initializes a new instance of <see cref="JWKHeader"/>. </summary>
+        internal JWKHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of JWKHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="JWKHeader"/>. </summary>
         /// <param name="crv"> crv value. </param>
         /// <param name="kid"> kid value. </param>
         /// <param name="kty"> kty value. </param>
@@ -31,14 +31,14 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> crv value. </summary>
-        public string Crv { get; set; }
+        public string Crv { get; }
         /// <summary> kid value. </summary>
-        public string Kid { get; set; }
+        public string Kid { get; }
         /// <summary> kty value. </summary>
-        public string Kty { get; set; }
+        public string Kty { get; }
         /// <summary> x value. </summary>
-        public string X { get; set; }
+        public string X { get; }
         /// <summary> y value. </summary>
-        public string Y { get; set; }
+        public string Y { get; }
     }
 }

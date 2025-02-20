@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -24,16 +22,18 @@ namespace Azure.Monitor.Query.Tests
         private DateTimeOffset RetentionWindowStart;
 
         public static string IntColumnNameSent = "IntColumn";
-        public static string IntColumnName = IntColumnNameSent + "_d";
+        public static string IntColumnName = "Int";
 
         public static string StringColumnNameSent = "StringColumn";
-        public static string StringColumnName = StringColumnNameSent + "_s";
+        public static string StringColumnName = "String";
 
         public static string BoolColumnNameSent = "BoolColumn";
-        public static string BoolColumnName = BoolColumnNameSent + "_b";
+        public static string BoolColumnName = "Bool";
 
         public static string FloatColumnNameSent = "FloatColumn";
-        public static string FloatColumnName = FloatColumnNameSent + "_d";
+        public static string FloatColumnName = "Float";
+
+        public static string DoubleColumnName = "Double";
 
         public static string TimeGeneratedColumnNameSent = "EventTimeGenerated";
         public static string TimeGeneratedColumnName = "TimeGenerated";
@@ -41,8 +41,9 @@ namespace Azure.Monitor.Query.Tests
         public readonly List<Dictionary<string, object>> TableA;
 
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
+
         public string TableAName => TableANameSent + "_CL";
-        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
+        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
 
         private readonly MonitorQueryTestEnvironment _testEnvironment;
 
@@ -51,7 +52,7 @@ namespace Azure.Monitor.Query.Tests
             _testEnvironment = test.TestEnvironment;
 
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
-            RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 7);
+            RetentionWindowStart = recordingUtcNow.AddDays(-14);
 
             TableA = new()
             {
@@ -65,7 +66,7 @@ namespace Azure.Monitor.Query.Tests
                 },
                 new()
                 {
-                    { IntColumnNameSent, 3},
+                    { IntColumnNameSent, 2},
                     { StringColumnNameSent, "b"},
                     { BoolColumnNameSent, true},
                     { FloatColumnNameSent, 1.2f },
@@ -73,12 +74,12 @@ namespace Azure.Monitor.Query.Tests
                 },
                 new()
                 {
-                    { IntColumnNameSent, 1},
+                    { IntColumnNameSent, 3},
                     { StringColumnNameSent, "c"},
                     { BoolColumnNameSent, false},
                     { FloatColumnNameSent, 1.1f },
                     { TimeGeneratedColumnNameSent, RetentionWindowStart.AddDays(5) }
-                },
+                }
             };
         }
 
@@ -122,12 +123,17 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task<int> QueryCount(string workspaceId)
         {
-            var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
+            var logsClient = new LogsQueryClient(new Uri(_testEnvironment.GetLogsAudience() + "/v1"), _testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
-                var count = countResponse.Value.Single();
-                return count;
+                var query = $"{TableAName}" +
+                    $" | distinct * |" +
+                    $"project {StringColumnName}, {IntColumnName}, {BoolColumnName}, {FloatColumnName} |" +
+                    $"count";
+                var customColumnsQuery = await logsClient.QueryWorkspaceAsync<int>(workspaceId, query,
+                    DataTimeRange);
+                var customColumns = customColumnsQuery.Value.Single();
+                return customColumns;
             }
             catch
             {

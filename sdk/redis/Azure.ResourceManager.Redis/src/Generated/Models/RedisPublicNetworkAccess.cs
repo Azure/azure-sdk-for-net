@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. If &apos;Disabled&apos;, private endpoints are the exclusive access method. Default value is &apos;Enabled&apos;. </summary>
+    /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
     public readonly partial struct RedisPublicNetworkAccess : IEquatable<RedisPublicNetworkAccess>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis.Models
         public static bool operator ==(RedisPublicNetworkAccess left, RedisPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(RedisPublicNetworkAccess left, RedisPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisPublicNetworkAccess"/>. </summary>
         public static implicit operator RedisPublicNetworkAccess(string value) => new RedisPublicNetworkAccess(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,15 +15,18 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchResult DeserializeRouteDirectionsBatchResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RouteDirectionsBatchItem>> batchItems = default;
-            Optional<BatchResultSummary> summary = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<RouteDirectionsBatchItem> batchItems = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("batchItems"))
+                if (property.NameEquals("batchItems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteDirectionsBatchItem> array = new List<RouteDirectionsBatchItem>();
@@ -34,18 +37,25 @@ namespace Azure.Maps.Routing.Models
                     batchItems = array;
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);
                     continue;
                 }
             }
-            return new RouteDirectionsBatchResult(summary.Value, Optional.ToList(batchItems));
+            return new RouteDirectionsBatchResult(summary, batchItems ?? new ChangeTrackingList<RouteDirectionsBatchItem>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RouteDirectionsBatchResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteDirectionsBatchResult(document.RootElement);
         }
     }
 }

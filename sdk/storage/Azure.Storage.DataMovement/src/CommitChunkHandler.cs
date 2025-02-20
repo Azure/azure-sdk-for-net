@@ -2,25 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Core;
-using Azure.Storage.DataMovement;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Threading.Channels;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
     internal class CommitChunkHandler : IAsyncDisposable
     {
-        // Indicates whether the current thread is processing stage chunks.
-        private static Task _processStageChunkEvents;
-
         #region Delegate Definitions
-        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
-        public delegate Task QueueCommitBlockTaskInternal();
-        public delegate void ReportProgressInBytes(long bytesWritten);
+        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
+        public delegate Task QueueCommitBlockTaskInternal(StorageResourceItemProperties sourceProperties);
+        public delegate ValueTask ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
 
@@ -37,34 +30,42 @@ namespace Azure.Storage.DataMovement
             public InvokeFailedEventHandlerInternal InvokeFailedHandler { get; set; }
         }
 
-        private event SyncAsyncEventHandler<StageChunkEventArgs> _commitBlockHandler;
-        internal SyncAsyncEventHandler<StageChunkEventArgs> GetCommitBlockHandler() => _commitBlockHandler;
-
         /// <summary>
-        /// Create channel of <see cref="StageChunkEventArgs"/> to keep track of that are
-        /// waiting to update the bytesTransferredand other required operations.
+        /// Create channel of <see cref="QueueStageChunkArgs"/> to keep track of that are
+        /// waiting to update the bytesTransferred and other required operations.
         /// </summary>
-        private readonly Channel<StageChunkEventArgs> _stageChunkChannel;
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
+        private readonly IProcessor<QueueStageChunkArgs> _stageChunkProcessor;
+        private readonly CancellationToken _cancellationToken;
 
-        private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
         private readonly long _expectedLength;
         private readonly long _blockSize;
-        private readonly TransferType _transferType;
+        private readonly TransferOrder _transferOrder;
+        private readonly StorageResourceItemProperties _sourceProperties;
+
+        internal bool _isChunkHandlerRunning;
 
         public CommitChunkHandler(
             long expectedLength,
             long blockSize,
             Behaviors behaviors,
-            TransferType transferType)
+            TransferOrder transferOrder,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken)
         {
             if (expectedLength <= 0)
             {
-                throw new ArgumentException("Cannot initiate Commit Block List function with File that has a negative or zero length");
+                throw Errors.InvalidExpectedLength(expectedLength);
             }
             Argument.AssertNotNull(behaviors, nameof(behaviors));
+
+            _cancellationToken = cancellationToken;
+            // Set bytes transferred to block size because we transferred the initial block
+            _bytesTransferred = blockSize;
+            _expectedLength = expectedLength;
+            _blockSize = blockSize;
+            _transferOrder = transferOrder;
+            _sourceProperties = sourceProperties;
 
             _queuePutBlockTask = behaviors.QueuePutBlockTask
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueuePutBlockTask));
@@ -75,147 +76,70 @@ namespace Azure.Storage.DataMovement
             _invokeFailedEventHandler = behaviors.InvokeFailedHandler
                 ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
 
-            // Set expected length to perform commit task
-            _expectedLength = expectedLength;
-
-            // Create channel of finished Stage Chunk Args to update the bytesTransferred
-            // and for ending tasks like commit block.
-            // The size of the channel should never exceed 50k (limit on blocks in a block blob).
-            // and that's in the worst case that we never read from the channel and had a maximum chunk blob.
-            _stageChunkChannel = Channel.CreateUnbounded<StageChunkEventArgs>(
-                new UnboundedChannelOptions()
-                {
-                    // Single reader is required as we can only read and write to bytesTransferred value
-                    SingleReader = true,
-                });
-            _cancellationTokenSource = new CancellationTokenSource();
-            _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
-
-            // Set bytes transferred to block size because we transferred the initial block
-            _currentBytesSemaphore = new SemaphoreSlim(1, 1);
-            _bytesTransferred = blockSize;
-
-            _blockSize = blockSize;
-            _transferType = transferType;
-            if (_transferType == TransferType.Sequential)
-            {
-                _commitBlockHandler += QueueBlockEvent;
-            }
-            _commitBlockHandler += CommitBlockEvent;
+            _stageChunkProcessor = ChannelProcessing.NewProcessor<QueueStageChunkArgs>(
+                readers: 1,
+                capacity: DataMovementConstants.Channels.StageChunkCapacity);
+            _stageChunkProcessor.Process = ProcessCommitRange;
+            _isChunkHandlerRunning = true;
         }
 
         public async ValueTask DisposeAsync()
         {
-            // We no longer have to read from the channel. We are not expecting any more requests.
-            _stageChunkChannel.Writer.Complete();
-            await _stageChunkChannel.Reader.Completion.ConfigureAwait(false);
-            if (!_cancellationTokenSource.IsCancellationRequested)
-            {
-                _cancellationTokenSource.Cancel();
-            }
-            _cancellationTokenSource.Dispose();
-
-            if (_currentBytesSemaphore != default)
-            {
-                _currentBytesSemaphore.Dispose();
-            }
-            DipsoseHandlers();
+            _isChunkHandlerRunning = false;
+            await _stageChunkProcessor.DisposeAsync().ConfigureAwait(false);
         }
 
-        public void DipsoseHandlers()
+        public async ValueTask QueueChunkAsync(QueueStageChunkArgs args)
         {
-            if (_transferType == TransferType.Sequential)
-            {
-                _commitBlockHandler -= QueueBlockEvent;
-            }
-            _commitBlockHandler -= CommitBlockEvent;
+            await _stageChunkProcessor.QueueAsync(args).ConfigureAwait(false);
         }
 
-        private async Task CommitBlockEvent(StageChunkEventArgs args)
-        {
-            if (args.Success)
-            {
-                // Let's add to the channel, and our notifier will handle the chunks.
-                await _stageChunkChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
-            }
-        }
-
-        private async Task NotifyOfPendingStageChunkEvents()
+        private async Task ProcessCommitRange(QueueStageChunkArgs args, CancellationToken cancellationToken = default)
         {
             try
             {
-                while (await _stageChunkChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
-                {
-                    // Read one event argument at a time.
-                    StageChunkEventArgs args = await _stageChunkChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        await _currentBytesSemaphore.WaitAsync(_cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // We should not continue if waiting on the semaphore has cancelled out.
-                        return;
-                    }
+                _bytesTransferred += args.BytesTransferred;
+                await _reportProgressInBytes(args.BytesTransferred).ConfigureAwait(false);
 
-                    Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
-                    // Use progress tracker to get the amount of bytes transferred
-                    _reportProgressInBytes(_bytesTransferred);
-                    if (_bytesTransferred == _expectedLength)
-                    {
-                        // Add CommitBlockList task to the channel
-                        await _queueCommitBlockTask().ConfigureAwait(false);
-                        _currentBytesSemaphore.Release();
-                        return;
-                    }
-                    else if (_bytesTransferred > _expectedLength)
-                    {
-                        await _invokeFailedEventHandler(
-                                new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
-                        _currentBytesSemaphore.Release();
-                        return;
-                    }
-                    _currentBytesSemaphore.Release();
+                if (_bytesTransferred == _expectedLength)
+                {
+                    // Add CommitBlockList task to the channel
+                    await _queueCommitBlockTask(_sourceProperties).ConfigureAwait(false);
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                // If operation cancelled, no need to log the exception. As it's logged by whoever called the cancellation (e.g. disposal)
+                else if (_bytesTransferred < _expectedLength)
+                {
+                    // If this is a sequential transfer, we need to queue the next chunk
+                    if (_transferOrder == TransferOrder.Sequential)
+                    {
+                        long newOffset = args.Offset + _blockSize;
+                        long blockLength = (newOffset + _blockSize < _expectedLength) ?
+                                            _blockSize :
+                                            _expectedLength - newOffset;
+                        await _queuePutBlockTask(
+                            newOffset,
+                            blockLength,
+                            _expectedLength,
+                            _sourceProperties).ConfigureAwait(false);
+                    }
+                }
+                else  // _bytesTransferred > _expectedLength
+                {
+                    throw Errors.MismatchLengthTransferred(
+                        expectedLength: _expectedLength,
+                        actualLength: _bytesTransferred);
+                }
             }
             catch (Exception ex)
             {
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
-            }
-        }
-
-        private async Task QueueBlockEvent(StageChunkEventArgs args)
-        {
-            if (args.Success)
-            {
-                long oldOffset = args.Offset;
-                long newOffset = oldOffset + _blockSize;
-                if (newOffset < _expectedLength)
+                // If we are disposing, we don't want to invoke the failed event handler
+                // because the error is likely due to the job part being disposed and was
+                // invoked by another InvokeFailedEventHandler call.
+                if (_isChunkHandlerRunning)
                 {
-                    long blockLength = (newOffset + _blockSize < _expectedLength) ?
-                                    _blockSize :
-                                    _expectedLength - newOffset;
-                    await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
+                    // This will trigger the job part to call Dispose on this object
+                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
                 }
             }
-            else
-            {
-                // Set status to completed with failed
-                await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
-            }
-        }
-
-        public async Task InvokeEvent(StageChunkEventArgs args)
-        {
-            await _commitBlockHandler.Invoke(args).ConfigureAwait(false);
         }
     }
 }

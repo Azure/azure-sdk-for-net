@@ -5,25 +5,23 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics;
-
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for an Extractive Summarization task. </summary>
     internal partial class ExtractiveSummarizationTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         public ExtractiveSummarizationTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="sentenceCount"></param>
         /// <param name="sortBy"> The sorting criteria to use for the results of Extractive Summarization. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, SummarySentencesOrder? sortBy, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, ExtractiveSummarySentencesOrder? sortBy, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
             SentenceCount = sentenceCount;
             SortBy = sortBy;
@@ -33,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Gets or sets the sentence count. </summary>
         public int? SentenceCount { get; set; }
         /// <summary> The sorting criteria to use for the results of Extractive Summarization. </summary>
-        public SummarySentencesOrder? SortBy { get; set; }
+        public ExtractiveSummarySentencesOrder? SortBy { get; set; }
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }

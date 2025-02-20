@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    /// <summary> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains &apos;Purgeable&apos; the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </summary>
+    /// <summary> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains 'Purgeable' the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </summary>
     public readonly partial struct DeletionRecoveryLevel : IEquatable<DeletionRecoveryLevel>
     {
         private readonly string _value;
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         public static bool operator ==(DeletionRecoveryLevel left, DeletionRecoveryLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeletionRecoveryLevel"/> values are not the same. </summary>
         public static bool operator !=(DeletionRecoveryLevel left, DeletionRecoveryLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeletionRecoveryLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeletionRecoveryLevel"/>. </summary>
         public static implicit operator DeletionRecoveryLevel(string value) => new DeletionRecoveryLevel(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

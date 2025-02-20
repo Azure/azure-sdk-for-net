@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -33,8 +32,22 @@ namespace Azure.ResourceManager.ProviderHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-09-01-preview";
+            _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace, string rolloutName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/customRollouts/", false);
+            uri.AppendPath(rolloutName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace, string rolloutName)
@@ -119,6 +132,20 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/customRollouts/", false);
+            uri.AppendPath(rolloutName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data)
         {
             var message = _pipeline.CreateMessage();
@@ -137,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -205,6 +232,19 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateListByProviderRegistrationRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/customRollouts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByProviderRegistrationRequest(string subscriptionId, string providerNamespace)
         {
             var message = _pipeline.CreateMessage();
@@ -230,7 +270,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomRolloutArrayResponseWithContinuation>> ListByProviderRegistrationAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<CustomRolloutListResult>> ListByProviderRegistrationAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -241,9 +281,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutArrayResponseWithContinuation value = default;
+                        CustomRolloutListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomRolloutArrayResponseWithContinuation.DeserializeCustomRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -257,7 +297,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomRolloutArrayResponseWithContinuation> ListByProviderRegistration(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public Response<CustomRolloutListResult> ListByProviderRegistration(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -268,14 +308,22 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutArrayResponseWithContinuation value = default;
+                        CustomRolloutListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomRolloutArrayResponseWithContinuation.DeserializeCustomRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProviderRegistrationNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProviderRegistrationNextPageRequest(string nextLink, string subscriptionId, string providerNamespace)
@@ -299,7 +347,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomRolloutArrayResponseWithContinuation>> ListByProviderRegistrationNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<CustomRolloutListResult>> ListByProviderRegistrationNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -311,9 +359,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutArrayResponseWithContinuation value = default;
+                        CustomRolloutListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomRolloutArrayResponseWithContinuation.DeserializeCustomRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -328,7 +376,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomRolloutArrayResponseWithContinuation> ListByProviderRegistrationNextPage(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public Response<CustomRolloutListResult> ListByProviderRegistrationNextPage(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -340,9 +388,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutArrayResponseWithContinuation value = default;
+                        CustomRolloutListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomRolloutArrayResponseWithContinuation.DeserializeCustomRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

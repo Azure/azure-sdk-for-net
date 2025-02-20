@@ -1,10 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+#if AZURE_MONITOR_EXPORTER
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+#elif LIVE_METRICS_EXPORTER
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+#endif
 
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
 using AzureCoreConnectionString = Azure.Core.ConnectionString;
@@ -41,18 +47,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 return new ConnectionVars(
                     instrumentationKey: connString.GetInstrumentationKey(),
                     ingestionEndpoint: connString.GetIngestionEndpoint(),
+                    liveEndpoint: connString.GetLiveEndpoint(),
                     aadAudience: connString.GetAADAudience());
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("ConnectionStringError", ex);
+#if AZURE_MONITOR_EXPORTER
+                AzureMonitorExporterEventSource.Log.FailedToParseConnectionString(ex);
+#elif LIVE_METRICS_EXPORTER
+                LiveMetricsExporterEventSource.Log.FailedToParseConnectionString(ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.FailedToParseConnectionString(ex);
+#endif
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }
 
-        internal static string GetAADAudience(this AzureCoreConnectionString connectionString) => connectionString.GetNonRequired(Constants.AADAudienceKey);
+        internal static string? GetAADAudience(this AzureCoreConnectionString connectionString) => connectionString.GetNonRequired(Constants.AADAudienceKey);
 
         internal static string GetInstrumentationKey(this AzureCoreConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
+
+        internal static string GetIngestionEndpoint(this AzureCoreConnectionString connectionString) =>
+            connectionString.GetEndpoint(endpointKeyName: Constants.IngestionExplicitEndpointKey, prefix: Constants.IngestionPrefix, defaultValue: Constants.DefaultIngestionEndpoint);
+
+        internal static string GetLiveEndpoint(this AzureCoreConnectionString connectionString) =>
+            connectionString.GetEndpoint(endpointKeyName: Constants.LiveExplicitEndpointKey, prefix: Constants.LivePrefix, defaultValue: Constants.DefaultLiveEndpoint);
 
         /// <summary>
         /// Evaluate connection string and return the requested endpoint.
@@ -64,29 +83,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         ///     3. use default endpoint (location is ignored)
         /// This behavior is required by the Connection String Specification.
         /// </remarks>
-        internal static string GetIngestionEndpoint(this AzureCoreConnectionString connectionString)
+        internal static string GetEndpoint(this AzureCoreConnectionString connectionString, string endpointKeyName, string prefix, string defaultValue)
         {
             // Passing the user input values through the Uri constructor will verify that we've built a valid endpoint.
-            Uri uri;
+            Uri? uri;
 
-            if (connectionString.TryGetNonRequiredValue(Constants.IngestionExplicitEndpointKey, out string explicitEndpoint))
+            if (connectionString.TryGetNonRequiredValue(endpointKeyName, out string? explicitEndpoint))
             {
                 if (!Uri.TryCreate(explicitEndpoint, UriKind.Absolute, out uri))
                 {
-                    throw new ArgumentException($"The value for {Constants.IngestionExplicitEndpointKey} is invalid. '{explicitEndpoint}'");
+                    throw new ArgumentException($"The value for {endpointKeyName} is invalid. '{explicitEndpoint}'");
                 }
             }
-            else if (connectionString.TryGetNonRequiredValue(Constants.EndpointSuffixKey, out string endpointSuffix))
+            else if (connectionString.TryGetNonRequiredValue(Constants.EndpointSuffixKey, out string? endpointSuffix))
             {
                 var location = connectionString.GetNonRequired(Constants.LocationKey);
-                if (!TryBuildUri(prefix: Constants.IngestionPrefix, suffix: endpointSuffix, location: location, uri: out uri))
+                if (!TryBuildUri(prefix: prefix, suffix: endpointSuffix, location: location, uri: out uri))
                 {
                     throw new ArgumentException($"The value for {Constants.EndpointSuffixKey} is invalid. '{endpointSuffix}'");
                 }
             }
             else
             {
-                return Constants.DefaultIngestionEndpoint;
+                return defaultValue;
             }
 
             return uri.AbsoluteUri;
@@ -100,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <remarks>
         /// Will also attempt to sanitize user input. Won't fail if the user typo-ed an extra period.
         /// </remarks>
-        internal static bool TryBuildUri(string prefix, string suffix, out Uri uri, string location = null)
+        internal static bool TryBuildUri(string prefix, string suffix, [NotNullWhen(true)] out Uri? uri, string? location = null)
         {
             // Location and Suffix are user input fields and need to be sanitized (extra spaces or periods).
             char[] trimPeriod = new char[] { '.' };
@@ -128,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <summary>
         /// This method wraps <see cref="AzureCoreConnectionString.GetNonRequired(string)"/> in a null check.
         /// </summary>
-        internal static bool TryGetNonRequiredValue(this AzureCoreConnectionString connectionString, string key, out string value)
+        internal static bool TryGetNonRequiredValue(this AzureCoreConnectionString connectionString, string key, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string? value)
         {
             value = connectionString.GetNonRequired(key);
             return value != null;

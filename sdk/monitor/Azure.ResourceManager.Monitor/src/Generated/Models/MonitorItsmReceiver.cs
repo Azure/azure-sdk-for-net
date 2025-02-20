@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Itsm receiver. </summary>
     public partial class MonitorItsmReceiver
     {
-        /// <summary> Initializes a new instance of MonitorItsmReceiver. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/>. </summary>
         /// <param name="name"> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="workspaceId"> OMS LA instance identifier. </param>
         /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
         /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
-        /// <param name="region"> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </param>
+        /// <param name="region"> Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/> or <paramref name="ticketConfiguration"/> is null. </exception>
         public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region)
         {
@@ -34,6 +67,28 @@ namespace Azure.ResourceManager.Monitor.Models
             Region = region;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/>. </summary>
+        /// <param name="name"> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="workspaceId"> OMS LA instance identifier. </param>
+        /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
+        /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
+        /// <param name="region"> Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            WorkspaceId = workspaceId;
+            ConnectionId = connectionId;
+            TicketConfiguration = ticketConfiguration;
+            Region = region;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/> for deserialization. </summary>
+        internal MonitorItsmReceiver()
+        {
+        }
+
         /// <summary> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </summary>
         public string Name { get; set; }
         /// <summary> OMS LA instance identifier. </summary>
@@ -42,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ConnectionId { get; set; }
         /// <summary> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </summary>
         public string TicketConfiguration { get; set; }
-        /// <summary> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </summary>
+        /// <summary> Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'. </summary>
         public AzureLocation Region { get; set; }
     }
 }

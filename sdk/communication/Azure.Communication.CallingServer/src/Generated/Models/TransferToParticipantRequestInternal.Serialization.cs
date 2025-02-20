@@ -15,24 +15,32 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant");
+            writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(TransfereeCallerId))
             {
-                writer.WritePropertyName("transfereeCallerId");
+                writer.WritePropertyName("transfereeCallerId"u8);
                 writer.WriteObjectValue(TransfereeCallerId);
             }
             if (Optional.IsDefined(UserToUserInformation))
             {
-                writer.WritePropertyName("userToUserInformation");
+                writer.WritePropertyName("userToUserInformation"u8);
                 writer.WriteStringValue(UserToUserInformation);
             }
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

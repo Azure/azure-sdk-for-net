@@ -15,11 +15,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("@apiVersion");
+                writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
@@ -27,28 +29,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDeviceGetRequest DeserializeOnvifDeviceGetRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointBase endpoint = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("methodName"))
+                if (property.NameEquals("methodName"u8))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@apiVersion"))
+                if (property.NameEquals("@apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new OnvifDeviceGetRequest(methodName, apiVersion.Value, endpoint);
+            return new OnvifDeviceGetRequest(methodName, apiVersion, endpoint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new OnvifDeviceGetRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifDeviceGetRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

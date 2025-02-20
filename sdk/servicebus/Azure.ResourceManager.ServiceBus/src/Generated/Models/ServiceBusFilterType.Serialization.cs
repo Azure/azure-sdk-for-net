@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusFilterType ToServiceBusFilterType(this string value)
         {
-            if (string.Equals(value, "SqlFilter", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusFilterType.SqlFilter;
-            if (string.Equals(value, "CorrelationFilter", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusFilterType.CorrelationFilter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlFilter")) return ServiceBusFilterType.SqlFilter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CorrelationFilter")) return ServiceBusFilterType.CorrelationFilter;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusFilterType value.");
         }
     }

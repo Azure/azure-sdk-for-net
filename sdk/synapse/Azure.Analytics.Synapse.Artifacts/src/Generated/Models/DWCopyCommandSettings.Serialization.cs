@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DefaultValues))
             {
-                writer.WritePropertyName("defaultValues");
+                writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(AdditionalOptions))
             {
-                writer.WritePropertyName("additionalOptions");
+                writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalOptions)
                 {
@@ -45,15 +45,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DWCopyCommandSettings DeserializeDWCopyCommandSettings(JsonElement element)
         {
-            Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
-            Optional<IDictionary<string, string>> additionalOptions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<DWCopyCommandDefaultValue> defaultValues = default;
+            IDictionary<string, string> additionalOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultValues"))
+                if (property.NameEquals("defaultValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DWCopyCommandDefaultValue> array = new List<DWCopyCommandDefaultValue>();
@@ -64,11 +67,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     defaultValues = array;
                     continue;
                 }
-                if (property.NameEquals("additionalOptions"))
+                if (property.NameEquals("additionalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -80,7 +82,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DWCopyCommandSettings(Optional.ToList(defaultValues), Optional.ToDictionary(additionalOptions));
+            return new DWCopyCommandSettings(defaultValues ?? new ChangeTrackingList<DWCopyCommandDefaultValue>(), additionalOptions ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DWCopyCommandSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDWCopyCommandSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DWCopyCommandSettingsConverter : JsonConverter<DWCopyCommandSettings>
@@ -89,6 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DWCopyCommandSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

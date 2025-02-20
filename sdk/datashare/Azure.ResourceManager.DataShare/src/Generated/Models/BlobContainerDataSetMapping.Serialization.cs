@@ -6,82 +6,127 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class BlobContainerDataSetMapping : IUtf8JsonSerializable
+    public partial class BlobContainerDataSetMapping : IUtf8JsonSerializable, IJsonModel<BlobContainerDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobContainerDataSetMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BlobContainerDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WritePropertyName("containerName");
-            writer.WriteStringValue(ContainerName);
-            writer.WritePropertyName("dataSetId");
-            writer.WriteStringValue(DataSetId);
-            writer.WritePropertyName("resourceGroup");
-            writer.WriteStringValue(ResourceGroup);
-            writer.WritePropertyName("storageAccountName");
-            writer.WriteStringValue(StorageAccountName);
-            writer.WritePropertyName("subscriptionId");
-            writer.WriteStringValue(SubscriptionId);
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static BlobContainerDataSetMapping DeserializeBlobContainerDataSetMapping(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobContainerDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobContainerDataSetMapping)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("containerName"u8);
+            writer.WriteStringValue(ContainerName);
+            writer.WritePropertyName("dataSetId"u8);
+            writer.WriteStringValue(DataSetId);
+            if (options.Format != "W" && Optional.IsDefined(DataSetMappingStatus))
+            {
+                writer.WritePropertyName("dataSetMappingStatus"u8);
+                writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WritePropertyName("resourceGroup"u8);
+            writer.WriteStringValue(ResourceGroup);
+            writer.WritePropertyName("storageAccountName"u8);
+            writer.WriteStringValue(StorageAccountName);
+            writer.WritePropertyName("subscriptionId"u8);
+            writer.WriteStringValue(SubscriptionId);
+            writer.WriteEndObject();
+        }
+
+        BlobContainerDataSetMapping IJsonModel<BlobContainerDataSetMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobContainerDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobContainerDataSetMapping)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobContainerDataSetMapping(document.RootElement, options);
+        }
+
+        internal static BlobContainerDataSetMapping DeserializeBlobContainerDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetMappingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string containerName = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
+            DataShareProvisioningState? provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DataSetMappingKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,47 +135,45 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("containerName"))
+                        if (property0.NameEquals("containerName"u8))
                         {
                             containerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSetId"))
+                        if (property0.NameEquals("dataSetId"u8))
                         {
                             dataSetId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("dataSetMappingStatus"))
+                        if (property0.NameEquals("dataSetMappingStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSetMappingStatus = new DataSetMappingStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DataShareProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceGroup"))
+                        if (property0.NameEquals("resourceGroup"u8))
                         {
                             resourceGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountName"))
+                        if (property0.NameEquals("storageAccountName"u8))
                         {
                             storageAccountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionId"))
+                        if (property0.NameEquals("subscriptionId"u8))
                         {
                             subscriptionId = property0.Value.GetString();
                             continue;
@@ -138,8 +181,57 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobContainerDataSetMapping(id, name, type, systemData.Value, kind, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BlobContainerDataSetMapping(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                dataSetMappingStatus,
+                provisioningState,
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
+
+        BinaryData IPersistableModel<BlobContainerDataSetMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobContainerDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobContainerDataSetMapping)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BlobContainerDataSetMapping IPersistableModel<BlobContainerDataSetMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobContainerDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlobContainerDataSetMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobContainerDataSetMapping)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobContainerDataSetMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

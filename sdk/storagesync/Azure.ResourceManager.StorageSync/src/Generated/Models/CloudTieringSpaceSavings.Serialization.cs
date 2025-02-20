@@ -6,85 +6,210 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudTieringSpaceSavings
+    public partial class CloudTieringSpaceSavings : IUtf8JsonSerializable, IJsonModel<CloudTieringSpaceSavings>
     {
-        internal static CloudTieringSpaceSavings DeserializeCloudTieringSpaceSavings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudTieringSpaceSavings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CloudTieringSpaceSavings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> volumeSizeBytes = default;
-            Optional<long> totalSizeCloudBytes = default;
-            Optional<long> cachedSizeBytes = default;
-            Optional<int> spaceSavingsPercent = default;
-            Optional<long> spaceSavingsBytes = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringSpaceSavings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(VolumeSizeInBytes))
+            {
+                writer.WritePropertyName("volumeSizeBytes"u8);
+                writer.WriteNumberValue(VolumeSizeInBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CloudTotalSizeInBytes))
+            {
+                writer.WritePropertyName("totalSizeCloudBytes"u8);
+                writer.WriteNumberValue(CloudTotalSizeInBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CachedSizeInBytes))
+            {
+                writer.WritePropertyName("cachedSizeBytes"u8);
+                writer.WriteNumberValue(CachedSizeInBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsPercent))
+            {
+                writer.WritePropertyName("spaceSavingsPercent"u8);
+                writer.WriteNumberValue(SpaceSavingsPercent.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsInBytes))
+            {
+                writer.WritePropertyName("spaceSavingsBytes"u8);
+                writer.WriteNumberValue(SpaceSavingsInBytes.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        CloudTieringSpaceSavings IJsonModel<CloudTieringSpaceSavings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringSpaceSavings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudTieringSpaceSavings(document.RootElement, options);
+        }
+
+        internal static CloudTieringSpaceSavings DeserializeCloudTieringSpaceSavings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? volumeSizeBytes = default;
+            long? totalSizeCloudBytes = default;
+            long? cachedSizeBytes = default;
+            int? spaceSavingsPercent = default;
+            long? spaceSavingsBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("volumeSizeBytes"))
+                if (property.NameEquals("volumeSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     volumeSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalSizeCloudBytes"))
+                if (property.NameEquals("totalSizeCloudBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalSizeCloudBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cachedSizeBytes"))
+                if (property.NameEquals("cachedSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cachedSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("spaceSavingsPercent"))
+                if (property.NameEquals("spaceSavingsPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spaceSavingsPercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("spaceSavingsBytes"))
+                if (property.NameEquals("spaceSavingsBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spaceSavingsBytes = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudTieringSpaceSavings(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(volumeSizeBytes), Optional.ToNullable(totalSizeCloudBytes), Optional.ToNullable(cachedSizeBytes), Optional.ToNullable(spaceSavingsPercent), Optional.ToNullable(spaceSavingsBytes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudTieringSpaceSavings(
+                lastUpdatedTimestamp,
+                volumeSizeBytes,
+                totalSizeCloudBytes,
+                cachedSizeBytes,
+                spaceSavingsPercent,
+                spaceSavingsBytes,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudTieringSpaceSavings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringSpaceSavings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudTieringSpaceSavings IPersistableModel<CloudTieringSpaceSavings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringSpaceSavings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudTieringSpaceSavings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudTieringSpaceSavings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

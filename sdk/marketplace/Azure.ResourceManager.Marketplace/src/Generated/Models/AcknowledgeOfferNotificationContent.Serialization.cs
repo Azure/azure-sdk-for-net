@@ -5,36 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class AcknowledgeOfferNotificationContent : IUtf8JsonSerializable
+    public partial class AcknowledgeOfferNotificationContent : IUtf8JsonSerializable, IJsonModel<AcknowledgeOfferNotificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcknowledgeOfferNotificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AcknowledgeOfferNotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeOfferNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
             {
-                writer.WritePropertyName("acknowledge");
+                writer.WritePropertyName("acknowledge"u8);
                 writer.WriteBooleanValue(IsAcknowledgeActionFlagEnabled.Value);
             }
             if (Optional.IsDefined(IsDismissActionFlagEnabled))
             {
-                writer.WritePropertyName("dismiss");
+                writer.WritePropertyName("dismiss"u8);
                 writer.WriteBooleanValue(IsDismissActionFlagEnabled.Value);
             }
             if (Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
             {
-                writer.WritePropertyName("removeOffer");
+                writer.WritePropertyName("removeOffer"u8);
                 writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AddPlans))
             {
-                writer.WritePropertyName("addPlans");
+                writer.WritePropertyName("addPlans"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddPlans)
                 {
@@ -44,7 +63,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             if (Optional.IsCollectionDefined(RemovePlans))
             {
-                writer.WritePropertyName("removePlans");
+                writer.WritePropertyName("removePlans"u8);
                 writer.WriteStartArray();
                 foreach (var item in RemovePlans)
                 {
@@ -53,7 +72,163 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        AcknowledgeOfferNotificationContent IJsonModel<AcknowledgeOfferNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeOfferNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcknowledgeOfferNotificationContent(document.RootElement, options);
+        }
+
+        internal static AcknowledgeOfferNotificationContent DeserializeAcknowledgeOfferNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? acknowledge = default;
+            bool? dismiss = default;
+            bool? removeOffer = default;
+            IList<string> addPlans = default;
+            IList<string> removePlans = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("acknowledge"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            acknowledge = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("dismiss"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dismiss = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("removeOffer"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            removeOffer = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("addPlans"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            addPlans = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("removePlans"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            removePlans = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AcknowledgeOfferNotificationContent(
+                acknowledge,
+                dismiss,
+                removeOffer,
+                addPlans ?? new ChangeTrackingList<string>(),
+                removePlans ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AcknowledgeOfferNotificationContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeOfferNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AcknowledgeOfferNotificationContent IPersistableModel<AcknowledgeOfferNotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeOfferNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcknowledgeOfferNotificationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcknowledgeOfferNotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string CreateValue = "Create";
         private const string ReplaceValue = "Replace";
         private const string DeleteValue = "Delete";
+        private const string RecreateValue = "Recreate";
         private const string SystemOperationValue = "SystemOperation";
 
         /// <summary> Create. </summary>
@@ -33,13 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBOperationType Replace { get; } = new CosmosDBOperationType(ReplaceValue);
         /// <summary> Delete. </summary>
         public static CosmosDBOperationType Delete { get; } = new CosmosDBOperationType(DeleteValue);
+        /// <summary> Recreate. </summary>
+        public static CosmosDBOperationType Recreate { get; } = new CosmosDBOperationType(RecreateValue);
         /// <summary> SystemOperation. </summary>
         public static CosmosDBOperationType SystemOperation { get; } = new CosmosDBOperationType(SystemOperationValue);
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBOperationType left, CosmosDBOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBOperationType left, CosmosDBOperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBOperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBOperationType"/>. </summary>
         public static implicit operator CosmosDBOperationType(string value) => new CosmosDBOperationType(value);
 
         /// <inheritdoc />
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

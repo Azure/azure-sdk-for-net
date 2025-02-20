@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string SucceededValue = "Succeeded";
+        private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
         /// <summary> Creating. </summary>
@@ -36,13 +37,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionEndpointProvisioningState Deleting { get; } = new DataCollectionEndpointProvisioningState(DeletingValue);
         /// <summary> Succeeded. </summary>
         public static DataCollectionEndpointProvisioningState Succeeded { get; } = new DataCollectionEndpointProvisioningState(SucceededValue);
+        /// <summary> Canceled. </summary>
+        public static DataCollectionEndpointProvisioningState Canceled { get; } = new DataCollectionEndpointProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static DataCollectionEndpointProvisioningState Failed { get; } = new DataCollectionEndpointProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataCollectionEndpointProvisioningState left, DataCollectionEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionEndpointProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DataCollectionEndpointProvisioningState left, DataCollectionEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataCollectionEndpointProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionEndpointProvisioningState"/>. </summary>
         public static implicit operator DataCollectionEndpointProvisioningState(string value) => new DataCollectionEndpointProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

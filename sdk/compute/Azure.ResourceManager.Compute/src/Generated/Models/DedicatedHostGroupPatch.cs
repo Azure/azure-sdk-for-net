@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -14,11 +14,30 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the dedicated host group that the dedicated host should be assigned to. Only tags may be updated. </summary>
     public partial class DedicatedHostGroupPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of DedicatedHostGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupPatch"/>. </summary>
         public DedicatedHostGroupPatch()
         {
             Zones = new ChangeTrackingList<string>();
             Hosts = new ChangeTrackingList<SubResource>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
+        /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
+        /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
+        /// <param name="instanceView"> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </param>
+        /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
+        /// <param name="additionalCapabilities"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
+        internal DedicatedHostGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, int? platformFaultDomainCount, IReadOnlyList<SubResource> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities) : base(tags, serializedAdditionalRawData)
+        {
+            Zones = zones;
+            PlatformFaultDomainCount = platformFaultDomainCount;
+            Hosts = hosts;
+            InstanceView = instanceView;
+            SupportAutomaticPlacement = supportAutomaticPlacement;
+            AdditionalCapabilities = additionalCapabilities;
         }
 
         /// <summary> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </summary>
@@ -35,11 +54,11 @@ namespace Azure.ResourceManager.Compute.Models
             get => InstanceView?.Hosts;
         }
 
-        /// <summary> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to &apos;false&apos; when not provided. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </summary>
+        /// <summary> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </summary>
         public bool? SupportAutomaticPlacement { get; set; }
-        /// <summary> Enables or disables a capability on the dedicated host group.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        /// <summary> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </summary>
         internal DedicatedHostGroupPropertiesAdditionalCapabilities AdditionalCapabilities { get; set; }
-        /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to &apos;false&apos; when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. &lt;br&gt;&lt;br&gt;NOTE: The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. **Note:** The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
         public bool? UltraSsdEnabled
         {
             get => AdditionalCapabilities is null ? default : AdditionalCapabilities.UltraSsdEnabled;

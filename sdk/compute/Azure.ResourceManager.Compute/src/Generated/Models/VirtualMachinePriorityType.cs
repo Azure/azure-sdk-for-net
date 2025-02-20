@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. &lt;br&gt;&lt;br&gt; &apos;Low&apos; enum will be deprecated in the future, please use &apos;Spot&apos; as the enum to deploy Azure Spot VM/VMSS. </summary>
+    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. 'Low' enum will be deprecated in the future, please use 'Spot' as the enum to deploy Azure Spot VM/VMSS. </summary>
     public readonly partial struct VirtualMachinePriorityType : IEquatable<VirtualMachinePriorityType>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePriorityType"/>. </summary>
         public static implicit operator VirtualMachinePriorityType(string value) => new VirtualMachinePriorityType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

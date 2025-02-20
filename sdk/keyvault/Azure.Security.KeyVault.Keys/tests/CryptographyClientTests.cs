@@ -37,8 +37,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void VerifyDataAsyncArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (byte[])null, new byte[0]));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (Stream)null, new byte[0]));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (byte[])null, Array.Empty<byte>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (Stream)null, Array.Empty<byte>()));
         }
     }
 }

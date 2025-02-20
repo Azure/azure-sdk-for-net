@@ -5,58 +5,145 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineDiskSecurityProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineDiskSecurityProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineDiskSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineDiskSecurityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualMachineDiskSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(SecurityEncryptionType))
             {
-                writer.WritePropertyName("securityEncryptionType");
+                writer.WritePropertyName("securityEncryptionType"u8);
                 writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
             }
             if (Optional.IsDefined(DiskEncryptionSet))
             {
-                writer.WritePropertyName("diskEncryptionSet");
+                writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static VirtualMachineDiskSecurityProfile DeserializeVirtualMachineDiskSecurityProfile(JsonElement element)
+        VirtualMachineDiskSecurityProfile IJsonModel<VirtualMachineDiskSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<SecurityEncryptionType> securityEncryptionType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineDiskSecurityProfile(document.RootElement, options);
+        }
+
+        internal static VirtualMachineDiskSecurityProfile DeserializeVirtualMachineDiskSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SecurityEncryptionType? securityEncryptionType = default;
+            WritableSubResource diskEncryptionSet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("securityEncryptionType"))
+                if (property.NameEquals("securityEncryptionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     securityEncryptionType = new SecurityEncryptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSet"))
+                if (property.NameEquals("diskEncryptionSet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineDiskSecurityProfile(Optional.ToNullable(securityEncryptionType), diskEncryptionSet);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineDiskSecurityProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineDiskSecurityProfile IPersistableModel<VirtualMachineDiskSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineDiskSecurityProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineDiskSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

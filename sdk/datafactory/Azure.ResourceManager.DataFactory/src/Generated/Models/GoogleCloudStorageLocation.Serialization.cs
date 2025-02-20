@@ -6,54 +6,45 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class GoogleCloudStorageLocation : IUtf8JsonSerializable
+    public partial class GoogleCloudStorageLocation : IUtf8JsonSerializable, IJsonModel<GoogleCloudStorageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleCloudStorageLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GoogleCloudStorageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BucketName))
             {
-                writer.WritePropertyName("bucketName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(BucketName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(BucketName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("bucketName"u8);
+                JsonSerializer.Serialize(writer, BucketName);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Version);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
-#endif
-            }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
-            {
-                writer.WritePropertyName("folderPath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(FileName))
-            {
-                writer.WritePropertyName("fileName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("version"u8);
+                JsonSerializer.Serialize(writer, Version);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -61,72 +52,125 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element)
+        GoogleCloudStorageLocation IJsonModel<GoogleCloudStorageLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> bucketName = default;
-            Optional<BinaryData> version = default;
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleCloudStorageLocation(document.RootElement, options);
+        }
+
+        internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> bucketName = default;
+            DataFactoryElement<string> version = default;
             string type = default;
-            Optional<BinaryData> folderPath = default;
-            Optional<BinaryData> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bucketName"))
+                if (property.NameEquals("bucketName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bucketName = BinaryData.FromString(property.Value.GetRawText());
+                    bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    version = BinaryData.FromString(property.Value.GetRawText());
+                    version = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = BinaryData.FromString(property.Value.GetRawText());
+                    folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileName = BinaryData.FromString(property.Value.GetRawText());
+                    fileName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleCloudStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+            return new GoogleCloudStorageLocation(
+                type,
+                folderPath,
+                fileName,
+                additionalProperties,
+                bucketName,
+                version);
         }
+
+        BinaryData IPersistableModel<GoogleCloudStorageLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GoogleCloudStorageLocation IPersistableModel<GoogleCloudStorageLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGoogleCloudStorageLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GoogleCloudStorageLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,16 +14,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static IncidentResultList DeserializeIncidentResultList(JsonElement element)
         {
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextLink = default;
             IReadOnlyList<AnomalyIncident> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<AnomalyIncident> array = new List<AnomalyIncident>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -35,7 +38,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new IncidentResultList(nextLink.Value, value);
+            return new IncidentResultList(nextLink, value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IncidentResultList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIncidentResultList(document.RootElement);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultLanguageCode != null)
                 {
-                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WritePropertyName("defaultLanguageCode"u8);
                     writer.WriteStringValue(DefaultLanguageCode);
                 }
                 else
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(MinimumPrecision))
+            if (Optional.IsDefined(MinPrecision))
             {
-                if (MinimumPrecision != null)
+                if (MinPrecision != null)
                 {
-                    writer.WritePropertyName("minimumPrecision");
-                    writer.WriteNumberValue(MinimumPrecision.Value);
+                    writer.WritePropertyName("minimumPrecision"u8);
+                    writer.WriteNumberValue(MinPrecision.Value);
                 }
                 else
                 {
@@ -42,15 +42,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(MaskingMode))
             {
-                writer.WritePropertyName("maskingMode");
+                writer.WritePropertyName("maskingMode"u8);
                 writer.WriteStringValue(MaskingMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaskingCharacter))
+            if (Optional.IsDefined(Mask))
             {
-                if (MaskingCharacter != null)
+                if (Mask != null)
                 {
-                    writer.WritePropertyName("maskingCharacter");
-                    writer.WriteStringValue(MaskingCharacter);
+                    writer.WritePropertyName("maskingCharacter"u8);
+                    writer.WriteStringValue(Mask);
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (ModelVersion != null)
                 {
-                    writer.WritePropertyName("modelVersion");
+                    writer.WritePropertyName("modelVersion"u8);
                     writer.WriteStringValue(ModelVersion);
                 }
                 else
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
-                writer.WritePropertyName("piiCategories");
+                writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
                 foreach (var item in PiiCategories)
                 {
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (Domain != null)
                 {
-                    writer.WritePropertyName("domain");
+                    writer.WritePropertyName("domain"u8);
                     writer.WriteStringValue(Domain);
                 }
                 else
@@ -91,35 +91,35 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("domain");
                 }
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
+            writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -127,22 +127,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PiiDetectionSkill DeserializePiiDetectionSkill(JsonElement element)
         {
-            Optional<string> defaultLanguageCode = default;
-            Optional<double?> minimumPrecision = default;
-            Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
-            Optional<string> maskingCharacter = default;
-            Optional<string> modelVersion = default;
-            Optional<IList<string>> piiCategories = default;
-            Optional<string> domain = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string defaultLanguageCode = default;
+            double? minimumPrecision = default;
+            PiiDetectionSkillMaskingMode? maskingMode = default;
+            string maskingCharacter = default;
+            string modelVersion = default;
+            IList<string> piiCategories = default;
+            string domain = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultLanguageCode"))
+                if (property.NameEquals("defaultLanguageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +156,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultLanguageCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minimumPrecision"))
+                if (property.NameEquals("minimumPrecision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,17 +166,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     minimumPrecision = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maskingMode"))
+                if (property.NameEquals("maskingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maskingMode = new PiiDetectionSkillMaskingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maskingCharacter"))
+                if (property.NameEquals("maskingCharacter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +185,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maskingCharacter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,11 +195,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("piiCategories"))
+                if (property.NameEquals("piiCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -207,7 +209,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     piiCategories = array;
                     continue;
                 }
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,27 +219,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     domain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     context = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -247,7 +249,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -258,7 +260,36 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultLanguageCode,
+                minimumPrecision,
+                maskingMode,
+                maskingCharacter,
+                modelVersion,
+                piiCategories ?? new ChangeTrackingList<string>(),
+                domain);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PiiDetectionSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePiiDetectionSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         protected ResourceMoverManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected ResourceMoverManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -43,9 +45,9 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         protected async Task<MoverResourceSetResource> CreateMoverResourceSet(ResourceGroupResource rg, string moverResourceSetName)
         {
-            MoverResourceSetData input = new MoverResourceSetData(AzureLocation.EastUS2)
+            MoverResourceSetData input = new MoverResourceSetData("eastus2")
             {
-                Properties = new MoverResourceSetProperties(AzureLocation.EastUS, AzureLocation.EastUS2),
+                Properties = new MoverResourceSetProperties() { SourceLocation = AzureLocation.EastUS, TargetLocation = AzureLocation.EastUS2 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             var lro = await rg.GetMoverResourceSets().CreateOrUpdateAsync(WaitUntil.Completed, moverResourceSetName, input);
@@ -71,14 +73,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             return lro.Value;
         }
 
-        protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName)
+        protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName, string targetVnetName)
         {
-            string targetVnetName = Recording.GenerateAssetName("targetVnet-");
             MoverResourceData input = new MoverResourceData
             {
                 Properties = new MoverResourceProperties(vnetId)
                 {
-                    ResourceSettings = new MoverVirtualNetworkResourceSettings(targetVnetName)
+                    ResourceSettings = new MoverVirtualNetworkResourceSettings() { TargetResourceName = targetVnetName }
                 }
             };
             var lro = await moverResourceSet.GetMoverResources().CreateOrUpdateAsync(WaitUntil.Completed, moverResourceName, input);

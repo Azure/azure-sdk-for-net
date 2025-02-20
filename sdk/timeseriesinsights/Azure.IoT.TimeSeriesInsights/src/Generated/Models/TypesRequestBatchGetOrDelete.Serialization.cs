@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TypeIds))
             {
-                writer.WritePropertyName("typeIds");
+                writer.WritePropertyName("typeIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in TypeIds)
                 {
@@ -27,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             if (Optional.IsCollectionDefined(Names))
             {
-                writer.WritePropertyName("names");
+                writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
                 foreach (var item in Names)
                 {
@@ -36,6 +36,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

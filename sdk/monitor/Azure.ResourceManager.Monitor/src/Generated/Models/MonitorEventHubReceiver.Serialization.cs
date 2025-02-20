@@ -6,89 +6,194 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorEventHubReceiver : IUtf8JsonSerializable
+    public partial class MonitorEventHubReceiver : IUtf8JsonSerializable, IJsonModel<MonitorEventHubReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorEventHubReceiver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MonitorEventHubReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("eventHubNameSpace");
+            writer.WritePropertyName("eventHubNameSpace"u8);
             writer.WriteStringValue(EventHubNameSpace);
-            writer.WritePropertyName("eventHubName");
+            writer.WritePropertyName("eventHubName"u8);
             writer.WriteStringValue(EventHubName);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
-                writer.WritePropertyName("useCommonAlertSchema");
+                writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            writer.WritePropertyName("subscriptionId");
+            writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
-            writer.WriteEndObject();
+            if (Optional.IsDefined(ManagedIdentity))
+            {
+                writer.WritePropertyName("managedIdentity"u8);
+                writer.WriteStringValue(ManagedIdentity);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MonitorEventHubReceiver DeserializeMonitorEventHubReceiver(JsonElement element)
+        MonitorEventHubReceiver IJsonModel<MonitorEventHubReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorEventHubReceiver(document.RootElement, options);
+        }
+
+        internal static MonitorEventHubReceiver DeserializeMonitorEventHubReceiver(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string eventHubNameSpace = default;
             string eventHubName = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<Guid> tenantId = default;
+            bool? useCommonAlertSchema = default;
+            Guid? tenantId = default;
             string subscriptionId = default;
+            string managedIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventHubNameSpace"))
+                if (property.NameEquals("eventHubNameSpace"u8))
                 {
                     eventHubNameSpace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventHubName"))
+                if (property.NameEquals("eventHubName"u8))
                 {
                     eventHubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useCommonAlertSchema"))
+                if (property.NameEquals("useCommonAlertSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("managedIdentity"u8))
+                {
+                    managedIdentity = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorEventHubReceiver(
+                name,
+                eventHubNameSpace,
+                eventHubName,
+                useCommonAlertSchema,
+                tenantId,
+                subscriptionId,
+                managedIdentity,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorEventHubReceiver>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorEventHubReceiver IPersistableModel<MonitorEventHubReceiver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorEventHubReceiver(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorEventHubReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

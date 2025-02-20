@@ -8,12 +8,18 @@ azure-arm: true
 csharp: true
 library-name: HDInsight
 namespace: Azure.ResourceManager.HDInsight
-require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/hdinsight/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1c47c885e90f2df94d6f2a70c9caeaf9d258e485/specification/hdinsight/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+models-to-treat-empty-string-as-null:
+- HDInsightStorageAccountInfo
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -23,7 +29,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'privateIPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -134,6 +140,7 @@ rename-mapping:
   UpdateClusterIdentityCertificateParameters: HDInsightClusterUpdateIdentityCertificateContent
   PrivateLink: HDInsightPrivateLinkState
   NetworkProperties: HDInsightClusterNetworkProperties
+  IpTag: HDInsightClusterIPTag
   LinuxOperatingSystemProfile: HDInsightLinuxOSProfile
   OsProfile.linuxOperatingSystemProfile: LinuxProfile
   HostInfo: HDInsightClusterHostInfo

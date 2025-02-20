@@ -18,6 +18,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: sqlmanagement
+    BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Sql

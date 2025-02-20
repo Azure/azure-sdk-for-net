@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -14,66 +13,80 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static TextAnswer DeserializeTextAnswer(JsonElement element)
         {
-            Optional<string> answer = default;
-            Optional<double> confidenceScore = default;
-            Optional<string> id = default;
-            Optional<AnswerSpan> answerSpan = default;
-            Optional<int> offset = default;
-            Optional<int> length = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string answer = default;
+            double? confidenceScore = default;
+            string id = default;
+            AnswerSpan answerSpan = default;
+            int? offset = default;
+            int? length = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("answer"))
+                if (property.NameEquals("answer"u8))
                 {
                     answer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("answerSpan"))
+                if (property.NameEquals("answerSpan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     length = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new TextAnswer(answer.Value, Optional.ToNullable(confidenceScore), id.Value, answerSpan.Value, Optional.ToNullable(offset), Optional.ToNullable(length));
+            return new TextAnswer(
+                answer,
+                confidenceScore,
+                id,
+                answerSpan,
+                offset,
+                length);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextAnswer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextAnswer(document.RootElement);
         }
     }
 }

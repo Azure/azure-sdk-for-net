@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            writer.WritePropertyName("roles");
-            writer.WriteObjectValue(Roles);
+            writer.WritePropertyName("roles"u8);
+            writer.WriteObjectValue<object>(Roles);
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
             }
             writer.WriteEndObject();
@@ -34,34 +34,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptAction DeserializeScriptAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string uri = default;
             object roles = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roles"))
+                if (property.NameEquals("roles"u8))
                 {
                     roles = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     parameters = property.Value.GetString();
                     continue;
                 }
             }
-            return new ScriptAction(name, uri, roles, parameters.Value);
+            return new ScriptAction(name, uri, roles, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScriptAction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScriptAction(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ScriptActionConverter : JsonConverter<ScriptAction>
@@ -70,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ScriptAction Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

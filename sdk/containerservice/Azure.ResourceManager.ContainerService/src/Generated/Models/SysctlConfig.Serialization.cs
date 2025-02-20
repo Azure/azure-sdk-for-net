@@ -5,468 +5,1006 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class SysctlConfig : IUtf8JsonSerializable
+    public partial class SysctlConfig : IUtf8JsonSerializable, IJsonModel<SysctlConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SysctlConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SysctlConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SysctlConfig)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(NetCoreSomaxconn))
             {
-                writer.WritePropertyName("netCoreSomaxconn");
+                writer.WritePropertyName("netCoreSomaxconn"u8);
                 writer.WriteNumberValue(NetCoreSomaxconn.Value);
             }
             if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
             {
-                writer.WritePropertyName("netCoreNetdevMaxBacklog");
+                writer.WritePropertyName("netCoreNetdevMaxBacklog"u8);
                 writer.WriteNumberValue(NetCoreNetdevMaxBacklog.Value);
             }
             if (Optional.IsDefined(NetCoreRmemDefault))
             {
-                writer.WritePropertyName("netCoreRmemDefault");
+                writer.WritePropertyName("netCoreRmemDefault"u8);
                 writer.WriteNumberValue(NetCoreRmemDefault.Value);
             }
             if (Optional.IsDefined(NetCoreRmemMax))
             {
-                writer.WritePropertyName("netCoreRmemMax");
+                writer.WritePropertyName("netCoreRmemMax"u8);
                 writer.WriteNumberValue(NetCoreRmemMax.Value);
             }
             if (Optional.IsDefined(NetCoreWmemDefault))
             {
-                writer.WritePropertyName("netCoreWmemDefault");
+                writer.WritePropertyName("netCoreWmemDefault"u8);
                 writer.WriteNumberValue(NetCoreWmemDefault.Value);
             }
             if (Optional.IsDefined(NetCoreWmemMax))
             {
-                writer.WritePropertyName("netCoreWmemMax");
+                writer.WritePropertyName("netCoreWmemMax"u8);
                 writer.WriteNumberValue(NetCoreWmemMax.Value);
             }
             if (Optional.IsDefined(NetCoreOptmemMax))
             {
-                writer.WritePropertyName("netCoreOptmemMax");
+                writer.WritePropertyName("netCoreOptmemMax"u8);
                 writer.WriteNumberValue(NetCoreOptmemMax.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
             {
-                writer.WritePropertyName("netIpv4TcpMaxSynBacklog");
+                writer.WritePropertyName("netIpv4TcpMaxSynBacklog"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxSynBacklog.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
             {
-                writer.WritePropertyName("netIpv4TcpMaxTwBuckets");
+                writer.WritePropertyName("netIpv4TcpMaxTwBuckets"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxTwBuckets.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpFinTimeout))
             {
-                writer.WritePropertyName("netIpv4TcpFinTimeout");
+                writer.WritePropertyName("netIpv4TcpFinTimeout"u8);
                 writer.WriteNumberValue(NetIPv4TcpFinTimeout.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
             {
-                writer.WritePropertyName("netIpv4TcpKeepaliveTime");
+                writer.WritePropertyName("netIpv4TcpKeepaliveTime"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveTime.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
             {
-                writer.WritePropertyName("netIpv4TcpKeepaliveProbes");
+                writer.WritePropertyName("netIpv4TcpKeepaliveProbes"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveProbes.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
             {
-                writer.WritePropertyName("netIpv4TcpkeepaliveIntvl");
+                writer.WritePropertyName("netIpv4TcpkeepaliveIntvl"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveIntvl.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpTwReuse))
             {
-                writer.WritePropertyName("netIpv4TcpTwReuse");
+                writer.WritePropertyName("netIpv4TcpTwReuse"u8);
                 writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
             }
             if (Optional.IsDefined(NetIPv4IPLocalPortRange))
             {
-                writer.WritePropertyName("netIpv4IpLocalPortRange");
+                writer.WritePropertyName("netIpv4IpLocalPortRange"u8);
                 writer.WriteStringValue(NetIPv4IPLocalPortRange);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
             {
-                writer.WritePropertyName("netIpv4NeighDefaultGcThresh1");
+                writer.WritePropertyName("netIpv4NeighDefaultGcThresh1"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh1.Value);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
             {
-                writer.WritePropertyName("netIpv4NeighDefaultGcThresh2");
+                writer.WritePropertyName("netIpv4NeighDefaultGcThresh2"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh2.Value);
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
             {
-                writer.WritePropertyName("netIpv4NeighDefaultGcThresh3");
+                writer.WritePropertyName("netIpv4NeighDefaultGcThresh3"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh3.Value);
             }
             if (Optional.IsDefined(NetNetfilterNfConntrackMax))
             {
-                writer.WritePropertyName("netNetfilterNfConntrackMax");
+                writer.WritePropertyName("netNetfilterNfConntrackMax"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackMax.Value);
             }
             if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
             {
-                writer.WritePropertyName("netNetfilterNfConntrackBuckets");
+                writer.WritePropertyName("netNetfilterNfConntrackBuckets"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackBuckets.Value);
             }
             if (Optional.IsDefined(FsInotifyMaxUserWatches))
             {
-                writer.WritePropertyName("fsInotifyMaxUserWatches");
+                writer.WritePropertyName("fsInotifyMaxUserWatches"u8);
                 writer.WriteNumberValue(FsInotifyMaxUserWatches.Value);
             }
             if (Optional.IsDefined(FsFileMax))
             {
-                writer.WritePropertyName("fsFileMax");
+                writer.WritePropertyName("fsFileMax"u8);
                 writer.WriteNumberValue(FsFileMax.Value);
             }
             if (Optional.IsDefined(FsAioMaxNr))
             {
-                writer.WritePropertyName("fsAioMaxNr");
+                writer.WritePropertyName("fsAioMaxNr"u8);
                 writer.WriteNumberValue(FsAioMaxNr.Value);
             }
             if (Optional.IsDefined(FsNrOpen))
             {
-                writer.WritePropertyName("fsNrOpen");
+                writer.WritePropertyName("fsNrOpen"u8);
                 writer.WriteNumberValue(FsNrOpen.Value);
             }
             if (Optional.IsDefined(KernelThreadsMax))
             {
-                writer.WritePropertyName("kernelThreadsMax");
+                writer.WritePropertyName("kernelThreadsMax"u8);
                 writer.WriteNumberValue(KernelThreadsMax.Value);
             }
             if (Optional.IsDefined(VmMaxMapCount))
             {
-                writer.WritePropertyName("vmMaxMapCount");
+                writer.WritePropertyName("vmMaxMapCount"u8);
                 writer.WriteNumberValue(VmMaxMapCount.Value);
             }
             if (Optional.IsDefined(VmSwappiness))
             {
-                writer.WritePropertyName("vmSwappiness");
+                writer.WritePropertyName("vmSwappiness"u8);
                 writer.WriteNumberValue(VmSwappiness.Value);
             }
             if (Optional.IsDefined(VmVfsCachePressure))
             {
-                writer.WritePropertyName("vmVfsCachePressure");
+                writer.WritePropertyName("vmVfsCachePressure"u8);
                 writer.WriteNumberValue(VmVfsCachePressure.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SysctlConfig DeserializeSysctlConfig(JsonElement element)
+        SysctlConfig IJsonModel<SysctlConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<int> netCoreSomaxconn = default;
-            Optional<int> netCoreNetdevMaxBacklog = default;
-            Optional<int> netCoreRmemDefault = default;
-            Optional<int> netCoreRmemMax = default;
-            Optional<int> netCoreWmemDefault = default;
-            Optional<int> netCoreWmemMax = default;
-            Optional<int> netCoreOptmemMax = default;
-            Optional<int> netIPv4TcpMaxSynBacklog = default;
-            Optional<int> netIPv4TcpMaxTwBuckets = default;
-            Optional<int> netIPv4TcpFinTimeout = default;
-            Optional<int> netIPv4TcpKeepaliveTime = default;
-            Optional<int> netIPv4TcpKeepaliveProbes = default;
-            Optional<int> netIPv4TcpKeepaliveIntvl = default;
-            Optional<bool> netIPv4TcpTwReuse = default;
-            Optional<string> netIPv4IPLocalPortRange = default;
-            Optional<int> netIPv4NeighDefaultGcThresh1 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh2 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh3 = default;
-            Optional<int> netNetfilterNfConntrackMax = default;
-            Optional<int> netNetfilterNfConntrackBuckets = default;
-            Optional<int> fsInotifyMaxUserWatches = default;
-            Optional<int> fsFileMax = default;
-            Optional<int> fsAioMaxNr = default;
-            Optional<int> fsNrOpen = default;
-            Optional<int> kernelThreadsMax = default;
-            Optional<int> vmMaxMapCount = default;
-            Optional<int> vmSwappiness = default;
-            Optional<int> vmVfsCachePressure = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SysctlConfig)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSysctlConfig(document.RootElement, options);
+        }
+
+        internal static SysctlConfig DeserializeSysctlConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? netCoreSomaxconn = default;
+            int? netCoreNetdevMaxBacklog = default;
+            int? netCoreRmemDefault = default;
+            int? netCoreRmemMax = default;
+            int? netCoreWmemDefault = default;
+            int? netCoreWmemMax = default;
+            int? netCoreOptmemMax = default;
+            int? netIPv4TcpMaxSynBacklog = default;
+            int? netIPv4TcpMaxTwBuckets = default;
+            int? netIPv4TcpFinTimeout = default;
+            int? netIPv4TcpKeepaliveTime = default;
+            int? netIPv4TcpKeepaliveProbes = default;
+            int? netIPv4TcpKeepaliveIntvl = default;
+            bool? netIPv4TcpTwReuse = default;
+            string netIPv4IPLocalPortRange = default;
+            int? netIPv4NeighDefaultGcThresh1 = default;
+            int? netIPv4NeighDefaultGcThresh2 = default;
+            int? netIPv4NeighDefaultGcThresh3 = default;
+            int? netNetfilterNfConntrackMax = default;
+            int? netNetfilterNfConntrackBuckets = default;
+            int? fsInotifyMaxUserWatches = default;
+            int? fsFileMax = default;
+            int? fsAioMaxNr = default;
+            int? fsNrOpen = default;
+            int? kernelThreadsMax = default;
+            int? vmMaxMapCount = default;
+            int? vmSwappiness = default;
+            int? vmVfsCachePressure = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("netCoreSomaxconn"))
+                if (property.NameEquals("netCoreSomaxconn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreSomaxconn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreNetdevMaxBacklog"))
+                if (property.NameEquals("netCoreNetdevMaxBacklog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreNetdevMaxBacklog = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreRmemDefault"))
+                if (property.NameEquals("netCoreRmemDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreRmemDefault = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreRmemMax"))
+                if (property.NameEquals("netCoreRmemMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreRmemMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreWmemDefault"))
+                if (property.NameEquals("netCoreWmemDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreWmemDefault = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreWmemMax"))
+                if (property.NameEquals("netCoreWmemMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreWmemMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netCoreOptmemMax"))
+                if (property.NameEquals("netCoreOptmemMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netCoreOptmemMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpMaxSynBacklog"))
+                if (property.NameEquals("netIpv4TcpMaxSynBacklog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpMaxSynBacklog = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpMaxTwBuckets"))
+                if (property.NameEquals("netIpv4TcpMaxTwBuckets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpMaxTwBuckets = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpFinTimeout"))
+                if (property.NameEquals("netIpv4TcpFinTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpFinTimeout = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpKeepaliveTime"))
+                if (property.NameEquals("netIpv4TcpKeepaliveTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpKeepaliveTime = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpKeepaliveProbes"))
+                if (property.NameEquals("netIpv4TcpKeepaliveProbes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpKeepaliveProbes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpkeepaliveIntvl"))
+                if (property.NameEquals("netIpv4TcpkeepaliveIntvl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpKeepaliveIntvl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4TcpTwReuse"))
+                if (property.NameEquals("netIpv4TcpTwReuse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4TcpTwReuse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("netIpv4IpLocalPortRange"))
+                if (property.NameEquals("netIpv4IpLocalPortRange"u8))
                 {
                     netIPv4IPLocalPortRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("netIpv4NeighDefaultGcThresh1"))
+                if (property.NameEquals("netIpv4NeighDefaultGcThresh1"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4NeighDefaultGcThresh1 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4NeighDefaultGcThresh2"))
+                if (property.NameEquals("netIpv4NeighDefaultGcThresh2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4NeighDefaultGcThresh2 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netIpv4NeighDefaultGcThresh3"))
+                if (property.NameEquals("netIpv4NeighDefaultGcThresh3"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netIPv4NeighDefaultGcThresh3 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netNetfilterNfConntrackMax"))
+                if (property.NameEquals("netNetfilterNfConntrackMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netNetfilterNfConntrackMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("netNetfilterNfConntrackBuckets"))
+                if (property.NameEquals("netNetfilterNfConntrackBuckets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netNetfilterNfConntrackBuckets = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsInotifyMaxUserWatches"))
+                if (property.NameEquals("fsInotifyMaxUserWatches"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fsInotifyMaxUserWatches = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsFileMax"))
+                if (property.NameEquals("fsFileMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fsFileMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsAioMaxNr"))
+                if (property.NameEquals("fsAioMaxNr"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fsAioMaxNr = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fsNrOpen"))
+                if (property.NameEquals("fsNrOpen"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fsNrOpen = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kernelThreadsMax"))
+                if (property.NameEquals("kernelThreadsMax"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kernelThreadsMax = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmMaxMapCount"))
+                if (property.NameEquals("vmMaxMapCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmMaxMapCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmSwappiness"))
+                if (property.NameEquals("vmSwappiness"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmSwappiness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmVfsCachePressure"))
+                if (property.NameEquals("vmVfsCachePressure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmVfsCachePressure = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SysctlConfig(
+                netCoreSomaxconn,
+                netCoreNetdevMaxBacklog,
+                netCoreRmemDefault,
+                netCoreRmemMax,
+                netCoreWmemDefault,
+                netCoreWmemMax,
+                netCoreOptmemMax,
+                netIPv4TcpMaxSynBacklog,
+                netIPv4TcpMaxTwBuckets,
+                netIPv4TcpFinTimeout,
+                netIPv4TcpKeepaliveTime,
+                netIPv4TcpKeepaliveProbes,
+                netIPv4TcpKeepaliveIntvl,
+                netIPv4TcpTwReuse,
+                netIPv4IPLocalPortRange,
+                netIPv4NeighDefaultGcThresh1,
+                netIPv4NeighDefaultGcThresh2,
+                netIPv4NeighDefaultGcThresh3,
+                netNetfilterNfConntrackMax,
+                netNetfilterNfConntrackBuckets,
+                fsInotifyMaxUserWatches,
+                fsFileMax,
+                fsAioMaxNr,
+                fsNrOpen,
+                kernelThreadsMax,
+                vmMaxMapCount,
+                vmSwappiness,
+                vmVfsCachePressure,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreSomaxconn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreSomaxconn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreSomaxconn))
+                {
+                    builder.Append("  netCoreSomaxconn: ");
+                    builder.AppendLine($"{NetCoreSomaxconn.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreNetdevMaxBacklog), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreNetdevMaxBacklog: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
+                {
+                    builder.Append("  netCoreNetdevMaxBacklog: ");
+                    builder.AppendLine($"{NetCoreNetdevMaxBacklog.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreRmemDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreRmemDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreRmemDefault))
+                {
+                    builder.Append("  netCoreRmemDefault: ");
+                    builder.AppendLine($"{NetCoreRmemDefault.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreRmemMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreRmemMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreRmemMax))
+                {
+                    builder.Append("  netCoreRmemMax: ");
+                    builder.AppendLine($"{NetCoreRmemMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreWmemDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreWmemDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreWmemDefault))
+                {
+                    builder.Append("  netCoreWmemDefault: ");
+                    builder.AppendLine($"{NetCoreWmemDefault.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreWmemMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreWmemMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreWmemMax))
+                {
+                    builder.Append("  netCoreWmemMax: ");
+                    builder.AppendLine($"{NetCoreWmemMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreOptmemMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreOptmemMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreOptmemMax))
+                {
+                    builder.Append("  netCoreOptmemMax: ");
+                    builder.AppendLine($"{NetCoreOptmemMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpMaxSynBacklog), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpMaxSynBacklog: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
+                {
+                    builder.Append("  netIpv4TcpMaxSynBacklog: ");
+                    builder.AppendLine($"{NetIPv4TcpMaxSynBacklog.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpMaxTwBuckets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpMaxTwBuckets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
+                {
+                    builder.Append("  netIpv4TcpMaxTwBuckets: ");
+                    builder.AppendLine($"{NetIPv4TcpMaxTwBuckets.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpFinTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpFinTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpFinTimeout))
+                {
+                    builder.Append("  netIpv4TcpFinTimeout: ");
+                    builder.AppendLine($"{NetIPv4TcpFinTimeout.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpKeepaliveTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpKeepaliveTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
+                {
+                    builder.Append("  netIpv4TcpKeepaliveTime: ");
+                    builder.AppendLine($"{NetIPv4TcpKeepaliveTime.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpKeepaliveProbes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpKeepaliveProbes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
+                {
+                    builder.Append("  netIpv4TcpKeepaliveProbes: ");
+                    builder.AppendLine($"{NetIPv4TcpKeepaliveProbes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpKeepaliveIntvl), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpkeepaliveIntvl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
+                {
+                    builder.Append("  netIpv4TcpkeepaliveIntvl: ");
+                    builder.AppendLine($"{NetIPv4TcpKeepaliveIntvl.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpTwReuse), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpTwReuse: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpTwReuse))
+                {
+                    builder.Append("  netIpv4TcpTwReuse: ");
+                    var boolValue = NetIPv4TcpTwReuse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4IPLocalPortRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4IpLocalPortRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4IPLocalPortRange))
+                {
+                    builder.Append("  netIpv4IpLocalPortRange: ");
+                    if (NetIPv4IPLocalPortRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetIPv4IPLocalPortRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetIPv4IPLocalPortRange}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4NeighDefaultGcThresh1), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh1: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
+                {
+                    builder.Append("  netIpv4NeighDefaultGcThresh1: ");
+                    builder.AppendLine($"{NetIPv4NeighDefaultGcThresh1.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4NeighDefaultGcThresh2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
+                {
+                    builder.Append("  netIpv4NeighDefaultGcThresh2: ");
+                    builder.AppendLine($"{NetIPv4NeighDefaultGcThresh2.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4NeighDefaultGcThresh3), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh3: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
+                {
+                    builder.Append("  netIpv4NeighDefaultGcThresh3: ");
+                    builder.AppendLine($"{NetIPv4NeighDefaultGcThresh3.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetNetfilterNfConntrackMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netNetfilterNfConntrackMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetNetfilterNfConntrackMax))
+                {
+                    builder.Append("  netNetfilterNfConntrackMax: ");
+                    builder.AppendLine($"{NetNetfilterNfConntrackMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetNetfilterNfConntrackBuckets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netNetfilterNfConntrackBuckets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
+                {
+                    builder.Append("  netNetfilterNfConntrackBuckets: ");
+                    builder.AppendLine($"{NetNetfilterNfConntrackBuckets.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsInotifyMaxUserWatches), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsInotifyMaxUserWatches: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsInotifyMaxUserWatches))
+                {
+                    builder.Append("  fsInotifyMaxUserWatches: ");
+                    builder.AppendLine($"{FsInotifyMaxUserWatches.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsFileMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsFileMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsFileMax))
+                {
+                    builder.Append("  fsFileMax: ");
+                    builder.AppendLine($"{FsFileMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsAioMaxNr), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsAioMaxNr: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsAioMaxNr))
+                {
+                    builder.Append("  fsAioMaxNr: ");
+                    builder.AppendLine($"{FsAioMaxNr.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsNrOpen), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsNrOpen: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsNrOpen))
+                {
+                    builder.Append("  fsNrOpen: ");
+                    builder.AppendLine($"{FsNrOpen.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelThreadsMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kernelThreadsMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KernelThreadsMax))
+                {
+                    builder.Append("  kernelThreadsMax: ");
+                    builder.AppendLine($"{KernelThreadsMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmMaxMapCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmMaxMapCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmMaxMapCount))
+                {
+                    builder.Append("  vmMaxMapCount: ");
+                    builder.AppendLine($"{VmMaxMapCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmSwappiness), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmSwappiness: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmSwappiness))
+                {
+                    builder.Append("  vmSwappiness: ");
+                    builder.AppendLine($"{VmSwappiness.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmVfsCachePressure), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmVfsCachePressure: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmVfsCachePressure))
+                {
+                    builder.Append("  vmVfsCachePressure: ");
+                    builder.AppendLine($"{VmVfsCachePressure.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SysctlConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SysctlConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SysctlConfig IPersistableModel<SysctlConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSysctlConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SysctlConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SysctlConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

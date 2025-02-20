@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator ==(TimeSeriesDatabaseConnectionState left, TimeSeriesDatabaseConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeSeriesDatabaseConnectionState"/> values are not the same. </summary>
         public static bool operator !=(TimeSeriesDatabaseConnectionState left, TimeSeriesDatabaseConnectionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TimeSeriesDatabaseConnectionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TimeSeriesDatabaseConnectionState"/>. </summary>
         public static implicit operator TimeSeriesDatabaseConnectionState(string value) => new TimeSeriesDatabaseConnectionState(value);
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,34 +14,46 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyAlert DeserializeAnomalyAlert(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string alertId = default;
             DateTimeOffset timestamp = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset modifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertId"))
+                if (property.NameEquals("alertId"u8))
                 {
                     alertId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modifiedTime"))
+                if (property.NameEquals("modifiedTime"u8))
                 {
                     modifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
             return new AnomalyAlert(alertId, timestamp, createdTime, modifiedTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyAlert FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyAlert(document.RootElement);
         }
     }
 }

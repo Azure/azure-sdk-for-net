@@ -5,137 +5,227 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerProbe : IUtf8JsonSerializable
+    public partial class ContainerProbe : IUtf8JsonSerializable, IJsonModel<ContainerProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Exec))
             {
-                writer.WritePropertyName("exec");
-                writer.WriteObjectValue(Exec);
+                writer.WritePropertyName("exec"u8);
+                writer.WriteObjectValue(Exec, options);
             }
             if (Optional.IsDefined(HttpGet))
             {
-                writer.WritePropertyName("httpGet");
-                writer.WriteObjectValue(HttpGet);
+                writer.WritePropertyName("httpGet"u8);
+                writer.WriteObjectValue(HttpGet, options);
             }
             if (Optional.IsDefined(InitialDelayInSeconds))
             {
-                writer.WritePropertyName("initialDelaySeconds");
+                writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
             if (Optional.IsDefined(PeriodInSeconds))
             {
-                writer.WritePropertyName("periodSeconds");
+                writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
             if (Optional.IsDefined(FailureThreshold))
             {
-                writer.WritePropertyName("failureThreshold");
+                writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
-                writer.WritePropertyName("successThreshold");
+                writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutSeconds");
+                writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ContainerProbe DeserializeContainerProbe(JsonElement element)
+        ContainerProbe IJsonModel<ContainerProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ContainerExec> exec = default;
-            Optional<ContainerHttpGet> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
-            Optional<int> timeoutSeconds = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerProbe(document.RootElement, options);
+        }
+
+        internal static ContainerProbe DeserializeContainerProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ContainerExec exec = default;
+            ContainerHttpGet httpGet = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
+            int? timeoutSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exec"))
+                if (property.NameEquals("exec"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exec = ContainerExec.DeserializeContainerExec(property.Value);
+                    exec = ContainerExec.DeserializeContainerExec(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("httpGet"))
+                if (property.NameEquals("httpGet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value);
+                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("initialDelaySeconds"))
+                if (property.NameEquals("initialDelaySeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialDelaySeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("periodSeconds"))
+                if (property.NameEquals("periodSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     periodSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failureThreshold"))
+                if (property.NameEquals("failureThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failureThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("successThreshold"))
+                if (property.NameEquals("successThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeoutSeconds"))
+                if (property.NameEquals("timeoutSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeoutSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerProbe(
+                exec,
+                httpGet,
+                initialDelaySeconds,
+                periodSeconds,
+                failureThreshold,
+                successThreshold,
+                timeoutSeconds,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerProbe>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerProbe)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerProbe IPersistableModel<ContainerProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerProbe(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerProbe)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerProbe>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

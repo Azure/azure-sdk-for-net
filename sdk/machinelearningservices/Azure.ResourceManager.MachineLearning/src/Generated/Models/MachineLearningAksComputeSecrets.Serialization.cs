@@ -5,32 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAksComputeSecrets
+    public partial class MachineLearningAksComputeSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningAksComputeSecrets>
     {
-        internal static MachineLearningAksComputeSecrets DeserializeMachineLearningAksComputeSecrets(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAksComputeSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningAksComputeSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> userKubeConfig = default;
-            Optional<string> adminKubeConfig = default;
-            Optional<string> imagePullSecretName = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAksComputeSecrets)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(UserKubeConfig))
+            {
+                writer.WritePropertyName("userKubeConfig"u8);
+                writer.WriteStringValue(UserKubeConfig);
+            }
+            if (Optional.IsDefined(AdminKubeConfig))
+            {
+                writer.WritePropertyName("adminKubeConfig"u8);
+                writer.WriteStringValue(AdminKubeConfig);
+            }
+            if (Optional.IsDefined(ImagePullSecretName))
+            {
+                if (ImagePullSecretName != null)
+                {
+                    writer.WritePropertyName("imagePullSecretName"u8);
+                    writer.WriteStringValue(ImagePullSecretName);
+                }
+                else
+                {
+                    writer.WriteNull("imagePullSecretName");
+                }
+            }
+        }
+
+        MachineLearningAksComputeSecrets IJsonModel<MachineLearningAksComputeSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAksComputeSecrets)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAksComputeSecrets(document.RootElement, options);
+        }
+
+        internal static MachineLearningAksComputeSecrets DeserializeMachineLearningAksComputeSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string userKubeConfig = default;
+            string adminKubeConfig = default;
+            string imagePullSecretName = default;
             ComputeType computeType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userKubeConfig"))
+                if (property.NameEquals("userKubeConfig"u8))
                 {
                     userKubeConfig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminKubeConfig"))
+                if (property.NameEquals("adminKubeConfig"u8))
                 {
                     adminKubeConfig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imagePullSecretName"))
+                if (property.NameEquals("imagePullSecretName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,13 +108,147 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     imagePullSecretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningAksComputeSecrets(computeType, userKubeConfig.Value, adminKubeConfig.Value, imagePullSecretName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningAksComputeSecrets(computeType, serializedAdditionalRawData, userKubeConfig, adminKubeConfig, imagePullSecretName);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserKubeConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userKubeConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserKubeConfig))
+                {
+                    builder.Append("  userKubeConfig: ");
+                    if (UserKubeConfig.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserKubeConfig}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserKubeConfig}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminKubeConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminKubeConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminKubeConfig))
+                {
+                    builder.Append("  adminKubeConfig: ");
+                    if (AdminKubeConfig.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminKubeConfig}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminKubeConfig}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImagePullSecretName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imagePullSecretName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImagePullSecretName))
+                {
+                    builder.Append("  imagePullSecretName: ");
+                    if (ImagePullSecretName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ImagePullSecretName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ImagePullSecretName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  computeType: ");
+                builder.AppendLine($"'{ComputeType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningAksComputeSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAksComputeSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningAksComputeSecrets IPersistableModel<MachineLearningAksComputeSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningAksComputeSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAksComputeSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningAksComputeSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

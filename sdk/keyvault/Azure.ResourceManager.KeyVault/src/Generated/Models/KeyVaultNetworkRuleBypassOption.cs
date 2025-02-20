@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </summary>
+    /// <summary> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </summary>
     public readonly partial struct KeyVaultNetworkRuleBypassOption : IEquatable<KeyVaultNetworkRuleBypassOption>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(KeyVaultNetworkRuleBypassOption left, KeyVaultNetworkRuleBypassOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultNetworkRuleBypassOption"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultNetworkRuleBypassOption left, KeyVaultNetworkRuleBypassOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultNetworkRuleBypassOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultNetworkRuleBypassOption"/>. </summary>
         public static implicit operator KeyVaultNetworkRuleBypassOption(string value) => new KeyVaultNetworkRuleBypassOption(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

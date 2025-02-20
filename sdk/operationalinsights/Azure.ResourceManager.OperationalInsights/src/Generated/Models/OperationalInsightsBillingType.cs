@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Configures whether billing will be only on the cluster or each workspace will be billed by its proportional use. This does not change the overall billing, only how it will be distributed. Default value is &apos;Cluster&apos;. </summary>
+    /// <summary> Configures whether billing will be only on the cluster or each workspace will be billed by its proportional use. This does not change the overall billing, only how it will be distributed. Default value is 'Cluster'. </summary>
     public readonly partial struct OperationalInsightsBillingType : IEquatable<OperationalInsightsBillingType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator ==(OperationalInsightsBillingType left, OperationalInsightsBillingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsBillingType"/> values are not the same. </summary>
         public static bool operator !=(OperationalInsightsBillingType left, OperationalInsightsBillingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationalInsightsBillingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsBillingType"/>. </summary>
         public static implicit operator OperationalInsightsBillingType(string value) => new OperationalInsightsBillingType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

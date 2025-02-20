@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,73 +16,90 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MachineLearningServicesDatasetDriftDetectedEventData DeserializeMachineLearningServicesDatasetDriftDetectedEventData(JsonElement element)
         {
-            Optional<string> dataDriftId = default;
-            Optional<string> dataDriftName = default;
-            Optional<string> runId = default;
-            Optional<string> baseDatasetId = default;
-            Optional<string> targetDatasetId = default;
-            Optional<double> driftCoefficient = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string dataDriftId = default;
+            string dataDriftName = default;
+            string runId = default;
+            string baseDatasetId = default;
+            string targetDatasetId = default;
+            double? driftCoefficient = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataDriftId"))
+                if (property.NameEquals("dataDriftId"u8))
                 {
                     dataDriftId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataDriftName"))
+                if (property.NameEquals("dataDriftName"u8))
                 {
                     dataDriftName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("baseDatasetId"))
+                if (property.NameEquals("baseDatasetId"u8))
                 {
                     baseDatasetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatasetId"))
+                if (property.NameEquals("targetDatasetId"u8))
                 {
                     targetDatasetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driftCoefficient"))
+                if (property.NameEquals("driftCoefficient"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     driftCoefficient = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new MachineLearningServicesDatasetDriftDetectedEventData(
+                dataDriftId,
+                dataDriftName,
+                runId,
+                baseDatasetId,
+                targetDatasetId,
+                driftCoefficient,
+                startTime,
+                endTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesDatasetDriftDetectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement);
         }
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>
@@ -92,6 +108,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesDatasetDriftDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

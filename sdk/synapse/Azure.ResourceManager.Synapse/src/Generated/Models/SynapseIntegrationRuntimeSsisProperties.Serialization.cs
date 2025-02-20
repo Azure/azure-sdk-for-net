@@ -6,49 +6,66 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeSsisProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeSsisProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimeSsisProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(CatalogInfo))
             {
-                writer.WritePropertyName("catalogInfo");
-                writer.WriteObjectValue(CatalogInfo);
+                writer.WritePropertyName("catalogInfo"u8);
+                writer.WriteObjectValue(CatalogInfo, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
-                writer.WritePropertyName("customSetupScriptProperties");
-                writer.WriteObjectValue(CustomSetupScriptProperties);
+                writer.WritePropertyName("customSetupScriptProperties"u8);
+                writer.WriteObjectValue(CustomSetupScriptProperties, options);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
-                writer.WritePropertyName("dataProxyProperties");
-                writer.WriteObjectValue(DataProxyProperties);
+                writer.WritePropertyName("dataProxyProperties"u8);
+                writer.WriteObjectValue(DataProxyProperties, options);
             }
             if (Optional.IsDefined(Edition))
             {
-                writer.WritePropertyName("edition");
+                writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
             {
-                writer.WritePropertyName("expressCustomSetupProperties");
+                writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,85 +75,99 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element)
+        SynapseIntegrationRuntimeSsisProperties IJsonModel<SynapseIntegrationRuntimeSsisProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<SynapseIntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<SynapseIntegrationRuntimeLicenseType> licenseType = default;
-            Optional<SynapseIntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<SynapseIntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<SynapseIntegrationRuntimeEdition> edition = default;
-            Optional<IList<SynapseCustomSetupBase>> expressCustomSetupProperties = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeSsisProperties(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SynapseIntegrationRuntimeSsisCatalogInfo catalogInfo = default;
+            SynapseIntegrationRuntimeLicenseType? licenseType = default;
+            SynapseIntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default;
+            SynapseIntegrationRuntimeDataProxyProperties dataProxyProperties = default;
+            SynapseIntegrationRuntimeEdition? edition = default;
+            IList<SynapseCustomSetupBase> expressCustomSetupProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("catalogInfo"))
+                if (property.NameEquals("catalogInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     licenseType = new SynapseIntegrationRuntimeLicenseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customSetupScriptProperties"))
+                if (property.NameEquals("customSetupScriptProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataProxyProperties"))
+                if (property.NameEquals("dataProxyProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("edition"))
+                if (property.NameEquals("edition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     edition = new SynapseIntegrationRuntimeEdition(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expressCustomSetupProperties"))
+                if (property.NameEquals("expressCustomSetupProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapseCustomSetupBase> array = new List<SynapseCustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item));
+                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item, options));
                     }
                     expressCustomSetupProperties = array;
                     continue;
@@ -144,7 +175,45 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
+            return new SynapseIntegrationRuntimeSsisProperties(
+                catalogInfo,
+                licenseType,
+                customSetupScriptProperties,
+                dataProxyProperties,
+                edition,
+                expressCustomSetupProperties ?? new ChangeTrackingList<SynapseCustomSetupBase>(),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseIntegrationRuntimeSsisProperties IPersistableModel<SynapseIntegrationRuntimeSsisProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseIntegrationRuntimeSsisProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeSsisProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

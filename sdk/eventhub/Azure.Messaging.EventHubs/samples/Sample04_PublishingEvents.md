@@ -33,11 +33,11 @@ The `EventHubBufferedProducerClient` aims to reduce complexity by owning the res
 
 ## Event lifetime
 
-When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age where they are older than the [retention period](https://docs.microsoft.com//azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  After that point in time, the Event Hubs service may chose to remove them from the partition.  Once removed, an event is no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
+When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age where they are older than the [retention period](https://learn.microsoft.com/azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  After that point in time, the Event Hubs service may chose to remove them from the partition.  Once removed, an event is no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
 
 ## Publishing size constraints
 
-There is a limit to the size (in bytes) that can be published in a single operation.  To accurately determine the size of an event, it must be measured in the format used by the active protocol in order to properly account for overhead.  The size limit is controlled by the Event Hubs service and differs for different types of Event Hub instances.  
+There is a limit to the size (in bytes) that can be published in a single operation.  To accurately determine the size of an event, it must be measured in the format used by the active protocol in order to properly account for overhead.  The size limit is controlled by the Event Hubs service and differs for different types of Event Hub instances.
 
 Applications using the `EventHubBufferedProducerClient` do not need to track size limitations; the producer will ensure that batches are correctly sized when publishing.
 
@@ -50,10 +50,14 @@ All of the events that belong to an `EventDataBatch` are considered part of a si
 To create an `EventDataBatch`, the `EventProducerClient` must be used, as the size limit is queried from the Event Hubs service the first time that a batch is created.  After the size has been queried once, batch creation will not incur the cost of a service request.   The `EventDataBatch` follows a `TryAdd` pattern; if the call returns `true` then the event was accepted into the batch.  If not, then the event was unable to fit.  To avoid accidentally losing events, it is recommended to check the return value when adding events.
 
 ```C# Snippet:EventHubs_Sample04_EventBatch
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -76,7 +80,7 @@ The `EventDataBatch` is scoped to a single publish operation.  Once that operati
 
 ## Publishing and partitions
 
-Every event that is published is sent to one of the [partitions](https://docs.microsoft.com/azure/architecture/reference-architectures/event-hubs/partitioning-in-event-hubs-and-kafka) of the Event Hub. The application may request publishing to a specific partition, grouped using a partition key,  or allow the partition to be chosen automatically.  
+Every event that is published is sent to one of the [partitions](https://learn.microsoft.com/azure/architecture/reference-architectures/event-hubs/partitioning-in-event-hubs-and-kafka) of the Event Hub. The application may request publishing to a specific partition, grouped using a partition key,  or allow the partition to be chosen automatically.
 
 When using the `EventHubProducerClient`, each batch must choose the partition assignment strategy at the time it is created, and that strategy is applied to all events in the batch.   The `EventHubBufferedProducerClient` allows the partition assignment strategy to be chosen for each individual event that is enqueued, and the producer will ensure that batches are constructed with the proper strategy.
 
@@ -89,10 +93,14 @@ Allowing automatic assignment to partitions is recommended when publishing needs
 When using the `EventHubBufferedProducerClient`, events enqueued with no options specified will be automatically routed.  Because the producer manages publishing, there is no explicit call.  When the producer is closed, it will ensure that any remaining enqueued events have been published.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRoutingBuffered
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
+var producer = new EventHubBufferedProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 // The failure handler is required and invoked after all allowable
 // retries were applied.
@@ -133,10 +141,14 @@ finally
 When using the `EventHubProducerClient` a batch is first created and then published.  The `SendAsync` call will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown, your application can consider publishing successful.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRouting
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -163,7 +175,7 @@ finally
 ## Publishing events with a partition key
 
 When publishing events, it may be desirable to request that the Event Hubs service keep the different event batches together on the same partition.  This can be accomplished by setting a partition key when creating the batch.  The partition key is NOT the identifier of a specific partition.  Rather, it is an arbitrary piece of string data that Event Hubs uses as the basis to compute a hash value.  Event Hubs will associate the hash value with a specific partition, ensuring that any events published with the same partition key are routed to the same partition.
-                
+
 There is no means of predicting which partition will be associated with a given partition key; we can only be assured that it will be a consistent choice of partition.  If you have a need to understand which exact partition an event is published to, you will need to specify the partition directly rather than using a partition key.
 
 ### Event Hub Buffered Producer Client
@@ -173,10 +185,14 @@ When using the `EventHubBufferedProducerClient`, events are enqueued with a part
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
 ```C# Snippet:EventHubs_Sample04_PartitionKeyBuffered
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
+var producer = new EventHubBufferedProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 // The failure handler is required and invoked after all allowable
 // retries were applied.
@@ -224,10 +240,14 @@ When using the `EventHubProducerClient` a batch is first created with a partitio
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
 ```C# Snippet:EventHubs_Sample04_PartitionKey
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -258,7 +278,7 @@ finally
 
 ## Publishing events to a specific partition
 
-When publishing, it may be desirable to request that the Event Hubs service place a batch on a specific partition, for organization and processing.  For example, you may have designated one partition of your Event Hub as being responsible for all of your telemetry-related events.  This can be accomplished by setting the identifier of the desired partition when creating the batch.  
+When publishing, it may be desirable to request that the Event Hubs service place a batch on a specific partition, for organization and processing.  For example, you may have designated one partition of your Event Hub as being responsible for all of your telemetry-related events.  This can be accomplished by setting the identifier of the desired partition when creating the batch.
 
 ### Event Hub Buffered Producer Client
 
@@ -267,10 +287,14 @@ When using the `EventHubBufferedProducerClient`, events are enqueued with a part
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
 ```C# Snippet:EventHubs_Sample04_PartitionIdBuffered
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
+var producer = new EventHubBufferedProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 // The failure handler is required and invoked after all allowable
 // retries were applied.
@@ -320,10 +344,14 @@ When using the `EventHubProducerClient` a batch is first created with a partitio
 **Note:** It is important to be aware that if you are using a partition identifier, you may not also specify a partition key; they are mutually exclusive.
 
 ```C# Snippet:EventHubs_Sample04_PartitionId
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -361,10 +389,14 @@ Because an event consists mainly of an opaque set of bytes, it may be difficult 
 This metadata is not used by, or in any way meaningful to, the Event Hubs service; it exists only for coordination between event publishers and consumers.
 
 ```C# Snippet:EventHubs_Sample04_CustomMetadata
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
+var producer = new EventHubBufferedProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 // The failure handler is required and invoked after all allowable
 // retries were applied.
@@ -426,15 +458,15 @@ It is also important that you guard against exceptions in your handler code; it 
 
 ## Tuning throughput for buffered publishing
 
-To ensure consistent performance and throughput, it is common for applications to make decisions around the pattern of publishing that they use - adjusting the frequency that batches are sent and how many operations take place concurrently.  Because the `EventHubBufferedProducerClient` manages batches and publishing in the background, your application cannot directly control these aspects.  
+To ensure consistent performance and throughput, it is common for applications to make decisions around the pattern of publishing that they use - adjusting the frequency that batches are sent and how many operations take place concurrently.  Because the `EventHubBufferedProducerClient` manages batches and publishing in the background, your application cannot directly control these aspects.
 
 Because the handlers are awaited, it is strongly advised that you *not* invoke `CloseAsync` or `DisposeAsync` from the handlers; doing so is likely to result in a deadlock scenario.  It is safe to attempt to resend events by adding them to the back of the buffer by calling `EnqueueEventAsync` or `EnqueueEventsAsync`
 
-By default, the `EventHubBufferedProducerClient` uses a set of values that will perform well for general-case scenarios, balancing consistent performance with ensuring that the order of events is maintained.  In the case where your application has different needs, it can provide a set of options when constructing the producer that will influence publishing behavior and help ensure that it is optimal for your specific scenarios.  
+By default, the `EventHubBufferedProducerClient` uses a set of values that will perform well for general-case scenarios, balancing consistent performance with ensuring that the order of events is maintained.  In the case where your application has different needs, it can provide a set of options when constructing the producer that will influence publishing behavior and help ensure that it is optimal for your specific scenarios.
 
 The performance-related settings are:
 
-- **MaximumWaitTime**: This is the longest that the producer will wait for a batch to be full before publishing.  For applications that publish frequently, waiting longer for a full batch may improve efficiency.  For applications that publish infrequently or sporadically, a lower value will ensure that events are not held in buffer waiting.  The default wait time is 1 second. 
+- **MaximumWaitTime**: This is the longest that the producer will wait for a batch to be full before publishing.  For applications that publish frequently, waiting longer for a full batch may improve efficiency.  For applications that publish infrequently or sporadically, a lower value will ensure that events are not held in buffer waiting.  The default wait time is 1 second.
 
 - **MaximumConcurrentSends**: The number of concurrent `SendAsync` calls that the producer will make.  Each call is a network request that publishes a single batch.  A higher degree of concurrency can improve throughput for applications that use an Event Hub with a large number of partitions.  Because the producer is highly asynchronous and is running background tasks, we recommend being careful when selecting a value to avoid creating contention in the thread pool.  Testing under normal load is essential.  The default concurrency is equal to the number of cores in the host environment.
 
@@ -442,13 +474,14 @@ The performance-related settings are:
 
 - **MaximumEventBufferLengthPerPartition**: The maximum number of events that can be buffered for each individual partition.  This is intended to ensure that your application does not run out of memory if buffering happens more frequently than events can be published.  When this limit is reached, your application can continue to call `EnqueueEventAsync` or `EnqueueEventsAsync` without an error; the call will block until space is available.  For applications that publish a high number of smaller-sized events, increasing this limit may help to improve throughput.  For scenarios where the application is buffering large events and needs to control memory use, lowering this limit may be helpful.  The default buffer length is 1500 events per partition.
 
-- **EnableIdempotentRetries**: Indicates whether or not events should be published using idempotent semantics for retries.   If enabled, retries during publishing will attempt to avoid duplication with a small cost to overall performance and throughput.  
+- **EnableIdempotentRetries**: Indicates whether or not events should be published using idempotent semantics for retries.   If enabled, retries during publishing will attempt to avoid duplication with a small cost to overall performance and throughput.
 
   **_NOTE:_** Enabling idempotent retries does not guarantee exactly-once semantics.  The Event Hubs at-least-once delivery contract still applies; duplicates are still possible but the chance of them occurring is much lower when idempotent retries are enabled.
 
 ```C# Snippet:EventHubs_Sample04_BufferedConfiguration
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
 var options = new EventHubBufferedProducerClientOptions
 {
@@ -459,7 +492,11 @@ var options = new EventHubBufferedProducerClientOptions
     EnableIdempotentRetries = true
 };
 
-var producer = new EventHubBufferedProducerClient(connectionString, eventHubName, options);
+var producer = new EventHubBufferedProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential,
+    options);
 
 // The failure handler is required and invoked after all allowable
 // retries were applied.
@@ -497,17 +534,22 @@ finally
 
 ## Creating and publishing multiple batches
 
-Because an `EventDataBatch` is scoped to a single publish operation, it is often necessary to more than a single batch to publish events.  This can take many forms, with varying levels of sophistication and complexity, depending on an application's needs.  One common approach is to stage the events to be published in a `Queue` and use that as a source for building batches.  
+Because an `EventDataBatch` is scoped to a single publish operation, it is often necessary to more than a single batch to publish events.  This can take many forms, with varying levels of sophistication and complexity, depending on an application's needs.  One common approach is to stage the events to be published in a `Queue` and use that as a source for building batches.
 
 The following illustration breaks the process into discrete steps, transforming the queue of events into a set of batches to be published.  This is done to help isolate the logic of creating batches for readability.  Production applications may wish to publish batches as they become full to make more efficient use of resources.
 
 **Note:** The batch is responsible for unmanaged resources; it is recommended that you `Dispose` the batch after it has been published.
 
 ```C# Snippet:EventHubs_Sample04_MultipleBatches
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
+
 var batches = default(IEnumerable<EventDataBatch>);
 var eventsToSend = new Queue<EventData>();
 
@@ -576,17 +618,21 @@ private static async Task<IReadOnlyList<EventDataBatch>> BuildBatchesAsync(
 
 ## Publishing events with an implicit batch
 
-In scenarios where an application using the `EventProducerClient` wishes to publish events more frequently and is not concerned with exceeding the size limitation, it is reasonable to bypass the safety offered by using the `EventDataBatch` to offer minor throughput gains and fewer memory allocations.  In support of this scenario, the `EventProducerClient` offers a `SendAsync` overload that accepts a set of events.  This method delegates validation to the Event Hubs service to avoid the performance cost of a client-side measurement.  If the set of events that was published exceeds the size limit, an [EventHubsException](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception?view=azure-dotnet) will be surfaced with its `Reason` set to [MessageSizeExceeded](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception.failurereason?view=azure-dotnet). 
+In scenarios where an application using the `EventProducerClient` wishes to publish events more frequently and is not concerned with exceeding the size limitation, it is reasonable to bypass the safety offered by using the `EventDataBatch` to offer minor throughput gains and fewer memory allocations.  In support of this scenario, the `EventProducerClient` offers a `SendAsync` overload that accepts a set of events.  This method delegates validation to the Event Hubs service to avoid the performance cost of a client-side measurement.  If the set of events that was published exceeds the size limit, an [EventHubsException](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception?view=azure-dotnet) will be surfaced with its `Reason` set to [MessageSizeExceeded](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception.failurereason?view=azure-dotnet).
 
 When events are passed in this form, the `EventProducerClient` will package them as a single publishing operation.  When the set is published, the result is atomic; either publishing was successful for all events, or it has failed for all events.  Partial success or failure when publishing a batch is not possible.
 
 When published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the set.  All of your event data will be published to one of the Event Hub partitions, though there may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_NoBatch
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -611,10 +657,14 @@ finally
 In some scenarios, such as when bandwidth is limited or publishers need to maintain control over how much data is transmitted at a time, a custom size limit (in bytes) may be specified when creating an `EventDataBatch`.  This will override the default limit specified by the Event Hub and allows an application to use the `EventDataBatch` to ensure that the size of events can be measured accurately and deterministically.  It is important to note that the custom limit may not exceed the limit specified by the Event Hub.
 
 ```C# Snippet:EventHubs_Sample04_CustomBatchSize
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {

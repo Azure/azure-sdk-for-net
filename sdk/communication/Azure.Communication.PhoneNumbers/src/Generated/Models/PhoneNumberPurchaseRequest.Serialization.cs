@@ -17,10 +17,18 @@ namespace Azure.Communication.PhoneNumbers
             writer.WriteStartObject();
             if (Optional.IsDefined(SearchId))
             {
-                writer.WritePropertyName("searchId");
+                writer.WritePropertyName("searchId"u8);
                 writer.WriteStringValue(SearchId);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

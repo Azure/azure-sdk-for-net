@@ -5,73 +5,119 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class CloudEdgeManagementRole : IUtf8JsonSerializable
+    public partial class CloudEdgeManagementRole : IUtf8JsonSerializable, IJsonModel<CloudEdgeManagementRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEdgeManagementRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CloudEdgeManagementRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RoleStatus))
-            {
-                writer.WritePropertyName("roleStatus");
-                writer.WriteStringValue(RoleStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static CloudEdgeManagementRole DeserializeCloudEdgeManagementRole(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEdgeManagementRole>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LocalManagementStatus))
+            {
+                writer.WritePropertyName("localManagementStatus"u8);
+                writer.WriteStringValue(LocalManagementStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
+            {
+                writer.WritePropertyName("edgeProfile"u8);
+                writer.WriteObjectValue(EdgeProfile, options);
+            }
+            if (Optional.IsDefined(RoleStatus))
+            {
+                writer.WritePropertyName("roleStatus"u8);
+                writer.WriteStringValue(RoleStatus.Value.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
+        CloudEdgeManagementRole IJsonModel<CloudEdgeManagementRole>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEdgeManagementRole>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEdgeManagementRole(document.RootElement, options);
+        }
+
+        internal static CloudEdgeManagementRole DeserializeCloudEdgeManagementRole(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeRoleStatus> localManagementStatus = default;
-            Optional<EdgeProfile> edgeProfile = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            SystemData systemData = default;
+            DataBoxEdgeRoleStatus? localManagementStatus = default;
+            EdgeProfile edgeProfile = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DataBoxEdgeRoleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,31 +126,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("localManagementStatus"))
+                        if (property0.NameEquals("localManagementStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localManagementStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("edgeProfile"))
+                        if (property0.NameEquals("edgeProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value);
+                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("roleStatus"))
+                        if (property0.NameEquals("roleStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
@@ -113,8 +156,53 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, Optional.ToNullable(localManagementStatus), edgeProfile.Value, Optional.ToNullable(roleStatus));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudEdgeManagementRole(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                localManagementStatus,
+                edgeProfile,
+                roleStatus);
         }
+
+        BinaryData IPersistableModel<CloudEdgeManagementRole>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEdgeManagementRole>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudEdgeManagementRole IPersistableModel<CloudEdgeManagementRole>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEdgeManagementRole>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudEdgeManagementRole(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudEdgeManagementRole>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

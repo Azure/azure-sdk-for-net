@@ -6,93 +6,152 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseReadOnlyFollowingDatabase : IUtf8JsonSerializable
+    public partial class SynapseReadOnlyFollowingDatabase : IUtf8JsonSerializable, IJsonModel<SynapseReadOnlyFollowingDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseReadOnlyFollowingDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseReadOnlyFollowingDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HotCachePeriod))
-            {
-                writer.WritePropertyName("hotCachePeriod");
-                writer.WriteStringValue(HotCachePeriod.Value, "P");
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SynapseReadOnlyFollowingDatabase DeserializeSynapseReadOnlyFollowingDatabase(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AzureLocation> location = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SoftDeletePeriod))
+            {
+                writer.WritePropertyName("softDeletePeriod"u8);
+                writer.WriteStringValue(SoftDeletePeriod.Value, "P");
+            }
+            if (Optional.IsDefined(HotCachePeriod))
+            {
+                writer.WritePropertyName("hotCachePeriod"u8);
+                writer.WriteStringValue(HotCachePeriod.Value, "P");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
+            {
+                writer.WritePropertyName("leaderClusterResourceId"u8);
+                writer.WriteStringValue(LeaderClusterResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AttachedDatabaseConfigurationName))
+            {
+                writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
+                writer.WriteStringValue(AttachedDatabaseConfigurationName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrincipalsModificationKind))
+            {
+                writer.WritePropertyName("principalsModificationKind"u8);
+                writer.WriteStringValue(PrincipalsModificationKind.Value.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
+        SynapseReadOnlyFollowingDatabase IJsonModel<SynapseReadOnlyFollowingDatabase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseReadOnlyFollowingDatabase(document.RootElement, options);
+        }
+
+        internal static SynapseReadOnlyFollowingDatabase DeserializeSynapseReadOnlyFollowingDatabase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation? location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<string> leaderClusterResourceId = default;
-            Optional<string> attachedDatabaseConfigurationName = default;
-            Optional<SynapsePrincipalsModificationKind> principalsModificationKind = default;
+            SystemData systemData = default;
+            ResourceProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            string leaderClusterResourceId = default;
+            string attachedDatabaseConfigurationName = default;
+            SynapsePrincipalsModificationKind? principalsModificationKind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SynapseKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,61 +160,56 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("softDeletePeriod"))
+                        if (property0.NameEquals("softDeletePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             softDeletePeriod = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("hotCachePeriod"))
+                        if (property0.NameEquals("hotCachePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hotCachePeriod = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("statistics"))
+                        if (property0.NameEquals("statistics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
+                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("leaderClusterResourceId"))
+                        if (property0.NameEquals("leaderClusterResourceId"u8))
                         {
                             leaderClusterResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("attachedDatabaseConfigurationName"))
+                        if (property0.NameEquals("attachedDatabaseConfigurationName"u8))
                         {
                             attachedDatabaseConfigurationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("principalsModificationKind"))
+                        if (property0.NameEquals("principalsModificationKind"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalsModificationKind = new SynapsePrincipalsModificationKind(property0.Value.GetString());
@@ -164,8 +218,58 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseReadOnlyFollowingDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                leaderClusterResourceId,
+                attachedDatabaseConfigurationName,
+                principalsModificationKind);
         }
+
+        BinaryData IPersistableModel<SynapseReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseReadOnlyFollowingDatabase IPersistableModel<SynapseReadOnlyFollowingDatabase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseReadOnlyFollowingDatabase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseReadOnlyFollowingDatabase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,0 +1,13 @@
+{
+    "properties": {
+        "providerSettings": {
+            "sslPreference": "Disabled",
+            "providerType": "MsSqlServer",
+            "hostname": "10.1.14.5",
+            "sapSid": "X00",
+            "dbPort": "1433",
+            "dbUsername": "ams",
+            "dbPassword": "Sanitized"
+        }
+    }
+}

@@ -15,39 +15,59 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sensitivity");
+            writer.WritePropertyName("sensitivity"u8);
             writer.WriteNumberValue(Sensitivity);
-            writer.WritePropertyName("anomalyDetectorDirection");
+            writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
-            writer.WritePropertyName("suppressCondition");
-            writer.WriteObjectValue(SuppressCondition);
+            writer.WritePropertyName("suppressCondition"u8);
+            writer.WriteObjectValue<SuppressCondition>(SuppressCondition);
             writer.WriteEndObject();
         }
 
         internal static SmartDetectionCondition DeserializeSmartDetectionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double sensitivity = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sensitivity"))
+                if (property.NameEquals("sensitivity"u8))
                 {
                     sensitivity = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectorDirection"))
+                if (property.NameEquals("anomalyDetectorDirection"u8))
                 {
                     anomalyDetectorDirection = new AnomalyDetectorDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("suppressCondition"))
+                if (property.NameEquals("suppressCondition"u8))
                 {
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;
                 }
             }
             return new SmartDetectionCondition(sensitivity, anomalyDetectorDirection, suppressCondition);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SmartDetectionCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSmartDetectionCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

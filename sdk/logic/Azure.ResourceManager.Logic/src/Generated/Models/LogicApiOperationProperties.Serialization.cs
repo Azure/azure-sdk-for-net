@@ -5,204 +5,298 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiOperationProperties : IUtf8JsonSerializable
+    public partial class LogicApiOperationProperties : IUtf8JsonSerializable, IJsonModel<LogicApiOperationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiOperationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LogicApiOperationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Summary))
             {
-                writer.WritePropertyName("summary");
+                writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Visibility))
             {
-                writer.WritePropertyName("visibility");
+                writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
             if (Optional.IsDefined(Trigger))
             {
-                writer.WritePropertyName("trigger");
+                writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
             }
             if (Optional.IsDefined(TriggerHint))
             {
-                writer.WritePropertyName("triggerHint");
+                writer.WritePropertyName("triggerHint"u8);
                 writer.WriteStringValue(TriggerHint);
             }
             if (Optional.IsDefined(IsPageable))
             {
-                writer.WritePropertyName("pageable");
+                writer.WritePropertyName("pageable"u8);
                 writer.WriteBooleanValue(IsPageable.Value);
             }
             if (Optional.IsDefined(Annotation))
             {
-                writer.WritePropertyName("annotation");
-                writer.WriteObjectValue(Annotation);
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteObjectValue(Annotation, options);
             }
             if (Optional.IsDefined(Api))
             {
-                writer.WritePropertyName("api");
-                writer.WriteObjectValue(Api);
+                writer.WritePropertyName("api"u8);
+                writer.WriteObjectValue(Api, options);
             }
             if (Optional.IsDefined(InputsDefinition))
             {
-                writer.WritePropertyName("inputsDefinition");
-                writer.WriteObjectValue(InputsDefinition);
+                writer.WritePropertyName("inputsDefinition"u8);
+                writer.WriteObjectValue(InputsDefinition, options);
             }
             if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
-                writer.WritePropertyName("responsesDefinition");
+                writer.WritePropertyName("responsesDefinition"u8);
                 writer.WriteStartObject();
                 foreach (var item in ResponsesDefinition)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(IsWebhook))
             {
-                writer.WritePropertyName("isWebhook");
+                writer.WritePropertyName("isWebhook"u8);
                 writer.WriteBooleanValue(IsWebhook.Value);
             }
             if (Optional.IsDefined(IsNotification))
             {
-                writer.WritePropertyName("isNotification");
+                writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element)
+        LogicApiOperationProperties IJsonModel<LogicApiOperationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> visibility = default;
-            Optional<string> trigger = default;
-            Optional<string> triggerHint = default;
-            Optional<bool> pageable = default;
-            Optional<LogicApiOperationAnnotation> annotation = default;
-            Optional<LogicApiReference> api = default;
-            Optional<SwaggerSchema> inputsDefinition = default;
-            Optional<IDictionary<string, SwaggerSchema>> responsesDefinition = default;
-            Optional<bool> isWebhook = default;
-            Optional<bool> isNotification = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiOperationProperties(document.RootElement, options);
+        }
+
+        internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string summary = default;
+            string description = default;
+            string visibility = default;
+            string trigger = default;
+            string triggerHint = default;
+            bool? pageable = default;
+            LogicApiOperationAnnotation annotation = default;
+            LogicApiReference api = default;
+            SwaggerSchema inputsDefinition = default;
+            IDictionary<string, SwaggerSchema> responsesDefinition = default;
+            bool? isWebhook = default;
+            bool? isNotification = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     summary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     visibility = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
                     trigger = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerHint"))
+                if (property.NameEquals("triggerHint"u8))
                 {
                     triggerHint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pageable"))
+                if (property.NameEquals("pageable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pageable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("annotation"))
+                if (property.NameEquals("annotation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    annotation = LogicApiOperationAnnotation.DeserializeLogicApiOperationAnnotation(property.Value);
+                    annotation = LogicApiOperationAnnotation.DeserializeLogicApiOperationAnnotation(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    api = LogicApiReference.DeserializeLogicApiReference(property.Value);
+                    api = LogicApiReference.DeserializeLogicApiReference(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("inputsDefinition"))
+                if (property.NameEquals("inputsDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inputsDefinition = SwaggerSchema.DeserializeSwaggerSchema(property.Value);
+                    inputsDefinition = SwaggerSchema.DeserializeSwaggerSchema(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("responsesDefinition"))
+                if (property.NameEquals("responsesDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, SwaggerSchema> dictionary = new Dictionary<string, SwaggerSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SwaggerSchema.DeserializeSwaggerSchema(property0.Value));
+                        dictionary.Add(property0.Name, SwaggerSchema.DeserializeSwaggerSchema(property0.Value, options));
                     }
                     responsesDefinition = dictionary;
                     continue;
                 }
-                if (property.NameEquals("isWebhook"))
+                if (property.NameEquals("isWebhook"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isWebhook = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isNotification"))
+                if (property.NameEquals("isNotification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isNotification = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogicApiOperationProperties(
+                summary,
+                description,
+                visibility,
+                trigger,
+                triggerHint,
+                pageable,
+                annotation,
+                api,
+                inputsDefinition,
+                responsesDefinition ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
+                isWebhook,
+                isNotification,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicApiOperationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogicApiOperationProperties IPersistableModel<LogicApiOperationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicApiOperationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicApiOperationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

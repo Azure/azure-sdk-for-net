@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Training
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
             _serviceVersion = serviceVersion;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
+            _operationInternal = new(this, _diagnostics, rawResponse: null, nameof(CreateCustomFormModelOperation));
 
             Id = location.Split('/').Last();
         }
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Training
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
             _serviceVersion = client.ServiceVersion;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
+            _operationInternal = new(this, _diagnostics, rawResponse: null, nameof(CreateCustomFormModelOperation));
         }
 
         /// <summary>
@@ -165,12 +165,10 @@ namespace Azure.AI.FormRecognizer.Training
             }
             else if (status == CustomFormModelStatus.Invalid)
             {
-                RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(
-                                                                      async,
-                                                                      _diagnostics,
-                                                                      rawResponse,
-                                                                      response.Value.TrainResult.Errors,
-                                                                      $"Invalid model created with ID {response.Value.ModelInfo.ModelId}").ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(
+                    rawResponse,
+                    response.Value.TrainResult.Errors,
+                    $"Invalid model created with ID {response.Value.ModelInfo.ModelId}");
 
                 return OperationState<CustomFormModel>.Failure(rawResponse, requestFailedException);
             }

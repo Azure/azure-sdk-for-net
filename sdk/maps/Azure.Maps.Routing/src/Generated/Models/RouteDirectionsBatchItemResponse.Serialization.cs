@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,33 +15,35 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element)
         {
-            Optional<ErrorDetail> error = default;
-            Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<RouteData>> routes = default;
-            Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
-            Optional<RouteReport> report = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ErrorDetail error = default;
+            string formatVersion = default;
+            IReadOnlyList<RouteData> routes = default;
+            IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints = default;
+            RouteReport report = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = Models.ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteData> array = new List<RouteData>();
@@ -52,11 +54,10 @@ namespace Azure.Maps.Routing.Models
                     routes = array;
                     continue;
                 }
-                if (property.NameEquals("optimizedWaypoints"))
+                if (property.NameEquals("optimizedWaypoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteOptimizedWaypoint> array = new List<RouteOptimizedWaypoint>();
@@ -67,18 +68,25 @@ namespace Azure.Maps.Routing.Models
                     optimizedWaypoints = array;
                     continue;
                 }
-                if (property.NameEquals("report"))
+                if (property.NameEquals("report"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     report = RouteReport.DeserializeRouteReport(property.Value);
                     continue;
                 }
             }
-            return new RouteDirectionsBatchItemResponse(formatVersion.Value, Optional.ToList(routes), Optional.ToList(optimizedWaypoints), report.Value, error.Value);
+            return new RouteDirectionsBatchItemResponse(formatVersion, routes ?? new ChangeTrackingList<RouteData>(), optimizedWaypoints ?? new ChangeTrackingList<RouteOptimizedWaypoint>(), report, error);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RouteDirectionsBatchItemResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteDirectionsBatchItemResponse(document.RootElement);
         }
     }
 }

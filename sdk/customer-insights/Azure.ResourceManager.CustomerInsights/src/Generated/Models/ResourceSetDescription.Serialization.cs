@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ResourceSetDescription : IUtf8JsonSerializable
+    public partial class ResourceSetDescription : IUtf8JsonSerializable, IJsonModel<ResourceSetDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSetDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceSetDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceSetDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Elements))
             {
-                writer.WritePropertyName("elements");
+                writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
                 foreach (var item in Elements)
                 {
@@ -28,7 +46,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsCollectionDefined(Exceptions))
             {
-                writer.WritePropertyName("exceptions");
+                writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exceptions)
                 {
@@ -36,20 +54,53 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ResourceSetDescription DeserializeResourceSetDescription(JsonElement element)
+        ResourceSetDescription IJsonModel<ResourceSetDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> elements = default;
-            Optional<IList<string>> exceptions = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceSetDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceSetDescription(document.RootElement, options);
+        }
+
+        internal static ResourceSetDescription DeserializeResourceSetDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> elements = default;
+            IList<string> exceptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("elements"))
+                if (property.NameEquals("elements"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -60,11 +111,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     elements = array;
                     continue;
                 }
-                if (property.NameEquals("exceptions"))
+                if (property.NameEquals("exceptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -75,8 +125,44 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     exceptions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceSetDescription(Optional.ToList(elements), Optional.ToList(exceptions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceSetDescription(elements ?? new ChangeTrackingList<string>(), exceptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceSetDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceSetDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceSetDescription IPersistableModel<ResourceSetDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceSetDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceSetDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceSetDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

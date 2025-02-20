@@ -5,53 +5,147 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoPrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
+    public partial class KustoPrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable, IJsonModel<KustoPrivateLinkServiceConnectionStateProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoPrivateLinkServiceConnectionStateProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KustoPrivateLinkServiceConnectionStateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoPrivateLinkServiceConnectionStateProperty)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
+            {
+                writer.WritePropertyName("actionsRequired"u8);
+                writer.WriteStringValue(ActionsRequired);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KustoPrivateLinkServiceConnectionStateProperty DeserializeKustoPrivateLinkServiceConnectionStateProperty(JsonElement element)
+        KustoPrivateLinkServiceConnectionStateProperty IJsonModel<KustoPrivateLinkServiceConnectionStateProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoPrivateLinkServiceConnectionStateProperty)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoPrivateLinkServiceConnectionStateProperty(document.RootElement, options);
+        }
+
+        internal static KustoPrivateLinkServiceConnectionStateProperty DeserializeKustoPrivateLinkServiceConnectionStateProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string status = default;
+            string description = default;
+            string actionsRequired = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionsRequired"))
+                if (property.NameEquals("actionsRequired"u8))
                 {
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoPrivateLinkServiceConnectionStateProperty(status.Value, description.Value, actionsRequired.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KustoPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoPrivateLinkServiceConnectionStateProperty)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KustoPrivateLinkServiceConnectionStateProperty IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoPrivateLinkServiceConnectionStateProperty(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoPrivateLinkServiceConnectionStateProperty)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoPrivateLinkServiceConnectionStateProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

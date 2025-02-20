@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {
     [CodeGenModel("SourceInput")]
     public partial class TranslationSource
     {
-        [CodeGenMember("StorageSource")]
-        internal string StorageSource { get; set; }
+        [CodeGenMember("TranslationStorageSource")]
+        internal string TranslationStorageSource { get; set; }
 
         /// <summary>
         /// Location of the folder / container or single file with your documents.
@@ -64,5 +64,35 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         [CodeGenMember("Filter")]
         internal DocumentFilter Filter { get; set; }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
+        /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
+        /// <param name="languageCode">
+        /// Language code
+        /// If none is specified, we will perform auto detect on the document
+        /// </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        /// <param name="prefix"> Document prefix filter. </param>
+        /// <param name="suffix"> Document suffix filter. </param>
+        public TranslationSource(Uri sourceUri, string languageCode = default, string storageSource = default, string prefix = default, string suffix = default)
+        {
+            SourceUri = sourceUri;
+            if (languageCode != null)
+            {
+                LanguageCode = languageCode;
+            }
+            if (storageSource != null)
+            {
+                TranslationStorageSource = storageSource;
+            }
+            if (prefix != null)
+            {
+                Prefix = prefix;
+            }
+            if (suffix != null)
+            {
+                Suffix = suffix;
+            }
+        }
     }
 }

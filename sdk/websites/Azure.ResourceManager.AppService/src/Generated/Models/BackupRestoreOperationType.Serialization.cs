@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static BackupRestoreOperationType ToBackupRestoreOperationType(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return BackupRestoreOperationType.Default;
-            if (string.Equals(value, "Clone", StringComparison.InvariantCultureIgnoreCase)) return BackupRestoreOperationType.Clone;
-            if (string.Equals(value, "Relocation", StringComparison.InvariantCultureIgnoreCase)) return BackupRestoreOperationType.Relocation;
-            if (string.Equals(value, "Snapshot", StringComparison.InvariantCultureIgnoreCase)) return BackupRestoreOperationType.Snapshot;
-            if (string.Equals(value, "CloudFS", StringComparison.InvariantCultureIgnoreCase)) return BackupRestoreOperationType.CloudFS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return BackupRestoreOperationType.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Clone")) return BackupRestoreOperationType.Clone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Relocation")) return BackupRestoreOperationType.Relocation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Snapshot")) return BackupRestoreOperationType.Snapshot;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CloudFS")) return BackupRestoreOperationType.CloudFS;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupRestoreOperationType value.");
         }
     }

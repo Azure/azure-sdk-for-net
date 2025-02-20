@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ToList))
             {
-                writer.WritePropertyName("toList");
+                writer.WritePropertyName("toList"u8);
                 writer.WriteStartArray();
                 foreach (var item in ToList)
                 {
@@ -26,6 +26,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

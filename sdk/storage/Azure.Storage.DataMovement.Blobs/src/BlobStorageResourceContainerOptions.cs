@@ -1,38 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using Azure.Storage.DataMovement;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options bag for <see cref="BlobDirectoryStorageResourceContainer"/> and
-    /// <see cref="BlobStorageResourceContainer"/>.
+    /// Options parameters when using a <see cref="BlobStorageResourceContainer"/>.
     /// </summary>
     public class BlobStorageResourceContainerOptions
     {
-        /// <summary>
-        /// Optional. The <see cref="BlobTraits"/> for when calling the
-        /// <see cref="BlobDirectoryStorageResourceContainer.GetStorageResourcesAsync(System.Threading.CancellationToken)"/>.
-        /// </summary>
-        public BlobTraits Traits { get; set; }
+        private BlobType? _blobType = default;
+        internal bool _isBlobTypeSet = false;
 
         /// <summary>
-        /// Optional. The <see cref="BlobStates"/> for when calling the
-        /// <see cref="BlobDirectoryStorageResourceContainer.GetStorageResourcesAsync(System.Threading.CancellationToken)"/>.
-        /// </summary>
-        public BlobStates States { get; set; }
-
-        /// <summary>
-        /// Optional. Defines the copy operation to take.
-        /// See <see cref="TransferCopyMethod"/>. Defaults to <see cref="TransferCopyMethod.SyncCopy"/>.
+        /// Optional. The <see cref="Storage.Blobs.Models.BlobType"/> that will be used when uploading blobs to the destination.
         ///
-        /// Only applies when calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
+        /// Defaults to preserving the blob type if the source is also a blob. If the source is not a blob, will default to Block Blob. If explicitly set to null, the source blob type will not be preserved, and be transferred as a Block Blob.
         /// </summary>
-        public TransferCopyMethod CopyMethod { get; set; }
+        public BlobType? BlobType
+        {
+            get => _blobType;
+            set
+            {
+                _blobType = value;
+                _isBlobTypeSet = true;
+            }
+        }
+
+        /// <summary>
+        /// Optional. The directory prefix within the Blob Storage Container to use in the transfer.
+        /// </summary>
+        public string BlobPrefix { get; set; }
+
+        /// <summary>
+        /// Optional. Additional options applied to each resource in the container.
+        /// </summary>
+        public BlobStorageResourceOptions BlobOptions { get; set; }
     }
 }

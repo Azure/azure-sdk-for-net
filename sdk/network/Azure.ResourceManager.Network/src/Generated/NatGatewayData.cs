@@ -7,17 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NatGateway data model. </summary>
+    /// <summary>
+    /// A class representing the NatGateway data model.
+    /// Nat Gateway resource.
+    /// </summary>
     public partial class NatGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NatGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewayData"/>. </summary>
         public NatGatewayData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -26,12 +28,13 @@ namespace Azure.ResourceManager.Network
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of NatGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The nat gateway SKU. </param>
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
-        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, ETag? etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPPrefixes, IReadOnlyList<WritableSubResource> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NatGatewaySku sku, IList<string> zones, ETag? etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPPrefixes, IReadOnlyList<WritableSubResource> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Sku = sku;
             Zones = zones;

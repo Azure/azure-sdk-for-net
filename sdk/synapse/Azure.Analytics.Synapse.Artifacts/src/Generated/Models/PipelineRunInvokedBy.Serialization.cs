@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,28 +16,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static PipelineRunInvokedBy DeserializePipelineRunInvokedBy(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> invokedByType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string id = default;
+            string invokedByType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("invokedByType"))
+                if (property.NameEquals("invokedByType"u8))
                 {
                     invokedByType = property.Value.GetString();
                     continue;
                 }
             }
-            return new PipelineRunInvokedBy(name.Value, id.Value, invokedByType.Value);
+            return new PipelineRunInvokedBy(name, id, invokedByType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineRunInvokedBy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineRunInvokedBy(document.RootElement);
         }
 
         internal partial class PipelineRunInvokedByConverter : JsonConverter<PipelineRunInvokedBy>
@@ -47,6 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override PipelineRunInvokedBy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

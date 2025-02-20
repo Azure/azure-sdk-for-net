@@ -1,6 +1,6 @@
 # Release History
 
-## 7.13.0-beta.1 (Unreleased)
+## 7.19.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,234 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.18.4 (2025-02-11)
+
+### Bugs Fixed
+
+- Fixed an issue with the `AmqpReceiver` class where a drain failure during a `ReceiveMessagesAsync` operation would cause message ordering to be violated. ([#47822](https://github.com/Azure/azure-sdk-for-net/issues/47822))
+
+- Fixed an issue where an error response from the Service Bus administration service without a body was incorrectly parsed, resulting in a null argument exception obscuring the actual failure response. ([#47517](https://github.com/Azure/azure-sdk-for-net/issues/47517))
+
+## 7.18.3 (2025-01-17)
+
+### Bugs Fixed
+
+- Fixed an issue where identifier generation for senders did not correctly include the entity path as an informational element.  ([#46952](https://github.com/Azure/azure-sdk-for-net/issues/46952))
+
+### Other Changes
+
+- Added annotations to make the package compatible with trimming and native AOT compilation.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+- Updated the transitive dependency on `System.Text.Json` to 6.0.10 via `Azure.Core` 1.44.1.  Though Service Bus does not perform JSON serialization and was not vulnerable, the .NET 9 SDK was emitting warnings during scans due to a flaw in the previous `System.Text.Json` dependency.
+
+## 7.18.2 (2024-10-08)
+
+### Other Changes
+
+- Enhanced the logs emitted when acquiring a session with `ServiceBusClient` times out or is canceled.  As these are known and expected exception conditions, they are now correctly logged as verbose information rather than an error.  Previously, these scenarios were special-cased for processors, but receivers were treated as standard errors.  Going forward, the processor and client/receiver scenarios are handled consistently.
+
+## 7.18.1 (2024-07-31)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
+
+## 7.18.0 (2024-07-18)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Martin Costello _([GitHub](https://github.com/martincostello))_
+
+### Bugs Fixed
+
+- Fixed an issue that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+- Fixed an issue where the scheduled enqueue time was not cleared when creating a new message from a received message.
+
+- Fixed an issue that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `ServiceBusMessage.ApplicationProperties` and `ServiceBusReceivedMessage.ApplicationProperties` collections.
+
+- Fixed an issue that caused `ServiceBusMessageBatch` to accept more than the allowed 1mb batch limit when sending to Service Bus entities with large message sizes enabled.
+
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
+
+### Other Changes
+
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigureed adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
+
+- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.
+
+- Reduced the number of allocations of various option types. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+
+## 7.18.0-beta.1 (2024-05-08)
+
+### Features Added
+
+- `ServiceBusReceiver` now supports the ability to delete all messages from an entity using the `PurgeMessagesAsync` method.  Callers may optionally request to limit the target messages to those earlier than a given date.
+
+- `ServiceBusReceiver` now supports the ability to delete messages from an entity in batches using the `DeleteMessagesAsync` method.  The messages selected for deletion will be the oldest in the entity, based on the enqueued date and callers may optionally request to limit them to only those earlier than a given date.
+
+### Bugs Fixed
+
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+
+## 7.17.5 (2024-04-09)
+
+### Bugs Fixed
+
+- Fixed an edge case where a cancellation token signaled while waiting for a throttling delay would cause a failure to reset state and service operations would continue to apply the throttle delay going forward.  ([#42952](https://github.com/Azure/azure-sdk-for-net/issues/42952))
+
+- Fixed an issue where the `ServiceBusSessionProcessor` was not respecting `ServiceBusSessionProcessorOptions.MaxConcurrentCallsPerSession` when `ServiceBusSessionProcessorOptions.SessionIds` was set to a value. ([#43157](https://github.com/Azure/azure-sdk-for-net/pull/43157))
+
+### Other Changes
+
+- Added missing documentation for `ServiceBusModelFactory` members with a focus on clarifying what model properties each parameter to the factory methods will populate.  In some cases, parameter names differ from the associated model properties, causing confusion.  ([#42772](https://github.com/Azure/azure-sdk-for-net/issues/42772))
+
+## 7.17.4 (2024-03-05)
+
+### Bugs Fixed
+
+- When creating a new `ServiceBusMessage` from an existing `ServiceBusReceivedMessage`, diagnostic properties will now be properly reset.  Previously, they were incorrectly retained which led to the new message being indistinguishable from the old in traces.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+
+## 7.17.3 (2024-02-14)
+
+### Bugs Fixed
+
+- Fixed draining of credits when prefetch is enabled.
+- No longer drain credits when using the `ServiceBusSessionProcessor` as it is not necessary unless the `ServiceBusSessionProcessorOptions.SessionIds` property is set.
+
+### Other Changes
+
+- Loosened validation for the fully qualified namespace name passed to the `ServiceBusClient` constructor.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the client.
+
+## 7.17.2 (2024-01-16)
+
+### Bugs Fixed
+
+- Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
+- Prevent `NullReferenceException` from being thrown when the `ReceiveMessagesAsync` method is called using a high degree of concurrency.
+
+## 7.17.1 (2023-12-04)
+
+### Bugs Fixed
+
+- Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+- Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the
+  `x-opt-partition-id` key as this is meant to apply only to the original message.
+- Drain excess credits when attempting to receive using sessions to ensure FIFO ordering.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
+- Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+## 7.17.0 (2023-11-14)
+
+### Breaking Changes
+
+The following breaking changes were made for the experimental support of Open Telemetry:
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+## 7.16.2 (2023-10-11)
+
+### Bugs Fixed
+
+- Fixed issue where `ActivitySource` activities were not being created even when the experimental
+  flag was set.
+
+### Other Changes
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3. This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
+
+## 7.16.1 (2023-08-15)
+
+### Bugs Fixed
+
+- Fixed race condition that could lead to an `ObjectDisposedException` when using the `ServiceBusSessionProcessor`.
+
+## 7.16.0 (2023-08-07)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- `ProcessMessageEventArgs` provides a `MessageLockLostAsync` event that can be subscribed to in
+  order to be notified when the message lock is lost.
+- `ProcessSessionMessageEventArgs` provides a `SessionLockLostAsync` event that can be subscribed to in
+  order to be notified when the session lock is lost.
+- A constructor for `ServiceBusMessage` taking an `AmqpAnnotatedMessage` has been added.
+
+### Bugs Fixed
+
+- The `CancellationTokenSource` used by the `ServiceBusSessionProcessor` in order to renew session
+  locks is now disposed when the session is no longer being processed, thereby preventing a memory leak.
+
+## 7.15.0 (2023-06-06)
+
+### Bugs Fixed
+
+- Do not copy over `DeliveryAnnotations` when constructing a new `ServiceBusMessage` from a `ServiceBusReceivedMessage`.
+
+### Other Changes
+
+- The reference for the AMQP transport library, Microsoft.Azure.Amqp, has been bumped to 2.6.2. This resolves a potential issue opening TLS connections on .NET 6+.
+
+## 7.14.0 (2023-05-09)
+
+### Features Added
+
+- The client-side idle timeout for connections can now be configured using `ServiceBusClientOptions`.
+
+### Bugs Fixed
+
+- Removed the 30 second cap applied when opening AMQP links; this allows developers to fully control the timeout for service operations by tuning the `TryTimeout` as appropriate for the application.
+
+- Fixed potential `NullReferenceException` when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+
+## 7.13.1 (2023-03-13)
+
+### Bugs Fixed
+
+- Fixed issue with Guid writing during message settlement that could result in an `ArgumentException` if the ArrayPool returned a buffer that is larger than the size of the Guid.
+
+## 7.13.0 (2023-03-08)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the messaging attribute specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml#L98).
+
+### Bugs Fixed
+
+- Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Some checks for cancellation that were occurring after a service operation had been completed have been removed.  Because the service operation was already complete, cancellation was not actually performed and the results of the operation should be returned.
+
+- Exceptions related to the cancellation token being signaled on a receive operation will now be logged as Verbose rather than Error.
 
 ## 7.12.0 (2023-01-12)
 
@@ -150,7 +378,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
-- Added `ServiceBusTransportMetrics` that can be used to get transport metric information. 
+- Added `ServiceBusTransportMetrics` that can be used to get transport metric information.
 
 ### Bugs Fixed
 
@@ -180,7 +408,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Bugs Fixed
 
 - Fixed name of ServiceBusAdministrationClient extension method.
-- Fixed entity name validation when passing in a subscription entity path into the 
+- Fixed entity name validation when passing in a subscription entity path into the
   CreateReceiver method.
 
 ### Other Changes
@@ -309,7 +537,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Added
 * Added `SubQueue` option to `ServiceBusProcessorOptions` to allow for processing the deadletter queue
-* Added Verbose event source events for the following scenarios that previously had Error events which resulted in unnecessary noise in application logs: 
+* Added Verbose event source events for the following scenarios that previously had Error events which resulted in unnecessary noise in application logs:
   * Accepting a session times out because there are no sessions available.
   * TaskCanceledException occurs while stopping the processor.
 
@@ -347,7 +575,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.2.0-beta.1 (2021-03-08)
 ### Added
 - Added `EnableCrossEntityTransactions` property to `ServiceBusClientOptions` to support transactions spanning multiple entities.
-- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor. 
+- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor.
 
 ### Key Bug Fixes
 - Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
@@ -372,7 +600,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.0.1 (2021-01-12)
 
 ### Fixed
-- Fixed race condition that could occur when using the same `ServiceBusSessionReceiverOptions` instance 
+- Fixed race condition that could occur when using the same `ServiceBusSessionReceiverOptions` instance
 for several receivers.
 - Increased the authorization refresh buffer to make it less likely that authorization will expire.
 
@@ -442,7 +670,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Added
 - Added MaxConcurrentCallsPerSession option to ServiceBusSessionProcessor
-  
+
 ### Breaking Changes
 - Change MaxConcurrentCalls to MaxConcurrentSessions in ServiceBusSessionProcessor.
 - Replace (Queue|Topic|Subscription|Rule)Description with (Queue|Topic|Subscription|Rule)Properties.
@@ -460,7 +688,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Added
 - Add IAsyncEnumerable Receive overload
 - Add batch schedule/cancel schedule messages
-  
+
 ### Breaking Changes
 - Remove use of "Batch" in Peek/Receive methods.
 - Add Message/Messages suffix to Peek/Send/Receive/Abandon/Defer/Complete/DeadLetter methods.
@@ -482,7 +710,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Add constructor for ServiceBusMessage taking a string
 - Use the BinaryData type for ServiceBusMessage.Body
 - Add diagnostic tracing
-  
+
 ### Breaking Changes
 - Introduce ServiceBusSessionReceiverOptions/ServiceBusSessionProcessorOptions for creating
   ServiceBusSessionReceiver/ServiceBusSessionProcessor
@@ -501,17 +729,17 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Add SessionInitializingAsync/SessionClosingAsync events in ServiceBusSessionProcessor
 - Do not attempt to autocomplete messages with the processor if the user settled the message in their callback
 - Add SendAsync overload accepting an IEnumerable of ServiceBusMessage
-- Various performance improvements  
+- Various performance improvements
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-- Improve the way exception stack traces are captured  
+- Improve the way exception stack traces are captured
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-  
+
 ### Breaking Changes
 - Change from using a static factory method for creating a sendable message from a received message to instead
-  using a constructor  
+  using a constructor
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-- CreateSessionProcessor parameter sessionId renamed to sessionIds (also changed from string to params string array). 
-- Remove cancellation token from CreateProcessor and CreateSessionProcessor  
+- CreateSessionProcessor parameter sessionId renamed to sessionIds (also changed from string to params string array).
+- Remove cancellation token from CreateProcessor and CreateSessionProcessor
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 - Rename SendBatchAsync to SendAsync
 - Add SenderOptions parameter to CreateSender method.

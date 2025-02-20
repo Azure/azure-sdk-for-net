@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,69 +16,89 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingStreamReceivedEventData DeserializeMediaLiveEventIncomingStreamReceivedEventData(JsonElement element)
         {
-            Optional<string> ingestUrl = default;
-            Optional<string> trackType = default;
-            Optional<string> trackName = default;
-            Optional<long> bitrate = default;
-            Optional<string> encoderIp = default;
-            Optional<string> encoderPort = default;
-            Optional<string> timestamp = default;
-            Optional<string> duration = default;
-            Optional<string> timescale = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string ingestUrl = default;
+            string trackType = default;
+            string trackName = default;
+            long? bitrate = default;
+            string encoderIp = default;
+            string encoderPort = default;
+            string timestamp = default;
+            string duration = default;
+            string timescale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestUrl"))
+                if (property.NameEquals("ingestUrl"u8))
                 {
                     ingestUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackType"))
+                if (property.NameEquals("trackType"u8))
                 {
                     trackType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("encoderIp"))
+                if (property.NameEquals("encoderIp"u8))
                 {
                     encoderIp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderPort"))
+                if (property.NameEquals("encoderPort"u8))
                 {
                     encoderPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     duration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamReceivedEventData(ingestUrl.Value, trackType.Value, trackName.Value, Optional.ToNullable(bitrate), encoderIp.Value, encoderPort.Value, timestamp.Value, duration.Value, timescale.Value);
+            return new MediaLiveEventIncomingStreamReceivedEventData(
+                ingestUrl,
+                trackType,
+                trackName,
+                bitrate,
+                encoderIp,
+                encoderPort,
+                timestamp,
+                duration,
+                timescale);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIncomingStreamReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIncomingStreamReceivedEventData(document.RootElement);
         }
 
         internal partial class MediaLiveEventIncomingStreamReceivedEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamReceivedEventData>
@@ -88,6 +107,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventIncomingStreamReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

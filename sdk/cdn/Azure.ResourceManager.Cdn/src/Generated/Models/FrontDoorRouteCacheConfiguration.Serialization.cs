@@ -5,68 +5,155 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorRouteCacheConfiguration : IUtf8JsonSerializable
+    public partial class FrontDoorRouteCacheConfiguration : IUtf8JsonSerializable, IJsonModel<FrontDoorRouteCacheConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRouteCacheConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FrontDoorRouteCacheConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
-                writer.WritePropertyName("queryStringCachingBehavior");
+                writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
             if (Optional.IsDefined(QueryParameters))
             {
-                writer.WritePropertyName("queryParameters");
+                writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
             if (Optional.IsDefined(CompressionSettings))
             {
-                writer.WritePropertyName("compressionSettings");
-                writer.WriteObjectValue(CompressionSettings);
+                writer.WritePropertyName("compressionSettings"u8);
+                writer.WriteObjectValue(CompressionSettings, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static FrontDoorRouteCacheConfiguration DeserializeFrontDoorRouteCacheConfiguration(JsonElement element)
+        FrontDoorRouteCacheConfiguration IJsonModel<FrontDoorRouteCacheConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<string> queryParameters = default;
-            Optional<RouteCacheCompressionSettings> compressionSettings = default;
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorRouteCacheConfiguration(document.RootElement, options);
+        }
+
+        internal static FrontDoorRouteCacheConfiguration DeserializeFrontDoorRouteCacheConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior = default;
+            string queryParameters = default;
+            RouteCacheCompressionSettings compressionSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryStringCachingBehavior"))
+                if (property.NameEquals("queryStringCachingBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryStringCachingBehavior = new FrontDoorQueryStringCachingBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryParameters"))
+                if (property.NameEquals("queryParameters"u8))
                 {
                     queryParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compressionSettings"))
+                if (property.NameEquals("compressionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value);
+                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorRouteCacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, compressionSettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorRouteCacheConfiguration(queryStringCachingBehavior, queryParameters, compressionSettings, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FrontDoorRouteCacheConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FrontDoorRouteCacheConfiguration IPersistableModel<FrontDoorRouteCacheConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFrontDoorRouteCacheConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontDoorRouteCacheConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

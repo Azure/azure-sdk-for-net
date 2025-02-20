@@ -5,30 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformCustomContainer : IUtf8JsonSerializable
+    public partial class AppPlatformCustomContainer : IUtf8JsonSerializable, IJsonModel<AppPlatformCustomContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCustomContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformCustomContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("server");
+                writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
             if (Optional.IsDefined(ContainerImage))
             {
-                writer.WritePropertyName("containerImage");
+                writer.WritePropertyName("containerImage"u8);
                 writer.WriteStringValue(ContainerImage);
             }
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -38,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(Args))
             {
-                writer.WritePropertyName("args");
+                writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
                 foreach (var item in Args)
                 {
@@ -48,42 +66,75 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(ImageRegistryCredential))
             {
-                writer.WritePropertyName("imageRegistryCredential");
-                writer.WriteObjectValue(ImageRegistryCredential);
+                writer.WritePropertyName("imageRegistryCredential"u8);
+                writer.WriteObjectValue(ImageRegistryCredential, options);
             }
             if (Optional.IsDefined(LanguageFramework))
             {
-                writer.WritePropertyName("languageFramework");
+                writer.WritePropertyName("languageFramework"u8);
                 writer.WriteStringValue(LanguageFramework);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppPlatformCustomContainer DeserializeAppPlatformCustomContainer(JsonElement element)
+        AppPlatformCustomContainer IJsonModel<AppPlatformCustomContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> server = default;
-            Optional<string> containerImage = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
-            Optional<string> languageFramework = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformCustomContainer(document.RootElement, options);
+        }
+
+        internal static AppPlatformCustomContainer DeserializeAppPlatformCustomContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string server = default;
+            string containerImage = default;
+            IList<string> command = default;
+            IList<string> args = default;
+            AppPlatformImageRegistryCredential imageRegistryCredential = default;
+            string languageFramework = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("server"))
+                if (property.NameEquals("server"u8))
                 {
                     server = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerImage"))
+                if (property.NameEquals("containerImage"u8))
                 {
                     containerImage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("command"))
+                if (property.NameEquals("command"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -94,11 +145,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     command = array;
                     continue;
                 }
-                if (property.NameEquals("args"))
+                if (property.NameEquals("args"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -109,23 +159,65 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     args = array;
                     continue;
                 }
-                if (property.NameEquals("imageRegistryCredential"))
+                if (property.NameEquals("imageRegistryCredential"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value);
+                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("languageFramework"))
+                if (property.NameEquals("languageFramework"u8))
                 {
                     languageFramework = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformCustomContainer(server.Value, containerImage.Value, Optional.ToList(command), Optional.ToList(args), imageRegistryCredential.Value, languageFramework.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformCustomContainer(
+                server,
+                containerImage,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                imageRegistryCredential,
+                languageFramework,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformCustomContainer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformCustomContainer IPersistableModel<AppPlatformCustomContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformCustomContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformCustomContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,6 +15,18 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("EdmString")]
         public static SearchFieldDataType String { get; } = new SearchFieldDataType(StringValue);
 
+        /// <summary> Indicates that a field contains a 8-bit signed integer. This is only valid when used with Collection(Edm.SByte). </summary>
+        [CodeGenMember("EdmSByte")]
+        public static SearchFieldDataType SByte { get; } = new SearchFieldDataType(SByteValue);
+
+        /// <summary> Indicates that a field contains a 8-bit unsigned integer. This is only valid when used with Collection(Edm.Byte). </summary>
+        [CodeGenMember("EdmByte")]
+        public static SearchFieldDataType Byte { get; } = new SearchFieldDataType(ByteValue);
+
+        /// <summary> Indicates that a field contains a 16-bit signed integer. This is only valid when used with Collection(Edm.Int16). </summary>
+        [CodeGenMember("EdmInt16")]
+        public static SearchFieldDataType Int16 { get; } = new SearchFieldDataType(Int16Value);
+
         /// <summary>An <see cref="int"/> type, or something that can convert to an <see cref="int"/>.</summary>
         [CodeGenMember("EdmInt32")]
         public static SearchFieldDataType Int32 { get; } = new SearchFieldDataType(Int32Value);
@@ -43,6 +55,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>A complex type with child fields.</summary>
         [CodeGenMember("EdmComplexType")]
         public static SearchFieldDataType Complex { get; } = new SearchFieldDataType(ComplexValue);
+
+        /// <summary>A single type.</summary>
+        [CodeGenMember("EdmSingle")]
+        public static SearchFieldDataType Single { get; } = new SearchFieldDataType(SingleValue);
 
         /// <summary>
         /// Gets a <see cref="SearchFieldDataType"/> representing a collection of <paramref name="type"/>.

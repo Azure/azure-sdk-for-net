@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            var nsg = await CreateNetworkSecurityGroup(_resourceGroup, Recording.GenerateAssetName("nsg"));
-            var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
-            var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
-            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Id, Recording.GenerateAssetName("vm"));
+            string interfaceName = Recording.GenerateAssetName("networkInterface");
+            string vmName = Recording.GenerateAssetName("vm");
+            var networkInterface = await CreateNetworkInterface(_resourceGroup, interfaceName);
+            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Id, vmName);
             _softwareCollection = _resourceGroup.GetSoftwareInventories("Microsoft.Compute", "virtualMachines", vm.Id.Name);
         }
 

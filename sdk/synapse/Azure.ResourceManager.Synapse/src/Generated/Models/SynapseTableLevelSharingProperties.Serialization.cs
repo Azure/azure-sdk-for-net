@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseTableLevelSharingProperties : IUtf8JsonSerializable
+    public partial class SynapseTableLevelSharingProperties : IUtf8JsonSerializable, IJsonModel<SynapseTableLevelSharingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseTableLevelSharingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseTableLevelSharingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseTableLevelSharingProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(TablesToInclude))
             {
-                writer.WritePropertyName("tablesToInclude");
+                writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToInclude)
                 {
@@ -28,7 +46,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(TablesToExclude))
             {
-                writer.WritePropertyName("tablesToExclude");
+                writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToExclude)
                 {
@@ -38,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(ExternalTablesToInclude))
             {
-                writer.WritePropertyName("externalTablesToInclude");
+                writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalTablesToInclude)
                 {
@@ -48,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
-                writer.WritePropertyName("externalTablesToExclude");
+                writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalTablesToExclude)
                 {
@@ -58,7 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
             {
-                writer.WritePropertyName("materializedViewsToInclude");
+                writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaterializedViewsToInclude)
                 {
@@ -68,7 +86,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
             {
-                writer.WritePropertyName("materializedViewsToExclude");
+                writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaterializedViewsToExclude)
                 {
@@ -76,24 +94,57 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SynapseTableLevelSharingProperties DeserializeSynapseTableLevelSharingProperties(JsonElement element)
+        SynapseTableLevelSharingProperties IJsonModel<SynapseTableLevelSharingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> tablesToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseTableLevelSharingProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseTableLevelSharingProperties(document.RootElement, options);
+        }
+
+        internal static SynapseTableLevelSharingProperties DeserializeSynapseTableLevelSharingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> tablesToInclude = default;
+            IList<string> tablesToExclude = default;
+            IList<string> externalTablesToInclude = default;
+            IList<string> externalTablesToExclude = default;
+            IList<string> materializedViewsToInclude = default;
+            IList<string> materializedViewsToExclude = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tablesToInclude"))
+                if (property.NameEquals("tablesToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -104,11 +155,10 @@ namespace Azure.ResourceManager.Synapse.Models
                     tablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("tablesToExclude"))
+                if (property.NameEquals("tablesToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -119,11 +169,10 @@ namespace Azure.ResourceManager.Synapse.Models
                     tablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToInclude"))
+                if (property.NameEquals("externalTablesToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -134,11 +183,10 @@ namespace Azure.ResourceManager.Synapse.Models
                     externalTablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToExclude"))
+                if (property.NameEquals("externalTablesToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -149,11 +197,10 @@ namespace Azure.ResourceManager.Synapse.Models
                     externalTablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToInclude"))
+                if (property.NameEquals("materializedViewsToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -164,11 +211,10 @@ namespace Azure.ResourceManager.Synapse.Models
                     materializedViewsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToExclude"))
+                if (property.NameEquals("materializedViewsToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -179,8 +225,51 @@ namespace Azure.ResourceManager.Synapse.Models
                     materializedViewsToExclude = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseTableLevelSharingProperties(
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseTableLevelSharingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseTableLevelSharingProperties IPersistableModel<SynapseTableLevelSharingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseTableLevelSharingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseTableLevelSharingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseTableLevelSharingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,54 +22,6 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class JobOperationsExtensions
     {
             /// <summary>
-            /// Gets lifetime summary statistics for all of the Jobs in the specified
-            /// Account.
-            /// </summary>
-            /// <remarks>
-            /// Statistics are aggregated across all Jobs that have ever existed in the
-            /// Account, from Account creation to the last update time of the statistics.
-            /// The statistics may not be immediately available. The Batch service performs
-            /// periodic roll-up of statistics. The typical delay is about 30 minutes.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='jobGetAllLifetimeStatisticsOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static JobStatistics GetAllLifetimeStatistics(this IJobOperations operations, JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions))
-            {
-                return operations.GetAllLifetimeStatisticsAsync(jobGetAllLifetimeStatisticsOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets lifetime summary statistics for all of the Jobs in the specified
-            /// Account.
-            /// </summary>
-            /// <remarks>
-            /// Statistics are aggregated across all Jobs that have ever existed in the
-            /// Account, from Account creation to the last update time of the statistics.
-            /// The statistics may not be immediately available. The Batch service performs
-            /// periodic roll-up of statistics. The typical delay is about 30 minutes.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='jobGetAllLifetimeStatisticsOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<JobStatistics> GetAllLifetimeStatisticsAsync(this IJobOperations operations, JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetAllLifetimeStatisticsWithHttpMessagesAsync(jobGetAllLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a Job.
             /// </summary>
             /// <remarks>

@@ -5,12 +5,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples
     {
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task TrainModelWithForms()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -23,12 +25,12 @@ namespace Azure.AI.FormRecognizer.Samples
             // managed identity configured.
             //
             // For instructions on setting up forms for training in an Azure Blob Storage Container, see
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
+            // https://learn.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 #if SNIPPET
             Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 

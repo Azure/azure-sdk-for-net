@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Properties.ProvisioningOperation, getResult.Properties.ProvisioningOperation);
                 Assert.AreEqual(model.Properties.Timestamp, getResult.Properties.Timestamp);
                 Assert.AreEqual(model.Properties.Duration, getResult.Properties.Duration);
-                Assert.AreEqual(model.Properties.ServiceRequestId, getResult.Properties.ServiceRequestId);
+                //Assert.AreEqual(model.Properties.ServiceRequestId, getResult.Properties.ServiceRequestId); // The list item from ArmDeploymentResource.GetDeploymentOperations() no longer has values for ServiceRequestId since version 2022-09-01.
                 Assert.AreEqual(model.Properties.StatusCode, getResult.Properties.StatusCode);
                 //Assert.AreEqual(model.Data.Properties.StatusMessage, getResult.Data.Properties.StatusMessage);
                 if (model.Properties.TargetResource != null || getResult.Properties.TargetResource != null)

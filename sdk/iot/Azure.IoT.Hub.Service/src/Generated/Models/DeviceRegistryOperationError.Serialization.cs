@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -14,45 +13,56 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element)
         {
-            Optional<string> deviceId = default;
-            Optional<DeviceRegistryOperationErrorCode> errorCode = default;
-            Optional<string> errorStatus = default;
-            Optional<string> moduleId = default;
-            Optional<string> operation = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string deviceId = default;
+            DeviceRegistryOperationErrorCode? errorCode = default;
+            string errorStatus = default;
+            string moduleId = default;
+            string operation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = new DeviceRegistryOperationErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorStatus"))
+                if (property.NameEquals("errorStatus"u8))
                 {
                     errorStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("moduleId"))
+                if (property.NameEquals("moduleId"u8))
                 {
                     moduleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     operation = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeviceRegistryOperationError(deviceId.Value, Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value);
+            return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceRegistryOperationError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceRegistryOperationError(document.RootElement);
         }
     }
 }

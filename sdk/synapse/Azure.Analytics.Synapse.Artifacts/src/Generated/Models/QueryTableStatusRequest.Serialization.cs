@@ -20,15 +20,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSegmentCount))
             {
-                writer.WritePropertyName("maxSegmentCount");
+                writer.WritePropertyName("maxSegmentCount"u8);
                 writer.WriteNumberValue(MaxSegmentCount.Value);
             }
             if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("continuationToken");
-                writer.WriteObjectValue(ContinuationToken);
+                writer.WritePropertyName("continuationToken"u8);
+                writer.WriteObjectValue<object>(ContinuationToken);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class QueryTableStatusRequestConverter : JsonConverter<QueryTableStatusRequest>
@@ -37,6 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override QueryTableStatusRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

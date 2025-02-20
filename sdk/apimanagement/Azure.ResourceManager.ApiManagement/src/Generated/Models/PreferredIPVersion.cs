@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(PreferredIPVersion left, PreferredIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are not the same. </summary>
         public static bool operator !=(PreferredIPVersion left, PreferredIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PreferredIPVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredIPVersion"/>. </summary>
         public static implicit operator PreferredIPVersion(string value) => new PreferredIPVersion(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

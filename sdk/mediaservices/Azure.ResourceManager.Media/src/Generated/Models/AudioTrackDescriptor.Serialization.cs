@@ -5,57 +5,129 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioTrackDescriptor : IUtf8JsonSerializable
+    public partial class AudioTrackDescriptor : IUtf8JsonSerializable, IJsonModel<AudioTrackDescriptor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTrackDescriptor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AudioTrackDescriptor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChannelMapping))
-            {
-                writer.WritePropertyName("channelMapping");
-                writer.WriteStringValue(ChannelMapping.Value.ToString());
-            }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AudioTrackDescriptor DeserializeAudioTrackDescriptor(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AudioTrackDescriptor)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ChannelMapping))
+            {
+                writer.WritePropertyName("channelMapping"u8);
+                writer.WriteStringValue(ChannelMapping.Value.ToString());
+            }
+        }
+
+        AudioTrackDescriptor IJsonModel<AudioTrackDescriptor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AudioTrackDescriptor)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAudioTrackDescriptor(document.RootElement, options);
+        }
+
+        internal static AudioTrackDescriptor DeserializeAudioTrackDescriptor(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element);
+                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element, options);
                 }
             }
-            Optional<ChannelMapping> channelMapping = default;
+            ChannelMapping? channelMapping = default;
             string odataType = "#Microsoft.Media.AudioTrackDescriptor";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelMapping"))
+                if (property.NameEquals("channelMapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channelMapping = new ChannelMapping(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AudioTrackDescriptor(odataType, Optional.ToNullable(channelMapping));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AudioTrackDescriptor(odataType, serializedAdditionalRawData, channelMapping);
         }
+
+        BinaryData IPersistableModel<AudioTrackDescriptor>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AudioTrackDescriptor)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AudioTrackDescriptor IPersistableModel<AudioTrackDescriptor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AudioTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAudioTrackDescriptor(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AudioTrackDescriptor)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AudioTrackDescriptor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

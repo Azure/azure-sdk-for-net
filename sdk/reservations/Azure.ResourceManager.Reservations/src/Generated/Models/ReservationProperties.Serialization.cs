@@ -6,78 +6,317 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationProperties
+    public partial class ReservationProperties : IUtf8JsonSerializable, IJsonModel<ReservationProperties>
     {
-        internal static ReservationProperties DeserializeReservationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ReservationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<InstanceFlexibility> instanceFlexibility = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> appliedScopes = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<bool> archived = default;
-            Optional<string> capabilities = default;
-            Optional<int> quantity = default;
-            Optional<ReservationProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> effectiveDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<DateTimeOffset> lastUpdatedDateTime = default;
-            Optional<DateTimeOffset> expiryDate = default;
-            Optional<string> skuDescription = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<string> displayProvisioningState = default;
-            Optional<string> provisioningSubState = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<ReservationSplitProperties> splitProperties = default;
-            Optional<ReservationMergeProperties> mergeProperties = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<bool> renew = default;
-            Optional<string> renewSource = default;
-            Optional<string> renewDestination = default;
-            Optional<RenewProperties> renewProperties = default;
-            Optional<ReservationTerm> term = default;
-            Optional<string> userFriendlyAppliedScopeType = default;
-            Optional<string> userFriendlyRenewState = default;
-            Optional<ReservationPropertiesUtilization> utilization = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ReservedResourceType))
+            {
+                writer.WritePropertyName("reservedResourceType"u8);
+                writer.WriteStringValue(ReservedResourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(InstanceFlexibility))
+            {
+                writer.WritePropertyName("instanceFlexibility"u8);
+                writer.WriteStringValue(InstanceFlexibility.Value.ToString());
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(AppliedScopes))
+            {
+                writer.WritePropertyName("appliedScopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppliedScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AppliedScopeType))
+            {
+                writer.WritePropertyName("appliedScopeType"u8);
+                writer.WriteStringValue(AppliedScopeType.Value.ToString());
+            }
+            if (Optional.IsDefined(IsArchived))
+            {
+                writer.WritePropertyName("archived"u8);
+                writer.WriteBooleanValue(IsArchived.Value);
+            }
+            if (Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStringValue(Capabilities);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(EffectOn))
+            {
+                writer.WritePropertyName("effectiveDateTime"u8);
+                writer.WriteStringValue(EffectOn.Value, "O");
+            }
+            if (Optional.IsDefined(BenefitStartOn))
+            {
+                writer.WritePropertyName("benefitStartTime"u8);
+                writer.WriteStringValue(BenefitStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedDateTime"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "D");
+            }
+            if (Optional.IsDefined(ReservationExpireOn))
+            {
+                writer.WritePropertyName("expiryDateTime"u8);
+                writer.WriteStringValue(ReservationExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(ReviewOn))
+            {
+                writer.WritePropertyName("reviewDateTime"u8);
+                writer.WriteStringValue(ReviewOn.Value, "O");
+            }
+            if (Optional.IsDefined(SkuDescription))
+            {
+                writer.WritePropertyName("skuDescription"u8);
+                writer.WriteStringValue(SkuDescription);
+            }
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                writer.WritePropertyName("extendedStatusInfo"u8);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
+            }
+            if (Optional.IsDefined(BillingPlan))
+            {
+                writer.WritePropertyName("billingPlan"u8);
+                writer.WriteStringValue(BillingPlan.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayProvisioningState))
+            {
+                writer.WritePropertyName("displayProvisioningState"u8);
+                writer.WriteStringValue(DisplayProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningSubState))
+            {
+                writer.WritePropertyName("provisioningSubState"u8);
+                writer.WriteStringValue(ProvisioningSubState);
+            }
+            if (Optional.IsDefined(PurchaseOn))
+            {
+                writer.WritePropertyName("purchaseDate"u8);
+                writer.WriteStringValue(PurchaseOn.Value, "D");
+            }
+            if (Optional.IsDefined(ReservationPurchaseOn))
+            {
+                writer.WritePropertyName("purchaseDateTime"u8);
+                writer.WriteStringValue(ReservationPurchaseOn.Value, "O");
+            }
+            if (Optional.IsDefined(SplitProperties))
+            {
+                writer.WritePropertyName("splitProperties"u8);
+                writer.WriteObjectValue(SplitProperties, options);
+            }
+            if (Optional.IsDefined(MergeProperties))
+            {
+                writer.WritePropertyName("mergeProperties"u8);
+                writer.WriteObjectValue(MergeProperties, options);
+            }
+            if (Optional.IsDefined(SwapProperties))
+            {
+                writer.WritePropertyName("swapProperties"u8);
+                writer.WriteObjectValue(SwapProperties, options);
+            }
+            if (Optional.IsDefined(AppliedScopeProperties))
+            {
+                writer.WritePropertyName("appliedScopeProperties"u8);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
+            }
+            if (Optional.IsDefined(BillingScopeId))
+            {
+                writer.WritePropertyName("billingScopeId"u8);
+                writer.WriteStringValue(BillingScopeId);
+            }
+            if (Optional.IsDefined(IsRenewEnabled))
+            {
+                writer.WritePropertyName("renew"u8);
+                writer.WriteBooleanValue(IsRenewEnabled.Value);
+            }
+            if (Optional.IsDefined(RenewSource))
+            {
+                writer.WritePropertyName("renewSource"u8);
+                writer.WriteStringValue(RenewSource);
+            }
+            if (Optional.IsDefined(RenewDestination))
+            {
+                writer.WritePropertyName("renewDestination"u8);
+                writer.WriteStringValue(RenewDestination);
+            }
+            if (Optional.IsDefined(RenewProperties))
+            {
+                writer.WritePropertyName("renewProperties"u8);
+                writer.WriteObjectValue(RenewProperties, options);
+            }
+            if (Optional.IsDefined(Term))
+            {
+                writer.WritePropertyName("term"u8);
+                writer.WriteStringValue(Term.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserFriendlyAppliedScopeType))
+            {
+                writer.WritePropertyName("userFriendlyAppliedScopeType"u8);
+                writer.WriteStringValue(UserFriendlyAppliedScopeType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserFriendlyRenewState))
+            {
+                writer.WritePropertyName("userFriendlyRenewState"u8);
+                writer.WriteStringValue(UserFriendlyRenewState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Utilization))
+            {
+                writer.WritePropertyName("utilization"u8);
+                writer.WriteObjectValue(Utilization, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ReservationProperties IJsonModel<ReservationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationProperties(document.RootElement, options);
+        }
+
+        internal static ReservationProperties DeserializeReservationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ReservedResourceType? reservedResourceType = default;
+            InstanceFlexibility? instanceFlexibility = default;
+            string displayName = default;
+            IReadOnlyList<string> appliedScopes = default;
+            AppliedScopeType? appliedScopeType = default;
+            bool? archived = default;
+            string capabilities = default;
+            int? quantity = default;
+            ReservationProvisioningState? provisioningState = default;
+            DateTimeOffset? effectiveDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            DateTimeOffset? lastUpdatedDateTime = default;
+            DateTimeOffset? expiryDate = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? reviewDateTime = default;
+            string skuDescription = default;
+            ExtendedStatusInfo extendedStatusInfo = default;
+            ReservationBillingPlan? billingPlan = default;
+            string displayProvisioningState = default;
+            string provisioningSubState = default;
+            DateTimeOffset? purchaseDate = default;
+            DateTimeOffset? purchaseDateTime = default;
+            ReservationSplitProperties splitProperties = default;
+            ReservationMergeProperties mergeProperties = default;
+            ReservationSwapProperties swapProperties = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            ResourceIdentifier billingScopeId = default;
+            bool? renew = default;
+            string renewSource = default;
+            string renewDestination = default;
+            RenewProperties renewProperties = default;
+            ReservationTerm? term = default;
+            string userFriendlyAppliedScopeType = default;
+            string userFriendlyRenewState = default;
+            ReservationPropertiesUtilization utilization = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reservedResourceType"))
+                if (property.NameEquals("reservedResourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservedResourceType = new ReservedResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceFlexibility"))
+                if (property.NameEquals("instanceFlexibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instanceFlexibility = new InstanceFlexibility(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appliedScopes"))
+                if (property.NameEquals("appliedScopes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -88,228 +327,327 @@ namespace Azure.ResourceManager.Reservations.Models
                     appliedScopes = array;
                     continue;
                 }
-                if (property.NameEquals("appliedScopeType"))
+                if (property.NameEquals("appliedScopeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appliedScopeType = new AppliedScopeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("archived"))
+                if (property.NameEquals("archived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     archived = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quantity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ReservationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("effectiveDateTime"))
+                if (property.NameEquals("effectiveDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("benefitStartTime"))
+                if (property.NameEquals("benefitStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     benefitStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedDateTime"))
+                if (property.NameEquals("lastUpdatedDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiryDate"))
+                if (property.NameEquals("expiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("skuDescription"))
+                if (property.NameEquals("expiryDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiryDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("reviewDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reviewDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("skuDescription"u8))
                 {
                     skuDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedStatusInfo"))
+                if (property.NameEquals("extendedStatusInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("billingPlan"))
+                if (property.NameEquals("billingPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingPlan = new ReservationBillingPlan(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayProvisioningState"))
+                if (property.NameEquals("displayProvisioningState"u8))
                 {
                     displayProvisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningSubState"))
+                if (property.NameEquals("provisioningSubState"u8))
                 {
                     provisioningSubState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("purchaseDate"))
+                if (property.NameEquals("purchaseDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     purchaseDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("splitProperties"))
+                if (property.NameEquals("purchaseDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value);
+                    purchaseDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("mergeProperties"))
+                if (property.NameEquals("splitProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value);
+                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("billingScopeId"))
+                if (property.NameEquals("mergeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("swapProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("appliedScopeProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("billingScopeId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     billingScopeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("renew"))
+                if (property.NameEquals("renew"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     renew = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("renewSource"))
+                if (property.NameEquals("renewSource"u8))
                 {
                     renewSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renewDestination"))
+                if (property.NameEquals("renewDestination"u8))
                 {
                     renewDestination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renewProperties"))
+                if (property.NameEquals("renewProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value);
+                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("term"))
+                if (property.NameEquals("term"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     term = new ReservationTerm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userFriendlyAppliedScopeType"))
+                if (property.NameEquals("userFriendlyAppliedScopeType"u8))
                 {
                     userFriendlyAppliedScopeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userFriendlyRenewState"))
+                if (property.NameEquals("userFriendlyRenewState"u8))
                 {
                     userFriendlyRenewState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("utilization"))
+                if (property.NameEquals("utilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value);
+                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), splitProperties.Value, mergeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReservationProperties(
+                reservedResourceType,
+                instanceFlexibility,
+                displayName,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeType,
+                archived,
+                capabilities,
+                quantity,
+                provisioningState,
+                effectiveDateTime,
+                benefitStartTime,
+                lastUpdatedDateTime,
+                expiryDate,
+                expiryDateTime,
+                reviewDateTime,
+                skuDescription,
+                extendedStatusInfo,
+                billingPlan,
+                displayProvisioningState,
+                provisioningSubState,
+                purchaseDate,
+                purchaseDateTime,
+                splitProperties,
+                mergeProperties,
+                swapProperties,
+                appliedScopeProperties,
+                billingScopeId,
+                renew,
+                renewSource,
+                renewDestination,
+                renewProperties,
+                term,
+                userFriendlyAppliedScopeType,
+                userFriendlyRenewState,
+                utilization,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReservationProperties IPersistableModel<ReservationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

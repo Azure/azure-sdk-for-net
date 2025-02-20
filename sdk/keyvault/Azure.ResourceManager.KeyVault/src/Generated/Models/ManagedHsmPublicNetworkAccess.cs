@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+    /// <summary> Control permission to the managed HSM from public networks. </summary>
     public readonly partial struct ManagedHsmPublicNetworkAccess : IEquatable<ManagedHsmPublicNetworkAccess>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmPublicNetworkAccess left, ManagedHsmPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmPublicNetworkAccess left, ManagedHsmPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmPublicNetworkAccess"/>. </summary>
         public static implicit operator ManagedHsmPublicNetworkAccess(string value) => new ManagedHsmPublicNetworkAccess(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

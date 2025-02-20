@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
@@ -15,39 +16,59 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("x");
+            writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
-            writer.WritePropertyName("y");
+            writer.WritePropertyName("y"u8);
             writer.WriteNumberValue(Y);
-            writer.WritePropertyName("z");
+            writer.WritePropertyName("z"u8);
             writer.WriteNumberValue(Z);
             writer.WriteEndObject();
         }
 
         internal static Vector3 DeserializeVector3(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             float x = default;
             float y = default;
             float z = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x"))
+                if (property.NameEquals("x"u8))
                 {
                     x = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("y"))
+                if (property.NameEquals("y"u8))
                 {
                     y = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("z"))
+                if (property.NameEquals("z"u8))
                 {
                     z = property.Value.GetSingle();
                     continue;
                 }
             }
             return new Vector3(x, y, z);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Vector3 FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVector3(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

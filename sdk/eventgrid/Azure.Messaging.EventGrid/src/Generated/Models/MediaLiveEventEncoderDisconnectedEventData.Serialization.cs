@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,40 +16,52 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventEncoderDisconnectedEventData DeserializeMediaLiveEventEncoderDisconnectedEventData(JsonElement element)
         {
-            Optional<string> ingestUrl = default;
-            Optional<string> streamId = default;
-            Optional<string> encoderIp = default;
-            Optional<string> encoderPort = default;
-            Optional<string> resultCode = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string ingestUrl = default;
+            string streamId = default;
+            string encoderIp = default;
+            string encoderPort = default;
+            string resultCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestUrl"))
+                if (property.NameEquals("ingestUrl"u8))
                 {
                     ingestUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streamId"))
+                if (property.NameEquals("streamId"u8))
                 {
                     streamId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderIp"))
+                if (property.NameEquals("encoderIp"u8))
                 {
                     encoderIp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderPort"))
+                if (property.NameEquals("encoderPort"u8))
                 {
                     encoderPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultCode"))
+                if (property.NameEquals("resultCode"u8))
                 {
                     resultCode = property.Value.GetString();
                     continue;
                 }
             }
-            return new MediaLiveEventEncoderDisconnectedEventData(ingestUrl.Value, streamId.Value, encoderIp.Value, encoderPort.Value, resultCode.Value);
+            return new MediaLiveEventEncoderDisconnectedEventData(ingestUrl, streamId, encoderIp, encoderPort, resultCode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventEncoderDisconnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventEncoderDisconnectedEventData(document.RootElement);
         }
 
         internal partial class MediaLiveEventEncoderDisconnectedEventDataConverter : JsonConverter<MediaLiveEventEncoderDisconnectedEventData>
@@ -59,6 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventEncoderDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

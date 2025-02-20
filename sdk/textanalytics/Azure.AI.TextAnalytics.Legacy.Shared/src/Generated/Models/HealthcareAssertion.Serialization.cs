@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -15,43 +14,52 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element)
         {
-            Optional<Conditionality> conditionality = default;
-            Optional<Certainty> certainty = default;
-            Optional<Association> association = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Conditionality? conditionality = default;
+            Certainty? certainty = default;
+            Association? association = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conditionality"))
+                if (property.NameEquals("conditionality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conditionality = property.Value.GetString().ToConditionality();
                     continue;
                 }
-                if (property.NameEquals("certainty"))
+                if (property.NameEquals("certainty"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certainty = property.Value.GetString().ToCertainty();
                     continue;
                 }
-                if (property.NameEquals("association"))
+                if (property.NameEquals("association"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     association = property.Value.GetString().ToAssociation();
                     continue;
                 }
             }
-            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareAssertion(conditionality, certainty, association);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareAssertion FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareAssertion(document.RootElement);
         }
     }
 }

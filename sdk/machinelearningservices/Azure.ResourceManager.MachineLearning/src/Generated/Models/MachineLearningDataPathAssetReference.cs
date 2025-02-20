@@ -5,31 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Reference to an asset via its path in a datastore. </summary>
     public partial class MachineLearningDataPathAssetReference : MachineLearningAssetReferenceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningDataPathAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataPathAssetReference"/>. </summary>
         public MachineLearningDataPathAssetReference()
         {
             ReferenceType = ReferenceType.DataPath;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataPathAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataPathAssetReference"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="datastoreId"> ARM resource ID of the datastore where the asset is located. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> The path of the file/directory in the datastore. </param>
-        internal MachineLearningDataPathAssetReference(ReferenceType referenceType, string datastoreId, string path) : base(referenceType)
+        /// <param name="datastoreId"> ARM resource ID of the datastore where the asset is located. </param>
+        internal MachineLearningDataPathAssetReference(ReferenceType referenceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string path, string datastoreId) : base(referenceType, serializedAdditionalRawData)
         {
-            DatastoreId = datastoreId;
             Path = path;
+            DatastoreId = datastoreId;
             ReferenceType = referenceType;
         }
 
-        /// <summary> ARM resource ID of the datastore where the asset is located. </summary>
-        public string DatastoreId { get; set; }
         /// <summary> The path of the file/directory in the datastore. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
+        /// <summary> ARM resource ID of the datastore where the asset is located. </summary>
+        [WirePath("datastoreId")]
+        public string DatastoreId { get; set; }
     }
 }

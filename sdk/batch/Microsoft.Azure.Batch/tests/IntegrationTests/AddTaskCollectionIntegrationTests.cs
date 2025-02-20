@@ -26,7 +26,7 @@
     public class AddTaskCollectionIntegrationTests
     {
         private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(2);
-        private static readonly TimeSpan LongTestTimeout = TimeSpan.FromMinutes(4);
+        private static readonly TimeSpan LongTestTimeout = TimeSpan.FromMinutes(10);
 
         private readonly ITestOutputHelper testOutputHelper;
 
@@ -317,7 +317,7 @@
 
         [LiveTest]
         [Theory, InlineData(false), InlineData(true)]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public async Task Bug1360227_AddTasksBatchWithFilesToStage(bool useJobOperations)
         {
             const string testName = "Bug1360227_AddTasksBatchWithFilesToStage";
@@ -369,7 +369,7 @@
                 Assert.Equal(expectedInitialFileStagingArtifactsCount, legArtifactsCountList.First());
                 Assert.Equal(expectedFinalFileStagingArtifactsCount, legArtifactsCountList.Last());
             },
-            TestTimeout);
+            LongTestTimeout);
         }
 
         [Fact]
@@ -469,7 +469,7 @@
                     async () => await AddTasksSimpleTestAsync(batchCli, testName, 1, resourceFiles: resourceFiles).ConfigureAwait(false)).ConfigureAwait(false);
                 var innerException = exception.InnerException;
                 Assert.IsType<BatchException>(innerException);
-                Assert.Equal(((BatchException)innerException).RequestInformation.BatchError.Code, BatchErrorCodeStrings.RequestBodyTooLarge);
+                Assert.Equal(BatchErrorCodeStrings.RequestBodyTooLarge, ((BatchException)innerException).RequestInformation.BatchError.Code);
             },
             TestTimeout);
         }

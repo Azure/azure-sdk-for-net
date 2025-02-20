@@ -14,24 +14,57 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The security profile which contains Ssh public key for the HDInsight cluster. </summary>
     public partial class HDInsightSecurityProfile
     {
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         public HDInsightSecurityProfile()
         {
             LdapUris = new ChangeTrackingList<Uri>();
             ClusterUsersGroupDNs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         /// <param name="directoryType"> The directory type. </param>
-        /// <param name="domain"> The organization&apos;s active directory domain. </param>
+        /// <param name="domain"> The organization's active directory domain. </param>
         /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
         /// <param name="ldapUris"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
         /// <param name="domainUsername"> The domain user account that will have admin privileges on the cluster. </param>
         /// <param name="domainUserPassword"> The domain admin password. </param>
         /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
-        /// <param name="aaddsResourceId"> The resource ID of the user&apos;s Azure Active Directory Domain Service. </param>
-        /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </param>
-        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId)
+        /// <param name="aaddsResourceId"> The resource ID of the user's Azure Active Directory Domain Service. </param>
+        /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DirectoryType = directoryType;
             Domain = domain;
@@ -42,11 +75,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             ClusterUsersGroupDNs = clusterUsersGroupDNs;
             AaddsResourceId = aaddsResourceId;
             MsiResourceId = msiResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The directory type. </summary>
         public AuthenticationDirectoryType? DirectoryType { get; set; }
-        /// <summary> The organization&apos;s active directory domain. </summary>
+        /// <summary> The organization's active directory domain. </summary>
         public string Domain { get; set; }
         /// <summary> The organizational unit within the Active Directory to place the cluster and service accounts. </summary>
         public string OrganizationalUnitDN { get; set; }
@@ -58,9 +92,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string DomainUserPassword { get; set; }
         /// <summary> Optional. The Distinguished Names for cluster user groups. </summary>
         public IList<string> ClusterUsersGroupDNs { get; }
-        /// <summary> The resource ID of the user&apos;s Azure Active Directory Domain Service. </summary>
+        /// <summary> The resource ID of the user's Azure Active Directory Domain Service. </summary>
         public ResourceIdentifier AaddsResourceId { get; set; }
-        /// <summary> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </summary>
+        /// <summary> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
     }
 }

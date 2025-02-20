@@ -5,22 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class MigrationProviderSpecificSettings
+    [PersistableModelProxy(typeof(UnknownMigrationProviderSpecificSettings))]
+    public partial class MigrationProviderSpecificSettings : IUtf8JsonSerializable, IJsonModel<MigrationProviderSpecificSettings>
     {
-        internal static MigrationProviderSpecificSettings DeserializeMigrationProviderSpecificSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationProviderSpecificSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MigrationProviderSpecificSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MigrationProviderSpecificSettings IJsonModel<MigrationProviderSpecificSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrationProviderSpecificSettings(document.RootElement, options);
+        }
+
+        internal static MigrationProviderSpecificSettings DeserializeMigrationProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "VMwareCbt": return VMwareCbtMigrationDetails.DeserializeVMwareCbtMigrationDetails(element);
+                    case "VMwareCbt": return VMwareCbtMigrationDetails.DeserializeVMwareCbtMigrationDetails(element, options);
                 }
             }
-            return UnknownMigrationProviderSpecificSettings.DeserializeUnknownMigrationProviderSpecificSettings(element);
+            return UnknownMigrationProviderSpecificSettings.DeserializeUnknownMigrationProviderSpecificSettings(element, options);
         }
+
+        BinaryData IPersistableModel<MigrationProviderSpecificSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrationProviderSpecificSettings IPersistableModel<MigrationProviderSpecificSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrationProviderSpecificSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrationProviderSpecificSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

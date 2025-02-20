@@ -65,8 +65,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 case RequestType.Connect:
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
-                        var eventRequest = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates);
+                        if (context is MqttConnectionContext mqttContext)
+                        {
+                            var requestBody = JsonSerializer.Deserialize<MqttConnectEventRequestContent>(content);
+                            return new MqttConnectEventRequest(mqttContext, requestBody.Claims, requestBody.Query, requestBody.ClientCertificates, requestBody.Headers, requestBody.Mqtt);
+                        }
+                        else
+                        {
+                            var requestBody = JsonSerializer.Deserialize<ConnectEventRequest>(content);
+                            return new ConnectEventRequest(context, requestBody.Claims, requestBody.Query, requestBody.Subprotocols, requestBody.ClientCertificates, requestBody.Headers);
+                        }
                     }
                 case RequestType.User:
                     {
@@ -86,8 +94,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 case RequestType.Disconnected:
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
-                        var eventRequest = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
-                        return new DisconnectedEventRequest(context, eventRequest.Reason);
+                        if (context is MqttConnectionContext mqttContext)
+                        {
+                            var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestContent>(content);
+                            return new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
+                        }
+                        else
+                        {
+                            var requestBody = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
+                            return new DisconnectedEventRequest(context, requestBody.Reason);
+                        }
                     }
                 default:
                     return null;
@@ -101,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Any())
                 {
-                    requestHosts = requestOrigin.ToList();
+                    requestHosts = requestOrigin.SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries)).ToList();
                     return true;
                 }
             }
@@ -116,26 +132,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return true;
             }
-
-            if (options.TryGetKey(connectionContext.Origin, out var accessKey))
+            foreach (var origin in connectionContext.Origin.ToHeaderList())
             {
-                // server side disable signature checks.
-                if (string.IsNullOrEmpty(accessKey))
+                if (options.TryGetKey(origin, out var accessKey))
                 {
-                    return true;
-                }
+                    // server side disable signature checks.
+                    if (string.IsNullOrEmpty(accessKey))
+                    {
+                        return true;
+                    }
 
-                var signatures = connectionContext.Signature.ToHeaderList();
-                if (signatures == null)
-                {
-                    return false;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
+                    var signatures = connectionContext.Signature.ToHeaderList();
+                    if (signatures == null)
+                    {
+                        return false;
+                    }
+                    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                    var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
+                    var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                    if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -218,6 +236,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     states = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.State).DecodeConnectionStates();
                 }
 
+                if (Constants.MqttWebSocketSubprotocolValue.Equals(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Subprotocol)))
+                {
+                    var physicalConnectionId = request.Headers[Constants.Headers.CloudEvents.MqttPhysicalConnectionId];
+                    if (physicalConnectionId.Count != 0)
+                    {
+                        var sessionId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.MqttSessionId);
+                        connectionContext = new MqttConnectionContext(eventType, eventName, hub, connectionId, physicalConnectionId.First(), sessionId, userId, signature, origin, states, headers);
+                        return true;
+                    }
+                }
                 connectionContext = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
                 return true;
             }

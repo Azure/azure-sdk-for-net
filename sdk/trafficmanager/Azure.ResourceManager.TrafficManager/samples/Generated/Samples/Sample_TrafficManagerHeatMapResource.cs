@@ -10,20 +10,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Samples
 {
     public partial class Sample_TrafficManagerHeatMapResource
     {
-        // HeatMap-GET
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HeatMapGET()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/HeatMap-GET.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +48,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HeatMap-GET-With-Null-Values
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HeatMapGETWithNullValues()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/HeatMap-GET-With-Null-Values.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-Null-Values.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,12 +79,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // HeatMap-GET-With-TopLeft-BotRight
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HeatMapGETWithTopLeftBotRight()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2022-04-01-preview/examples/HeatMap-GET-With-TopLeft-BotRight.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-TopLeft-BotRight.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,14 +101,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             TrafficManagerHeatMapResource trafficManagerHeatMap = client.GetTrafficManagerHeatMapResource(trafficManagerHeatMapResourceId);
 
             // invoke the operation
-            IEnumerable<double> topLeft = new double[]
-            {
-10,50.001
-            };
-            IEnumerable<double> botRight = new double[]
-            {
--50.001,80
-            };
+            IEnumerable<double> topLeft = new double[] { 10, 50.001 };
+            IEnumerable<double> botRight = new double[] { -50.001, 80 };
             TrafficManagerHeatMapResource result = await trafficManagerHeatMap.GetAsync(topLeft: topLeft, botRight: botRight);
 
             // the variable result is a resource, you could call other operations on this instance as well

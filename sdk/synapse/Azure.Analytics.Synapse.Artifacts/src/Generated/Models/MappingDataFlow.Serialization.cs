@@ -19,33 +19,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Sources))
             {
-                writer.WritePropertyName("sources");
+                writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
@@ -55,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Sinks))
             {
-                writer.WritePropertyName("sinks");
+                writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
@@ -65,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Transformations))
             {
-                writer.WritePropertyName("transformations");
+                writer.WritePropertyName("transformations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transformations)
                 {
@@ -75,12 +80,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(Script))
             {
-                writer.WritePropertyName("script");
+                writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
             if (Optional.IsCollectionDefined(ScriptLines))
             {
-                writer.WritePropertyName("scriptLines");
+                writer.WritePropertyName("scriptLines"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScriptLines)
                 {
@@ -94,53 +99,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static MappingDataFlow DeserializeMappingDataFlow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            Optional<IList<DataFlowSource>> sources = default;
-            Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<Transformation>> transformations = default;
-            Optional<string> script = default;
-            Optional<IList<string>> scriptLines = default;
+            string description = default;
+            IList<object> annotations = default;
+            DataFlowFolder folder = default;
+            IList<DataFlowSource> sources = default;
+            IList<DataFlowSink> sinks = default;
+            IList<Transformation> transformations = default;
+            string script = default;
+            IList<string> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,11 +163,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sources"))
+                        if (property0.NameEquals("sources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataFlowSource> array = new List<DataFlowSource>();
@@ -164,11 +177,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sources = array;
                             continue;
                         }
-                        if (property0.NameEquals("sinks"))
+                        if (property0.NameEquals("sinks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataFlowSink> array = new List<DataFlowSink>();
@@ -179,11 +191,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sinks = array;
                             continue;
                         }
-                        if (property0.NameEquals("transformations"))
+                        if (property0.NameEquals("transformations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Transformation> array = new List<Transformation>();
@@ -194,16 +205,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             transformations = array;
                             continue;
                         }
-                        if (property0.NameEquals("script"))
+                        if (property0.NameEquals("script"u8))
                         {
                             script = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("scriptLines"))
+                        if (property0.NameEquals("scriptLines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -218,7 +228,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            return new MappingDataFlow(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<Transformation>(),
+                script,
+                scriptLines ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MappingDataFlow FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMappingDataFlow(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>
@@ -227,6 +262,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override MappingDataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

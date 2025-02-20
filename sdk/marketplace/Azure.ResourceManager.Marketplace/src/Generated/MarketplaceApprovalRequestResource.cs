@@ -9,23 +9,23 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Marketplace.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A Class representing a MarketplaceApprovalRequest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MarketplaceApprovalRequestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMarketplaceApprovalRequestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource" /> using the GetMarketplaceApprovalRequest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MarketplaceApprovalRequestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMarketplaceApprovalRequestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource"/> using the GetMarketplaceApprovalRequest method.
     /// </summary>
     public partial class MarketplaceApprovalRequestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MarketplaceApprovalRequestResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
+        /// <param name="requestApprovalId"> The requestApprovalId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId, string requestApprovalId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}";
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.Marketplace
         private readonly PrivateStoreRestOperations _marketplaceApprovalRequestPrivateStoreRestClient;
         private readonly MarketplaceApprovalRequestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/requestApprovals";
+
         /// <summary> Initializes a new instance of the <see cref="MarketplaceApprovalRequestResource"/> class for mocking. </summary>
         protected MarketplaceApprovalRequestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MarketplaceApprovalRequestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceApprovalRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MarketplaceApprovalRequestResource(ArmClient client, MarketplaceApprovalRequestData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.Marketplace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/requestApprovals";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,10 +178,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_CreateApprovalRequest</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
@@ -177,7 +201,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequestAsync(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -200,10 +226,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_CreateApprovalRequest</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
@@ -215,7 +249,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -238,9 +274,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
+        /// <param name="content"> The <see cref="QueryApprovalRequestContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<QueryApprovalRequestResult>> QueryApprovalRequestAsync(QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
@@ -269,9 +313,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
+        /// <param name="content"> The <see cref="QueryApprovalRequestContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<QueryApprovalRequestResult> QueryApprovalRequest(QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
@@ -300,9 +352,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_WithdrawPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The WithdrawPlanContent to use. </param>
+        /// <param name="content"> The <see cref="WithdrawPlanContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> WithdrawPlanAsync(WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
@@ -331,9 +391,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_WithdrawPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The WithdrawPlanContent to use. </param>
+        /// <param name="content"> The <see cref="WithdrawPlanContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response WithdrawPlan(WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {

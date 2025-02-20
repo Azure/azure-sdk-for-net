@@ -10,14 +10,14 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> A definition of a single property that can be used in time series ID properties defined during environment creation. </summary>
     public partial class TimeSeriesIdProperty
     {
-        /// <summary> Initializes a new instance of TimeSeriesIdProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesIdProperty"/>. </summary>
         internal TimeSeriesIdProperty()
         {
         }
 
         /// <summary> The name of the property. </summary>
         public string Name { get; }
-        /// <summary> The type of the property. Currently, only &quot;String&quot; is supported. </summary>
+        /// <summary> The type of the property. Currently, only "String" is supported. </summary>
         public TimeSeriesIdPropertyType? Type { get; }
     }
 }

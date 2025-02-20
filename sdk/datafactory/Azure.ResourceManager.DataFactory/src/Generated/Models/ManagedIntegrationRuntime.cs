@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
-    public partial class ManagedIntegrationRuntime : IntegrationRuntimeDefinition
+    public partial class ManagedIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
         public ManagedIntegrationRuntime()
         {
-            RuntimeType = IntegrationRuntimeType.Managed;
+            IntegrationRuntimeType = IntegrationRuntimeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <param name="customerVirtualNetwork"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork) : base(runtimeType, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork) : base(integrationRuntimeType, description, additionalProperties)
         {
             State = state;
             ManagedVirtualNetwork = managedVirtualNetwork;
             ComputeProperties = computeProperties;
             SsisProperties = ssisProperties;
             CustomerVirtualNetwork = customerVirtualNetwork;
-            RuntimeType = runtimeType;
+            IntegrationRuntimeType = integrationRuntimeType;
         }
 
         /// <summary> Integration runtime state, only valid for managed dedicated integration runtime. </summary>

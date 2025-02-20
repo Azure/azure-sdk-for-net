@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing
 {
@@ -64,7 +65,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Possible values:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> <c>true</c> - Do consider all available traffic information during routing </description></item>
         /// <item><description> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </description></item>
         /// </list>
@@ -98,7 +99,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </description></item>
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
@@ -107,7 +108,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Weight of the vehicle in kilograms.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> It is mandatory if any of the *Efficiency parameters are set. </description></item>
         /// <item><description> It must be strictly positive when used in the context of the Consumption Model. Weight restrictions are considered. </description></item>
         /// <item><description> If no detailed Consumption Model is specified and the value of <c>vehicleWeight</c> is non-zero, then weight restrictions are considered. </description></item>
@@ -120,7 +121,7 @@ namespace Azure.Maps.Routing
         /// <summary> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </summary>
         public bool? IsCommercialVehicle { get; set; }
 
-        /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
+        /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
         public VehicleLoadType? VehicleLoadType { get; set; }
 
         /// <summary> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of <c>vehicleEngineType</c>. </summary>
@@ -129,7 +130,7 @@ namespace Azure.Maps.Routing
         /// <summary>
         /// Specifies the speed-dependent component of consumption.
         /// Provided as an unordered list of colon-delimited speed &amp; consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> by linear interpolation, if the given speed lies in between two speeds in the list. </description></item>
         /// <item><description> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list. </description></item>
         /// </list>
@@ -197,7 +198,7 @@ namespace Azure.Maps.Routing
         /// <summary>
         /// Specifies the speed-dependent component of consumption.
         /// Provided as an unordered list of speed/consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> by linear interpolation, if the given speed lies in between two speeds in the list </description></item>
         /// <item><description> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </description></item>
         /// </list>

@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeSubnetId))
             {
-                writer.WritePropertyName("computeSubnetId");
+                writer.WritePropertyName("computeSubnetId"u8);
                 writer.WriteStringValue(ComputeSubnetId);
             }
             writer.WriteEndObject();
@@ -28,16 +28,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static VirtualNetworkProfile DeserializeVirtualNetworkProfile(JsonElement element)
         {
-            Optional<string> computeSubnetId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string computeSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeSubnetId"))
+                if (property.NameEquals("computeSubnetId"u8))
                 {
                     computeSubnetId = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkProfile(computeSubnetId.Value);
+            return new VirtualNetworkProfile(computeSubnetId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VirtualNetworkProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVirtualNetworkProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class VirtualNetworkProfileConverter : JsonConverter<VirtualNetworkProfile>
@@ -46,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override VirtualNetworkProfile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

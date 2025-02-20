@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Image layer information. </summary>
     internal partial class FsLayer
     {
-        /// <summary> Initializes a new instance of FsLayer. </summary>
-        public FsLayer()
+        /// <summary> Initializes a new instance of <see cref="FsLayer"/>. </summary>
+        internal FsLayer()
         {
         }
 
-        /// <summary> Initializes a new instance of FsLayer. </summary>
+        /// <summary> Initializes a new instance of <see cref="FsLayer"/>. </summary>
         /// <param name="blobSum"> SHA of an image layer. </param>
         internal FsLayer(string blobSum)
         {
@@ -23,6 +23,6 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> SHA of an image layer. </summary>
-        public string BlobSum { get; set; }
+        public string BlobSum { get; }
     }
 }

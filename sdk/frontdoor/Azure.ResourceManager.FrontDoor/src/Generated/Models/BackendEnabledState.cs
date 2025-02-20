@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Whether to enable use of this backend. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct BackendEnabledState : IEquatable<BackendEnabledState>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(BackendEnabledState left, BackendEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendEnabledState"/> values are not the same. </summary>
         public static bool operator !=(BackendEnabledState left, BackendEnabledState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackendEnabledState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendEnabledState"/>. </summary>
         public static implicit operator BackendEnabledState(string value) => new BackendEnabledState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

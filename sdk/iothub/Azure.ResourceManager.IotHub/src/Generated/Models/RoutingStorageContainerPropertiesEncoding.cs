@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </summary>
+    /// <summary> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </summary>
     public readonly partial struct RoutingStorageContainerPropertiesEncoding : IEquatable<RoutingStorageContainerPropertiesEncoding>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are not the same. </summary>
         public static bool operator !=(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
         public static implicit operator RoutingStorageContainerPropertiesEncoding(string value) => new RoutingStorageContainerPropertiesEncoding(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

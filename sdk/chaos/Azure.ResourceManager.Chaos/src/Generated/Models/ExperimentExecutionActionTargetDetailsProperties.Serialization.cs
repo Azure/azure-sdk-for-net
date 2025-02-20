@@ -6,33 +6,137 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ExperimentExecutionActionTargetDetailsProperties
+    public partial class ExperimentExecutionActionTargetDetailsProperties : IUtf8JsonSerializable, IJsonModel<ExperimentExecutionActionTargetDetailsProperties>
     {
-        internal static ExperimentExecutionActionTargetDetailsProperties DeserializeExperimentExecutionActionTargetDetailsProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExperimentExecutionActionTargetDetailsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExperimentExecutionActionTargetDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> status = default;
-            Optional<string> target = default;
-            Optional<DateTimeOffset?> targetFailedTime = default;
-            Optional<DateTimeOffset?> targetCompletedTime = default;
-            Optional<ExperimentExecutionActionTargetDetailsError> error = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetFailedOn))
+            {
+                if (TargetFailedOn != null)
+                {
+                    writer.WritePropertyName("targetFailedTime"u8);
+                    writer.WriteStringValue(TargetFailedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("targetFailedTime");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetCompletedOn))
+            {
+                if (TargetCompletedOn != null)
+                {
+                    writer.WritePropertyName("targetCompletedTime"u8);
+                    writer.WriteStringValue(TargetCompletedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("targetCompletedTime");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error, options);
+                }
+                else
+                {
+                    writer.WriteNull("error");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ExperimentExecutionActionTargetDetailsProperties IJsonModel<ExperimentExecutionActionTargetDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExperimentExecutionActionTargetDetailsProperties(document.RootElement, options);
+        }
+
+        internal static ExperimentExecutionActionTargetDetailsProperties DeserializeExperimentExecutionActionTargetDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string status = default;
+            string target = default;
+            DateTimeOffset? targetFailedTime = default;
+            DateTimeOffset? targetCompletedTime = default;
+            ExperimentExecutionActionTargetDetailsError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetFailedTime"))
+                if (property.NameEquals("targetFailedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +146,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     targetFailedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("targetCompletedTime"))
+                if (property.NameEquals("targetCompletedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,18 +156,60 @@ namespace Azure.ResourceManager.Chaos.Models
                     targetCompletedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         error = null;
                         continue;
                     }
-                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value);
+                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExperimentExecutionActionTargetDetailsProperties(status.Value, target.Value, Optional.ToNullable(targetFailedTime), Optional.ToNullable(targetCompletedTime), error.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExperimentExecutionActionTargetDetailsProperties(
+                status,
+                target,
+                targetFailedTime,
+                targetCompletedTime,
+                error,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExperimentExecutionActionTargetDetailsProperties IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExperimentExecutionActionTargetDetailsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

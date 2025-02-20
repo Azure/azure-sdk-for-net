@@ -3,8 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The Recognize configurations specific for IVR Choices.
@@ -12,14 +13,14 @@ namespace Azure.Communication.CallAutomation.Models
     public class CallMediaRecognizeChoiceOptions : CallMediaRecognizeOptions
     {
         /// <summary> Initializes a new instance of CallMediaRecognizeChoiceOptions. </summary>
-        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, List<RecognizeChoice> recognizeChoices) : base(RecognizeInputType.Choices, targetParticipant)
+        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognitionChoice> choices) : base(RecognizeInputType.Choices, targetParticipant)
         {
-            RecognizeChoices = recognizeChoices;
+            Choices = choices.ToList<RecognitionChoice>();
         }
 
         /// <summary>
         /// The IvR choices for recognize
         /// </summary>
-        public IList<RecognizeChoice> RecognizeChoices { get; }
+        public IList<RecognitionChoice> Choices { get; }
     }
 }

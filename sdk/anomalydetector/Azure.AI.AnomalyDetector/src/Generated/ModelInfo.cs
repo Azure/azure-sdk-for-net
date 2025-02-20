@@ -7,23 +7,63 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary>
-    /// Training result of a model including its status, errors and diagnostics
+    /// Training result of a model, including its status, errors, and diagnostics
     /// information.
     /// </summary>
     public partial class ModelInfo
     {
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
-        /// <param name="dataSource"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
+        /// <param name="dataSource">
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection.
+        /// </param>
+        /// <param name="startTime">
+        /// Start date/time of training data, which should be
+        /// in ISO 8601 format.
+        /// </param>
+        /// <param name="endTime">
+        /// End date/time of training data, which should be
+        /// in ISO 8601 format.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public ModelInfo(string dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        public ModelInfo(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
@@ -33,18 +73,38 @@ namespace Azure.AI.AnomalyDetector
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
-        /// <param name="dataSource"></param>
-        /// <param name="dataSchema"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="displayName"></param>
-        /// <param name="slidingWindow"></param>
-        /// <param name="alignPolicy"></param>
-        /// <param name="status"></param>
-        /// <param name="errors"></param>
-        /// <param name="diagnosticsInfo"></param>
-        internal ModelInfo(string dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
+        /// <param name="dataSource">
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection.
+        /// </param>
+        /// <param name="dataSchema">
+        /// Data schema of the input data source. The default
+        /// is OneTable.
+        /// </param>
+        /// <param name="startTime">
+        /// Start date/time of training data, which should be
+        /// in ISO 8601 format.
+        /// </param>
+        /// <param name="endTime">
+        /// End date/time of training data, which should be
+        /// in ISO 8601 format.
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the model. Maximum length is 24
+        /// characters.
+        /// </param>
+        /// <param name="slidingWindow">
+        /// Number of previous time stamps that will be used to
+        /// detect whether the time stamp is an anomaly or not.
+        /// </param>
+        /// <param name="alignPolicy"> Manner of aligning multiple variables. </param>
+        /// <param name="status"> Model status. </param>
+        /// <param name="errors"> Error messages after failure to create a model. </param>
+        /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -54,29 +114,54 @@ namespace Azure.AI.AnomalyDetector
             SlidingWindow = slidingWindow;
             AlignPolicy = alignPolicy;
             Status = status;
-            Errors = errors.ToList();
+            Errors = errors;
             DiagnosticsInfo = diagnosticsInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the data source. </summary>
-        public string DataSource { get; set; }
-        /// <summary> Gets or sets the data schema. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/> for deserialization. </summary>
+        internal ModelInfo()
+        {
+        }
+
+        /// <summary>
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection.
+        /// </summary>
+        public Uri DataSource { get; set; }
+        /// <summary>
+        /// Data schema of the input data source. The default
+        /// is OneTable.
+        /// </summary>
         public DataSchema? DataSchema { get; set; }
-        /// <summary> Gets or sets the start time. </summary>
+        /// <summary>
+        /// Start date/time of training data, which should be
+        /// in ISO 8601 format.
+        /// </summary>
         public DateTimeOffset StartTime { get; set; }
-        /// <summary> Gets or sets the end time. </summary>
+        /// <summary>
+        /// End date/time of training data, which should be
+        /// in ISO 8601 format.
+        /// </summary>
         public DateTimeOffset EndTime { get; set; }
-        /// <summary> Gets or sets the display name. </summary>
+        /// <summary>
+        /// Display name of the model. Maximum length is 24
+        /// characters.
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> Gets or sets the sliding window. </summary>
+        /// <summary>
+        /// Number of previous time stamps that will be used to
+        /// detect whether the time stamp is an anomaly or not.
+        /// </summary>
         public int? SlidingWindow { get; set; }
-        /// <summary> Gets or sets the align policy. </summary>
+        /// <summary> Manner of aligning multiple variables. </summary>
         public AlignPolicy AlignPolicy { get; set; }
-        /// <summary> Gets or sets the status. </summary>
-        public ModelStatus? Status { get; set; }
-        /// <summary> Gets the errors. </summary>
+        /// <summary> Model status. </summary>
+        public ModelStatus? Status { get; }
+        /// <summary> Error messages after failure to create a model. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> Gets or sets the diagnostics info. </summary>
-        public DiagnosticsInfo DiagnosticsInfo { get; set; }
+        /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
+        public DiagnosticsInfo DiagnosticsInfo { get; }
     }
 }

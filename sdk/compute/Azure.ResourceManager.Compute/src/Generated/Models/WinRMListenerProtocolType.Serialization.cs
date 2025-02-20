@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static WinRMListenerProtocolType ToWinRMListenerProtocolType(this string value)
         {
-            if (string.Equals(value, "Http", StringComparison.InvariantCultureIgnoreCase)) return WinRMListenerProtocolType.Http;
-            if (string.Equals(value, "Https", StringComparison.InvariantCultureIgnoreCase)) return WinRMListenerProtocolType.Https;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http")) return WinRMListenerProtocolType.Http;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https")) return WinRMListenerProtocolType.Https;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WinRMListenerProtocolType value.");
         }
     }

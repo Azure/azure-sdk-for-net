@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -38,13 +39,28 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-        /// Repeatability Headers.
+        /// Live Transcription Configuration.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+        public TranscriptionOptions TranscriptionOptions { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+
+        /// <summary>
+        /// The identifier of the call automation entity which answers the call.
+        /// </summary>
+        public CommunicationUserIdentifier AnsweredBy { get; set; }
+
+        /// <summary>
+        /// The operation context.
+        /// </summary>
+        public string OperationContext { get; set; }
+
+        /// <summary>
+        /// The Custom Context which contains SIP and voip headers.
+        /// </summary>
+        public CustomCallingContext CustomCallingContext { get; }
     }
 }

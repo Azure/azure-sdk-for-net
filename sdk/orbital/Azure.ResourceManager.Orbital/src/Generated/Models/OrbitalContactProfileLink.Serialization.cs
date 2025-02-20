@@ -5,100 +5,193 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactProfileLink : IUtf8JsonSerializable
+    public partial class OrbitalContactProfileLink : IUtf8JsonSerializable, IJsonModel<OrbitalContactProfileLink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactProfileLink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OrbitalContactProfileLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("polarization");
+            writer.WritePropertyName("polarization"u8);
             writer.WriteStringValue(Polarization.ToString());
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
             if (Optional.IsDefined(GainOverTemperature))
             {
-                writer.WritePropertyName("gainOverTemperature");
+                writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
             if (Optional.IsDefined(EirpdBW))
             {
-                writer.WritePropertyName("eirpdBW");
+                writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);
             }
-            writer.WritePropertyName("channels");
+            writer.WritePropertyName("channels"u8);
             writer.WriteStartArray();
             foreach (var item in Channels)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static OrbitalContactProfileLink DeserializeOrbitalContactProfileLink(JsonElement element)
+        OrbitalContactProfileLink IJsonModel<OrbitalContactProfileLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalContactProfileLink(document.RootElement, options);
+        }
+
+        internal static OrbitalContactProfileLink DeserializeOrbitalContactProfileLink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
-            Optional<float> gainOverTemperature = default;
-            Optional<float> eirpdBW = default;
+            float? gainOverTemperature = default;
+            float? eirpdBW = default;
             IList<OrbitalContactProfileLinkChannel> channels = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("polarization"))
+                if (property.NameEquals("polarization"u8))
                 {
                     polarization = new OrbitalLinkPolarization(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new OrbitalLinkDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("gainOverTemperature"))
+                if (property.NameEquals("gainOverTemperature"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gainOverTemperature = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("eirpdBW"))
+                if (property.NameEquals("eirpdBW"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eirpdBW = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("channels"))
+                if (property.NameEquals("channels"u8))
                 {
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item, options));
                     }
                     channels = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OrbitalContactProfileLink(
+                name,
+                polarization,
+                direction,
+                gainOverTemperature,
+                eirpdBW,
+                channels,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OrbitalContactProfileLink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OrbitalContactProfileLink IPersistableModel<OrbitalContactProfileLink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOrbitalContactProfileLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OrbitalContactProfileLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

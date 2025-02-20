@@ -5,69 +5,158 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class NamespaceJunction : IUtf8JsonSerializable
+    public partial class NamespaceJunction : IUtf8JsonSerializable, IJsonModel<NamespaceJunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceJunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NamespaceJunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NamespaceJunction)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(NamespacePath))
             {
-                writer.WritePropertyName("namespacePath");
+                writer.WritePropertyName("namespacePath"u8);
                 writer.WriteStringValue(NamespacePath);
             }
             if (Optional.IsDefined(TargetPath))
             {
-                writer.WritePropertyName("targetPath");
+                writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
             if (Optional.IsDefined(NfsExport))
             {
-                writer.WritePropertyName("nfsExport");
+                writer.WritePropertyName("nfsExport"u8);
                 writer.WriteStringValue(NfsExport);
             }
             if (Optional.IsDefined(NfsAccessPolicy))
             {
-                writer.WritePropertyName("nfsAccessPolicy");
+                writer.WritePropertyName("nfsAccessPolicy"u8);
                 writer.WriteStringValue(NfsAccessPolicy);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static NamespaceJunction DeserializeNamespaceJunction(JsonElement element)
+        NamespaceJunction IJsonModel<NamespaceJunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> namespacePath = default;
-            Optional<string> targetPath = default;
-            Optional<string> nfsExport = default;
-            Optional<string> nfsAccessPolicy = default;
+            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NamespaceJunction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNamespaceJunction(document.RootElement, options);
+        }
+
+        internal static NamespaceJunction DeserializeNamespaceJunction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string namespacePath = default;
+            string targetPath = default;
+            string nfsExport = default;
+            string nfsAccessPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("namespacePath"))
+                if (property.NameEquals("namespacePath"u8))
                 {
                     namespacePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPath"))
+                if (property.NameEquals("targetPath"u8))
                 {
                     targetPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsExport"))
+                if (property.NameEquals("nfsExport"u8))
                 {
                     nfsExport = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsAccessPolicy"))
+                if (property.NameEquals("nfsAccessPolicy"u8))
                 {
                     nfsAccessPolicy = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NamespaceJunction(namespacePath.Value, targetPath.Value, nfsExport.Value, nfsAccessPolicy.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NamespaceJunction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceJunction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NamespaceJunction IPersistableModel<NamespaceJunction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNamespaceJunction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceJunction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NamespaceJunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

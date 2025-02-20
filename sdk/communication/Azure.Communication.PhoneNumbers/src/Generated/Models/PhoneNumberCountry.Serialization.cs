@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -14,22 +13,34 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberCountry DeserializePhoneNumberCountry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string localizedName = default;
             string countryCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localizedName"))
+                if (property.NameEquals("localizedName"u8))
                 {
                     localizedName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
             }
             return new PhoneNumberCountry(localizedName, countryCode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumberCountry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePhoneNumberCountry(document.RootElement);
         }
     }
 }

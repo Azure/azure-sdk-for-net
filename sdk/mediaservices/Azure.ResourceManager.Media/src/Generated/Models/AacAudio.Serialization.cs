@@ -5,108 +5,164 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AacAudio : IUtf8JsonSerializable
+    public partial class AacAudio : IUtf8JsonSerializable, IJsonModel<AacAudio>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AacAudio>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AacAudio>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Profile))
-            {
-                writer.WritePropertyName("profile");
-                writer.WriteStringValue(Profile.Value.ToString());
-            }
-            if (Optional.IsDefined(Channels))
-            {
-                writer.WritePropertyName("channels");
-                writer.WriteNumberValue(Channels.Value);
-            }
-            if (Optional.IsDefined(SamplingRate))
-            {
-                writer.WritePropertyName("samplingRate");
-                writer.WriteNumberValue(SamplingRate.Value);
-            }
-            if (Optional.IsDefined(Bitrate))
-            {
-                writer.WritePropertyName("bitrate");
-                writer.WriteNumberValue(Bitrate.Value);
-            }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label");
-                writer.WriteStringValue(Label);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AacAudio DeserializeAacAudio(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AacAudioProfile> profile = default;
-            Optional<int> channels = default;
-            Optional<int> samplingRate = default;
-            Optional<int> bitrate = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AacAudio>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AacAudio)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Profile))
+            {
+                writer.WritePropertyName("profile"u8);
+                writer.WriteStringValue(Profile.Value.ToString());
+            }
+        }
+
+        AacAudio IJsonModel<AacAudio>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AacAudio>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AacAudio)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAacAudio(document.RootElement, options);
+        }
+
+        internal static AacAudio DeserializeAacAudio(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AacAudioProfile? profile = default;
+            int? channels = default;
+            int? samplingRate = default;
+            int? bitrate = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profile"))
+                if (property.NameEquals("profile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     profile = new AacAudioProfile(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("channels"))
+                if (property.NameEquals("channels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channels = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("samplingRate"))
+                if (property.NameEquals("samplingRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingRate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AacAudio(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate), Optional.ToNullable(profile));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AacAudio(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                channels,
+                samplingRate,
+                bitrate,
+                profile);
         }
+
+        BinaryData IPersistableModel<AacAudio>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AacAudio>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AacAudio)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AacAudio IPersistableModel<AacAudio>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AacAudio>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAacAudio(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AacAudio)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AacAudio>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

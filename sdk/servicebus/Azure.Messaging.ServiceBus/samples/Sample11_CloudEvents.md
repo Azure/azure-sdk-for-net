@@ -1,13 +1,14 @@
 # Integrating with the CloudEvent type
 
-The Azure.Core library contains the [CloudEvent](https://docs.microsoft.com/dotnet/api/azure.messaging.cloudevent) type which conforms to the [CloudEvent JSON spec](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). This type can be used in conjunction with the Service Bus library as shown below:
+The Azure.Core library contains the [CloudEvent](https://learn.microsoft.com/dotnet/api/azure.messaging.cloudevent) type which conforms to the [CloudEvent JSON spec](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). This type can be used in conjunction with the Service Bus library as shown below:
 
 ```C# Snippet:ServiceBusCloudEvents
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+DefaultAzureCredential credential = new();
 
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);

@@ -39,6 +39,7 @@ module keyVault './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/keyVault
         id: id
         location: location
         cluster_object_id: cluster.outputs.CLUSTER_OBJECT_ID
+        user_assigned_identity_principal_id: managedIdentity.outputs.USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
     }
     scope: resourceGroup()
 }
@@ -64,6 +65,7 @@ module dataConnection './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/da
     params: {
         id: id
         location: location
+        user_assigned_identity_principal_id: managedIdentity.outputs.USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
     }
     scope: resourceGroup()
 }
@@ -85,4 +87,4 @@ module storage './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/storage.b
 
 output STORAGE_ACCOUNT_ID string = storage.outputs.STORAGE_ACCOUNT_ID
 output STORAGE_ACCOUNT_SAS_TOKEN string = storage.outputs.STORAGE_ACCOUNT_SAS_TOKEN
-output SCRIPT_URI string = storage.outputs.SCRIPT_URI
+output KUSTO_TENANT_ID string =  tenant().tenantId

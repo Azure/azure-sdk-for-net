@@ -21,133 +21,145 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RequestMethod))
             {
-                writer.WritePropertyName("requestMethod");
-                writer.WriteObjectValue(RequestMethod);
+                writer.WritePropertyName("requestMethod"u8);
+                writer.WriteObjectValue<object>(RequestMethod);
             }
             if (Optional.IsDefined(RequestBody))
             {
-                writer.WritePropertyName("requestBody");
-                writer.WriteObjectValue(RequestBody);
+                writer.WritePropertyName("requestBody"u8);
+                writer.WriteObjectValue<object>(RequestBody);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
-                writer.WritePropertyName("additionalHeaders");
-                writer.WriteObjectValue(AdditionalHeaders);
+                writer.WritePropertyName("additionalHeaders"u8);
+                writer.WriteObjectValue<object>(AdditionalHeaders);
             }
             if (Optional.IsDefined(RequestTimeout))
             {
-                writer.WritePropertyName("requestTimeout");
-                writer.WriteObjectValue(RequestTimeout);
+                writer.WritePropertyName("requestTimeout"u8);
+                writer.WriteObjectValue<object>(RequestTimeout);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
-                writer.WritePropertyName("enablePartitionDiscovery");
-                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+                writer.WritePropertyName("enablePartitionDiscovery"u8);
+                writer.WriteObjectValue<object>(EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
-                writer.WritePropertyName("partitionRootPath");
-                writer.WriteObjectValue(PartitionRootPath);
+                writer.WritePropertyName("partitionRootPath"u8);
+                writer.WriteObjectValue<object>(PartitionRootPath);
             }
-            writer.WritePropertyName("type");
+            if (Optional.IsDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns"u8);
+                writer.WriteObjectValue<object>(AdditionalColumns);
+            }
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WritePropertyName("maxConcurrentConnections"u8);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static HttpReadSettings DeserializeHttpReadSettings(JsonElement element)
         {
-            Optional<object> requestMethod = default;
-            Optional<object> requestBody = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> requestTimeout = default;
-            Optional<bool> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object requestMethod = default;
+            object requestBody = default;
+            object additionalHeaders = default;
+            object requestTimeout = default;
+            object enablePartitionDiscovery = default;
+            object partitionRootPath = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requestMethod"))
+                if (property.NameEquals("requestMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestMethod = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("requestBody"))
+                if (property.NameEquals("requestBody"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestBody = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("additionalHeaders"))
+                if (property.NameEquals("additionalHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalHeaders = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("requestTimeout"))
+                if (property.NameEquals("requestTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestTimeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enablePartitionDiscovery"))
+                if (property.NameEquals("enablePartitionDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    enablePartitionDiscovery = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionRootPath"))
+                if (property.NameEquals("partitionRootPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionRootPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("additionalColumns"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalColumns = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -156,7 +168,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value);
+            return new HttpReadSettings(
+                type,
+                maxConcurrentConnections,
+                additionalProperties,
+                requestMethod,
+                requestBody,
+                additionalHeaders,
+                requestTimeout,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                additionalColumns);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HttpReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHttpReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class HttpReadSettingsConverter : JsonConverter<HttpReadSettings>
@@ -165,6 +203,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override HttpReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

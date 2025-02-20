@@ -15,127 +15,149 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("anomalyDetectionConfigurationId");
+            writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
             writer.WriteStringValue(DetectionConfigurationId);
-            writer.WritePropertyName("anomalyScopeType");
+            writer.WritePropertyName("anomalyScopeType"u8);
             writer.WriteStringValue(AnomalyScopeType.ToString());
             if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
-                writer.WritePropertyName("negationOperation");
+                writer.WritePropertyName("negationOperation"u8);
                 writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
             }
             if (Optional.IsDefined(DimensionAnomalyScope))
             {
-                writer.WritePropertyName("dimensionAnomalyScope");
-                writer.WriteObjectValue(DimensionAnomalyScope);
+                writer.WritePropertyName("dimensionAnomalyScope"u8);
+                writer.WriteObjectValue<DimensionKey>(DimensionAnomalyScope);
             }
             if (Optional.IsDefined(TopNAnomalyScope))
             {
-                writer.WritePropertyName("topNAnomalyScope");
-                writer.WriteObjectValue(TopNAnomalyScope);
+                writer.WritePropertyName("topNAnomalyScope"u8);
+                writer.WriteObjectValue<TopNGroupScope>(TopNAnomalyScope);
             }
             if (Optional.IsDefined(SeverityFilter))
             {
-                writer.WritePropertyName("severityFilter");
-                writer.WriteObjectValue(SeverityFilter);
+                writer.WritePropertyName("severityFilter"u8);
+                writer.WriteObjectValue<SeverityCondition>(SeverityFilter);
             }
             if (Optional.IsDefined(AlertSnoozeCondition))
             {
-                writer.WritePropertyName("snoozeFilter");
-                writer.WriteObjectValue(AlertSnoozeCondition);
+                writer.WritePropertyName("snoozeFilter"u8);
+                writer.WriteObjectValue<MetricAnomalyAlertSnoozeCondition>(AlertSnoozeCondition);
             }
             if (Optional.IsDefined(ValueFilter))
             {
-                writer.WritePropertyName("valueFilter");
-                writer.WriteObjectValue(ValueFilter);
+                writer.WritePropertyName("valueFilter"u8);
+                writer.WriteObjectValue<MetricBoundaryCondition>(ValueFilter);
             }
             writer.WriteEndObject();
         }
 
         internal static MetricAlertConfiguration DeserializeMetricAlertConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string anomalyDetectionConfigurationId = default;
             MetricAnomalyAlertScopeType anomalyScopeType = default;
-            Optional<bool> negationOperation = default;
-            Optional<DimensionKey> dimensionAnomalyScope = default;
-            Optional<TopNGroupScope> topNAnomalyScope = default;
-            Optional<SeverityCondition> severityFilter = default;
-            Optional<MetricAnomalyAlertSnoozeCondition> snoozeFilter = default;
-            Optional<MetricBoundaryCondition> valueFilter = default;
+            bool? negationOperation = default;
+            DimensionKey dimensionAnomalyScope = default;
+            TopNGroupScope topNAnomalyScope = default;
+            SeverityCondition severityFilter = default;
+            MetricAnomalyAlertSnoozeCondition snoozeFilter = default;
+            MetricBoundaryCondition valueFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anomalyDetectionConfigurationId"))
+                if (property.NameEquals("anomalyDetectionConfigurationId"u8))
                 {
                     anomalyDetectionConfigurationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("anomalyScopeType"))
+                if (property.NameEquals("anomalyScopeType"u8))
                 {
                     anomalyScopeType = new MetricAnomalyAlertScopeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negationOperation"))
+                if (property.NameEquals("negationOperation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negationOperation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dimensionAnomalyScope"))
+                if (property.NameEquals("dimensionAnomalyScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dimensionAnomalyScope = DimensionKey.DeserializeDimensionKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("topNAnomalyScope"))
+                if (property.NameEquals("topNAnomalyScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     topNAnomalyScope = TopNGroupScope.DeserializeTopNGroupScope(property.Value);
                     continue;
                 }
-                if (property.NameEquals("severityFilter"))
+                if (property.NameEquals("severityFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severityFilter = SeverityCondition.DeserializeSeverityCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("snoozeFilter"))
+                if (property.NameEquals("snoozeFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snoozeFilter = MetricAnomalyAlertSnoozeCondition.DeserializeMetricAnomalyAlertSnoozeCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("valueFilter"))
+                if (property.NameEquals("valueFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFilter = MetricBoundaryCondition.DeserializeMetricBoundaryCondition(property.Value);
                     continue;
                 }
             }
-            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
+            return new MetricAlertConfiguration(
+                anomalyDetectionConfigurationId,
+                anomalyScopeType,
+                negationOperation,
+                dimensionAnomalyScope,
+                topNAnomalyScope,
+                severityFilter,
+                snoozeFilter,
+                valueFilter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricAlertConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricAlertConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -5,63 +5,264 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DatabaseAccountKeysMetadata
+    public partial class DatabaseAccountKeysMetadata : IUtf8JsonSerializable, IJsonModel<DatabaseAccountKeysMetadata>
     {
-        internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseAccountKeysMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DatabaseAccountKeysMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AccountKeyMetadata> primaryMasterKey = default;
-            Optional<AccountKeyMetadata> secondaryMasterKey = default;
-            Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
-            Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
-            foreach (var property in element.EnumerateObject())
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("primaryMasterKey"))
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
+            {
+                writer.WritePropertyName("primaryMasterKey"u8);
+                writer.WriteObjectValue(PrimaryMasterKey, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
+            {
+                writer.WritePropertyName("secondaryMasterKey"u8);
+                writer.WriteObjectValue(SecondaryMasterKey, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
+            {
+                writer.WritePropertyName("primaryReadonlyMasterKey"u8);
+                writer.WriteObjectValue(PrimaryReadonlyMasterKey, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
+            {
+                writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
+                writer.WriteObjectValue(SecondaryReadonlyMasterKey, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("secondaryMasterKey"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("primaryReadonlyMasterKey"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("secondaryReadonlyMasterKey"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new DatabaseAccountKeysMetadata(primaryMasterKey.Value, secondaryMasterKey.Value, primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value);
         }
+
+        DatabaseAccountKeysMetadata IJsonModel<DatabaseAccountKeysMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
+        }
+
+        internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AccountKeyMetadata primaryMasterKey = default;
+            AccountKeyMetadata secondaryMasterKey = default;
+            AccountKeyMetadata primaryReadonlyMasterKey = default;
+            AccountKeyMetadata secondaryReadonlyMasterKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("primaryMasterKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("secondaryMasterKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("primaryReadonlyMasterKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("secondaryReadonlyMasterKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DatabaseAccountKeysMetadata(primaryMasterKey, secondaryMasterKey, primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrimaryMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryMasterKey: ");
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryMasterKey))
+                {
+                    builder.Append("  primaryMasterKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrimaryMasterKey, options, 2, false, "  primaryMasterKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecondaryMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondaryMasterKey: ");
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryMasterKey))
+                {
+                    builder.Append("  secondaryMasterKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecondaryMasterKey, options, 2, false, "  secondaryMasterKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrimaryReadonlyMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryReadonlyMasterKey: ");
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryReadonlyMasterKey))
+                {
+                    builder.Append("  primaryReadonlyMasterKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrimaryReadonlyMasterKey, options, 2, false, "  primaryReadonlyMasterKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecondaryReadonlyMasterKeyGeneratedOn", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondaryReadonlyMasterKey: ");
+                builder.AppendLine("{");
+                builder.Append("    generationTime: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryReadonlyMasterKey))
+                {
+                    builder.Append("  secondaryReadonlyMasterKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecondaryReadonlyMasterKey, options, 2, false, "  secondaryReadonlyMasterKey: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<DatabaseAccountKeysMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatabaseAccountKeysMetadata IPersistableModel<DatabaseAccountKeysMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseAccountKeysMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

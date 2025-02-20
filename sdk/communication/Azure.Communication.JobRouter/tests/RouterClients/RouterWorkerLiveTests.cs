@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -23,65 +21,72 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateWorkerTest()
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
 
             // Setup queue
             var createQueueResponse = await CreateQueueAsync(nameof(CreateWorkerTest));
 
             // Register worker
             var workerId = GenerateUniqueId($"{IdPrefix}{nameof(CreateWorkerTest)}");
-            var totalCapacity = 100;
+            var capacity = 100;
 
-            var channelConfig1 = new ChannelConfiguration(20);
+            var channel1 = new RouterChannel("ACS_Chat_Channel", 20) { MaxNumberOfJobs = 5 };
 
-            var channelConfigList = new Dictionary<string, ChannelConfiguration>()
+            var channels = new List<RouterChannel> { channel1 };
+
+            var workerLabels = new Dictionary<string, RouterValue?>()
             {
-                ["ACS_Chat_Channel"] = channelConfig1
-            };
-            var workerLabels = new Dictionary<string, LabelValue>()
-            {
-                ["test_label_1"] = new LabelValue("testLabel"),
-                ["test_label_2"] = new LabelValue(12),
+                ["test_label_1"] = new RouterValue("testLabel"),
+                ["test_label_2"] = new RouterValue(12),
             };
 
-            var queueAssignmentList = new string[] { createQueueResponse.Value.Id };
+            var queues = new List<string> { createQueueResponse.Value.Id };
 
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId, totalCapacity)
+                new CreateWorkerOptions(workerId, capacity)
                 {
-                    QueueIds = queueAssignmentList.ToDictionary(x => x, _ => new QueueAssignment()),
-                    Labels = workerLabels,
-                    ChannelConfigurations = channelConfigList,
+                    Queues = { createQueueResponse.Value.Id },
+                    Labels =
+                    {
+                        ["test_label_1"] = new RouterValue("testLabel"),
+                        ["test_label_2"] = new RouterValue(12),
+                    },
+                    Channels = { channel1 }
                 });
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
-            AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queueAssignmentList,
-                totalCapacity, workerLabels, channelConfigList);
+            AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queues,
+                capacity, workerLabels, channels);
 
-            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(routerWorkerResponse.Value.Id)));
+            routerWorkerResponse.Value.AvailableForOffers = false;
+            routerWorkerResponse.Value.Queues.RemoveAt(0);
+
+            await routerClient.UpdateWorkerAsync(routerWorkerResponse);
         }
 
         [Test]
         public async Task RegisterWorkerShouldNotThrowArgumentNullExceptionTest()
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
 
             // Register worker with only id and total capacity
             var workerId = $"{IdPrefix}-WorkerIDRegisterWorker";
 
-            var totalCapacity = 100;
-            var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, totalCapacity) {AvailableForOffers = true});
+            var capacity = 100;
+            var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, capacity) {AvailableForOffers = true});
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
 
-            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(routerWorkerResponse.Value.Id)));
+            routerWorkerResponse.Value.AvailableForOffers = false;
+            await routerClient.UpdateWorkerAsync(routerWorkerResponse);
         }
 
-        [Test]
-        [Ignore(reason: "Pagination doesn't get generated correctly")]
+        /*[Test]
         public async Task GetWorkersTest()
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
 
             // Setup queue 1
             var createQueue1Response = await CreateQueueAsync($"Q1{nameof(GetWorkersTest)}");
@@ -100,76 +105,60 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var expectedWorkerIds = new List<string>() { workerId1, workerId2, workerId3, workerId4 };
 
             var registerWorker1Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId1,
-                    10)
+                new CreateWorkerOptions(workerId1, 10)
                 {
-                    QueueIds = new Dictionary<string, QueueAssignment>()
+                    Queues = { createQueue1.Id, },
+                    Channels =
                     {
-                        [createQueue1.Id] = new QueueAssignment()
-                    },
-                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
-                    {
-                        ["WebChat"] = new ChannelConfiguration(1),
-                        ["Voip"] = new ChannelConfiguration(10)
+                        new RouterChannel("WebChat", 1),
+                        ["Voip"] = new RouterChannel(10)
                     },
                     AvailableForOffers = true
                 });
             var registerWorker1 = registerWorker1Response.Value;
-            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false})));
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false})));
 
             var registerWorker2Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(
-                    workerId2,
-                    10)
+                new CreateWorkerOptions(workerId2, 10)
                 {
-                    QueueIds = new Dictionary<string, QueueAssignment>()
+                    Queues = { createQueue2.Id, },
+                    Channels =
                     {
-                        [createQueue2.Id] = new QueueAssignment()
-                    },
-                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
-                    {
-                        ["WebChat"] = new ChannelConfiguration(1),
-                        ["Voip"] = new ChannelConfiguration(10)
+                        ["WebChat"] = new RouterChannel(5) { MaxNumberOfJobs = 1 },
+                        ["Voip"] = new RouterChannel(10) { MaxNumberOfJobs = 1 }
                     },
                     AvailableForOffers = true,
                 });
             var registerWorker2 = registerWorker2Response.Value;
-            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId2) { AvailableForOffers = false })));
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new RouterWorker(workerId2) { AvailableForOffers = false })));
 
             var registerWorker3Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId3,
-                    10)
+                new CreateWorkerOptions(workerId3, 12)
                 {
-                    QueueIds = new Dictionary<string, QueueAssignment>()
+                    Queues =
                     {
-                        [createQueue1.Id] = new QueueAssignment(), [createQueue2.Id] = new QueueAssignment()
+                        createQueue1.Id,,
+                        createQueue2.Id,
                     },
-                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+                    Channels =
                     {
-                        ["WebChat"] = new ChannelConfiguration(1),
-                        ["Voip"] = new ChannelConfiguration(10)
+                        ["WebChat"] = new RouterChannel(1) { MaxNumberOfJobs = 12 },
+                        ["Voip"] = new RouterChannel(10)
                     },
                     AvailableForOffers = true,
                 });
             var registerWorker3 = registerWorker3Response.Value;
-            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId3) { AvailableForOffers = false })));
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new RouterWorker(workerId3) { AvailableForOffers = false })));
 
             var registerWorker4Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId4,
-                    10)
+                new CreateWorkerOptions(workerId4, 10)
                 {
-                    QueueIds = new Dictionary<string, QueueAssignment>()
-                    {
-                        [createQueue1.Id] = new QueueAssignment()
-                    },
-                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
-                    {
-                        ["WebChat"] = new ChannelConfiguration(1)
-                    },
+                    Queues = { createQueue1.Id, },
+                    Channels = { ["WebChat"] = new RouterChannel(1) },
                     AvailableForOffers = true,
                 });
             var registerWorker4 = registerWorker4Response.Value;
-            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync( new UpdateWorkerOptions(workerId4) { AvailableForOffers = false })));
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync( new RouterWorker(workerId4) { AvailableForOffers = false })));
 
             // Query all workers with channel filter
             var channel2Workers = new HashSet<string>() { workerId1, workerId2, workerId3 };
@@ -179,9 +168,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    if (channel2Workers.Contains(worker.RouterWorker.Id))
+                    if (channel2Workers.Contains(worker.Id))
                     {
-                        channel2Workers.Remove(worker.RouterWorker.Id);
+                        channel2Workers.Remove(worker.Id);
                     }
                 }
             }
@@ -195,9 +184,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    if (queue2Workers.Contains(worker.RouterWorker.Id))
+                    if (queue2Workers.Contains(worker.Id))
                     {
-                        queue2Workers.Remove(worker.RouterWorker.Id);
+                        queue2Workers.Remove(worker.Id);
                     }
                 }
             }
@@ -211,16 +200,16 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    if (channel1Workers.Contains(worker.RouterWorker.Id))
+                    if (channel1Workers.Contains(worker.Id))
                     {
-                        channel1Workers.Remove(worker.RouterWorker.Id);
+                        channel1Workers.Remove(worker.Id);
                     }
                 }
             }
             Assert.IsEmpty(channel1Workers);
 
             // Deregister worker1
-            await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false});
+            await routerClient.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false});
 
             var checkWorker1Status = await Poll(async () => await routerClient.GetWorkerAsync(workerId1),
                 w => w.Value.State == RouterWorkerState.Inactive, TimeSpan.FromSeconds(10));
@@ -229,13 +218,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // Query all workers with status: active
             var activeWorkers = new HashSet<string>();
-            getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", Status = WorkerStateSelector.Active});
+            getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", State = RouterWorkerStateSelector.Active});
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    activeWorkers.Add(worker.RouterWorker.Id);
+                    activeWorkers.Add(worker.Id);
                 }
             }
 
@@ -245,13 +234,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // Query all workers with status: inactive
             var inactiveWorkers = new HashSet<string>();
-            getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", Status = WorkerStateSelector.Inactive });
+            getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", State = RouterWorkerStateSelector.Inactive });
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    inactiveWorkers.Add(worker.RouterWorker.Id);
+                    inactiveWorkers.Add(worker.Id);
                 }
             }
             Assert.IsTrue(inactiveWorkers.Contains(workerId1));
@@ -261,7 +250,74 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[1]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[2]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[3]);
+        }*/
+
+        [Test]
+        public async Task UpdateWorkerTest()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(UpdateWorkerTest));
+
+            // Register worker
+            var workerId = GenerateUniqueId($"{IdPrefix}{nameof(UpdateWorkerTest)}");
+            var capacity = 100;
+            var channels = new List<RouterChannel>()
+            {
+                new("ACS_Chat_Channel", 20) { MaxNumberOfJobs = 5 },
+                new("ACS_Voice_Channel", 10) { MaxNumberOfJobs = 3 }
+            };
+            var workerLabels = new Dictionary<string, RouterValue?>()
+            {
+                ["test_label_1"] = new("testLabel"),
+                ["test_label_2"] = new(12),
+            };
+            var workerTags = new Dictionary<string, RouterValue?>()
+            {
+                ["test_tag_1"] = new("tag"),
+                ["test_tag_2"] = new(12),
+            };
+
+            var queues = new List<string> { createQueueResponse.Value.Id };
+
+            var createWorkerOptions = new CreateWorkerOptions(workerId, capacity)
+            {
+                AvailableForOffers = true
+            };
+            createWorkerOptions.Labels.Append(workerLabels);
+            createWorkerOptions.Channels.AddRange(channels);
+            createWorkerOptions.Queues.AddRange(queues);
+            createWorkerOptions.Tags.Append(workerTags);
+
+            var routerWorkerResponse = await routerClient.CreateWorkerAsync(createWorkerOptions);
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
+
+            Assert.NotNull(routerWorkerResponse.Value);
+            AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queues,
+                capacity, workerLabels, channels, workerTags);
+
+            var updatedWorker = routerWorkerResponse.Value;
+            updatedWorker.Labels[workerLabels.First().Key] = null;
+            updatedWorker.Tags[workerTags.First().Key] = null;
+            updatedWorker.Queues.Remove(createQueueResponse.Value.Id);
+            updatedWorker.Channels.RemoveAt(0);
+
+            var updateWorkerResponse = await routerClient.UpdateWorkerAsync(updatedWorker);
+
+            updatedWorker.Labels.Remove("Id");
+            updatedWorker.Labels.Remove(workerLabels.First().Key);
+            updatedWorker.Tags.Remove(workerTags.First().Key);
+
+            AssertRegisteredWorkerIsValid(updateWorkerResponse, workerId, new List<string>(),
+                capacity, updatedWorker.Labels, updatedWorker.Channels, updatedWorker.Tags);
+
+            // in-test cleanup
+            updatedWorker.AvailableForOffers = false;
+
+            await routerClient.UpdateWorkerAsync(updatedWorker);
         }
+
         #endregion Worker Tests
     }
 }

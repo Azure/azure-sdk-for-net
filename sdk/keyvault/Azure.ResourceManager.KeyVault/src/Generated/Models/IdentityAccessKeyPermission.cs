@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string RestoreValue = "restore";
         private const string RecoverValue = "recover";
         private const string PurgeValue = "purge";
+        private const string ReleaseValue = "release";
+        private const string RotateValue = "rotate";
+        private const string GetrotationpolicyValue = "getrotationpolicy";
+        private const string SetrotationpolicyValue = "setrotationpolicy";
 
         /// <summary> all. </summary>
         public static IdentityAccessKeyPermission All { get; } = new IdentityAccessKeyPermission(AllValue);
@@ -74,11 +78,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static IdentityAccessKeyPermission Recover { get; } = new IdentityAccessKeyPermission(RecoverValue);
         /// <summary> purge. </summary>
         public static IdentityAccessKeyPermission Purge { get; } = new IdentityAccessKeyPermission(PurgeValue);
+        /// <summary> release. </summary>
+        public static IdentityAccessKeyPermission Release { get; } = new IdentityAccessKeyPermission(ReleaseValue);
+        /// <summary> rotate. </summary>
+        public static IdentityAccessKeyPermission Rotate { get; } = new IdentityAccessKeyPermission(RotateValue);
+        /// <summary> getrotationpolicy. </summary>
+        public static IdentityAccessKeyPermission Getrotationpolicy { get; } = new IdentityAccessKeyPermission(GetrotationpolicyValue);
+        /// <summary> setrotationpolicy. </summary>
+        public static IdentityAccessKeyPermission Setrotationpolicy { get; } = new IdentityAccessKeyPermission(SetrotationpolicyValue);
         /// <summary> Determines if two <see cref="IdentityAccessKeyPermission"/> values are the same. </summary>
         public static bool operator ==(IdentityAccessKeyPermission left, IdentityAccessKeyPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityAccessKeyPermission"/> values are not the same. </summary>
         public static bool operator !=(IdentityAccessKeyPermission left, IdentityAccessKeyPermission right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IdentityAccessKeyPermission"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityAccessKeyPermission"/>. </summary>
         public static implicit operator IdentityAccessKeyPermission(string value) => new IdentityAccessKeyPermission(value);
 
         /// <inheritdoc />
@@ -89,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

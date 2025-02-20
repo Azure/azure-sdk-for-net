@@ -15,24 +15,37 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceType");
-            writer.WriteStringValue(SourceType.ToString());
-            if (Optional.IsDefined(PlaySourceId))
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(PlaySourceCacheId))
             {
-                writer.WritePropertyName("playSourceId");
-                writer.WriteStringValue(PlaySourceId);
+                writer.WritePropertyName("playSourceCacheId"u8);
+                writer.WriteStringValue(PlaySourceCacheId);
             }
-            if (Optional.IsDefined(FileSource))
+            if (Optional.IsDefined(File))
             {
-                writer.WritePropertyName("fileSource");
-                writer.WriteObjectValue(FileSource);
+                writer.WritePropertyName("file"u8);
+                writer.WriteObjectValue(File);
             }
-            if (Optional.IsDefined(TextSource))
+            if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("textSource");
-                writer.WriteObjectValue(TextSource);
+                writer.WritePropertyName("text"u8);
+                writer.WriteObjectValue(Text);
+            }
+            if (Optional.IsDefined(Ssml))
+            {
+                writer.WritePropertyName("ssml"u8);
+                writer.WriteObjectValue(Ssml);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

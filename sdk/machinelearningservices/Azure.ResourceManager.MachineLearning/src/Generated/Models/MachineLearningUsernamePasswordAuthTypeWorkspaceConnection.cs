@@ -5,31 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningUsernamePasswordAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningUsernamePasswordAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.UsernamePassword;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
         /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, MachineLearningWorkspaceConnectionUsernamePassword credentials) : base(authType, category, target, value, valueFormat)
+        internal MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningWorkspaceConnectionUsernamePassword credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
         }
 
         /// <summary> Gets or sets the credentials. </summary>
+        [WirePath("credentials")]
         public MachineLearningWorkspaceConnectionUsernamePassword Credentials { get; set; }
     }
 }

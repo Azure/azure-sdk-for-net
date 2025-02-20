@@ -5,73 +5,159 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class O365BreakOutCategoryPolicies : IUtf8JsonSerializable
+    public partial class O365BreakOutCategoryPolicies : IUtf8JsonSerializable, IJsonModel<O365BreakOutCategoryPolicies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<O365BreakOutCategoryPolicies>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<O365BreakOutCategoryPolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<O365BreakOutCategoryPolicies>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Allow))
             {
-                writer.WritePropertyName("allow");
+                writer.WritePropertyName("allow"u8);
                 writer.WriteBooleanValue(Allow.Value);
             }
             if (Optional.IsDefined(Optimize))
             {
-                writer.WritePropertyName("optimize");
+                writer.WritePropertyName("optimize"u8);
                 writer.WriteBooleanValue(Optimize.Value);
             }
             if (Optional.IsDefined(Default))
             {
-                writer.WritePropertyName("default");
+                writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(Default.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static O365BreakOutCategoryPolicies DeserializeO365BreakOutCategoryPolicies(JsonElement element)
+        O365BreakOutCategoryPolicies IJsonModel<O365BreakOutCategoryPolicies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> allow = default;
-            Optional<bool> optimize = default;
-            Optional<bool> @default = default;
+            var format = options.Format == "W" ? ((IPersistableModel<O365BreakOutCategoryPolicies>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeO365BreakOutCategoryPolicies(document.RootElement, options);
+        }
+
+        internal static O365BreakOutCategoryPolicies DeserializeO365BreakOutCategoryPolicies(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? allow = default;
+            bool? optimize = default;
+            bool? @default = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allow"))
+                if (property.NameEquals("allow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allow = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("optimize"))
+                if (property.NameEquals("optimize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optimize = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new O365BreakOutCategoryPolicies(Optional.ToNullable(allow), Optional.ToNullable(optimize), Optional.ToNullable(@default));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new O365BreakOutCategoryPolicies(allow, optimize, @default, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<O365BreakOutCategoryPolicies>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<O365BreakOutCategoryPolicies>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        O365BreakOutCategoryPolicies IPersistableModel<O365BreakOutCategoryPolicies>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<O365BreakOutCategoryPolicies>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeO365BreakOutCategoryPolicies(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<O365BreakOutCategoryPolicies>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -15,24 +16,32 @@ namespace Azure.AI.FormRecognizer.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
             if (Optional.IsDefined(SourceFilter))
             {
-                writer.WritePropertyName("sourceFilter");
+                writer.WritePropertyName("sourceFilter"u8);
                 writer.WriteObjectValue(SourceFilter);
             }
             if (Optional.IsDefined(UseLabelFile))
             {
-                writer.WritePropertyName("useLabelFile");
+                writer.WritePropertyName("useLabelFile"u8);
                 writer.WriteBooleanValue(UseLabelFile.Value);
             }
             if (Optional.IsDefined(ModelName))
             {
-                writer.WritePropertyName("modelName");
+                writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

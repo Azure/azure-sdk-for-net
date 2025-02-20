@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         public static ServiceAlertModificationEvent ToServiceAlertModificationEvent(this string value)
         {
-            if (string.Equals(value, "AlertCreated", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.AlertCreated;
-            if (string.Equals(value, "StateChange", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.StateChange;
-            if (string.Equals(value, "MonitorConditionChange", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.MonitorConditionChange;
-            if (string.Equals(value, "SeverityChange", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.SeverityChange;
-            if (string.Equals(value, "ActionRuleTriggered", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.ActionRuleTriggered;
-            if (string.Equals(value, "ActionRuleSuppressed", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.ActionRuleSuppressed;
-            if (string.Equals(value, "ActionsTriggered", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.ActionsTriggered;
-            if (string.Equals(value, "ActionsSuppressed", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.ActionsSuppressed;
-            if (string.Equals(value, "ActionsFailed", StringComparison.InvariantCultureIgnoreCase)) return ServiceAlertModificationEvent.ActionsFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlertCreated")) return ServiceAlertModificationEvent.AlertCreated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StateChange")) return ServiceAlertModificationEvent.StateChange;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MonitorConditionChange")) return ServiceAlertModificationEvent.MonitorConditionChange;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SeverityChange")) return ServiceAlertModificationEvent.SeverityChange;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionRuleTriggered")) return ServiceAlertModificationEvent.ActionRuleTriggered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionRuleSuppressed")) return ServiceAlertModificationEvent.ActionRuleSuppressed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionsTriggered")) return ServiceAlertModificationEvent.ActionsTriggered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionsSuppressed")) return ServiceAlertModificationEvent.ActionsSuppressed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionsFailed")) return ServiceAlertModificationEvent.ActionsFailed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceAlertModificationEvent value.");
         }
     }

@@ -5,104 +5,143 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SnapshotRestoreRequest : IUtf8JsonSerializable
+    public partial class SnapshotRestoreRequest : IUtf8JsonSerializable, IJsonModel<SnapshotRestoreRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotRestoreRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SnapshotRestoreRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SnapshotTime))
             {
-                writer.WritePropertyName("snapshotTime");
+                writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
             if (Optional.IsDefined(RecoverySource))
             {
-                writer.WritePropertyName("recoverySource");
-                writer.WriteObjectValue(RecoverySource);
+                writer.WritePropertyName("recoverySource"u8);
+                writer.WriteObjectValue(RecoverySource, options);
             }
             if (Optional.IsDefined(CanOverwrite))
             {
-                writer.WritePropertyName("overwrite");
+                writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(RecoverConfiguration))
             {
-                writer.WritePropertyName("recoverConfiguration");
+                writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
             if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
-                writer.WritePropertyName("ignoreConflictingHostNames");
+                writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
             if (Optional.IsDefined(UseDRSecondary))
             {
-                writer.WritePropertyName("useDRSecondary");
+                writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static SnapshotRestoreRequest DeserializeSnapshotRestoreRequest(JsonElement element)
+        SnapshotRestoreRequest IJsonModel<SnapshotRestoreRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> kind = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotRestoreRequest(document.RootElement, options);
+        }
+
+        internal static SnapshotRestoreRequest DeserializeSnapshotRestoreRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> snapshotTime = default;
-            Optional<SnapshotRecoverySource> recoverySource = default;
-            Optional<bool> overwrite = default;
-            Optional<bool> recoverConfiguration = default;
-            Optional<bool> ignoreConflictingHostNames = default;
-            Optional<bool> useDRSecondary = default;
+            SystemData systemData = default;
+            string snapshotTime = default;
+            SnapshotRecoverySource recoverySource = default;
+            bool? overwrite = default;
+            bool? recoverConfiguration = default;
+            bool? ignoreConflictingHostNames = default;
+            bool? useDRSecondary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,56 +150,51 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("snapshotTime"))
+                        if (property0.NameEquals("snapshotTime"u8))
                         {
                             snapshotTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recoverySource"))
+                        if (property0.NameEquals("recoverySource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value);
+                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("overwrite"))
+                        if (property0.NameEquals("overwrite"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             overwrite = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("recoverConfiguration"))
+                        if (property0.NameEquals("recoverConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recoverConfiguration = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("ignoreConflictingHostNames"))
+                        if (property0.NameEquals("ignoreConflictingHostNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ignoreConflictingHostNames = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("useDRSecondary"))
+                        if (property0.NameEquals("useDRSecondary"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useDRSecondary = property0.Value.GetBoolean();
@@ -169,8 +203,254 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary), kind.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SnapshotRestoreRequest(
+                id,
+                name,
+                type,
+                systemData,
+                snapshotTime,
+                recoverySource,
+                overwrite,
+                recoverConfiguration,
+                ignoreConflictingHostNames,
+                useDRSecondary,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SnapshotTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    snapshotTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SnapshotTime))
+                {
+                    builder.Append("    snapshotTime: ");
+                    if (SnapshotTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SnapshotTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SnapshotTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecoverySource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recoverySource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecoverySource))
+                {
+                    builder.Append("    recoverySource: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RecoverySource, options, 4, false, "    recoverySource: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanOverwrite), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    overwrite: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanOverwrite))
+                {
+                    builder.Append("    overwrite: ");
+                    var boolValue = CanOverwrite.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecoverConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recoverConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecoverConfiguration))
+                {
+                    builder.Append("    recoverConfiguration: ");
+                    var boolValue = RecoverConfiguration.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreConflictingHostNames), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ignoreConflictingHostNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreConflictingHostNames))
+                {
+                    builder.Append("    ignoreConflictingHostNames: ");
+                    var boolValue = IgnoreConflictingHostNames.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseDRSecondary), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    useDRSecondary: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseDRSecondary))
+                {
+                    builder.Append("    useDRSecondary: ");
+                    var boolValue = UseDRSecondary.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SnapshotRestoreRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SnapshotRestoreRequest IPersistableModel<SnapshotRestoreRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSnapshotRestoreRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SnapshotRestoreRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

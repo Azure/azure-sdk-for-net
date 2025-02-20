@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,16 +16,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static CreateDataFlowDebugSessionResponse DeserializeCreateDataFlowDebugSessionResponse(JsonElement element)
         {
-            Optional<string> sessionId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string sessionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     sessionId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CreateDataFlowDebugSessionResponse(sessionId.Value);
+            return new CreateDataFlowDebugSessionResponse(sessionId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CreateDataFlowDebugSessionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
         }
 
         internal partial class CreateDataFlowDebugSessionResponseConverter : JsonConverter<CreateDataFlowDebugSessionResponse>
@@ -35,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override CreateDataFlowDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

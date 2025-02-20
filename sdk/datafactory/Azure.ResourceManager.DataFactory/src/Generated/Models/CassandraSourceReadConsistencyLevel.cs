@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is &apos;ONE&apos;. It is case-insensitive. </summary>
+    /// <summary> The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive. </summary>
     public readonly partial struct CassandraSourceReadConsistencyLevel : IEquatable<CassandraSourceReadConsistencyLevel>
     {
         private readonly string _value;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are not the same. </summary>
         public static bool operator !=(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
         public static implicit operator CassandraSourceReadConsistencyLevel(string value) => new CassandraSourceReadConsistencyLevel(value);
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

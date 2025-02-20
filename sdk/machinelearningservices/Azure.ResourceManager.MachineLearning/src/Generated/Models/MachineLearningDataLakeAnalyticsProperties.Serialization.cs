@@ -5,36 +5,166 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class MachineLearningDataLakeAnalyticsProperties : IUtf8JsonSerializable
+    internal partial class MachineLearningDataLakeAnalyticsProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningDataLakeAnalyticsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDataLakeAnalyticsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningDataLakeAnalyticsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataLakeStoreAccountName))
-            {
-                writer.WritePropertyName("dataLakeStoreAccountName");
-                writer.WriteStringValue(DataLakeStoreAccountName);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDataLakeAnalyticsProperties DeserializeMachineLearningDataLakeAnalyticsProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> dataLakeStoreAccountName = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalyticsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalyticsProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(DataLakeStoreAccountName))
+            {
+                writer.WritePropertyName("dataLakeStoreAccountName"u8);
+                writer.WriteStringValue(DataLakeStoreAccountName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MachineLearningDataLakeAnalyticsProperties IJsonModel<MachineLearningDataLakeAnalyticsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalyticsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalyticsProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDataLakeAnalyticsProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningDataLakeAnalyticsProperties DeserializeMachineLearningDataLakeAnalyticsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string dataLakeStoreAccountName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataLakeStoreAccountName"))
+                if (property.NameEquals("dataLakeStoreAccountName"u8))
                 {
                     dataLakeStoreAccountName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataLakeStoreAccountName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataLakeStoreAccountName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataLakeStoreAccountName))
+                {
+                    builder.Append("  dataLakeStoreAccountName: ");
+                    if (DataLakeStoreAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataLakeStoreAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataLakeStoreAccountName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningDataLakeAnalyticsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalyticsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalyticsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningDataLakeAnalyticsProperties IPersistableModel<MachineLearningDataLakeAnalyticsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalyticsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningDataLakeAnalyticsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalyticsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningDataLakeAnalyticsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

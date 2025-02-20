@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -11,44 +9,43 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Options for closing a job.
     /// </summary>
-    public class CloseJobOptions
+    public partial class CloseJobOptions
     {
-        /// <summary>
-        /// Public constructor.
-        /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="assignmentId"> The id used to assign the job to a worker. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
+        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
+        internal CloseJobOptions()
+        {
+        }
+
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of the assignment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public CloseJobOptions(string jobId, string assignmentId)
         {
-            Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
-            Argument.AssertNotNullOrWhiteSpace(assignmentId, nameof(assignmentId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             JobId = jobId;
             AssignmentId = assignmentId;
         }
 
-        /// <summary>
-        /// Id of the job.
-        /// </summary>
-        public string JobId { get; }
-
-        /// <summary>
-        /// The id used to assign the job to a worker.
-        /// </summary>
+        /// <summary> Id of a job assignment. </summary>
         public string AssignmentId { get; }
 
-        /// <summary> Reason code for cancelled or closed jobs. </summary>
+        /// <summary> Id of a job. </summary>
+        public string JobId { get; }
+
+        /// <summary> Indicates the outcome of a job, populate this field with your own custom values. </summary>
         public string DispositionCode { get; set; }
 
         /// <summary>
-        /// If provided, the future time at which to release the capacity. If not provided capacity will be released immediately.
+        /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.
         /// </summary>
-        public DateTimeOffset CloseTime { get; set; }
+        public DateTimeOffset CloseAt { get; set; }
 
         /// <summary>
-        /// Custom supplied note.
+        /// A note that will be appended to a job's Notes collection with the current timestamp.
         /// </summary>
         public string Note { get; set; }
     }

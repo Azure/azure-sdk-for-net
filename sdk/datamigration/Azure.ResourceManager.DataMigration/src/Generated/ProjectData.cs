@@ -7,24 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the Project data model. </summary>
+    /// <summary>
+    /// A class representing the Project data model.
+    /// A project resource
+    /// </summary>
     public partial class ProjectData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProjectData(AzureLocation location) : base(location)
         {
             DatabasesInfo = new ChangeTrackingList<DatabaseInfo>();
         }
 
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,8 +81,9 @@ namespace Azure.ResourceManager.DataMigration
         /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
-        /// <param name="provisioningState"> The project&apos;s provisioning state. </param>
-        internal ProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ProjectSourcePlatform? sourcePlatform, AzureActiveDirectoryApp azureAuthenticationInfo, ProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo, IList<DatabaseInfo> databasesInfo, ProjectProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> The project's provisioning state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ProjectSourcePlatform? sourcePlatform, AzureActiveDirectoryApp azureAuthenticationInfo, ProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo, IList<DatabaseInfo> databasesInfo, ProjectProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             SourcePlatform = sourcePlatform;
@@ -59,6 +94,12 @@ namespace Azure.ResourceManager.DataMigration
             TargetConnectionInfo = targetConnectionInfo;
             DatabasesInfo = databasesInfo;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/> for deserialization. </summary>
+        internal ProjectData()
+        {
         }
 
         /// <summary> HTTP strong entity tag value. This is ignored if submitted. </summary>
@@ -85,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration
         public ConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> List of DatabaseInfo. </summary>
         public IList<DatabaseInfo> DatabasesInfo { get; }
-        /// <summary> The project&apos;s provisioning state. </summary>
+        /// <summary> The project's provisioning state. </summary>
         public ProjectProvisioningState? ProvisioningState { get; }
     }
 }

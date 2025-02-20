@@ -5,70 +5,155 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class DiagnosticsInfo : IUtf8JsonSerializable
+    public partial class DiagnosticsInfo : IUtf8JsonSerializable, IJsonModel<DiagnosticsInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticsInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DiagnosticsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ModelState))
-            {
-                writer.WritePropertyName("modelState");
-                writer.WriteObjectValue(ModelState);
-            }
-            if (Optional.IsCollectionDefined(VariableStates))
-            {
-                writer.WritePropertyName("variableStates");
-                writer.WriteStartArray();
-                foreach (var item in VariableStates)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticsInfo DeserializeDiagnosticsInfo(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ModelState> modelState = default;
-            Optional<IList<VariableState>> variableStates = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ModelState))
+            {
+                writer.WritePropertyName("modelState"u8);
+                writer.WriteObjectValue(ModelState, options);
+            }
+            if (Optional.IsCollectionDefined(VariableStates))
+            {
+                writer.WritePropertyName("variableStates"u8);
+                writer.WriteStartArray();
+                foreach (var item in VariableStates)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DiagnosticsInfo IJsonModel<DiagnosticsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnosticsInfo(document.RootElement, options);
+        }
+
+        internal static DiagnosticsInfo DeserializeDiagnosticsInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ModelState modelState = default;
+            IReadOnlyList<VariableState> variableStates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelState"))
+                if (property.NameEquals("modelState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modelState = ModelState.DeserializeModelState(property.Value);
+                    modelState = ModelState.DeserializeModelState(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("variableStates"))
+                if (property.NameEquals("variableStates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item));
+                        array.Add(VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiagnosticsInfo(modelState, Optional.ToList(variableStates));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiagnosticsInfo(modelState, variableStates ?? new ChangeTrackingList<VariableState>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiagnosticsInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DiagnosticsInfo IPersistableModel<DiagnosticsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiagnosticsInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiagnosticsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -78,11 +163,11 @@ namespace Azure.AI.AnomalyDetector
             return DeserializeDiagnosticsInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

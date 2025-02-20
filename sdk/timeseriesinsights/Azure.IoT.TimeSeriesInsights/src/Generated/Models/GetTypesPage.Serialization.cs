@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,15 +14,18 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetTypesPage DeserializeGetTypesPage(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesType>> types = default;
-            Optional<string> continuationToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<TimeSeriesType> types = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("types"))
+                if (property.NameEquals("types"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesType> array = new List<TimeSeriesType>();
@@ -34,13 +36,21 @@ namespace Azure.IoT.TimeSeriesInsights
                     types = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new GetTypesPage(continuationToken.Value, Optional.ToList(types));
+            return new GetTypesPage(continuationToken, types ?? new ChangeTrackingList<TimeSeriesType>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GetTypesPage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetTypesPage(document.RootElement);
         }
     }
 }

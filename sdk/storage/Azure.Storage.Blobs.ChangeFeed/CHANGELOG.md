@@ -1,6 +1,101 @@
 # Release History
 
-## 12.0.0-preview.30 (Unreleased)
+## 12.0.0-preview.54 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-preview.53 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.0.0-preview.52 (2024-11-12)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.51 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.0.0-preview.50 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+
+## 12.0.0-preview.49 (2024-09-18)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.48 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+
+## 12.0.0-preview.47 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.0.0-preview.46 (2024-07-16)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.45 (2024-06-11)
+- Added support for service version 2024-08-04.
+
+## 12.0.0-preview.44 (2024-05-13)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.43 (2024-04-15)
+- Added support for service version 2024-05-04.
+
+## 12.0.0-preview.42 (2023-12-05)
+- Added support for service version 2024-02-04.
+
+## 12.0.0-preview.41 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.0.0-preview.40 (2023-11-06)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.39 (2023-10-16)
+- Added support for service version 2023-11-03.
+
+## 12.0.0-preview.38 (2023-09-12)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.37 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
+
+## 12.0.0-preview.36 (2023-07-11)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.35 (2023-05-30)
+- Added support for service version 2023-01-03.
+
+## 12.0.0-preview.34 (2023-04-11)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.33 (2023-03-28)
+- Added support for service version 2022-11-02.
+
+## 12.0.0-preview.32 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.0.0-preview.31 (2023-02-21)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.30 (2023-02-07)
 - Added support for service version 2021-12-02.
 
 ## 12.0.0-preview.29 (2022-10-12)

@@ -6,133 +6,163 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformKeyVaultCertificateProperties : IUtf8JsonSerializable
+    public partial class AppPlatformKeyVaultCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformKeyVaultCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformKeyVaultCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformKeyVaultCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vaultUri");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformKeyVaultCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformKeyVaultCertificateProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("vaultUri"u8);
             writer.WriteStringValue(VaultUri.AbsoluteUri);
-            writer.WritePropertyName("keyVaultCertName");
+            writer.WritePropertyName("keyVaultCertName"u8);
             writer.WriteStringValue(KeyVaultCertName);
             if (Optional.IsDefined(CertVersion))
             {
-                writer.WritePropertyName("certVersion");
+                writer.WritePropertyName("certVersion"u8);
                 writer.WriteStringValue(CertVersion);
             }
             if (Optional.IsDefined(IsPrivateKeyExcluded))
             {
-                writer.WritePropertyName("excludePrivateKey");
+                writer.WritePropertyName("excludePrivateKey"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExcluded.Value);
             }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(CertificatePropertiesType);
-            writer.WriteEndObject();
         }
 
-        internal static AppPlatformKeyVaultCertificateProperties DeserializeAppPlatformKeyVaultCertificateProperties(JsonElement element)
+        AppPlatformKeyVaultCertificateProperties IJsonModel<AppPlatformKeyVaultCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformKeyVaultCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformKeyVaultCertificateProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformKeyVaultCertificateProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformKeyVaultCertificateProperties DeserializeAppPlatformKeyVaultCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri vaultUri = default;
             string keyVaultCertName = default;
-            Optional<string> certVersion = default;
-            Optional<bool> excludePrivateKey = default;
+            string certVersion = default;
+            bool? excludePrivateKey = default;
             string type = default;
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issuedDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> activateDate = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> dnsNames = default;
-            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string issuer = default;
+            DateTimeOffset? issuedDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? activateDate = default;
+            string subjectName = default;
+            IReadOnlyList<string> dnsNames = default;
+            AppPlatformCertificateProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultUri"))
+                if (property.NameEquals("vaultUri"u8))
                 {
                     vaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultCertName"))
+                if (property.NameEquals("keyVaultCertName"u8))
                 {
                     keyVaultCertName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certVersion"))
+                if (property.NameEquals("certVersion"u8))
                 {
                     certVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("excludePrivateKey"))
+                if (property.NameEquals("excludePrivateKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     excludePrivateKey = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuedDate"))
+                if (property.NameEquals("issuedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     issuedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("activateDate"))
+                if (property.NameEquals("activateDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activateDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("subjectName"))
+                if (property.NameEquals("subjectName"u8))
                 {
                     subjectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsNames"))
+                if (property.NameEquals("dnsNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -143,18 +173,67 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     dnsNames = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformCertificateProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformKeyVaultCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState), vaultUri, keyVaultCertName, certVersion.Value, Optional.ToNullable(excludePrivateKey));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformKeyVaultCertificateProperties(
+                type,
+                thumbprint,
+                issuer,
+                issuedDate,
+                expirationDate,
+                activateDate,
+                subjectName,
+                dnsNames ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData,
+                vaultUri,
+                keyVaultCertName,
+                certVersion,
+                excludePrivateKey);
         }
+
+        BinaryData IPersistableModel<AppPlatformKeyVaultCertificateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformKeyVaultCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformKeyVaultCertificateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformKeyVaultCertificateProperties IPersistableModel<AppPlatformKeyVaultCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformKeyVaultCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformKeyVaultCertificateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformKeyVaultCertificateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformKeyVaultCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

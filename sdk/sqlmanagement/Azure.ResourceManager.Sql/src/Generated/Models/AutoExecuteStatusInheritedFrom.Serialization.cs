@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static AutoExecuteStatusInheritedFrom ToAutoExecuteStatusInheritedFrom(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatusInheritedFrom.Default;
-            if (string.Equals(value, "Subscription", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatusInheritedFrom.Subscription;
-            if (string.Equals(value, "Server", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatusInheritedFrom.Server;
-            if (string.Equals(value, "ElasticPool", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatusInheritedFrom.ElasticPool;
-            if (string.Equals(value, "Database", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatusInheritedFrom.Database;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutoExecuteStatusInheritedFrom.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Subscription")) return AutoExecuteStatusInheritedFrom.Subscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Server")) return AutoExecuteStatusInheritedFrom.Server;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ElasticPool")) return AutoExecuteStatusInheritedFrom.ElasticPool;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Database")) return AutoExecuteStatusInheritedFrom.Database;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoExecuteStatusInheritedFrom value.");
         }
     }

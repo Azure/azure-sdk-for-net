@@ -1,0 +1,26 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+        {
+            "apiVersion": "2024-06-01-preview",
+            "type": "Microsoft.ServiceFabric/managedclusters",
+            "name": "sfmctestclusternet1",
+            "location": "southcentralus",
+            "sku": {
+                "name": "Standard"
+            },
+            "tags": {
+                "SFRP.CertificateSource": "Dsms",
+                "SFRP.EnableDiagnosticMI": "true"
+            },
+            "properties": {
+                "dnsName": "sfmctestclusternet1",
+                "adminUserName": "testusername",
+                "adminPassword": "TestPass123!",
+                "clientConnectionPort": 19000,
+                "httpGatewayConnectionPort": 19080
+            }
+        }
+    ]
+}

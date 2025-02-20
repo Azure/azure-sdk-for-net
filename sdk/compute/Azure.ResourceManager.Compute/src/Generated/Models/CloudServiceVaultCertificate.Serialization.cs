@@ -6,41 +6,143 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceVaultCertificate : IUtf8JsonSerializable
+    public partial class CloudServiceVaultCertificate : IUtf8JsonSerializable, IJsonModel<CloudServiceVaultCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceVaultCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CloudServiceVaultCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateUri))
-            {
-                writer.WritePropertyName("certificateUrl");
-                writer.WriteStringValue(CertificateUri.AbsoluteUri);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static CloudServiceVaultCertificate DeserializeCloudServiceVaultCertificate(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<Uri> certificateUrl = default;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudServiceVaultCertificate)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(CertificateUri))
+            {
+                writer.WritePropertyName("certificateUrl"u8);
+                writer.WriteStringValue(CertificateUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(IsBootstrapCertificate))
+            {
+                writer.WritePropertyName("isBootstrapCertificate"u8);
+                writer.WriteBooleanValue(IsBootstrapCertificate.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        CloudServiceVaultCertificate IJsonModel<CloudServiceVaultCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudServiceVaultCertificate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceVaultCertificate(document.RootElement, options);
+        }
+
+        internal static CloudServiceVaultCertificate DeserializeCloudServiceVaultCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri certificateUrl = default;
+            bool? isBootstrapCertificate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateUrl"))
+                if (property.NameEquals("certificateUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        certificateUrl = null;
                         continue;
                     }
                     certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("isBootstrapCertificate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isBootstrapCertificate = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudServiceVaultCertificate(certificateUrl.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudServiceVaultCertificate(certificateUrl, isBootstrapCertificate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudServiceVaultCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudServiceVaultCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudServiceVaultCertificate IPersistableModel<CloudServiceVaultCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudServiceVaultCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudServiceVaultCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudServiceVaultCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

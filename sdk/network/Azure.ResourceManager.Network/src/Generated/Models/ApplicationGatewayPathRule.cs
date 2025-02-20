@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Path rule of URL path map of an application gateway. </summary>
     public partial class ApplicationGatewayPathRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         public ApplicationGatewayPathRule()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of URL path map path rule. </param>
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
+        /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Paths = paths;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             BackendHttpSettings = backendHttpSettings;
             RedirectConfiguration = redirectConfiguration;
             RewriteRuleSet = rewriteRuleSet;
+            LoadDistributionPolicy = loadDistributionPolicy;
             ProvisioningState = provisioningState;
             FirewallPolicy = firewallPolicy;
         }
@@ -102,6 +105,20 @@ namespace Azure.ResourceManager.Network.Models
                 if (RewriteRuleSet is null)
                     RewriteRuleSet = new WritableSubResource();
                 RewriteRuleSet.Id = value;
+            }
+        }
+
+        /// <summary> Load Distribution Policy resource of URL path map path rule. </summary>
+        internal WritableSubResource LoadDistributionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadDistributionPolicyId
+        {
+            get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
+            set
+            {
+                if (LoadDistributionPolicy is null)
+                    LoadDistributionPolicy = new WritableSubResource();
+                LoadDistributionPolicy.Id = value;
             }
         }
 

@@ -24,12 +24,12 @@ namespace Azure.Monitor.Query.Models
 
         public static MetricAggregationType ToMetricAggregationType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return MetricAggregationType.None;
-            if (string.Equals(value, "Average", StringComparison.InvariantCultureIgnoreCase)) return MetricAggregationType.Average;
-            if (string.Equals(value, "Count", StringComparison.InvariantCultureIgnoreCase)) return MetricAggregationType.Count;
-            if (string.Equals(value, "Minimum", StringComparison.InvariantCultureIgnoreCase)) return MetricAggregationType.Minimum;
-            if (string.Equals(value, "Maximum", StringComparison.InvariantCultureIgnoreCase)) return MetricAggregationType.Maximum;
-            if (string.Equals(value, "Total", StringComparison.InvariantCultureIgnoreCase)) return MetricAggregationType.Total;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return MetricAggregationType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average")) return MetricAggregationType.Average;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return MetricAggregationType.Count;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Minimum")) return MetricAggregationType.Minimum;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Maximum")) return MetricAggregationType.Maximum;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Total")) return MetricAggregationType.Total;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricAggregationType value.");
         }
     }

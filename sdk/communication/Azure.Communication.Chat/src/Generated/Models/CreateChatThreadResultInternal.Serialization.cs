@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -15,25 +14,27 @@ namespace Azure.Communication.Chat
     {
         internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element)
         {
-            Optional<ChatThreadPropertiesInternal> chatThread = default;
-            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ChatThreadPropertiesInternal chatThread = default;
+            IReadOnlyList<ChatError> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("chatThread"))
+                if (property.NameEquals("chatThread"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     chatThread = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("invalidParticipants"))
+                if (property.NameEquals("invalidParticipants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ChatError> array = new List<ChatError>();
@@ -45,7 +46,15 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new CreateChatThreadResultInternal(chatThread.Value, Optional.ToList(invalidParticipants));
+            return new CreateChatThreadResultInternal(chatThread, invalidParticipants ?? new ChangeTrackingList<ChatError>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CreateChatThreadResultInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCreateChatThreadResultInternal(document.RootElement);
         }
     }
 }

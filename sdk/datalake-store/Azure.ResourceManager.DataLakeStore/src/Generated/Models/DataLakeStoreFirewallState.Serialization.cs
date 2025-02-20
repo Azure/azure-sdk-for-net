@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreFirewallState ToDataLakeStoreFirewallState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreFirewallState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreFirewallState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataLakeStoreFirewallState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataLakeStoreFirewallState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreFirewallState value.");
         }
     }

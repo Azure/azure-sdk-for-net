@@ -5,42 +5,131 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVSiteDetails
+    public partial class HyperVSiteDetails : IUtf8JsonSerializable, IJsonModel<HyperVSiteDetails>
     {
-        internal static HyperVSiteDetails DeserializeHyperVSiteDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVSiteDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HyperVSiteDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<HyperVHostDetails>> hyperVHosts = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVSiteDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(HyperVHosts))
+            {
+                writer.WritePropertyName("hyperVHosts"u8);
+                writer.WriteStartArray();
+                foreach (var item in HyperVHosts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        HyperVSiteDetails IJsonModel<HyperVSiteDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVSiteDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVSiteDetails(document.RootElement, options);
+        }
+
+        internal static HyperVSiteDetails DeserializeHyperVSiteDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<HyperVHostDetails> hyperVHosts = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hyperVHosts"))
+                if (property.NameEquals("hyperVHosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HyperVHostDetails> array = new List<HyperVHostDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item));
+                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item, options));
                     }
                     hyperVHosts = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVSiteDetails(instanceType, Optional.ToList(hyperVHosts));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HyperVSiteDetails(instanceType, serializedAdditionalRawData, hyperVHosts ?? new ChangeTrackingList<HyperVHostDetails>());
         }
+
+        BinaryData IPersistableModel<HyperVSiteDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVSiteDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVSiteDetails IPersistableModel<HyperVSiteDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVSiteDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVSiteDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVSiteDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

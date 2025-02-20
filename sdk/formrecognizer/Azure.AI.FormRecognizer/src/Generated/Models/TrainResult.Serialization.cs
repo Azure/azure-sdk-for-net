@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,14 +15,18 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static TrainResult DeserializeTrainResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
-            Optional<IReadOnlyList<CustomFormModelField>> fields = default;
-            Optional<float> averageModelAccuracy = default;
-            Optional<string> modelId = default;
-            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            IReadOnlyList<CustomFormModelField> fields = default;
+            float? averageModelAccuracy = default;
+            string modelId = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trainingDocuments"))
+                if (property.NameEquals("trainingDocuments"u8))
                 {
                     List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -33,11 +36,10 @@ namespace Azure.AI.FormRecognizer.Models
                     trainingDocuments = array;
                     continue;
                 }
-                if (property.NameEquals("fields"))
+                if (property.NameEquals("fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CustomFormModelField> array = new List<CustomFormModelField>();
@@ -48,26 +50,24 @@ namespace Azure.AI.FormRecognizer.Models
                     fields = array;
                     continue;
                 }
-                if (property.NameEquals("averageModelAccuracy"))
+                if (property.NameEquals("averageModelAccuracy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
@@ -79,7 +79,15 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), modelId.Value, Optional.ToList(errors));
+            return new TrainResult(trainingDocuments, fields ?? new ChangeTrackingList<CustomFormModelField>(), averageModelAccuracy, modelId, errors ?? new ChangeTrackingList<FormRecognizerError>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TrainResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTrainResult(document.RootElement);
         }
     }
 }

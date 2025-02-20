@@ -6,37 +6,143 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAssetFileEncryptionMetadata
+    public partial class MediaAssetFileEncryptionMetadata : IUtf8JsonSerializable, IJsonModel<MediaAssetFileEncryptionMetadata>
     {
-        internal static MediaAssetFileEncryptionMetadata DeserializeMediaAssetFileEncryptionMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAssetFileEncryptionMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MediaAssetFileEncryptionMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> initializationVector = default;
-            Optional<string> assetFileName = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaAssetFileEncryptionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaAssetFileEncryptionMetadata)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(InitializationVector))
+            {
+                writer.WritePropertyName("initializationVector"u8);
+                writer.WriteStringValue(InitializationVector);
+            }
+            if (Optional.IsDefined(AssetFileName))
+            {
+                writer.WritePropertyName("assetFileName"u8);
+                writer.WriteStringValue(AssetFileName);
+            }
+            writer.WritePropertyName("assetFileId"u8);
+            writer.WriteStringValue(AssetFileId);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MediaAssetFileEncryptionMetadata IJsonModel<MediaAssetFileEncryptionMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaAssetFileEncryptionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaAssetFileEncryptionMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaAssetFileEncryptionMetadata(document.RootElement, options);
+        }
+
+        internal static MediaAssetFileEncryptionMetadata DeserializeMediaAssetFileEncryptionMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string initializationVector = default;
+            string assetFileName = default;
             Guid assetFileId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("initializationVector"))
+                if (property.NameEquals("initializationVector"u8))
                 {
                     initializationVector = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetFileName"))
+                if (property.NameEquals("assetFileName"u8))
                 {
                     assetFileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetFileId"))
+                if (property.NameEquals("assetFileId"u8))
                 {
                     assetFileId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaAssetFileEncryptionMetadata(initializationVector.Value, assetFileName.Value, assetFileId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MediaAssetFileEncryptionMetadata(initializationVector, assetFileName, assetFileId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaAssetFileEncryptionMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaAssetFileEncryptionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MediaAssetFileEncryptionMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MediaAssetFileEncryptionMetadata IPersistableModel<MediaAssetFileEncryptionMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaAssetFileEncryptionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaAssetFileEncryptionMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MediaAssetFileEncryptionMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaAssetFileEncryptionMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

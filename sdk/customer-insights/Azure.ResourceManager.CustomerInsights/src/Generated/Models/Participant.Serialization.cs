@@ -5,31 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class Participant : IUtf8JsonSerializable
+    public partial class Participant : IUtf8JsonSerializable, IJsonModel<Participant>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Participant>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<Participant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("profileTypeName");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Participant)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("profileTypeName"u8);
             writer.WriteStringValue(ProfileTypeName);
-            writer.WritePropertyName("participantPropertyReferences");
+            writer.WritePropertyName("participantPropertyReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ParticipantPropertyReferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("participantName");
+            writer.WritePropertyName("participantName"u8);
             writer.WriteStringValue(ParticipantName);
             if (Optional.IsCollectionDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
                 foreach (var item in DisplayName)
                 {
@@ -40,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsCollectionDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
                 foreach (var item in Description)
                 {
@@ -51,47 +69,80 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static Participant DeserializeParticipant(JsonElement element)
+        Participant IJsonModel<Participant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Participant)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParticipant(document.RootElement, options);
+        }
+
+        internal static Participant DeserializeParticipant(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string profileTypeName = default;
             IList<ParticipantPropertyReference> participantPropertyReferences = default;
             string participantName = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<string> role = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
+            string role = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileTypeName"))
+                if (property.NameEquals("profileTypeName"u8))
                 {
                     profileTypeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participantPropertyReferences"))
+                if (property.NameEquals("participantPropertyReferences"u8))
                 {
                     List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item, options));
                     }
                     participantPropertyReferences = array;
                     continue;
                 }
-                if (property.NameEquals("participantName"))
+                if (property.NameEquals("participantName"u8))
                 {
                     participantName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -102,11 +153,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     displayName = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -117,13 +167,56 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     description = dictionary;
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Participant(
+                profileTypeName,
+                participantPropertyReferences,
+                participantName,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                role,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Participant>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Participant)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Participant IPersistableModel<Participant>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeParticipant(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Participant)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Participant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

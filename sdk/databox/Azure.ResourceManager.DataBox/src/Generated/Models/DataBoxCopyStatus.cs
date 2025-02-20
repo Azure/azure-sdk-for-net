@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string DriveCorruptedValue = "DriveCorrupted";
         private const string MetadataFilesModifiedOrRemovedValue = "MetadataFilesModifiedOrRemoved";
 
-        /// <summary> Data copy hasn&apos;t started yet. </summary>
+        /// <summary> Data copy hasn't started yet. </summary>
         public static DataBoxCopyStatus NotStarted { get; } = new DataBoxCopyStatus(NotStartedValue);
         /// <summary> Data copy is in progress. </summary>
         public static DataBoxCopyStatus InProgress { get; } = new DataBoxCopyStatus(InProgressValue);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator ==(DataBoxCopyStatus left, DataBoxCopyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxCopyStatus"/> values are not the same. </summary>
         public static bool operator !=(DataBoxCopyStatus left, DataBoxCopyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxCopyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxCopyStatus"/>. </summary>
         public static implicit operator DataBoxCopyStatus(string value) => new DataBoxCopyStatus(value);
 
         /// <inheritdoc />
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

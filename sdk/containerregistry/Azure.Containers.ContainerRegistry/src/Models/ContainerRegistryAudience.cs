@@ -27,6 +27,7 @@ namespace Azure.Containers.ContainerRegistry
         public static ContainerRegistryAudience AzureResourceManagerChina { get; } = new ContainerRegistryAudience(AzureResourceManagerChinaValue);
 
         /// <summary> Azure Germany. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryAudience AzureResourceManagerGermany { get; } = new ContainerRegistryAudience(AzureResourceManagerGermanyValue);
 
         /// <summary> Azure Government. </summary>

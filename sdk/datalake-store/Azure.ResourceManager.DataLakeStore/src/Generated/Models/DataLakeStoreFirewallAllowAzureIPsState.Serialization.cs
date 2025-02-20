@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreFirewallAllowAzureIPsState ToDataLakeStoreFirewallAllowAzureIPsState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreFirewallAllowAzureIPsState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreFirewallAllowAzureIPsState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataLakeStoreFirewallAllowAzureIPsState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataLakeStoreFirewallAllowAzureIPsState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreFirewallAllowAzureIPsState value.");
         }
     }

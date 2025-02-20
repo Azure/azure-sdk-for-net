@@ -17,77 +17,94 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TrustedCertificates))
             {
-                writer.WritePropertyName("trustedCertificates");
+                writer.WritePropertyName("trustedCertificates"u8);
                 writer.WriteObjectValue(TrustedCertificates);
             }
             if (Optional.IsDefined(ValidationOptions))
             {
-                writer.WritePropertyName("validationOptions");
+                writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
             writer.WriteEndObject();
         }
 
         internal static TlsEndpoint DeserializeTlsEndpoint(JsonElement element)
         {
-            Optional<CertificateSource> trustedCertificates = default;
-            Optional<TlsValidationOptions> validationOptions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CertificateSource trustedCertificates = default;
+            TlsValidationOptions validationOptions = default;
             string type = default;
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trustedCertificates"))
+                if (property.NameEquals("trustedCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trustedCertificates = CertificateSource.DeserializeCertificateSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationOptions"))
+                if (property.NameEquals("validationOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationOptions = TlsValidationOptions.DeserializeTlsValidationOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
             }
-            return new TlsEndpoint(type, credentials.Value, url, trustedCertificates.Value, validationOptions.Value);
+            return new TlsEndpoint(type, credentials, url, trustedCertificates, validationOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TlsEndpoint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTlsEndpoint(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

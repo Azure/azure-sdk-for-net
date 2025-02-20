@@ -10,20 +10,50 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Get the subscription capabilities for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetHDInsightClusters_GetAllHadoopOnLinuxClusters()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopAllClusters.json
+            // this example is just showing the usage of "Clusters_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "subid";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (HDInsightClusterResource item in subscriptionResource.GetHDInsightClustersAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                HDInsightClusterData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightCapabilities_GetTheSubscriptionCapabilitiesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetHDInsightCapabilities.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetHDInsightCapabilities.json
             // this example is just showing the usage of "Locations_GetCapabilities" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,12 +74,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightUsages_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetHDInsightUsages.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetHDInsightUsages.json
             // this example is just showing the usage of "Locations_ListUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,15 +99,14 @@ namespace Azure.ResourceManager.HDInsight.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the subscription billingSpecs for the specified location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightBillingSpecs_GetTheSubscriptionBillingSpecsForTheSpecifiedLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Locations_ListBillingSpecs.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_ListBillingSpecs.json
             // this example is just showing the usage of "Locations_ListBillingSpecs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,12 +127,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckHDInsightNameAvailability_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Locations_CheckClusterNameAvailability.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_CheckClusterNameAvailability.json
             // this example is just showing the usage of "Locations_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +147,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            HDInsightNameAvailabilityContent content = new HDInsightNameAvailabilityContent()
+            HDInsightNameAvailabilityContent content = new HDInsightNameAvailabilityContent
             {
                 Name = "test123",
                 ResourceType = new ResourceType("clusters"),
@@ -130,12 +157,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateHDInsightClusterCreation_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Locations_ValidateClusterCreateRequest.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_ValidateClusterCreateRequest.json
             // this example is just showing the usage of "Locations_ValidateClusterCreateRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,109 +177,90 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("southcentralus");
-            HDInsightClusterCreationValidateContent content = new HDInsightClusterCreationValidateContent()
+            HDInsightClusterCreationValidateContent content = new HDInsightClusterCreationValidateContent
             {
                 Name = "testclustername",
                 ClusterCreateRequestValidationParametersType = "Microsoft.HDInsight/clusters",
                 TenantId = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 FetchAaddsResource = false,
                 Location = new AzureLocation("southcentralus"),
-                Tags =
-{
-},
-                Properties = new HDInsightClusterCreateOrUpdateProperties()
+                Tags = { },
+                Properties = new HDInsightClusterCreateOrUpdateProperties
                 {
                     ClusterVersion = "4.0",
                     OSType = HDInsightOSType.Linux,
                     Tier = HDInsightTier.Standard,
-                    ClusterDefinition = new HDInsightClusterDefinition()
+                    ClusterDefinition = new HDInsightClusterDefinition
                     {
                         Kind = "spark",
                         ComponentVersion =
 {
-["Spark"] = "2.4",
+["Spark"] = "2.4"
 },
-                        Configurations = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                        Configurations = BinaryData.FromObjectAsJson(new
                         {
-                            ["gateway"] = new Dictionary<string, object>()
+                            gateway = new Dictionary<string, object>
                             {
                                 ["restAuthCredential.isEnabled"] = "true",
                                 ["restAuthCredential.password"] = "**********",
                                 ["restAuthCredential.username"] = "admin"
-                            }
+                            },
                         }),
                     },
-                    ComputeRoles =
-{
-new HDInsightClusterRole()
+                    ComputeRoles = {new HDInsightClusterRole
 {
 Name = "headnode",
 MinInstanceCount = 1,
 TargetInstanceCount = 2,
-AutoScaleConfiguration = null,
+AutoScaleConfiguration = default,
 HardwareVmSize = "Standard_E8_V3",
-OSLinuxProfile = new HDInsightLinuxOSProfile()
+OSLinuxProfile = new HDInsightLinuxOSProfile
 {
 Username = "sshuser",
 Password = "********",
 },
-VirtualNetworkProfile = null,
-DataDisksGroups =
-{
-},
-ScriptActions =
-{
-},
-},new HDInsightClusterRole()
+VirtualNetworkProfile = default,
+DataDisksGroups = {},
+ScriptActions = {},
+}, new HDInsightClusterRole
 {
 Name = "workernode",
 TargetInstanceCount = 4,
-AutoScaleConfiguration = null,
+AutoScaleConfiguration = default,
 HardwareVmSize = "Standard_E8_V3",
-OSLinuxProfile = new HDInsightLinuxOSProfile()
+OSLinuxProfile = new HDInsightLinuxOSProfile
 {
 Username = "sshuser",
 Password = "********",
 },
-VirtualNetworkProfile = null,
-DataDisksGroups =
-{
-},
-ScriptActions =
-{
-},
-},new HDInsightClusterRole()
+VirtualNetworkProfile = default,
+DataDisksGroups = {},
+ScriptActions = {},
+}, new HDInsightClusterRole
 {
 Name = "zookeepernode",
 MinInstanceCount = 1,
 TargetInstanceCount = 3,
-AutoScaleConfiguration = null,
+AutoScaleConfiguration = default,
 HardwareVmSize = "Standard_D13_V2",
-OSLinuxProfile = new HDInsightLinuxOSProfile()
+OSLinuxProfile = new HDInsightLinuxOSProfile
 {
 Username = "sshuser",
 Password = "**********",
 },
-VirtualNetworkProfile = null,
-DataDisksGroups =
-{
-},
-ScriptActions =
-{
-},
-}
-},
-                    StorageAccounts =
-{
-new HDInsightStorageAccountInfo()
+VirtualNetworkProfile = default,
+DataDisksGroups = {},
+ScriptActions = {},
+}},
+                    StorageAccounts = {new HDInsightStorageAccountInfo
 {
 Name = "storagename.blob.core.windows.net",
 IsDefault = true,
 Container = "contianername",
 Key = "*******",
 ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/storagename"),
-}
-},
+EnableSecureChannel = true,
+}},
                     MinSupportedTlsVersion = "1.2",
                 },
             };

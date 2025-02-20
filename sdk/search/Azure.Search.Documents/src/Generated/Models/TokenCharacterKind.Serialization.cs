@@ -23,11 +23,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static TokenCharacterKind ToTokenCharacterKind(this string value)
         {
-            if (string.Equals(value, "letter", StringComparison.InvariantCultureIgnoreCase)) return TokenCharacterKind.Letter;
-            if (string.Equals(value, "digit", StringComparison.InvariantCultureIgnoreCase)) return TokenCharacterKind.Digit;
-            if (string.Equals(value, "whitespace", StringComparison.InvariantCultureIgnoreCase)) return TokenCharacterKind.Whitespace;
-            if (string.Equals(value, "punctuation", StringComparison.InvariantCultureIgnoreCase)) return TokenCharacterKind.Punctuation;
-            if (string.Equals(value, "symbol", StringComparison.InvariantCultureIgnoreCase)) return TokenCharacterKind.Symbol;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "letter")) return TokenCharacterKind.Letter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "digit")) return TokenCharacterKind.Digit;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "whitespace")) return TokenCharacterKind.Whitespace;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "punctuation")) return TokenCharacterKind.Punctuation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "symbol")) return TokenCharacterKind.Symbol;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenCharacterKind value.");
         }
     }

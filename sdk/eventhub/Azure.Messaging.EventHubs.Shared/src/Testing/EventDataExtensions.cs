@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -63,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Verify that the stand-alone system properties are equivalent.
 
             if ((considerSystemProperties)
-                && ((instance.Offset != other.Offset)
+                && ((instance.OffsetString != other.OffsetString)
                     || (instance.EnqueuedTime != other.EnqueuedTime)
                     || (instance.PartitionKey != other.PartitionKey)
                     || (instance.SequenceNumber != other.SequenceNumber)))
@@ -115,7 +117,33 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            return instance.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(other.Properties.OrderBy(kvp => kvp.Key));
+            foreach (var key in instance.Properties.Keys)
+            {
+                if (!other.Properties.TryGetValue(key, out object otherValue))
+                {
+                    return false;
+                }
+
+                // Properties can contain byte[] or ArraySegment<byte> values, which need to be compared
+                // as a sequence rather than by strict equality.  Both forms implement IList<byte>, so they
+                // can be normalized for comparison.
+
+                if ((instance.Properties[key] is IList<byte> instanceList) && (otherValue is IList<byte> otherList))
+                {
+                    if (!instanceList.SequenceEqual(otherList))
+                    {
+                        return false;
+                    }
+                }
+                else if (!instance.Properties[key].Equals(otherValue))
+                {
+                    return false;
+                }
+            }
+
+            // No inequalities were found, so the events are equal.
+
+            return true;
         }
     }
 }

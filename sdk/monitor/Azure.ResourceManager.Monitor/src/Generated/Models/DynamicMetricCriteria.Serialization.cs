@@ -6,55 +6,45 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DynamicMetricCriteria : IUtf8JsonSerializable
+    public partial class DynamicMetricCriteria : IUtf8JsonSerializable, IJsonModel<DynamicMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DynamicMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operator");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            writer.WritePropertyName("alertSensitivity");
+            writer.WritePropertyName("alertSensitivity"u8);
             writer.WriteStringValue(AlertSensitivity.ToString());
-            writer.WritePropertyName("failingPeriods");
-            writer.WriteObjectValue(FailingPeriods);
+            writer.WritePropertyName("failingPeriods"u8);
+            writer.WriteObjectValue(FailingPeriods, options);
             if (Optional.IsDefined(IgnoreDataBefore))
             {
-                writer.WritePropertyName("ignoreDataBefore");
+                writer.WritePropertyName("ignoreDataBefore"u8);
                 writer.WriteStringValue(IgnoreDataBefore.Value, "O");
-            }
-            writer.WritePropertyName("criterionType");
-            writer.WriteStringValue(CriterionType.ToString());
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("metricName");
-            writer.WriteStringValue(MetricName);
-            if (Optional.IsDefined(MetricNamespace))
-            {
-                writer.WritePropertyName("metricNamespace");
-                writer.WriteStringValue(MetricNamespace);
-            }
-            writer.WritePropertyName("timeAggregation");
-            writer.WriteStringValue(TimeAggregation.ToString());
-            if (Optional.IsCollectionDefined(Dimensions))
-            {
-                writer.WritePropertyName("dimensions");
-                writer.WriteStartArray();
-                foreach (var item in Dimensions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SkipMetricValidation))
-            {
-                writer.WritePropertyName("skipMetricValidation");
-                writer.WriteBooleanValue(SkipMetricValidation.Value);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -62,99 +52,116 @@ namespace Azure.ResourceManager.Monitor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element)
+        DynamicMetricCriteria IJsonModel<DynamicMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicMetricCriteria(document.RootElement, options);
+        }
+
+        internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DynamicThresholdOperator @operator = default;
             DynamicThresholdSensitivity alertSensitivity = default;
             DynamicThresholdFailingPeriods failingPeriods = default;
-            Optional<DateTimeOffset> ignoreDataBefore = default;
+            DateTimeOffset? ignoreDataBefore = default;
             CriterionType criterionType = default;
             string name = default;
             string metricName = default;
-            Optional<string> metricNamespace = default;
+            string metricNamespace = default;
             MetricCriteriaTimeAggregationType timeAggregation = default;
-            Optional<IList<MetricDimension>> dimensions = default;
-            Optional<bool> skipMetricValidation = default;
+            IList<MetricDimension> dimensions = default;
+            bool? skipMetricValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new DynamicThresholdOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertSensitivity"))
+                if (property.NameEquals("alertSensitivity"u8))
                 {
                     alertSensitivity = new DynamicThresholdSensitivity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failingPeriods"))
+                if (property.NameEquals("failingPeriods"u8))
                 {
-                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value);
+                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ignoreDataBefore"))
+                if (property.NameEquals("ignoreDataBefore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreDataBefore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("criterionType"))
+                if (property.NameEquals("criterionType"u8))
                 {
                     criterionType = new CriterionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     timeAggregation = new MetricCriteriaTimeAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("skipMetricValidation"))
+                if (property.NameEquals("skipMetricValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skipMetricValidation = property.Value.GetBoolean();
@@ -163,7 +170,50 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, Optional.ToList(dimensions), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, alertSensitivity, failingPeriods, Optional.ToNullable(ignoreDataBefore));
+            return new DynamicMetricCriteria(
+                criterionType,
+                name,
+                metricName,
+                metricNamespace,
+                timeAggregation,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                skipMetricValidation,
+                additionalProperties,
+                @operator,
+                alertSensitivity,
+                failingPeriods,
+                ignoreDataBefore);
         }
+
+        BinaryData IPersistableModel<DynamicMetricCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DynamicMetricCriteria IPersistableModel<DynamicMetricCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynamicMetricCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynamicMetricCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

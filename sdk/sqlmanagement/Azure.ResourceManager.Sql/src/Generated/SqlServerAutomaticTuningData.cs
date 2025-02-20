@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,16 +13,51 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerAutomaticTuning data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerAutomaticTuning data model.
+    /// Server-level Automatic Tuning.
+    /// </summary>
     public partial class SqlServerAutomaticTuningData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerAutomaticTuningData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerAutomaticTuningData"/>. </summary>
         public SqlServerAutomaticTuningData()
         {
             Options = new ChangeTrackingDictionary<string, AutomaticTuningServerOptions>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerAutomaticTuningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAutomaticTuningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,18 +65,23 @@ namespace Azure.ResourceManager.Sql
         /// <param name="desiredState"> Automatic tuning desired state. </param>
         /// <param name="actualState"> Automatic tuning actual state. </param>
         /// <param name="options"> Automatic tuning options definition. </param>
-        internal SqlServerAutomaticTuningData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomaticTuningServerMode? desiredState, AutomaticTuningServerMode? actualState, IDictionary<string, AutomaticTuningServerOptions> options) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerAutomaticTuningData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomaticTuningServerMode? desiredState, AutomaticTuningServerMode? actualState, IDictionary<string, AutomaticTuningServerOptions> options, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DesiredState = desiredState;
             ActualState = actualState;
             Options = options;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Automatic tuning desired state. </summary>
+        [WirePath("properties.desiredState")]
         public AutomaticTuningServerMode? DesiredState { get; set; }
         /// <summary> Automatic tuning actual state. </summary>
+        [WirePath("properties.actualState")]
         public AutomaticTuningServerMode? ActualState { get; }
         /// <summary> Automatic tuning options definition. </summary>
+        [WirePath("properties.options")]
         public IDictionary<string, AutomaticTuningServerOptions> Options { get; }
     }
 }

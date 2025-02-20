@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountUrl))
             {
-                writer.WritePropertyName("accountUrl");
+                writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUrl);
             }
             if (Optional.IsDefined(Filesystem))
             {
-                writer.WritePropertyName("filesystem");
+                writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
             writer.WriteEndObject();
@@ -33,22 +33,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataLakeStorageAccountDetails DeserializeDataLakeStorageAccountDetails(JsonElement element)
         {
-            Optional<string> accountUrl = default;
-            Optional<string> filesystem = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string accountUrl = default;
+            string filesystem = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountUrl"))
+                if (property.NameEquals("accountUrl"u8))
                 {
                     accountUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filesystem"))
+                if (property.NameEquals("filesystem"u8))
                 {
                     filesystem = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value);
+            return new DataLakeStorageAccountDetails(accountUrl, filesystem);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataLakeStorageAccountDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataLakeStorageAccountDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DataLakeStorageAccountDetailsConverter : JsonConverter<DataLakeStorageAccountDetails>
@@ -57,6 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DataLakeStorageAccountDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

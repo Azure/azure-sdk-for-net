@@ -22,12 +22,6 @@
                 "description": "The application client ID used to run tests."
             }
         },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
-        },
         "testApplicationOid": {
             "type": "string",
             "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
@@ -135,10 +129,6 @@
             "type": "string",
             "value": "[parameters('testApplicationId')]"
         },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
         "AZURE_SECURITYINSIGHTS_WORKSPACE": {
             "type": "string",
             "value": "[variables('workspaceName')]"
@@ -167,6 +157,6 @@
             "type": "string",
             "value": "[listCallbackURL(concat(resourceId('Microsoft.Logic/workflows/', variables('workflowName')), '/triggers/When_a_response_to_an_Azure_Sentinel_alert_is_triggered'), '2016-06-01').value]"
         }
-        
+
     }
 }

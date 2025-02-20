@@ -6,17 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntityRecognitionLROResult. </summary>
     internal partial class EntityRecognitionLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of EntityRecognitionLROResult. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <summary> Initializes a new instance of <see cref="EntityRecognitionLROResult"/>. </summary>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         public EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, EntitiesResult results) : base(lastUpdateDateTime, status)
@@ -27,9 +25,9 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.EntityRecognitionLROResults;
         }
 
-        /// <summary> Initializes a new instance of EntityRecognitionLROResult. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <summary> Initializes a new instance of <see cref="EntityRecognitionLROResult"/>. </summary>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"></param>

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string StandardLrsValue = "Standard_LRS";
         private const string StandardZrsValue = "Standard_ZRS";
         private const string PremiumLrsValue = "Premium_LRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
 
         /// <summary> Standard_LRS. </summary>
         public static ImageStorageAccountType StandardLrs { get; } = new ImageStorageAccountType(StandardLrsValue);
@@ -32,11 +33,13 @@ namespace Azure.ResourceManager.Compute.Models
         public static ImageStorageAccountType StandardZrs { get; } = new ImageStorageAccountType(StandardZrsValue);
         /// <summary> Premium_LRS. </summary>
         public static ImageStorageAccountType PremiumLrs { get; } = new ImageStorageAccountType(PremiumLrsValue);
+        /// <summary> PremiumV2_LRS. </summary>
+        public static ImageStorageAccountType PremiumV2Lrs { get; } = new ImageStorageAccountType(PremiumV2LrsValue);
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(ImageStorageAccountType left, ImageStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(ImageStorageAccountType left, ImageStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageStorageAccountType"/>. </summary>
         public static implicit operator ImageStorageAccountType(string value) => new ImageStorageAccountType(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

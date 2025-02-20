@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
@@ -15,42 +14,45 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     {
         internal static TasksStateTasks DeserializeTasksStateTasks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int completed = default;
             int failed = default;
             int inProgress = default;
             int total = default;
-            Optional<IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem>> entityRecognitionTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem>> entityRecognitionPiiTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksEntityLinkingTasksItem>> entityLinkingTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
+            IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks = default;
+            IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks = default;
+            IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks = default;
+            IReadOnlyList<TasksStateTasksEntityLinkingTasksItem> entityLinkingTasks = default;
+            IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("completed"))
+                if (property.NameEquals("completed"u8))
                 {
                     completed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failed"))
+                if (property.NameEquals("failed"u8))
                 {
                     failed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inProgress"))
+                if (property.NameEquals("inProgress"u8))
                 {
                     inProgress = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     total = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("entityRecognitionTasks"))
+                if (property.NameEquals("entityRecognitionTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TasksStateTasksEntityRecognitionTasksItem> array = new List<TasksStateTasksEntityRecognitionTasksItem>();
@@ -61,11 +63,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     entityRecognitionTasks = array;
                     continue;
                 }
-                if (property.NameEquals("entityRecognitionPiiTasks"))
+                if (property.NameEquals("entityRecognitionPiiTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TasksStateTasksEntityRecognitionPiiTasksItem> array = new List<TasksStateTasksEntityRecognitionPiiTasksItem>();
@@ -76,11 +77,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     entityRecognitionPiiTasks = array;
                     continue;
                 }
-                if (property.NameEquals("keyPhraseExtractionTasks"))
+                if (property.NameEquals("keyPhraseExtractionTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TasksStateTasksKeyPhraseExtractionTasksItem> array = new List<TasksStateTasksKeyPhraseExtractionTasksItem>();
@@ -91,11 +91,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     keyPhraseExtractionTasks = array;
                     continue;
                 }
-                if (property.NameEquals("entityLinkingTasks"))
+                if (property.NameEquals("entityLinkingTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TasksStateTasksEntityLinkingTasksItem> array = new List<TasksStateTasksEntityLinkingTasksItem>();
@@ -106,11 +105,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     entityLinkingTasks = array;
                     continue;
                 }
-                if (property.NameEquals("sentimentAnalysisTasks"))
+                if (property.NameEquals("sentimentAnalysisTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TasksStateTasksSentimentAnalysisTasksItem> array = new List<TasksStateTasksSentimentAnalysisTasksItem>();
@@ -122,7 +120,24 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     continue;
                 }
             }
-            return new TasksStateTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
+            return new TasksStateTasks(
+                completed,
+                failed,
+                inProgress,
+                total,
+                entityRecognitionTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionTasksItem>(),
+                entityRecognitionPiiTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionPiiTasksItem>(),
+                keyPhraseExtractionTasks ?? new ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>(),
+                entityLinkingTasks ?? new ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>(),
+                sentimentAnalysisTasks ?? new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TasksStateTasks FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTasksStateTasks(document.RootElement);
         }
     }
 }

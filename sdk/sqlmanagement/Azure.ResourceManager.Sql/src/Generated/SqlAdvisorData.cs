@@ -13,29 +13,65 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlAdvisor data model. </summary>
+    /// <summary>
+    /// A class representing the SqlAdvisor data model.
+    /// Database, Server or Elastic Pool Advisor.
+    /// </summary>
     public partial class SqlAdvisorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
         public SqlAdvisorData()
         {
             RecommendedActions = new ChangeTrackingList<RecommendedActionData>();
         }
 
-        /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="advisorStatus"> Gets the status of availability of this advisor to customers. Possible values are &apos;GA&apos;, &apos;PublicPreview&apos;, &apos;LimitedPublicPreview&apos; and &apos;PrivatePreview&apos;. </param>
-        /// <param name="autoExecuteStatus"> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are &apos;Enabled&apos; and &apos;Disabled&apos;. </param>
-        /// <param name="autoExecuteStatusInheritedFrom"> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are &apos;Subscription&apos;, &apos;Server&apos;, &apos;ElasticPool&apos;, &apos;Database&apos; and &apos;Default&apos; (when status is not explicitly set on any level). </param>
-        /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, &apos;Ok&apos; (Recommendations available),LowActivity (not enough workload to analyze), &apos;DbSeemsTuned&apos; (Database is doing well), etc. </param>
+        /// <param name="advisorStatus"> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </param>
+        /// <param name="autoExecuteStatus"> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </param>
+        /// <param name="autoExecuteStatusInheritedFrom"> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </param>
+        /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </param>
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
-        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -45,23 +81,32 @@ namespace Azure.ResourceManager.Sql
             RecommendationsStatus = recommendationsStatus;
             LastCheckedOn = lastCheckedOn;
             RecommendedActions = recommendedActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Gets the status of availability of this advisor to customers. Possible values are &apos;GA&apos;, &apos;PublicPreview&apos;, &apos;LimitedPublicPreview&apos; and &apos;PrivatePreview&apos;. </summary>
+        /// <summary> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </summary>
+        [WirePath("properties.advisorStatus")]
         public SqlAdvisorStatus? AdvisorStatus { get; }
-        /// <summary> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are &apos;Enabled&apos; and &apos;Disabled&apos;. </summary>
+        /// <summary> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </summary>
+        [WirePath("properties.autoExecuteStatus")]
         public AutoExecuteStatus? AutoExecuteStatus { get; set; }
-        /// <summary> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are &apos;Subscription&apos;, &apos;Server&apos;, &apos;ElasticPool&apos;, &apos;Database&apos; and &apos;Default&apos; (when status is not explicitly set on any level). </summary>
+        /// <summary> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </summary>
+        [WirePath("properties.autoExecuteStatusInheritedFrom")]
         public AutoExecuteStatusInheritedFrom? AutoExecuteStatusInheritedFrom { get; }
-        /// <summary> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, &apos;Ok&apos; (Recommendations available),LowActivity (not enough workload to analyze), &apos;DbSeemsTuned&apos; (Database is doing well), etc. </summary>
+        /// <summary> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </summary>
+        [WirePath("properties.recommendationsStatus")]
         public string RecommendationsStatus { get; }
         /// <summary> Gets the time when the current resource was analyzed for recommendations by this advisor. </summary>
+        [WirePath("properties.lastChecked")]
         public DateTimeOffset? LastCheckedOn { get; }
         /// <summary> Gets the recommended actions for this advisor. </summary>
+        [WirePath("properties.recommendedActions")]
         public IReadOnlyList<RecommendedActionData> RecommendedActions { get; }
     }
 }

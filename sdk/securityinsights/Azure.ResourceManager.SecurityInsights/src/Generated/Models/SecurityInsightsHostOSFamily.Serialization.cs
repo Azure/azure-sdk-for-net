@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         public static SecurityInsightsHostOSFamily ToSecurityInsightsHostOSFamily(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsHostOSFamily.Unknown;
-            if (string.Equals(value, "Linux", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsHostOSFamily.Linux;
-            if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsHostOSFamily.Windows;
-            if (string.Equals(value, "Android", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsHostOSFamily.Android;
-            if (string.Equals(value, "IOS", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsHostOSFamily.Ios;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return SecurityInsightsHostOSFamily.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return SecurityInsightsHostOSFamily.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return SecurityInsightsHostOSFamily.Windows;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Android")) return SecurityInsightsHostOSFamily.Android;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IOS")) return SecurityInsightsHostOSFamily.Ios;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsHostOSFamily value.");
         }
     }

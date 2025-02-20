@@ -17,25 +17,33 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(Quote))
             {
-                writer.WritePropertyName("quote");
+                writer.WritePropertyName("quote"u8);
                 writer.WriteBase64StringValue(Quote, "U");
             }
             if (Optional.IsDefined(RuntimeData))
             {
-                writer.WritePropertyName("runtimeData");
+                writer.WritePropertyName("runtimeData"u8);
                 writer.WriteObjectValue(RuntimeData);
             }
             if (Optional.IsDefined(InitTimeData))
             {
-                writer.WritePropertyName("initTimeData");
+                writer.WritePropertyName("initTimeData"u8);
                 writer.WriteObjectValue(InitTimeData);
             }
             if (Optional.IsDefined(DraftPolicyForAttestation))
             {
-                writer.WritePropertyName("draftPolicyForAttestation");
+                writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

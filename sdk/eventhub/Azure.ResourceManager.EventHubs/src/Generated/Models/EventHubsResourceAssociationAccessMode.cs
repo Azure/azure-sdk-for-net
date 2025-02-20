@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(EventHubsResourceAssociationAccessMode left, EventHubsResourceAssociationAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsResourceAssociationAccessMode"/> values are not the same. </summary>
         public static bool operator !=(EventHubsResourceAssociationAccessMode left, EventHubsResourceAssociationAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
         public static implicit operator EventHubsResourceAssociationAccessMode(string value) => new EventHubsResourceAssociationAccessMode(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,53 +14,53 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobError DeserializeMediaJobError(JsonElement element)
         {
-            Optional<MediaJobErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<MediaJobErrorCategory> category = default;
-            Optional<MediaJobRetry> retry = default;
-            Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MediaJobErrorCode? code = default;
+            string message = default;
+            MediaJobErrorCategory? category = default;
+            MediaJobRetry? retry = default;
+            IReadOnlyList<MediaJobErrorDetail> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     code = property.Value.GetString().ToMediaJobErrorCode();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     category = property.Value.GetString().ToMediaJobErrorCategory();
                     continue;
                 }
-                if (property.NameEquals("retry"))
+                if (property.NameEquals("retry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retry = property.Value.GetString().ToMediaJobRetry();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaJobErrorDetail> array = new List<MediaJobErrorDetail>();
@@ -73,7 +72,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobError(Optional.ToNullable(code), message.Value, Optional.ToNullable(category), Optional.ToNullable(retry), Optional.ToList(details));
+            return new MediaJobError(code, message, category, retry, details ?? new ChangeTrackingList<MediaJobErrorDetail>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaJobError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobError(document.RootElement);
         }
     }
 }

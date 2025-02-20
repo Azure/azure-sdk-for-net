@@ -6,69 +6,106 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class MdeOnboarding : IUtf8JsonSerializable
+    public partial class MdeOnboarding : IUtf8JsonSerializable, IJsonModel<MdeOnboarding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MdeOnboarding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MdeOnboarding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MdeOnboarding>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MdeOnboarding)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OnboardingPackageWindows))
             {
-                writer.WritePropertyName("onboardingPackageWindows");
+                writer.WritePropertyName("onboardingPackageWindows"u8);
                 writer.WriteBase64StringValue(OnboardingPackageWindows, "D");
             }
             if (Optional.IsDefined(OnboardingPackageLinux))
             {
-                writer.WritePropertyName("onboardingPackageLinux");
+                writer.WritePropertyName("onboardingPackageLinux"u8);
                 writer.WriteBase64StringValue(OnboardingPackageLinux, "D");
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static MdeOnboarding DeserializeMdeOnboarding(JsonElement element)
+        MdeOnboarding IJsonModel<MdeOnboarding>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MdeOnboarding>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MdeOnboarding)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMdeOnboarding(document.RootElement, options);
+        }
+
+        internal static MdeOnboarding DeserializeMdeOnboarding(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<byte[]> onboardingPackageWindows = default;
-            Optional<byte[]> onboardingPackageLinux = default;
+            SystemData systemData = default;
+            byte[] onboardingPackageWindows = default;
+            byte[] onboardingPackageLinux = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,21 +114,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("onboardingPackageWindows"))
+                        if (property0.NameEquals("onboardingPackageWindows"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             onboardingPackageWindows = property0.Value.GetBytesFromBase64("D");
                             continue;
                         }
-                        if (property0.NameEquals("onboardingPackageLinux"))
+                        if (property0.NameEquals("onboardingPackageLinux"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             onboardingPackageLinux = property0.Value.GetBytesFromBase64("D");
@@ -100,8 +135,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MdeOnboarding(id, name, type, systemData.Value, onboardingPackageWindows.Value, onboardingPackageLinux.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MdeOnboarding(
+                id,
+                name,
+                type,
+                systemData,
+                onboardingPackageWindows,
+                onboardingPackageLinux,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MdeOnboarding>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MdeOnboarding>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MdeOnboarding)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MdeOnboarding IPersistableModel<MdeOnboarding>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MdeOnboarding>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMdeOnboarding(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MdeOnboarding)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MdeOnboarding>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

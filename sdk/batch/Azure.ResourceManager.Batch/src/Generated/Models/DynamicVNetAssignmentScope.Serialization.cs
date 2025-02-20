@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static DynamicVNetAssignmentScope ToDynamicVNetAssignmentScope(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return DynamicVNetAssignmentScope.None;
-            if (string.Equals(value, "job", StringComparison.InvariantCultureIgnoreCase)) return DynamicVNetAssignmentScope.Job;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return DynamicVNetAssignmentScope.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "job")) return DynamicVNetAssignmentScope.Job;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DynamicVNetAssignmentScope value.");
         }
     }

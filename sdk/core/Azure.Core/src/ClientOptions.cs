@@ -36,7 +36,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ClientOptions"/> with the specificed <see cref="DiagnosticsOptions"/>.
+        /// Creates a new instance of <see cref="ClientOptions"/> with the specified <see cref="DiagnosticsOptions"/>.
         /// </summary>
         /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
         protected ClientOptions(DiagnosticsOptions? diagnostics)
@@ -93,8 +93,8 @@ namespace Azure.Core
 
         /// <summary>
         /// Gets or sets the policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
-        /// The <see cref="RetryPolicy"/> type can be derived from to modify the default behavior without needing to fully implement the retry logic.
-        /// If <see cref="RetryPolicy.Process"/> is overriden or a custom <see cref="HttpPipelinePolicy"/> is specified,
+        /// The <see cref="Pipeline.RetryPolicy"/> type can be derived from to modify the default behavior without needing to fully implement the retry logic.
+        /// If <see cref="RetryPolicy.Process"/> is overridden or a custom <see cref="HttpPipelinePolicy"/> is specified,
         /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
         /// </summary>
         public HttpPipelinePolicy? RetryPolicy { get; set; }

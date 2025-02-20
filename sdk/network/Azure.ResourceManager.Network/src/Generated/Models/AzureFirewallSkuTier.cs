@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
+        private const string BasicValue = "Basic";
 
         /// <summary> Standard. </summary>
         public static AzureFirewallSkuTier Standard { get; } = new AzureFirewallSkuTier(StandardValue);
         /// <summary> Premium. </summary>
         public static AzureFirewallSkuTier Premium { get; } = new AzureFirewallSkuTier(PremiumValue);
+        /// <summary> Basic. </summary>
+        public static AzureFirewallSkuTier Basic { get; } = new AzureFirewallSkuTier(BasicValue);
         /// <summary> Determines if two <see cref="AzureFirewallSkuTier"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallSkuTier left, AzureFirewallSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallSkuTier"/> values are not the same. </summary>
         public static bool operator !=(AzureFirewallSkuTier left, AzureFirewallSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureFirewallSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallSkuTier"/>. </summary>
         public static implicit operator AzureFirewallSkuTier(string value) => new AzureFirewallSkuTier(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

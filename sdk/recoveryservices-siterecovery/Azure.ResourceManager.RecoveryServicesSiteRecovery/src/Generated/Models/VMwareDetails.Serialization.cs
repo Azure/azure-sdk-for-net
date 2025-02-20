@@ -6,309 +6,600 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareDetails
+    public partial class VMwareDetails : IUtf8JsonSerializable, IJsonModel<VMwareDetails>
     {
-        internal static VMwareDetails DeserializeVMwareDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VMwareDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<ProcessServer>> processServers = default;
-            Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
-            Optional<IReadOnlyList<RunAsAccount>> runAsAccounts = default;
-            Optional<string> replicationPairCount = default;
-            Optional<string> processServerCount = default;
-            Optional<string> agentCount = default;
-            Optional<string> protectedServers = default;
-            Optional<string> systemLoad = default;
-            Optional<string> systemLoadStatus = default;
-            Optional<string> cpuLoad = default;
-            Optional<string> cpuLoadStatus = default;
-            Optional<long> totalMemoryInBytes = default;
-            Optional<long> availableMemoryInBytes = default;
-            Optional<string> memoryUsageStatus = default;
-            Optional<long> totalSpaceInBytes = default;
-            Optional<long> availableSpaceInBytes = default;
-            Optional<string> spaceUsageStatus = default;
-            Optional<string> webLoad = default;
-            Optional<string> webLoadStatus = default;
-            Optional<string> databaseServerLoad = default;
-            Optional<string> databaseServerLoadStatus = default;
-            Optional<string> csServiceStatus = default;
-            Optional<string> ipAddress = default;
-            Optional<string> agentVersion = default;
-            Optional<string> hostName = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
-            Optional<DateTimeOffset> sslCertExpiryDate = default;
-            Optional<int> sslCertExpiryRemainingDays = default;
-            Optional<string> psTemplateVersion = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
-            Optional<VersionDetails> agentVersionDetails = default;
-            Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(ProcessServers))
+            {
+                writer.WritePropertyName("processServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProcessServers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(MasterTargetServers))
+            {
+                writer.WritePropertyName("masterTargetServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in MasterTargetServers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RunAsAccounts))
+            {
+                writer.WritePropertyName("runAsAccounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in RunAsAccounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ReplicationPairCount))
+            {
+                writer.WritePropertyName("replicationPairCount"u8);
+                writer.WriteStringValue(ReplicationPairCount);
+            }
+            if (Optional.IsDefined(ProcessServerCount))
+            {
+                writer.WritePropertyName("processServerCount"u8);
+                writer.WriteStringValue(ProcessServerCount);
+            }
+            if (Optional.IsDefined(AgentCount))
+            {
+                writer.WritePropertyName("agentCount"u8);
+                writer.WriteStringValue(AgentCount);
+            }
+            if (Optional.IsDefined(ProtectedServers))
+            {
+                writer.WritePropertyName("protectedServers"u8);
+                writer.WriteStringValue(ProtectedServers);
+            }
+            if (Optional.IsDefined(SystemLoad))
+            {
+                writer.WritePropertyName("systemLoad"u8);
+                writer.WriteStringValue(SystemLoad);
+            }
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                writer.WritePropertyName("systemLoadStatus"u8);
+                writer.WriteStringValue(SystemLoadStatus);
+            }
+            if (Optional.IsDefined(CpuLoad))
+            {
+                writer.WritePropertyName("cpuLoad"u8);
+                writer.WriteStringValue(CpuLoad);
+            }
+            if (Optional.IsDefined(CpuLoadStatus))
+            {
+                writer.WritePropertyName("cpuLoadStatus"u8);
+                writer.WriteStringValue(CpuLoadStatus);
+            }
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                writer.WritePropertyName("totalMemoryInBytes"u8);
+                writer.WriteNumberValue(TotalMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                writer.WritePropertyName("availableMemoryInBytes"u8);
+                writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                writer.WritePropertyName("memoryUsageStatus"u8);
+                writer.WriteStringValue(MemoryUsageStatus);
+            }
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                writer.WritePropertyName("totalSpaceInBytes"u8);
+                writer.WriteNumberValue(TotalSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                writer.WritePropertyName("availableSpaceInBytes"u8);
+                writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(SpaceUsageStatus))
+            {
+                writer.WritePropertyName("spaceUsageStatus"u8);
+                writer.WriteStringValue(SpaceUsageStatus);
+            }
+            if (Optional.IsDefined(WebLoad))
+            {
+                writer.WritePropertyName("webLoad"u8);
+                writer.WriteStringValue(WebLoad);
+            }
+            if (Optional.IsDefined(WebLoadStatus))
+            {
+                writer.WritePropertyName("webLoadStatus"u8);
+                writer.WriteStringValue(WebLoadStatus);
+            }
+            if (Optional.IsDefined(DatabaseServerLoad))
+            {
+                writer.WritePropertyName("databaseServerLoad"u8);
+                writer.WriteStringValue(DatabaseServerLoad);
+            }
+            if (Optional.IsDefined(DatabaseServerLoadStatus))
+            {
+                writer.WritePropertyName("databaseServerLoadStatus"u8);
+                writer.WriteStringValue(DatabaseServerLoadStatus);
+            }
+            if (Optional.IsDefined(CsServiceStatus))
+            {
+                writer.WritePropertyName("csServiceStatus"u8);
+                writer.WriteStringValue(CsServiceStatus);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (Optional.IsDefined(LastHeartbeat))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeat.Value, "O");
+            }
+            if (Optional.IsDefined(VersionStatus))
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (Optional.IsDefined(SslCertExpireOn))
+            {
+                writer.WritePropertyName("sslCertExpiryDate"u8);
+                writer.WriteStringValue(SslCertExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            {
+                writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
+                writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
+            }
+            if (Optional.IsDefined(PSTemplateVersion))
+            {
+                writer.WritePropertyName("psTemplateVersion"u8);
+                writer.WriteStringValue(PSTemplateVersion);
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                writer.WriteObjectValue(AgentVersionDetails, options);
+            }
+            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            {
+                writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in SwitchProviderBlockingErrorDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        VMwareDetails IJsonModel<VMwareDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareDetails(document.RootElement, options);
+        }
+
+        internal static VMwareDetails DeserializeVMwareDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<SiteRecoveryProcessServer> processServers = default;
+            IReadOnlyList<MasterTargetServer> masterTargetServers = default;
+            IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts = default;
+            string replicationPairCount = default;
+            string processServerCount = default;
+            string agentCount = default;
+            string protectedServers = default;
+            string systemLoad = default;
+            string systemLoadStatus = default;
+            string cpuLoad = default;
+            string cpuLoadStatus = default;
+            long? totalMemoryInBytes = default;
+            long? availableMemoryInBytes = default;
+            string memoryUsageStatus = default;
+            long? totalSpaceInBytes = default;
+            long? availableSpaceInBytes = default;
+            string spaceUsageStatus = default;
+            string webLoad = default;
+            string webLoadStatus = default;
+            string databaseServerLoad = default;
+            string databaseServerLoadStatus = default;
+            string csServiceStatus = default;
+            IPAddress ipAddress = default;
+            string agentVersion = default;
+            string hostName = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionStatus = default;
+            DateTimeOffset? sslCertExpireOn = default;
+            int? sslCertExpiryRemainingDays = default;
+            string psTemplateVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            SiteRecoveryVersionDetails agentVersionDetails = default;
+            IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("processServers"))
+                if (property.NameEquals("processServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProcessServer> array = new List<ProcessServer>();
+                    List<SiteRecoveryProcessServer> array = new List<SiteRecoveryProcessServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessServer.DeserializeProcessServer(item));
+                        array.Add(SiteRecoveryProcessServer.DeserializeSiteRecoveryProcessServer(item, options));
                     }
                     processServers = array;
                     continue;
                 }
-                if (property.NameEquals("masterTargetServers"))
+                if (property.NameEquals("masterTargetServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MasterTargetServer> array = new List<MasterTargetServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MasterTargetServer.DeserializeMasterTargetServer(item));
+                        array.Add(MasterTargetServer.DeserializeMasterTargetServer(item, options));
                     }
                     masterTargetServers = array;
                     continue;
                 }
-                if (property.NameEquals("runAsAccounts"))
+                if (property.NameEquals("runAsAccounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RunAsAccount> array = new List<RunAsAccount>();
+                    List<SiteRecoveryRunAsAccount> array = new List<SiteRecoveryRunAsAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunAsAccount.DeserializeRunAsAccount(item));
+                        array.Add(SiteRecoveryRunAsAccount.DeserializeSiteRecoveryRunAsAccount(item, options));
                     }
                     runAsAccounts = array;
                     continue;
                 }
-                if (property.NameEquals("replicationPairCount"))
+                if (property.NameEquals("replicationPairCount"u8))
                 {
                     replicationPairCount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processServerCount"))
+                if (property.NameEquals("processServerCount"u8))
                 {
                     processServerCount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentCount"))
+                if (property.NameEquals("agentCount"u8))
                 {
                     agentCount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedServers"))
+                if (property.NameEquals("protectedServers"u8))
                 {
                     protectedServers = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemLoad"))
+                if (property.NameEquals("systemLoad"u8))
                 {
                     systemLoad = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemLoadStatus"))
+                if (property.NameEquals("systemLoadStatus"u8))
                 {
                     systemLoadStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLoad"))
+                if (property.NameEquals("cpuLoad"u8))
                 {
                     cpuLoad = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLoadStatus"))
+                if (property.NameEquals("cpuLoadStatus"u8))
                 {
                     cpuLoadStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalMemoryInBytes"))
+                if (property.NameEquals("totalMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInBytes"))
+                if (property.NameEquals("availableMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsageStatus"))
+                if (property.NameEquals("memoryUsageStatus"u8))
                 {
                     memoryUsageStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalSpaceInBytes"))
+                if (property.NameEquals("totalSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableSpaceInBytes"))
+                if (property.NameEquals("availableSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("spaceUsageStatus"))
+                if (property.NameEquals("spaceUsageStatus"u8))
                 {
                     spaceUsageStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("webLoad"))
+                if (property.NameEquals("webLoad"u8))
                 {
                     webLoad = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("webLoadStatus"))
+                if (property.NameEquals("webLoadStatus"u8))
                 {
                     webLoadStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseServerLoad"))
+                if (property.NameEquals("databaseServerLoad"u8))
                 {
                     databaseServerLoad = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseServerLoadStatus"))
+                if (property.NameEquals("databaseServerLoadStatus"u8))
                 {
                     databaseServerLoadStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("csServiceStatus"))
+                if (property.NameEquals("csServiceStatus"u8))
                 {
                     csServiceStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostName"))
+                if (property.NameEquals("hostName"u8))
                 {
                     hostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionStatus"))
+                if (property.NameEquals("versionStatus"u8))
                 {
                     versionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sslCertExpiryDate"))
+                if (property.NameEquals("sslCertExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sslCertExpiryDate = property.Value.GetDateTimeOffset("O");
+                    sslCertExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sslCertExpiryRemainingDays"))
+                if (property.NameEquals("sslCertExpiryRemainingDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sslCertExpiryRemainingDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("psTemplateVersion"))
+                if (property.NameEquals("psTemplateVersion"u8))
                 {
                     psTemplateVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"))
+                if (property.NameEquals("agentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersionDetails"))
+                if (property.NameEquals("agentVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("switchProviderBlockingErrorDetails"))
+                if (property.NameEquals("switchProviderBlockingErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageFabricSwitchProviderBlockingErrorDetails> array = new List<InMageFabricSwitchProviderBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageFabricSwitchProviderBlockingErrorDetails.DeserializeInMageFabricSwitchProviderBlockingErrorDetails(item));
+                        array.Add(InMageFabricSwitchProviderBlockingErrorDetails.DeserializeInMageFabricSwitchProviderBlockingErrorDetails(item, options));
                     }
                     switchProviderBlockingErrorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpiryDate), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpiryDate), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServer>(),
+                masterTargetServers ?? new ChangeTrackingList<MasterTargetServer>(),
+                runAsAccounts ?? new ChangeTrackingList<SiteRecoveryRunAsAccount>(),
+                replicationPairCount,
+                processServerCount,
+                agentCount,
+                protectedServers,
+                systemLoad,
+                systemLoadStatus,
+                cpuLoad,
+                cpuLoadStatus,
+                totalMemoryInBytes,
+                availableMemoryInBytes,
+                memoryUsageStatus,
+                totalSpaceInBytes,
+                availableSpaceInBytes,
+                spaceUsageStatus,
+                webLoad,
+                webLoadStatus,
+                databaseServerLoad,
+                databaseServerLoadStatus,
+                csServiceStatus,
+                ipAddress,
+                agentVersion,
+                hostName,
+                lastHeartbeat,
+                versionStatus,
+                sslCertExpireOn,
+                sslCertExpiryRemainingDays,
+                psTemplateVersion,
+                agentExpireOn,
+                agentVersionDetails,
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>());
         }
+
+        BinaryData IPersistableModel<VMwareDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VMwareDetails IPersistableModel<VMwareDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

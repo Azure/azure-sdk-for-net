@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ManagedClusterKeyVaultNetworkAccessType left, ManagedClusterKeyVaultNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterKeyVaultNetworkAccessType"/> values are not the same. </summary>
         public static bool operator !=(ManagedClusterKeyVaultNetworkAccessType left, ManagedClusterKeyVaultNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
         public static implicit operator ManagedClusterKeyVaultNetworkAccessType(string value) => new ManagedClusterKeyVaultNetworkAccessType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

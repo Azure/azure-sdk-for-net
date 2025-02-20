@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Criterion for dynamic threshold. </summary>
     public partial class DynamicMetricCriteria : MultiMetricCriteria
     {
-        /// <summary> Initializes a new instance of DynamicMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
@@ -34,14 +33,14 @@ namespace Azure.ResourceManager.Monitor.Models
             CriterionType = CriterionType.DynamicThresholdCriterion;
         }
 
-        /// <summary> Initializes a new instance of DynamicMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="metricNamespace"> Namespace of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
-        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
+        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="operator"> The operator used to compare the metric value against the threshold. </param>
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. </param>
@@ -54,6 +53,11 @@ namespace Azure.ResourceManager.Monitor.Models
             FailingPeriods = failingPeriods;
             IgnoreDataBefore = ignoreDataBefore;
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/> for deserialization. </summary>
+        internal DynamicMetricCriteria()
+        {
         }
 
         /// <summary> The operator used to compare the metric value against the threshold. </summary>

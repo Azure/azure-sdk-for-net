@@ -6,85 +6,159 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlUpsertSettings : IUtf8JsonSerializable
+    public partial class SqlUpsertSettings : IUtf8JsonSerializable, IJsonModel<SqlUpsertSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlUpsertSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlUpsertSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UseTempDB))
-            {
-                writer.WritePropertyName("useTempDB");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseTempDB);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTempDB.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(InterimSchemaName))
-            {
-                writer.WritePropertyName("interimSchemaName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(InterimSchemaName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(InterimSchemaName.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(Keys))
-            {
-                writer.WritePropertyName("keys");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Keys);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Keys.ToString()).RootElement);
-#endif
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SqlUpsertSettings DeserializeSqlUpsertSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> useTempDB = default;
-            Optional<BinaryData> interimSchemaName = default;
-            Optional<BinaryData> keys = default;
-            foreach (var property in element.EnumerateObject())
+            var format = options.Format == "W" ? ((IPersistableModel<SqlUpsertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("useTempDB"))
+                throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(UseTempDB))
+            {
+                writer.WritePropertyName("useTempDB"u8);
+                JsonSerializer.Serialize(writer, UseTempDB);
+            }
+            if (Optional.IsDefined(InterimSchemaName))
+            {
+                writer.WritePropertyName("interimSchemaName"u8);
+                JsonSerializer.Serialize(writer, InterimSchemaName);
+            }
+            if (Optional.IsDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                JsonSerializer.Serialize(writer, Keys);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    useTempDB = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("interimSchemaName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    interimSchemaName = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("keys"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    keys = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
+#endif
                 }
             }
-            return new SqlUpsertSettings(useTempDB.Value, interimSchemaName.Value, keys.Value);
         }
+
+        SqlUpsertSettings IJsonModel<SqlUpsertSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlUpsertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlUpsertSettings(document.RootElement, options);
+        }
+
+        internal static SqlUpsertSettings DeserializeSqlUpsertSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<bool> useTempDB = default;
+            DataFactoryElement<string> interimSchemaName = default;
+            DataFactoryElement<IList<string>> keys = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("useTempDB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    useTempDB = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("interimSchemaName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interimSchemaName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("keys"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keys = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlUpsertSettings(useTempDB, interimSchemaName, keys, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SqlUpsertSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlUpsertSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlUpsertSettings IPersistableModel<SqlUpsertSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlUpsertSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlUpsertSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlUpsertSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

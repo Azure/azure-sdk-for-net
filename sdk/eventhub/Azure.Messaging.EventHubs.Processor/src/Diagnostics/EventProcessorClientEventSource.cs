@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
@@ -48,16 +49,18 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An identifier for the processing operation, allowing its activities to be correlated.</param>
         ///
-        [Event(20, Level = EventLevel.Verbose, Message = "Starting to process a batch of events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(20, Level = EventLevel.Verbose, Message = "Starting to process a batch of events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Operation Id: '{4}'")]
         public virtual void EventBatchProcessingStart(string partitionId,
                                                       string identifier,
                                                       string eventHubName,
-                                                      string consumerGroup)
+                                                      string consumerGroup,
+                                                      string operationId)
         {
             if (IsEnabled())
             {
-                WriteEvent(20, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(20, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty);
             }
         }
 
@@ -69,16 +72,18 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An identifier for the processing operation, allowing its activities to be correlated.</param>
         ///
-        [Event(21, Level = EventLevel.Verbose, Message = "Completed processing a batch of events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(21, Level = EventLevel.Verbose, Message = "Completed processing a batch of events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Operation Id: '{4}'")]
         public virtual void EventBatchProcessingComplete(string partitionId,
                                                          string identifier,
                                                          string eventHubName,
-                                                         string consumerGroup)
+                                                         string consumerGroup,
+                                                         string operationId)
         {
             if (IsEnabled())
             {
-                WriteEvent(21, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(21, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty);
             }
         }
 
@@ -91,17 +96,19 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="operationId">An identifier for the processing operation, allowing its activities to be correlated.</param>
         ///
-        [Event(22, Level = EventLevel.Error, Message = "An exception occurred while processing events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        [Event(22, Level = EventLevel.Error, Message = "An exception occurred while processing events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'; Operation Id: '{5}'")]
         public virtual void EventBatchProcessingError(string partitionId,
                                                       string identifier,
                                                       string eventHubName,
                                                       string consumerGroup,
-                                                      string errorMessage)
+                                                      string errorMessage,
+                                                      string operationId)
         {
             if (IsEnabled())
             {
-                WriteEvent(22, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(22, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, operationId ?? string.Empty);
             }
         }
 
@@ -113,16 +120,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} Sequence Number: {4} Offset {5}.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
-                                                  string consumerGroup)
+                                                  string consumerGroup,
+                                                  string sequenceNumber,
+                                                  string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(23, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(23, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, sequenceNumber ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -134,16 +145,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} Sequence Number: {4} Offset: {5}.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string identifier,
                                                      string eventHubName,
-                                                     string consumerGroup)
+                                                     string consumerGroup,
+                                                     string sequenceNumber,
+                                                     string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(24, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(24, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, sequenceNumber ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -156,17 +171,21 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}. Sequence Number: {5} Offset: {6}'")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
                                                   string consumerGroup,
-                                                  string errorMessage)
+                                                  string errorMessage,
+                                                  string sequenceNumber,
+                                                  string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(25, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(25, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, sequenceNumber ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -192,6 +211,31 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessorClient" /> has begin processing a batch of events for a partition.
+        /// </summary>
+        ///
+        /// <param name="sequenceNumber">The sequence number of the event being passed to the handler for processing.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An identifier for the processing operation, allowing its activities to be correlated.</param>
+        ///
+        [Event(27, Level = EventLevel.Verbose, Message = "Invoking the event processing handler for sequence number '{0}'.  Partition '{1}'; Processor Identifier '{2}'; Event Hub: {3}; Consumer Group: {4}; Operation Id: '{5}'")]
+        public virtual void EventBatchProcessingHandlerCall(string sequenceNumber,
+                                                            string partitionId,
+                                                            string identifier,
+                                                            string eventHubName,
+                                                            string consumerGroup,
+                                                            string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(27, sequenceNumber ?? string.Empty, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
         ///   to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
@@ -204,6 +248,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -247,6 +292,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -278,6 +324,122 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
 
                 WriteEventCore(eventId, 5, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            {
+                var eventPayload = stackalloc EventData[7];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
+
+                WriteEventCore(eventId, 7, eventPayload);
             }
         }
     }

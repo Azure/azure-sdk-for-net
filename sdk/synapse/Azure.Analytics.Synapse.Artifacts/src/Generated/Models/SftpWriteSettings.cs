@@ -12,20 +12,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Sftp write settings. </summary>
     public partial class SftpWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of SftpWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpWriteSettings"/>. </summary>
         public SftpWriteSettings()
         {
             Type = "SftpWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of SftpWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="operationTimeout"> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </param>
-        /// <param name="useTempFileRename"> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean). </param>
-        internal SftpWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties, object operationTimeout, object useTempFileRename) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
+        /// <param name="useTempFileRename"> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn't support rename operation. Type: boolean (or Expression with resultType boolean). </param>
+        internal SftpWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IList<MetadataItem> metadata, IDictionary<string, object> additionalProperties, object operationTimeout, object useTempFileRename) : base(type, maxConcurrentConnections, copyBehavior, metadata, additionalProperties)
         {
             OperationTimeout = operationTimeout;
             UseTempFileRename = useTempFileRename;
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </summary>
         public object OperationTimeout { get; set; }
-        /// <summary> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn't support rename operation. Type: boolean (or Expression with resultType boolean). </summary>
         public object UseTempFileRename { get; set; }
     }
 }

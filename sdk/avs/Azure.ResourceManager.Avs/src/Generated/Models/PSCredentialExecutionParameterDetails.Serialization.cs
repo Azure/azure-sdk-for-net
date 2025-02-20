@@ -5,63 +5,134 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable
+    public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<PSCredentialExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PSCredentialExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PSCredentialExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(ParameterType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static PSCredentialExecutionParameterDetails DeserializePSCredentialExecutionParameterDetails(JsonElement element)
+        PSCredentialExecutionParameterDetails IJsonModel<PSCredentialExecutionParameterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> username = default;
-            Optional<string> password = default;
-            string name = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePSCredentialExecutionParameterDetails(document.RootElement, options);
+        }
+
+        internal static PSCredentialExecutionParameterDetails DeserializePSCredentialExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string username = default;
+            string password = default;
             ScriptExecutionParameterType type = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PSCredentialExecutionParameterDetails(name, type, username.Value, password.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PSCredentialExecutionParameterDetails(type, name, serializedAdditionalRawData, username, password);
         }
+
+        BinaryData IPersistableModel<PSCredentialExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PSCredentialExecutionParameterDetails IPersistableModel<PSCredentialExecutionParameterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePSCredentialExecutionParameterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PSCredentialExecutionParameterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

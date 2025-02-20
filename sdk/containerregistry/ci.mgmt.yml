@@ -18,7 +18,6 @@ extends:
   parameters:
     SDKType: mgmtclient
     ServiceDirectory: containerregistry
-    BuildSnippets: true
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ContainerRegistry

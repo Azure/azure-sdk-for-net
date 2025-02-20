@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -14,22 +13,26 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static KeyVaultServiceError DeserializeKeyVaultServiceError(JsonElement element)
         {
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<KeyVaultServiceError> innererror = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string code = default;
+            string message = default;
+            KeyVaultServiceError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +43,15 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new KeyVaultServiceError(code.Value, message.Value, innererror.Value);
+            return new KeyVaultServiceError(code, message, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultServiceError(document.RootElement);
         }
     }
 }

@@ -5,99 +5,196 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeShippingAddress : IUtf8JsonSerializable
+    public partial class DataBoxEdgeShippingAddress : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeShippingAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeShippingAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxEdgeShippingAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(AddressLine1))
             {
-                writer.WritePropertyName("addressLine1");
+                writer.WritePropertyName("addressLine1"u8);
                 writer.WriteStringValue(AddressLine1);
             }
             if (Optional.IsDefined(AddressLine2))
             {
-                writer.WritePropertyName("addressLine2");
+                writer.WritePropertyName("addressLine2"u8);
                 writer.WriteStringValue(AddressLine2);
             }
             if (Optional.IsDefined(AddressLine3))
             {
-                writer.WritePropertyName("addressLine3");
+                writer.WritePropertyName("addressLine3"u8);
                 writer.WriteStringValue(AddressLine3);
             }
             if (Optional.IsDefined(PostalCode))
             {
-                writer.WritePropertyName("postalCode");
+                writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city");
+                writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DataBoxEdgeShippingAddress DeserializeDataBoxEdgeShippingAddress(JsonElement element)
+        DataBoxEdgeShippingAddress IJsonModel<DataBoxEdgeShippingAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> addressLine1 = default;
-            Optional<string> addressLine2 = default;
-            Optional<string> addressLine3 = default;
-            Optional<string> postalCode = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeShippingAddress DeserializeDataBoxEdgeShippingAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string addressLine1 = default;
+            string addressLine2 = default;
+            string addressLine3 = default;
+            string postalCode = default;
+            string city = default;
+            string state = default;
             string country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressLine1"))
+                if (property.NameEquals("addressLine1"u8))
                 {
                     addressLine1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine2"))
+                if (property.NameEquals("addressLine2"u8))
                 {
                     addressLine2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine3"))
+                if (property.NameEquals("addressLine3"u8))
                 {
                     addressLine3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeShippingAddress(addressLine1.Value, addressLine2.Value, addressLine3.Value, postalCode.Value, city.Value, state.Value, country);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeShippingAddress(
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                postalCode,
+                city,
+                state,
+                country,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeShippingAddress IPersistableModel<DataBoxEdgeShippingAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeShippingAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceHostType ToAppServiceHostType(this string value)
         {
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return AppServiceHostType.Standard;
-            if (string.Equals(value, "Repository", StringComparison.InvariantCultureIgnoreCase)) return AppServiceHostType.Repository;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return AppServiceHostType.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Repository")) return AppServiceHostType.Repository;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceHostType value.");
         }
     }

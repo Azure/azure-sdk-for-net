@@ -18,52 +18,56 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
-                writer.WritePropertyName("writeBatchSize");
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WritePropertyName("writeBatchSize"u8);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
-                writer.WritePropertyName("writeBatchTimeout");
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WritePropertyName("writeBatchTimeout"u8);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
-                writer.WritePropertyName("sinkRetryCount");
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WritePropertyName("sinkRetryCount"u8);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
-                writer.WritePropertyName("sinkRetryWait");
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WritePropertyName("sinkRetryWait"u8);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WritePropertyName("maxConcurrentConnections"u8);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static CopySink DeserializeCopySink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "AvroSink": return AvroSink.DeserializeAvroSink(element);
                     case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element);
+                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element);
                     case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element);
                     case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element);
-                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element);
                     case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element);
                     case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element);
                     case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element);
@@ -82,6 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element);
                     case "InformixSink": return InformixSink.DeserializeInformixSink(element);
                     case "JsonSink": return JsonSink.DeserializeJsonSink(element);
+                    case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element);
                     case "MicrosoftAccessSink": return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element);
                     case "OdbcSink": return OdbcSink.DeserializeOdbcSink(element);
                     case "OracleSink": return OracleSink.DeserializeOracleSink(element);
@@ -89,16 +94,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "ParquetSink": return ParquetSink.DeserializeParquetSink(element);
                     case "RestSink": return RestSink.DeserializeRestSink(element);
                     case "SalesforceServiceCloudSink": return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element);
+                    case "SalesforceServiceCloudV2Sink": return SalesforceServiceCloudV2Sink.DeserializeSalesforceServiceCloudV2Sink(element);
                     case "SalesforceSink": return SalesforceSink.DeserializeSalesforceSink(element);
+                    case "SalesforceV2Sink": return SalesforceV2Sink.DeserializeSalesforceV2Sink(element);
                     case "SapCloudForCustomerSink": return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element);
                     case "SnowflakeSink": return SnowflakeSink.DeserializeSnowflakeSink(element);
+                    case "SnowflakeV2Sink": return SnowflakeV2Sink.DeserializeSnowflakeV2Sink(element);
                     case "SqlDWSink": return SqlDWSink.DeserializeSqlDWSink(element);
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element);
                     case "SqlSink": return SqlSink.DeserializeSqlSink(element);
+                    case "WarehouseSink": return WarehouseSink.DeserializeWarehouseSink(element);
                 }
             }
             return UnknownCopySink.DeserializeUnknownCopySink(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopySink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopySink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class CopySinkConverter : JsonConverter<CopySink>
@@ -107,6 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CopySink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

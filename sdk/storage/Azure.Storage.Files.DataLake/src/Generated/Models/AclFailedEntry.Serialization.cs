@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -14,28 +13,40 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static AclFailedEntry DeserializeAclFailedEntry(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> errorMessage = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string type = default;
+            string errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new AclFailedEntry(name.Value, type.Value, errorMessage.Value);
+            return new AclFailedEntry(name, type, errorMessage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AclFailedEntry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAclFailedEntry(document.RootElement);
         }
     }
 }

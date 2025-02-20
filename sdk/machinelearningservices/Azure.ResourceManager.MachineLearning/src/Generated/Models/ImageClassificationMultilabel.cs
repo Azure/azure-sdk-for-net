@@ -7,17 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Image Classification Multilabel. Multi-label image classification is used when an image could have one or more labels
-    /// from a set of labels - e.g. an image could be labeled with both &apos;cat&apos; and &apos;dog&apos;.
+    /// from a set of labels - e.g. an image could be labeled with both 'cat' and 'dog'.
     /// </summary>
     public partial class ImageClassificationMultilabel : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of ImageClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageClassificationMultilabel"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
@@ -31,14 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.ImageClassificationMultilabel;
         }
 
-        /// <summary> Initializes a new instance of ImageClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageClassificationMultilabel"/>. </summary>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryMetric"> Primary metric to optimize for this task. </param>
         /// <param name="modelSettings"> Settings used for training the model. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
-        internal ImageClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationMultilabelPrimaryMetric? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal ImageClassificationMultilabel(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationMultilabelPrimaryMetric? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -62,23 +62,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = taskType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImageClassificationMultilabel"/> for deserialization. </summary>
+        internal ImageClassificationMultilabel()
+        {
+        }
+
         /// <summary> Primary metric to optimize for this task. </summary>
+        [WirePath("primaryMetric")]
         public ClassificationMultilabelPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Settings used for training the model. </summary>
+        [WirePath("modelSettings")]
         public ImageModelSettingsClassification ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
+        [WirePath("searchSpace")]
         public IList<ImageModelDistributionSettingsClassification> SearchSpace { get; set; }
         /// <summary> [Required] Limit settings for the AutoML job. </summary>
+        [WirePath("limitSettings")]
         public ImageLimitSettings LimitSettings { get; set; }
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
+        [WirePath("sweepSettings")]
         public ImageSweepSettings SweepSettings { get; set; }
         /// <summary> Validation data inputs. </summary>
+        [WirePath("validationData")]
         public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </summary>
+        [WirePath("validationDataSize")]
         public double? ValidationDataSize { get; set; }
     }
 }

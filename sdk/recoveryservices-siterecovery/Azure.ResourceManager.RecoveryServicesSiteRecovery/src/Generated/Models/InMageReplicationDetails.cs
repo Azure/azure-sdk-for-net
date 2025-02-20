@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -14,19 +15,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage provider specific settings. </summary>
     public partial class InMageReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageReplicationDetails"/>. </summary>
         internal InMageReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageProtectedDiskDetails>();
             ConsistencyPoints = new ChangeTrackingDictionary<string, DateTimeOffset>();
             VmNics = new ChangeTrackingList<VmNicDetails>();
             Datastores = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<HealthError>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             InstanceType = "InMage";
         }
 
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="activeSiteType"> The active location of the VM. If the VM is being protected from Azure, this field will take values from { Azure, OnPrem }. If the VM is being protected between two data-centers, this field will be OnPrem always. </param>
         /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
         /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
@@ -36,14 +38,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmProtectionState"> The protection state for the vm. </param>
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
         /// <param name="resyncDetails"> The resync details of the machine. </param>
-        /// <param name="retentionWindowStart"> The retention window start time. </param>
-        /// <param name="retentionWindowEnd"> The retention window end time. </param>
+        /// <param name="retentionWindowStartOn"> The retention window start time. </param>
+        /// <param name="retentionWindowEndOn"> The retention window end time. </param>
         /// <param name="compressedDataRateInMB"> The compressed data change rate in MB. </param>
         /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
         /// <param name="rpoInSeconds"> The RPO in seconds. </param>
         /// <param name="protectedDisks"> The list of protected disks. </param>
         /// <param name="ipAddress"> The source IP address. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the source server. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="masterTargetId"> The master target Id. </param>
         /// <param name="consistencyPoints"> The collection of Consistency points. </param>
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isAdditionalStatsAvailable"> A value indicating whether additional IR stats are available or not. </param>
         /// <param name="totalDataTransferred"> The total transferred data in bytes. </param>
         /// <param name="totalProgressHealth"> The progress health. </param>
-        internal InMageReplicationDetails(string instanceType, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, OSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStart, DateTimeOffset? retentionWindowEnd, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, string ipAddress, DateTimeOffset? lastHeartbeat, string processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, string azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<HealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType)
+        internal InMageReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, SiteRecoveryOSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStartOn, DateTimeOffset? retentionWindowEndOn, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, IPAddress ipAddress, DateTimeOffset? lastHeartbeatReceivedOn, Guid? processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, ResourceIdentifier azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType, serializedAdditionalRawData)
         {
             ActiveSiteType = activeSiteType;
             SourceVmCpuCount = sourceVmCpuCount;
@@ -78,14 +80,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmProtectionState = vmProtectionState;
             VmProtectionStateDescription = vmProtectionStateDescription;
             ResyncDetails = resyncDetails;
-            RetentionWindowStart = retentionWindowStart;
-            RetentionWindowEnd = retentionWindowEnd;
+            RetentionWindowStartOn = retentionWindowStartOn;
+            RetentionWindowEndOn = retentionWindowEndOn;
             CompressedDataRateInMB = compressedDataRateInMB;
             UncompressedDataRateInMB = uncompressedDataRateInMB;
             RpoInSeconds = rpoInSeconds;
             ProtectedDisks = protectedDisks;
             IPAddress = ipAddress;
-            LastHeartbeat = lastHeartbeat;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ProcessServerId = processServerId;
             MasterTargetId = masterTargetId;
             ConsistencyPoints = consistencyPoints;
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The RAM size of the VM on the primary side. </summary>
         public int? SourceVmRamSizeInMB { get; }
         /// <summary> The OS details. </summary>
-        public OSDiskDetails OSDetails { get; }
+        public SiteRecoveryOSDiskDetails OSDetails { get; }
         /// <summary> The protection stage. </summary>
         public string ProtectionStage { get; }
         /// <summary> The virtual machine Id. </summary>
@@ -131,9 +133,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The resync details of the machine. </summary>
         public InitialReplicationDetails ResyncDetails { get; }
         /// <summary> The retention window start time. </summary>
-        public DateTimeOffset? RetentionWindowStart { get; }
+        public DateTimeOffset? RetentionWindowStartOn { get; }
         /// <summary> The retention window end time. </summary>
-        public DateTimeOffset? RetentionWindowEnd { get; }
+        public DateTimeOffset? RetentionWindowEndOn { get; }
         /// <summary> The compressed data change rate in MB. </summary>
         public double? CompressedDataRateInMB { get; }
         /// <summary> The uncompressed data change rate in MB. </summary>
@@ -143,11 +145,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The list of protected disks. </summary>
         public IReadOnlyList<InMageProtectedDiskDetails> ProtectedDisks { get; }
         /// <summary> The source IP address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The last heartbeat received from the source server. </summary>
-        public DateTimeOffset? LastHeartbeat { get; }
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
         /// <summary> The process server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid? ProcessServerId { get; }
         /// <summary> The master target Id. </summary>
         public string MasterTargetId { get; }
         /// <summary> The collection of Consistency points. </summary>
@@ -173,11 +175,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating the discovery type of the machine. </summary>
         public string DiscoveryType { get; }
         /// <summary> A value indicating the underlying Azure storage account. If the VM is not running in Azure, this value shall be set to null. </summary>
-        public string AzureStorageAccountId { get; }
+        public ResourceIdentifier AzureStorageAccountId { get; }
         /// <summary> The datastores of the on-premise machine Value can be list of strings that contain datastore names. </summary>
         public IReadOnlyList<string> Datastores { get; }
         /// <summary> The validation errors of the on-premise machine Value can be list of validation errors. </summary>
-        public IReadOnlyList<HealthError> ValidationErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> ValidationErrors { get; }
         /// <summary> The last RPO calculated time. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
         /// <summary> The last update time received from on-prem components. </summary>

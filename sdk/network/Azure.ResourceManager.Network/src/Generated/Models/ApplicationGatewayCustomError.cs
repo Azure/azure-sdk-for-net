@@ -6,29 +6,64 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Customer error of an application gateway. </summary>
+    /// <summary> Custom error of an application gateway. </summary>
     public partial class ApplicationGatewayCustomError
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayCustomError. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayCustomError"/>. </summary>
         public ApplicationGatewayCustomError()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayCustomError. </summary>
-        /// <param name="statusCode"> Status code of the application gateway customer error. </param>
-        /// <param name="customErrorPageUri"> Error page URL of the application gateway customer error. </param>
-        internal ApplicationGatewayCustomError(ApplicationGatewayCustomErrorStatusCode? statusCode, Uri customErrorPageUri)
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayCustomError"/>. </summary>
+        /// <param name="statusCode"> Status code of the application gateway custom error. </param>
+        /// <param name="customErrorPageUri"> Error page URL of the application gateway custom error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayCustomError(ApplicationGatewayCustomErrorStatusCode? statusCode, Uri customErrorPageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StatusCode = statusCode;
             CustomErrorPageUri = customErrorPageUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status code of the application gateway customer error. </summary>
+        /// <summary> Status code of the application gateway custom error. </summary>
         public ApplicationGatewayCustomErrorStatusCode? StatusCode { get; set; }
-        /// <summary> Error page URL of the application gateway customer error. </summary>
+        /// <summary> Error page URL of the application gateway custom error. </summary>
         public Uri CustomErrorPageUri { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -15,15 +14,18 @@ namespace Azure.Communication.CallingServer
     {
         internal static AddParticipantsResponseInternal DeserializeAddParticipantsResponseInternal(JsonElement element)
         {
-            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
-            Optional<string> operationContext = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<AcsCallParticipantInternal> participants = default;
+            string operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
@@ -34,13 +36,21 @@ namespace Azure.Communication.CallingServer
                     participants = array;
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;
                 }
             }
-            return new AddParticipantsResponseInternal(Optional.ToList(participants), operationContext.Value);
+            return new AddParticipantsResponseInternal(participants ?? new ChangeTrackingList<AcsCallParticipantInternal>(), operationContext);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddParticipantsResponseInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAddParticipantsResponseInternal(document.RootElement);
         }
     }
 }

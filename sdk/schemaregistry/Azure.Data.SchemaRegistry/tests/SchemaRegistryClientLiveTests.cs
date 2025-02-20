@@ -3,17 +3,13 @@
 
 using System;
 using System.Text.RegularExpressions;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
-    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10)]
+    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01)]
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
         private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
@@ -26,16 +22,43 @@ namespace Azure.Data.SchemaRegistry.Tests
         private SchemaRegistryClient CreateClient(string format)
         {
             string endpoint;
-            switch (format)
+            switch (format, _serviceVersion)
             {
-                case Json:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
-                    break;
-                case Avro:
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
-                case Custom:
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro2022;
+                    break;
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro2021;
+                    break;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
+                    break;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson2022;
+                    break;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson2021;
+                    break;
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
+                    break;
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom2022;
+                    break;
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom2021;
+                    break;
+                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointProtobuf;
+                    break;
+                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointProtobuf2022;
+                    break;
+                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointProtobuf2021;
                     break;
                 default:
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
@@ -56,15 +79,20 @@ namespace Azure.Data.SchemaRegistry.Tests
         private const string Json_SchemaContent_V2 = "{\r\n  \"$id\": \"2\",\r\n  \"$schema\": \"Json\",\r\n  \"title\": \"Person_V2\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"firstName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's first name.\"\r\n    },\r\n    \"lastName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's last name.\"\r\n    },\r\n    \"age\": {\r\n      \"description\": \"Age in years which must be equal to or greater than zero.\",\r\n      \"type\": \"integer\",\r\n      \"minimum\": 0\r\n    }\r\n  }\r\n}";
         private const string Custom_SchemaContent = "Hello";
         private const string Custom_SchemaContent_V2 = "Hello_V2";
+        private const string Protobuf_SchemaContent = "syntax = \"proto3\";\n\npackage person.example;\n\nmessage Person {\n    string name = 1;\n    int64 favorite_number = 2;\n    string favorite_color = 3;\n}\n";
+        private const string Protobuf_SchemaContent_V2 = "syntax = \"proto3\";\n\npackage person.example;\n\nmessage PersonV2 {\n    string name = 1;\n    int64 least_favorite_number = 2;\n    string favorite_color = 3;\n}\n";
 
         private const string Avro = "Avro";
         private const string Json = "Json";
         private const string Custom = "Custom";
+        private const string Protobuf = "Protobuf";
 
         [RecordedTest]
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
+        // Until Protobuf is publicly available
+        //[TestCase(Protobuf)]
         public async Task CanRegisterSchema(string formatName)
         {
             var client = CreateClient(formatName);
@@ -85,6 +113,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
+        //[TestCase(Protobuf)]
         public async Task CanRegisterNewVersionOfSchema(string formatName)
         {
             var client = CreateClient(formatName);
@@ -110,6 +139,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
+        //[TestCase(Protobuf)]
         public async Task CanGetSchemaId(string formatName)
         {
             var client = CreateClient(formatName);
@@ -130,6 +160,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
+        //[TestCase(Protobuf)]
         public async Task CanGetSchema(string formatName)
         {
             var client = CreateClient(formatName);
@@ -138,10 +169,10 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = StringToSchemaFormat(formatName);
             var content = StringToSchemaContent(formatName, 1);
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
-            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
+            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Id);
             AssertSchema(schema, schemaName, content, format);
             AssertPropertiesAreEqual(registerProperties, schema.Properties, format);
         }
@@ -150,6 +181,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
+        //[TestCase(Protobuf)]
         public async Task CanGetSchemaByVersion(string formatName)
         {
             var client = CreateClient(formatName);
@@ -184,8 +216,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("UnknownType");
             Assert.That(
                 async () => await client.RegisterSchemaAsync(groupName, schemaName, "Hello", format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(403)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("NotAvaliable"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
         }
 
         [RecordedTest]
@@ -197,8 +229,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("UnknownType");
             Assert.That(
                 async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, "Hello", format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
         }
 
         [RecordedTest]
@@ -246,7 +278,9 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
             Assert.AreEqual(schemaFormat, properties.Format);
             Assert.AreEqual(schemaName, properties.Name);
-            Assert.AreEqual(TestEnvironment.SchemaRegistryGroup, properties.GroupName);
+            string expectedGroupName = TestEnvironment.SchemaRegistryGroup;
+
+            Assert.AreEqual(expectedGroupName, properties.GroupName);
         }
 
         private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema, SchemaFormat schemaFormat)
@@ -271,6 +305,8 @@ namespace Azure.Data.SchemaRegistry.Tests
                     return SchemaFormat.Json;
                 case Custom:
                     return SchemaFormat.Custom;
+                //case Protobuf:
+                //    return SchemaFormat.Protobuf;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }
@@ -298,6 +334,12 @@ namespace Azure.Data.SchemaRegistry.Tests
                         return Custom_SchemaContent;
                     }
                     return Custom_SchemaContent_V2;
+                case Protobuf:
+                    if (version == 1)
+                    {
+                        return Protobuf_SchemaContent;
+                    }
+                    return Protobuf_SchemaContent_V2;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }

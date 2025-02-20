@@ -5,32 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsOrganizationalInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAwsOrganizationalData))]
+    public partial class AwsOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<AwsOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsOrganizationalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AwsOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("organizationMembershipType");
-            writer.WriteStringValue(OrganizationMembershipType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AwsOrganizationalInfo DeserializeAwsOrganizationalInfo(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("organizationMembershipType"u8);
+            writer.WriteStringValue(OrganizationMembershipType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AwsOrganizationalInfo IJsonModel<AwsOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAwsOrganizationalInfo(document.RootElement, options);
+        }
+
+        internal static AwsOrganizationalInfo DeserializeAwsOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("organizationMembershipType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element);
-                    case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element);
+                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element, options);
+                    case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element, options);
                 }
             }
-            return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element);
+            return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element, options);
         }
+
+        BinaryData IPersistableModel<AwsOrganizationalInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AwsOrganizationalInfo IPersistableModel<AwsOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAwsOrganizationalInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AwsOrganizationalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

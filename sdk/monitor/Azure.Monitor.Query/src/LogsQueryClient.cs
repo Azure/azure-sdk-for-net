@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -27,12 +27,10 @@ namespace Azure.Monitor.Query
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
-        /// <example snippet="Snippet:CreateLogsClient">
-        /// <code language="csharp">
+        /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         /// </code>
-        /// </example>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -40,29 +38,37 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint, unless <see cref="LogsQueryClientOptions.Audience"/> is set to an Azure sovereign cloud.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
-        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options)
+            : this(
+                  string.IsNullOrEmpty(options?.Audience?.ToString())
+                    ? _defaultEndpoint
+                    : new Uri(options.Audience.ToString()),
+                  credential,
+                  options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LogsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LogsQueryClient(Uri endpoint, TokenCredential credential, LogsQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -70,16 +76,33 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
-            var scope = $"{endpoint.AbsoluteUri}/.default";
+
+            // Set authorization scope from Endpoint if Audience is not set.
+            string authorizationScope = "";
+            if (string.IsNullOrEmpty(options.Audience?.ToString()))
+            {
+                // Endpoint.AbsoluteUri includes an extra / so only adding one here
+                authorizationScope = $"{endpoint.AbsoluteUri}/.default";
+            }
+            else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
+            {
+                throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience to a regionally specific value, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
+            }
+            else
+            {
+                authorizationScope = $"{options.Audience}//.default";
+            }
+
+            var scopes = new List<string> { authorizationScope };
 
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/> for mocking.
+        /// Creates an instance of <see cref="LogsQueryClient"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected LogsQueryClient()
         {
@@ -113,12 +136,15 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
         public virtual Response<IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = QueryWorkspace(workspaceId, query, timeRange, options, cancellationToken);
@@ -149,12 +175,15 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
         public virtual async Task<Response<IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryWorkspaceAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
@@ -165,19 +194,22 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
         public virtual Response<LogsQueryResult> QueryWorkspace(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryWorkspace)}");
             scope.Start();
             try
             {
-                return ExecuteAsync(workspaceId, query, timeRange, options, false, cancellationToken).EnsureCompleted();
+                return ExecuteAsync(workspaceId, query, timeRange, options, async: false, isWorkspace: true, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -189,19 +221,22 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
         public virtual async Task<Response<LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryWorkspace)}");
             scope.Start();
             try
             {
-                return await ExecuteAsync(workspaceId, query, timeRange, options, true, cancellationToken).ConfigureAwait(false);
+                return await ExecuteAsync(workspaceId, query, timeRange, options, async: true, isWorkspace: true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -310,6 +345,191 @@ namespace Azure.Monitor.Query
             try
             {
                 return await ExecuteBatchAsync(batch, async: true, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
+        /// {
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual Response<IReadOnlyList<T>> QueryResource<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = QueryResource(resourceId, query, timeRange, options, cancellationToken);
+
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
+        /// {
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = await QueryResourceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
+        /// {
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
+        public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
+                return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
+        /// {
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        /// <remarks>
+        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// </remarks>
+        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
+                return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -539,27 +759,22 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
 
-        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response<LogsQueryResult>> ExecuteAsync(string id, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, bool isWorkspace, CancellationToken cancellationToken = default)
         {
-            if (workspaceId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workspaceId));
+                throw new ArgumentNullException(nameof(id));
             }
 
             QueryBody queryBody = CreateQueryBody(query, timeRange, options, out string prefer);
-            using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
+
+            using var message = isWorkspace ? _queryClient.CreateExecuteRequest(id, queryBody, prefer)
+                : _queryClient.CreateResourceExecuteRequest(new ResourceIdentifier(id), queryBody, prefer);
 
             if (options?.ServerTimeout != null)
             {
@@ -598,14 +813,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }

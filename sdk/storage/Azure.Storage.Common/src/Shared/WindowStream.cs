@@ -16,11 +16,9 @@ namespace Azure.Storage.Shared
     /// Exposes a predetermined slice of a larger stream using the same Stream interface.
     /// There should not be access to the base stream while this facade is in use.
     /// </summary>
-    internal abstract class WindowStream : SlicedStream
+    internal abstract class WindowStream : Stream
     {
         private Stream InnerStream { get; }
-
-        public override long AbsolutePosition { get; }
 
         public override bool CanRead => true;
 
@@ -32,16 +30,12 @@ namespace Azure.Storage.Shared
         /// <param name="stream">
         /// Potentialy unseekable stream to expose a window of.
         /// </param>
-        /// <param name="absolutePosition">
-        /// The offset of this stream from the start of the wrapped stream.
-        /// </param>
-        private WindowStream(Stream stream, long absolutePosition)
+        private WindowStream(Stream stream)
         {
             InnerStream = stream;
-            AbsolutePosition = absolutePosition;
         }
 
-        public static WindowStream GetWindow(Stream stream, long maxWindowLength, long absolutePosition = default)
+        public static Stream GetWindow(Stream stream, long maxWindowLength)
         {
             if (stream.CanSeek)
             {
@@ -49,7 +43,7 @@ namespace Azure.Storage.Shared
             }
             else
             {
-                return new UnseekableWindowStream(stream, maxWindowLength, absolutePosition);
+                return new UnseekableWindowStream(stream, maxWindowLength);
             }
         }
 
@@ -120,7 +114,7 @@ namespace Azure.Storage.Shared
 
             private long MaxLength { get; }
 
-            public UnseekableWindowStream(Stream stream, long maxWindowLength, long absolutePosition) : base(stream, absolutePosition)
+            public UnseekableWindowStream(Stream stream, long maxWindowLength) : base(stream)
             {
                 MaxLength = maxWindowLength;
             }
@@ -145,17 +139,20 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Exposes a predetermined slice of a larger, seekable stream using the same Stream
         /// interface. There should not be access to the base stream while this facade is in use.
-        /// This stream wrapper is sseekable. To wrap a partition of an unseekable stream where
+        /// This stream wrapper is seekable. To wrap a partition of an unseekable stream where
         /// the partition is seekable, see <see cref="PooledMemoryStream"/>.
         /// </summary>
         private class SeekableWindowStream : WindowStream
         {
-            public SeekableWindowStream(Stream stream, long maxWindowLength) : base(stream, stream.Position)
+            private readonly long _baseStreamStartingPosition;
+
+            public SeekableWindowStream(Stream stream, long maxWindowLength) : base(stream)
             {
                 // accessing the stream's Position in the constructor acts as our validator that we're wrapping a seekable stream
                 Length = Math.Min(
                     stream.Length - stream.Position,
                     maxWindowLength);
+                _baseStreamStartingPosition = stream.Position;
             }
 
             public override bool CanSeek => true;
@@ -164,8 +161,8 @@ namespace Azure.Storage.Shared
 
             public override long Position
             {
-                get => InnerStream.Position - AbsolutePosition;
-                set => InnerStream.Position = AbsolutePosition + value;
+                get => InnerStream.Position - _baseStreamStartingPosition;
+                set => InnerStream.Position = _baseStreamStartingPosition + value;
             }
 
             public override long Seek(long offset, SeekOrigin origin)
@@ -173,13 +170,13 @@ namespace Azure.Storage.Shared
                 switch (origin)
                 {
                     case SeekOrigin.Begin:
-                        InnerStream.Seek(AbsolutePosition + offset, SeekOrigin.Begin);
+                        InnerStream.Seek(_baseStreamStartingPosition + offset, SeekOrigin.Begin);
                         break;
                     case SeekOrigin.Current:
                         InnerStream.Seek(InnerStream.Position + offset, SeekOrigin.Current);
                         break;
                     case SeekOrigin.End:
-                        InnerStream.Seek((AbsolutePosition + this.Length) - InnerStream.Length + offset, SeekOrigin.End);
+                        InnerStream.Seek((_baseStreamStartingPosition + this.Length) - InnerStream.Length + offset, SeekOrigin.End);
                         break;
                 }
                 return Position;

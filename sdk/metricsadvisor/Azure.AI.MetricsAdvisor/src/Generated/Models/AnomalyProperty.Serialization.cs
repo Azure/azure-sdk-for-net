@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -14,33 +13,36 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnomalySeverity anomalySeverity = default;
-            Optional<AnomalyStatus> anomalyStatus = default;
+            AnomalyStatus? anomalyStatus = default;
             double value = default;
-            Optional<double?> expectedValue = default;
+            double? expectedValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anomalySeverity"))
+                if (property.NameEquals("anomalySeverity"u8))
                 {
                     anomalySeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("anomalyStatus"))
+                if (property.NameEquals("anomalyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     anomalyStatus = new AnomalyStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("expectedValue"))
+                if (property.NameEquals("expectedValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +53,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue));
+            return new AnomalyProperty(anomalySeverity, anomalyStatus, value, expectedValue);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyProperty FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyProperty(document.RootElement);
         }
     }
 }

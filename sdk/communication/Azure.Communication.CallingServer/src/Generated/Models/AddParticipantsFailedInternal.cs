@@ -6,21 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The AddParticipantsFailedEvent. </summary>
     internal partial class AddParticipantsFailedInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsFailedInternal"/>. </summary>
         internal AddParticipantsFailedInternal()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsFailedInternal"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -29,7 +27,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
+        /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
         internal AddParticipantsFailedInternal(string eventSource, string operationContext, ResultInformation resultInformation, IReadOnlyList<CommunicationIdentifierModel> participants, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             EventSource = eventSource;
@@ -59,7 +57,7 @@ namespace Azure.Communication.CallingServer
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
+        /// <summary> The public event namespace used as the "type" property in the CloudEvent. </summary>
         public string PublicEventType { get; }
     }
 }

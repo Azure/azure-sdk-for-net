@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientAssertionCredentialTests : CredentialTestBase
+    public class ClientAssertionCredentialTests : CredentialTestBase<ClientAssertionCredentialOptions>
     {
         public ClientAssertionCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -24,28 +24,73 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new ClientAssertionCredential(expectedTenantId, ClientId, () => "assertion", clientAssertionOptions));
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
+            if (config.TenantId == null)
             {
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
-            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
-
-            var options = new ClientAssertionCredentialOptions() { MsalClient = msalClientMock, Pipeline = CredentialPipeline.GetInstance(null) };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            var options = new ClientAssertionCredentialOptions
             {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                MsalClient = config.MockConfidentialMsalClient,
+                AuthorityHost = config.AuthorityHost,
+            };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
             }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            var pipeline = CredentialPipeline.GetInstance(options);
+            options.Pipeline = pipeline;
+            return IsAsync ?
+                InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, (_) => Task.FromResult("assertion"), options)) :
+                InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
+        }
 
-            var cred = InstrumentClient(new ClientAssertionCredential(parameters.TenantId, ClientId, () => "assertion", options));
+        [Test]
+        public async Task ValidatesClientAssertionIsCorrect()
+        {
+            var expectedToken = Guid.NewGuid().ToString();
+            var expectedClientAssertion = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => expectedToken,
+                RequestValidator = req =>
+                {
+                    if (req.Content != null)
+                    {
+                        var stream = new MemoryStream();
+                        req.Content.WriteTo(stream, default);
+                        var content = new BinaryData(stream.ToArray()).ToString();
+                        Assert.That(content, Does.Contain($"client_assertion={expectedClientAssertion}"));
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var _transport = new MockTransport(factory);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
 
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+            options = new ClientAssertionCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost"),
+                Transport = _transport
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            ((ClientAssertionCredentialOptions)options).Pipeline = pipeline;
+
+            ClientAssertionCredential client = IsAsync ?
+            InstrumentClient(new ClientAssertionCredential(TenantId, ClientId, (_) => Task.FromResult(expectedClientAssertion), options as ClientAssertionCredentialOptions)) :
+            InstrumentClient(new ClientAssertionCredential(TenantId, ClientId, () => expectedClientAssertion, options as ClientAssertionCredentialOptions));
+
+            var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
         }
     }
 }

@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/billing/Azure.ResourceManager.Billing",
+  "Tag": "net/billing/Azure.ResourceManager.Billing_faf8ba296e"
+}

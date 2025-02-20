@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </summary>
+    /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </summary>
     public readonly partial struct KillChainIntent : IEquatable<KillChainIntent>
     {
         private readonly string _value;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(KillChainIntent left, KillChainIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KillChainIntent"/> values are not the same. </summary>
         public static bool operator !=(KillChainIntent left, KillChainIntent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KillChainIntent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KillChainIntent"/>. </summary>
         public static implicit operator KillChainIntent(string value) => new KillChainIntent(value);
 
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

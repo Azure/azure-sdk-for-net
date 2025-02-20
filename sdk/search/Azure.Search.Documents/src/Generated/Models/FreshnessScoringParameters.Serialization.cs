@@ -16,23 +16,43 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("boostingDuration");
+            writer.WritePropertyName("boostingDuration"u8);
             writer.WriteStringValue(BoostingDuration, "P");
             writer.WriteEndObject();
         }
 
         internal static FreshnessScoringParameters DeserializeFreshnessScoringParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan boostingDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("boostingDuration"))
+                if (property.NameEquals("boostingDuration"u8))
                 {
                     boostingDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
             return new FreshnessScoringParameters(boostingDuration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FreshnessScoringParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFreshnessScoringParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

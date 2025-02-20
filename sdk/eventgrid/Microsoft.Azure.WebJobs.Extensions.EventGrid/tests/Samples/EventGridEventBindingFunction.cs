@@ -9,7 +9,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 
-namespace Azure.Extensions.WebJobs.Sample
+namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Samples
 {
     #region Snippet:EventGridEventBindingFunction
     public static class EventGridEventBindingFunction

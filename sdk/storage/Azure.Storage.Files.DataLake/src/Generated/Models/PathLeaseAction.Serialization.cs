@@ -23,11 +23,11 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static PathLeaseAction ToPathLeaseAction(this string value)
         {
-            if (string.Equals(value, "acquire", StringComparison.InvariantCultureIgnoreCase)) return PathLeaseAction.Acquire;
-            if (string.Equals(value, "break", StringComparison.InvariantCultureIgnoreCase)) return PathLeaseAction.Break;
-            if (string.Equals(value, "change", StringComparison.InvariantCultureIgnoreCase)) return PathLeaseAction.Change;
-            if (string.Equals(value, "renew", StringComparison.InvariantCultureIgnoreCase)) return PathLeaseAction.Renew;
-            if (string.Equals(value, "release", StringComparison.InvariantCultureIgnoreCase)) return PathLeaseAction.Release;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire")) return PathLeaseAction.Acquire;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "break")) return PathLeaseAction.Break;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "change")) return PathLeaseAction.Change;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "renew")) return PathLeaseAction.Renew;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "release")) return PathLeaseAction.Release;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathLeaseAction value.");
         }
     }

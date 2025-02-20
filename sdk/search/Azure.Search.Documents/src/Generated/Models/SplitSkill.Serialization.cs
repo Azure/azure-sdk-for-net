@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultLanguageCode != null)
                 {
-                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WritePropertyName("defaultLanguageCode"u8);
                     writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
                 }
                 else
@@ -30,14 +30,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(TextSplitMode))
             {
-                writer.WritePropertyName("textSplitMode");
+                writer.WritePropertyName("textSplitMode"u8);
                 writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
             if (Optional.IsDefined(MaximumPageLength))
             {
                 if (MaximumPageLength != null)
                 {
-                    writer.WritePropertyName("maximumPageLength");
+                    writer.WritePropertyName("maximumPageLength"u8);
                     writer.WriteNumberValue(MaximumPageLength.Value);
                 }
                 else
@@ -45,35 +45,83 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPageLength");
                 }
             }
-            writer.WritePropertyName("@odata.type");
+            if (Optional.IsDefined(PageOverlapLength))
+            {
+                if (PageOverlapLength != null)
+                {
+                    writer.WritePropertyName("pageOverlapLength"u8);
+                    writer.WriteNumberValue(PageOverlapLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("pageOverlapLength");
+                }
+            }
+            if (Optional.IsDefined(MaximumPagesToTake))
+            {
+                if (MaximumPagesToTake != null)
+                {
+                    writer.WritePropertyName("maximumPagesToTake"u8);
+                    writer.WriteNumberValue(MaximumPagesToTake.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maximumPagesToTake");
+                }
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                if (Unit != null)
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("unit");
+                }
+            }
+            if (Optional.IsDefined(AzureOpenAITokenizerParameters))
+            {
+                if (AzureOpenAITokenizerParameters != null)
+                {
+                    writer.WritePropertyName("azureOpenAITokenizerParameters"u8);
+                    writer.WriteObjectValue(AzureOpenAITokenizerParameters);
+                }
+                else
+                {
+                    writer.WriteNull("azureOpenAITokenizerParameters");
+                }
+            }
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
+            writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -81,18 +129,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SplitSkill DeserializeSplitSkill(JsonElement element)
         {
-            Optional<SplitSkillLanguage?> defaultLanguageCode = default;
-            Optional<TextSplitMode> textSplitMode = default;
-            Optional<int?> maximumPageLength = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SplitSkillLanguage? defaultLanguageCode = default;
+            TextSplitMode? textSplitMode = default;
+            int? maximumPageLength = default;
+            int? pageOverlapLength = default;
+            int? maximumPagesToTake = default;
+            SplitSkillUnit? unit = default;
+            AzureOpenAITokenizerParameters azureOpenAITokenizerParameters = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultLanguageCode"))
+                if (property.NameEquals("defaultLanguageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,17 +158,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultLanguageCode = new SplitSkillLanguage(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("textSplitMode"))
+                if (property.NameEquals("textSplitMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     textSplitMode = new TextSplitMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maximumPageLength"))
+                if (property.NameEquals("maximumPageLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,27 +177,67 @@ namespace Azure.Search.Documents.Indexes.Models
                     maximumPageLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("pageOverlapLength"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        pageOverlapLength = null;
+                        continue;
+                    }
+                    pageOverlapLength = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maximumPagesToTake"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maximumPagesToTake = null;
+                        continue;
+                    }
+                    maximumPagesToTake = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("unit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        unit = null;
+                        continue;
+                    }
+                    unit = new SplitSkillUnit(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("azureOpenAITokenizerParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        azureOpenAITokenizerParameters = null;
+                        continue;
+                    }
+                    azureOpenAITokenizerParameters = AzureOpenAITokenizerParameters.DeserializeAzureOpenAITokenizerParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     context = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -152,7 +247,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -163,7 +258,36 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SplitSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(textSplitMode), Optional.ToNullable(maximumPageLength));
+            return new SplitSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultLanguageCode,
+                textSplitMode,
+                maximumPageLength,
+                pageOverlapLength,
+                maximumPagesToTake,
+                unit,
+                azureOpenAITokenizerParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SplitSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSplitSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

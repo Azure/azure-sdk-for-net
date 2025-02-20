@@ -15,13 +15,15 @@ namespace Azure.ResourceManager.Batch.Models
         {
             BatchPublicNetworkAccess.Enabled => "Enabled",
             BatchPublicNetworkAccess.Disabled => "Disabled",
+            BatchPublicNetworkAccess.SecuredByPerimeter => "SecuredByPerimeter",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPublicNetworkAccess value.")
         };
 
         public static BatchPublicNetworkAccess ToBatchPublicNetworkAccess(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return BatchPublicNetworkAccess.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return BatchPublicNetworkAccess.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return BatchPublicNetworkAccess.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return BatchPublicNetworkAccess.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecuredByPerimeter")) return BatchPublicNetworkAccess.SecuredByPerimeter;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPublicNetworkAccess value.");
         }
     }

@@ -7,23 +7,72 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ProviderHub;
 using Azure.ResourceManager.ProviderHub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ProviderHub.Samples
 {
     public partial class Sample_ResourceTypeSkuCollection
     {
-        // Skus_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_SkusCreateOrUpdate()
+        {
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdate.json
+            // this example is just showing the usage of "Skus_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceTypeRegistrationResource created on azure
+            // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
+            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string providerNamespace = "Microsoft.Contoso";
+            string resourceType = "testResourceType";
+            ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
+            ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
+
+            // get the collection of this ResourceTypeSkuResource
+            ResourceTypeSkuCollection collection = resourceTypeRegistration.GetResourceTypeSkus();
+
+            // invoke the operation
+            string sku = "testSku";
+            ResourceTypeSkuData data = new ResourceTypeSkuData
+            {
+                Properties = new ResourceTypeSkuProperties(new ResourceTypeSkuSetting[]
+            {
+new ResourceTypeSkuSetting("freeSku")
+{
+Tier = "Tier1",
+Kind = "Standard",
+},
+new ResourceTypeSkuSetting("premiumSku")
+{
+Tier = "Tier2",
+Kind = "Premium",
+Costs = {new ResourceTypeSkuCost("xxx")},
+}
+            }),
+            };
+            ArmOperation<ResourceTypeSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
+            ResourceTypeSkuResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ResourceTypeSkuData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SkusGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
             // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,17 +97,52 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SkuResourceData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_SkusListByResourceTypeRegistrations()
+        {
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_ListByResourceTypeRegistrations.json
+            // this example is just showing the usage of "Skus_ListByResourceTypeRegistrations" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceTypeRegistrationResource created on azure
+            // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
+            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string providerNamespace = "Microsoft.Contoso";
+            string resourceType = "testResourceType";
+            ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
+            ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
+
+            // get the collection of this ResourceTypeSkuResource
+            ResourceTypeSkuCollection collection = resourceTypeRegistration.GetResourceTypeSkus();
+
+            // invoke the operation and iterate over the result
+            await foreach (ResourceTypeSkuResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ResourceTypeSkuData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SkusGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
             // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,13 +168,12 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_SkusCreateOrUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_SkusGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_CreateOrUpdate.json
-            // this example is just showing the usage of "Skus_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
+            // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,70 +193,21 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // invoke the operation
             string sku = "testSku";
-            SkuResourceData data = new SkuResourceData()
+            NullableResponse<ResourceTypeSkuResource> response = await collection.GetIfExistsAsync(sku);
+            ResourceTypeSkuResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
             {
-                Properties = new SkuResourceProperties(new SkuSetting[]
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
             {
-new SkuSetting("freeSku")
-{
-Tier = "Tier1",
-Kind = "Standard",
-},new SkuSetting("premiumSku")
-{
-Tier = "Tier2",
-Kind = "Premium",
-Costs =
-{
-new SkuCost("xxx")
-},
-}
-            }),
-            };
-            ArmOperation<ResourceTypeSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
-            ResourceTypeSkuResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SkuResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Skus_ListByResourceTypeRegistrations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_SkusListByResourceTypeRegistrations()
-        {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_ListByResourceTypeRegistrations.json
-            // this example is just showing the usage of "Skus_ListByResourceTypeRegistrations" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceTypeRegistrationResource created on azure
-            // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
-            string providerNamespace = "Microsoft.Contoso";
-            string resourceType = "testResourceType";
-            ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
-            ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
-
-            // get the collection of this ResourceTypeSkuResource
-            ResourceTypeSkuCollection collection = resourceTypeRegistration.GetResourceTypeSkus();
-
-            // invoke the operation and iterate over the result
-            await foreach (ResourceTypeSkuResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
+                // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SkuResourceData resourceData = item.Data;
+                ResourceTypeSkuData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

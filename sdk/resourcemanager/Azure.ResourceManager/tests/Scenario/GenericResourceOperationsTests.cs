@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -122,6 +121,19 @@ namespace Azure.ResourceManager.Tests
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
+            Assert.AreEqual(1, aset.Data.Tags.Count);
+
+            GenericResource aset2 = await aset.AddTagAsync("key2", "value2");
+
+            Assert.IsTrue(aset2.Data.Tags.ContainsKey("key2"));
+            Assert.AreEqual("value2", aset2.Data.Tags["key2"]);
+            Assert.AreEqual(2, aset2.Data.Tags.Count);
+
+            GenericResource aset3 = await aset2.AddTagAsync("key", "value3");
+
+            Assert.IsTrue(aset3.Data.Tags.ContainsKey("key"));
+            Assert.AreEqual("value3", aset3.Data.Tags["key"]);
+            Assert.AreEqual(2, aset3.Data.Tags.Count);
         }
 
         [TestCase]
@@ -157,6 +169,15 @@ namespace Azure.ResourceManager.Tests
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
+            Assert.AreEqual(1, aset.Data.Tags.Count);
+
+            Dictionary<string, string> tags2 = new Dictionary<string, string>();
+            tags2.Add("key2", "value2");
+            GenericResource aset2 = await aset.SetTagsAsync(tags2);
+
+            Assert.IsTrue(aset2.Data.Tags.ContainsKey("key2"));
+            Assert.AreEqual("value2", aset2.Data.Tags["key2"]);
+            Assert.AreEqual(1, aset2.Data.Tags.Count);
         }
 
         [TestCase]
@@ -169,12 +190,16 @@ namespace Azure.ResourceManager.Tests
 
             Dictionary<string, string> tags = new Dictionary<string, string>();
             tags.Add("key", "value");
+            tags.Add("key2", "value2");
             aset = await aset.SetTagsAsync(tags);
+
+            Assert.AreEqual(2, aset.Data.Tags.Count);
 
             aset = await aset.RemoveTagAsync("key");
 
             Assert.IsFalse(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual(0, aset.Data.Tags.Count);
+            Assert.IsTrue(aset.Data.Tags.ContainsKey("key2"));
+            Assert.AreEqual(1, aset.Data.Tags.Count);
         }
 
         [TestCase]
@@ -229,6 +254,20 @@ namespace Azure.ResourceManager.Tests
                 var updateOp = await aset.UpdateAsync(WaitUntil.Started, null);
                 _ = await updateOp.WaitForCompletionAsync();
             });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateWithApiVersionSetting()
+        {
+            var options = new ArmClientOptions();
+            options.SetApiVersion(new ResourceType("Microsoft.Compute/test"), "2022-09-01");
+            var client = GetArmClient(options);
+            var rgOp = await (await client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            GenericResourceData data = ConstructGenericAvailabilitySet();
+            var asetId = rgOp.Value.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            var op = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, asetId, data);
+            Assert.NotNull(op.Value);
         }
     }
 }

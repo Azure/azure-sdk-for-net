@@ -16,21 +16,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint);
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Headers)
                 {
@@ -41,12 +41,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsDefined(CertificateKey))
             {
-                writer.WritePropertyName("certificateKey");
+                writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
             if (Optional.IsDefined(CertificatePassword))
             {
-                writer.WritePropertyName("certificatePassword");
+                writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WriteEndObject();
@@ -54,34 +54,37 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static WebhookHookParameter DeserializeWebhookHookParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string endpoint = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<IDictionary<string, string>> headers = default;
-            Optional<string> certificateKey = default;
-            Optional<string> certificatePassword = default;
+            string username = default;
+            string password = default;
+            IDictionary<string, string> headers = default;
+            string certificateKey = default;
+            string certificatePassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -92,18 +95,40 @@ namespace Azure.AI.MetricsAdvisor.Models
                     headers = dictionary;
                     continue;
                 }
-                if (property.NameEquals("certificateKey"))
+                if (property.NameEquals("certificateKey"u8))
                 {
                     certificateKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificatePassword"))
+                if (property.NameEquals("certificatePassword"u8))
                 {
                     certificatePassword = property.Value.GetString();
                     continue;
                 }
             }
-            return new WebhookHookParameter(endpoint, username.Value, password.Value, Optional.ToDictionary(headers), certificateKey.Value, certificatePassword.Value);
+            return new WebhookHookParameter(
+                endpoint,
+                username,
+                password,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                certificateKey,
+                certificatePassword);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebhookHookParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebhookHookParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -11,9 +11,12 @@ namespace Azure.AI.Language.Conversations.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
-        ConversationsClientOptions.ServiceVersion.V2022_10_01_Preview,
-        ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview,
+        ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview,
+        ConversationsClientOptions.ServiceVersion.V2024_11_01,
+        ConversationsClientOptions.ServiceVersion.V2024_05_01,
+        ConversationsClientOptions.ServiceVersion.V2023_04_01,
         ConversationsClientOptions.ServiceVersion.V2022_05_01)]
+    [IgnoreServiceError(429, "429")]
     public abstract class ConversationAnalysisTestBase<TClient> : RecordedTestBase<ConversationAnalysisTestEnvironment> where TClient : class
     {
         protected ConversationAnalysisTestBase(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
@@ -43,11 +46,11 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             await base.StartTestRecordingAsync();
 
+            ConversationsClientOptions options = new ConversationsClientOptions(ServiceVersion);
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
-                InstrumentClientOptions(
-                    new ConversationsClientOptions(ServiceVersion)));
+                InstrumentClientOptions(options));
         }
     }
 }

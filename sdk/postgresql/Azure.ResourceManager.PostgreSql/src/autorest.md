@@ -11,10 +11,12 @@ library-name: PostgreSql
 
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2021-06
+  - tag: package-flexibleserver-2024-08-01
+enable-bicep-serialization: true
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -22,6 +24,9 @@ batch:
 namespace: Azure.ResourceManager.PostgreSql
 require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSql/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -36,7 +41,7 @@ format-by-name-rules:
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -90,6 +95,8 @@ prepend-rp-prefix:
   - PrivateEndpointProvisioningState
   - PrivateLinkServiceConnectionStateStatus
   - PublicNetworkAccessEnum
+  - Replica
+  - ReplicationState
   - StorageProfile
   - ServerPropertiesForCreate
   - ServerPropertiesForDefaultCreate
@@ -105,9 +112,16 @@ prepend-rp-prefix:
   - ServerPrivateLinkServiceConnectionStateProperty
   - ServerSecurityAlertPolicyListResult
   - ServerSecurityAlertPolicyState
+  - ServerSku
   - ServerState
+  - SourceType
   - SslEnforcementEnum
+  - SslMode
   - StorageAutogrow
+  - StorageType
+  - ValidationDetails
+  - ValidationMessage
+  - ValidationState
   - VirtualNetworkRuleListResult
   - VirtualNetworkRuleState
 rename-mapping:
@@ -142,11 +156,14 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2021-06'
+``` yaml $(tag) == 'package-flexibleserver-2024-08-01'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -159,7 +176,7 @@ format-by-name-rules:
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -192,8 +209,6 @@ rename-mapping:
   FailoverMode: PostgreSqlFlexibleServerFailoverMode
   FlexibleServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   GeoRedundantBackupEnum: PostgreSqlFlexibleServerGeoRedundantBackupEnum
-  HyperscaleNodeEditionCapability: PostgreSqlFlexibleServerHyperscaleNodeEditionCapability
-  NodeTypeCapability: PostgreSqlFlexibleServerNodeTypeCapability
   Database: PostgreSqlFlexibleServerDatabase
   FirewallRule: PostgreSqlFlexibleServerFirewallRule
   Server: PostgreSqlFlexibleServer
@@ -213,32 +228,111 @@ rename-mapping:
   VirtualNetworkSubnetUsageParameter: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
   DelegatedSubnetUsage: PostgreSqlFlexibleServerDelegatedSubnetUsage
   VirtualNetworkSubnetUsageResult: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
-  VcoreCapability: PostgreSqlFlexibleServerVCoreCapability
   ServerVersionCapability: PostgreSqlFlexibleServerServerVersionCapability
   ServerVersionCapability.supportedVcores: SupportedVCores
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
   ServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
-  CapabilityProperties: PostgreSqlFlexibleServerCapabilityProperties
-  CapabilityProperties.geoBackupSupported: IsGeoBackupSupported
-  CapabilityProperties.zoneRedundantHaSupported: IsZoneRedundantHASupported
-  CapabilityProperties.zoneRedundantHaAndGeoBackupSupported: IsZoneRedundantHAAndGeoBackupSupported
   CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
-  NameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityRequest
+  CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityContent
+  CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
+  CheckNameAvailabilityReason: PostgreSqlFlexibleServerNameUnavailableReason
   NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
   CreateMode: PostgreSqlFlexibleServerCreateMode
   SkuTier: PostgreSqlFlexibleServerSkuTier
-  NameAvailability.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
   Storage.storageSizeGB: StorageSizeInGB
-  StorageMBCapability.storageSizeMB: StorageSizeInMB
-  StorageMBCapability: PostgreSqlFlexibleServerStorageCapability
-  VcoreCapability.supportedMemoryPerVcoreMB: SupportedMemoryPerVCoreInMB
-  Reason: PostgreSqlFlexibleServerNameUnavailableReason
+  StorageMbCapability.storageSizeMb: StorageSizeInMB
+  StorageMbCapability: PostgreSqlFlexibleServerStorageCapability
   RestartParameter: PostgreSqlFlexibleServerRestartParameter
   ServerHAState: PostgreSqlFlexibleServerHAState
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
-  CapabilityProperties.supportedHAMode: SupportedHAModes
-  StorageEditionCapability.supportedStorageMB: SupportedStorageCapabilities
+  StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
+  ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
+  ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
+  AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
+  ArmServerKeyType: PostgreSqlFlexibleServerKeyType
+  AuthConfig: PostgreSqlFlexibleServerAuthConfig
+  DataEncryption: PostgreSqlFlexibleServerDataEncryption
+  FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
+  IdentityType: PostgreSqlFlexibleServerIdentityType
+  Origin: PostgreSqlFlexibleServerBackupOrigin
+  PasswordAuthEnum: PostgreSqlFlexibleServerPasswordAuthEnum
+  PrincipalType: PostgreSqlFlexibleServerPrincipalType
+  ReplicationRole: PostgreSqlFlexibleServerReplicationRole
+  ServerBackup: PostgreSqlFlexibleServerBackup
+  ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
+  StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
+  UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
+  AdminCredentials: PostgreSqlMigrationAdminCredentials
+  BackupSettings: PostgreSqlFlexibleServerBackupSettings
+  BackupStoreDetails: PostgreSqlFlexibleServerBackupStoreDetails
+  CancelEnum: PostgreSqlMigrationCancel
+  LogicalReplicationOnSourceDbEnum: PostgreSqlMigrationLogicalReplicationOnSourceDb
+  OverwriteDbsInTargetEnum: PostgreSqlMigrationOverwriteDbsInTarget
+  StartDataMigrationEnum: PostgreSqlMigrationStartDataMigration
+  TriggerCutoverEnum: PostgreSqlMigrationTriggerCutover
+  CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
+  DbServerMetadata: PostgreSqlServerMetadata
+  FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupported
+  FlexibleServerCapability.fastProvisioningSupported: SupportFastProvisioning
+  FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
+  LogFile: PostgreSqlFlexibleServerLogFile
+  LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
+  GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupported
+  HaMode: PostgreSqlFlexibleServerHAMode
+  ZoneRedundantHaSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaSupported
+  ZoneRedundantHaAndGeoBackupSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
+  StorageAutoGrowthSupportedEnum: PostgreSqlFlexibleServerStorageAutoGrowthSupported
+  OnlineResizeSupportedEnum: PostgreSqlFlexibleServerOnlineResizeSupported
+  RestrictedEnum: PostgreSqlFlexibleServerZoneRedundantRestricted
+  ServerSkuCapability: PostgreSqlFlexibleServerSkuCapability
+  CapabilityBase.status: CapabilityStatus
+  CapabilityBase: PostgreSqlBaseCapability
+  ExecutionStatus: PostgreSqlExecutionStatus
+  KeyStatusEnum: PostgreSqlKeyStatus
+  LtrBackupResponse: PostgreSqlFlexibleServerLtrBackupResult
+  LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
+  LtrServerBackupOperation: PostgreSqlLtrServerBackupOperation
+  LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
+  MigrationListFilter: PostgreSqlMigrationListFilter
+  MigrationMode: PostgreSqlMigrationMode
+  MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
+  MigrationResourceListResult: PostgreSqlMigrationResourceListResult
+  MigrationNameAvailabilityResource: PostgreSqlCheckMigrationNameAvailabilityContent
+  MigrationNameAvailabilityResource.nameAvailable: IsNameAvailable
+  MigrationSecretParameters: PostgreSqlMigrationSecretParameters
+  MigrationState: PostgreSqlMigrationState
+  MigrationStatus: PostgreSqlMigrationStatus
+  MigrationSubState: PostgreSqlMigrationSubState
+  MigrationSubStateDetails: PostgreSqlMigrationSubStateDetails
+  BackupRequestBase: PostgreSqlBackupContent
+  AzureManagedDiskPerformanceTiers: PostgreSqlManagedDiskPerformanceTier
+  LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
+  LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
+  MigrationResource: PostgreSqlMigration
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
+  CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
+  CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
+  LogFiles_ListByServer: GetPostgreSqlFlexibleServerLogFiles
+directive:
+  - from: Administrators.json
+    where: $.definitions
+    transform: >
+      $.AdministratorProperties.properties.objectId['format'] = 'uuid'
+  - from: FlexibleServers.json
+    where: $.definitions
+    transform: >
+      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id';
+      $.ServerForUpdate.properties.location = {"type": "string", "description": "The location the resource resides in."}
+  - from: types.json
+    where: $.definitions
+    transform: >
+      $.CheckNameAvailabilityRequest.required = ['name']
+  - from: Configuration.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/configurations/{configurationName}"].patch
+    transform: >
+      const parameters = $.parameters;
+      $.parameters[parameters.length-1].schema["$ref"] = "#/definitions/Configuration"
 ```

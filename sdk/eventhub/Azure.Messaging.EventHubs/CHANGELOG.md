@@ -1,10 +1,262 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.12.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.12.0-beta.2 (2025-02-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- tovyhnal _([GitHub](https://github.com/tovyhnal))_
+
+### Features Added
+
+- Support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.  
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+  
+  Obsoleted properties:
+  - `EventData.Offset`
+  - `LastEnqueuedEventProperties.Offset`
+  - `PartitionProperties.LastEnqueuedOffset`
+
+  Obsoleted method overloads:
+  - `EventPosition.FromOffset`
+  - `EventHubsModelFactory.EventData`
+  - `BlobCheckpointStore.UpdateCheckpointAsync`
+  - `EventProcessorClient.UpdateCheckpointAsync`
+
+### Bugs Fixed
+
+- Querying runtime data and other management operations will now correctly guards against the race condition where an AMQP link is in the process of closing as the operation attempts to use it.  These errors will now properly be classified as retriable as they are for producer and consumer operations.
+
+- Fixed an obscure edge case in the `EventHubBufferedProducer` client where an obscure race condition when flushing/enqueuing events concurrently with disposing the producer could cause a semaphore to be released inappropriately.  This error superseded the `TaskCanceledException` that should have been surfaced.
+
+### Other Changes
+
+- Added annotations to make the package compatible with trimming and native AOT compilation.
+
+- Added Event Hub name to processor load balancing logs for additional context.  _(A community contribution, courtesy of [tovyhnal](https://github.com/tovyhnal))_
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.11.6 (2025-02-11)
+
+### Bugs Fixed
+
+- Fixed an obscure edge case in the `EventHubBufferedProducer` client where an obscure race condition when flushing/enqueuing events concurrently with disposing the producer could cause a semaphore to be released inappropriately.  This error superseded the `TaskCanceledException` that should have been surfaced.
+
+## 5.11.5 (2024-07-31)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
+
+## 5.11.4 (2024-07-17)
+
+### Bugs Fixed
+
+- Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
+
+- Fixed an error with ETW logs which caused structured arguments for Id 105 (Event Processor position determined) to be out-of-order with the message format.  This also caused the date to render incorrectly for some captures.
+
+### Other Changes
+
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigured and adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation.
+
+- The `PluggableCheckpointStoreEventProcessor` will now emit a diagnostic span when a checkpoint is created/updated.  While this span is not defined by the Open Telemetry specification, this change aligns diagnostic spans with those emitted by `EventProcessorClient`.
+
+- Adjusted the options used by `EventProcessor<TPartition>` and descendants during startup validation to reduce the amount of data transferred and minimize impact on the outgoing events metric.
+
+## 5.12.0-beta.1 (2024-05-17)
+
+### Features Added
+
+- Preview support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+### Breaking Changes
+
+  ### Major
+
+  The type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API.  The default value for any offset-related data has been changed from `long.MinValue` to `null`.
+
+  Impacted properties:
+  - EventData.Offset
+  - CheckpointPosition.Offset
+  - LastEnqueuedEventProperties.Offset
+  - PartitionProperties.LastEnqueuedOffset
+
+  Impacted methods:
+  - CheckpointPosition constructor
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
+  - EventProcessorClient.UpdateCheckpointAsync _(deprecated overload)_
+
+## 5.11.3 (2024-05-15)
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Removed the restriction that endpoints used with the development emulator had to resolve to a `localhost` variant.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains several bug fixes, including for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+
+## 5.11.2 (2024-04-10)
+
+### Features Added
+
+- It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
+
+### Bugs Fixed
+
+- Fixed a warning for "too many parameters" that was written to logs when the processor attempted to log load balancing messages due to improper ETW attribute use.
+
+### Other Changes
+
+- It is now possible to set `byte[]` values as [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
+
+## 5.11.1 (2024-03-05)
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  A notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 5.11.0 (2024-02-13)
+
+### Features Added
+
+- Added a `CheckpointPosition` struct to `Azure.Messaging.EventHubs.Processor` to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `CheckpointStore`, `PluggableCheckpointStoreEventProcessor<TPartition` and `EventProcessor<TPartition>` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
+
+### Breaking Changes
+
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.
+
+  This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
+  - MessageId
+  - CorrelationId
+  - To
+  - ReplyTo
+
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  **There is no behavioral change for those using the official checkpoint store implementations.**
+
+### Bugs Fixed
+
+- Load balancing is no longer blocked when event processing for a lost partition does not honor the cancellation token.  Previously, long-running processing could cause delays in load balancing that resulted in ownership not being renewed for all partitions.
+
+- Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+
+- Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping an event processor.
+
+- Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
+
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, it will now properly surrender ownership when processing stops.
+
+- Reduced the timeout for transient service failures when starting the buffered producer. This fixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
+
+- Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
+
+- Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+- Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
+
+- Improved the approach used by the processor to manage the background tasks for partition processing and load balancing.  These tasks are now marked as long-running and have improved error recovery.
+
+- Initialization of the load balancing task is now performed in the background and will no longer cause delays when starting the processor.
+
+- Loosened validation for the fully qualified namespace name passed to client constructors.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the clients.
+
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, the processor now signals the error handler with a wrapped exception that makes clear that processing will terminate.  Previously, the source exception was surfaced to the error handler and the impact was not clear.
+
+- The "Event Receive Completed" log now includes the maximum batch size and wait time that were used for the operation.
+
+- A new log has been added to capture the end-to-end performance of the cycle to read and process events for a partition owned by an event processor type.  This is emitted as a verbose ETW event with the Id 129 and is highly recommended to capture when troubleshooting processor scenarios.
+
+## 5.10.0 (2023-11-07)
+
+### Breaking Changes
+
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
+  and message `Activity` name from `EventHubs.Message` to `Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+### Bugs Fixed
+
+- Fixed a parameter type mismatch in ETW #7 (ReceiveComplete) which caused the duration argument of the operation to be interpreted as a Unicode string and fail to render properly in the formatted message.
+
+### Other Changes
+
+- When an Event Hub is disabled, it will now be detected and result in a terminal `EventHubsException` with its reason set to `FailureReason.ResourceNotFound`.
+
+## 5.9.3 (2023-09-12)
+
+### Bugs Fixed
+
+- When using the `EventHubBufferedProducerClient`, events are now instrumented when `EnqueueEventAsync` or `EnqueueEventsAsync` is called, rather than when the event is published. This ensures that the instrumentation is accurate when the event is published, regardless of whether the event is published immediately or buffered for a period of time.
+
+### Other Changes
+
+- Several improvements to logging have been made to capture additional context and fix typos.  Most notable among them is the inclusion of starting and ending sequence numbers when events are read from Event Hubs and dispatched for processing by event processor types.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3.  This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
+
+## 5.9.2 (2023-06-06)
+
+### Other Changes
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.2.  This resolves a potential issue opening TLS connections on .NET 6+.
+
+- It is now possible to create an `EventData` instance from an `AmqpAnnotatedMessage`.
+
+## 5.9.1 (2023-05-09)
+
+### Bugs Fixed
+
+- Removed the 30 second cap applied when opening AMQP links; this allows developers to fully control the timeout for service operations by tuning the `TryTimeout` as appropriate for the application.
+
+## 5.9.0 (2023-04-11)
+
+### Breaking Changes
+
+- If diagnostic tracing is enabled, diagnostic tracing information is retained on `EventData` instances when they are added to an `EventDataBatch`. This matches the existing behavior when sending events using the `SendEventsAsync` method that takes an `IEnumerable<EventData>`.
+
+### Bugs Fixed
+
+- Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
+
+### Other Changes
+
+- Enhanced the log emitted when an event processor begins reading from a partition to report whether the offset chosen was based on a checkpoint or default value.
+
+## 5.8.1 (2023-03-09)
+
+### Other Changes
+
+- Upgrading dependency on `Azure.Core` library.
+
+## 5.8.0 (2023-03-07)
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the messaging attribute specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml#L98).
 
 ### Bugs Fixed
 
@@ -505,11 +757,11 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Features Added
 
-- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
 - The `EventHubConsumerClient` pipeline for reading events from a single partition was reworked to improve efficiency and make use of the new configuration options for `PrefetchCount` and `CacheEventCount`.
 
-- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
+- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
 
 - Logging for the core send and receive operations against the Event Hubs service can now be correlated by an `OperationId` in the logs and detail the number of retries attempted for the operation.
 
@@ -548,15 +800,15 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Consuming events
 
-- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
+- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
 
 - The `EventHubConsumerClient` pipeline for reading events from a single partition was reworked to improve efficiency and make use of the new configuration options for `PrefetchCount` and `CacheEventCount`.
 
 #### Processing events
 
-- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
-- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
 
 #### Diagnostics
 

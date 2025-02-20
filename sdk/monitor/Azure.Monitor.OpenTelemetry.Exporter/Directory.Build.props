@@ -8,6 +8,8 @@
 
   <PropertyGroup>
     <Nullable>enable</Nullable>
+    <!-- https://github.com/Azure/azure-sdk-for-net/issues/33970 -->
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
 
 </Project>

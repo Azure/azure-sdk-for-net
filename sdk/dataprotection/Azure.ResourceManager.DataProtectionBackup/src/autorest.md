@@ -8,13 +8,17 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/33d5054122e52490eef9925d6cbe801f28b88e18/specification/dataprotection/resource-manager/readme.md
-tag: package-2022-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/a6ba164815464151a4adb687ea12a7a7090ed7fe/specification/dataprotection/resource-manager/readme.md
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -23,7 +27,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -45,6 +49,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   PIN: Pin
 
 request-path-is-non-resource:
@@ -67,14 +72,17 @@ override-operation-name:
   ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects: GetDeleteResourceGuardProxyObjects
   ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject: GetDisableSoftDeleteObject
   ResourceGuards_GetDisableSoftDeleteRequestsObjects: GetDisableSoftDeleteObjects
-  ResourceGuards_GetDefaultBackupSecurityPINRequestsObject: GetBackupSecurityPinObject
-  ResourceGuards_GetBackupSecurityPINRequestsObjects: GetBackupSecurityPinObjects
+  ResourceGuards_GetDefaultBackupSecurityPinRequestsObject: GetBackupSecurityPinObject
+  ResourceGuards_GetBackupSecurityPinRequestsObjects: GetBackupSecurityPinObjects
   ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject: GetUpdateProtectedItemObject
   ResourceGuards_GetUpdateProtectedItemRequestsObjects: GetUpdateProtectedItemObjects
   ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject: GetUpdateProtectionPolicyObject
   ResourceGuards_GetUpdateProtectionPolicyRequestsObjects: GetUpdateProtectionPolicyObjects
   DataProtection_CheckFeatureSupport: CheckDataProtectionBackupFeatureSupport
   BackupVaults_CheckNameAvailability: CheckDataProtectionBackupVaultNameAvailability
+  FetchCrossRegionRestoreJob_Get: GetCrossRegionRestoreJob
+  FetchCrossRegionRestoreJobs_List: GetCrossRegionRestoreJobs
+  FetchSecondaryRecoveryPoints_List: GetSecondaryRecoveryPoints
 
 rename-mapping:
   AzureBackupJobResource: DataProtectionBackupJob
@@ -91,6 +99,7 @@ rename-mapping:
   AzureBackupRecoveryPoint: DataProtectionBackupRecoveryPointProperties
   AzureBackupDiscreteRecoveryPoint: DataProtectionBackupDiscreteRecoveryPointProperties
   AzureBackupDiscreteRecoveryPoint.recoveryPointTime: RecoverOn
+  AzureBackupDiscreteRecoveryPoint.expiryTime: ExpireOn
   BackupInstanceResource: DataProtectionBackupInstance
   BackupInstance: DataProtectionBackupInstanceProperties
   BackupInstance.datasourceAuthCredentials: DataSourceAuthCredentials
@@ -98,7 +107,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: -|uuid
+  OperationJobExtendedInfo.jobId: JobIdentifier
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
@@ -117,7 +126,6 @@ rename-mapping:
   ValidateRestoreRequestObject: BackupValidateRestoreContent
   BackupVaultResource: DataProtectionBackupVault
   BackupVault: DataProtectionBackupVaultProperties
-  PatchResourceRequestInput: DataProtectionBackupPatch
   ValidateForBackupRequest: AdhocBackupValidateContent
   BaseBackupPolicyResource: DataProtectionBackupPolicy
   BaseBackupPolicy: DataProtectionBackupPolicyPropertiesBase
@@ -172,11 +180,13 @@ rename-mapping:
   Datasource.resourceID: -|arm-id
   Datasource.resourceLocation: -|azure-location
   Datasource.resourceType: -|resource-type
+  Datasource.resourceUri: ResourceUriString
   DatasourceSet: DataSourceSetInfo
   DatasourceSet.datasourceType: DataSourceType
   DatasourceSet.resourceID: -|arm-id
   DatasourceSet.resourceLocation: -|azure-location
   DatasourceSet.resourceType: -|resource-type
+  DatasourceSet.resourceUri: ResourceUriString
   PolicyInfo: BackupInstancePolicyInfo
   PolicyInfo.policyId: -|arm-id
   ValidationType: BackupValidationType
@@ -210,6 +220,7 @@ rename-mapping:
   ResourceGuardOperation: ResourceGuardOperationDetails
   ResourceGuardOperation.requestResourceType: -|resource-type
   TargetDetails: RestoreFilesTargetDetails
+  TargetDetails.targetResourceArmId: -|arm-id
   RestoreJobRecoveryPointDetails.recoveryPointTime: RecoverOn
   RestoreTargetInfo.datasourceInfo: DataSourceInfo
   RestoreTargetInfo.datasourceSetInfo: DataSourceSetInfo
@@ -220,6 +231,50 @@ rename-mapping:
   SyncType: BackupInstanceSyncType
   ScheduleBasedBackupCriteria.daysOfTheWeek: DaysOfWeek
   ScheduleBasedBackupCriteria.weeksOfTheMonth: WeeksOfMonth
+  DeletedBackupInstanceResource: DeletedDataProtectionBackupInstance
+  DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
+  BackupDatasourceParameters: BackupDataSourceSettings
+  BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
+  KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  KubernetesClusterRestoreCriteria.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  CrossSubscriptionRestoreState: DataProtectionBackupCrossSubscriptionRestoreState
+  DeletionInfo: BackupInstanceDeletionInfo
+  DeletionInfo.deletionTime: DeleteOn|date-time
+  DeletionInfo.billingEndDate: BillingEndOn|date-time
+  DeletionInfo.scheduledPurgeTime: ScheduledPurgeOn|date-time
+  ExistingResourcePolicy: KubernetesClusterRestoreExistingResourcePolicy
+  ImmutabilityState: BackupVaultImmutabilityState
+  PatchBackupVaultInput: DataProtectionBackupVaultPatchProperties
+  PolicyParameters: BackupInstancePolicySettings
+  PolicyParameters.backupDatasourceParametersList: BackupDataSourceParametersList
+  SecuritySettings: BackupVaultSecuritySettings
+  SoftDeleteSettings: BackupVaultSoftDeleteSettings
+  SoftDeleteState: BackupVaultSoftDeleteState
+  UnlockDeleteRequest: DataProtectionUnlockDeleteContent
+  UnlockDeleteResponse: DataProtectionUnlockDeleteResult
+  SecureScoreLevel: BackupVaultSecureScoreLevel
+  FeatureSettings: BackupVaultFeatureSettings
+  IdentityDetails: DataProtectionIdentityDetails
+  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityId|arm-id
+  NamespacedNameResource: NamespacedName
+  CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
+  CrossRegionRestoreDetails.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobRequest.jobId : -|uuid
+  CrossRegionRestoreJobRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobRequest.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobsRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobsRequest.sourceRegion  : -|azure-location
+  FetchSecondaryRPsRequestParameters.sourceBackupInstanceId : -|arm-id
+  FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
+  BackupVault.replicatedRegions : -|azure-location
+  RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
+  CmkKekIdentity: BackupVaultCmkKekIdentity
+  EncryptionSettings: BackupVaultEncryptionSettings
+  EncryptionState: BackupVaultEncryptionState
+  IdentityType: BackupVaultCmkKekIdentityType
+  InfrastructureEncryptionState: BackupVaultInfrastructureEncryptionState
 
 directive:
 # Correct the type of properties
@@ -328,4 +383,9 @@ directive:
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport'].post.parameters[3]['x-ms-client-name'] = 'content';
+# revert the format change of SubscriptionIdParameter in common type V4 to avoid breaking changes
+  - from: types.json
+    where: $.parameters
+    transform: >
+      delete $.SubscriptionIdParameter.format;
 ```

@@ -3,12 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -53,7 +49,7 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Record:
                     var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile) { XRecordingAssetsFile = assetsJson });
                     RecordingId = recordResponse.Headers.XRecordingId;
-                    await AddProxySanitizersAsync();
+                    await ApplySanitizersAsync();
 
                     break;
                 case RecordedTestMode.Playback:
@@ -65,13 +61,15 @@ namespace Azure.Core.TestFramework
                     catch (RequestFailedException ex)
                         when (ex.Status == 404)
                     {
+                        // We don't throw the exception here because Playback only tests that are testing the
+                        // recording infrastructure itself will not have session records.
                         MismatchException = new TestRecordingMismatchException(ex.Message, ex);
                         return;
                     }
 
                     _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
                     RecordingId = playbackResponse.Headers.XRecordingId;
-                    await AddProxySanitizersAsync();
+                    await ApplySanitizersAsync();
 
                     // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
                     var excludedHeaders = new List<string>(_recordedTestBase.LegacyExcludedHeaders)
@@ -97,11 +95,11 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private async Task AddProxySanitizersAsync()
+        private async Task ApplySanitizersAsync()
         {
             foreach (string header in _recordedTestBase.SanitizedHeaders)
             {
-                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header), RecordingId);
             }
 
             foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
@@ -130,7 +128,7 @@ namespace Azure.Core.TestFramework
 
             foreach (string path in _recordedTestBase.JsonPathSanitizers)
             {
-                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
+                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(path), RecordingId);
             }
 
             foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
@@ -141,6 +139,16 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
+            }
+
+            if (_recordedTestBase.SanitizersToRemove.Count > 0)
+            {
+                var toRemove = new SanitizersToRemove();
+                foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
+                {
+                    toRemove.Sanitizers.Add(sanitizer);
+                }
+                await _proxy.Client.RemoveSanitizersAsync(toRemove, RecordingId);
             }
         }
 
@@ -180,6 +188,7 @@ namespace Azure.Core.TestFramework
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
+                            ValidateVariables();
                             _random = new TestRandom(Mode, int.Parse(Variables[RandomSeedVariableKey]));
                             break;
                         default:
@@ -199,6 +208,18 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestBase _recordedTestBase;
 
         public string RecordingId { get; private set; }
+
+        /// <summary>
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
+        /// should use the default Guid format. The default Guid format contains hyphens.
+        /// </summary>
+        public bool UseDefaultGuidFormatForClientRequestId
+        {
+            get
+            {
+               return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
+            }
+        }
 
         /// <summary>
         /// Gets the moment in time that this test is being run.  This is useful
@@ -262,8 +283,9 @@ namespace Azure.Core.TestFramework
             {
                 if (currentTransport is ProxyTransport)
                 {
-                    //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30029
-                    return currentTransport;
+                    throw new InvalidOperationException(
+                        "The supplied options have already been instrumented. Each test must pass a unique options instance to " +
+                        "InstrumentClientOptions.");
                 }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
@@ -324,14 +346,22 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    if (Variables.Count == 0)
-                    {
-                        throw new TestRecordingMismatchException("The recording contains no variables.");
-                    }
+                    ValidateVariables();
                     Variables.TryGetValue(variableName, out string value);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void ValidateVariables()
+        {
+            if (Variables.Count == 0)
+            {
+                throw new TestRecordingMismatchException(
+                    "The record session does not exist or is missing the Variables section. If the test is " +
+                    "attributed with 'RecordedTest', it will be recorded automatically. Otherwise, set the " +
+                    "RecordedTestMode to 'Record' and attempt to record the test.");
             }
         }
 

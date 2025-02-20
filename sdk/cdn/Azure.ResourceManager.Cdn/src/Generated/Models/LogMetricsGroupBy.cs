@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(LogMetricsGroupBy left, LogMetricsGroupBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are not the same. </summary>
         public static bool operator !=(LogMetricsGroupBy left, LogMetricsGroupBy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogMetricsGroupBy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetricsGroupBy"/>. </summary>
         public static implicit operator LogMetricsGroupBy(string value) => new LogMetricsGroupBy(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

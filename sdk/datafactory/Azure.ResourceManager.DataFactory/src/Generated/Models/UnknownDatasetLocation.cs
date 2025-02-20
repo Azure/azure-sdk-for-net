@@ -7,20 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownDatasetLocation. </summary>
+    /// <summary> Unknown version of DatasetLocation. </summary>
     internal partial class UnknownDatasetLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of UnknownDatasetLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDatasetLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownDatasetLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal UnknownDatasetLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             DatasetLocationType = datasetLocationType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatasetLocation"/> for deserialization. </summary>
+        internal UnknownDatasetLocation()
+        {
         }
     }
 }

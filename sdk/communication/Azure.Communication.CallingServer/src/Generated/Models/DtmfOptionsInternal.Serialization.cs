@@ -17,17 +17,17 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             if (Optional.IsDefined(InterToneTimeoutInSeconds))
             {
-                writer.WritePropertyName("interToneTimeoutInSeconds");
+                writer.WritePropertyName("interToneTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InterToneTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(MaxTonesToCollect))
             {
-                writer.WritePropertyName("maxTonesToCollect");
+                writer.WritePropertyName("maxTonesToCollect"u8);
                 writer.WriteNumberValue(MaxTonesToCollect.Value);
             }
             if (Optional.IsCollectionDefined(StopTones))
             {
-                writer.WritePropertyName("stopTones");
+                writer.WritePropertyName("stopTones"u8);
                 writer.WriteStartArray();
                 foreach (var item in StopTones)
                 {
@@ -36,6 +36,14 @@ namespace Azure.Communication.CallingServer
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

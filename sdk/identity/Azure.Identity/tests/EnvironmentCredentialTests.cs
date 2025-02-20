@@ -210,5 +210,31 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expectedCredentialType, cred.Credential.GetType());
             }
         }
+
+        [NonParallelizable]
+        [Test]
+        [TestCaseSource(nameof(EnvCredConfigs))]
+        public void EnvironmentCredentialHonorsDisableInstanceDiscoveryIsTrue(Dictionary<string, string> environmentVars, Type expectedCredentialType)
+        {
+            using (new TestEnvVar(environmentVars))
+            {
+                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = true });
+                bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
+                Assert.IsTrue(DisableInstanceDiscovery);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        [TestCaseSource(nameof(EnvCredConfigs))]
+        public void EnvironmentCredentialHonorsDisableInstanceDiscoveryIsFalse(Dictionary<string, string> environmentVars, Type expectedCredentialType)
+        {
+            using (new TestEnvVar(environmentVars))
+            {
+                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = false });
+                bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
+                Assert.IsFalse(DisableInstanceDiscovery);
+            }
+        }
     }
 }

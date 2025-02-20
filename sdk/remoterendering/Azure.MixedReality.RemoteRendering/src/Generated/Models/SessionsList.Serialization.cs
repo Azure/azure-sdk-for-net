@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -15,11 +14,15 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static SessionsList DeserializeSessionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RenderingSession> sessions = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessions"))
+                if (property.NameEquals("sessions"u8))
                 {
                     List<RenderingSession> array = new List<RenderingSession>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,13 +32,21 @@ namespace Azure.MixedReality.RemoteRendering
                     sessions = array;
                     continue;
                 }
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SessionsList(sessions, nextLink.Value);
+            return new SessionsList(sessions, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SessionsList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSessionsList(document.RootElement);
         }
     }
 }

@@ -17,8 +17,6 @@ namespace Azure.Security.KeyVault.Keys
         internal const string RsaHsmValue = "RSA-HSM";
         internal const string OctValue = "oct";
         internal const string OctHsmValue = "oct-HSM";
-        internal const string OkpValue = "OKP";
-        internal const string OkpHsmValue = "OKP-HSM";
 
         private readonly string _value;
 
@@ -60,16 +58,6 @@ namespace Azure.Security.KeyVault.Keys
         /// An AES cryptographic algorithm backed by a Hardware Security Module (HSM).
         /// </summary>
         public static KeyType OctHsm { get; } = new KeyType(OctHsmValue);
-
-        /// <summary>
-        /// An Octet Key Pair (OKP) algorithm.
-        /// </summary>
-        public static KeyType Okp { get; } = new KeyType(OkpValue);
-
-        /// <summary>
-        /// An Octet Key Pair (OKP) algorithm backed by a Hardware Security Module (HSM).
-        /// </summary>
-        public static KeyType OkpHsm { get; } = new KeyType(OkpHsmValue);
 
         /// <summary>
         /// Determines if two <see cref="KeyType"/> values are the same.

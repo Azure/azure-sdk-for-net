@@ -5,55 +5,142 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobFunctionProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFunctionProperties))]
+    public partial class StreamingJobFunctionProperties : IUtf8JsonSerializable, IJsonModel<StreamingJobFunctionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobFunctionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StreamingJobFunctionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
-            writer.WritePropertyName("properties");
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Output))
             {
-                writer.WritePropertyName("output");
-                writer.WriteObjectValue(Output);
+                writer.WritePropertyName("output"u8);
+                writer.WriteObjectValue(Output, options);
             }
             if (Optional.IsDefined(Binding))
             {
-                writer.WritePropertyName("binding");
-                writer.WriteObjectValue(Binding);
+                writer.WritePropertyName("binding"u8);
+                writer.WriteObjectValue(Binding, options);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static StreamingJobFunctionProperties DeserializeStreamingJobFunctionProperties(JsonElement element)
+        StreamingJobFunctionProperties IJsonModel<StreamingJobFunctionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
+        }
+
+        internal static StreamingJobFunctionProperties DeserializeStreamingJobFunctionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Aggregate": return AggregateFunctionProperties.DeserializeAggregateFunctionProperties(element);
-                    case "Scalar": return ScalarFunctionProperties.DeserializeScalarFunctionProperties(element);
+                    case "Aggregate": return AggregateFunctionProperties.DeserializeAggregateFunctionProperties(element, options);
+                    case "Scalar": return ScalarFunctionProperties.DeserializeScalarFunctionProperties(element, options);
                 }
             }
-            return UnknownFunctionProperties.DeserializeUnknownFunctionProperties(element);
+            return UnknownFunctionProperties.DeserializeUnknownFunctionProperties(element, options);
         }
+
+        BinaryData IPersistableModel<StreamingJobFunctionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamingJobFunctionProperties IPersistableModel<StreamingJobFunctionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingJobFunctionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

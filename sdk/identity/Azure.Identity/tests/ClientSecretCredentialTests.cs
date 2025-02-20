@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialTests : CredentialTestBase
+    public class ClientSecretCredentialTests : CredentialTestBase<ClientSecretCredentialOptions>
     {
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -19,28 +18,30 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
+            if (config.TenantId == null)
             {
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
-            var options = new ClientSecretCredentialOptions();
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            var options = new ClientSecretCredentialOptions
             {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
+            };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
             }
-
-            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(new ClientSecretCredential(parameters.TenantId, ClientId, "secret", options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, config.MockConfidentialMsalClient));
         }
 
         [Test]
@@ -62,7 +63,7 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var options = new ClientSecretCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             ClientSecretCredential client =
                 InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));

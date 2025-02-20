@@ -19,28 +19,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Structure))
             {
-                writer.WritePropertyName("structure");
-                writer.WriteObjectValue(Structure);
+                writer.WritePropertyName("structure"u8);
+                writer.WriteObjectValue<object>(Structure);
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
-                writer.WriteObjectValue(Schema);
+                writer.WritePropertyName("schema"u8);
+                writer.WriteObjectValue<object>(Schema);
             }
-            writer.WritePropertyName("linkedServiceName");
+            writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -51,144 +51,150 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(Location);
             }
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
-                writer.WriteObjectValue(ColumnDelimiter);
+                writer.WritePropertyName("columnDelimiter"u8);
+                writer.WriteObjectValue<object>(ColumnDelimiter);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
-                writer.WritePropertyName("rowDelimiter");
-                writer.WriteObjectValue(RowDelimiter);
+                writer.WritePropertyName("rowDelimiter"u8);
+                writer.WriteObjectValue<object>(RowDelimiter);
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
-                writer.WriteObjectValue(EncodingName);
+                writer.WritePropertyName("encodingName"u8);
+                writer.WriteObjectValue<object>(EncodingName);
             }
             if (Optional.IsDefined(CompressionCodec))
             {
-                writer.WritePropertyName("compressionCodec");
-                writer.WriteObjectValue(CompressionCodec);
+                writer.WritePropertyName("compressionCodec"u8);
+                writer.WriteObjectValue<object>(CompressionCodec);
             }
             if (Optional.IsDefined(CompressionLevel))
             {
-                writer.WritePropertyName("compressionLevel");
-                writer.WriteObjectValue(CompressionLevel);
+                writer.WritePropertyName("compressionLevel"u8);
+                writer.WriteObjectValue<object>(CompressionLevel);
             }
             if (Optional.IsDefined(QuoteChar))
             {
-                writer.WritePropertyName("quoteChar");
-                writer.WriteObjectValue(QuoteChar);
+                writer.WritePropertyName("quoteChar"u8);
+                writer.WriteObjectValue<object>(QuoteChar);
             }
             if (Optional.IsDefined(EscapeChar))
             {
-                writer.WritePropertyName("escapeChar");
-                writer.WriteObjectValue(EscapeChar);
+                writer.WritePropertyName("escapeChar"u8);
+                writer.WriteObjectValue<object>(EscapeChar);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
-                writer.WriteObjectValue(FirstRowAsHeader);
+                writer.WritePropertyName("firstRowAsHeader"u8);
+                writer.WriteObjectValue<object>(FirstRowAsHeader);
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
-                writer.WriteObjectValue(NullValue);
+                writer.WritePropertyName("nullValue"u8);
+                writer.WriteObjectValue<object>(NullValue);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static DelimitedTextDataset DeserializeDelimitedTextDataset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> encodingName = default;
-            Optional<object> compressionCodec = default;
-            Optional<object> compressionLevel = default;
-            Optional<object> quoteChar = default;
-            Optional<object> escapeChar = default;
-            Optional<object> firstRowAsHeader = default;
-            Optional<object> nullValue = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            object columnDelimiter = default;
+            object rowDelimiter = default;
+            object encodingName = default;
+            object compressionCodec = default;
+            object compressionLevel = default;
+            object quoteChar = default;
+            object escapeChar = default;
+            object firstRowAsHeader = default;
+            object nullValue = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("structure"))
+                if (property.NameEquals("structure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     structure = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("schema"))
+                if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schema = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
@@ -199,32 +205,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,101 +244,91 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("columnDelimiter"))
+                        if (property0.NameEquals("columnDelimiter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             columnDelimiter = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("rowDelimiter"))
+                        if (property0.NameEquals("rowDelimiter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rowDelimiter = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("encodingName"))
+                        if (property0.NameEquals("encodingName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encodingName = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("compressionCodec"))
+                        if (property0.NameEquals("compressionCodec"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             compressionCodec = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("compressionLevel"))
+                        if (property0.NameEquals("compressionLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             compressionLevel = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("quoteChar"))
+                        if (property0.NameEquals("quoteChar"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quoteChar = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("escapeChar"))
+                        if (property0.NameEquals("escapeChar"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             escapeChar = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("firstRowAsHeader"))
+                        if (property0.NameEquals("firstRowAsHeader"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firstRowAsHeader = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("nullValue"))
+                        if (property0.NameEquals("nullValue"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nullValue = property0.Value.GetObject();
@@ -339,7 +340,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                additionalProperties,
+                location,
+                columnDelimiter,
+                rowDelimiter,
+                encodingName,
+                compressionCodec,
+                compressionLevel,
+                quoteChar,
+                escapeChar,
+                firstRowAsHeader,
+                nullValue);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DelimitedTextDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDelimitedTextDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DelimitedTextDatasetConverter : JsonConverter<DelimitedTextDataset>
@@ -348,6 +384,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DelimitedTextDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

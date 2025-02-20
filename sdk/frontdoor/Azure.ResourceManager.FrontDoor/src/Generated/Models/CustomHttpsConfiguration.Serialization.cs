@@ -5,79 +5,132 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class CustomHttpsConfiguration : IUtf8JsonSerializable
+    public partial class CustomHttpsConfiguration : IUtf8JsonSerializable, IJsonModel<CustomHttpsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomHttpsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomHttpsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateSource");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
-            writer.WritePropertyName("protocolType");
+            writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            writer.WritePropertyName("minimumTlsVersion");
+            writer.WritePropertyName("minimumTlsVersion"u8);
             writer.WriteStringValue(MinimumTlsVersion.ToString());
-            writer.WritePropertyName("frontDoorCertificateSourceParameters");
+            writer.WritePropertyName("frontDoorCertificateSourceParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateType))
             {
-                writer.WritePropertyName("certificateType");
+                writer.WritePropertyName("certificateType"u8);
                 writer.WriteStringValue(CertificateType.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("keyVaultCertificateSourceParameters");
+            writer.WritePropertyName("keyVaultCertificateSourceParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Vault))
             {
-                writer.WritePropertyName("vault");
+                writer.WritePropertyName("vault"u8);
                 JsonSerializer.Serialize(writer, Vault);
             }
             if (Optional.IsDefined(SecretName))
             {
-                writer.WritePropertyName("secretName");
+                writer.WritePropertyName("secretName"u8);
                 writer.WriteStringValue(SecretName);
             }
             if (Optional.IsDefined(SecretVersion))
             {
-                writer.WritePropertyName("secretVersion");
+                writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static CustomHttpsConfiguration DeserializeCustomHttpsConfiguration(JsonElement element)
+        CustomHttpsConfiguration IJsonModel<CustomHttpsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomHttpsConfiguration(document.RootElement, options);
+        }
+
+        internal static CustomHttpsConfiguration DeserializeCustomHttpsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
-            Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
-            Optional<WritableSubResource> vault = default;
-            Optional<string> secretName = default;
-            Optional<string> secretVersion = default;
+            FrontDoorEndpointConnectionCertificateType? certificateType = default;
+            WritableSubResource vault = default;
+            string secretName = default;
+            string secretVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateSource"))
+                if (property.NameEquals("certificateSource"u8))
                 {
                     certificateSource = new FrontDoorCertificateSource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocolType"))
+                if (property.NameEquals("protocolType"u8))
                 {
                     protocolType = new FrontDoorTlsProtocolType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimumTlsVersion"))
+                if (property.NameEquals("minimumTlsVersion"u8))
                 {
                     minimumTlsVersion = new FrontDoorRequiredMinimumTlsVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("frontDoorCertificateSourceParameters"))
+                if (property.NameEquals("frontDoorCertificateSourceParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,11 +139,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("certificateType"))
+                        if (property0.NameEquals("certificateType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificateType = new FrontDoorEndpointConnectionCertificateType(property0.Value.GetString());
@@ -99,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
-                if (property.NameEquals("keyVaultCertificateSourceParameters"))
+                if (property.NameEquals("keyVaultCertificateSourceParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,22 +160,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("vault"))
+                        if (property0.NameEquals("vault"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("secretName"))
+                        if (property0.NameEquals("secretName"u8))
                         {
                             secretName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secretVersion"))
+                        if (property0.NameEquals("secretVersion"u8))
                         {
                             secretVersion = property0.Value.GetString();
                             continue;
@@ -131,8 +182,52 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomHttpsConfiguration(
+                certificateSource,
+                protocolType,
+                minimumTlsVersion,
+                certificateType,
+                vault,
+                secretName,
+                secretVersion,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomHttpsConfiguration IPersistableModel<CustomHttpsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomHttpsConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomHttpsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

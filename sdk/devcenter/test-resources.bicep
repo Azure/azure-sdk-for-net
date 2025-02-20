@@ -8,21 +8,22 @@ param testUserName string
 param projectAdminRoleDefinitionId string
 param deploymentEnvironmentsRoleDefinitionId string
 
-var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', baseName, resourceGroup().name)}'
+var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', '2022-11-11-preview', baseName, resourceGroup().name)}'
 
-var defaultProjectName = 'sdk-default-project'
-var defaultPoolName = 'sdk-default-pool'
-var defaultNetworkConnectionName = 'sdk-networkconnection-${uniqueString('networkConnection', baseName, resourceGroup().name)}'
-var defaultNetworkConnection2Name = 'sdk-networkconnection2-${uniqueString('networkConnection', baseName, resourceGroup().name)}'
-var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
+var defaultProjectName = 'sdk-project-${uniqueString('project', '2022-09-01-preview', baseName, resourceGroup().name)}'
+var defaultPoolName = 'sdk-pool-${uniqueString('pool', '2022-09-01-preview', baseName, resourceGroup().name)}'
+var defaultNetworkConnectionName = 'sdk-networkconnection-${uniqueString('networkConnection', '2022-09-01-preview', baseName, resourceGroup().name)}'
+var defaultNetworkConnection2Name = 'sdk-networkconnection2-${uniqueString('networkConnection', '2022-09-01-preview', baseName, resourceGroup().name)}'
+var defaultMarketplaceDefinition = 'sdk-devboxdefinition-${uniqueString('devboxdefinition', '2022-09-01-preview', baseName, resourceGroup().name)}'
 var defaultCatalogName = 'sdk-default-catalog'
-var defaultEnvironmentTypeName = 'sdk-default-environment-type'
-var devBoxSkuName = 'general_a_8c32gb_v1'
-var devBoxStorage = 'ssd_1024gb'
-var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
-var gitUri = 'https://github.com/Azure/fidalgoIntegrationTests.git'
+var defaultScheduleName = 'default'
+var defaultEnvironmentTypeName = 'sdk-environment-type-${uniqueString('environment-type', '2022-11-11-preview', baseName, resourceGroup().name)}'
+var devBoxSkuName = 'general_i_8c32gb256ssd_v2'
+var devBoxStorage = 'ssd_256gb'
+var marketplaceImageName = 'microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2'
+var gitUri = 'https://github.com/Azure/deployment-environments.git'
 
-resource devcenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
+resource devcenter 'Microsoft.DevCenter/devcenters@2022-11-11-preview' = {
   name: defaultDevCenterName
   location: resourceLocation
   identity: {
@@ -169,19 +170,33 @@ resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = 
     gitHub: {
       branch: 'main'
       secretIdentifier: catalogPatIdentifier
-      path: '/NewFormat'
+      path: '/Environments'
       uri: gitUri
     }
   }
 }
 
-resource environmentType 'Microsoft.DevCenter/devcenters/environmentTypes@2022-09-01-preview' = {
+resource schedule 'Microsoft.DevCenter/projects/pools/schedules@2023-01-01-preview' = {
+  name: '${project.name}/${defaultPoolName}/${defaultScheduleName}'
+  properties: {
+    type: 'StopDevBox'
+    frequency: 'Daily'
+    time: '19:00'
+    timeZone: 'America/Los_Angeles'
+    state: 'Enabled'
+  }
+  dependsOn: [
+    project, pool
+  ]
+}
+
+resource environmentType 'Microsoft.DevCenter/devcenters/environmentTypes@2022-11-11-preview' = {
   name: '${devcenter.name}/${defaultEnvironmentTypeName}'
   properties: {
   }
 }
 
-resource projectEnvironmentType 'Microsoft.DevCenter/projects/environmentTypes@2022-09-01-preview' = {
+resource projectEnvironmentType 'Microsoft.DevCenter/projects/environmentTypes@2022-11-11-preview' = {
   name: '${project.name}/${defaultEnvironmentTypeName}'
   identity: {
     type: 'UserAssigned'
@@ -196,20 +211,30 @@ resource projectEnvironmentType 'Microsoft.DevCenter/projects/environmentTypes@2
 }
 
 resource environmentRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(resourceGroup().id, projectAdminRoleDefinitionId, testUserOid)
+  name: guid(resourceGroup().id, project.name, deploymentEnvironmentsRoleDefinitionId, testUserOid)
   scope: project
   properties: {
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', projectAdminRoleDefinitionId)
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', deploymentEnvironmentsRoleDefinitionId)
     principalId: testUserOid
     principalType: 'User'
   }
 }
 
+resource devcenterRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+  name: guid(resourceGroup().id, devcenter.name, projectAdminRoleDefinitionId, testUserOid)
+  scope: devcenter
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', projectAdminRoleDefinitionId)
+    principalId: testUserOid
+    principalType: 'User'
+}
+}
+
 resource devBoxRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(resourceGroup().id, deploymentEnvironmentsRoleDefinitionId, testUserOid)
+  name: guid(resourceGroup().id, project.name, projectAdminRoleDefinitionId, testUserOid)
   scope: project
   properties: {
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', deploymentEnvironmentsRoleDefinitionId)
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', projectAdminRoleDefinitionId)
     principalId: testUserOid
     principalType: 'User'
 }
@@ -227,5 +252,6 @@ output DEFAULT_POOL_NAME string = defaultPoolName
 output DEFAULT_ENVIRONMENT_TYPE_NAME string = defaultEnvironmentTypeName
 output DEFAULT_CATALOG_NAME string = defaultCatalogName
 output DEVCENTER_TENANT_ID string = subscription().tenantId
+output DEVCENTER_ENDPOINT string = devcenter.properties.devCenterUri
 output STATIC_TEST_USER_ID string = testUserOid
 output DEFAULT_TEST_USER_NAME string = testUserName

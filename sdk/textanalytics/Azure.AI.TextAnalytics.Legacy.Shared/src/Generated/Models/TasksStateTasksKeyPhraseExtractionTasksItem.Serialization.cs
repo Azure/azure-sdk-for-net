@@ -7,8 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics.Legacy;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
@@ -16,39 +14,50 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     {
         internal static TasksStateTasksKeyPhraseExtractionTasksItem DeserializeTasksStateTasksKeyPhraseExtractionTasksItem(JsonElement element)
         {
-            Optional<KeyPhraseResult> results = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            KeyPhraseResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastUpdateDateTime"))
+                if (property.NameEquals("lastUpdateDateTime"u8))
                 {
                     lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("taskName"))
+                if (property.NameEquals("taskName"u8))
                 {
                     taskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToState();
                     continue;
                 }
             }
-            return new TasksStateTasksKeyPhraseExtractionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new TasksStateTasksKeyPhraseExtractionTasksItem(lastUpdateDateTime, taskName, status, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TasksStateTasksKeyPhraseExtractionTasksItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTasksStateTasksKeyPhraseExtractionTasksItem(document.RootElement);
         }
     }
 }

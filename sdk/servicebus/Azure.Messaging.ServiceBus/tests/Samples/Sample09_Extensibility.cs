@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Plugins;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
@@ -18,12 +19,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:End2EndPluginReceiver
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
                 string queueName = scope.QueueName;
 #endif
                 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
@@ -91,12 +92,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
                 string queueName = scope.QueueName;
 #endif
                 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
@@ -123,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 });
 
                 await sender.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                await using ServiceBusReceiver receiver = await client.AccextNextSessionPluginAsync(queueName, new List<Func<ServiceBusReceivedMessage, Task>>()
+                await using ServiceBusReceiver receiver = await client.AcceptNextSessionPluginAsync(queueName, new List<Func<ServiceBusReceivedMessage, Task>>()
                 {
                     message =>
                     {
@@ -165,12 +166,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:End2EndPluginProcessor
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
                 string queueName = scope.QueueName;
 #endif
                 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
@@ -263,12 +264,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:End2EndPluginSessionProcessor
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
                 string queueName = scope.QueueName;
 #endif
                 await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()

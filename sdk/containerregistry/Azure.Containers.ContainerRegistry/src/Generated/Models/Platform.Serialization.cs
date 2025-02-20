@@ -7,88 +7,44 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class Platform : IUtf8JsonSerializable
+    internal partial class Platform
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Architecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
-            }
-            if (Optional.IsDefined(Os))
-            {
-                writer.WritePropertyName("os");
-                writer.WriteStringValue(Os);
-            }
-            if (Optional.IsDefined(OsVersion))
-            {
-                writer.WritePropertyName("os.version");
-                writer.WriteStringValue(OsVersion);
-            }
-            if (Optional.IsCollectionDefined(OsFeatures))
-            {
-                writer.WritePropertyName("os.features");
-                writer.WriteStartArray();
-                foreach (var item in OsFeatures)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Variant))
-            {
-                writer.WritePropertyName("variant");
-                writer.WriteStringValue(Variant);
-            }
-            if (Optional.IsCollectionDefined(Features))
-            {
-                writer.WritePropertyName("features");
-                writer.WriteStartArray();
-                foreach (var item in Features)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static Platform DeserializePlatform(JsonElement element)
         {
-            Optional<string> architecture = default;
-            Optional<string> os = default;
-            Optional<string> osVersion = default;
-            Optional<IList<string>> osFeatures = default;
-            Optional<string> variant = default;
-            Optional<IList<string>> features = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string architecture = default;
+            string os = default;
+            string osVersion = default;
+            IReadOnlyList<string> osFeatures = default;
+            string variant = default;
+            IReadOnlyList<string> features = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     architecture = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     os = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os.version"))
+                if (property.NameEquals("os.version"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os.features"))
+                if (property.NameEquals("os.features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -99,16 +55,15 @@ namespace Azure.Containers.ContainerRegistry
                     osFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("variant"))
+                if (property.NameEquals("variant"u8))
                 {
                     variant = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("features"))
+                if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -120,7 +75,21 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Platform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
+            return new Platform(
+                architecture,
+                os,
+                osVersion,
+                osFeatures ?? new ChangeTrackingList<string>(),
+                variant,
+                features ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Platform FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePlatform(document.RootElement);
         }
     }
 }

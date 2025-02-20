@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseMaintenanceWindow along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseMaintenanceWindowResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseMaintenanceWindowResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseMaintenanceWindow method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseMaintenanceWindowResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseMaintenanceWindowResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseMaintenanceWindow method.
     /// </summary>
     public partial class SynapseMaintenanceWindowResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseMaintenanceWindowResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/maintenancewindows/current";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolMaintenanceWindowsRestOperations _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient;
         private readonly SynapseMaintenanceWindowData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/maintenancewindows";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseMaintenanceWindowResource"/> class for mocking. </summary>
         protected SynapseMaintenanceWindowResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseMaintenanceWindowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseMaintenanceWindowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseMaintenanceWindowResource(ArmClient client, SynapseMaintenanceWindowData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/maintenancewindows";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s Maintenance Windows.
+        /// Get a SQL pool's Maintenance Windows.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,6 +98,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s Maintenance Windows.
+        /// Get a SQL pool's Maintenance Windows.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,6 +142,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +177,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates a Sql pool&apos;s maintenance windows settings.
+        /// Creates or updates a Sql pool's maintenance windows settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,6 +186,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +212,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(response);
+                var uri = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -199,7 +227,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates a Sql pool&apos;s maintenance windows settings.
+        /// Creates or updates a Sql pool's maintenance windows settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -208,6 +236,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +262,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data, cancellationToken);
-                var operation = new SynapseArmOperation(response);
+                var uri = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

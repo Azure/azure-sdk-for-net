@@ -5,57 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class EncryptionSettingsElement : IUtf8JsonSerializable
+    public partial class EncryptionSettingsElement : IUtf8JsonSerializable, IJsonModel<EncryptionSettingsElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionSettingsElement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EncryptionSettingsElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionKey))
-            {
-                writer.WritePropertyName("diskEncryptionKey");
-                writer.WriteObjectValue(DiskEncryptionKey);
-            }
-            if (Optional.IsDefined(KeyEncryptionKey))
-            {
-                writer.WritePropertyName("keyEncryptionKey");
-                writer.WriteObjectValue(KeyEncryptionKey);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static EncryptionSettingsElement DeserializeEncryptionSettingsElement(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
-            Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
-            foreach (var property in element.EnumerateObject())
+            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsElement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("diskEncryptionKey"))
+                throw new FormatException($"The model {nameof(EncryptionSettingsElement)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(DiskEncryptionKey))
+            {
+                writer.WritePropertyName("diskEncryptionKey"u8);
+                writer.WriteObjectValue(DiskEncryptionKey, options);
+            }
+            if (Optional.IsDefined(KeyEncryptionKey))
+            {
+                writer.WritePropertyName("keyEncryptionKey"u8);
+                writer.WriteObjectValue(KeyEncryptionKey, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("keyEncryptionKey"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new EncryptionSettingsElement(diskEncryptionKey.Value, keyEncryptionKey.Value);
         }
+
+        EncryptionSettingsElement IJsonModel<EncryptionSettingsElement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsElement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EncryptionSettingsElement)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncryptionSettingsElement(document.RootElement, options);
+        }
+
+        internal static EncryptionSettingsElement DeserializeEncryptionSettingsElement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            KeyVaultAndSecretReference diskEncryptionKey = default;
+            KeyVaultAndKeyReference keyEncryptionKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("diskEncryptionKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("keyEncryptionKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EncryptionSettingsElement(diskEncryptionKey, keyEncryptionKey, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EncryptionSettingsElement>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsElement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EncryptionSettingsElement)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EncryptionSettingsElement IPersistableModel<EncryptionSettingsElement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsElement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEncryptionSettingsElement(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EncryptionSettingsElement)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EncryptionSettingsElement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

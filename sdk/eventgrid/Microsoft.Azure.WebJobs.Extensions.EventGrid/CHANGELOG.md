@@ -1,6 +1,6 @@
 # Release History
 
-## 3.3.0-beta.1 (Unreleased)
+## 3.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.4.3 (2024-11-19)
+
+### Bugs Fixed
+
+- Return correct `WebHook-Allowed-Origin` response header for CloudEvent schema subscriptions for gov cloud.
+- Prevent DateTime values from being translated by NewtonSoft when parsing payloads. They are now treated as strings.
+
+## 3.4.2 (2024-07-30)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-m5vv-6r4h-3vj9), updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`.
+
+## 3.4.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`.
+
+## 3.3.1 (2023-11-13)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.Identity`.
+
+## 3.3.0 (2023-06-14)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Andrew Williamson  _([GitHub](https://github.com/andrewjw1995))_
+
+### Features Added
+
+- Added the ability to use Active Directory authentication when using the `EventGrid` output binding. _(A community contribution, courtesy of [andrewjw1995](https://github.com/andrewjw1995))_
 
 ## 3.2.1 (2022-09-08)
 

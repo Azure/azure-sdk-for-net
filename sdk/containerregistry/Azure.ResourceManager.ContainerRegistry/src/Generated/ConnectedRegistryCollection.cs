@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectedRegistryResource" /> and their operations.
-    /// Each <see cref="ConnectedRegistryResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
-    /// To get a <see cref="ConnectedRegistryCollection" /> instance call the GetConnectedRegistries method from an instance of <see cref="ContainerRegistryResource" />.
+    /// A class representing a collection of <see cref="ConnectedRegistryResource"/> and their operations.
+    /// Each <see cref="ConnectedRegistryResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
+    /// To get a <see cref="ConnectedRegistryCollection"/> instance call the GetConnectedRegistries method from an instance of <see cref="ContainerRegistryResource"/>.
     /// </summary>
     public partial class ConnectedRegistryCollection : ArmCollection, IEnumerable<ConnectedRegistryResource>, IAsyncEnumerable<ConnectedRegistryResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _connectedRegistryRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +111,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _connectedRegistryRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +159,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +205,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
@@ -219,16 +250,24 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectedRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedRegistryResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedRegistryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedRegistryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,16 +281,24 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectedRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectedRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedRegistryResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedRegistryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedRegistryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +311,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +355,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ConnectedRegistries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
@@ -316,6 +379,96 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 var response = _connectedRegistryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectedRegistryName"> The name of the connected registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConnectedRegistryResource>> GetIfExistsAsync(string connectedRegistryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
+
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _connectedRegistryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectedRegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectedRegistryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectedRegistryName"> The name of the connected registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
+        public virtual NullableResponse<ConnectedRegistryResource> GetIfExists(string connectedRegistryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
+
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _connectedRegistryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectedRegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectedRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

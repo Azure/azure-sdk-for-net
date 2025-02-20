@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformGatewayProvisioningState left, AppPlatformGatewayProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformGatewayProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformGatewayProvisioningState left, AppPlatformGatewayProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformGatewayProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformGatewayProvisioningState"/>. </summary>
         public static implicit operator AppPlatformGatewayProvisioningState(string value) => new AppPlatformGatewayProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -15,15 +14,18 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static ShortCodes DeserializeShortCodes(JsonElement element)
         {
-            Optional<IReadOnlyList<ShortCode>> shortCodes = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<ShortCode> shortCodes = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shortCodes"))
+                if (property.NameEquals("shortCodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ShortCode> array = new List<ShortCode>();
@@ -34,13 +36,21 @@ namespace Azure.Communication.ShortCodes.Models
                     shortCodes = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ShortCodes(Optional.ToList(shortCodes), nextLink.Value);
+            return new ShortCodes(shortCodes ?? new ChangeTrackingList<ShortCode>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ShortCodes FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShortCodes(document.RootElement);
         }
     }
 }

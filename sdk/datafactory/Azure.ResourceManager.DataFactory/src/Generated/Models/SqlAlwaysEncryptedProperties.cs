@@ -6,45 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sql always encrypted properties. </summary>
     public partial class SqlAlwaysEncryptedProperties
     {
-        /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
-        /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </param>
-        public SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType)
-        {
-            AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
-        }
-
-        /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
-        /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey">
-        /// The key of the service principal used to authenticate against Azure Key Vault.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, FactoryCredentialReference credential)
-        {
-            AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalKey = servicePrincipalKey;
-            Credential = credential;
-        }
-
-        /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
-        public SqlAlwaysEncryptedAkvAuthType AlwaysEncryptedAkvAuthType { get; set; }
         /// <summary>
-        /// The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -68,14 +44,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ServicePrincipalId { get; set; }
-        /// <summary>
-        /// The key of the service principal used to authenticate against Azure Key Vault.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/>. </summary>
+        /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
+        public SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType)
+        {
+            AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/>. </summary>
+        /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
+        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure Key Vault. </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
+            ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
+            Credential = credential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/> for deserialization. </summary>
+        internal SqlAlwaysEncryptedProperties()
+        {
+        }
+
+        /// <summary> Sql always encrypted AKV authentication type. Type: string. </summary>
+        public SqlAlwaysEncryptedAkvAuthType AlwaysEncryptedAkvAuthType { get; set; }
+        /// <summary> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ServicePrincipalId { get; set; }
+        /// <summary> The key of the service principal used to authenticate against Azure Key Vault. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        public FactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

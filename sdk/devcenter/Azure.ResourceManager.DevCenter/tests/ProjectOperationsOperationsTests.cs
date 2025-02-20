@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<ResourceGroupResource> rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ResourceGroup, new ResourceGroupData(TestEnvironment.Location)).ConfigureAwait(false);
             ResourceGroupResource rg = rgResponse.Value;
 
-            ProjectCollection resourceCollection = rg.GetProjects();
+            DevCenterProjectCollection resourceCollection = rg.GetDevCenterProjects();
 
             string projectName = "sdktest-project";
 
             // Create a Project resource
 
-            var projectData = new ProjectData(TestEnvironment.Location)
+            var projectData = new DevCenterProjectData(TestEnvironment.Location)
             {
-                DevCenterId = TestEnvironment.DefaultDevCenterId,
+                DevCenterId = new Core.ResourceIdentifier(TestEnvironment.DefaultDevCenterId),
             };
 
-            ProjectResource createdResource
+            DevCenterProjectResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List Projects
-            List<ProjectResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterProjectResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<ProjectResource> retrievedProject = await resourceCollection.GetAsync(projectName);
+            Response<DevCenterProjectResource> retrievedProject = await resourceCollection.GetAsync(projectName);
             Assert.NotNull(retrievedProject.Value);
             Assert.NotNull(retrievedProject.Value.Data);
 

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The type of execution parameter. </summary>
+    /// <summary> script execution parameter type. </summary>
     internal readonly partial struct ScriptExecutionParameterType : IEquatable<ScriptExecutionParameterType>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(ScriptExecutionParameterType left, ScriptExecutionParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptExecutionParameterType"/> values are not the same. </summary>
         public static bool operator !=(ScriptExecutionParameterType left, ScriptExecutionParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptExecutionParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptExecutionParameterType"/>. </summary>
         public static implicit operator ScriptExecutionParameterType(string value) => new ScriptExecutionParameterType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

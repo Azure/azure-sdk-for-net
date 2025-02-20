@@ -6,43 +6,87 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The container settings for a task. </summary>
     public partial class BatchTaskContainerSettings
     {
-        /// <summary> Initializes a new instance of BatchTaskContainerSettings. </summary>
-        /// <param name="imageName"> This is the full image reference, as would be specified to &quot;docker pull&quot;. If no tag is provided as part of the image name, the tag &quot;:latest&quot; is used as a default. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
+        /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public BatchTaskContainerSettings(string imageName)
         {
             Argument.AssertNotNull(imageName, nameof(imageName));
 
             ImageName = imageName;
+            ContainerHostBatchBindMounts = new ChangeTrackingList<ContainerHostBatchBindMountEntry>();
         }
 
-        /// <summary> Initializes a new instance of BatchTaskContainerSettings. </summary>
-        /// <param name="containerRunOptions"> These additional options are supplied as arguments to the &quot;docker create&quot; command, in addition to those controlled by the Batch Service. </param>
-        /// <param name="imageName"> This is the full image reference, as would be specified to &quot;docker pull&quot;. If no tag is provided as part of the image name, the tag &quot;:latest&quot; is used as a default. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
+        /// <param name="containerRunOptions"> These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </param>
+        /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <param name="registry"> This setting can be omitted if was already provided at pool creation. </param>
-        /// <param name="workingDirectory"> A flag to indicate where the container task working directory is. The default is &apos;taskWorkingDirectory&apos;. </param>
-        internal BatchTaskContainerSettings(string containerRunOptions, string imageName, BatchVmContainerRegistry registry, BatchContainerWorkingDirectory? workingDirectory)
+        /// <param name="workingDirectory"> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </param>
+        /// <param name="containerHostBatchBindMounts"> If this array is null or be not present, container task will mount entire temporary disk drive in windows (or AZ_BATCH_NODE_ROOT_DIR in Linux). It won't' mount any data paths into container if this array is set as empty. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchTaskContainerSettings(string containerRunOptions, string imageName, BatchVmContainerRegistry registry, BatchContainerWorkingDirectory? workingDirectory, IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerRunOptions = containerRunOptions;
             ImageName = imageName;
             Registry = registry;
             WorkingDirectory = workingDirectory;
+            ContainerHostBatchBindMounts = containerHostBatchBindMounts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> These additional options are supplied as arguments to the &quot;docker create&quot; command, in addition to those controlled by the Batch Service. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/> for deserialization. </summary>
+        internal BatchTaskContainerSettings()
+        {
+        }
+
+        /// <summary> These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </summary>
         public string ContainerRunOptions { get; set; }
-        /// <summary> This is the full image reference, as would be specified to &quot;docker pull&quot;. If no tag is provided as part of the image name, the tag &quot;:latest&quot; is used as a default. </summary>
+        /// <summary> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </summary>
         public string ImageName { get; set; }
         /// <summary> This setting can be omitted if was already provided at pool creation. </summary>
         public BatchVmContainerRegistry Registry { get; set; }
-        /// <summary> A flag to indicate where the container task working directory is. The default is &apos;taskWorkingDirectory&apos;. </summary>
+        /// <summary> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </summary>
         public BatchContainerWorkingDirectory? WorkingDirectory { get; set; }
+        /// <summary> If this array is null or be not present, container task will mount entire temporary disk drive in windows (or AZ_BATCH_NODE_ROOT_DIR in Linux). It won't' mount any data paths into container if this array is set as empty. </summary>
+        public IList<ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts { get; }
     }
 }

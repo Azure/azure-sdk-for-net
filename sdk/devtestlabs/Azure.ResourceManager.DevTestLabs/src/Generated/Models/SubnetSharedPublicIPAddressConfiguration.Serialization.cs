@@ -5,52 +5,139 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class SubnetSharedPublicIPAddressConfiguration : IUtf8JsonSerializable
+    internal partial class SubnetSharedPublicIPAddressConfiguration : IUtf8JsonSerializable, IJsonModel<SubnetSharedPublicIPAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetSharedPublicIPAddressConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SubnetSharedPublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedPorts))
-            {
-                writer.WritePropertyName("allowedPorts");
-                writer.WriteStartArray();
-                foreach (var item in AllowedPorts)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SubnetSharedPublicIPAddressConfiguration DeserializeSubnetSharedPublicIPAddressConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IList<DevTestLabPort>> allowedPorts = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetSharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedPorts))
+            {
+                writer.WritePropertyName("allowedPorts"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedPorts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        SubnetSharedPublicIPAddressConfiguration IJsonModel<SubnetSharedPublicIPAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetSharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnetSharedPublicIPAddressConfiguration(document.RootElement, options);
+        }
+
+        internal static SubnetSharedPublicIPAddressConfiguration DeserializeSubnetSharedPublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<DevTestLabPort> allowedPorts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedPorts"))
+                if (property.NameEquals("allowedPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DevTestLabPort> array = new List<DevTestLabPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item));
+                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item, options));
                     }
                     allowedPorts = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubnetSharedPublicIPAddressConfiguration(Optional.ToList(allowedPorts));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubnetSharedPublicIPAddressConfiguration(allowedPorts ?? new ChangeTrackingList<DevTestLabPort>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubnetSharedPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetSharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubnetSharedPublicIPAddressConfiguration IPersistableModel<SubnetSharedPublicIPAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetSharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubnetSharedPublicIPAddressConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubnetSharedPublicIPAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

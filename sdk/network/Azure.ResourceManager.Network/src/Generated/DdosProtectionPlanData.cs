@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -15,17 +14,53 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the DdosProtectionPlan data model. </summary>
+    /// <summary>
+    /// A class representing the DdosProtectionPlan data model.
+    /// A DDoS protection plan in a resource group.
+    /// </summary>
     public partial class DdosProtectionPlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DdosProtectionPlanData(AzureLocation location) : base(location)
         {
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
             VirtualNetworks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +70,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
+        /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
-        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> virtualNetworks) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IReadOnlyList<WritableSubResource> virtualNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            PublicIPAddresses = publicIPAddresses;
             VirtualNetworks = virtualNetworks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/> for deserialization. </summary>
+        internal DdosProtectionPlanData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -50,6 +94,8 @@ namespace Azure.ResourceManager.Network
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the DDoS protection plan resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </summary>
+        public IReadOnlyList<WritableSubResource> PublicIPAddresses { get; }
         /// <summary> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </summary>
         public IReadOnlyList<WritableSubResource> VirtualNetworks { get; }
     }

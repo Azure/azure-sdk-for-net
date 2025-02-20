@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -16,45 +15,48 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             SentenceSentimentValue sentiment = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            IReadOnlyList<SentenceTarget> targets = default;
+            IReadOnlyList<SentenceAssessment> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sentiment"))
+                if (property.NameEquals("sentiment"u8))
                 {
                     sentiment = property.Value.GetString().ToSentenceSentimentValue();
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     confidenceScores = SentimentConfidenceScorePerLabel.DeserializeSentimentConfidenceScorePerLabel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SentenceTarget> array = new List<SentenceTarget>();
@@ -65,11 +67,10 @@ namespace Azure.AI.TextAnalytics.Legacy
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("assessments"))
+                if (property.NameEquals("assessments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SentenceAssessment> array = new List<SentenceAssessment>();
@@ -81,7 +82,22 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new SentenceSentiment(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
+            return new SentenceSentiment(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SentenceSentiment FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentenceSentiment(document.RootElement);
         }
     }
 }

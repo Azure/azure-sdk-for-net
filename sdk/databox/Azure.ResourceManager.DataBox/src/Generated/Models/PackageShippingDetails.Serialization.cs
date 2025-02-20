@@ -6,42 +6,150 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class PackageShippingDetails
+    public partial class PackageShippingDetails : IUtf8JsonSerializable, IJsonModel<PackageShippingDetails>
     {
-        internal static PackageShippingDetails DeserializePackageShippingDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PackageShippingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PackageShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<Uri> trackingUrl = default;
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(TrackingUri))
+            {
+                writer.WritePropertyName("trackingUrl"u8);
+                writer.WriteStringValue(TrackingUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CarrierName))
+            {
+                writer.WritePropertyName("carrierName"u8);
+                writer.WriteStringValue(CarrierName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
+            {
+                writer.WritePropertyName("trackingId"u8);
+                writer.WriteStringValue(TrackingId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        PackageShippingDetails IJsonModel<PackageShippingDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePackageShippingDetails(document.RootElement, options);
+        }
+
+        internal static PackageShippingDetails DeserializePackageShippingDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri trackingUrl = default;
+            string carrierName = default;
+            string trackingId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackingUrl"))
+                if (property.NameEquals("trackingUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        trackingUrl = null;
                         continue;
                     }
                     trackingUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("carrierName"))
+                if (property.NameEquals("carrierName"u8))
                 {
                     carrierName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingId"))
+                if (property.NameEquals("trackingId"u8))
                 {
                     trackingId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PackageShippingDetails(trackingUrl.Value, carrierName.Value, trackingId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PackageShippingDetails(trackingUrl, carrierName, trackingId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PackageShippingDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PackageShippingDetails IPersistableModel<PackageShippingDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePackageShippingDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PackageShippingDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

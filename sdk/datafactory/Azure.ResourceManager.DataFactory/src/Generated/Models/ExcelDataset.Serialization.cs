@@ -6,130 +6,72 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExcelDataset : IUtf8JsonSerializable
+    public partial class ExcelDataset : IUtf8JsonSerializable, IJsonModel<ExcelDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExcelDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExcelDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(DatasetType);
-            if (Optional.IsDefined(Description))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
+                throw new FormatException($"The model {nameof(ExcelDataset)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Structure))
-            {
-                writer.WritePropertyName("structure");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(Schema))
-            {
-                writer.WritePropertyName("schema");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
-            }
-            writer.WritePropertyName("linkedServiceName");
-            writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters");
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations");
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Folder))
-            {
-                writer.WritePropertyName("folder");
-                writer.WriteObjectValue(Folder);
-            }
-            writer.WritePropertyName("typeProperties");
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLocation))
             {
-                writer.WritePropertyName("location");
-                writer.WriteObjectValue(DataLocation);
+                writer.WritePropertyName("location"u8);
+                writer.WriteObjectValue(DataLocation, options);
             }
             if (Optional.IsDefined(SheetName))
             {
-                writer.WritePropertyName("sheetName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SheetName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SheetName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sheetName"u8);
+                JsonSerializer.Serialize(writer, SheetName);
             }
             if (Optional.IsDefined(SheetIndex))
             {
-                writer.WritePropertyName("sheetIndex");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SheetIndex);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SheetIndex.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sheetIndex"u8);
+                JsonSerializer.Serialize(writer, SheetIndex);
             }
             if (Optional.IsDefined(Range))
             {
-                writer.WritePropertyName("range");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Range);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Range.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("range"u8);
+                JsonSerializer.Serialize(writer, Range);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FirstRowAsHeader);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowAsHeader.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("firstRowAsHeader"u8);
+                JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
             if (Optional.IsDefined(Compression))
             {
-                writer.WritePropertyName("compression");
-                writer.WriteObjectValue(Compression);
+                writer.WritePropertyName("compression"u8);
+                writer.WriteObjectValue(Compression, options);
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NullValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NullValue.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("nullValue"u8);
+                JsonSerializer.Serialize(writer, NullValue);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -138,109 +80,131 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static ExcelDataset DeserializeExcelDataset(JsonElement element)
+        ExcelDataset IJsonModel<ExcelDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExcelDataset)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExcelDataset(document.RootElement, options);
+        }
+
+        internal static ExcelDataset DeserializeExcelDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
-            Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<BinaryData> sheetName = default;
-            Optional<BinaryData> sheetIndex = default;
-            Optional<BinaryData> range = default;
-            Optional<BinaryData> firstRowAsHeader = default;
-            Optional<DatasetCompression> compression = default;
-            Optional<BinaryData> nullValue = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            DataFactoryElement<string> sheetName = default;
+            DataFactoryElement<int> sheetIndex = default;
+            DataFactoryElement<string> range = default;
+            DataFactoryElement<bool> firstRowAsHeader = default;
+            DatasetCompression compression = default;
+            DataFactoryElement<string> nullValue = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("structure"))
+                if (property.NameEquals("structure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("schema"))
+                if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
+                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,74 +213,67 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
+                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("sheetName"))
+                        if (property0.NameEquals("sheetName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sheetName = BinaryData.FromString(property0.Value.GetRawText());
+                            sheetName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("sheetIndex"))
+                        if (property0.NameEquals("sheetIndex"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sheetIndex = BinaryData.FromString(property0.Value.GetRawText());
+                            sheetIndex = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("range"))
+                        if (property0.NameEquals("range"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            range = BinaryData.FromString(property0.Value.GetRawText());
+                            range = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("firstRowAsHeader"))
+                        if (property0.NameEquals("firstRowAsHeader"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firstRowAsHeader = BinaryData.FromString(property0.Value.GetRawText());
+                            firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("compression"))
+                        if (property0.NameEquals("compression"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compression = DatasetCompression.DeserializeDatasetCompression(property0.Value);
+                            compression = DatasetCompression.DeserializeDatasetCompression(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("nullValue"))
+                        if (property0.NameEquals("nullValue"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            nullValue = BinaryData.FromString(property0.Value.GetRawText());
+                            nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -325,7 +282,54 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExcelDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, sheetName.Value, sheetIndex.Value, range.Value, firstRowAsHeader.Value, compression.Value, nullValue.Value);
+            return new ExcelDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                additionalProperties,
+                location,
+                sheetName,
+                sheetIndex,
+                range,
+                firstRowAsHeader,
+                compression,
+                nullValue);
         }
+
+        BinaryData IPersistableModel<ExcelDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExcelDataset)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExcelDataset IPersistableModel<ExcelDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExcelDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExcelDataset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExcelDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

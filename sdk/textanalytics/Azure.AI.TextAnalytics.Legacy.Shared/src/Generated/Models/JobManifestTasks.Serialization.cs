@@ -17,55 +17,63 @@ namespace Azure.AI.TextAnalytics.Legacy
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EntityRecognitionTasks))
             {
-                writer.WritePropertyName("entityRecognitionTasks");
+                writer.WritePropertyName("entityRecognitionTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EntitiesTask>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(EntityRecognitionPiiTasks))
             {
-                writer.WritePropertyName("entityRecognitionPiiTasks");
+                writer.WritePropertyName("entityRecognitionPiiTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionPiiTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PiiTask>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(KeyPhraseExtractionTasks))
             {
-                writer.WritePropertyName("keyPhraseExtractionTasks");
+                writer.WritePropertyName("keyPhraseExtractionTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeyPhraseExtractionTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyPhrasesTask>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(EntityLinkingTasks))
             {
-                writer.WritePropertyName("entityLinkingTasks");
+                writer.WritePropertyName("entityLinkingTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in EntityLinkingTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EntityLinkingTask>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(SentimentAnalysisTasks))
             {
-                writer.WritePropertyName("sentimentAnalysisTasks");
+                writer.WritePropertyName("sentimentAnalysisTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in SentimentAnalysisTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentimentAnalysisTask>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

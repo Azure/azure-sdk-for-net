@@ -6,73 +6,178 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorAzureFunctionReceiver : IUtf8JsonSerializable
+    public partial class MonitorAzureFunctionReceiver : IUtf8JsonSerializable, IJsonModel<MonitorAzureFunctionReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorAzureFunctionReceiver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MonitorAzureFunctionReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("functionAppResourceId");
-            writer.WriteStringValue(FunctionAppResourceId);
-            writer.WritePropertyName("functionName");
-            writer.WriteStringValue(FunctionName);
-            writer.WritePropertyName("httpTriggerUrl");
-            writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
-            if (Optional.IsDefined(UseCommonAlertSchema))
-            {
-                writer.WritePropertyName("useCommonAlertSchema");
-                writer.WriteBooleanValue(UseCommonAlertSchema.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MonitorAzureFunctionReceiver DeserializeMonitorAzureFunctionReceiver(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAzureFunctionReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorAzureFunctionReceiver)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("functionAppResourceId"u8);
+            writer.WriteStringValue(FunctionAppResourceId);
+            writer.WritePropertyName("functionName"u8);
+            writer.WriteStringValue(FunctionName);
+            writer.WritePropertyName("httpTriggerUrl"u8);
+            writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
+            if (Optional.IsDefined(UseCommonAlertSchema))
+            {
+                writer.WritePropertyName("useCommonAlertSchema"u8);
+                writer.WriteBooleanValue(UseCommonAlertSchema.Value);
+            }
+            if (Optional.IsDefined(ManagedIdentity))
+            {
+                writer.WritePropertyName("managedIdentity"u8);
+                writer.WriteStringValue(ManagedIdentity);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MonitorAzureFunctionReceiver IJsonModel<MonitorAzureFunctionReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAzureFunctionReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorAzureFunctionReceiver)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorAzureFunctionReceiver(document.RootElement, options);
+        }
+
+        internal static MonitorAzureFunctionReceiver DeserializeMonitorAzureFunctionReceiver(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ResourceIdentifier functionAppResourceId = default;
             string functionName = default;
             Uri httpTriggerUrl = default;
-            Optional<bool> useCommonAlertSchema = default;
+            bool? useCommonAlertSchema = default;
+            string managedIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("functionAppResourceId"))
+                if (property.NameEquals("functionAppResourceId"u8))
                 {
                     functionAppResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("functionName"))
+                if (property.NameEquals("functionName"u8))
                 {
                     functionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpTriggerUrl"))
+                if (property.NameEquals("httpTriggerUrl"u8))
                 {
                     httpTriggerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useCommonAlertSchema"))
+                if (property.NameEquals("useCommonAlertSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("managedIdentity"u8))
+                {
+                    managedIdentity = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorAzureFunctionReceiver(name, functionAppResourceId, functionName, httpTriggerUrl, Optional.ToNullable(useCommonAlertSchema));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorAzureFunctionReceiver(
+                name,
+                functionAppResourceId,
+                functionName,
+                httpTriggerUrl,
+                useCommonAlertSchema,
+                managedIdentity,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorAzureFunctionReceiver>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAzureFunctionReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorAzureFunctionReceiver)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorAzureFunctionReceiver IPersistableModel<MonitorAzureFunctionReceiver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAzureFunctionReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorAzureFunctionReceiver(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorAzureFunctionReceiver)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorAzureFunctionReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

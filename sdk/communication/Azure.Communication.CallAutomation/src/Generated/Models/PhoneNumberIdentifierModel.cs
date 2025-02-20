@@ -6,15 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Communication.CallAutomation;
 
 namespace Azure.Communication
 {
-    /// <summary> The PhoneNumberIdentifierModel. </summary>
+    /// <summary> A phone number. </summary>
     internal partial class PhoneNumberIdentifierModel
     {
-        /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
-        /// <param name="value"></param>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
+        /// <param name="value"> The phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhoneNumberIdentifierModel(string value)
         {
@@ -23,7 +23,7 @@ namespace Azure.Communication
             Value = value;
         }
 
-        /// <summary> Gets or sets the value. </summary>
+        /// <summary> The phone number in E.164 format. </summary>
         public string Value { get; set; }
     }
 }

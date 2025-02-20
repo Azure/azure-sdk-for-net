@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,62 +16,79 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static KeyVaultCertificateNewVersionCreatedEventData DeserializeKeyVaultCertificateNewVersionCreatedEventData(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> vaultName = default;
-            Optional<string> objectType = default;
-            Optional<string> objectName = default;
-            Optional<string> version = default;
-            Optional<float> nbf = default;
-            Optional<float> exp = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string vaultName = default;
+            string objectType = default;
+            string objectName = default;
+            string version = default;
+            float? nbf = default;
+            float? exp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Id"))
+                if (property.NameEquals("Id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("VaultName"))
+                if (property.NameEquals("VaultName"u8))
                 {
                     vaultName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ObjectType"))
+                if (property.NameEquals("ObjectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ObjectName"))
+                if (property.NameEquals("ObjectName"u8))
                 {
                     objectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Version"))
+                if (property.NameEquals("Version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("NBF"))
+                if (property.NameEquals("NBF"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nbf = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("EXP"))
+                if (property.NameEquals("EXP"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exp = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new KeyVaultCertificateNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            return new KeyVaultCertificateNewVersionCreatedEventData(
+                id,
+                vaultName,
+                objectType,
+                objectName,
+                version,
+                nbf,
+                exp);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultCertificateNewVersionCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultCertificateNewVersionCreatedEventData(document.RootElement);
         }
 
         internal partial class KeyVaultCertificateNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultCertificateNewVersionCreatedEventData>
@@ -81,6 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override KeyVaultCertificateNewVersionCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

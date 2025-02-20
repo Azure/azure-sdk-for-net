@@ -5,130 +5,245 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingEndpoints : IUtf8JsonSerializable
+    public partial class RoutingEndpoints : IUtf8JsonSerializable, IJsonModel<RoutingEndpoints>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingEndpoints>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RoutingEndpoints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(ServiceBusQueues))
             {
-                writer.WritePropertyName("serviceBusQueues");
+                writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ServiceBusTopics))
             {
-                writer.WritePropertyName("serviceBusTopics");
+                writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
-                writer.WritePropertyName("eventHubs");
+                writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(StorageContainers))
             {
-                writer.WritePropertyName("storageContainers");
+                writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(CosmosDBSqlContainers))
+            {
+                writer.WritePropertyName("cosmosDBSqlContainers"u8);
+                writer.WriteStartArray();
+                foreach (var item in CosmosDBSqlContainers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element)
+        RoutingEndpoints IJsonModel<RoutingEndpoints>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<RoutingServiceBusQueueEndpointProperties>> serviceBusQueues = default;
-            Optional<IList<RoutingServiceBusTopicEndpointProperties>> serviceBusTopics = default;
-            Optional<IList<RoutingEventHubProperties>> eventHubs = default;
-            Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingEndpoints(document.RootElement, options);
+        }
+
+        internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default;
+            IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default;
+            IList<RoutingEventHubProperties> eventHubs = default;
+            IList<RoutingStorageContainerProperties> storageContainers = default;
+            IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceBusQueues"))
+                if (property.NameEquals("serviceBusQueues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoutingServiceBusQueueEndpointProperties> array = new List<RoutingServiceBusQueueEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item));
+                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item, options));
                     }
                     serviceBusQueues = array;
                     continue;
                 }
-                if (property.NameEquals("serviceBusTopics"))
+                if (property.NameEquals("serviceBusTopics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoutingServiceBusTopicEndpointProperties> array = new List<RoutingServiceBusTopicEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item));
+                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item, options));
                     }
                     serviceBusTopics = array;
                     continue;
                 }
-                if (property.NameEquals("eventHubs"))
+                if (property.NameEquals("eventHubs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoutingEventHubProperties> array = new List<RoutingEventHubProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item));
+                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item, options));
                     }
                     eventHubs = array;
                     continue;
                 }
-                if (property.NameEquals("storageContainers"))
+                if (property.NameEquals("storageContainers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoutingStorageContainerProperties> array = new List<RoutingStorageContainerProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item));
+                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item, options));
                     }
                     storageContainers = array;
                     continue;
                 }
+                if (property.NameEquals("cosmosDBSqlContainers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RoutingCosmosDBSqlApiProperties> array = new List<RoutingCosmosDBSqlApiProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item, options));
+                    }
+                    cosmosDBSqlContainers = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutingEndpoints(Optional.ToList(serviceBusQueues), Optional.ToList(serviceBusTopics), Optional.ToList(eventHubs), Optional.ToList(storageContainers));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoutingEndpoints(
+                serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>(),
+                serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>(),
+                eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(),
+                storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(),
+                cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoutingEndpoints>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoutingEndpoints IPersistableModel<RoutingEndpoints>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutingEndpoints(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutingEndpoints>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> The FrontDoorExperimentResourceGetTimeSeriesReportOptions. </summary>
     public partial class FrontDoorExperimentResourceGetTimeSeriesReportOptions
     {
-        /// <summary> Initializes a new instance of FrontDoorExperimentResourceGetTimeSeriesReportOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentResourceGetTimeSeriesReportOptions"/>. </summary>
         /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
         /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
         /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             TimeSeriesType = timeSeriesType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentResourceGetTimeSeriesReportOptions"/> for deserialization. </summary>
+        internal FrontDoorExperimentResourceGetTimeSeriesReportOptions()
+        {
+        }
+
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         public DateTimeOffset StartOn { get; }
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
@@ -34,9 +39,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The type of Timeseries. </summary>
         public FrontDoorTimeSeriesType TimeSeriesType { get; }
         /// <summary> The specific endpoint. </summary>
-        public string Endpoint { get; set; } = null;
-
+        public string Endpoint { get; set; }
         /// <summary> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
-        public string Country { get; set; } = null;
+        public string Country { get; set; }
     }
 }

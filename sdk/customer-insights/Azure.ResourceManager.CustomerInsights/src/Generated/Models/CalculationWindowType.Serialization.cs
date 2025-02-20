@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static CalculationWindowType ToCalculationWindowType(this string value)
         {
-            if (string.Equals(value, "Lifetime", StringComparison.InvariantCultureIgnoreCase)) return CalculationWindowType.Lifetime;
-            if (string.Equals(value, "Hour", StringComparison.InvariantCultureIgnoreCase)) return CalculationWindowType.Hour;
-            if (string.Equals(value, "Day", StringComparison.InvariantCultureIgnoreCase)) return CalculationWindowType.Day;
-            if (string.Equals(value, "Week", StringComparison.InvariantCultureIgnoreCase)) return CalculationWindowType.Week;
-            if (string.Equals(value, "Month", StringComparison.InvariantCultureIgnoreCase)) return CalculationWindowType.Month;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Lifetime")) return CalculationWindowType.Lifetime;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hour")) return CalculationWindowType.Hour;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Day")) return CalculationWindowType.Day;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Week")) return CalculationWindowType.Week;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Month")) return CalculationWindowType.Month;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CalculationWindowType value.");
         }
     }

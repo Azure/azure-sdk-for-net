@@ -15,31 +15,51 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("periodType");
+            writer.WritePropertyName("periodType"u8);
             writer.WriteStringValue(PeriodType.ToString());
-            writer.WritePropertyName("periodValue");
+            writer.WritePropertyName("periodValue"u8);
             writer.WriteNumberValue(PeriodValue);
             writer.WriteEndObject();
         }
 
         internal static PeriodFeedbackValue DeserializePeriodFeedbackValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MetricPeriodType periodType = default;
             int periodValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("periodType"))
+                if (property.NameEquals("periodType"u8))
                 {
                     periodType = new MetricPeriodType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("periodValue"))
+                if (property.NameEquals("periodValue"u8))
                 {
                     periodValue = property.Value.GetInt32();
                     continue;
                 }
             }
             return new PeriodFeedbackValue(periodType, periodValue);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PeriodFeedbackValue FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePeriodFeedbackValue(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

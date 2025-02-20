@@ -7,6 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
+using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
 {
@@ -15,14 +17,14 @@ namespace Azure.Maps.Routing
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(_GeoJsonSupportingPoints))
+            if (Common.Optional.IsDefined(_GeoJsonSupportingPoints))
             {
-                writer.WritePropertyName("supportingPoints");
-                writer.WriteObjectValue(_GeoJsonSupportingPoints);
+                writer.WritePropertyName("supportingPoints"u8);
+                writer.WriteObjectValue<GeoJsonGeometryCollection>(_GeoJsonSupportingPoints);
             }
-            if (Optional.IsCollectionDefined(AvoidVignette))
+            if (Common.Optional.IsCollectionDefined(AvoidVignette))
             {
-                writer.WritePropertyName("avoidVignette");
+                writer.WritePropertyName("avoidVignette"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvoidVignette)
                 {
@@ -30,9 +32,9 @@ namespace Azure.Maps.Routing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowVignette))
+            if (Common.Optional.IsCollectionDefined(AllowVignette))
             {
-                writer.WritePropertyName("allowVignette");
+                writer.WritePropertyName("allowVignette"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowVignette)
                 {
@@ -40,12 +42,20 @@ namespace Azure.Maps.Routing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(_GeoJsonAvoidAreas))
+            if (Common.Optional.IsDefined(_GeoJsonAvoidAreas))
             {
-                writer.WritePropertyName("avoidAreas");
-                writer.WriteObjectValue(_GeoJsonAvoidAreas);
+                writer.WritePropertyName("avoidAreas"u8);
+                writer.WriteObjectValue<GeoJsonMultiPolygon>(_GeoJsonAvoidAreas);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

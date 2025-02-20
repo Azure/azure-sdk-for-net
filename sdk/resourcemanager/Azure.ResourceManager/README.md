@@ -29,11 +29,11 @@ dotnet add package Azure.ResourceManager
 - Set up a way to authenticate to Azure with Azure Identity.
 
   Some options are:
-    - Through the [Azure CLI sign in](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
-    - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
+    - Through the [Azure CLI sign in](https://learn.microsoft.com/cli/azure/authenticate-azure-cli).
+    - Via [Visual Studio](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
     - Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
 
-    More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+    More information and different authentication approaches using Azure Identity can be found in [this document](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ### Authenticate the Client
 
@@ -41,21 +41,36 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following code:
 
-```C# Snippet:Readme_AuthClient
+```C# Snippet:Readme_AuthClient_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
-
-// Code omitted for brevity
-
+```
+```C# Snippet:Readme_AuthClient
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 
-More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+Note: if you want to authenticate with the azure in China, you can use the following code:
+```C# Snippet:Readme_AuthClientChina
+// Please replace the following placeholders with your Azure information
+string tenantId = "your-tenant-id";
+string clientId = "your-client-id";
+string clientSecret = "your-client-secret";
+string subscriptionId = "your-subscription-id";
+//ArmClientOptions to set the Azure China environment
+ArmClientOptions armOptions = new ArmClientOptions { Environment = ArmEnvironment.AzureChina };
+// AzureAuthorityHosts to set the Azure China environment
+Uri authorityHost = AzureAuthorityHosts.AzureChina;
+// Create ClientSecretCredential for authentication
+TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
+// Create the Azure Resource Manager client
+ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
+```
+
+More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
@@ -134,7 +149,7 @@ await foreach (VirtualMachineResource virtualMachine in virtualMachines)
 ```
 
 ## Structured Resource Identifier
-Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifer("myid");`.
+Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifier("myid");`.
 
 ### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
@@ -306,6 +321,148 @@ string resourceGroupName = "myRgName";
 ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
 await resourceGroup.DeleteAsync(WaitUntil.Completed);
 ```
+### Get GenericResource List
+```C# Snippet:Get_GenericResource_List
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource sub = client.GetDefaultSubscription();
+AsyncPageable<GenericResource> networkAndVmWithTestInName = sub.GetGenericResourcesAsync(
+    // Set filter to only return virtual network and virtual machine resource with 'test' in the name
+    filter: "(resourceType eq 'Microsoft.Network/virtualNetworks' or resourceType eq 'Microsoft.Compute/virtualMachines') and substringof('test', name)",
+    // Include 'createdTime' and 'changeTime' properties in the returned data
+    expand: "createdTime,changedTime"
+    );
+
+int count = 0;
+await foreach (var res in networkAndVmWithTestInName)
+{
+    Console.WriteLine($"{res.Id.Name} in resource group {res.Id.ResourceGroupName} created at {res.Data.CreatedOn} and changed at {res.Data.ChangedOn}");
+    count++;
+}
+Console.WriteLine($"{count} resources found");
+```
+### Create GenericResource
+```C# Snippet:Create_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+var subnetName = "samplesubnet";
+var addressSpaces = new Dictionary<string, object>()
+{
+    { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
+};
+var subnet = new Dictionary<string, object>()
+{
+    { "name", subnetName },
+    { "properties", new Dictionary<string, object>()
+        {
+            { "addressPrefix", "10.0.1.0/24" }
+        }
+    }
+};
+var subnets = new List<object>() { subnet };
+var data = new GenericResourceData(AzureLocation.EastUS)
+{
+    Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+    {
+        { "addressSpace", addressSpaces },
+        { "subnets", subnets }
+    })
+};
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+var createResult = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {createResult.Value.Id.ResourceGroupName} created");
+```
+### Update GenericResource
+```C# Snippet:Update_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+var subnetName = "samplesubnet";
+var addressSpaces = new Dictionary<string, object>()
+{
+    { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
+};
+var subnet = new Dictionary<string, object>()
+{
+    { "name", subnetName },
+    { "properties", new Dictionary<string, object>()
+        {
+            { "addressPrefix", "10.0.1.0/24" }
+        }
+    }
+};
+var subnets = new List<object>() { subnet };
+var data = new GenericResourceData(AzureLocation.EastUS)
+{
+    Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+    {
+        { "addressSpace", addressSpaces },
+        { "subnets", subnets }
+    })
+};
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+var createResult = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {createResult.Value.Id.ResourceGroupName} updated");
+```
+### Update GenericResource Tags
+```C# Snippet:Update_GenericResourc_Tags
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+GenericResource resource = client.GetGenericResources().Get(id).Value;
+
+GenericResourceData updateTag = new GenericResourceData(AzureLocation.EastUS);
+updateTag.Tags.Add("tag1", "sample-for-genericresource");
+ArmOperation<GenericResource> updateTagResult = await resource.UpdateAsync(WaitUntil.Completed, updateTag);
+
+Console.WriteLine($"Resource {updateTagResult.Value.Id.Name} in resource group {updateTagResult.Value.Id.ResourceGroupName} updated");
+```
+### Get GenericResource
+```C# Snippet:Get_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+Response<GenericResource> getResultFromGenericResourceCollection = await client.GetGenericResources().GetAsync(id);
+Console.WriteLine($"Resource {getResultFromGenericResourceCollection.Value.Id.Name} in resource group {getResultFromGenericResourceCollection.Value.Id.ResourceGroupName} got");
+
+GenericResource resource = getResultFromGenericResourceCollection.Value;
+Response<GenericResource> getResultFromGenericResource = await resource.GetAsync();
+Console.WriteLine($"Resource {getResultFromGenericResource.Value.Id.Name} in resource group {getResultFromGenericResource.Value.Id.ResourceGroupName} got");
+```
+### Check whether GenericResource exists
+```C# Snippet:Is_GenericResource_Exist
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+bool existResult = await client.GetGenericResources().ExistsAsync(id);
+Console.WriteLine($"Resource exists: {existResult}");
+```
+### Delete GenericResource
+```C# Snippet:Delete_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+GenericResource resource = client.GetGenericResources().Get(id).Value;
+
+var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
+Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");
+```
+
+### Rehydrate a long-running operation
+```C# Snippet:Readme_LRORehydration
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+// We initialize a long-running operation
+var rgOp = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Started, "orgName", orgData);
+// We get the rehydration token from the operation
+var rgOpRehydrationToken = rgOp.GetRehydrationToken();
+// We rehydrate the long-running operation with the rehydration token, we can also do this asynchronously
+var rehydratedOrgOperation = ArmOperation.Rehydrate<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+var rehydratedOrgOperationAsync = await ArmOperation.RehydrateAsync<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+// Now we can operate with the rehydrated operation
+var rawResponse = rehydratedOrgOperation.GetRawResponse();
+await rehydratedOrgOperation.WaitForCompletionAsync();
+```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
 
@@ -334,9 +491,9 @@ To run test with code coverage and auto generate an html report with just a sing
 ## Next steps
 ### More sample code
 
-- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample2_ManagingResourceGroups.md)
-- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample3_CreatingAVirtualNetwork.md)
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample2_ManagingResourceGroups.md)
+- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample3_CreatingAVirtualNetwork.md)
+- [.NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Other Documentation
 

@@ -7,26 +7,26 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices.Models;
+using NUnit.Framework;
 
-namespace Azure.ResourceManager.CognitiveServices
+namespace Azure.ResourceManager.CognitiveServices.Samples
 {
     public partial class Sample_CommitmentPlanResource
     {
-        // GetCommitmentPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2022-10-01/examples/GetCommitmentPlan.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetCommitmentPlan.json
             // this example is just showing the usage of "CommitmentPlans_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommitmentPlanResource created on azure
             // for more information of creating CommitmentPlanResource, please refer to the document of CommitmentPlanResource
@@ -47,16 +47,17 @@ namespace Azure.ResourceManager.CognitiveServices
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PutCommitmentPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PutCommitmentPlan()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2022-10-01/examples/PutCommitmentPlan.json
-            // this example is just showing the usage of "CommitmentPlans_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/DeleteCommitmentPlan.json
+            // this example is just showing the usage of "CommitmentPlans_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommitmentPlanResource created on azure
             // for more information of creating CommitmentPlanResource, please refer to the document of CommitmentPlanResource
@@ -68,13 +69,40 @@ namespace Azure.ResourceManager.CognitiveServices
             CommitmentPlanResource commitmentPlan = client.GetCommitmentPlanResource(commitmentPlanResourceId);
 
             // invoke the operation
-            CommitmentPlanData data = new CommitmentPlanData()
+            await commitmentPlan.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PutCommitmentPlan()
+        {
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutCommitmentPlan.json
+            // this example is just showing the usage of "CommitmentPlans_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommitmentPlanResource created on azure
+            // for more information of creating CommitmentPlanResource, please refer to the document of CommitmentPlanResource
+            string subscriptionId = "subscriptionId";
+            string resourceGroupName = "resourceGroupName";
+            string accountName = "accountName";
+            string commitmentPlanName = "commitmentPlanName";
+            ResourceIdentifier commitmentPlanResourceId = CommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, commitmentPlanName);
+            CommitmentPlanResource commitmentPlan = client.GetCommitmentPlanResource(commitmentPlanResourceId);
+
+            // invoke the operation
+            CommitmentPlanData data = new CommitmentPlanData
             {
-                Properties = new CommitmentPlanProperties()
+                Properties = new CommitmentPlanProperties
                 {
                     HostingModel = ServiceAccountHostingModel.Web,
                     PlanType = "Speech2Text",
-                    Current = new CommitmentPeriod()
+                    Current = new CommitmentPeriod
                     {
                         Tier = "T1",
                     },
@@ -89,32 +117,6 @@ namespace Azure.ResourceManager.CognitiveServices
             CommitmentPlanData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DeleteCommitmentPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteCommitmentPlan()
-        {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2022-10-01/examples/DeleteCommitmentPlan.json
-            // this example is just showing the usage of "CommitmentPlans_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
-
-            // this example assumes you already have this CommitmentPlanResource created on azure
-            // for more information of creating CommitmentPlanResource, please refer to the document of CommitmentPlanResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string accountName = "accountName";
-            string commitmentPlanName = "commitmentPlanName";
-            ResourceIdentifier commitmentPlanResourceId = CommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, commitmentPlanName);
-            CommitmentPlanResource commitmentPlan = client.GetCommitmentPlanResource(commitmentPlanResourceId);
-
-            // invoke the operation
-            await commitmentPlan.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

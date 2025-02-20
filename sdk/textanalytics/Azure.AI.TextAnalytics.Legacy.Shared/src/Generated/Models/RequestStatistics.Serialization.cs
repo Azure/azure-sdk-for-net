@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -14,34 +13,46 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static RequestStatistics DeserializeRequestStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int documentsCount = default;
             int validDocumentsCount = default;
             int erroneousDocumentsCount = default;
             long transactionsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documentsCount"))
+                if (property.NameEquals("documentsCount"u8))
                 {
                     documentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("validDocumentsCount"))
+                if (property.NameEquals("validDocumentsCount"u8))
                 {
                     validDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("erroneousDocumentsCount"))
+                if (property.NameEquals("erroneousDocumentsCount"u8))
                 {
                     erroneousDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionsCount"))
+                if (property.NameEquals("transactionsCount"u8))
                 {
                     transactionsCount = property.Value.GetInt64();
                     continue;
                 }
             }
             return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RequestStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRequestStatistics(document.RootElement);
         }
     }
 }

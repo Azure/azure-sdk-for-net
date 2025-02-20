@@ -6,33 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execution policy for an activity. </summary>
     public partial class RetryPolicy
     {
-        /// <summary> Initializes a new instance of RetryPolicy. </summary>
-        public RetryPolicy()
-        {
-        }
-
-        /// <summary> Initializes a new instance of RetryPolicy. </summary>
-        /// <param name="count"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="intervalInSeconds"> Interval between retries in seconds. Default is 30. </param>
-        internal RetryPolicy(BinaryData count, int? intervalInSeconds)
-        {
-            Count = count;
-            IntervalInSeconds = intervalInSeconds;
-        }
-
         /// <summary>
-        /// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -56,7 +44,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Count { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RetryPolicy"/>. </summary>
+        public RetryPolicy()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RetryPolicy"/>. </summary>
+        /// <param name="count"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="intervalInSeconds"> Interval between retries in seconds. Default is 30. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RetryPolicy(DataFactoryElement<int> count, int? intervalInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Count = count;
+            IntervalInSeconds = intervalInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        public DataFactoryElement<int> Count { get; set; }
         /// <summary> Interval between retries in seconds. Default is 30. </summary>
         public int? IntervalInSeconds { get; set; }
     }

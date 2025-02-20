@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountId, string billingProfileId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileRequest(string billingAccountId, string billingProfileId)
@@ -110,6 +122,21 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountRequest(string billingAccountId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -133,7 +160,7 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts. </summary>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -159,7 +186,7 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts. </summary>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -181,6 +208,23 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCustomerRequestUri(string billingAccountId, string customerId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/customers/", false);
+            uri.AppendPath(customerId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByCustomerRequest(string billingAccountId, string customerId, string filter)
@@ -209,7 +253,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Lists all Azure credits for a customer. The API is only supported for Microsoft Partner  Agreements (MPA) billing accounts. </summary>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="customerId"> Customer ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -237,7 +281,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Lists all Azure credits for a customer. The API is only supported for Microsoft Partner  Agreements (MPA) billing accounts. </summary>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="customerId"> Customer ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -260,6 +304,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountId, string billingProfileId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountId, string billingProfileId)
@@ -334,6 +386,14 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -351,7 +411,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -379,7 +439,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -404,6 +464,14 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByCustomerNextPageRequestUri(string nextLink, string billingAccountId, string customerId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByCustomerNextPageRequest(string nextLink, string billingAccountId, string customerId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -422,7 +490,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="customerId"> Customer ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountId"/> or <paramref name="customerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -452,7 +520,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="customerId"> Customer ID. </param>
-        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountId"/> or <paramref name="customerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>

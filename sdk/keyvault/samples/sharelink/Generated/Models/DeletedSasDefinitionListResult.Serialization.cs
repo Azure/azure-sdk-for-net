@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -15,15 +14,18 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static DeletedSasDefinitionListResult DeserializeDeletedSasDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedSasDefinitionItem>> value = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<DeletedSasDefinitionItem> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeletedSasDefinitionItem> array = new List<DeletedSasDefinitionItem>();
@@ -34,13 +36,21 @@ namespace Azure.Security.KeyVault.Storage.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeletedSasDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new DeletedSasDefinitionListResult(value ?? new ChangeTrackingList<DeletedSasDefinitionItem>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeletedSasDefinitionListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeletedSasDefinitionListResult(document.RootElement);
         }
     }
 }

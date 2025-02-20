@@ -5,55 +5,128 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpMemberOrganizationalInfo : IUtf8JsonSerializable
+    public partial class GcpMemberOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<GcpMemberOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpMemberOrganizationalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GcpMemberOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpMemberOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GcpMemberOrganizationalInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ParentHierarchyId))
             {
-                writer.WritePropertyName("parentHierarchyId");
+                writer.WritePropertyName("parentHierarchyId"u8);
                 writer.WriteStringValue(ParentHierarchyId);
             }
             if (Optional.IsDefined(ManagementProjectNumber))
             {
-                writer.WritePropertyName("managementProjectNumber");
+                writer.WritePropertyName("managementProjectNumber"u8);
                 writer.WriteStringValue(ManagementProjectNumber);
             }
-            writer.WritePropertyName("organizationMembershipType");
-            writer.WriteStringValue(OrganizationMembershipType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static GcpMemberOrganizationalInfo DeserializeGcpMemberOrganizationalInfo(JsonElement element)
+        GcpMemberOrganizationalInfo IJsonModel<GcpMemberOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> parentHierarchyId = default;
-            Optional<string> managementProjectNumber = default;
+            var format = options.Format == "W" ? ((IPersistableModel<GcpMemberOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GcpMemberOrganizationalInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpMemberOrganizationalInfo(document.RootElement, options);
+        }
+
+        internal static GcpMemberOrganizationalInfo DeserializeGcpMemberOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string parentHierarchyId = default;
+            string managementProjectNumber = default;
             OrganizationMembershipType organizationMembershipType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parentHierarchyId"))
+                if (property.NameEquals("parentHierarchyId"u8))
                 {
                     parentHierarchyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementProjectNumber"))
+                if (property.NameEquals("managementProjectNumber"u8))
                 {
                     managementProjectNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationMembershipType"))
+                if (property.NameEquals("organizationMembershipType"u8))
                 {
                     organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GcpMemberOrganizationalInfo(organizationMembershipType, parentHierarchyId.Value, managementProjectNumber.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GcpMemberOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId, managementProjectNumber);
         }
+
+        BinaryData IPersistableModel<GcpMemberOrganizationalInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpMemberOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GcpMemberOrganizationalInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GcpMemberOrganizationalInfo IPersistableModel<GcpMemberOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpMemberOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGcpMemberOrganizationalInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GcpMemberOrganizationalInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GcpMemberOrganizationalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,101 +6,241 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionEventSummary : IUtf8JsonSerializable
+    public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConsumptionEventSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag");
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
-            {
-                writer.WritePropertyName("eventType");
-                writer.WriteStringValue(EventType.Value.ToString());
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ETag> eTag = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
+            {
+                writer.WritePropertyName("transactionDate"u8);
+                writer.WriteStringValue(TransactOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewCredit))
+            {
+                writer.WritePropertyName("newCredit"u8);
+                writer.WriteObjectValue(NewCredit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
+            {
+                writer.WritePropertyName("adjustments"u8);
+                writer.WriteObjectValue(Adjustments, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditExpired))
+            {
+                writer.WritePropertyName("creditExpired"u8);
+                writer.WriteObjectValue(CreditExpired, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Charges))
+            {
+                writer.WritePropertyName("charges"u8);
+                writer.WriteObjectValue(Charges, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
+            {
+                writer.WritePropertyName("closedBalance"u8);
+                writer.WriteObjectValue(ClosedBalance, options);
+            }
+            if (Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceNumber))
+            {
+                writer.WritePropertyName("invoiceNumber"u8);
+                writer.WriteStringValue(InvoiceNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            {
+                writer.WritePropertyName("billingProfileId"u8);
+                writer.WriteStringValue(BillingProfileId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileDisplayName))
+            {
+                writer.WritePropertyName("billingProfileDisplayName"u8);
+                writer.WriteStringValue(BillingProfileDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LotId))
+            {
+                writer.WritePropertyName("lotId"u8);
+                writer.WriteStringValue(LotId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LotSource))
+            {
+                writer.WritePropertyName("lotSource"u8);
+                writer.WriteStringValue(LotSource);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
+            {
+                writer.WritePropertyName("canceledCredit"u8);
+                writer.WriteObjectValue(CanceledCredit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
+            {
+                writer.WritePropertyName("creditCurrency"u8);
+                writer.WriteStringValue(CreditCurrency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
+            {
+                writer.WritePropertyName("billingCurrency"u8);
+                writer.WriteStringValue(BillingCurrency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
+            {
+                writer.WritePropertyName("reseller"u8);
+                writer.WriteObjectValue(Reseller, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
+            {
+                writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
+                writer.WriteObjectValue(CreditExpiredInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
+            {
+                writer.WritePropertyName("newCreditInBillingCurrency"u8);
+                writer.WriteObjectValue(NewCreditInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
+            {
+                writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
+                writer.WriteObjectValue(AdjustmentsInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
+            {
+                writer.WritePropertyName("chargesInBillingCurrency"u8);
+                writer.WriteObjectValue(ChargesInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
+            {
+                writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
+                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionEventSummary IJsonModel<ConsumptionEventSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionEventSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> transactionDate = default;
-            Optional<string> description = default;
-            Optional<ConsumptionAmount> newCredit = default;
-            Optional<ConsumptionAmount> adjustments = default;
-            Optional<ConsumptionAmount> creditExpired = default;
-            Optional<ConsumptionAmount> charges = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionEventType> eventType = default;
-            Optional<string> invoiceNumber = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<ResourceIdentifier> lotId = default;
-            Optional<string> lotSource = default;
-            Optional<ConsumptionAmount> canceledCredit = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
-            Optional<ConsumptionAmountWithExchangeRate> creditExpiredInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> newCreditInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            SystemData systemData = default;
+            DateTimeOffset? transactionDate = default;
+            string description = default;
+            ConsumptionAmount newCredit = default;
+            ConsumptionAmount adjustments = default;
+            ConsumptionAmount creditExpired = default;
+            ConsumptionAmount charges = default;
+            ConsumptionAmount closedBalance = default;
+            ConsumptionEventType? eventType = default;
+            string invoiceNumber = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileDisplayName = default;
+            ResourceIdentifier lotId = default;
+            string lotSource = default;
+            ConsumptionAmount canceledCredit = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionReseller reseller = default;
+            ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,201 +249,249 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("transactionDate"))
+                        if (property0.NameEquals("transactionDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             transactionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("newCredit"))
+                        if (property0.NameEquals("newCredit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("adjustments"))
+                        if (property0.NameEquals("adjustments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("creditExpired"))
+                        if (property0.NameEquals("creditExpired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("charges"))
+                        if (property0.NameEquals("charges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("closedBalance"))
+                        if (property0.NameEquals("closedBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("eventType"))
+                        if (property0.NameEquals("eventType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventType = new ConsumptionEventType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("invoiceNumber"))
+                        if (property0.NameEquals("invoiceNumber"u8))
                         {
                             invoiceNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileId"))
+                        if (property0.NameEquals("billingProfileId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingProfileId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileDisplayName"))
+                        if (property0.NameEquals("billingProfileDisplayName"u8))
                         {
                             billingProfileDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lotId"))
+                        if (property0.NameEquals("lotId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lotId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lotSource"))
+                        if (property0.NameEquals("lotSource"u8))
                         {
                             lotSource = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("canceledCredit"))
+                        if (property0.NameEquals("canceledCredit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("creditCurrency"))
+                        if (property0.NameEquals("creditCurrency"u8))
                         {
                             creditCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingCurrency"))
+                        if (property0.NameEquals("billingCurrency"u8))
                         {
                             billingCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reseller"))
+                        if (property0.NameEquals("reseller"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);
+                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("creditExpiredInBillingCurrency"))
+                        if (property0.NameEquals("creditExpiredInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("newCreditInBillingCurrency"))
+                        if (property0.NameEquals("newCreditInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("adjustmentsInBillingCurrency"))
+                        if (property0.NameEquals("adjustmentsInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("chargesInBillingCurrency"))
+                        if (property0.NameEquals("chargesInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("closedBalanceInBillingCurrency"))
+                        if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionEventSummary(
+                id,
+                name,
+                type,
+                systemData,
+                transactionDate,
+                description,
+                newCredit,
+                adjustments,
+                creditExpired,
+                charges,
+                closedBalance,
+                eventType,
+                invoiceNumber,
+                billingProfileId,
+                billingProfileDisplayName,
+                lotId,
+                lotSource,
+                canceledCredit,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                creditExpiredInBillingCurrency,
+                newCreditInBillingCurrency,
+                adjustmentsInBillingCurrency,
+                chargesInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                etag,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionEventSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionEventSummary IPersistableModel<ConsumptionEventSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionEventSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionEventSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

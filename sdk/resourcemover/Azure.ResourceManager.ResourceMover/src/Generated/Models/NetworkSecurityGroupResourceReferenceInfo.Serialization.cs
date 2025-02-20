@@ -5,33 +5,106 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class NetworkSecurityGroupResourceReferenceInfo : IUtf8JsonSerializable
+    internal partial class NetworkSecurityGroupResourceReferenceInfo : IUtf8JsonSerializable, IJsonModel<NetworkSecurityGroupResourceReferenceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityGroupResourceReferenceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NetworkSecurityGroupResourceReferenceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceArmResourceId");
-            writer.WriteStringValue(SourceArmResourceId);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static NetworkSecurityGroupResourceReferenceInfo DeserializeNetworkSecurityGroupResourceReferenceInfo(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceReferenceInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        NetworkSecurityGroupResourceReferenceInfo IJsonModel<NetworkSecurityGroupResourceReferenceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceReferenceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityGroupResourceReferenceInfo(document.RootElement, options);
+        }
+
+        internal static NetworkSecurityGroupResourceReferenceInfo DeserializeNetworkSecurityGroupResourceReferenceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier sourceArmResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceArmResourceId"))
+                if (property.NameEquals("sourceArmResourceId"u8))
                 {
                     sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkSecurityGroupResourceReferenceInfo(sourceArmResourceId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkSecurityGroupResourceReferenceInfo(sourceArmResourceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceReferenceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkSecurityGroupResourceReferenceInfo IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkSecurityGroupResourceReferenceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceReferenceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkSecurityGroupResourceReferenceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

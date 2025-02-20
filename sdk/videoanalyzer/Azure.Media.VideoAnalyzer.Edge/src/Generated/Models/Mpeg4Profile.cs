@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(Mpeg4Profile left, Mpeg4Profile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Mpeg4Profile"/> values are not the same. </summary>
         public static bool operator !=(Mpeg4Profile left, Mpeg4Profile right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Mpeg4Profile"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Mpeg4Profile"/>. </summary>
         public static implicit operator Mpeg4Profile(string value) => new Mpeg4Profile(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -6,127 +6,222 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable
+    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable, IJsonModel<SavingsPlanOrderPaymentDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanOrderPaymentDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SavingsPlanOrderPaymentDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DueOn))
             {
-                writer.WritePropertyName("dueDate");
+                writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
             if (Optional.IsDefined(PayOn))
             {
-                writer.WritePropertyName("paymentDate");
+                writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
-                writer.WritePropertyName("pricingCurrencyTotal");
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
-                writer.WritePropertyName("billingCurrencyTotal");
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue(BillingCurrencyTotal, options);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
+            {
+                writer.WritePropertyName("extendedStatusInfo"u8);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
-                writer.WritePropertyName("billingAccount");
+                writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element)
+        SavingsPlanOrderPaymentDetail IJsonModel<SavingsPlanOrderPaymentDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<BillingBenefitsPrice> billingCurrencyTotal = default;
-            Optional<BillingBenefitsPaymentStatus> status = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<string> billingAccount = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanOrderPaymentDetail(document.RootElement, options);
+        }
+
+        internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? dueDate = default;
+            DateTimeOffset? paymentDate = default;
+            BillingBenefitsPrice pricingCurrencyTotal = default;
+            BillingBenefitsPrice billingCurrencyTotal = default;
+            BillingBenefitsPaymentStatus? status = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
+            string billingAccount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dueDate"))
+                if (property.NameEquals("dueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("paymentDate"))
+                if (property.NameEquals("paymentDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     paymentDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new BillingBenefitsPaymentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extendedStatusInfo"))
+                if (property.NameEquals("extendedStatusInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("billingAccount"))
+                if (property.NameEquals("billingAccount"u8))
                 {
                     billingAccount = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SavingsPlanOrderPaymentDetail(
+                dueDate,
+                paymentDate,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                status,
+                extendedStatusInfo,
+                billingAccount,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SavingsPlanOrderPaymentDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SavingsPlanOrderPaymentDetail IPersistableModel<SavingsPlanOrderPaymentDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSavingsPlanOrderPaymentDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SavingsPlanOrderPaymentDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

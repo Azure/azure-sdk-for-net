@@ -17,22 +17,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(SegmentLength))
             {
-                writer.WritePropertyName("segmentLength");
+                writer.WritePropertyName("segmentLength"u8);
                 writer.WriteStringValue(SegmentLength);
             }
             if (Optional.IsDefined(RetentionPeriod))
             {
-                writer.WritePropertyName("retentionPeriod");
+                writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteStringValue(RetentionPeriod);
             }
             writer.WriteEndObject();
@@ -40,34 +40,54 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoCreationProperties DeserializeVideoCreationProperties(JsonElement element)
         {
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> segmentLength = default;
-            Optional<string> retentionPeriod = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string title = default;
+            string description = default;
+            string segmentLength = default;
+            string retentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("segmentLength"))
+                if (property.NameEquals("segmentLength"u8))
                 {
                     segmentLength = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionPeriod"))
+                if (property.NameEquals("retentionPeriod"u8))
                 {
                     retentionPeriod = property.Value.GetString();
                     continue;
                 }
             }
-            return new VideoCreationProperties(title.Value, description.Value, segmentLength.Value, retentionPeriod.Value);
+            return new VideoCreationProperties(title, description, segmentLength, retentionPeriod);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VideoCreationProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoCreationProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

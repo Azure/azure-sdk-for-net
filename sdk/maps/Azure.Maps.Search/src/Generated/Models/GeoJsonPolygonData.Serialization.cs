@@ -7,62 +7,64 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonPolygonData : IUtf8JsonSerializable
+    internal partial class GeoJsonPolygonData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteStartArray();
-                    foreach (var item1 in item0)
-                    {
-                        writer.WriteNumberValue(item1);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonPolygonData DeserializeGeoJsonPolygonData(JsonElement element)
         {
-            IList<IList<IList<double>>> coordinates = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<IList<IList<double>>> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"))
+                if (property.NameEquals("coordinates"u8))
                 {
                     List<IList<IList<double>>> array = new List<IList<IList<double>>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<IList<double>> array0 = new List<IList<double>>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            List<double> array1 = new List<double>();
-                            foreach (var item1 in item0.EnumerateArray())
-                            {
-                                array1.Add(item1.GetDouble());
-                            }
-                            array0.Add(array1);
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<IList<double>> array0 = new List<IList<double>>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    List<double> array1 = new List<double>();
+                                    foreach (var item1 in item0.EnumerateArray())
+                                    {
+                                        array1.Add(item1.GetDouble());
+                                    }
+                                    array0.Add(array1);
+                                }
+                            }
+                            array.Add(array0);
+                        }
                     }
                     coordinates = array;
                     continue;
                 }
             }
             return new GeoJsonPolygonData(coordinates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonPolygonData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonPolygonData(document.RootElement);
         }
     }
 }

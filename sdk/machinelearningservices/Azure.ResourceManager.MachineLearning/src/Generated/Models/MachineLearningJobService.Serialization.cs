@@ -5,34 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningJobService : IUtf8JsonSerializable
+    public partial class MachineLearningJobService : IUtf8JsonSerializable, IJsonModel<MachineLearningJobService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningJobService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningJobService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (Endpoint != null)
-                {
-                    writer.WritePropertyName("endpoint");
-                    writer.WriteStringValue(Endpoint);
-                }
-                else
-                {
-                    writer.WriteNull("endpoint");
-                }
+                throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(JobServiceType))
             {
                 if (JobServiceType != null)
                 {
-                    writer.WritePropertyName("jobServiceType");
+                    writer.WritePropertyName("jobServiceType"u8);
                     writer.WriteStringValue(JobServiceType);
                 }
                 else
@@ -44,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Port != null)
                 {
-                    writer.WritePropertyName("port");
+                    writer.WritePropertyName("port"u8);
                     writer.WriteNumberValue(Port.Value);
                 }
                 else
@@ -52,11 +60,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
+            if (Optional.IsDefined(Endpoint))
+            {
+                if (Endpoint != null)
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+                else
+                {
+                    writer.WriteNull("endpoint");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+                else
+                {
+                    writer.WriteNull("status");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            {
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage");
+                }
+            }
             if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -70,40 +114,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(Nodes))
+            {
+                if (Nodes != null)
+                {
+                    writer.WritePropertyName("nodes"u8);
+                    writer.WriteObjectValue(Nodes, options);
+                }
+                else
+                {
+                    writer.WriteNull("nodes");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningJobService DeserializeMachineLearningJobService(JsonElement element)
+        MachineLearningJobService IJsonModel<MachineLearningJobService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> endpoint = default;
-            Optional<string> errorMessage = default;
-            Optional<string> jobServiceType = default;
-            Optional<int?> port = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<string> status = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningJobService(document.RootElement, options);
+        }
+
+        internal static MachineLearningJobService DeserializeMachineLearningJobService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string jobServiceType = default;
+            int? port = default;
+            string endpoint = default;
+            string status = default;
+            string errorMessage = default;
+            IDictionary<string, string> properties = default;
+            JobNodes nodes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpoint = null;
-                        continue;
-                    }
-                    endpoint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("errorMessage"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        errorMessage = null;
-                        continue;
-                    }
-                    errorMessage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobServiceType"))
+                if (property.NameEquals("jobServiceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobServiceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,29 +194,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        properties = null;
+                        endpoint = null;
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
-                    }
-                    properties = dictionary;
+                    endpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,8 +214,263 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     status = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("errorMessage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorMessage = null;
+                        continue;
+                    }
+                    errorMessage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("nodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nodes = null;
+                        continue;
+                    }
+                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningJobService(
+                jobServiceType,
+                port,
+                endpoint,
+                status,
+                errorMessage,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                nodes,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobServiceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobServiceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobServiceType))
+                {
+                    builder.Append("  jobServiceType: ");
+                    if (JobServiceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobServiceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobServiceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("  port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    builder.Append("  endpoint: ");
+                    if (Endpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Endpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Endpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errorMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    builder.Append("  errorMessage: ");
+                    if (ErrorMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ErrorMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ErrorMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    if (Properties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nodes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Nodes))
+                {
+                    builder.Append("  nodes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Nodes, options, 2, false, "  nodes: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningJobService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningJobService IPersistableModel<MachineLearningJobService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningJobService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningJobService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -15,14 +14,17 @@ namespace Azure.Communication.CallingServer
     {
         internal static CollectTonesResult DeserializeCollectTonesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DtmfTone>> tones = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<DtmfTone> tones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tones"))
+                if (property.NameEquals("tones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DtmfTone> array = new List<DtmfTone>();
@@ -34,7 +36,15 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CollectTonesResult(Optional.ToList(tones));
+            return new CollectTonesResult(tones ?? new ChangeTrackingList<DtmfTone>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CollectTonesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCollectTonesResult(document.RootElement);
         }
     }
 }

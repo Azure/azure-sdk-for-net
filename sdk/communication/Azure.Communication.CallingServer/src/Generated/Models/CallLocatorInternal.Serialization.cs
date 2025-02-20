@@ -17,20 +17,28 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupCallId))
             {
-                writer.WritePropertyName("groupCallId");
+                writer.WritePropertyName("groupCallId"u8);
                 writer.WriteStringValue(GroupCallId);
             }
             if (Optional.IsDefined(ServerCallId))
             {
-                writer.WritePropertyName("serverCallId");
+                writer.WritePropertyName("serverCallId"u8);
                 writer.WriteStringValue(ServerCallId);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

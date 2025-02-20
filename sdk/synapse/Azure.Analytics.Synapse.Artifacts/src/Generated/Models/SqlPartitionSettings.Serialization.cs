@@ -20,61 +20,78 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
-                writer.WriteObjectValue(PartitionColumnName);
+                writer.WritePropertyName("partitionColumnName"u8);
+                writer.WriteObjectValue<object>(PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
-                writer.WritePropertyName("partitionUpperBound");
-                writer.WriteObjectValue(PartitionUpperBound);
+                writer.WritePropertyName("partitionUpperBound"u8);
+                writer.WriteObjectValue<object>(PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
-                writer.WritePropertyName("partitionLowerBound");
-                writer.WriteObjectValue(PartitionLowerBound);
+                writer.WritePropertyName("partitionLowerBound"u8);
+                writer.WriteObjectValue<object>(PartitionLowerBound);
             }
             writer.WriteEndObject();
         }
 
         internal static SqlPartitionSettings DeserializeSqlPartitionSettings(JsonElement element)
         {
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionColumnName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionUpperBound"))
+                if (property.NameEquals("partitionUpperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionUpperBound = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionLowerBound"))
+                if (property.NameEquals("partitionLowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionLowerBound = property.Value.GetObject();
                     continue;
                 }
             }
-            return new SqlPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new SqlPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlPartitionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlPartitionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SqlPartitionSettingsConverter : JsonConverter<SqlPartitionSettings>
@@ -83,6 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SqlPartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

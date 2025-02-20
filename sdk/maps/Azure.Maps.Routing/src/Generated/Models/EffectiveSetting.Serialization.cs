@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,22 +13,34 @@ namespace Azure.Maps.Routing.Models
     {
         internal static EffectiveSetting DeserializeEffectiveSetting(JsonElement element)
         {
-            Optional<string> key = default;
-            Optional<string> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string key = default;
+            string value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
             }
-            return new EffectiveSetting(key.Value, value.Value);
+            return new EffectiveSetting(key, value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EffectiveSetting FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEffectiveSetting(document.RootElement);
         }
     }
 }

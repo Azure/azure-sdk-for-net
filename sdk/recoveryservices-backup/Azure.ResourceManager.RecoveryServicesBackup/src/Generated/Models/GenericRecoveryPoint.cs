@@ -6,30 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Generic backup copy. </summary>
-    public partial class GenericRecoveryPoint : RecoveryPoint
+    public partial class GenericRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericRecoveryPoint"/>. </summary>
         public GenericRecoveryPoint()
         {
             ObjectType = "GenericRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of the backup copy. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
-        internal GenericRecoveryPoint(string objectType, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo) : base(objectType)
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        internal GenericRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointAdditionalInfo = recoveryPointAdditionalInfo;
+            RecoveryPointProperties = recoveryPointProperties;
             ObjectType = objectType ?? "GenericRecoveryPoint";
         }
 
@@ -41,5 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? RecoveryPointOn { get; set; }
         /// <summary> Additional information associated with this backup copy. </summary>
         public string RecoveryPointAdditionalInfo { get; set; }
+        /// <summary> Properties of Recovery Point. </summary>
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

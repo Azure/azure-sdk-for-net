@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> The deleted date. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use DeletedOn.", false)]
         public DateTimeOffset? DeletionOn => DeletedOn;
     }
 }

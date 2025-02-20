@@ -132,15 +132,6 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal KeyRequestParameters(CreateOkpKeyOptions okpKey)
-            : this(okpKey.KeyType, okpKey)
-        {
-            if (okpKey.CurveName.HasValue)
-            {
-                Curve = okpKey.CurveName.Value;
-            }
-        }
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)

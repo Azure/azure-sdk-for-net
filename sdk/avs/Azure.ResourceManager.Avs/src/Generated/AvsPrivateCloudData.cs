@@ -13,12 +13,47 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloud data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloud data model.
+    /// A private cloud resource
+    /// </summary>
     public partial class AvsPrivateCloudData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The private cloud SKU. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
         {
@@ -26,27 +61,38 @@ namespace Azure.ResourceManager.Avs
 
             Sku = sku;
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
+            ExtendedNetworkBlocks = new ChangeTrackingList<string>();
             ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The private cloud SKU. </param>
-        /// <param name="identity"> The identity of the private cloud, if configured. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="managementCluster"> The default cluster used for management. </param>
         /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
         /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
         /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
+        /// <param name="extendedNetworkBlocks">
+        /// Array of additional networks noncontiguous with networkBlock. Networks must be
+        /// unique and non-overlapping across VNet in your subscription, on-premise, and
+        /// this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
+        /// (A.B.C.D/X).
+        /// </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="circuit"> An ExpressRoute Circuit. </param>
         /// <param name="endpoints"> The endpoints. </param>
-        /// <param name="networkBlock"> The block of addresses should be unique across VNet in your subscription as well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where A,B,C,D are between 0 and 255, and X is between 0 and 22. </param>
+        /// <param name="networkBlock">
+        /// The block of addresses should be unique across VNet in your subscription as
+        /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
+        /// A,B,C,D are between 0 and 255, and X is between 0 and 22
+        /// </param>
         /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
         /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
         /// <param name="vMotionNetwork"> Used for live migration of virtual machines. </param>
@@ -55,9 +101,18 @@ namespace Azure.ResourceManager.Avs
         /// <param name="vCenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
         /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
-        /// <param name="secondaryCircuit"> A secondary expressRoute circuit from a separate AZ. Only present in a stretched private cloud. </param>
-        /// <param name="nsxPublicIPQuotaRaised"> Flag to indicate whether the private cloud has the quota for provisioned NSX Public IP count raised from 64 to 1024. </param>
-        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="secondaryCircuit">
+        /// A secondary expressRoute circuit from a separate AZ. Only present in a
+        /// stretched private cloud
+        /// </param>
+        /// <param name="nsxPublicIPQuotaRaised">
+        /// Flag to indicate whether the private cloud has the quota for provisioned NSX
+        /// Public IP count raised from 64 to 1024
+        /// </param>
+        /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
+        /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -66,6 +121,7 @@ namespace Azure.ResourceManager.Avs
             IdentitySources = identitySources;
             Availability = availability;
             Encryption = encryption;
+            ExtendedNetworkBlocks = extendedNetworkBlocks;
             ProvisioningState = provisioningState;
             Circuit = circuit;
             Endpoints = endpoints;
@@ -80,18 +136,19 @@ namespace Azure.ResourceManager.Avs
             ExternalCloudLinks = externalCloudLinks;
             SecondaryCircuit = secondaryCircuit;
             NsxPublicIPQuotaRaised = nsxPublicIPQuotaRaised;
+            VirtualNetworkId = virtualNetworkId;
+            DnsZoneType = dnsZoneType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private cloud SKU. </summary>
-        internal AvsSku Sku { get; set; }
-        /// <summary> The name of the SKU. </summary>
-        public string SkuName
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/> for deserialization. </summary>
+        internal AvsPrivateCloudData()
         {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new AvsSku(value);
         }
 
-        /// <summary> The identity of the private cloud, if configured. Current supported identity types: SystemAssigned, None. </summary>
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public AvsSku Sku { get; set; }
+        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default cluster used for management. </summary>
         public AvsManagementCluster ManagementCluster { get; set; }
@@ -103,13 +160,24 @@ namespace Azure.ResourceManager.Avs
         public PrivateCloudAvailabilityProperties Availability { get; set; }
         /// <summary> Customer managed key encryption, can be enabled or disabled. </summary>
         public CustomerManagedEncryption Encryption { get; set; }
+        /// <summary>
+        /// Array of additional networks noncontiguous with networkBlock. Networks must be
+        /// unique and non-overlapping across VNet in your subscription, on-premise, and
+        /// this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
+        /// (A.B.C.D/X).
+        /// </summary>
+        public IList<string> ExtendedNetworkBlocks { get; }
         /// <summary> The provisioning state. </summary>
         public AvsPrivateCloudProvisioningState? ProvisioningState { get; }
         /// <summary> An ExpressRoute Circuit. </summary>
         public ExpressRouteCircuit Circuit { get; set; }
         /// <summary> The endpoints. </summary>
         public AvsPrivateCloudEndpoints Endpoints { get; }
-        /// <summary> The block of addresses should be unique across VNet in your subscription as well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where A,B,C,D are between 0 and 255, and X is between 0 and 22. </summary>
+        /// <summary>
+        /// The block of addresses should be unique across VNet in your subscription as
+        /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
+        /// A,B,C,D are between 0 and 255, and X is between 0 and 22
+        /// </summary>
         public string NetworkBlock { get; set; }
         /// <summary> Network used to access vCenter Server and NSX-T Manager. </summary>
         public string ManagementNetwork { get; }
@@ -127,9 +195,19 @@ namespace Azure.ResourceManager.Avs
         public string NsxtCertificateThumbprint { get; }
         /// <summary> Array of cloud link IDs from other clouds that connect to this one. </summary>
         public IReadOnlyList<ResourceIdentifier> ExternalCloudLinks { get; }
-        /// <summary> A secondary expressRoute circuit from a separate AZ. Only present in a stretched private cloud. </summary>
+        /// <summary>
+        /// A secondary expressRoute circuit from a separate AZ. Only present in a
+        /// stretched private cloud
+        /// </summary>
         public ExpressRouteCircuit SecondaryCircuit { get; set; }
-        /// <summary> Flag to indicate whether the private cloud has the quota for provisioned NSX Public IP count raised from 64 to 1024. </summary>
+        /// <summary>
+        /// Flag to indicate whether the private cloud has the quota for provisioned NSX
+        /// Public IP count raised from 64 to 1024
+        /// </summary>
         public NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get; }
+        /// <summary> Azure resource ID of the virtual network. </summary>
+        public ResourceIdentifier VirtualNetworkId { get; set; }
+        /// <summary> The type of DNS zone to use. </summary>
+        public AvsDnsZoneType? DnsZoneType { get; set; }
     }
 }

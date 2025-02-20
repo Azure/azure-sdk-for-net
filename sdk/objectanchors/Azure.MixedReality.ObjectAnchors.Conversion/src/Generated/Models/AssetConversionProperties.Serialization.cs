@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -17,120 +18,119 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConversionStatus))
+            if (Common.Optional.IsDefined(ConversionStatus))
             {
-                writer.WritePropertyName("jobStatus");
+                writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AssetFileTypeString))
+            if (Common.Optional.IsDefined(AssetFileTypeString))
             {
-                writer.WritePropertyName("assetFileType");
+                writer.WritePropertyName("assetFileType"u8);
                 writer.WriteStringValue(AssetFileTypeString);
             }
-            if (Optional.IsDefined(InputAssetUriString))
+            if (Common.Optional.IsDefined(InputAssetUriString))
             {
-                writer.WritePropertyName("inputAssetUri");
+                writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
-            if (Optional.IsDefined(ConversionConfiguration))
+            if (Common.Optional.IsDefined(ConversionConfiguration))
             {
-                writer.WritePropertyName("ingestionConfiguration");
-                writer.WriteObjectValue(ConversionConfiguration);
+                writer.WritePropertyName("ingestionConfiguration"u8);
+                writer.WriteObjectValue<AssetConversionConfiguration>(ConversionConfiguration);
             }
             writer.WriteEndObject();
         }
 
         internal static AssetConversionProperties DeserializeAssetConversionProperties(JsonElement element)
         {
-            Optional<string> clientErrorDetails = default;
-            Optional<string> serverErrorDetails = default;
-            Optional<ConversionErrorCode> errorCode = default;
-            Optional<Guid> jobId = default;
-            Optional<string> outputModelUri = default;
-            Optional<AssetConversionStatus> jobStatus = default;
-            Optional<string> assetFileType = default;
-            Optional<string> inputAssetUri = default;
-            Optional<Guid> accountId = default;
-            Optional<AssetConversionConfiguration> ingestionConfiguration = default;
-            Optional<Vector3> scaledAssetDimensions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string clientErrorDetails = default;
+            string serverErrorDetails = default;
+            ConversionErrorCode errorCode = default;
+            Guid? jobId = default;
+            string outputModelUri = default;
+            AssetConversionStatus? jobStatus = default;
+            string assetFileType = default;
+            string inputAssetUri = default;
+            Guid? accountId = default;
+            AssetConversionConfiguration ingestionConfiguration = default;
+            Vector3 scaledAssetDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientErrorDetails"))
+                if (property.NameEquals("clientErrorDetails"u8))
                 {
                     clientErrorDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverErrorDetails"))
+                if (property.NameEquals("serverErrorDetails"u8))
                 {
                     serverErrorDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = new ConversionErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("outputModelUri"))
+                if (property.NameEquals("outputModelUri"u8))
                 {
                     outputModelUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobStatus"))
+                if (property.NameEquals("jobStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobStatus = property.Value.GetString().ToAssetConversionStatus();
                     continue;
                 }
-                if (property.NameEquals("assetFileType"))
+                if (property.NameEquals("assetFileType"u8))
                 {
                     assetFileType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputAssetUri"))
+                if (property.NameEquals("inputAssetUri"u8))
                 {
                     inputAssetUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("ingestionConfiguration"))
+                if (property.NameEquals("ingestionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingestionConfiguration = AssetConversionConfiguration.DeserializeAssetConversionConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaledAssetDimensions"))
+                if (property.NameEquals("scaledAssetDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,34 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(
+                clientErrorDetails,
+                serverErrorDetails,
+                errorCode,
+                jobId,
+                outputModelUri,
+                jobStatus,
+                assetFileType,
+                inputAssetUri,
+                accountId,
+                ingestionConfiguration,
+                scaledAssetDimensions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetConversionProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

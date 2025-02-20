@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    /// <summary> Indicates the messaging content category used in the program e.g. &apos;ringTones&apos;, &apos;smsChat&apos;, &apos;video&apos;, &apos;loyaltyProgramPointsPrizes&apos;, &apos;gifting&apos;, &apos;inApplicationBilling&apos;, &apos;textToScreen&apos;. </summary>
+    /// <summary> Indicates the messaging content category used in the program e.g. 'ringTones', 'smsChat', 'video', 'loyaltyProgramPointsPrizes', 'gifting', 'inApplicationBilling', 'textToScreen'. </summary>
     public readonly partial struct MessageContentCategory : IEquatable<MessageContentCategory>
     {
         private readonly string _value;
@@ -150,7 +150,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator ==(MessageContentCategory left, MessageContentCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageContentCategory"/> values are not the same. </summary>
         public static bool operator !=(MessageContentCategory left, MessageContentCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MessageContentCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageContentCategory"/>. </summary>
         public static implicit operator MessageContentCategory(string value) => new MessageContentCategory(value);
 
         /// <inheritdoc />
@@ -161,7 +161,7 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

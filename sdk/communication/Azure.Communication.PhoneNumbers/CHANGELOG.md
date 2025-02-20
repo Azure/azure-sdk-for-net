@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,51 @@
 
 ### Other Changes
 
+## 1.3.0 (2025-02-11)
+
+### Features Added
+
+- GA release of Number Insight.
+- API version `(2025-02-11)` is the default
+
+### Bugs Fixed
+- OperatorDetails.Name is now optional in OperatorInformation Response.
+
+## 1.3.0-beta.5 (2024-03-01)
+
+### Features Added
+- Add support for number lookup
+  - Format only can be returned for no cost
+  - Additional number details can be returned for a cost
+
+## 1.3.0-beta.2 (2023-08-31)
+
+### Bugs Fixed
+- Service version updated to include 2023-05-01-preview
+- Default to latest public version
+
+## 1.3.0-beta.1 (2023-08-25)
+
+### Features Added
+- Number Lookup API public preview
+- API version `2023-05-01-preview` is the default
+
+## 1.2.0-beta.1 (2023-08-08)
+
+### Features Added
+- Added custom page sizes to PurchasedPhoneNumbers, Countries, Localities, AreaCodes and Offerings.
+
+## 1.1.0 (2023-03-28)
+
+### Features Added
+- Added support for SIP routing API version `2023-03-01`, releasing SIP routing functionality from public preview to GA.
+- Added environment variable `AZURE_TEST_DOMAIN` for SIP routing tests to support domain verification.
+
 ## 1.1.0-beta.3 (2023-01-10)
 - Adds support for Azure Communication Services Phone Numbers Browse API Methods.
 
 ### Features Added
-- Added support for API version `2022-12-01`, giving users the ability to: 
+- Added support for API version `2022-12-01`, giving users the ability to:
   - Get all supported countries
   - Get all supported localities given a country code.
   - Get all Toll-Free area codes from a given country code.
@@ -72,4 +112,4 @@ Updated `Azure.Communication.PhoneNumbers` version.
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/README.md
-[documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[documentation]: https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp

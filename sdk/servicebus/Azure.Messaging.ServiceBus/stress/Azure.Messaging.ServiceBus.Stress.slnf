@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "..\\..\\Azure.Messaging.ServiceBus.sln",
+     "projects": [
+      "Azure.Messaging.ServiceBus\\src\\Azure.Messaging.ServiceBus.csproj",
+      "Azure.Messaging.ServiceBus\\stress\\src\\Azure.Messaging.ServiceBus.Stress.csproj"
+    ]
+  }
+  }
+}

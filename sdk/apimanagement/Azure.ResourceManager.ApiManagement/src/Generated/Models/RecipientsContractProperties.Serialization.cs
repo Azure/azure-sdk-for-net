@@ -5,20 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RecipientsContractProperties : IUtf8JsonSerializable
+    public partial class RecipientsContractProperties : IUtf8JsonSerializable, IJsonModel<RecipientsContractProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecipientsContractProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RecipientsContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientsContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecipientsContractProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Emails))
             {
-                writer.WritePropertyName("emails");
+                writer.WritePropertyName("emails"u8);
                 writer.WriteStartArray();
                 foreach (var item in Emails)
                 {
@@ -28,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Users))
             {
-                writer.WritePropertyName("users");
+                writer.WritePropertyName("users"u8);
                 writer.WriteStartArray();
                 foreach (var item in Users)
                 {
@@ -36,20 +56,53 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RecipientsContractProperties DeserializeRecipientsContractProperties(JsonElement element)
+        RecipientsContractProperties IJsonModel<RecipientsContractProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> emails = default;
-            Optional<IList<string>> users = default;
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientsContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecipientsContractProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecipientsContractProperties(document.RootElement, options);
+        }
+
+        internal static RecipientsContractProperties DeserializeRecipientsContractProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> emails = default;
+            IList<string> users = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emails"))
+                if (property.NameEquals("emails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -60,11 +113,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     emails = array;
                     continue;
                 }
-                if (property.NameEquals("users"))
+                if (property.NameEquals("users"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -75,8 +127,133 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     users = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecipientsContractProperties(Optional.ToList(emails), Optional.ToList(users));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecipientsContractProperties(emails ?? new ChangeTrackingList<string>(), users ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Emails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  emails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Emails))
+                {
+                    if (Emails.Any())
+                    {
+                        builder.Append("  emails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Emails)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Users), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  users: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Users))
+                {
+                    if (Users.Any())
+                    {
+                        builder.Append("  users: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Users)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RecipientsContractProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientsContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RecipientsContractProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecipientsContractProperties IPersistableModel<RecipientsContractProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientsContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecipientsContractProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecipientsContractProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecipientsContractProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

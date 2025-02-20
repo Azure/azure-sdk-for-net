@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -55,6 +57,8 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </remarks>
     ///
     /// <seealso cref="EventHubBufferedProducerClient" />
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubProducerClient : IAsyncDisposable
     {
@@ -149,6 +153,12 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </value>
         ///
         private ConcurrentDictionary<string, PartitionPublishingState> PartitionState { get; }
+
+        /// <summary>
+        ///   The client diagnostics for this producer.
+        /// </summary>
+        ///
+        private MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
@@ -258,6 +268,12 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
             }
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                Connection.EventHubName);
         }
 
         /// <summary>
@@ -342,6 +358,12 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
             }
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                Connection.EventHubName);
         }
 
         /// <summary>
@@ -377,6 +399,12 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
             }
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                Connection.EventHubName);
         }
 
         /// <summary>
@@ -402,11 +430,18 @@ namespace Azure.Messaging.EventHubs.Producer
                                        object credential,
                                        EventHubProducerClientOptions clientOptions = default)
         {
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
             OwnsConnection = true;
             Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
@@ -429,6 +464,12 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
             }
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                Connection.EventHubName);
         }
 
         /// <summary>
@@ -671,7 +712,7 @@ namespace Azure.Messaging.EventHubs.Producer
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await PartitionProducerPool.EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
-            return new EventDataBatch(transportBatch, FullyQualifiedNamespace, EventHubName, options);
+            return new EventDataBatch(transportBatch, FullyQualifiedNamespace, EventHubName, options, ClientDiagnostics);
         }
 
         /// <summary>
@@ -848,19 +889,19 @@ namespace Azure.Messaging.EventHubs.Producer
                                              CancellationToken cancellationToken = default)
         {
             var attempts = 0;
-            var diagnosticIdentifiers = new List<string>();
+            var diagnosticIdentifiers = new List<(string, string)>();
 
             foreach (var eventData in events)
             {
-                var (_, identifier) = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
+                ClientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out var traceparent, out var tracestate);
 
-                if (identifier != null)
+                if (traceparent != null)
                 {
-                    diagnosticIdentifiers.Add(identifier);
+                    diagnosticIdentifiers.Add((traceparent, tracestate));
                 }
             }
 
-            using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers);
+            using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers, events.Count);
             var pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested)
@@ -904,7 +945,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private async Task SendInternalAsync(EventDataBatch eventBatch,
                                              CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.GetEventDiagnosticIdentifiers());
+            using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.GetTraceContext(), eventBatch.Count);
 
             var attempts = 0;
             var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
@@ -1258,22 +1299,23 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   events.
         /// </summary>
         ///
-        /// <param name="diagnosticIdentifiers">The set of diagnostic identifiers to which the scope will be linked.</param>
-        ///
+        /// <param name="traceContexts">The set of trace contexts to which the scope will be linked.</param>
+        /// <param name="eventCount">The count of events corresponding to the scope.</param>
         /// <returns>The requested <see cref="DiagnosticScope" />.</returns>
         ///
-        private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers)
+        private DiagnosticScope CreateDiagnosticScope(IEnumerable<(string TraceParent, string TraceState)> traceContexts, int eventCount)
         {
-            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName, DiagnosticScope.ActivityKind.Client);
-            scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
-            scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName, ActivityKind.Client, MessagingDiagnosticOperation.Publish);
 
             if (scope.IsEnabled)
             {
-                foreach (var identifier in diagnosticIdentifiers)
+                foreach (var context in traceContexts)
                 {
-                    scope.AddLink(identifier, null);
+                    scope.AddLink(context.TraceParent, context.TraceState);
+                }
+                if (eventCount > 1 && ActivityExtensions.SupportsActivitySource)
+                {
+                    scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventCount);
                 }
             }
 

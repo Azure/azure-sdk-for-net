@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The overall success or failure status of the operation. It remains &quot;InProgress&quot; until the operation completes. At that point it will become &quot;Unknown&quot;, &quot;Failed&quot;, &quot;Succeeded&quot;, or &quot;CompletedWithWarnings.&quot;. </summary>
+    /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </summary>
     public readonly partial struct PatchOperationStatus : IEquatable<PatchOperationStatus>
     {
         private readonly string _value;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(PatchOperationStatus left, PatchOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PatchOperationStatus"/> values are not the same. </summary>
         public static bool operator !=(PatchOperationStatus left, PatchOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PatchOperationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PatchOperationStatus"/>. </summary>
         public static implicit operator PatchOperationStatus(string value) => new PatchOperationStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

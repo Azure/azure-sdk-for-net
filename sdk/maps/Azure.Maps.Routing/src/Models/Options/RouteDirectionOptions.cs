@@ -68,14 +68,14 @@ namespace Azure.Maps.Routing
         public bool? ShouldReportEffectiveSettings { get; set; }
 
         /// <summary> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </summary>
-        public SectionType? SectionFilter { get; set; }
+        public IList<SectionType> SectionFilter { get; } = new List<SectionType>();
 
         /// <summary> The type of route requested. </summary>
         public RouteType? RouteType { get; set; }
 
         /// <summary>
         /// Possible values:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> <c>true</c> - Do consider all available traffic information during routing </description></item>
         /// <item><description> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </description></item>
         /// </list>
@@ -109,7 +109,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </description></item>
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
@@ -118,7 +118,7 @@ namespace Azure.Maps.Routing
 
         /// <summary>
         /// Weight of the vehicle in kilograms.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> It is mandatory if any of the *Efficiency parameters are set. </description></item>
         /// <item><description> It must be strictly positive when used in the context of the Consumption Model. Weight restrictions are considered. </description></item>
         /// <item><description> If no detailed <c>Consumption Model</c> is specified and the value of <c>vehicleWeight</c> is non-zero, then weight restrictions are considered. </description></item>
@@ -131,7 +131,7 @@ namespace Azure.Maps.Routing
         /// <summary> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </summary>
         public bool? IsCommercialVehicle { get; set; }
 
-        /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
+        /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
         public VehicleLoadType? VehicleLoadType { get; set; }
 
         /// <summary> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of <c>vehicleEngineType</c>. </summary>
@@ -140,7 +140,7 @@ namespace Azure.Maps.Routing
         /// <summary>
         /// Specifies the speed-dependent component of consumption.
         /// Provided as an unordered list of colon-delimited speed &amp; consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> by linear interpolation, if the given speed lies in between two speeds in the list </description></item>
         /// <item><description> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </description></item>
         /// </list>
@@ -208,7 +208,7 @@ namespace Azure.Maps.Routing
         /// <summary>
         /// Specifies the speed-dependent component of consumption.
         /// Provided as an unordered list of speed/consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> by linear interpolation, if the given speed lies in between two speeds in the list </description></item>
         /// <item><description> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </description></item>
         /// </list>
@@ -247,7 +247,7 @@ namespace Azure.Maps.Routing
         /// <summary>
         /// Used for reconstructing a route and for calculating zero or more alternative routes to this reference route.  The provided sequence of coordinates is used as input for route reconstruction. The alternative routes  are calculated between the origin and destination points specified in the base path parameter locations.  If both minDeviationDistance and minDeviationTime are set to zero, then these origin and destination points  are expected to be at (or very near) the beginning and end of the reference route, respectively. Intermediate  locations (waypoints) are not supported when using supportingPoints.
         /// Setting at least one of minDeviationDistance or minDeviationTime to a value greater than zero has the  following consequences:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> The origin point of the calculateRoute request must be on (or very near) the input reference route. If  this is not the case, an error is returned. However, the origin point does not need to be at the beginning of  the input reference route (it can be thought of as the current vehicle position on the reference route). </description></item>
         /// <item><description> The reference route, returned as the first route in the calculateRoute response, will start at the origin  point specified in the calculateRoute request. The initial part of the input reference route up until the  origin point will be excluded from the response. </description></item>
         /// <item><description> The values of minDeviationDistance and minDeviationTime determine how far alternative routes will be  guaranteed to follow the reference route from the origin point onwards. </description></item>

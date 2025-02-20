@@ -6,76 +6,161 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesJustInTimeAccessPolicy : IUtf8JsonSerializable
+    public partial class ManagedServicesJustInTimeAccessPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServicesJustInTimeAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesJustInTimeAccessPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedServicesJustInTimeAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("multiFactorAuthProvider");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesJustInTimeAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("multiFactorAuthProvider"u8);
             writer.WriteStringValue(MultiFactorAuthProvider.ToString());
             if (Optional.IsDefined(MaximumActivationDuration))
             {
-                writer.WritePropertyName("maximumActivationDuration");
+                writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
             if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
             {
-                writer.WritePropertyName("managedByTenantApprovers");
+                writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenantApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ManagedServicesJustInTimeAccessPolicy DeserializeManagedServicesJustInTimeAccessPolicy(JsonElement element)
+        ManagedServicesJustInTimeAccessPolicy IJsonModel<ManagedServicesJustInTimeAccessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesJustInTimeAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesJustInTimeAccessPolicy(document.RootElement, options);
+        }
+
+        internal static ManagedServicesJustInTimeAccessPolicy DeserializeManagedServicesJustInTimeAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MultiFactorAuthProvider multiFactorAuthProvider = default;
-            Optional<TimeSpan> maximumActivationDuration = default;
-            Optional<IList<ManagedServicesEligibleApprover>> managedByTenantApprovers = default;
+            TimeSpan? maximumActivationDuration = default;
+            IList<ManagedServicesEligibleApprover> managedByTenantApprovers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("multiFactorAuthProvider"))
+                if (property.NameEquals("multiFactorAuthProvider"u8))
                 {
                     multiFactorAuthProvider = new MultiFactorAuthProvider(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maximumActivationDuration"))
+                if (property.NameEquals("maximumActivationDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumActivationDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("managedByTenantApprovers"))
+                if (property.NameEquals("managedByTenantApprovers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesEligibleApprover> array = new List<ManagedServicesEligibleApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item));
+                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item, options));
                     }
                     managedByTenantApprovers = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, Optional.ToNullable(maximumActivationDuration), Optional.ToList(managedByTenantApprovers));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, maximumActivationDuration, managedByTenantApprovers ?? new ChangeTrackingList<ManagedServicesEligibleApprover>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServicesJustInTimeAccessPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesJustInTimeAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedServicesJustInTimeAccessPolicy IPersistableModel<ManagedServicesJustInTimeAccessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesJustInTimeAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedServicesJustInTimeAccessPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedServicesJustInTimeAccessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

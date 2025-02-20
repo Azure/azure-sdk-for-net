@@ -20,9 +20,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="name"> Gets or sets name of the route. </param>
         /// <param name="numberPattern">
         /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
-        /// 
         /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
-        /// 
         /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
         /// </param>
         /// <param name="trunks"> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </param>

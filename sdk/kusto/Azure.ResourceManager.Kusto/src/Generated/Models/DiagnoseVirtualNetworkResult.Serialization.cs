@@ -5,24 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class DiagnoseVirtualNetworkResult
+    public partial class DiagnoseVirtualNetworkResult : IUtf8JsonSerializable, IJsonModel<DiagnoseVirtualNetworkResult>
     {
-        internal static DiagnoseVirtualNetworkResult DeserializeDiagnoseVirtualNetworkResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnoseVirtualNetworkResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DiagnoseVirtualNetworkResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<string>> findings = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(Findings))
+            {
+                writer.WritePropertyName("findings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Findings)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DiagnoseVirtualNetworkResult IJsonModel<DiagnoseVirtualNetworkResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnoseVirtualNetworkResult(document.RootElement, options);
+        }
+
+        internal static DiagnoseVirtualNetworkResult DeserializeDiagnoseVirtualNetworkResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> findings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("findings"))
+                if (property.NameEquals("findings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -33,8 +100,44 @@ namespace Azure.ResourceManager.Kusto.Models
                     findings = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiagnoseVirtualNetworkResult(Optional.ToList(findings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiagnoseVirtualNetworkResult(findings ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiagnoseVirtualNetworkResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DiagnoseVirtualNetworkResult IPersistableModel<DiagnoseVirtualNetworkResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiagnoseVirtualNetworkResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiagnoseVirtualNetworkResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,35 +17,16 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
+            SanitizedHeaders.Add("Repeatability-Request-ID");
+            SanitizedHeaders.Add("Repeatability-First-Sent");
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
         }
 
         public bool SkipCallAutomationInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS")== "TRUE";
-
-        /// <summary>
-        /// Creates a <see cref="CallAutomationClient" />
-        /// </summary>
-        /// <returns>The instrumented <see cref="CallAutomationClient" />.</returns>
-        protected CallAutomationClient CreateInstrumentedCallAutomationClientWithConnectionString()
-        {
-            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-
-            CallAutomationClient callAutomationClient;
-            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
-            {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
-            }
-            else
-            {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
-            }
-
-            return InstrumentClient(callAutomationClient);
-        }
+           => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClientOptions" />
@@ -78,9 +59,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestStaticConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
-        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync() {
+        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
+        {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
         }

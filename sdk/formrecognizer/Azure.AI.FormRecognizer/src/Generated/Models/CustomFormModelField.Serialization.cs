@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -14,16 +13,20 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string fieldName = default;
             float? accuracy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accuracy"))
+                if (property.NameEquals("accuracy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,6 +38,14 @@ namespace Azure.AI.FormRecognizer.Training
                 }
             }
             return new CustomFormModelField(fieldName, accuracy);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomFormModelField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomFormModelField(document.RootElement);
         }
     }
 }

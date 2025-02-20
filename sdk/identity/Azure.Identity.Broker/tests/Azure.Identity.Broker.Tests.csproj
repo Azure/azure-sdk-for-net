@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj" />
+    <ProjectReference Include="..\src\Azure.Identity.Broker.csproj" />
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
+    <Compile Include="*.cs" Exclude="*Manual*.cs" />
+    <Compile Include="ManualInteractiveBrowserCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
+    <Compile Include="ManualSharedTokenCacheCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
+  </ItemGroup>
+
+</Project>

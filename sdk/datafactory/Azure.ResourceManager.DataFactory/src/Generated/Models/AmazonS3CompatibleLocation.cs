@@ -7,93 +7,36 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The location of Amazon S3 Compatible dataset. </summary>
     public partial class AmazonS3CompatibleLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of AmazonS3CompatibleLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3CompatibleLocation"/>. </summary>
         public AmazonS3CompatibleLocation()
         {
             DatasetLocationType = "AmazonS3CompatibleLocation";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3CompatibleLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3CompatibleLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="bucketName"> Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3CompatibleLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AmazonS3CompatibleLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;
             DatasetLocationType = datasetLocationType ?? "AmazonS3CompatibleLocation";
         }
 
-        /// <summary>
-        /// Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string)
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData BucketName { get; set; }
-        /// <summary>
-        /// Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Version { get; set; }
+        /// <summary> Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> BucketName { get; set; }
+        /// <summary> Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Version { get; set; }
     }
 }

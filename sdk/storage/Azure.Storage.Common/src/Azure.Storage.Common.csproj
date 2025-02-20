@@ -1,14 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
-    <!-- Remove this line when Azure.Core is released for net6.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net6.0'">false</RunApiCompat>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
-    <Version>12.14.0-beta.1</Version>
+    <Version>12.23.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.13.0</ApiCompatVersion>
+    <ApiCompatVersion>12.22.0</ApiCompatVersion>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -27,12 +25,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <Compile Remove="Shared\AesGcm\**\*.cs" />
+    <Compile Remove="stress\**" />
+    <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
@@ -45,9 +47,13 @@
     <Compile Include="Shared\StorageResponseClassifier.cs" />
     <Compile Include="Shared\StorageSharedKeyCredentialInternals.cs" />
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
+    <Compile Include="Shared\StorageCrc64Calculator.cs" />
+    <Compile Include="Shared\StorageCrc64Composer.cs" />
+    <Compile Include="Shared\SyncAsyncEventHandlerExtensions.cs" />
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
     <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />
+    <Compile Include="Shared\TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="Shared\ISupportsTenantIdChallenges.cs" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -14,16 +13,28 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatementCancellationResult DeserializeSparkStatementCancellationResult(JsonElement element)
         {
-            Optional<string> msg = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string msg = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("msg"))
+                if (property.NameEquals("msg"u8))
                 {
                     msg = property.Value.GetString();
                     continue;
                 }
             }
-            return new SparkStatementCancellationResult(msg.Value);
+            return new SparkStatementCancellationResult(msg);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkStatementCancellationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkStatementCancellationResult(document.RootElement);
         }
     }
 }

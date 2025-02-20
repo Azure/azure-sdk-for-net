@@ -6,147 +6,533 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtMigrationDetails
+    public partial class VMwareCbtMigrationDetails : IUtf8JsonSerializable, IJsonModel<VMwareCbtMigrationDetails>
     {
-        internal static VMwareCbtMigrationDetails DeserializeVMwareCbtMigrationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtMigrationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VMwareCbtMigrationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> vmwareMachineId = default;
-            Optional<string> osType = default;
-            Optional<string> firmwareType = default;
-            Optional<string> targetGeneration = default;
-            Optional<string> licenseType = default;
-            Optional<string> sqlServerLicenseType = default;
-            Optional<string> dataMoverRunAsAccountId = default;
-            Optional<string> snapshotRunAsAccountId = default;
-            Optional<string> storageAccountId = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<string> targetLocation = default;
-            Optional<string> targetResourceGroupId = default;
-            Optional<string> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<string> targetProximityPlacementGroupId = default;
-            Optional<string> targetBootDiagnosticsStorageAccountId = default;
-            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Optional<IReadOnlyList<VMwareCbtProtectedDiskDetails>> protectedDisks = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<IReadOnlyList<VMwareCbtNicDetails>> vmNics = default;
-            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Optional<string> migrationRecoveryPointId = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<string> lastRecoveryPointId = default;
-            Optional<int> initialSeedingProgressPercentage = default;
-            Optional<int> migrationProgressPercentage = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<int> resumeProgressPercentage = default;
-            Optional<long> initialSeedingRetryCount = default;
-            Optional<long> resyncRetryCount = default;
-            Optional<long> resumeRetryCount = default;
-            Optional<string> resyncRequired = default;
-            Optional<ResyncState> resyncState = default;
-            Optional<string> performAutoResync = default;
-            Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(VMwareMachineId))
+            {
+                writer.WritePropertyName("vmwareMachineId"u8);
+                writer.WriteStringValue(VMwareMachineId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSName))
+            {
+                writer.WritePropertyName("osName"u8);
+                writer.WriteStringValue(OSName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
+            {
+                writer.WritePropertyName("firmwareType"u8);
+                writer.WriteStringValue(FirmwareType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetGeneration))
+            {
+                writer.WritePropertyName("targetGeneration"u8);
+                writer.WriteStringValue(TargetGeneration);
+            }
+            if (Optional.IsDefined(LicenseType))
+            {
+                writer.WritePropertyName("licenseType"u8);
+                writer.WriteStringValue(LicenseType);
+            }
+            if (Optional.IsDefined(SqlServerLicenseType))
+            {
+                writer.WritePropertyName("sqlServerLicenseType"u8);
+                writer.WriteStringValue(SqlServerLicenseType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataMoverRunAsAccountId))
+            {
+                writer.WritePropertyName("dataMoverRunAsAccountId"u8);
+                writer.WriteStringValue(DataMoverRunAsAccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotRunAsAccountId))
+            {
+                writer.WritePropertyName("snapshotRunAsAccountId"u8);
+                writer.WriteStringValue(SnapshotRunAsAccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
+            {
+                writer.WritePropertyName("storageAccountId"u8);
+                writer.WriteStringValue(StorageAccountId);
+            }
+            if (Optional.IsDefined(TargetVmName))
+            {
+                writer.WritePropertyName("targetVmName"u8);
+                writer.WriteStringValue(TargetVmName);
+            }
+            if (Optional.IsDefined(TargetVmSize))
+            {
+                writer.WritePropertyName("targetVmSize"u8);
+                writer.WriteStringValue(TargetVmSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
+            {
+                writer.WritePropertyName("targetLocation"u8);
+                writer.WriteStringValue(TargetLocation);
+            }
+            if (Optional.IsDefined(TargetResourceGroupId))
+            {
+                writer.WritePropertyName("targetResourceGroupId"u8);
+                writer.WriteStringValue(TargetResourceGroupId);
+            }
+            if (Optional.IsDefined(TargetAvailabilitySetId))
+            {
+                writer.WritePropertyName("targetAvailabilitySetId"u8);
+                writer.WriteStringValue(TargetAvailabilitySetId);
+            }
+            if (Optional.IsDefined(TargetAvailabilityZone))
+            {
+                writer.WritePropertyName("targetAvailabilityZone"u8);
+                writer.WriteStringValue(TargetAvailabilityZone);
+            }
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            {
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
+                writer.WriteStringValue(TargetProximityPlacementGroupId);
+            }
+            if (Optional.IsDefined(ConfidentialVmKeyVaultId))
+            {
+                writer.WritePropertyName("confidentialVmKeyVaultId"u8);
+                writer.WriteStringValue(ConfidentialVmKeyVaultId);
+            }
+            if (Optional.IsDefined(TargetVmSecurityProfile))
+            {
+                writer.WritePropertyName("targetVmSecurityProfile"u8);
+                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+            }
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
+            {
+                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
+                writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
+            }
+            if (Optional.IsCollectionDefined(TargetVmTags))
+            {
+                writer.WritePropertyName("targetVmTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetVmTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                writer.WritePropertyName("protectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedDisks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                writer.WritePropertyName("targetNetworkId"u8);
+                writer.WriteStringValue(TargetNetworkId);
+            }
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                writer.WritePropertyName("testNetworkId"u8);
+                writer.WriteStringValue(TestNetworkId);
+            }
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetNicTags))
+            {
+                writer.WritePropertyName("targetNicTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetNicTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(MigrationRecoveryPointId))
+            {
+                writer.WritePropertyName("migrationRecoveryPointId"u8);
+                writer.WriteStringValue(MigrationRecoveryPointId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
+            {
+                writer.WritePropertyName("lastRecoveryPointReceived"u8);
+                writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
+            {
+                writer.WritePropertyName("lastRecoveryPointId"u8);
+                writer.WriteStringValue(LastRecoveryPointId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialSeedingProgressPercentage))
+            {
+                writer.WritePropertyName("initialSeedingProgressPercentage"u8);
+                writer.WriteNumberValue(InitialSeedingProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MigrationProgressPercentage))
+            {
+                writer.WritePropertyName("migrationProgressPercentage"u8);
+                writer.WriteNumberValue(MigrationProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncProgressPercentage))
+            {
+                writer.WritePropertyName("resyncProgressPercentage"u8);
+                writer.WriteNumberValue(ResyncProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResumeProgressPercentage))
+            {
+                writer.WritePropertyName("resumeProgressPercentage"u8);
+                writer.WriteNumberValue(ResumeProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeltaSyncProgressPercentage))
+            {
+                writer.WritePropertyName("deltaSyncProgressPercentage"u8);
+                writer.WriteNumberValue(DeltaSyncProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsCheckSumResyncCycle))
+            {
+                writer.WritePropertyName("isCheckSumResyncCycle"u8);
+                writer.WriteStringValue(IsCheckSumResyncCycle);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialSeedingRetryCount))
+            {
+                writer.WritePropertyName("initialSeedingRetryCount"u8);
+                writer.WriteNumberValue(InitialSeedingRetryCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncRetryCount))
+            {
+                writer.WritePropertyName("resyncRetryCount"u8);
+                writer.WriteNumberValue(ResyncRetryCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResumeRetryCount))
+            {
+                writer.WritePropertyName("resumeRetryCount"u8);
+                writer.WriteNumberValue(ResumeRetryCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeltaSyncRetryCount))
+            {
+                writer.WritePropertyName("deltaSyncRetryCount"u8);
+                writer.WriteNumberValue(DeltaSyncRetryCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncRequired))
+            {
+                writer.WritePropertyName("resyncRequired"u8);
+                writer.WriteStringValue(ResyncRequired);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncState))
+            {
+                writer.WritePropertyName("resyncState"u8);
+                writer.WriteStringValue(ResyncState.Value.ToString());
+            }
+            if (Optional.IsDefined(PerformAutoResync))
+            {
+                writer.WritePropertyName("performAutoResync"u8);
+                writer.WriteStringValue(PerformAutoResync);
+            }
+            if (Optional.IsCollectionDefined(SeedDiskTags))
+            {
+                writer.WritePropertyName("seedDiskTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in SeedDiskTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(TargetDiskTags))
+            {
+                writer.WritePropertyName("targetDiskTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetDiskTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(SupportedOSVersions))
+            {
+                writer.WritePropertyName("supportedOSVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedOSVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApplianceMonitoringDetails))
+            {
+                writer.WritePropertyName("applianceMonitoringDetails"u8);
+                writer.WriteObjectValue(ApplianceMonitoringDetails, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
+            {
+                writer.WritePropertyName("gatewayOperationDetails"u8);
+                writer.WriteObjectValue(GatewayOperationDetails, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationName))
+            {
+                writer.WritePropertyName("operationName"u8);
+                writer.WriteStringValue(OperationName);
+            }
+        }
+
+        VMwareCbtMigrationDetails IJsonModel<VMwareCbtMigrationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtMigrationDetails(document.RootElement, options);
+        }
+
+        internal static VMwareCbtMigrationDetails DeserializeVMwareCbtMigrationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier vmwareMachineId = default;
+            string osType = default;
+            string osName = default;
+            string firmwareType = default;
+            string targetGeneration = default;
+            string licenseType = default;
+            string sqlServerLicenseType = default;
+            ResourceIdentifier dataMoverRunAsAccountId = default;
+            ResourceIdentifier snapshotRunAsAccountId = default;
+            ResourceIdentifier storageAccountId = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            string targetLocation = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier confidentialVmKeyVaultId = default;
+            VMwareCbtSecurityProfileProperties targetVmSecurityProfile = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            IReadOnlyDictionary<string, string> targetVmTags = default;
+            IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            IReadOnlyList<VMwareCbtNicDetails> vmNics = default;
+            IReadOnlyDictionary<string, string> targetNicTags = default;
+            ResourceIdentifier migrationRecoveryPointId = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
+            ResourceIdentifier lastRecoveryPointId = default;
+            int? initialSeedingProgressPercentage = default;
+            int? migrationProgressPercentage = default;
+            int? resyncProgressPercentage = default;
+            int? resumeProgressPercentage = default;
+            int? deltaSyncProgressPercentage = default;
+            string isCheckSumResyncCycle = default;
+            long? initialSeedingRetryCount = default;
+            long? resyncRetryCount = default;
+            long? resumeRetryCount = default;
+            long? deltaSyncRetryCount = default;
+            string resyncRequired = default;
+            SiteRecoveryResyncState? resyncState = default;
+            string performAutoResync = default;
+            IReadOnlyDictionary<string, string> seedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetDiskTags = default;
+            IReadOnlyList<string> supportedOSVersions = default;
+            ApplianceMonitoringDetails applianceMonitoringDetails = default;
+            GatewayOperationDetails gatewayOperationDetails = default;
+            string operationName = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmwareMachineId"))
+                if (property.NameEquals("vmwareMachineId"u8))
                 {
-                    vmwareMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmwareMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firmwareType"))
+                if (property.NameEquals("osName"u8))
+                {
+                    osName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("firmwareType"u8))
                 {
                     firmwareType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetGeneration"))
+                if (property.NameEquals("targetGeneration"u8))
                 {
                     targetGeneration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     licenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlServerLicenseType"))
+                if (property.NameEquals("sqlServerLicenseType"u8))
                 {
                     sqlServerLicenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataMoverRunAsAccountId"))
+                if (property.NameEquals("dataMoverRunAsAccountId"u8))
                 {
-                    dataMoverRunAsAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataMoverRunAsAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("snapshotRunAsAccountId"))
+                if (property.NameEquals("snapshotRunAsAccountId"u8))
                 {
-                    snapshotRunAsAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotRunAsAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVmName"))
+                if (property.NameEquals("targetVmName"u8))
                 {
                     targetVmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmSize"))
+                if (property.NameEquals("targetVmSize"u8))
                 {
                     targetVmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetLocation"))
+                if (property.NameEquals("targetLocation"u8))
                 {
                     targetLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroupId"))
+                if (property.NameEquals("targetResourceGroupId"u8))
                 {
-                    targetResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilitySetId"))
+                if (property.NameEquals("targetAvailabilitySetId"u8))
                 {
-                    targetAvailabilitySetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilityZone"))
+                if (property.NameEquals("targetAvailabilityZone"u8))
                 {
                     targetAvailabilityZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetProximityPlacementGroupId"))
-                {
-                    targetProximityPlacementGroupId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"))
-                {
-                    targetBootDiagnosticsStorageAccountId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetVmTags"))
+                if (property.NameEquals("targetProximityPlacementGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("confidentialVmKeyVaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidentialVmKeyVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetVmSecurityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetVmTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -157,51 +543,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetVmTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protectedDisks"))
+                if (property.NameEquals("protectedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VMwareCbtProtectedDiskDetails> array = new List<VMwareCbtProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item));
+                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("targetNetworkId"))
-                {
-                    targetNetworkId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("testNetworkId"))
-                {
-                    testNetworkId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vmNics"))
+                if (property.NameEquals("targetNetworkId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("testNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vmNics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<VMwareCbtNicDetails> array = new List<VMwareCbtNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item));
+                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("targetNicTags"))
+                if (property.NameEquals("targetNicTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -212,121 +603,142 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetNicTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("migrationRecoveryPointId"))
-                {
-                    migrationRecoveryPointId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastRecoveryPointReceived"))
+                if (property.NameEquals("migrationRecoveryPointId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    migrationRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("lastRecoveryPointReceived"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     lastRecoveryPointReceived = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastRecoveryPointId"))
-                {
-                    lastRecoveryPointId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("initialSeedingProgressPercentage"))
+                if (property.NameEquals("lastRecoveryPointId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("initialSeedingProgressPercentage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     initialSeedingProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("migrationProgressPercentage"))
+                if (property.NameEquals("migrationProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resyncProgressPercentage"))
+                if (property.NameEquals("resyncProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resumeProgressPercentage"))
+                if (property.NameEquals("resumeProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resumeProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("initialSeedingRetryCount"))
+                if (property.NameEquals("deltaSyncProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deltaSyncProgressPercentage = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("isCheckSumResyncCycle"u8))
+                {
+                    isCheckSumResyncCycle = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("initialSeedingRetryCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     initialSeedingRetryCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncRetryCount"))
+                if (property.NameEquals("resyncRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncRetryCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resumeRetryCount"))
+                if (property.NameEquals("resumeRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resumeRetryCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncRequired"))
+                if (property.NameEquals("deltaSyncRetryCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deltaSyncRetryCount = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("resyncRequired"u8))
                 {
                     resyncRequired = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncState"))
+                if (property.NameEquals("resyncState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resyncState = new ResyncState(property.Value.GetString());
+                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("performAutoResync"))
+                if (property.NameEquals("performAutoResync"u8))
                 {
                     performAutoResync = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedDiskTags"))
+                if (property.NameEquals("seedDiskTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -337,11 +749,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     seedDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetDiskTags"))
+                if (property.NameEquals("targetDiskTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -352,13 +763,136 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("supportedOSVersions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedOSVersions = array;
+                    continue;
+                }
+                if (property.NameEquals("applianceMonitoringDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("gatewayOperationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("operationName"u8))
+                {
+                    operationName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareCbtMigrationDetails(instanceType, vmwareMachineId.Value, osType.Value, firmwareType.Value, targetGeneration.Value, licenseType.Value, sqlServerLicenseType.Value, dataMoverRunAsAccountId.Value, snapshotRunAsAccountId.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetLocation.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, Optional.ToDictionary(targetVmTags), Optional.ToList(protectedDisks), targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToDictionary(targetNicTags), migrationRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialSeedingProgressPercentage), Optional.ToNullable(migrationProgressPercentage), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resumeProgressPercentage), Optional.ToNullable(initialSeedingRetryCount), Optional.ToNullable(resyncRetryCount), Optional.ToNullable(resumeRetryCount), resyncRequired.Value, Optional.ToNullable(resyncState), performAutoResync.Value, Optional.ToDictionary(seedDiskTags), Optional.ToDictionary(targetDiskTags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareCbtMigrationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareMachineId,
+                osType,
+                osName,
+                firmwareType,
+                targetGeneration,
+                licenseType,
+                sqlServerLicenseType,
+                dataMoverRunAsAccountId,
+                snapshotRunAsAccountId,
+                storageAccountId,
+                targetVmName,
+                targetVmSize,
+                targetLocation,
+                targetResourceGroupId,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                confidentialVmKeyVaultId,
+                targetVmSecurityProfile,
+                targetBootDiagnosticsStorageAccountId,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                protectedDisks ?? new ChangeTrackingList<VMwareCbtProtectedDiskDetails>(),
+                targetNetworkId,
+                testNetworkId,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicDetails>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                migrationRecoveryPointId,
+                lastRecoveryPointReceived,
+                lastRecoveryPointId,
+                initialSeedingProgressPercentage,
+                migrationProgressPercentage,
+                resyncProgressPercentage,
+                resumeProgressPercentage,
+                deltaSyncProgressPercentage,
+                isCheckSumResyncCycle,
+                initialSeedingRetryCount,
+                resyncRetryCount,
+                resumeRetryCount,
+                deltaSyncRetryCount,
+                resyncRequired,
+                resyncState,
+                performAutoResync,
+                seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                supportedOSVersions ?? new ChangeTrackingList<string>(),
+                applianceMonitoringDetails,
+                gatewayOperationDetails,
+                operationName);
         }
+
+        BinaryData IPersistableModel<VMwareCbtMigrationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VMwareCbtMigrationDetails IPersistableModel<VMwareCbtMigrationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareCbtMigrationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareCbtMigrationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

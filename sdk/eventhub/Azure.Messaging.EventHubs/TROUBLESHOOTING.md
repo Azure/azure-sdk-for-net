@@ -1,6 +1,6 @@
 # Troubleshoot Event Hubs issues
 
-This troubleshooting guide covers failure investigation techniques, common errors for the credential types in the Azure Event Hubs .NET client library, and mitigation steps to resolve these errors.
+This troubleshooting guide covers failure investigation techniques, errors encountered while using the Azure Event Hubs .NET client library, and mitigation steps to resolve these errors.
 
 - [Handle Event Hubs exceptions](#handle-event-hubs-exceptions)
   - [Find information about an EventHubsException](#find-information-about-an-eventhubsexception)
@@ -71,7 +71,7 @@ The exception includes some contextual information to assist in understanding th
 
   - **Consumer Disconnected** : A consumer client was disconnected by the Event Hub service from the Event Hub instance.  This typically occurs when a consumer with a higher owner level asserts ownership over a partition and consumer group pairing.
 
-  - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been deleted from the service or that there is an issue with the Event Hubs service itself.
+  - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been disabled, is still in the process of being created, was deleted from the service, or that there is an issue with the Event Hubs service itself.
 
 Reacting to a specific failure reason for the [EventHubsException][EventHubsException] can be accomplished in several ways, the most common of which is by applying an exception filter clause as part of the `catch` block:
 
@@ -231,7 +231,7 @@ Generally, it is recommended that an event processor own no more than 3 partitio
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
-- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
+- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://learn.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
 #### "Soft Delete" or "Blob versioning" is enabled for a Blob Storage checkpoint store:
@@ -418,9 +418,11 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 45 (EventProcessorClaimOwnershipError)
   - 103 (EventProcessorLoadBalancingCycleSlowWarning)
   - 104 (EventProcessorHighPartitionOwnershipWarning)
+  - 105 (EventProcessorPartitionProcessingEventPositionDetermined)
   - 123 (EventProcessorProcessingHandlerStart)
   - 124 (EventProcessorProcessingHandlerComplete)
   - 125 (EventProcessorProcessingHandlerError)
+  - 129 (EventProcessorPartitionProcessingCycleComplete)
 
 ### Consuming issues
 
@@ -452,28 +454,28 @@ For more information on ways to request support, please see: [Support][SUPPORT].
 [MigrationGuideT1]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md
 [SUPPORT]: https://github.com/Azure/azure-sdk-for-net/blob/main/SUPPORT.md
 
-<!-- docs.microsoft.com links -->
-[AuthorizeSAS]: https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature
-[AzureSdkNetLogging]: https://docs.microsoft.com/dotnet/azure/sdk/logging#map-to-aspnet-core-logging
-[DebugThreadPoolStarvation]: https://docs.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
-[DependencyInjectionAzureFunctions]: https://docs.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection
-[DependencyInjectionAzureSdk]: https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection
-[DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
-[EventHubsException]: https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception
-[EventHubsIPAddresses]: https://docs.microsoft.com/azure/event-hubs/troubleshooting-guide#what-ip-addresses-do-i-need-to-allow
-[EventHubsMessagingExceptions]: https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions
-[EventHubsQuotas]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas
-[EventHubsRetryOptions]: https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsretryoptions
-[EventHubsTroubleshooting]: https://docs.microsoft.com/azure/event-hubs/troubleshooting-guide
-[GetConnectionString]: https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string
-[IoTHubDocs]: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-endpoints
-[IoTEventHubEndpoint]: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin
-[IoTHubSAS]: https://docs.microsoft.com/azure/iot-hub/iot-hub-dev-guide-sas#security-tokens
-[RBAC]: https://docs.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory
-[SoftDeleteBlobStorage]: https://docs.microsoft.com/azure/storage/blobs/soft-delete-blob-overview
-[VersioningBlobStorage]: https://docs.microsoft.com/azure/storage/blobs/versioning-overview
-[TroubleshootAuthenticationAuthorization]: https://docs.microsoft.com/azure/event-hubs/troubleshoot-authentication-authorization
-[UnauthorizedAccessException]: https://docs.microsoft.com/dotnet/api/system.unauthorizedaccessexception
+<!-- learn.microsoft.com links -->
+[AuthorizeSAS]: https://learn.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature
+[AzureSdkNetLogging]: https://learn.microsoft.com/dotnet/azure/sdk/logging#map-to-aspnet-core-logging
+[DebugThreadPoolStarvation]: https://learn.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
+[DependencyInjectionAzureFunctions]: https://learn.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection
+[DependencyInjectionAzureSdk]: https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection
+[DiagnoseThreadPoolExhaustion]: https://learn.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
+[EventHubsException]: https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception
+[EventHubsIPAddresses]: https://learn.microsoft.com/azure/event-hubs/troubleshooting-guide#what-ip-addresses-do-i-need-to-allow
+[EventHubsMessagingExceptions]: https://learn.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions
+[EventHubsQuotas]: https://learn.microsoft.com/azure/event-hubs/event-hubs-quotas
+[EventHubsRetryOptions]: https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsretryoptions
+[EventHubsTroubleshooting]: https://learn.microsoft.com/azure/event-hubs/troubleshooting-guide
+[GetConnectionString]: https://learn.microsoft.com/azure/event-hubs/event-hubs-get-connection-string
+[IoTHubDocs]: https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-endpoints
+[IoTEventHubEndpoint]: https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin
+[IoTHubSAS]: https://learn.microsoft.com/azure/iot-hub/iot-hub-dev-guide-sas#security-tokens
+[RBAC]: https://learn.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory
+[SoftDeleteBlobStorage]: https://learn.microsoft.com/azure/storage/blobs/soft-delete-blob-overview
+[VersioningBlobStorage]: https://learn.microsoft.com/azure/storage/blobs/versioning-overview
+[TroubleshootAuthenticationAuthorization]: https://learn.microsoft.com/azure/event-hubs/troubleshoot-authentication-authorization
+[UnauthorizedAccessException]: https://learn.microsoft.com/dotnet/api/system.unauthorizedaccessexception
 
 <!-- external links -->
 [AmqpSpec]: https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-types-v1.0-os.html

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static bool operator ==(AuthenticationMethod left, AuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are not the same. </summary>
         public static bool operator !=(AuthenticationMethod left, AuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuthenticationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationMethod"/>. </summary>
         public static implicit operator AuthenticationMethod(string value) => new AuthenticationMethod(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

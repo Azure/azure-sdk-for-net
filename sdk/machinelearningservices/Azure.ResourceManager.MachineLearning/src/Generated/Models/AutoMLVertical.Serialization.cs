@@ -5,26 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AutoMLVertical : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAutoMLVertical))]
+    public partial class AutoMLVertical : IUtf8JsonSerializable, IJsonModel<AutoMLVertical>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AutoMLVertical>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
-                writer.WritePropertyName("logVerbosity");
+                writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData, options);
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
-                    writer.WritePropertyName("targetColumnName");
+                    writer.WritePropertyName("targetColumnName"u8);
                     writer.WriteStringValue(TargetColumnName);
                 }
                 else
@@ -32,32 +57,173 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType");
-            writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData");
-            writer.WriteObjectValue(TrainingData);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element)
+        AutoMLVertical IJsonModel<AutoMLVertical>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoMLVertical(document.RootElement, options);
+        }
+
+        internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("taskType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element);
-                    case "Forecasting": return MachineLearningForecasting.DeserializeMachineLearningForecasting(element);
-                    case "ImageClassification": return ImageClassification.DeserializeImageClassification(element);
-                    case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element);
-                    case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element);
-                    case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element);
-                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element);
-                    case "TextClassification": return TextClassification.DeserializeTextClassification(element);
-                    case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element);
-                    case "TextNER": return TextNer.DeserializeTextNer(element);
+                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element, options);
+                    case "Forecasting": return MachineLearningForecasting.DeserializeMachineLearningForecasting(element, options);
+                    case "ImageClassification": return ImageClassification.DeserializeImageClassification(element, options);
+                    case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element, options);
+                    case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element, options);
+                    case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element, options);
+                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element, options);
+                    case "TextClassification": return TextClassification.DeserializeTextClassification(element, options);
+                    case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element, options);
+                    case "TextNER": return TextNer.DeserializeTextNer(element, options);
                 }
             }
-            return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element);
+            return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element, options);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine($"'{TaskType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogVerbosity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logVerbosity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogVerbosity))
+                {
+                    builder.Append("  logVerbosity: ");
+                    builder.AppendLine($"'{LogVerbosity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trainingData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrainingData))
+                {
+                    builder.Append("  trainingData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TrainingData, options, 2, false, "  trainingData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetColumnName))
+                {
+                    builder.Append("  targetColumnName: ");
+                    if (TargetColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetColumnName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoMLVertical IPersistableModel<AutoMLVertical>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoMLVertical(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoMLVertical>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

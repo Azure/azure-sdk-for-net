@@ -5,74 +5,195 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationToReturnForExchange
+    public partial class ReservationToReturnForExchange : IUtf8JsonSerializable, IJsonModel<ReservationToReturnForExchange>
     {
-        internal static ReservationToReturnForExchange DeserializeReservationToReturnForExchange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationToReturnForExchange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ReservationToReturnForExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> reservationId = default;
-            Optional<int> quantity = default;
-            Optional<PurchasePrice> billingRefundAmount = default;
-            Optional<BillingInformation> billingInformation = default;
-            Optional<ReservationOperationStatus> status = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturnForExchange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationToReturnForExchange)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ReservationId))
+            {
+                writer.WritePropertyName("reservationId"u8);
+                writer.WriteStringValue(ReservationId);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (Optional.IsDefined(BillingRefundAmount))
+            {
+                writer.WritePropertyName("billingRefundAmount"u8);
+                writer.WriteObjectValue(BillingRefundAmount, options);
+            }
+            if (Optional.IsDefined(BillingInformation))
+            {
+                writer.WritePropertyName("billingInformation"u8);
+                writer.WriteObjectValue(BillingInformation, options);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ReservationToReturnForExchange IJsonModel<ReservationToReturnForExchange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturnForExchange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationToReturnForExchange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationToReturnForExchange(document.RootElement, options);
+        }
+
+        internal static ReservationToReturnForExchange DeserializeReservationToReturnForExchange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier reservationId = default;
+            int? quantity = default;
+            PurchasePrice billingRefundAmount = default;
+            BillingInformation billingInformation = default;
+            ReservationOperationStatus? status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reservationId"))
+                if (property.NameEquals("reservationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quantity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("billingRefundAmount"))
+                if (property.NameEquals("billingRefundAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("billingInformation"))
+                if (property.NameEquals("billingInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value);
+                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationToReturnForExchange(reservationId.Value, Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReservationToReturnForExchange(
+                reservationId,
+                quantity,
+                billingRefundAmount,
+                billingInformation,
+                status,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationToReturnForExchange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturnForExchange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationToReturnForExchange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReservationToReturnForExchange IPersistableModel<ReservationToReturnForExchange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturnForExchange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationToReturnForExchange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationToReturnForExchange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationToReturnForExchange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

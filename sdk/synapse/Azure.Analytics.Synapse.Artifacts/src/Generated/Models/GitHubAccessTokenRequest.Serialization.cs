@@ -18,13 +18,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("gitHubClientId");
+            writer.WritePropertyName("gitHubClientId"u8);
             writer.WriteStringValue(GitHubClientId);
-            writer.WritePropertyName("gitHubAccessCode");
+            writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
-            writer.WritePropertyName("gitHubAccessTokenBaseUrl");
+            writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
             writer.WriteStringValue(GitHubAccessTokenBaseUrl);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class GitHubAccessTokenRequestConverter : JsonConverter<GitHubAccessTokenRequest>
@@ -33,6 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override GitHubAccessTokenRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

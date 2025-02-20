@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,16 +13,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinMetadata DeserializeDeviceTwinMetadata(JsonElement element)
         {
-            Optional<string> lastUpdated = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     lastUpdated = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeviceTwinMetadata(lastUpdated.Value);
+            return new DeviceTwinMetadata(lastUpdated);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceTwinMetadata FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceTwinMetadata(document.RootElement);
         }
     }
 }

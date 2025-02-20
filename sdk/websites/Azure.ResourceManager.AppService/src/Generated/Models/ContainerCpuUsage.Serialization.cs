@@ -5,25 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerCpuUsage : IUtf8JsonSerializable
+    public partial class ContainerCpuUsage : IUtf8JsonSerializable, IJsonModel<ContainerCpuUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerCpuUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerCpuUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(TotalUsage))
             {
-                writer.WritePropertyName("totalUsage");
+                writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
             if (Optional.IsCollectionDefined(PerCpuUsage))
             {
-                writer.WritePropertyName("perCpuUsage");
+                writer.WritePropertyName("perCpuUsage"u8);
                 writer.WriteStartArray();
                 foreach (var item in PerCpuUsage)
                 {
@@ -33,40 +53,72 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(KernelModeUsage))
             {
-                writer.WritePropertyName("kernelModeUsage");
+                writer.WritePropertyName("kernelModeUsage"u8);
                 writer.WriteNumberValue(KernelModeUsage.Value);
             }
             if (Optional.IsDefined(UserModeUsage))
             {
-                writer.WritePropertyName("userModeUsage");
+                writer.WritePropertyName("userModeUsage"u8);
                 writer.WriteNumberValue(UserModeUsage.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ContainerCpuUsage DeserializeContainerCpuUsage(JsonElement element)
+        ContainerCpuUsage IJsonModel<ContainerCpuUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<long> totalUsage = default;
-            Optional<IList<long>> perCpuUsage = default;
-            Optional<long> kernelModeUsage = default;
-            Optional<long> userModeUsage = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerCpuUsage(document.RootElement, options);
+        }
+
+        internal static ContainerCpuUsage DeserializeContainerCpuUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            long? totalUsage = default;
+            IList<long> perCpuUsage = default;
+            long? kernelModeUsage = default;
+            long? userModeUsage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalUsage"))
+                if (property.NameEquals("totalUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalUsage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("perCpuUsage"))
+                if (property.NameEquals("perCpuUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<long> array = new List<long>();
@@ -77,28 +129,147 @@ namespace Azure.ResourceManager.AppService.Models
                     perCpuUsage = array;
                     continue;
                 }
-                if (property.NameEquals("kernelModeUsage"))
+                if (property.NameEquals("kernelModeUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kernelModeUsage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("userModeUsage"))
+                if (property.NameEquals("userModeUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userModeUsage = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerCpuUsage(Optional.ToNullable(totalUsage), Optional.ToList(perCpuUsage), Optional.ToNullable(kernelModeUsage), Optional.ToNullable(userModeUsage));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerCpuUsage(totalUsage, perCpuUsage ?? new ChangeTrackingList<long>(), kernelModeUsage, userModeUsage, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalUsage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  totalUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalUsage))
+                {
+                    builder.Append("  totalUsage: ");
+                    builder.AppendLine($"'{TotalUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerCpuUsage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  perCpuUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PerCpuUsage))
+                {
+                    if (PerCpuUsage.Any())
+                    {
+                        builder.Append("  perCpuUsage: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PerCpuUsage)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelModeUsage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kernelModeUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KernelModeUsage))
+                {
+                    builder.Append("  kernelModeUsage: ");
+                    builder.AppendLine($"'{KernelModeUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserModeUsage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userModeUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserModeUsage))
+                {
+                    builder.Append("  userModeUsage: ");
+                    builder.AppendLine($"'{UserModeUsage.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerCpuUsage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerCpuUsage IPersistableModel<ContainerCpuUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerCpuUsage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerCpuUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

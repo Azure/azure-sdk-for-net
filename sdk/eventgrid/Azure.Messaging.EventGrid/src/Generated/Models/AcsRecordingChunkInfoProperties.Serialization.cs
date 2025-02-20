@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,51 +13,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsRecordingChunkInfoProperties DeserializeAcsRecordingChunkInfoProperties(JsonElement element)
         {
-            Optional<string> documentId = default;
-            Optional<long> index = default;
-            Optional<string> endReason = default;
-            Optional<string> metadataLocation = default;
-            Optional<string> contentLocation = default;
-            Optional<string> deleteLocation = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string documentId = default;
+            long? index = default;
+            string endReason = default;
+            string metadataLocation = default;
+            string contentLocation = default;
+            string deleteLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documentId"))
+                if (property.NameEquals("documentId"u8))
                 {
                     documentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("index"))
+                if (property.NameEquals("index"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     index = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("endReason"))
+                if (property.NameEquals("endReason"u8))
                 {
                     endReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadataLocation"))
+                if (property.NameEquals("metadataLocation"u8))
                 {
                     metadataLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentLocation"))
+                if (property.NameEquals("contentLocation"u8))
                 {
                     contentLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deleteLocation"))
+                if (property.NameEquals("deleteLocation"u8))
                 {
                     deleteLocation = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value, metadataLocation.Value, contentLocation.Value, deleteLocation.Value);
+            return new AcsRecordingChunkInfoProperties(
+                documentId,
+                index,
+                endReason,
+                metadataLocation,
+                contentLocation,
+                deleteLocation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRecordingChunkInfoProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRecordingChunkInfoProperties(document.RootElement);
         }
     }
 }

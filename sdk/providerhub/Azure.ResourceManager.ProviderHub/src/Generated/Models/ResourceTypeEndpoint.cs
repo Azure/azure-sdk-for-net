@@ -14,53 +14,85 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeEndpoint. </summary>
     public partial class ResourceTypeEndpoint
     {
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         public ResourceTypeEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             RequiredFeatures = new ChangeTrackingList<string>();
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
-        /// <param name="enabled"></param>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
+        /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="locations"></param>
         /// <param name="requiredFeatures"></param>
         /// <param name="featuresRule"></param>
         /// <param name="extensions"></param>
         /// <param name="timeout"></param>
-        /// <param name="endpointType"></param>
-        internal ResourceTypeEndpoint(bool? enabled, IList<string> apiVersions, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, EndpointType? endpointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ApiVersions = apiVersions;
             Locations = locations;
             RequiredFeatures = requiredFeatures;
             FeaturesRule = featuresRule;
             Extensions = extensions;
             Timeout = timeout;
-            EndpointType = endpointType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the enabled. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary> Gets or sets the is enabled. </summary>
+        public bool? IsEnabled { get; set; }
         /// <summary> Gets the api versions. </summary>
         public IList<string> ApiVersions { get; }
         /// <summary> Gets the locations. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
         /// <summary> Gets the required features. </summary>
         public IList<string> RequiredFeatures { get; }
         /// <summary> Gets or sets the features rule. </summary>
-        internal ResourceTypeEndpointFeaturesRule FeaturesRule { get; set; }
+        internal FeaturesRule FeaturesRule { get; set; }
         /// <summary> Gets or sets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new ResourceTypeEndpointFeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
             }
         }
 
@@ -68,7 +100,5 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceTypeExtension> Extensions { get; }
         /// <summary> Gets or sets the timeout. </summary>
         public TimeSpan? Timeout { get; set; }
-        /// <summary> Gets or sets the endpoint type. </summary>
-        public EndpointType? EndpointType { get; set; }
     }
 }

@@ -5,46 +5,88 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapProviderInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapProviderInstance data model.
+    /// A provider instance associated with SAP monitor.
+    /// </summary>
     public partial class SapProviderInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapProviderInstanceData"/>. </summary>
         public SapProviderInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapProviderInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> [currently not in use] Managed service identity(user assigned identities). </param>
         /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings">
-        /// Defines the provider instance errors.
+        /// Defines the provider specific properties.
         /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
         /// </param>
-        internal SapProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Identity = identity;
             ProvisioningState = provisioningState;
             Errors = errors;
             ProviderSettings = providerSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> [currently not in use] Managed service identity(user assigned identities). </summary>
+        public UserAssignedServiceIdentity Identity { get; set; }
         /// <summary> State of provisioning of the provider instance. </summary>
         public WorkloadMonitorProvisioningState? ProvisioningState { get; }
         /// <summary> Defines the provider instance errors. </summary>
         public ResponseError Errors { get; }
         /// <summary>
-        /// Defines the provider instance errors.
+        /// Defines the provider specific properties.
         /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
         /// </summary>

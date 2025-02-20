@@ -17,7 +17,14 @@ namespace Azure.Storage.Queues
             switch (messageEncoding)
             {
                 case QueueMessageEncoding.None:
-                    return binaryData.ToString();
+                    try
+                    {
+                        return binaryData.ToString();
+                    }
+                    catch (ArgumentNullException) // workaround for: https://github.com/dotnet/runtime/issues/68262 which was fixed in 8.0.0, can remove this after upgrade
+                    {
+                        return string.Empty;
+                    }
                 case QueueMessageEncoding.Base64:
                     if (MemoryMarshal.TryGetArray(binaryData.ToMemory(), out var segment))
                     {

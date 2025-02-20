@@ -112,6 +112,16 @@ namespace BatchClientIntegrationTests
                     CloudTask newTask = new CloudTask("a", "cat /etc/centos-release")
                     {
                         ContainerSettings = new TaskContainerSettings("centos")
+                        {
+                            ContainerHostBatchBindMounts = new List<ContainerHostBatchBindMountEntry>
+                            {
+                                new ContainerHostBatchBindMountEntry()
+                                {
+                                    Source ="Shared",
+                                    IsReadOnly = false,
+                                }
+                            }
+                        }    
                     };
                     client.JobOperations.AddTask(jobId, newTask);
 
@@ -124,6 +134,7 @@ namespace BatchClientIntegrationTests
                     task.Refresh();
 
                     Assert.Equal("ContainerPoolNotSupported", task.ExecutionInformation.FailureInformation.Code);
+                    Assert.Equal("Shared", task.ContainerSettings.ContainerHostBatchBindMounts.First().Source);
                 }
                 finally
                 {

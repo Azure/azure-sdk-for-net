@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -22,6 +26,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return UnknownMediaJobOutput.DeserializeUnknownMediaJobOutput(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaJobOutput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobOutput(document.RootElement);
         }
     }
 }

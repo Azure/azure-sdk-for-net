@@ -6,77 +6,165 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowResponse : IUtf8JsonSerializable
+    public partial class LogicWorkflowResponse : IUtf8JsonSerializable, IJsonModel<LogicWorkflowResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LogicWorkflowResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Headers);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Headers))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(StatusCode))
             {
-                writer.WritePropertyName("statusCode");
+                writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
             if (Optional.IsDefined(BodyLink))
             {
-                writer.WritePropertyName("bodyLink");
-                writer.WriteObjectValue(BodyLink);
+                writer.WritePropertyName("bodyLink"u8);
+                writer.WriteObjectValue(BodyLink, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LogicWorkflowResponse DeserializeLogicWorkflowResponse(JsonElement element)
+        LogicWorkflowResponse IJsonModel<LogicWorkflowResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> headers = default;
-            Optional<int> statusCode = default;
-            Optional<LogicContentLink> bodyLink = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowResponse(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowResponse DeserializeLogicWorkflowResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            BinaryData headers = default;
+            int? statusCode = default;
+            LogicContentLink bodyLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     headers = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bodyLink"))
+                if (property.NameEquals("bodyLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowResponse(headers.Value, Optional.ToNullable(statusCode), bodyLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogicWorkflowResponse(headers, statusCode, bodyLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogicWorkflowResponse IPersistableModel<LogicWorkflowResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicWorkflowResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicWorkflowResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

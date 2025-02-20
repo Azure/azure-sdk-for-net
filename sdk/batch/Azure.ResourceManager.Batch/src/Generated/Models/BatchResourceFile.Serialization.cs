@@ -6,117 +6,210 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchResourceFile : IUtf8JsonSerializable
+    public partial class BatchResourceFile : IUtf8JsonSerializable, IJsonModel<BatchResourceFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchResourceFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BatchResourceFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchResourceFile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(AutoBlobContainerName))
             {
-                writer.WritePropertyName("autoStorageContainerName");
+                writer.WritePropertyName("autoStorageContainerName"u8);
                 writer.WriteStringValue(AutoBlobContainerName);
             }
             if (Optional.IsDefined(BlobContainerUri))
             {
-                writer.WritePropertyName("storageContainerUrl");
+                writer.WritePropertyName("storageContainerUrl"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(HttpUri))
             {
-                writer.WritePropertyName("httpUrl");
+                writer.WritePropertyName("httpUrl"u8);
                 writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
-                writer.WritePropertyName("blobPrefix");
+                writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(FileMode))
             {
-                writer.WritePropertyName("fileMode");
+                writer.WritePropertyName("fileMode"u8);
                 writer.WriteStringValue(FileMode);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identityReference");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("identityReference"u8);
+                writer.WriteObjectValue(Identity, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element)
+        BatchResourceFile IJsonModel<BatchResourceFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> autoStorageContainerName = default;
-            Optional<Uri> storageContainerUrl = default;
-            Optional<Uri> httpUrl = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> filePath = default;
-            Optional<string> fileMode = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchResourceFile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchResourceFile(document.RootElement, options);
+        }
+
+        internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string autoStorageContainerName = default;
+            Uri storageContainerUrl = default;
+            Uri httpUrl = default;
+            string blobPrefix = default;
+            string filePath = default;
+            string fileMode = default;
+            ComputeNodeIdentityReference identityReference = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autoStorageContainerName"))
+                if (property.NameEquals("autoStorageContainerName"u8))
                 {
                     autoStorageContainerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageContainerUrl"))
+                if (property.NameEquals("storageContainerUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        storageContainerUrl = null;
                         continue;
                     }
                     storageContainerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpUrl"))
+                if (property.NameEquals("httpUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpUrl = null;
                         continue;
                     }
                     httpUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("blobPrefix"))
+                if (property.NameEquals("blobPrefix"u8))
                 {
                     blobPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filePath"))
+                if (property.NameEquals("filePath"u8))
                 {
                     filePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileMode"))
+                if (property.NameEquals("fileMode"u8))
                 {
                     fileMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityReference"))
+                if (property.NameEquals("identityReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchResourceFile(autoStorageContainerName.Value, storageContainerUrl.Value, httpUrl.Value, blobPrefix.Value, filePath.Value, fileMode.Value, identityReference.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchResourceFile(
+                autoStorageContainerName,
+                storageContainerUrl,
+                httpUrl,
+                blobPrefix,
+                filePath,
+                fileMode,
+                identityReference,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchResourceFile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchResourceFile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchResourceFile IPersistableModel<BatchResourceFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchResourceFile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchResourceFile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchResourceFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

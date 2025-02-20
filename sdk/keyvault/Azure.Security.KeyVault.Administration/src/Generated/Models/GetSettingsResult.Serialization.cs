@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -15,14 +14,17 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<KeyVaultSetting> settings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultSetting> array = new List<KeyVaultSetting>();
@@ -34,7 +36,15 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new GetSettingsResult(Optional.ToList(settings));
+            return new GetSettingsResult(settings ?? new ChangeTrackingList<KeyVaultSetting>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GetSettingsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetSettingsResult(document.RootElement);
         }
     }
 }

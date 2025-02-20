@@ -17,7 +17,7 @@ namespace Azure.Communication.Identity.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
-                writer.WritePropertyName("createTokenWithScopes");
+                writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CreateTokenWithScopes)
                 {
@@ -27,10 +27,18 @@ namespace Azure.Communication.Identity.Models
             }
             if (Optional.IsDefined(ExpiresInMinutes))
             {
-                writer.WritePropertyName("expiresInMinutes");
+                writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

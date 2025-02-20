@@ -29,29 +29,29 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<ResourceGroupResource> rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ResourceGroup, new ResourceGroupData(TestEnvironment.Location)).ConfigureAwait(false);
             ResourceGroupResource rg = rgResponse.Value;
 
-            NetworkConnectionCollection resourceCollection = rg.GetNetworkConnections();
+            DevCenterNetworkConnectionCollection resourceCollection = rg.GetDevCenterNetworkConnections();
 
             string networkConnectionName = "sdk-networkconn";
 
             // Create
 
-            var networkConnectionData = new NetworkConnectionData(TestEnvironment.Location)
+            var networkConnectionData = new DevCenterNetworkConnectionData(TestEnvironment.Location)
             {
-                DomainJoinType = DomainJoinType.AzureADJoin,
-                SubnetId = $"{rg.Id}/providers/Microsoft.Network/virtualNetworks/sdk-vnet1/subnets/default",
+                DomainJoinType = DomainJoinType.AadJoin,
+                SubnetId = new Core.ResourceIdentifier($"{rg.Id}/providers/Microsoft.Network/virtualNetworks/sdk-vnet1/subnets/default"),
             };
-            NetworkConnectionResource createdResource =
+            DevCenterNetworkConnectionResource createdResource =
                 (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkConnectionName, networkConnectionData)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List
-            List<NetworkConnectionResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterNetworkConnectionResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<NetworkConnectionResource> retrievedNetworkConnection = await resourceCollection.GetAsync(networkConnectionName);
+            Response<DevCenterNetworkConnectionResource> retrievedNetworkConnection = await resourceCollection.GetAsync(networkConnectionName);
             Assert.NotNull(retrievedNetworkConnection.Value);
             Assert.NotNull(retrievedNetworkConnection.Value.Data);
 

@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
@@ -47,10 +44,20 @@ namespace Azure.Data.AppConfiguration.Samples
             #region Snippet:AzConfigSample2_GetConfigurationSettingsAsync
             var selector = new SettingSelector { LabelFilter = "production" };
 
-            Debug.WriteLine("Settings for Production environment:");
+            Console.WriteLine("Settings for Production environment:");
             await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
             {
                 Console.WriteLine(setting);
+            }
+            #endregion
+
+            #region Snippet:AzConfigSample2_GetLabelsAsync
+            var labelsSelector = new SettingLabelSelector { NameFilter = "production*" };
+
+            Console.WriteLine("Labels for Production environment:");
+            await foreach (SettingLabel label in client.GetLabelsAsync(labelsSelector))
+            {
+                Console.WriteLine(label.Name);
             }
             #endregion
 

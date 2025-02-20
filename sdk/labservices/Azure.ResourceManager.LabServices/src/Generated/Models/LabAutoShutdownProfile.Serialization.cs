@@ -6,121 +6,210 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabAutoShutdownProfile : IUtf8JsonSerializable
+    public partial class LabAutoShutdownProfile : IUtf8JsonSerializable, IJsonModel<LabAutoShutdownProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabAutoShutdownProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LabAutoShutdownProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ShutdownOnDisconnect))
             {
-                writer.WritePropertyName("shutdownOnDisconnect");
+                writer.WritePropertyName("shutdownOnDisconnect"u8);
                 writer.WriteStringValue(ShutdownOnDisconnect.Value.ToSerialString());
             }
             if (Optional.IsDefined(ShutdownWhenNotConnected))
             {
-                writer.WritePropertyName("shutdownWhenNotConnected");
+                writer.WritePropertyName("shutdownWhenNotConnected"u8);
                 writer.WriteStringValue(ShutdownWhenNotConnected.Value.ToSerialString());
             }
             if (Optional.IsDefined(ShutdownOnIdle))
             {
-                writer.WritePropertyName("shutdownOnIdle");
+                writer.WritePropertyName("shutdownOnIdle"u8);
                 writer.WriteStringValue(ShutdownOnIdle.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisconnectDelay))
             {
-                writer.WritePropertyName("disconnectDelay");
+                writer.WritePropertyName("disconnectDelay"u8);
                 writer.WriteStringValue(DisconnectDelay.Value, "P");
             }
             if (Optional.IsDefined(NoConnectDelay))
             {
-                writer.WritePropertyName("noConnectDelay");
+                writer.WritePropertyName("noConnectDelay"u8);
                 writer.WriteStringValue(NoConnectDelay.Value, "P");
             }
             if (Optional.IsDefined(IdleDelay))
             {
-                writer.WritePropertyName("idleDelay");
+                writer.WritePropertyName("idleDelay"u8);
                 writer.WriteStringValue(IdleDelay.Value, "P");
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LabAutoShutdownProfile DeserializeLabAutoShutdownProfile(JsonElement element)
+        LabAutoShutdownProfile IJsonModel<LabAutoShutdownProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<LabServicesEnableState> shutdownOnDisconnect = default;
-            Optional<LabServicesEnableState> shutdownWhenNotConnected = default;
-            Optional<LabVirtualMachineShutdownOnIdleMode> shutdownOnIdle = default;
-            Optional<TimeSpan> disconnectDelay = default;
-            Optional<TimeSpan> noConnectDelay = default;
-            Optional<TimeSpan> idleDelay = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabAutoShutdownProfile(document.RootElement, options);
+        }
+
+        internal static LabAutoShutdownProfile DeserializeLabAutoShutdownProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            LabServicesEnableState? shutdownOnDisconnect = default;
+            LabServicesEnableState? shutdownWhenNotConnected = default;
+            LabVirtualMachineShutdownOnIdleMode? shutdownOnIdle = default;
+            TimeSpan? disconnectDelay = default;
+            TimeSpan? noConnectDelay = default;
+            TimeSpan? idleDelay = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shutdownOnDisconnect"))
+                if (property.NameEquals("shutdownOnDisconnect"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shutdownOnDisconnect = property.Value.GetString().ToLabServicesEnableState();
                     continue;
                 }
-                if (property.NameEquals("shutdownWhenNotConnected"))
+                if (property.NameEquals("shutdownWhenNotConnected"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shutdownWhenNotConnected = property.Value.GetString().ToLabServicesEnableState();
                     continue;
                 }
-                if (property.NameEquals("shutdownOnIdle"))
+                if (property.NameEquals("shutdownOnIdle"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shutdownOnIdle = property.Value.GetString().ToLabVirtualMachineShutdownOnIdleMode();
                     continue;
                 }
-                if (property.NameEquals("disconnectDelay"))
+                if (property.NameEquals("disconnectDelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disconnectDelay = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("noConnectDelay"))
+                if (property.NameEquals("noConnectDelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     noConnectDelay = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("idleDelay"))
+                if (property.NameEquals("idleDelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     idleDelay = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabAutoShutdownProfile(Optional.ToNullable(shutdownOnDisconnect), Optional.ToNullable(shutdownWhenNotConnected), Optional.ToNullable(shutdownOnIdle), Optional.ToNullable(disconnectDelay), Optional.ToNullable(noConnectDelay), Optional.ToNullable(idleDelay));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LabAutoShutdownProfile(
+                shutdownOnDisconnect,
+                shutdownWhenNotConnected,
+                shutdownOnIdle,
+                disconnectDelay,
+                noConnectDelay,
+                idleDelay,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabAutoShutdownProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LabAutoShutdownProfile IPersistableModel<LabAutoShutdownProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLabAutoShutdownProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LabAutoShutdownProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

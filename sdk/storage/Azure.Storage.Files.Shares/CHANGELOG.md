@@ -1,6 +1,142 @@
 # Release History
 
-## 12.13.0-beta.1 (Unreleased)
+## 12.22.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.22.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+- Added support for NFS over REST.
+
+### Breaking Changes
+- The following APIs no longer send the x-ms-file-permission-key, x-ms-file-attributes, x-ms-file-creation-time, and x-ms-file-last-write-time request headers by default.  These headers have been optional in the REST API since x-ms-version 2021-06-08:
+    - ShareFileClient.Create() and .CreateAsync()
+    - ShareFileClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+    - ShareDirectoryClient.Create() and .CreateAsync()
+    - ShareDirectoryClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+
+### Bugs Fixed
+- Fixed \[BUG\] Unable to create directory with only whiteSpaceChars #42891
+
+## 12.21.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1 and 12.21.0-beta..
+
+## 12.21.0-beta.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.20.1 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.21.0-beta.1 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+- Added support for the provisioned V2 billing model.
+- Added support for specifying the binary file permission format for ShareFileClient.StartCopy() and .StartCopyAsync().
+- Added ShareAccessTier.Premium enum value.
+
+## 12.20.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1.
+
+### Bugs Fixed
+- Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on ShareErrorCode #44213
+
+## 12.20.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+- Added support for token-based authentication for all APIs.
+- Added support for paid bursting on premium file share accounts.
+- Added support for binary format for file permissions.
+- Added ability to retrieve SAS string to sign for debugging purposes.
+
+## 12.19.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.19.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.19.0-beta.1.
+
+### Bugs Fixed
+- Fixed bug where storage clients when constructed with URLs with '#' character would truncate the path at the '#'.
+
+## 12.19.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+- Added more detailed messaging for authorization failure cases.
+- Added support for snapshot management on NFS shares.
+
+## 12.18.0 (2024-05-13)
+- Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
+- Fixed bug where `ShareClient` and `ShareFileClient` did not throw an exception on empty/null share container names and file names, respectively, when constructing a client.
+
+## 12.18.0-beta.2 (2024-04-15)
+- Added support for service version 2024-05-04.
+- Added ability to retrieve file handle client name with ShareFile/DirectoryClient.GetHandles() and .GetHandlesAsync().
+- Added ability to call ShareFileClient.GetRangeListDiff() and .GetRangeListDiffAsync() on a file that has been renamed.
+- Fixed bug where on `ShareDirectoryClient` and `ShareFileClient`, calling `.Rename(..)` will throw a 403 Authentication Error, if the source storage client was instantiated with a SAS on the `Uri`, will not pass the SAS to the destination client, when the destination does not have any credentials.
+
+## 12.18.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
+
+## 12.17.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.17.0 (2023-11-06)
+- Includes all features from 12.17.0-beta.1.
+- Fixed bug where the x-ms-file-request-intent request header was not being sent for ShareFileClient.UploadRangeFromUri() and .UploadRangeFromUriAsync().
+
+## 12.17.0-beta.1 (2023-10-16)
+- Added support for service version 2023-11-03.
+- Added support for ShareClientOptions.Audience
+
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
+
+## 12.15.0 (2023-07-23)
+- Includes all features from 12.15.0-beta.1.
+
+## 12.15.0-beta.1 (2023-05-30)
+- Added support for service version 2023-01-03.
+- Added AccessRights property to ShareFileHandle.
+
+## 12.14.0 (2023-04-11)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-03-28)
+- Added support for service version 2022-11-02.
+- Added support OAuth.
+- Added support for Trailing Dot.
+
+## 12.13.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.13.0 (2023-02-21)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2023-02-07)
 - Added support for service version 2021-12-02.
 - Added support for invalid XML characters in file and directory names for ShareDirectoryClient.GetfilesAndDirectories(), .GetHandles(), and ShareFileClient.GetHandles().
 

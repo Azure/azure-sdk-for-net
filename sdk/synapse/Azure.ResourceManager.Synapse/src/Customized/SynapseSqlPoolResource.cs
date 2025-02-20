@@ -22,8 +22,16 @@ namespace Azure.ResourceManager.Synapse
     {
         /// <summary>
         /// Apply a partial update to a SQL pool
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
-        /// Operation Id: SqlPools_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The updated SQL pool properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -36,8 +44,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Apply a partial update to a SQL pool
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
-        /// Operation Id: SqlPools_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The updated SQL pool properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

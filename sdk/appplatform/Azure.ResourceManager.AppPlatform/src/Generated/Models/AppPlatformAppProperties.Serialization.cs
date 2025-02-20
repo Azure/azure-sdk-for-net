@@ -6,260 +6,387 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformAppProperties : IUtf8JsonSerializable
+    public partial class AppPlatformAppProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IsPublic))
             {
-                writer.WritePropertyName("public");
+                writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UriString))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(UriString);
             }
             if (Optional.IsCollectionDefined(AddonConfigs))
             {
-                writer.WritePropertyName("addonConfigs");
+                writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
                 foreach (var item in AddonConfigs)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
-                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item0.Value.ToString()).RootElement);
+                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
             if (Optional.IsDefined(IsHttpsOnly))
             {
-                writer.WritePropertyName("httpsOnly");
+                writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsDefined(TemporaryDisk))
             {
-                writer.WritePropertyName("temporaryDisk");
-                writer.WriteObjectValue(TemporaryDisk);
+                writer.WritePropertyName("temporaryDisk"u8);
+                writer.WriteObjectValue(TemporaryDisk, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
-                writer.WritePropertyName("persistentDisk");
-                writer.WriteObjectValue(PersistentDisk);
+                writer.WritePropertyName("persistentDisk"u8);
+                writer.WriteObjectValue(PersistentDisk, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
-                writer.WritePropertyName("customPersistentDisks");
+                writer.WritePropertyName("customPersistentDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsEndToEndTlsEnabled))
             {
-                writer.WritePropertyName("enableEndToEndTLS");
+                writer.WritePropertyName("enableEndToEndTLS"u8);
                 writer.WriteBooleanValue(IsEndToEndTlsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(LoadedCertificates))
             {
-                writer.WritePropertyName("loadedCertificates");
+                writer.WritePropertyName("loadedCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
-                writer.WritePropertyName("vnetAddons");
-                writer.WriteObjectValue(VnetAddons);
+                writer.WritePropertyName("vnetAddons"u8);
+                writer.WriteObjectValue(VnetAddons, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
-                writer.WritePropertyName("ingressSettings");
-                writer.WriteObjectValue(IngressSettings);
+                writer.WritePropertyName("ingressSettings"u8);
+                writer.WriteObjectValue(IngressSettings, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element)
+        AppPlatformAppProperties IJsonModel<AppPlatformAppProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> @public = default;
-            Optional<Uri> uri = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppPlatformAppProvisioningState> provisioningState = default;
-            Optional<string> fqdn = default;
-            Optional<bool> httpsOnly = default;
-            Optional<AppTemporaryDisk> temporaryDisk = default;
-            Optional<AppPersistentDisk> persistentDisk = default;
-            Optional<IList<AppCustomPersistentDisk>> customPersistentDisks = default;
-            Optional<bool> enableEndToEndTls = default;
-            Optional<IList<AppLoadedCertificate>> loadedCertificates = default;
-            Optional<AppVnetAddons> vnetAddons = default;
-            Optional<AppIngressSettings> ingressSettings = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformAppProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? @public = default;
+            string uri = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
+            AppPlatformAppProvisioningState? provisioningState = default;
+            string fqdn = default;
+            bool? httpsOnly = default;
+            AppTemporaryDisk temporaryDisk = default;
+            AppPersistentDisk persistentDisk = default;
+            IList<AppCustomPersistentDisk> customPersistentDisks = default;
+            bool? enableEndToEndTls = default;
+            IList<AppLoadedCertificate> loadedCertificates = default;
+            AppVnetAddons vnetAddons = default;
+            AppIngressSettings ingressSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("public"))
+                if (property.NameEquals("public"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @public = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        uri = null;
-                        continue;
-                    }
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addonConfigs"))
+                if (property.NameEquals("addonConfigs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, IDictionary<string, BinaryData>> dictionary = new Dictionary<string, IDictionary<string, BinaryData>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
-                        foreach (var property1 in property0.Value.EnumerateObject())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, dictionary0);
+                        else
+                        {
+                            Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary0.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
                     }
                     addonConfigs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformAppProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsOnly"))
+                if (property.NameEquals("httpsOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     httpsOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("temporaryDisk"))
+                if (property.NameEquals("temporaryDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value);
+                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("persistentDisk"))
+                if (property.NameEquals("persistentDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value);
+                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customPersistentDisks"))
+                if (property.NameEquals("customPersistentDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppCustomPersistentDisk> array = new List<AppCustomPersistentDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item));
+                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item, options));
                     }
                     customPersistentDisks = array;
                     continue;
                 }
-                if (property.NameEquals("enableEndToEndTLS"))
+                if (property.NameEquals("enableEndToEndTLS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableEndToEndTls = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("loadedCertificates"))
+                if (property.NameEquals("loadedCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppLoadedCertificate> array = new List<AppLoadedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item));
+                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item, options));
                     }
                     loadedCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("vnetAddons"))
+                if (property.NameEquals("vnetAddons"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value);
+                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ingressSettings"))
+                if (property.NameEquals("ingressSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value);
+                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformAppProperties(
+                @public,
+                uri,
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                provisioningState,
+                fqdn,
+                httpsOnly,
+                temporaryDisk,
+                persistentDisk,
+                customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(),
+                enableEndToEndTls,
+                loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(),
+                vnetAddons,
+                ingressSettings,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformAppProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformAppProperties IPersistableModel<AppPlatformAppProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformAppProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformAppProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

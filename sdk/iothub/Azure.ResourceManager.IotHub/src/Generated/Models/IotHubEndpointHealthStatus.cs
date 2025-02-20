@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Health statuses have following meanings. The &apos;healthy&apos; status shows that the endpoint is accepting messages as expected. The &apos;unhealthy&apos; status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The &apos;dead&apos; status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The &apos;unknown&apos; status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </summary>
+    /// <summary> Health statuses have following meanings. The 'healthy' status shows that the endpoint is accepting messages as expected. The 'unhealthy' status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The 'dead' status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The 'unknown' status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </summary>
     public readonly partial struct IotHubEndpointHealthStatus : IEquatable<IotHubEndpointHealthStatus>
     {
         private readonly string _value;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(IotHubEndpointHealthStatus left, IotHubEndpointHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubEndpointHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(IotHubEndpointHealthStatus left, IotHubEndpointHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotHubEndpointHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubEndpointHealthStatus"/>. </summary>
         public static implicit operator IotHubEndpointHealthStatus(string value) => new IotHubEndpointHealthStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

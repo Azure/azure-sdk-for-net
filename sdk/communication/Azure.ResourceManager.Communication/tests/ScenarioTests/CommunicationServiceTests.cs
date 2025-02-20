@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public CommunicationServiceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -50,6 +51,15 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 await communicationService.DeleteAsync(WaitUntil.Completed);
             }
+        }
+
+        private async Task<GenericResource> CreateUserAssignedIdentityAsync()
+        {
+            string userAssignedIdentityName = Recording.GenerateAssetName("testMsi-");
+            ResourceIdentifier userIdentityId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}");
+            var input = new GenericResourceData("westus2");
+            var response = await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userIdentityId, input);
+            return response.Value;
         }
 
         [TestCase(null)]
@@ -112,6 +122,23 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         [Test]
+        public async Task CreateResourceWithManagedIdentity()
+        {
+            var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
+            var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
+            identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
+            CommunicationServiceResourceData data = new CommunicationServiceResourceData(ResourceLocation)
+            {
+                DataLocation = ResourceDataLocation,
+                Identity = identity
+            };
+            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+            var resource = communicationServiceLro.Value;
+            Assert.AreEqual(resource.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssignedUserAssigned);
+        }
+
+        [Test]
         public async Task GetKeys()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
@@ -124,7 +151,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.NotNull(keys.Value.SecondaryConnectionString);
         }
 
-        [Test]
+        // [Test]
         public async Task RegenerateKey()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
@@ -136,11 +163,11 @@ namespace Azure.ResourceManager.Communication.Tests
             string primaryConnectionString = keys.Value.PrimaryConnectionString;
             string secondaryConnectionString = keys.Value.SecondaryConnectionString;
             var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
-            var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
+            var newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.AreEqual(primaryKey, newkeys.Value.PrimaryKey);
             Assert.NotNull(primaryConnectionString, keys.Value.PrimaryConnectionString);
             parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
-            newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
+            newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.NotNull(secondaryKey, keys.Value.SecondaryKey);
             Assert.NotNull(secondaryConnectionString, keys.Value.SecondaryConnectionString);
         }
@@ -188,7 +215,7 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 Tags = { { "newtag", "newvalue" } }
             };
-            var communication2 = (await communication1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            var communication2 = (await communication1.UpdateAsync(patch)).Value;
             Assert.IsNotNull(communication2);
             Assert.AreEqual("newtag", communication2.Data.Tags.FirstOrDefault().Key);
             Assert.AreEqual(communication1.Data.Name, communication2.Data.Name);

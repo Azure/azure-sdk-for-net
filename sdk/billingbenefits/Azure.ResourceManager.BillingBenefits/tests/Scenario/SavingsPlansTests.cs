@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlans()
         {
-            var response = _tenant.GetBillingBenefitsSavingsPlansAsync(new TenantGetBillingBenefitsSavingsPlansOptions());
+            var response = _tenant.GetBillingBenefitsSavingsPlansAsync(new TenantResourceGetBillingBenefitsSavingsPlansOptions());
             List<BillingBenefitsSavingsPlanResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlansWithSelectedState()
         {
-            var options = new TenantGetBillingBenefitsSavingsPlansOptions();
+            var options = new TenantResourceGetBillingBenefitsSavingsPlansOptions();
             options.SelectedState = "Succeeded";
             var response = _tenant.GetBillingBenefitsSavingsPlansAsync(options);
             List<BillingBenefitsSavingsPlanResource> savingsPlanModelResources = await response.ToEnumerableAsync();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
                     {
                         PurchaseProperties = new BillingBenefitsPurchaseContent
                         {
-                            Sku = new BillingBenefitsSku("Compute_Savings_Plan"),
+                            Sku = new BillingBenefitsSku("Compute_Savings_Plan", null),
                             DisplayName = "TestRenewSP",
                             BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
                             Term = new BillingBenefitsTerm("P1Y"),

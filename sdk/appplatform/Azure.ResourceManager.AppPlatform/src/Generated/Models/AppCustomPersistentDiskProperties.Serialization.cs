@@ -5,28 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppCustomPersistentDiskProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCustomPersistentDiskProperties))]
+    public partial class AppCustomPersistentDiskProperties : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDiskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppCustomPersistentDiskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppCustomPersistentDiskProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UnderlyingResourceType.ToString());
-            writer.WritePropertyName("mountPath");
+            writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
             if (Optional.IsDefined(IsReadOnly))
             {
-                writer.WritePropertyName("readOnly");
+                writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MountOptions)
                 {
@@ -34,19 +53,82 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppCustomPersistentDiskProperties DeserializeAppCustomPersistentDiskProperties(JsonElement element)
+        AppCustomPersistentDiskProperties IJsonModel<AppCustomPersistentDiskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppCustomPersistentDiskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
+        }
+
+        internal static AppCustomPersistentDiskProperties DeserializeAppCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileVolume": return AppPlatformAzureFileVolume.DeserializeAppPlatformAzureFileVolume(element);
+                    case "AzureFileVolume": return AppPlatformAzureFileVolume.DeserializeAppPlatformAzureFileVolume(element, options);
                 }
             }
-            return UnknownCustomPersistentDiskProperties.DeserializeUnknownCustomPersistentDiskProperties(element);
+            return UnknownCustomPersistentDiskProperties.DeserializeUnknownCustomPersistentDiskProperties(element, options);
         }
+
+        BinaryData IPersistableModel<AppCustomPersistentDiskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppCustomPersistentDiskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppCustomPersistentDiskProperties IPersistableModel<AppCustomPersistentDiskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppCustomPersistentDiskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppCustomPersistentDiskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

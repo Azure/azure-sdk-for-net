@@ -6,45 +6,160 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalAvailableContact
+    public partial class OrbitalAvailableContact : IUtf8JsonSerializable, IJsonModel<OrbitalAvailableContact>
     {
-        internal static OrbitalAvailableContact DeserializeOrbitalAvailableContact(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalAvailableContact>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OrbitalAvailableContact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<WritableSubResource> spacecraft = default;
-            Optional<string> groundStationName = default;
-            Optional<float> maximumElevationDegrees = default;
-            Optional<DateTimeOffset> txStartTime = default;
-            Optional<DateTimeOffset> txEndTime = default;
-            Optional<DateTimeOffset> rxStartTime = default;
-            Optional<DateTimeOffset> rxEndTime = default;
-            Optional<float> startAzimuthDegrees = default;
-            Optional<float> endAzimuthDegrees = default;
-            Optional<float> startElevationDegrees = default;
-            Optional<float> endElevationDegrees = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Spacecraft))
+            {
+                writer.WritePropertyName("spacecraft"u8);
+                JsonSerializer.Serialize(writer, Spacecraft);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GroundStationName))
+            {
+                writer.WritePropertyName("groundStationName"u8);
+                writer.WriteStringValue(GroundStationName);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(MaximumElevationDegrees))
+            {
+                writer.WritePropertyName("maximumElevationDegrees"u8);
+                writer.WriteNumberValue(MaximumElevationDegrees.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TxStartOn))
+            {
+                writer.WritePropertyName("txStartTime"u8);
+                writer.WriteStringValue(TxStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TxEndOn))
+            {
+                writer.WritePropertyName("txEndTime"u8);
+                writer.WriteStringValue(TxEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RxStartOn))
+            {
+                writer.WritePropertyName("rxStartTime"u8);
+                writer.WriteStringValue(RxStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RxEndOn))
+            {
+                writer.WritePropertyName("rxEndTime"u8);
+                writer.WriteStringValue(RxEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartAzimuthDegrees))
+            {
+                writer.WritePropertyName("startAzimuthDegrees"u8);
+                writer.WriteNumberValue(StartAzimuthDegrees.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndAzimuthDegrees))
+            {
+                writer.WritePropertyName("endAzimuthDegrees"u8);
+                writer.WriteNumberValue(EndAzimuthDegrees.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartElevationDegrees))
+            {
+                writer.WritePropertyName("startElevationDegrees"u8);
+                writer.WriteNumberValue(StartElevationDegrees.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndElevationDegrees))
+            {
+                writer.WritePropertyName("endElevationDegrees"u8);
+                writer.WriteNumberValue(EndElevationDegrees.Value);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        OrbitalAvailableContact IJsonModel<OrbitalAvailableContact>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalAvailableContact(document.RootElement, options);
+        }
+
+        internal static OrbitalAvailableContact DeserializeOrbitalAvailableContact(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            WritableSubResource spacecraft = default;
+            string groundStationName = default;
+            float? maximumElevationDegrees = default;
+            DateTimeOffset? txStartTime = default;
+            DateTimeOffset? txEndTime = default;
+            DateTimeOffset? rxStartTime = default;
+            DateTimeOffset? rxEndTime = default;
+            float? startAzimuthDegrees = default;
+            float? endAzimuthDegrees = default;
+            float? startElevationDegrees = default;
+            float? endElevationDegrees = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("spacecraft"))
+                if (property.NameEquals("spacecraft"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spacecraft = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("groundStationName"))
+                if (property.NameEquals("groundStationName"u8))
                 {
                     groundStationName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,91 +168,82 @@ namespace Azure.ResourceManager.Orbital.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("maximumElevationDegrees"))
+                        if (property0.NameEquals("maximumElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumElevationDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("txStartTime"))
+                        if (property0.NameEquals("txStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("txEndTime"))
+                        if (property0.NameEquals("txEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("rxStartTime"))
+                        if (property0.NameEquals("rxStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("rxEndTime"))
+                        if (property0.NameEquals("rxEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("startAzimuthDegrees"))
+                        if (property0.NameEquals("startAzimuthDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startAzimuthDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("endAzimuthDegrees"))
+                        if (property0.NameEquals("endAzimuthDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endAzimuthDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("startElevationDegrees"))
+                        if (property0.NameEquals("startElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startElevationDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("endElevationDegrees"))
+                        if (property0.NameEquals("endElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endElevationDegrees = property0.Value.GetSingle();
@@ -146,8 +252,56 @@ namespace Azure.ResourceManager.Orbital.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OrbitalAvailableContact(
+                spacecraft,
+                groundStationName,
+                maximumElevationDegrees,
+                txStartTime,
+                txEndTime,
+                rxStartTime,
+                rxEndTime,
+                startAzimuthDegrees,
+                endAzimuthDegrees,
+                startElevationDegrees,
+                endElevationDegrees,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OrbitalAvailableContact>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OrbitalAvailableContact IPersistableModel<OrbitalAvailableContact>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOrbitalAvailableContact(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OrbitalAvailableContact>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

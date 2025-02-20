@@ -15,24 +15,42 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant");
+            writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(TransfereeCallerId))
-            {
-                writer.WritePropertyName("transfereeCallerId");
-                writer.WriteObjectValue(TransfereeCallerId);
-            }
-            if (Optional.IsDefined(UserToUserInformation))
-            {
-                writer.WritePropertyName("userToUserInformation");
-                writer.WriteStringValue(UserToUserInformation);
-            }
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(Transferee))
+            {
+                writer.WritePropertyName("transferee"u8);
+                writer.WriteObjectValue(Transferee);
+            }
+            if (Optional.IsDefined(OperationCallbackUri))
+            {
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
+            if (Optional.IsDefined(CustomCallingContext))
+            {
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
+            }
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

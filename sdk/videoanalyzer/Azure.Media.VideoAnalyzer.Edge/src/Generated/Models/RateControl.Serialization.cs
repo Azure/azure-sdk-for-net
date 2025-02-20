@@ -17,22 +17,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BitRateLimit))
             {
-                writer.WritePropertyName("bitRateLimit");
+                writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
             if (Optional.IsDefined(EncodingInterval))
             {
-                writer.WritePropertyName("encodingInterval");
+                writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
             if (Optional.IsDefined(FrameRateLimit))
             {
-                writer.WritePropertyName("frameRateLimit");
+                writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
             if (Optional.IsDefined(GuaranteedFrameRate))
             {
-                writer.WritePropertyName("guaranteedFrameRate");
+                writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);
             }
             writer.WriteEndObject();
@@ -40,54 +40,70 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RateControl DeserializeRateControl(JsonElement element)
         {
-            Optional<float> bitRateLimit = default;
-            Optional<float> encodingInterval = default;
-            Optional<float> frameRateLimit = default;
-            Optional<bool> guaranteedFrameRate = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            float? bitRateLimit = default;
+            float? encodingInterval = default;
+            float? frameRateLimit = default;
+            bool? guaranteedFrameRate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bitRateLimit"))
+                if (property.NameEquals("bitRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitRateLimit = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("encodingInterval"))
+                if (property.NameEquals("encodingInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encodingInterval = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("frameRateLimit"))
+                if (property.NameEquals("frameRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frameRateLimit = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("guaranteedFrameRate"))
+                if (property.NameEquals("guaranteedFrameRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     guaranteedFrameRate = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new RateControl(Optional.ToNullable(bitRateLimit), Optional.ToNullable(encodingInterval), Optional.ToNullable(frameRateLimit), Optional.ToNullable(guaranteedFrameRate));
+            return new RateControl(bitRateLimit, encodingInterval, frameRateLimit, guaranteedFrameRate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RateControl FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRateControl(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

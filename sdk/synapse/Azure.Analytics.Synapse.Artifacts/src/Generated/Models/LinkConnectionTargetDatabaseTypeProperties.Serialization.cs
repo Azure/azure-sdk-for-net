@@ -20,45 +20,78 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CrossTableTransaction))
             {
-                writer.WritePropertyName("crossTableTransaction");
+                writer.WritePropertyName("crossTableTransaction"u8);
                 writer.WriteBooleanValue(CrossTableTransaction.Value);
             }
             if (Optional.IsDefined(DropExistingTargetTableOnStart))
             {
-                writer.WritePropertyName("dropExistingTargetTableOnStart");
+                writer.WritePropertyName("dropExistingTargetTableOnStart"u8);
                 writer.WriteBooleanValue(DropExistingTargetTableOnStart.Value);
+            }
+            if (Optional.IsDefined(ActionOnExistingTargetTable))
+            {
+                writer.WritePropertyName("actionOnExistingTargetTable"u8);
+                writer.WriteStringValue(ActionOnExistingTargetTable.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static LinkConnectionTargetDatabaseTypeProperties DeserializeLinkConnectionTargetDatabaseTypeProperties(JsonElement element)
         {
-            Optional<bool> crossTableTransaction = default;
-            Optional<bool> dropExistingTargetTableOnStart = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? crossTableTransaction = default;
+            bool? dropExistingTargetTableOnStart = default;
+            ActionOnExistingTargetTable? actionOnExistingTargetTable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("crossTableTransaction"))
+                if (property.NameEquals("crossTableTransaction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossTableTransaction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dropExistingTargetTableOnStart"))
+                if (property.NameEquals("dropExistingTargetTableOnStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dropExistingTargetTableOnStart = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("actionOnExistingTargetTable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actionOnExistingTargetTable = new ActionOnExistingTargetTable(property.Value.GetString());
+                    continue;
+                }
             }
-            return new LinkConnectionTargetDatabaseTypeProperties(Optional.ToNullable(crossTableTransaction), Optional.ToNullable(dropExistingTargetTableOnStart));
+            return new LinkConnectionTargetDatabaseTypeProperties(crossTableTransaction, dropExistingTargetTableOnStart, actionOnExistingTargetTable);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionTargetDatabaseTypeProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionTargetDatabaseTypeProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class LinkConnectionTargetDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionTargetDatabaseTypeProperties>
@@ -67,6 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LinkConnectionTargetDatabaseTypeProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -5,29 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class UserDefinedResourcesProperties : IUtf8JsonSerializable
+    public partial class UserDefinedResourcesProperties : IUtf8JsonSerializable, IJsonModel<UserDefinedResourcesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDefinedResourcesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<UserDefinedResourcesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedResourcesProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserDefinedResourcesProperties)} does not support writing '{format}' format.");
+            }
+
             if (Query != null)
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             else
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null)
+            if (QuerySubscriptions != null && Optional.IsCollectionDefined(QuerySubscriptions))
             {
-                writer.WritePropertyName("querySubscriptions");
+                writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in QuerySubscriptions)
                 {
@@ -39,16 +57,50 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("querySubscriptions");
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element)
+        UserDefinedResourcesProperties IJsonModel<UserDefinedResourcesProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedResourcesProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserDefinedResourcesProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserDefinedResourcesProperties(document.RootElement, options);
+        }
+
+        internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string query = default;
             IList<string> querySubscriptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("querySubscriptions"))
+                if (property.NameEquals("querySubscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,8 +125,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     querySubscriptions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UserDefinedResourcesProperties(query, querySubscriptions);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UserDefinedResourcesProperties(query, querySubscriptions, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UserDefinedResourcesProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedResourcesProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UserDefinedResourcesProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UserDefinedResourcesProperties IPersistableModel<UserDefinedResourcesProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedResourcesProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUserDefinedResourcesProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserDefinedResourcesProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UserDefinedResourcesProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

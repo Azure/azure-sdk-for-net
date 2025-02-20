@@ -7,51 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementDiagnosticResource
     {
-        // ApiManagementHeadDiagnostic
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadDiagnostic()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadDiagnostic.json
-            // this example is just showing the usage of "Diagnostic_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementDiagnosticResource created on azure
-            // for more information of creating ApiManagementDiagnosticResource, please refer to the document of ApiManagementDiagnosticResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string diagnosticId = "applicationinsights";
-            ResourceIdentifier apiManagementDiagnosticResourceId = ApiManagementDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, diagnosticId);
-            ApiManagementDiagnosticResource apiManagementDiagnostic = client.GetApiManagementDiagnosticResource(apiManagementDiagnosticResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementDiagnostic.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetDiagnostic
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetDiagnostic()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetDiagnostic.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetDiagnostic.json
             // this example is just showing the usage of "Diagnostic_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementDiagnosticResource created on azure
             // for more information of creating ApiManagementDiagnosticResource, please refer to the document of ApiManagementDiagnosticResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string diagnosticId = "applicationinsights";
@@ -78,12 +47,39 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateDiagnostic
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteDiagnostic()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteDiagnostic.json
+            // this example is just showing the usage of "Diagnostic_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementDiagnosticResource created on azure
+            // for more information of creating ApiManagementDiagnosticResource, please refer to the document of ApiManagementDiagnosticResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string diagnosticId = "applicationinsights";
+            ResourceIdentifier apiManagementDiagnosticResourceId = ApiManagementDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, diagnosticId);
+            ApiManagementDiagnosticResource apiManagementDiagnostic = client.GetApiManagementDiagnosticResource(apiManagementDiagnosticResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            await apiManagementDiagnostic.DeleteAsync(WaitUntil.Completed, ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateDiagnostic()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateDiagnostic.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateDiagnostic.json
             // this example is just showing the usage of "Diagnostic_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementDiagnosticResource created on azure
             // for more information of creating ApiManagementDiagnosticResource, please refer to the document of ApiManagementDiagnosticResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string diagnosticId = "applicationinsights";
@@ -102,50 +98,38 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            DiagnosticContractData data = new DiagnosticContractData()
+            DiagnosticContractData data = new DiagnosticContractData
             {
                 AlwaysLog = AlwaysLog.AllErrors,
                 LoggerId = "/loggers/applicationinsights",
-                Sampling = new SamplingSettings()
+                Sampling = new SamplingSettings
                 {
                     SamplingType = SamplingType.Fixed,
                     Percentage = 50,
                 },
-                Frontend = new PipelineDiagnosticSettings()
+                Frontend = new PipelineDiagnosticSettings
                 {
-                    Request = new HttpMessageDiagnostic()
+                    Request = new HttpMessageDiagnostic
                     {
-                        Headers =
-{
-"Content-type"
-},
+                        Headers = { "Content-type" },
                         BodyBytes = 512,
                     },
-                    Response = new HttpMessageDiagnostic()
+                    Response = new HttpMessageDiagnostic
                     {
-                        Headers =
-{
-"Content-type"
-},
+                        Headers = { "Content-type" },
                         BodyBytes = 512,
                     },
                 },
-                Backend = new PipelineDiagnosticSettings()
+                Backend = new PipelineDiagnosticSettings
                 {
-                    Request = new HttpMessageDiagnostic()
+                    Request = new HttpMessageDiagnostic
                     {
-                        Headers =
-{
-"Content-type"
-},
+                        Headers = { "Content-type" },
                         BodyBytes = 512,
                     },
-                    Response = new HttpMessageDiagnostic()
+                    Response = new HttpMessageDiagnostic
                     {
-                        Headers =
-{
-"Content-type"
-},
+                        Headers = { "Content-type" },
                         BodyBytes = 512,
                     },
                 },
@@ -159,13 +143,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteDiagnostic
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ApiManagementDeleteDiagnostic()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadDiagnostic()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteDiagnostic.json
-            // this example is just showing the usage of "Diagnostic_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadDiagnostic.json
+            // this example is just showing the usage of "Diagnostic_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -174,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementDiagnosticResource created on azure
             // for more information of creating ApiManagementDiagnosticResource, please refer to the document of ApiManagementDiagnosticResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string diagnosticId = "applicationinsights";
@@ -182,10 +165,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementDiagnosticResource apiManagementDiagnostic = client.GetApiManagementDiagnosticResource(apiManagementDiagnosticResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("*");
-            await apiManagementDiagnostic.DeleteAsync(WaitUntil.Completed, ifMatch);
+            bool result = await apiManagementDiagnostic.GetEntityTagAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -15,21 +15,29 @@ namespace Azure.Quantum.Jobs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("op");
+            writer.WritePropertyName("op"u8);
             writer.WriteStringValue(Op.ToString());
-            writer.WritePropertyName("path");
+            writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
-                writer.WriteObjectValue(Value);
+                writer.WritePropertyName("value"u8);
+                writer.WriteObjectValue<object>(Value);
             }
             if (Optional.IsDefined(From))
             {
-                writer.WritePropertyName("from");
+                writer.WritePropertyName("from"u8);
                 writer.WriteStringValue(From);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

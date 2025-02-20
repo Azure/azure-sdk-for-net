@@ -16,9 +16,9 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("indexes");
+            writer.WritePropertyName("indexes"u8);
             writer.WriteStartArray();
             foreach (var item in Indexes)
             {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(_etag))
             {
-                writer.WritePropertyName("@odata.etag");
+                writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
@@ -35,17 +35,21 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchAlias DeserializeSearchAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<string> indexes = default;
-            Optional<string> odataEtag = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexes"))
+                if (property.NameEquals("indexes"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -55,13 +59,29 @@ namespace Azure.Search.Documents.Indexes.Models
                     indexes = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.etag"))
+                if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchAlias(name, indexes, odataEtag.Value);
+            return new SearchAlias(name, indexes, odataEtag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchAlias FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchAlias(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

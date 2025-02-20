@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabWeekDetails : IUtf8JsonSerializable
+    public partial class DevTestLabWeekDetails : IUtf8JsonSerializable, IJsonModel<DevTestLabWeekDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabWeekDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevTestLabWeekDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabWeekDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Weekdays))
             {
-                writer.WritePropertyName("weekdays");
+                writer.WritePropertyName("weekdays"u8);
                 writer.WriteStartArray();
                 foreach (var item in Weekdays)
                 {
@@ -28,23 +46,56 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             if (Optional.IsDefined(Time))
             {
-                writer.WritePropertyName("time");
+                writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DevTestLabWeekDetails DeserializeDevTestLabWeekDetails(JsonElement element)
+        DevTestLabWeekDetails IJsonModel<DevTestLabWeekDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> weekdays = default;
-            Optional<string> time = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabWeekDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabWeekDetails(document.RootElement, options);
+        }
+
+        internal static DevTestLabWeekDetails DeserializeDevTestLabWeekDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> weekdays = default;
+            string time = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("weekdays"))
+                if (property.NameEquals("weekdays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -55,13 +106,49 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     weekdays = array;
                     continue;
                 }
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     time = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabWeekDetails(Optional.ToList(weekdays), time.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabWeekDetails(weekdays ?? new ChangeTrackingList<string>(), time, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabWeekDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabWeekDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabWeekDetails IPersistableModel<DevTestLabWeekDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabWeekDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabWeekDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabWeekDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

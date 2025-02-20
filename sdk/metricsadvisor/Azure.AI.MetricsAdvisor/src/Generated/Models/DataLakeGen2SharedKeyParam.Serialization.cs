@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
             writer.WriteEndObject();
@@ -25,16 +25,36 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static DataLakeGen2SharedKeyParam DeserializeDataLakeGen2SharedKeyParam(JsonElement element)
         {
-            Optional<string> accountKey = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string accountKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataLakeGen2SharedKeyParam(accountKey.Value);
+            return new DataLakeGen2SharedKeyParam(accountKey);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataLakeGen2SharedKeyParam FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataLakeGen2SharedKeyParam(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

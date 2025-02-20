@@ -18,47 +18,66 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceManagerEndpoint");
-            writer.WriteObjectValue(ResourceManagerEndpoint);
-            writer.WritePropertyName("tempScriptPath");
-            writer.WriteObjectValue(TempScriptPath);
+            writer.WritePropertyName("resourceManagerEndpoint"u8);
+            writer.WriteObjectValue<object>(ResourceManagerEndpoint);
+            writer.WritePropertyName("tempScriptPath"u8);
+            writer.WriteObjectValue<object>(TempScriptPath);
             if (Optional.IsDefined(DistcpOptions))
             {
-                writer.WritePropertyName("distcpOptions");
-                writer.WriteObjectValue(DistcpOptions);
+                writer.WritePropertyName("distcpOptions"u8);
+                writer.WriteObjectValue<object>(DistcpOptions);
             }
             writer.WriteEndObject();
         }
 
         internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
-            Optional<object> distcpOptions = default;
+            object distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceManagerEndpoint"))
+                if (property.NameEquals("resourceManagerEndpoint"u8))
                 {
                     resourceManagerEndpoint = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("tempScriptPath"))
+                if (property.NameEquals("tempScriptPath"u8))
                 {
                     tempScriptPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("distcpOptions"))
+                if (property.NameEquals("distcpOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     distcpOptions = property.Value.GetObject();
                     continue;
                 }
             }
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value);
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DistcpSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDistcpSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DistcpSettingsConverter : JsonConverter<DistcpSettings>
@@ -67,6 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DistcpSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

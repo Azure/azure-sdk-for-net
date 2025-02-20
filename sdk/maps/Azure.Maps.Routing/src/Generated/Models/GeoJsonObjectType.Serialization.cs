@@ -27,15 +27,15 @@ namespace Azure.Maps.Routing.Models
 
         public static GeoJsonObjectType ToGeoJsonObjectType(this string value)
         {
-            if (string.Equals(value, "Point", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonPoint;
-            if (string.Equals(value, "MultiPoint", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonMultiPoint;
-            if (string.Equals(value, "LineString", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonLineString;
-            if (string.Equals(value, "MultiLineString", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonMultiLineString;
-            if (string.Equals(value, "Polygon", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonPolygon;
-            if (string.Equals(value, "MultiPolygon", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonMultiPolygon;
-            if (string.Equals(value, "GeometryCollection", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonGeometryCollection;
-            if (string.Equals(value, "Feature", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonFeature;
-            if (string.Equals(value, "FeatureCollection", StringComparison.InvariantCultureIgnoreCase)) return GeoJsonObjectType.GeoJsonFeatureCollection;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Point")) return GeoJsonObjectType.GeoJsonPoint;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MultiPoint")) return GeoJsonObjectType.GeoJsonMultiPoint;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LineString")) return GeoJsonObjectType.GeoJsonLineString;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MultiLineString")) return GeoJsonObjectType.GeoJsonMultiLineString;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Polygon")) return GeoJsonObjectType.GeoJsonPolygon;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MultiPolygon")) return GeoJsonObjectType.GeoJsonMultiPolygon;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeometryCollection")) return GeoJsonObjectType.GeoJsonGeometryCollection;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Feature")) return GeoJsonObjectType.GeoJsonFeature;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FeatureCollection")) return GeoJsonObjectType.GeoJsonFeatureCollection;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoJsonObjectType value.");
         }
     }

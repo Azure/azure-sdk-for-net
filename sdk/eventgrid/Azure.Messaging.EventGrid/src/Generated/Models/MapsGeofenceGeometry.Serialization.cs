@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,61 +13,76 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element)
         {
-            Optional<string> deviceId = default;
-            Optional<float> distance = default;
-            Optional<string> geometryId = default;
-            Optional<float> nearestLat = default;
-            Optional<float> nearestLon = default;
-            Optional<string> udId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string deviceId = default;
+            float? distance = default;
+            string geometryId = default;
+            float? nearestLat = default;
+            float? nearestLon = default;
+            string udId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("distance"))
+                if (property.NameEquals("distance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     distance = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("geometryId"))
+                if (property.NameEquals("geometryId"u8))
                 {
                     geometryId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nearestLat"))
+                if (property.NameEquals("nearestLat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nearestLat = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("nearestLon"))
+                if (property.NameEquals("nearestLon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nearestLon = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("udId"))
+                if (property.NameEquals("udId"u8))
                 {
                     udId = property.Value.GetString();
                     continue;
                 }
             }
-            return new MapsGeofenceGeometry(deviceId.Value, Optional.ToNullable(distance), geometryId.Value, Optional.ToNullable(nearestLat), Optional.ToNullable(nearestLon), udId.Value);
+            return new MapsGeofenceGeometry(
+                deviceId,
+                distance,
+                geometryId,
+                nearestLat,
+                nearestLon,
+                udId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapsGeofenceGeometry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsGeofenceGeometry(document.RootElement);
         }
     }
 }

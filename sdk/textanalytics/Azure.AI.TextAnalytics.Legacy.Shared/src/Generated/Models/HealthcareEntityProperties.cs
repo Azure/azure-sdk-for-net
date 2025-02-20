@@ -7,18 +7,17 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The HealthcareEntityProperties. </summary>
     internal partial class HealthcareEntityProperties
     {
-        /// <summary> Initializes a new instance of HealthcareEntityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntityProperties"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal HealthcareEntityProperties(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore)
@@ -32,12 +31,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of HealthcareEntityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntityProperties"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         internal HealthcareEntityProperties(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore)
         {
@@ -55,9 +54,9 @@ namespace Azure.AI.TextAnalytics.Legacy
         public HealthcareEntityCategory Category { get; }
         /// <summary> (Optional) Entity sub type. </summary>
         public string Subcategory { get; }
-        /// <summary> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </summary>
+        /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; }
-        /// <summary> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </summary>
+        /// <summary> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </summary>
         public int Length { get; }
         /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
         public double ConfidenceScore { get; }

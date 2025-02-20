@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -44,6 +45,11 @@ namespace Azure.Communication.CallAutomation
         public PlaySource Prompt { get; set; }
 
         /// <summary>
+        /// PlaySource objects representing the sources to play.
+        /// </summary>
+        public IList<PlaySource> PlayPrompts { get; set; }
+
+        /// <summary>
         /// Determines if we interrupt the prompt and start recognizing.
         /// </summary>
         public bool InterruptPrompt { get; set; }
@@ -58,5 +64,17 @@ namespace Azure.Communication.CallAutomation
         /// Target participant of DTFM tone recognition.
         /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
+
+        /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
+        public string SpeechLanguage { get; set; }
+
+        /// <summary> Endpoint where the speech custom model was deployed. </summary>
+        public string SpeechModelEndpointId { get; set; }
+
+        /// <summary>
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public Uri OperationCallbackUri { get; set; }
     }
 }

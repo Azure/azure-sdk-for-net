@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRouteAuthorizationResource" /> and their operations.
-    /// Each <see cref="ExpressRouteAuthorizationResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get an <see cref="ExpressRouteAuthorizationCollection" /> instance call the GetExpressRouteAuthorizations method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="ExpressRouteAuthorizationResource"/> and their operations.
+    /// Each <see cref="ExpressRouteAuthorizationResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get an <see cref="ExpressRouteAuthorizationCollection"/> instance call the GetExpressRouteAuthorizations method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class ExpressRouteAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteAuthorizationResource>, IAsyncEnumerable<ExpressRouteAuthorizationResource>
     {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+        /// Create a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -63,11 +62,19 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="data"> An ExpressRoute Circuit Authorization. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+        /// Create a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -104,11 +111,19 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="data"> An ExpressRoute Circuit Authorization. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data, cancellationToken);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,7 +150,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an ExpressRoute Circuit Authorization by name in a private cloud
+        /// Get a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -145,9 +160,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
@@ -172,7 +195,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an ExpressRoute Circuit Authorization by name in a private cloud
+        /// Get a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,9 +205,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
@@ -209,7 +240,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List ExpressRoute Circuit Authorizations in a private cloud
+        /// List ExpressRouteAuthorization resources by PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,19 +250,27 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteAuthorizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteAuthorizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteAuthorizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List ExpressRoute Circuit Authorizations in a private cloud
+        /// List ExpressRouteAuthorization resources by PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,15 +280,23 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteAuthorizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteAuthorizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteAuthorizationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,9 +310,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
@@ -298,9 +353,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
@@ -314,6 +377,96 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _expressRouteAuthorizationAuthorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExpressRouteAuthorizationResource>> GetIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            using var scope = _expressRouteAuthorizationAuthorizationsClientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteAuthorizationAuthorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRouteAuthorizationResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteAuthorizationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        public virtual NullableResponse<ExpressRouteAuthorizationResource> GetIfExists(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            using var scope = _expressRouteAuthorizationAuthorizationsClientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteAuthorizationAuthorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRouteAuthorizationResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteAuthorizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

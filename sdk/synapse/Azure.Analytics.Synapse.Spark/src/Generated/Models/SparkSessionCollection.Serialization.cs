@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -15,26 +14,29 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSessionCollection DeserializeSparkSessionCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int @from = default;
             int total = default;
-            Optional<IReadOnlyList<SparkSession>> sessions = default;
+            IReadOnlyList<SparkSession> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     @from = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     total = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sessions"))
+                if (property.NameEquals("sessions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SparkSession> array = new List<SparkSession>();
@@ -46,7 +48,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSessionCollection(@from, total, Optional.ToList(sessions));
+            return new SparkSessionCollection(@from, total, sessions ?? new ChangeTrackingList<SparkSession>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkSessionCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkSessionCollection(document.RootElement);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static CdnMinimumTlsVersion ToCdnMinimumTlsVersion(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return CdnMinimumTlsVersion.None;
-            if (string.Equals(value, "TLS10", StringComparison.InvariantCultureIgnoreCase)) return CdnMinimumTlsVersion.Tls1_0;
-            if (string.Equals(value, "TLS12", StringComparison.InvariantCultureIgnoreCase)) return CdnMinimumTlsVersion.Tls1_2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return CdnMinimumTlsVersion.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10")) return CdnMinimumTlsVersion.Tls1_0;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12")) return CdnMinimumTlsVersion.Tls1_2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CdnMinimumTlsVersion value.");
         }
     }

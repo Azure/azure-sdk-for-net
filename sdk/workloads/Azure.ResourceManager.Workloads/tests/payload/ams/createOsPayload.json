@@ -1,0 +1,10 @@
+{
+    "properties": {
+        "providerSettings": {
+            "sslPreference": "Disabled",
+            "providerType": "PrometheusOS",
+            "prometheusUrl": "http://10.1.0.4:9100/metrics",
+            "sapSid": "X00"
+        }
+    }
+}

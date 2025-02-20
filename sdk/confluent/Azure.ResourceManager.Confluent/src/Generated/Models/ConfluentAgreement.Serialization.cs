@@ -6,105 +6,142 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentAgreement : IUtf8JsonSerializable
+    public partial class ConfluentAgreement : IUtf8JsonSerializable, IJsonModel<ConfluentAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentAgreement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConfluentAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(Product))
             {
-                writer.WritePropertyName("product");
+                writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
             if (Optional.IsDefined(LicenseTextLink))
             {
-                writer.WritePropertyName("licenseTextLink");
+                writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
             if (Optional.IsDefined(PrivacyPolicyLink))
             {
-                writer.WritePropertyName("privacyPolicyLink");
+                writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
             if (Optional.IsDefined(RetrieveOn))
             {
-                writer.WritePropertyName("retrieveDatetime");
+                writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveOn.Value, "O");
             }
             if (Optional.IsDefined(Signature))
             {
-                writer.WritePropertyName("signature");
+                writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
             if (Optional.IsDefined(IsAccepted))
             {
-                writer.WritePropertyName("accepted");
+                writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(IsAccepted.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ConfluentAgreement DeserializeConfluentAgreement(JsonElement element)
+        ConfluentAgreement IJsonModel<ConfluentAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfluentAgreement(document.RootElement, options);
+        }
+
+        internal static ConfluentAgreement DeserializeConfluentAgreement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string product = default;
+            string plan = default;
+            string licenseTextLink = default;
+            string privacyPolicyLink = default;
+            DateTimeOffset? retrieveDatetime = default;
+            string signature = default;
+            bool? accepted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,51 +150,49 @@ namespace Azure.ResourceManager.Confluent.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("product"))
+                        if (property0.NameEquals("product"u8))
                         {
                             product = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("plan"))
+                        if (property0.NameEquals("plan"u8))
                         {
                             plan = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("licenseTextLink"))
+                        if (property0.NameEquals("licenseTextLink"u8))
                         {
                             licenseTextLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privacyPolicyLink"))
+                        if (property0.NameEquals("privacyPolicyLink"u8))
                         {
                             privacyPolicyLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("retrieveDatetime"))
+                        if (property0.NameEquals("retrieveDatetime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retrieveDatetime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("signature"))
+                        if (property0.NameEquals("signature"u8))
                         {
                             signature = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accepted"))
+                        if (property0.NameEquals("accepted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accepted = property0.Value.GetBoolean();
@@ -166,8 +201,57 @@ namespace Azure.ResourceManager.Confluent.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfluentAgreement(
+                id,
+                name,
+                type,
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveDatetime,
+                signature,
+                accepted,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfluentAgreement>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfluentAgreement IPersistableModel<ConfluentAgreement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfluentAgreement(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfluentAgreement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

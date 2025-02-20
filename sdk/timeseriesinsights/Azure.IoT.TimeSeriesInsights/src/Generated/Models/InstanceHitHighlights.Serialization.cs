@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,21 +14,24 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> timeSeriesId = default;
-            Optional<string> typeName = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<string>> hierarchyIds = default;
-            Optional<IReadOnlyList<string>> hierarchyNames = default;
-            Optional<IReadOnlyList<string>> instanceFieldNames = default;
-            Optional<IReadOnlyList<string>> instanceFieldValues = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> timeSeriesId = default;
+            string typeName = default;
+            string name = default;
+            string description = default;
+            IReadOnlyList<string> hierarchyIds = default;
+            IReadOnlyList<string> hierarchyNames = default;
+            IReadOnlyList<string> instanceFieldNames = default;
+            IReadOnlyList<string> instanceFieldValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeSeriesId"))
+                if (property.NameEquals("timeSeriesId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -40,26 +42,25 @@ namespace Azure.IoT.TimeSeriesInsights
                     timeSeriesId = array;
                     continue;
                 }
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hierarchyIds"))
+                if (property.NameEquals("hierarchyIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -70,11 +71,10 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchyIds = array;
                     continue;
                 }
-                if (property.NameEquals("hierarchyNames"))
+                if (property.NameEquals("hierarchyNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -85,11 +85,10 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchyNames = array;
                     continue;
                 }
-                if (property.NameEquals("instanceFieldNames"))
+                if (property.NameEquals("instanceFieldNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -100,11 +99,10 @@ namespace Azure.IoT.TimeSeriesInsights
                     instanceFieldNames = array;
                     continue;
                 }
-                if (property.NameEquals("instanceFieldValues"))
+                if (property.NameEquals("instanceFieldValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -116,7 +114,23 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstanceHitHighlights(Optional.ToList(timeSeriesId), typeName.Value, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToList(hierarchyNames), Optional.ToList(instanceFieldNames), Optional.ToList(instanceFieldValues));
+            return new InstanceHitHighlights(
+                timeSeriesId ?? new ChangeTrackingList<string>(),
+                typeName,
+                name,
+                description,
+                hierarchyIds ?? new ChangeTrackingList<string>(),
+                hierarchyNames ?? new ChangeTrackingList<string>(),
+                instanceFieldNames ?? new ChangeTrackingList<string>(),
+                instanceFieldValues ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InstanceHitHighlights FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInstanceHitHighlights(document.RootElement);
         }
     }
 }

@@ -6,213 +6,164 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderRegistrationProperties : IUtf8JsonSerializable
+    public partial class ProviderRegistrationProperties : IUtf8JsonSerializable, IJsonModel<ProviderRegistrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderRegistrationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProviderRegistrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ProviderHubMetadata))
             {
-                writer.WritePropertyName("providerHubMetadata");
-                writer.WriteObjectValue(ProviderHubMetadata);
+                writer.WritePropertyName("providerHubMetadata"u8);
+                writer.WriteObjectValue(ProviderHubMetadata, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
-                writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications");
-                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications);
+                writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
+                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications, options);
             }
-            if (Optional.IsDefined(ProviderAuthentication))
-            {
-                writer.WritePropertyName("providerAuthentication");
-                writer.WriteObjectValue(ProviderAuthentication);
-            }
-            if (Optional.IsCollectionDefined(ProviderAuthorizations))
-            {
-                writer.WritePropertyName("providerAuthorizations");
-                writer.WriteStartArray();
-                foreach (var item in ProviderAuthorizations)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Namespace))
-            {
-                writer.WritePropertyName("namespace");
-                writer.WriteStringValue(Namespace);
-            }
-            if (Optional.IsDefined(ProviderVersion))
-            {
-                writer.WritePropertyName("providerVersion");
-                writer.WriteStringValue(ProviderVersion);
-            }
-            if (Optional.IsDefined(ProviderType))
-            {
-                writer.WritePropertyName("providerType");
-                writer.WriteStringValue(ProviderType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
-            {
-                writer.WritePropertyName("requiredFeatures");
-                writer.WriteStartArray();
-                foreach (var item in RequiredFeatures)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(FeaturesRule))
-            {
-                writer.WritePropertyName("featuresRule");
-                writer.WriteObjectValue(FeaturesRule);
-            }
-            if (Optional.IsDefined(RequestHeaderOptions))
-            {
-                writer.WritePropertyName("requestHeaderOptions");
-                writer.WriteObjectValue(RequestHeaderOptions);
-            }
-            if (Optional.IsDefined(Management))
-            {
-                writer.WritePropertyName("management");
-                writer.WriteObjectValue(Management);
-            }
-            if (Optional.IsCollectionDefined(Capabilities))
-            {
-                writer.WritePropertyName("capabilities");
-                writer.WriteStartArray();
-                foreach (var item in Capabilities)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Metadata);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(TemplateDeploymentOptions))
-            {
-                writer.WritePropertyName("templateDeploymentOptions");
-                writer.WriteObjectValue(TemplateDeploymentOptions);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ProviderRegistrationProperties DeserializeProviderRegistrationProperties(JsonElement element)
+        ProviderRegistrationProperties IJsonModel<ProviderRegistrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ProviderRegistrationPropertiesProviderHubMetadata> providerHubMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
-            Optional<ResourceProviderManifestPropertiesProviderAuthentication> providerAuthentication = default;
-            Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Optional<string> @namespace = default;
-            Optional<string> providerVersion = default;
-            Optional<ResourceProviderType> providerType = default;
-            Optional<IList<string>> requiredFeatures = default;
-            Optional<ResourceProviderManifestPropertiesFeaturesRule> featuresRule = default;
-            Optional<ResourceProviderManifestPropertiesRequestHeaderOptions> requestHeaderOptions = default;
-            Optional<ResourceProviderManifestPropertiesManagement> management = default;
-            Optional<IList<ResourceProviderCapabilities>> capabilities = default;
-            Optional<BinaryData> metadata = default;
-            Optional<ResourceProviderManifestPropertiesTemplateDeploymentOptions> templateDeploymentOptions = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderRegistrationProperties(document.RootElement, options);
+        }
+
+        internal static ProviderRegistrationProperties DeserializeProviderRegistrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ProviderHubMetadata providerHubMetadata = default;
+            ProviderHubProvisioningState? provisioningState = default;
+            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
+            ResourceProviderAuthentication providerAuthentication = default;
+            IList<ResourceProviderAuthorization> providerAuthorizations = default;
+            string @namespace = default;
+            string providerVersion = default;
+            ResourceProviderType? providerType = default;
+            IList<string> requiredFeatures = default;
+            FeaturesRule featuresRule = default;
+            RequestHeaderOptions requestHeaderOptions = default;
+            ResourceProviderManagement management = default;
+            IList<ResourceProviderCapabilities> capabilities = default;
+            BinaryData metadata = default;
+            TemplateDeploymentOptions templateDeploymentOptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerHubMetadata"))
+                if (property.NameEquals("providerHubMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerHubMetadata = ProviderRegistrationPropertiesProviderHubMetadata.DeserializeProviderRegistrationPropertiesProviderHubMetadata(property.Value);
+                    providerHubMetadata = ProviderHubMetadata.DeserializeProviderHubMetadata(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionLifecycleNotificationSpecifications"))
+                if (property.NameEquals("subscriptionLifecycleNotificationSpecifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subscriptionLifecycleNotificationSpecifications = ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications.DeserializeProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications(property.Value);
+                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("providerAuthentication"))
+                if (property.NameEquals("providerAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerAuthentication = ResourceProviderManifestPropertiesProviderAuthentication.DeserializeResourceProviderManifestPropertiesProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("providerAuthorizations"))
+                if (property.NameEquals("providerAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item));
+                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item, options));
                     }
                     providerAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerVersion"))
+                if (property.NameEquals("providerVersion"u8))
                 {
                     providerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerType = new ResourceProviderType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requiredFeatures"))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -223,73 +174,119 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("featuresRule"))
+                if (property.NameEquals("featuresRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featuresRule = ResourceProviderManifestPropertiesFeaturesRule.DeserializeResourceProviderManifestPropertiesFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("requestHeaderOptions"))
+                if (property.NameEquals("requestHeaderOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestHeaderOptions = ResourceProviderManifestPropertiesRequestHeaderOptions.DeserializeResourceProviderManifestPropertiesRequestHeaderOptions(property.Value);
+                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("management"))
+                if (property.NameEquals("management"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    management = ResourceProviderManifestPropertiesManagement.DeserializeResourceProviderManifestPropertiesManagement(property.Value);
+                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderCapabilities> array = new List<ResourceProviderCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderCapabilities.DeserializeResourceProviderCapabilities(item));
+                        array.Add(ResourceProviderCapabilities.DeserializeResourceProviderCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("templateDeploymentOptions"))
+                if (property.NameEquals("templateDeploymentOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    templateDeploymentOptions = ResourceProviderManifestPropertiesTemplateDeploymentOptions.DeserializeResourceProviderManifestPropertiesTemplateDeploymentOptions(property.Value);
+                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderRegistrationProperties(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, providerHubMetadata.Value, Optional.ToNullable(provisioningState), subscriptionLifecycleNotificationSpecifications.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProviderRegistrationProperties(
+                providerAuthentication,
+                providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
+                @namespace,
+                providerVersion,
+                providerType,
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule,
+                requestHeaderOptions,
+                management,
+                capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
+                metadata,
+                templateDeploymentOptions,
+                serializedAdditionalRawData,
+                providerHubMetadata,
+                provisioningState,
+                subscriptionLifecycleNotificationSpecifications);
         }
+
+        BinaryData IPersistableModel<ProviderRegistrationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProviderRegistrationProperties IPersistableModel<ProviderRegistrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProviderRegistrationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderRegistrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> Properties of a time series database connection to Azure Data Explorer with data being sent via an EventHub. </summary>
     public partial class DataExplorerConnectionProperties : TimeSeriesDatabaseConnectionProperties
     {
-        /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExplorerConnectionProperties"/>. </summary>
         /// <param name="adxResourceId"> The resource ID of the Azure Data Explorer cluster. </param>
         /// <param name="adxEndpointUri"> The URI of the Azure Data Explorer endpoint. </param>
         /// <param name="adxDatabaseName"> The name of the Azure Data Explorer database. </param>
@@ -39,29 +40,41 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ConnectionType = ConnectionType.AzureDataExplorer;
         }
 
-        /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExplorerConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="adxResourceId"> The resource ID of the Azure Data Explorer cluster. </param>
         /// <param name="adxEndpointUri"> The URI of the Azure Data Explorer endpoint. </param>
         /// <param name="adxDatabaseName"> The name of the Azure Data Explorer database. </param>
-        /// <param name="adxTableName"> The name of the Azure Data Explorer table. Defaults to AdtPropertyEvents. </param>
+        /// <param name="adxTableName"> The name of the Azure Data Explorer table used for storing updates to properties of twins and relationships. Defaults to AdtPropertyEvents. </param>
+        /// <param name="adxTwinLifecycleEventsTableName"> The name of the Azure Data Explorer table used for recording twin lifecycle events. The table will not be created if this property is left unspecified. </param>
+        /// <param name="adxRelationshipLifecycleEventsTableName"> The name of the Azure Data Explorer table used for recording relationship lifecycle events. The table will not be created if this property is left unspecified. </param>
         /// <param name="eventHubEndpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol sb://. </param>
         /// <param name="eventHubEntityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
         /// <param name="eventHubNamespaceResourceId"> The resource ID of the EventHub namespace. </param>
         /// <param name="eventHubConsumerGroup"> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </param>
-        internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup) : base(connectionType, provisioningState, identity)
+        /// <param name="recordPropertyAndItemRemovals"> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to 'true'. Setting this property to 'true' will generate an additional column in the property events table in ADX. </param>
+        internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, string adxTwinLifecycleEventsTableName, string adxRelationshipLifecycleEventsTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup, RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals) : base(connectionType, provisioningState, identity, serializedAdditionalRawData)
         {
             AdxResourceId = adxResourceId;
             AdxEndpointUri = adxEndpointUri;
             AdxDatabaseName = adxDatabaseName;
             AdxTableName = adxTableName;
+            AdxTwinLifecycleEventsTableName = adxTwinLifecycleEventsTableName;
+            AdxRelationshipLifecycleEventsTableName = adxRelationshipLifecycleEventsTableName;
             EventHubEndpointUri = eventHubEndpointUri;
             EventHubEntityPath = eventHubEntityPath;
             EventHubNamespaceResourceId = eventHubNamespaceResourceId;
             EventHubConsumerGroup = eventHubConsumerGroup;
+            RecordPropertyAndItemRemovals = recordPropertyAndItemRemovals;
             ConnectionType = connectionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataExplorerConnectionProperties"/> for deserialization. </summary>
+        internal DataExplorerConnectionProperties()
+        {
         }
 
         /// <summary> The resource ID of the Azure Data Explorer cluster. </summary>
@@ -70,8 +83,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public Uri AdxEndpointUri { get; set; }
         /// <summary> The name of the Azure Data Explorer database. </summary>
         public string AdxDatabaseName { get; set; }
-        /// <summary> The name of the Azure Data Explorer table. Defaults to AdtPropertyEvents. </summary>
+        /// <summary> The name of the Azure Data Explorer table used for storing updates to properties of twins and relationships. Defaults to AdtPropertyEvents. </summary>
         public string AdxTableName { get; set; }
+        /// <summary> The name of the Azure Data Explorer table used for recording twin lifecycle events. The table will not be created if this property is left unspecified. </summary>
+        public string AdxTwinLifecycleEventsTableName { get; set; }
+        /// <summary> The name of the Azure Data Explorer table used for recording relationship lifecycle events. The table will not be created if this property is left unspecified. </summary>
+        public string AdxRelationshipLifecycleEventsTableName { get; set; }
         /// <summary> The URL of the EventHub namespace for identity-based authentication. It must include the protocol sb://. </summary>
         public Uri EventHubEndpointUri { get; set; }
         /// <summary> The EventHub name in the EventHub namespace for identity-based authentication. </summary>
@@ -80,5 +97,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public ResourceIdentifier EventHubNamespaceResourceId { get; set; }
         /// <summary> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </summary>
         public string EventHubConsumerGroup { get; set; }
+        /// <summary> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to 'true'. Setting this property to 'true' will generate an additional column in the property events table in ADX. </summary>
+        public RecordPropertyAndItemRemoval? RecordPropertyAndItemRemovals { get; set; }
     }
 }

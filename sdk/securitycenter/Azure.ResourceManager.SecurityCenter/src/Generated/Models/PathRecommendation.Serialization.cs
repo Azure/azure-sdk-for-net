@@ -5,45 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class PathRecommendation : IUtf8JsonSerializable
+    public partial class PathRecommendation : IUtf8JsonSerializable, IJsonModel<PathRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PathRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PathRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PathRecommendation)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
             if (Optional.IsDefined(IotSecurityRecommendationType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
             if (Optional.IsDefined(PublisherInfo))
             {
-                writer.WritePropertyName("publisherInfo");
-                writer.WriteObjectValue(PublisherInfo);
+                writer.WritePropertyName("publisherInfo"u8);
+                writer.WriteObjectValue(PublisherInfo, options);
             }
             if (Optional.IsDefined(IsCommon))
             {
-                writer.WritePropertyName("common");
+                writer.WritePropertyName("common"u8);
                 writer.WriteBooleanValue(IsCommon.Value);
             }
             if (Optional.IsCollectionDefined(UserSids))
             {
-                writer.WritePropertyName("userSids");
+                writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserSids)
                 {
@@ -53,90 +71,119 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsCollectionDefined(Usernames))
             {
-                writer.WritePropertyName("usernames");
+                writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FileType))
             {
-                writer.WritePropertyName("fileType");
+                writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
             if (Optional.IsDefined(ConfigurationStatus))
             {
-                writer.WritePropertyName("configurationStatus");
+                writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static PathRecommendation DeserializePathRecommendation(JsonElement element)
+        PathRecommendation IJsonModel<PathRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> path = default;
-            Optional<RecommendationAction> action = default;
-            Optional<IotSecurityRecommendationType> type = default;
-            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
-            Optional<bool> common = default;
-            Optional<IList<string>> userSids = default;
-            Optional<IList<UserRecommendation>> usernames = default;
-            Optional<PathRecommendationFileType> fileType = default;
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PathRecommendation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePathRecommendation(document.RootElement, options);
+        }
+
+        internal static PathRecommendation DeserializePathRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string path = default;
+            RecommendationAction? action = default;
+            IotSecurityRecommendationType? type = default;
+            SecurityCenterPublisherInfo publisherInfo = default;
+            bool? common = default;
+            IList<string> userSids = default;
+            IList<UserRecommendation> usernames = default;
+            PathRecommendationFileType? fileType = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new RecommendationAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new IotSecurityRecommendationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publisherInfo"))
+                if (property.NameEquals("publisherInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value);
+                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("common"))
+                if (property.NameEquals("common"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     common = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("userSids"))
+                if (property.NameEquals("userSids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -147,43 +194,86 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     userSids = array;
                     continue;
                 }
-                if (property.NameEquals("usernames"))
+                if (property.NameEquals("usernames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UserRecommendation> array = new List<UserRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserRecommendation.DeserializeUserRecommendation(item));
+                        array.Add(UserRecommendation.DeserializeUserRecommendation(item, options));
                     }
                     usernames = array;
                     continue;
                 }
-                if (property.NameEquals("fileType"))
+                if (property.NameEquals("fileType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileType = new PathRecommendationFileType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("configurationStatus"))
+                if (property.NameEquals("configurationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configurationStatus = new SecurityCenterConfigurationStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), Optional.ToList(userSids), Optional.ToList(usernames), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PathRecommendation(
+                path,
+                action,
+                type,
+                publisherInfo,
+                common,
+                userSids ?? new ChangeTrackingList<string>(),
+                usernames ?? new ChangeTrackingList<UserRecommendation>(),
+                fileType,
+                configurationStatus,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PathRecommendation IPersistableModel<PathRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePathRecommendation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PathRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

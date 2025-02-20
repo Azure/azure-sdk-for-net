@@ -5,57 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class OperationalDataStoreSettings : IUtf8JsonSerializable
+    public partial class OperationalDataStoreSettings : IUtf8JsonSerializable, IJsonModel<OperationalDataStoreSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalDataStoreSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OperationalDataStoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceGroupId))
-            {
-                writer.WritePropertyName("resourceGroupId");
-                writer.WriteStringValue(ResourceGroupId);
-            }
-            writer.WritePropertyName("objectType");
-            writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("dataStoreType");
-            writer.WriteStringValue(DataStoreType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static OperationalDataStoreSettings DeserializeOperationalDataStoreSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> resourceGroupId = default;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalDataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ResourceGroupId))
+            {
+                writer.WritePropertyName("resourceGroupId"u8);
+                writer.WriteStringValue(ResourceGroupId);
+            }
+        }
+
+        OperationalDataStoreSettings IJsonModel<OperationalDataStoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalDataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalDataStoreSettings(document.RootElement, options);
+        }
+
+        internal static OperationalDataStoreSettings DeserializeOperationalDataStoreSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceGroupId"))
+                if (property.NameEquals("resourceGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataStoreType"))
+                if (property.NameEquals("dataStoreType"u8))
                 {
                     dataStoreType = new DataStoreType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalDataStoreSettings(objectType, dataStoreType, resourceGroupId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OperationalDataStoreSettings(objectType, dataStoreType, serializedAdditionalRawData, resourceGroupId);
         }
+
+        BinaryData IPersistableModel<OperationalDataStoreSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalDataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OperationalDataStoreSettings IPersistableModel<OperationalDataStoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalDataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalDataStoreSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalDataStoreSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

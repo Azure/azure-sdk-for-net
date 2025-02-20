@@ -41,9 +41,6 @@ namespace Azure
         /// </summary>
         public virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
-
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
@@ -56,7 +53,7 @@ namespace Azure
             {
                 if (ContentStream == null)
                 {
-                    return s_EmptyBinaryData;
+                    return BinaryData.Empty;
                 }
 
                 MemoryStream? memoryContent = ContentStream as MemoryStream;
@@ -90,7 +87,7 @@ namespace Azure
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
-        internal RequestFailedDetailsParser?  RequestFailedDetailsParser { get; set; }
+        internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

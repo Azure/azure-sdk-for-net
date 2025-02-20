@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -15,43 +14,45 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentFieldSchema DeserializeDocumentFieldSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentFieldType type = default;
-            Optional<string> description = default;
-            Optional<string> example = default;
-            Optional<DocumentFieldSchema> items = default;
-            Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
+            string description = default;
+            string example = default;
+            DocumentFieldSchema items = default;
+            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToDocumentFieldType();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("example"))
+                if (property.NameEquals("example"u8))
                 {
                     example = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("items"))
+                if (property.NameEquals("items"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     items = DeserializeDocumentFieldSchema(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
@@ -63,7 +64,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Optional.ToDictionary(properties));
+            return new DocumentFieldSchema(type, description, example, items, properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentFieldSchema FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentFieldSchema(document.RootElement);
         }
     }
 }

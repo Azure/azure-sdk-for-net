@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(JobVersion))
             {
-                writer.WritePropertyName("jobVersion");
+                writer.WritePropertyName("jobVersion"u8);
                 writer.WriteStringValue(JobVersion);
             }
             writer.WriteEndObject();
@@ -28,16 +28,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StartDataFlowDebugSessionResponse DeserializeStartDataFlowDebugSessionResponse(JsonElement element)
         {
-            Optional<string> jobVersion = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobVersion"))
+                if (property.NameEquals("jobVersion"u8))
                 {
                     jobVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new StartDataFlowDebugSessionResponse(jobVersion.Value);
+            return new StartDataFlowDebugSessionResponse(jobVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StartDataFlowDebugSessionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStartDataFlowDebugSessionResponse(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class StartDataFlowDebugSessionResponseConverter : JsonConverter<StartDataFlowDebugSessionResponse>
@@ -46,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override StartDataFlowDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

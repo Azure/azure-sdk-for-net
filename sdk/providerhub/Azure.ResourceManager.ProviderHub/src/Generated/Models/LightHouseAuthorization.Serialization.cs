@@ -5,41 +5,130 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LightHouseAuthorization : IUtf8JsonSerializable
+    public partial class LightHouseAuthorization : IUtf8JsonSerializable, IJsonModel<LightHouseAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LightHouseAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LightHouseAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("principalId");
-            writer.WriteStringValue(PrincipalId);
-            writer.WritePropertyName("roleDefinitionId");
-            writer.WriteStringValue(RoleDefinitionId);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static LightHouseAuthorization DeserializeLightHouseAuthorization(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LightHouseAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LightHouseAuthorization)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("principalId"u8);
+            writer.WriteStringValue(PrincipalId);
+            writer.WritePropertyName("roleDefinitionId"u8);
+            writer.WriteStringValue(RoleDefinitionId);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        LightHouseAuthorization IJsonModel<LightHouseAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LightHouseAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LightHouseAuthorization)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLightHouseAuthorization(document.RootElement, options);
+        }
+
+        internal static LightHouseAuthorization DeserializeLightHouseAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string principalId = default;
             string roleDefinitionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleDefinitionId"))
+                if (property.NameEquals("roleDefinitionId"u8))
                 {
                     roleDefinitionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LightHouseAuthorization(principalId, roleDefinitionId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LightHouseAuthorization(principalId, roleDefinitionId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LightHouseAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LightHouseAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LightHouseAuthorization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LightHouseAuthorization IPersistableModel<LightHouseAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LightHouseAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLightHouseAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LightHouseAuthorization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LightHouseAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

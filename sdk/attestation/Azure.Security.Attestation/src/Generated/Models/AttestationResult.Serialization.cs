@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -17,299 +16,328 @@ namespace Azure.Security.Attestation
     {
         internal static AttestationResult DeserializeAttestationResult(JsonElement element)
         {
-            Optional<string> jti = default;
-            Optional<string> iss = default;
-            Optional<double> iat = default;
-            Optional<double> exp = default;
-            Optional<double> nbf = default;
-            Optional<object> cnf = default;
-            Optional<string> nonce = default;
-            Optional<string> xMsVer = default;
-            Optional<object> xMsRuntime = default;
-            Optional<object> xMsInittime = default;
-            Optional<object> xMsPolicy = default;
-            Optional<string> xMsAttestationType = default;
-            Optional<JsonWebKey> xMsPolicySigner = default;
-            Optional<string> xMsPolicyHash = default;
-            Optional<bool> xMsSgxIsDebuggable = default;
-            Optional<float> xMsSgxProductId = default;
-            Optional<string> xMsSgxMrenclave = default;
-            Optional<string> xMsSgxMrsigner = default;
-            Optional<float> xMsSgxSvn = default;
-            Optional<string> xMsSgxEhd = default;
-            Optional<object> xMsSgxCollateral = default;
-            Optional<string> ver = default;
-            Optional<bool> isDebuggable = default;
-            Optional<object> maaAttestationcollateral = default;
-            Optional<string> aasEhd = default;
-            Optional<string> maaEhd = default;
-            Optional<float> productId = default;
-            Optional<string> sgxMrenclave = default;
-            Optional<string> sgxMrsigner = default;
-            Optional<float> svn = default;
-            Optional<string> tee = default;
-            Optional<JsonWebKey> policySigner = default;
-            Optional<string> policyHash = default;
-            Optional<string> rpData = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string jti = default;
+            string iss = default;
+            double? iat = default;
+            double? exp = default;
+            double? nbf = default;
+            object cnf = default;
+            string nonce = default;
+            string xMsVer = default;
+            object xMsRuntime = default;
+            object xMsInittime = default;
+            object xMsPolicy = default;
+            string xMsAttestationType = default;
+            JsonWebKey xMsPolicySigner = default;
+            string xMsPolicyHash = default;
+            bool? xMsSgxIsDebuggable = default;
+            float? xMsSgxProductId = default;
+            string xMsSgxMrenclave = default;
+            string xMsSgxMrsigner = default;
+            float? xMsSgxSvn = default;
+            string xMsSgxEhd = default;
+            object xMsSgxCollateral = default;
+            string ver = default;
+            bool? isDebuggable = default;
+            object maaAttestationcollateral = default;
+            string aasEhd = default;
+            string maaEhd = default;
+            float? productId = default;
+            string sgxMrenclave = default;
+            string sgxMrsigner = default;
+            float? svn = default;
+            string tee = default;
+            JsonWebKey policySigner = default;
+            string policyHash = default;
+            string rpData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jti"))
+                if (property.NameEquals("jti"u8))
                 {
                     jti = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iss"))
+                if (property.NameEquals("iss"u8))
                 {
                     iss = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iat"))
+                if (property.NameEquals("iat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iat = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("exp"))
+                if (property.NameEquals("exp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exp = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("nbf"))
+                if (property.NameEquals("nbf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nbf = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cnf"))
+                if (property.NameEquals("cnf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cnf = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("nonce"))
+                if (property.NameEquals("nonce"u8))
                 {
                     nonce = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-ver"))
+                if (property.NameEquals("x-ms-ver"u8))
                 {
                     xMsVer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-runtime"))
+                if (property.NameEquals("x-ms-runtime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsRuntime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("x-ms-inittime"))
+                if (property.NameEquals("x-ms-inittime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsInittime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy"))
+                if (property.NameEquals("x-ms-policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicy = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("x-ms-attestation-type"))
+                if (property.NameEquals("x-ms-attestation-type"u8))
                 {
                     xMsAttestationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy-signer"))
+                if (property.NameEquals("x-ms-policy-signer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy-hash"))
+                if (property.NameEquals("x-ms-policy-hash"u8))
                 {
                     xMsPolicyHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-is-debuggable"))
+                if (property.NameEquals("x-ms-sgx-is-debuggable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxIsDebuggable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-product-id"))
+                if (property.NameEquals("x-ms-sgx-product-id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxProductId = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-mrenclave"))
+                if (property.NameEquals("x-ms-sgx-mrenclave"u8))
                 {
                     xMsSgxMrenclave = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-mrsigner"))
+                if (property.NameEquals("x-ms-sgx-mrsigner"u8))
                 {
                     xMsSgxMrsigner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-svn"))
+                if (property.NameEquals("x-ms-sgx-svn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxSvn = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-ehd"))
+                if (property.NameEquals("x-ms-sgx-ehd"u8))
                 {
                     xMsSgxEhd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-collateral"))
+                if (property.NameEquals("x-ms-sgx-collateral"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxCollateral = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("ver"))
+                if (property.NameEquals("ver"u8))
                 {
                     ver = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("is-debuggable"))
+                if (property.NameEquals("is-debuggable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDebuggable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maa-attestationcollateral"))
+                if (property.NameEquals("maa-attestationcollateral"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maaAttestationcollateral = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("aas-ehd"))
+                if (property.NameEquals("aas-ehd"u8))
                 {
                     aasEhd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maa-ehd"))
+                if (property.NameEquals("maa-ehd"u8))
                 {
                     maaEhd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("product-id"))
+                if (property.NameEquals("product-id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     productId = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("sgx-mrenclave"))
+                if (property.NameEquals("sgx-mrenclave"u8))
                 {
                     sgxMrenclave = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sgx-mrsigner"))
+                if (property.NameEquals("sgx-mrsigner"u8))
                 {
                     sgxMrsigner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("svn"))
+                if (property.NameEquals("svn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     svn = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("tee"))
+                if (property.NameEquals("tee"u8))
                 {
                     tee = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policy_signer"))
+                if (property.NameEquals("policy_signer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy_hash"))
+                if (property.NameEquals("policy_hash"u8))
                 {
                     policyHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rp_data"))
+                if (property.NameEquals("rp_data"u8))
                 {
                     rpData = property.Value.GetString();
                     continue;
                 }
             }
-            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+            return new AttestationResult(
+                jti,
+                iss,
+                iat,
+                exp,
+                nbf,
+                cnf,
+                nonce,
+                xMsVer,
+                xMsRuntime,
+                xMsInittime,
+                xMsPolicy,
+                xMsAttestationType,
+                xMsPolicySigner,
+                xMsPolicyHash,
+                xMsSgxIsDebuggable,
+                xMsSgxProductId,
+                xMsSgxMrenclave,
+                xMsSgxMrsigner,
+                xMsSgxSvn,
+                xMsSgxEhd,
+                xMsSgxCollateral,
+                ver,
+                isDebuggable,
+                maaAttestationcollateral,
+                aasEhd,
+                maaEhd,
+                productId,
+                sgxMrenclave,
+                sgxMrsigner,
+                svn,
+                tee,
+                policySigner,
+                policyHash,
+                rpData);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AttestationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAttestationResult(document.RootElement);
         }
 
         internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
@@ -318,6 +346,7 @@ namespace Azure.Security.Attestation
             {
                 throw new NotImplementedException();
             }
+
             public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

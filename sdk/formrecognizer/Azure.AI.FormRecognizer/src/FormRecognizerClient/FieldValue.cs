@@ -414,7 +414,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
         /// <remarks>
-        /// This method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public SelectionMarkState AsSelectionMarkState()
         {

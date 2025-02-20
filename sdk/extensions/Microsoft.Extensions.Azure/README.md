@@ -48,7 +48,7 @@ public void ConfigureServices(IServiceCollection services)
         builder.ConfigureDefaults(options => options.Retry.Mode = RetryMode.Exponential);
 
         // Advanced configure global defaults
-        builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(provider.GetService<DependencyInjectionEnabledPolicy>(), HttpPipelinePosition.PerCall));
+        builder.ConfigureDefaults((options, provider) => options.AddPolicy(provider.GetService<DependencyInjectionEnabledPolicy>(), HttpPipelinePosition.PerCall));
 
         // Register blob service client and initialize it using the Storage section of configuration
         builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
@@ -146,7 +146,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/Microsoft.Extensions.Azure/src
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Microsoft.Extensions.Azure/
-[configuration]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0
-[dependency_injection]: https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.0
+[configuration]: https://learn.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0
+[dependency_injection]: https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.0
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

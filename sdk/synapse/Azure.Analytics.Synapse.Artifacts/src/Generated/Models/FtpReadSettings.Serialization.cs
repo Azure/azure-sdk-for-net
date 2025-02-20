@@ -21,181 +21,175 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
-                writer.WritePropertyName("recursive");
-                writer.WriteObjectValue(Recursive);
+                writer.WritePropertyName("recursive"u8);
+                writer.WriteObjectValue<object>(Recursive);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
-                writer.WritePropertyName("wildcardFolderPath");
-                writer.WriteObjectValue(WildcardFolderPath);
+                writer.WritePropertyName("wildcardFolderPath"u8);
+                writer.WriteObjectValue<object>(WildcardFolderPath);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
-                writer.WritePropertyName("wildcardFileName");
-                writer.WriteObjectValue(WildcardFileName);
+                writer.WritePropertyName("wildcardFileName"u8);
+                writer.WriteObjectValue<object>(WildcardFileName);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
-                writer.WritePropertyName("enablePartitionDiscovery");
-                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+                writer.WritePropertyName("enablePartitionDiscovery"u8);
+                writer.WriteObjectValue<object>(EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
-                writer.WritePropertyName("partitionRootPath");
-                writer.WriteObjectValue(PartitionRootPath);
+                writer.WritePropertyName("partitionRootPath"u8);
+                writer.WriteObjectValue<object>(PartitionRootPath);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
-                writer.WritePropertyName("deleteFilesAfterCompletion");
-                writer.WriteObjectValue(DeleteFilesAfterCompletion);
+                writer.WritePropertyName("deleteFilesAfterCompletion"u8);
+                writer.WriteObjectValue<object>(DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(FileListPath))
             {
-                writer.WritePropertyName("fileListPath");
-                writer.WriteObjectValue(FileListPath);
+                writer.WritePropertyName("fileListPath"u8);
+                writer.WriteObjectValue<object>(FileListPath);
             }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
-                writer.WritePropertyName("useBinaryTransfer");
-                writer.WriteBooleanValue(UseBinaryTransfer.Value);
+                writer.WritePropertyName("useBinaryTransfer"u8);
+                writer.WriteObjectValue<object>(UseBinaryTransfer);
             }
             if (Optional.IsDefined(DisableChunking))
             {
-                writer.WritePropertyName("disableChunking");
-                writer.WriteObjectValue(DisableChunking);
+                writer.WritePropertyName("disableChunking"u8);
+                writer.WriteObjectValue<object>(DisableChunking);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WritePropertyName("maxConcurrentConnections"u8);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element)
         {
-            Optional<object> recursive = default;
-            Optional<object> wildcardFolderPath = default;
-            Optional<object> wildcardFileName = default;
-            Optional<bool> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> deleteFilesAfterCompletion = default;
-            Optional<object> fileListPath = default;
-            Optional<bool> useBinaryTransfer = default;
-            Optional<object> disableChunking = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object recursive = default;
+            object wildcardFolderPath = default;
+            object wildcardFileName = default;
+            object enablePartitionDiscovery = default;
+            object partitionRootPath = default;
+            object deleteFilesAfterCompletion = default;
+            object fileListPath = default;
+            object useBinaryTransfer = default;
+            object disableChunking = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recursive"))
+                if (property.NameEquals("recursive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recursive = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("wildcardFolderPath"))
+                if (property.NameEquals("wildcardFolderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     wildcardFolderPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("wildcardFileName"))
+                if (property.NameEquals("wildcardFileName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     wildcardFileName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enablePartitionDiscovery"))
+                if (property.NameEquals("enablePartitionDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    enablePartitionDiscovery = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionRootPath"))
+                if (property.NameEquals("partitionRootPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionRootPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("deleteFilesAfterCompletion"))
+                if (property.NameEquals("deleteFilesAfterCompletion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deleteFilesAfterCompletion = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileListPath"))
+                if (property.NameEquals("fileListPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileListPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("useBinaryTransfer"))
+                if (property.NameEquals("useBinaryTransfer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useBinaryTransfer = property.Value.GetBoolean();
+                    useBinaryTransfer = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("disableChunking"))
+                if (property.NameEquals("disableChunking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableChunking = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -204,7 +198,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, Optional.ToNullable(useBinaryTransfer), disableChunking.Value);
+            return new FtpReadSettings(
+                type,
+                maxConcurrentConnections,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                fileListPath,
+                useBinaryTransfer,
+                disableChunking);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FtpReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFtpReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class FtpReadSettingsConverter : JsonConverter<FtpReadSettings>
@@ -213,6 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override FtpReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

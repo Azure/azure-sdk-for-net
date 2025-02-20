@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The storage account type for the database&apos;s backups. </summary>
+    /// <summary> The storage account type for the database's backups. </summary>
     public readonly partial struct StorageCapabilityStorageAccountType : IEquatable<StorageCapabilityStorageAccountType>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
         public static implicit operator StorageCapabilityStorageAccountType(string value) => new StorageCapabilityStorageAccountType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

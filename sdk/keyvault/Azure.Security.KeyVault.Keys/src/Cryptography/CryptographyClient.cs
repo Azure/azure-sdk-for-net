@@ -16,8 +16,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
+    [CallerShouldAudit(CallerShouldAuditReason)]
     public class CryptographyClient : IKeyEncryptionKey
     {
+        private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";
+        private const string GetOperation = "get";
+        private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly string _keyId;
         private readonly KeyVaultPipeline _pipeline;
         private readonly RemoteCryptographyClient _remoteProvider;
@@ -200,6 +204,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
             await EncryptAsync(new EncryptParameters(algorithm, plaintext), cancellationToken).ConfigureAwait(false);
 
@@ -220,6 +225,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
             Encrypt(new EncryptParameters(algorithm, plaintext), cancellationToken);
 
@@ -240,12 +246,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptParameters encryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(encryptParameters, nameof(encryptParameters));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Encrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -302,12 +309,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual EncryptResult Encrypt(EncryptParameters encryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(encryptParameters, nameof(encryptParameters));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Encrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -360,6 +368,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
             await DecryptAsync(new DecryptParameters(algorithm, ciphertext), cancellationToken).ConfigureAwait(false);
 
@@ -377,6 +386,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
             Decrypt(new DecryptParameters(algorithm, ciphertext), cancellationToken);
 
@@ -394,12 +404,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(DecryptParameters decryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(decryptParameters, nameof(decryptParameters));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Decrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -453,12 +464,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DecryptResult Decrypt(DecryptParameters decryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(decryptParameters, nameof(decryptParameters));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Decrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -515,7 +527,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(WrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -573,7 +585,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(WrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -630,7 +642,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(UnwrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -688,7 +700,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(UnwrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -745,7 +757,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Sign)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -803,7 +815,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Sign)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -860,7 +872,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual async Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Verify)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -918,7 +930,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Verify)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -972,7 +984,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -994,7 +1006,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SignData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1051,7 +1063,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1073,7 +1085,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SignData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1130,7 +1142,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1153,7 +1165,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SignData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1210,7 +1222,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1233,7 +1245,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SignData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1289,7 +1301,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1312,7 +1324,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(VerifyData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1369,7 +1381,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1392,7 +1404,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(VerifyData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1448,7 +1460,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1471,7 +1483,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(VerifyData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1528,7 +1540,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1551,7 +1563,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(VerifyData)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1591,6 +1603,64 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw;
             }
         }
+
+        /// <summary>
+        /// Creates an <see cref="RSA"/> implementation backed by this <see cref="CryptographyClient"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
+        /// <returns>An <see cref="RSAKeyVault"/> implementation backed by this <see cref="CryptographyClient"/>.</returns>
+        /// <remarks>
+        /// The <see cref="CryptographyClient"/> will attempt to download the public key synchronously.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual RSAKeyVault CreateRSA(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(CreateRSA)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                Initialize(GetOperation, cancellationToken);
+                return new RSAKeyVault(this, KeyId, KeyMaterial);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an <see cref="RSA"/> implementation backed by this <see cref="CryptographyClient"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
+        /// <returns>An <see cref="RSAKeyVault"/> implementation backed by this <see cref="CryptographyClient"/>.</returns>
+        /// <remarks>
+        /// The <see cref="CryptographyClient"/> will attempt to download the public key asynchronously.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<RSAKeyVault> CreateRSAAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(CreateRSA)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                await InitializeAsync(GetOperation, cancellationToken).ConfigureAwait(false);
+                return new RSAKeyVault(this, KeyId, KeyMaterial);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private JsonWebKey KeyMaterial => _provider is LocalCryptographyProvider local ? local.KeyMaterial : null;
 
         private void ThrowIfLocalOnly(string name)
         {
@@ -1670,7 +1740,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Initialize)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1687,7 +1757,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
-                scope.AddAttribute("status", e.Status);
+                scope.Failed(e);
 
                 _provider = _remoteProvider;
 
@@ -1708,7 +1778,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Initialize)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -1725,7 +1795,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
-                scope.AddAttribute("status", e.Status);
+                scope.Failed(e);
 
                 _provider = _remoteProvider;
 

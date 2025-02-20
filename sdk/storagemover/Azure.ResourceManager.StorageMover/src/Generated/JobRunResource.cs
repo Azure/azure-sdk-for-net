@@ -9,22 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
     /// A Class representing a JobRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobRunResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetJobRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="JobDefinitionResource" /> using the GetJobRun method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JobRunResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetJobRunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="JobDefinitionResource"/> using the GetJobRun method.
     /// </summary>
     public partial class JobRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JobRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageMoverName"> The storageMoverName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="jobDefinitionName"> The jobDefinitionName. </param>
+        /// <param name="jobRunName"> The jobRunName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, string jobRunName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/jobRuns/{jobRunName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.StorageMover
         private readonly JobRunsRestOperations _jobRunRestClient;
         private readonly JobRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects/jobDefinitions/jobRuns";
+
         /// <summary> Initializes a new instance of the <see cref="JobRunResource"/> class for mocking. </summary>
         protected JobRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JobRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal JobRunResource(ArmClient client, JobRunData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects/jobDefinitions/jobRuns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

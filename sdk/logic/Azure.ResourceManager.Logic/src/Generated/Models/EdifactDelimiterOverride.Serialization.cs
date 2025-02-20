@@ -5,63 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable
+    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable, IJsonModel<EdifactDelimiterOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactDelimiterOverride>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EdifactDelimiterOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(MessageId))
             {
-                writer.WritePropertyName("messageId");
+                writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
             if (Optional.IsDefined(MessageVersion))
             {
-                writer.WritePropertyName("messageVersion");
+                writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
             if (Optional.IsDefined(MessageRelease))
             {
-                writer.WritePropertyName("messageRelease");
+                writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
-            writer.WritePropertyName("dataElementSeparator");
+            writer.WritePropertyName("dataElementSeparator"u8);
             writer.WriteNumberValue(DataElementSeparator);
-            writer.WritePropertyName("componentSeparator");
+            writer.WritePropertyName("componentSeparator"u8);
             writer.WriteNumberValue(ComponentSeparator);
-            writer.WritePropertyName("segmentTerminator");
+            writer.WritePropertyName("segmentTerminator"u8);
             writer.WriteNumberValue(SegmentTerminator);
-            writer.WritePropertyName("repetitionSeparator");
+            writer.WritePropertyName("repetitionSeparator"u8);
             writer.WriteNumberValue(RepetitionSeparator);
-            writer.WritePropertyName("segmentTerminatorSuffix");
+            writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
-            writer.WritePropertyName("decimalPointIndicator");
+            writer.WritePropertyName("decimalPointIndicator"u8);
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
-            writer.WritePropertyName("releaseIndicator");
+            writer.WritePropertyName("releaseIndicator"u8);
             writer.WriteNumberValue(ReleaseIndicator);
             if (Optional.IsDefined(MessageAssociationAssignedCode))
             {
-                writer.WritePropertyName("messageAssociationAssignedCode");
+                writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
             if (Optional.IsDefined(TargetNamespace))
             {
-                writer.WritePropertyName("targetNamespace");
+                writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static EdifactDelimiterOverride DeserializeEdifactDelimiterOverride(JsonElement element)
+        EdifactDelimiterOverride IJsonModel<EdifactDelimiterOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> messageId = default;
-            Optional<string> messageVersion = default;
-            Optional<string> messageRelease = default;
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactDelimiterOverride(document.RootElement, options);
+        }
+
+        internal static EdifactDelimiterOverride DeserializeEdifactDelimiterOverride(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string messageId = default;
+            string messageVersion = default;
+            string messageRelease = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
             int segmentTerminator = default;
@@ -69,72 +120,123 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             EdifactDecimalIndicator decimalPointIndicator = default;
             int releaseIndicator = default;
-            Optional<string> messageAssociationAssignedCode = default;
-            Optional<string> targetNamespace = default;
+            string messageAssociationAssignedCode = default;
+            string targetNamespace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageVersion"))
+                if (property.NameEquals("messageVersion"u8))
                 {
                     messageVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageRelease"))
+                if (property.NameEquals("messageRelease"u8))
                 {
                     messageRelease = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataElementSeparator"))
+                if (property.NameEquals("dataElementSeparator"u8))
                 {
                     dataElementSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("componentSeparator"))
+                if (property.NameEquals("componentSeparator"u8))
                 {
                     componentSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminator"))
+                if (property.NameEquals("segmentTerminator"u8))
                 {
                     segmentTerminator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("repetitionSeparator"))
+                if (property.NameEquals("repetitionSeparator"u8))
                 {
                     repetitionSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminatorSuffix"))
+                if (property.NameEquals("segmentTerminatorSuffix"u8))
                 {
                     segmentTerminatorSuffix = property.Value.GetString().ToSegmentTerminatorSuffix();
                     continue;
                 }
-                if (property.NameEquals("decimalPointIndicator"))
+                if (property.NameEquals("decimalPointIndicator"u8))
                 {
                     decimalPointIndicator = property.Value.GetString().ToEdifactDecimalIndicator();
                     continue;
                 }
-                if (property.NameEquals("releaseIndicator"))
+                if (property.NameEquals("releaseIndicator"u8))
                 {
                     releaseIndicator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("messageAssociationAssignedCode"))
+                if (property.NameEquals("messageAssociationAssignedCode"u8))
                 {
                     messageAssociationAssignedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetNamespace"))
+                if (property.NameEquals("targetNamespace"u8))
                 {
                     targetNamespace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdifactDelimiterOverride(
+                messageId,
+                messageVersion,
+                messageRelease,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                repetitionSeparator,
+                segmentTerminatorSuffix,
+                decimalPointIndicator,
+                releaseIndicator,
+                messageAssociationAssignedCode,
+                targetNamespace,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdifactDelimiterOverride>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdifactDelimiterOverride IPersistableModel<EdifactDelimiterOverride>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdifactDelimiterOverride(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdifactDelimiterOverride>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,73 +5,149 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupRule : IUtf8JsonSerializable
+    public partial class DataProtectionBackupRule : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataProtectionBackupRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupParameters))
-            {
-                writer.WritePropertyName("backupParameters");
-                writer.WriteObjectValue(BackupParameters);
-            }
-            writer.WritePropertyName("dataStore");
-            writer.WriteObjectValue(DataStore);
-            writer.WritePropertyName("trigger");
-            writer.WriteObjectValue(Trigger);
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("objectType");
-            writer.WriteStringValue(ObjectType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupRule DeserializeDataProtectionBackupRule(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<DataProtectionBackupSettingsBase> backupParameters = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(BackupParameters))
+            {
+                writer.WritePropertyName("backupParameters"u8);
+                writer.WriteObjectValue(BackupParameters, options);
+            }
+            writer.WritePropertyName("dataStore"u8);
+            writer.WriteObjectValue(DataStore, options);
+            writer.WritePropertyName("trigger"u8);
+            writer.WriteObjectValue(Trigger, options);
+        }
+
+        DataProtectionBackupRule IJsonModel<DataProtectionBackupRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupRule(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupRule DeserializeDataProtectionBackupRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataProtectionBackupSettingsBase backupParameters = default;
             DataStoreInfoBase dataStore = default;
             DataProtectionBackupTriggerContext trigger = default;
             string name = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupParameters"))
+                if (property.NameEquals("backupParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value);
+                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataStore"))
+                if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
-                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value);
+                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupRule(name, objectType, backupParameters.Value, dataStore, trigger);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProtectionBackupRule(
+                name,
+                objectType,
+                serializedAdditionalRawData,
+                backupParameters,
+                dataStore,
+                trigger);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataProtectionBackupRule IPersistableModel<DataProtectionBackupRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProtectionBackupRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProtectionBackupRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

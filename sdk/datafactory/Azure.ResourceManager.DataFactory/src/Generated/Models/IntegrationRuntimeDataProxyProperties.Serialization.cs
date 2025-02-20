@@ -5,68 +5,155 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeDataProxyProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeDataProxyProperties : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeDataProxyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeDataProxyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IntegrationRuntimeDataProxyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectVia))
-            {
-                writer.WritePropertyName("connectVia");
-                writer.WriteObjectValue(ConnectVia);
-            }
-            if (Optional.IsDefined(StagingLinkedService))
-            {
-                writer.WritePropertyName("stagingLinkedService");
-                writer.WriteObjectValue(StagingLinkedService);
-            }
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path");
-                writer.WriteStringValue(Path);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeDataProxyProperties DeserializeIntegrationRuntimeDataProxyProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<EntityReference> connectVia = default;
-            Optional<EntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeDataProxyProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ConnectVia))
+            {
+                writer.WritePropertyName("connectVia"u8);
+                writer.WriteObjectValue(ConnectVia, options);
+            }
+            if (Optional.IsDefined(StagingLinkedService))
+            {
+                writer.WritePropertyName("stagingLinkedService"u8);
+                writer.WriteObjectValue(StagingLinkedService, options);
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        IntegrationRuntimeDataProxyProperties IJsonModel<IntegrationRuntimeDataProxyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeDataProxyProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeDataProxyProperties(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeDataProxyProperties DeserializeIntegrationRuntimeDataProxyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            EntityReference connectVia = default;
+            EntityReference stagingLinkedService = default;
+            string path = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectVia = EntityReference.DeserializeEntityReference(property.Value);
+                    connectVia = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("stagingLinkedService"))
+                if (property.NameEquals("stagingLinkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeDataProxyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataProxyProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationRuntimeDataProxyProperties IPersistableModel<IntegrationRuntimeDataProxyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationRuntimeDataProxyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataProxyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationRuntimeDataProxyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

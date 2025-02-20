@@ -15,37 +15,57 @@ namespace Azure.DigitalTwins.Core
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointName");
+            writer.WritePropertyName("endpointName"u8);
             writer.WriteStringValue(EndpointName);
-            writer.WritePropertyName("filter");
+            writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter);
             writer.WriteEndObject();
         }
 
         internal static DigitalTwinsEventRoute DeserializeDigitalTwinsEventRoute(JsonElement element)
         {
-            Optional<string> id = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
             string endpointName = default;
             string filter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointName"))
+                if (property.NameEquals("endpointName"u8))
                 {
                     endpointName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     filter = property.Value.GetString();
                     continue;
                 }
             }
-            return new DigitalTwinsEventRoute(id.Value, endpointName, filter);
+            return new DigitalTwinsEventRoute(id, endpointName, filter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DigitalTwinsEventRoute FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDigitalTwinsEventRoute(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

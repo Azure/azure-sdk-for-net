@@ -7,21 +7,11 @@
 
 using System;
 using Azure.Communication.Identity.Models;
-using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
     /// <summary> A communication identity with access token. </summary>
     public partial class CommunicationUserIdentifierAndToken
     {
-        /// <summary> Initializes a new instance of CommunicationUserIdentifierAndToken. </summary>
-        /// <param name="identity"> A communication identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
-        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity)
-        {
-            Argument.AssertNotNull(identity, nameof(identity));
-
-            Identity = identity;
-        }
     }
 }

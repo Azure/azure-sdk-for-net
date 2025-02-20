@@ -5,49 +5,118 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DataDiskImageEncryption : IUtf8JsonSerializable
+    public partial class DataDiskImageEncryption : IUtf8JsonSerializable, IJsonModel<DataDiskImageEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDiskImageEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataDiskImageEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lun");
-            writer.WriteNumberValue(Lun);
-            if (Optional.IsDefined(DiskEncryptionSetId))
-            {
-                writer.WritePropertyName("diskEncryptionSetId");
-                writer.WriteStringValue(DiskEncryptionSetId);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DataDiskImageEncryption DeserializeDataDiskImageEncryption(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataDiskImageEncryption)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("lun"u8);
+            writer.WriteNumberValue(Lun);
+        }
+
+        DataDiskImageEncryption IJsonModel<DataDiskImageEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataDiskImageEncryption)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataDiskImageEncryption(document.RootElement, options);
+        }
+
+        internal static DataDiskImageEncryption DeserializeDataDiskImageEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataDiskImageEncryption(diskEncryptionSetId.Value, lun);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataDiskImageEncryption(diskEncryptionSetId, serializedAdditionalRawData, lun);
         }
+
+        BinaryData IPersistableModel<DataDiskImageEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataDiskImageEncryption)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataDiskImageEncryption IPersistableModel<DataDiskImageEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataDiskImageEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataDiskImageEncryption)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataDiskImageEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

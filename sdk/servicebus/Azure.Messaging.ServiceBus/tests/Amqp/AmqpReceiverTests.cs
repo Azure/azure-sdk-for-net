@@ -433,7 +433,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         /// </summary>
         ///
         [Test]
-        public void ReceiveAsyncDoesntRetryOnTaskCanceled()
+        public void ReceiveAsyncDoesNotRetryOnTaskCanceled()
         {
             var exception = new TaskCanceledException();
             var entityName = "entityName";

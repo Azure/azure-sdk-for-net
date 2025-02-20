@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
@@ -15,25 +14,27 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     {
         internal static SparkJobListViewResponse DeserializeSparkJobListViewResponse(JsonElement element)
         {
-            Optional<int> nJobs = default;
-            Optional<IReadOnlyList<SparkJob>> sparkJobs = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? nJobs = default;
+            IReadOnlyList<SparkJob> sparkJobs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nJobs"))
+                if (property.NameEquals("nJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sparkJobs"))
+                if (property.NameEquals("sparkJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sparkJobs = null;
                         continue;
                     }
                     List<SparkJob> array = new List<SparkJob>();
@@ -45,7 +46,15 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJobListViewResponse(Optional.ToNullable(nJobs), Optional.ToList(sparkJobs));
+            return new SparkJobListViewResponse(nJobs, sparkJobs ?? new ChangeTrackingList<SparkJob>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobListViewResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJobListViewResponse(document.RootElement);
         }
     }
 }

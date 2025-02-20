@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter. </summary>
+    /// <summary> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". "QuotaId" is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. "NotAvailableForSubscription" is related to capacity at the datacenter. </summary>
     public readonly partial struct StorageCacheRestrictionReasonCode : IEquatable<StorageCacheRestrictionReasonCode>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are not the same. </summary>
         public static bool operator !=(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
         public static implicit operator StorageCacheRestrictionReasonCode(string value) => new StorageCacheRestrictionReasonCode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

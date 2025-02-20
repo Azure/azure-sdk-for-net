@@ -5,63 +5,145 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadProtectableItem : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownWorkloadProtectableItem))]
+    public partial class WorkloadProtectableItem : IUtf8JsonSerializable, IJsonModel<WorkloadProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadProtectableItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WorkloadProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("protectableItemType");
+            writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static WorkloadProtectableItem DeserializeWorkloadProtectableItem(JsonElement element)
+        WorkloadProtectableItem IJsonModel<WorkloadProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadProtectableItem(document.RootElement, options);
+        }
+
+        internal static WorkloadProtectableItem DeserializeWorkloadProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("protectableItemType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShare": return AzureFileShareProtectableItem.DeserializeAzureFileShareProtectableItem(element);
-                    case "AzureVmWorkloadProtectableItem": return AzureVmWorkloadProtectableItem.DeserializeAzureVmWorkloadProtectableItem(element);
-                    case "IaaSVMProtectableItem": return IaasVmProtectableItem.DeserializeIaasVmProtectableItem(element);
-                    case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmProtectableItem.DeserializeAzureIaaSClassicComputeVmProtectableItem(element);
-                    case "Microsoft.Compute/virtualMachines": return AzureIaaSComputeVmProtectableItem.DeserializeAzureIaaSComputeVmProtectableItem(element);
-                    case "SAPAseSystem": return AzureVmWorkloadSAPAseSystemProtectableItem.DeserializeAzureVmWorkloadSAPAseSystemProtectableItem(element);
-                    case "SAPHanaDBInstance": return AzureVmWorkloadSAPHanaDBInstance.DeserializeAzureVmWorkloadSAPHanaDBInstance(element);
-                    case "SAPHanaDatabase": return AzureVmWorkloadSAPHanaDatabaseProtectableItem.DeserializeAzureVmWorkloadSAPHanaDatabaseProtectableItem(element);
-                    case "SAPHanaHSR": return AzureVmWorkloadSAPHanaHSR.DeserializeAzureVmWorkloadSAPHanaHSR(element);
-                    case "SAPHanaSystem": return AzureVmWorkloadSAPHanaSystemProtectableItem.DeserializeAzureVmWorkloadSAPHanaSystemProtectableItem(element);
-                    case "SQLAvailabilityGroupContainer": return AzureVmWorkloadSQLAvailabilityGroupProtectableItem.DeserializeAzureVmWorkloadSQLAvailabilityGroupProtectableItem(element);
-                    case "SQLDataBase": return AzureVmWorkloadSQLDatabaseProtectableItem.DeserializeAzureVmWorkloadSQLDatabaseProtectableItem(element);
-                    case "SQLInstance": return AzureVmWorkloadSQLInstanceProtectableItem.DeserializeAzureVmWorkloadSQLInstanceProtectableItem(element);
+                    case "AzureFileShare": return FileShareProtectableItem.DeserializeFileShareProtectableItem(element, options);
+                    case "AzureVmWorkloadProtectableItem": return VmWorkloadProtectableItem.DeserializeVmWorkloadProtectableItem(element, options);
+                    case "HanaHSRContainer": return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
+                    case "IaaSVMProtectableItem": return IaasVmProtectableItem.DeserializeIaasVmProtectableItem(element, options);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmProtectableItem.DeserializeIaasClassicComputeVmProtectableItem(element, options);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectableItem.DeserializeIaasComputeVmProtectableItem(element, options);
+                    case "SAPAseSystem": return VmWorkloadSapAseSystemProtectableItem.DeserializeVmWorkloadSapAseSystemProtectableItem(element, options);
+                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectableItem.DeserializeVmWorkloadSapHanaDatabaseProtectableItem(element, options);
+                    case "SAPHanaDBInstance": return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
+                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemProtectableItem.DeserializeVmWorkloadSapHanaSystemProtectableItem(element, options);
+                    case "SQLAvailabilityGroupContainer": return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
+                    case "SQLDataBase": return VmWorkloadSqlDatabaseProtectableItem.DeserializeVmWorkloadSqlDatabaseProtectableItem(element, options);
+                    case "SQLInstance": return VmWorkloadSqlInstanceProtectableItem.DeserializeVmWorkloadSqlInstanceProtectableItem(element, options);
                 }
             }
-            return UnknownWorkloadProtectableItem.DeserializeUnknownWorkloadProtectableItem(element);
+            return UnknownWorkloadProtectableItem.DeserializeUnknownWorkloadProtectableItem(element, options);
         }
+
+        BinaryData IPersistableModel<WorkloadProtectableItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadProtectableItem IPersistableModel<WorkloadProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkloadProtectableItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

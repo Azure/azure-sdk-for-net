@@ -7,12 +7,21 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/e812b54127fad6c9bc2407b33980b0fe385b7717/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
+#tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -21,7 +30,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -197,6 +206,36 @@ rename-mapping:
   VnetConfiguration.infrastructureSubnetId: -|arm-id
   VnetConfiguration.internal: IsInternal
   ContainerApp.properties.eventStreamEndpoint: -|uri
+  ContainerApp.properties.outboundIpAddresses: OutboundIPAddressList|ip-address
+  ContainerAppProbe.type: ProbeType
+  Type: ContainerAppProbeType
+  Scheme: ContainerAppHttpScheme
+  ContainerAppProbeHttpGetHttpHeadersItem: ContainerAppHttpHeaderInfo
+  RegistryInfo.registryUrl: RegistryServer
+  WorkloadProfile.maximumCount: MaximumNodeCount
+  WorkloadProfile.minimumCount: MinimumNodeCount
+  BillingMeterProperties.category: WorkloadProfileCategory
+  TriggerType: ContainerAppJobTriggerType
+  JobTemplate: ContainerAppJobTemplate
+  JobProvisioningState: ContainerAppJobProvisioningState
+  JobPatchPropertiesProperties: ContainerAppJobPatchProperties
+  JobExecution: ContainerAppJobExecution
+  JobExecutionBase: ContainerAppJobExecutionBase
+  JobExecutionTemplate: ContainerAppJobExecutionTemplate
+  JobConfiguration: ContainerAppJobConfiguration
+  Job: ContainerAppJob
+  JobsCollection: ContainerAppJobsCollection
+  ManagedCertificate: ContainerAppManagedCertificate
+  Mtls.enabled: IsMtlsEnabled
+  ServiceBind: ContainerAppServiceBind
+  JobScale: ContainerAppJobScale
+  JobScale.pollingInterval: PollingIntervalInSeconds
+  JobScaleRule: ContainerAppJobScaleRule
+  JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  TokenStore: ContainerAppTokenStore
+  Usage: ContainerAppUsage
+  UsageName: ContainerAppUsageName
+  UsageUnit: ContainerAppUsageUnit
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -206,26 +245,24 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}: ContainerAppManagedEnvironmentDaprComponent
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectors/{detectorName}: ContainerAppJobDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}: ContainerAppJobDetectorProperty
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
+# mgmt-debug:
+#    show-serialized-names: true
+
 directive:
-  - from: CommonDefinitions.json
-    where: $.definitions
-    transform: >
-      $.ContainerAppProbe.properties.type['x-ms-enum']['name'] = 'ContainerAppProbeType';
-      $.ContainerAppProbe.properties.httpGet.properties.scheme['x-ms-enum']['name'] = 'ContainerAppHttpScheme';
-      $.ContainerAppProbe.properties.httpGet.properties.httpHeaders.items['x-ms-client-name'] = 'ContainerAppHttpHeaderInfo';
-      $.DefaultErrorResponse.properties.error.properties.innererror['x-ms-client-name'] = 'InnerError';
   - from: swagger-document
     where: $.definitions..enabled
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
-  - from: ContainerApps.json
-    where: $.definitions.ContainerApp
-    transform: >
-      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
-      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
+  # Change type to ResourceIdentifier
+  - from: CommonDefinitions.json
+    where: $.definitions.ServiceBind.properties.serviceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

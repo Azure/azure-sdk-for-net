@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -16,15 +14,18 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyVaultRoleDefinition>> value = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<KeyVaultRoleDefinition> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
@@ -35,13 +36,21 @@ namespace Azure.Security.KeyVault.Administration.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new RoleDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<KeyVaultRoleDefinition>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RoleDefinitionListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRoleDefinitionListResult(document.RootElement);
         }
     }
 }

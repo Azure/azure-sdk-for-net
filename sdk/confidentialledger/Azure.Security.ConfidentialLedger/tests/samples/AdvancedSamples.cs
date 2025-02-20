@@ -21,7 +21,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:GetIdentity
 
 #if SNIPPET
-            Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
+            Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com"); // The hostname from the identityServiceUri
 #else
             Uri identityServiceEndpoint = TestEnvironment.ConfidentialLedgerIdentityUrl;
 #endif

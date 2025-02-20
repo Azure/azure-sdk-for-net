@@ -5,49 +5,138 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12OneWayAgreement : IUtf8JsonSerializable
+    public partial class X12OneWayAgreement : IUtf8JsonSerializable, IJsonModel<X12OneWayAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12OneWayAgreement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<X12OneWayAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("senderBusinessIdentity");
-            writer.WriteObjectValue(SenderBusinessIdentity);
-            writer.WritePropertyName("receiverBusinessIdentity");
-            writer.WriteObjectValue(ReceiverBusinessIdentity);
-            writer.WritePropertyName("protocolSettings");
-            writer.WriteObjectValue(ProtocolSettings);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static X12OneWayAgreement DeserializeX12OneWayAgreement(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X12OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("senderBusinessIdentity"u8);
+            writer.WriteObjectValue(SenderBusinessIdentity, options);
+            writer.WritePropertyName("receiverBusinessIdentity"u8);
+            writer.WriteObjectValue(ReceiverBusinessIdentity, options);
+            writer.WritePropertyName("protocolSettings"u8);
+            writer.WriteObjectValue(ProtocolSettings, options);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        X12OneWayAgreement IJsonModel<X12OneWayAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12OneWayAgreement(document.RootElement, options);
+        }
+
+        internal static X12OneWayAgreement DeserializeX12OneWayAgreement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             X12ProtocolSettings protocolSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("senderBusinessIdentity"))
+                if (property.NameEquals("senderBusinessIdentity"u8))
                 {
-                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
+                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("receiverBusinessIdentity"))
+                if (property.NameEquals("receiverBusinessIdentity"u8))
                 {
-                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
+                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("protocolSettings"))
+                if (property.NameEquals("protocolSettings"u8))
                 {
-                    protocolSettings = X12ProtocolSettings.DeserializeX12ProtocolSettings(property.Value);
+                    protocolSettings = X12ProtocolSettings.DeserializeX12ProtocolSettings(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new X12OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new X12OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<X12OneWayAgreement>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        X12OneWayAgreement IPersistableModel<X12OneWayAgreement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeX12OneWayAgreement(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<X12OneWayAgreement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

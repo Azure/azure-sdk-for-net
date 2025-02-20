@@ -21,9 +21,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ListSharesIncludeType ToListSharesIncludeType(this string value)
         {
-            if (string.Equals(value, "snapshots", StringComparison.InvariantCultureIgnoreCase)) return ListSharesIncludeType.Snapshots;
-            if (string.Equals(value, "metadata", StringComparison.InvariantCultureIgnoreCase)) return ListSharesIncludeType.Metadata;
-            if (string.Equals(value, "deleted", StringComparison.InvariantCultureIgnoreCase)) return ListSharesIncludeType.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "snapshots")) return ListSharesIncludeType.Snapshots;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata")) return ListSharesIncludeType.Metadata;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted")) return ListSharesIncludeType.Deleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListSharesIncludeType value.");
         }
     }

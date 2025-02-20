@@ -6,77 +6,153 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentStatusResult : IUtf8JsonSerializable
+    public partial class SecurityAssessmentStatusResult : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityAssessmentStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("code");
-            writer.WriteStringValue(Code.ToString());
-            if (Optional.IsDefined(Cause))
-            {
-                writer.WritePropertyName("cause");
-                writer.WriteStringValue(Cause);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SecurityAssessmentStatusResult DeserializeSecurityAssessmentStatusResult(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<DateTimeOffset> firstEvaluationDate = default;
-            Optional<DateTimeOffset> statusChangeDate = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(FirstEvaluatedOn))
+            {
+                writer.WritePropertyName("firstEvaluationDate"u8);
+                writer.WriteStringValue(FirstEvaluatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(StatusChangeOn))
+            {
+                writer.WritePropertyName("statusChangeDate"u8);
+                writer.WriteStringValue(StatusChangeOn.Value, "O");
+            }
+        }
+
+        SecurityAssessmentStatusResult IJsonModel<SecurityAssessmentStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAssessmentStatusResult(document.RootElement, options);
+        }
+
+        internal static SecurityAssessmentStatusResult DeserializeSecurityAssessmentStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? firstEvaluationDate = default;
+            DateTimeOffset? statusChangeDate = default;
             SecurityAssessmentStatusCode code = default;
-            Optional<string> cause = default;
-            Optional<string> description = default;
+            string cause = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstEvaluationDate"))
+                if (property.NameEquals("firstEvaluationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstEvaluationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("statusChangeDate"))
+                if (property.NameEquals("statusChangeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusChangeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = new SecurityAssessmentStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cause"))
+                if (property.NameEquals("cause"u8))
                 {
                     cause = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityAssessmentStatusResult(code, cause.Value, description.Value, Optional.ToNullable(firstEvaluationDate), Optional.ToNullable(statusChangeDate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityAssessmentStatusResult(
+                code,
+                cause,
+                description,
+                serializedAdditionalRawData,
+                firstEvaluationDate,
+                statusChangeDate);
         }
+
+        BinaryData IPersistableModel<SecurityAssessmentStatusResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityAssessmentStatusResult IPersistableModel<SecurityAssessmentStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityAssessmentStatusResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityAssessmentStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -14,21 +13,32 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static EntityLinkingTaskResult DeserializeEntityLinkingTaskResult(JsonElement element)
         {
-            Optional<EntityLinkingResult> results = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            EntityLinkingResult results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = EntityLinkingResult.DeserializeEntityLinkingResult(property.Value);
                     continue;
                 }
             }
-            return new EntityLinkingTaskResult(results.Value);
+            return new EntityLinkingTaskResult(results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EntityLinkingTaskResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEntityLinkingTaskResult(document.RootElement);
         }
     }
 }

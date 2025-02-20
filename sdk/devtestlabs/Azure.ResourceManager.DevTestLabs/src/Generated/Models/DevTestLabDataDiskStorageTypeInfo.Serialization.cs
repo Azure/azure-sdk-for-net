@@ -5,52 +5,140 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabDataDiskStorageTypeInfo : IUtf8JsonSerializable
+    public partial class DevTestLabDataDiskStorageTypeInfo : IUtf8JsonSerializable, IJsonModel<DevTestLabDataDiskStorageTypeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabDataDiskStorageTypeInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevTestLabDataDiskStorageTypeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskStorageTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Lun))
             {
-                writer.WritePropertyName("lun");
+                writer.WritePropertyName("lun"u8);
                 writer.WriteStringValue(Lun);
             }
             if (Optional.IsDefined(StorageType))
             {
-                writer.WritePropertyName("storageType");
+                writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DevTestLabDataDiskStorageTypeInfo DeserializeDevTestLabDataDiskStorageTypeInfo(JsonElement element)
+        DevTestLabDataDiskStorageTypeInfo IJsonModel<DevTestLabDataDiskStorageTypeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> lun = default;
-            Optional<DevTestLabStorageType> storageType = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskStorageTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabDataDiskStorageTypeInfo(document.RootElement, options);
+        }
+
+        internal static DevTestLabDataDiskStorageTypeInfo DeserializeDevTestLabDataDiskStorageTypeInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string lun = default;
+            DevTestLabStorageType? storageType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     lun = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageType = new DevTestLabStorageType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabDataDiskStorageTypeInfo(lun.Value, Optional.ToNullable(storageType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabDataDiskStorageTypeInfo(lun, storageType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabDataDiskStorageTypeInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskStorageTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabDataDiskStorageTypeInfo IPersistableModel<DevTestLabDataDiskStorageTypeInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskStorageTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabDataDiskStorageTypeInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabDataDiskStorageTypeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

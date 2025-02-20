@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal SparkConfigurationRenameSparkConfigurationOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "SparkConfigurationRenameSparkConfigurationOperation");
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "SparkConfigurationRenameSparkConfigurationOperation");
         }
 
         /// <inheritdoc />

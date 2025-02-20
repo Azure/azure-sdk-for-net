@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the operation associated with the notification and its value must be &quot;scale&quot;. </summary>
+    /// <summary> the operation associated with the notification and its value must be "scale". </summary>
     public readonly partial struct MonitorOperationType : IEquatable<MonitorOperationType>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(MonitorOperationType left, MonitorOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorOperationType"/> values are not the same. </summary>
         public static bool operator !=(MonitorOperationType left, MonitorOperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorOperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorOperationType"/>. </summary>
         public static implicit operator MonitorOperationType(string value) => new MonitorOperationType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

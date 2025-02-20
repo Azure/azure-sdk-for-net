@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,16 +13,20 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchResourceCounter DeserializeSearchResourceCounter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long usage = default;
-            Optional<long?> quota = default;
+            long? quota = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("usage"))
+                if (property.NameEquals("usage"u8))
                 {
                     usage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +37,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchResourceCounter(usage, Optional.ToNullable(quota));
+            return new SearchResourceCounter(usage, quota);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchResourceCounter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchResourceCounter(document.RootElement);
         }
     }
 }

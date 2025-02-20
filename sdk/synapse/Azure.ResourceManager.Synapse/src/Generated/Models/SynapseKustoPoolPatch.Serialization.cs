@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,14 +14,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable
+    public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseKustoPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseKustoPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseKustoPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseKustoPoolPatch)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,60 +49,108 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataIngestionUri))
+            {
+                writer.WritePropertyName("dataIngestionUri"u8);
+                writer.WriteStringValue(DataIngestionUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StateReason))
+            {
+                writer.WritePropertyName("stateReason"u8);
+                writer.WriteStringValue(StateReason);
+            }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
-                writer.WritePropertyName("optimizedAutoscale");
-                writer.WriteObjectValue(OptimizedAutoscale);
+                writer.WritePropertyName("optimizedAutoscale"u8);
+                writer.WriteObjectValue(OptimizedAutoscale, options);
             }
             if (Optional.IsDefined(EnableStreamingIngest))
             {
-                writer.WritePropertyName("enableStreamingIngest");
+                writer.WritePropertyName("enableStreamingIngest"u8);
                 writer.WriteBooleanValue(EnableStreamingIngest.Value);
             }
             if (Optional.IsDefined(EnablePurge))
             {
-                writer.WritePropertyName("enablePurge");
+                writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(EnablePurge.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
+            {
+                writer.WritePropertyName("languageExtensions"u8);
+                writer.WriteObjectValue(LanguageExtensions, options);
             }
             if (Optional.IsDefined(WorkspaceUid))
             {
-                writer.WritePropertyName("workspaceUID");
+                writer.WritePropertyName("workspaceUID"u8);
                 writer.WriteStringValue(WorkspaceUid.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static SynapseKustoPoolPatch DeserializeSynapseKustoPoolPatch(JsonElement element)
+        SynapseKustoPoolPatch IJsonModel<SynapseKustoPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SynapseDataSourceSku> sku = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseKustoPoolPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseKustoPoolPatch(document.RootElement, options);
+        }
+
+        internal static SynapseKustoPoolPatch DeserializeSynapseKustoPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            SynapseDataSourceSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoPoolState> state = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Uri> uri = default;
-            Optional<Uri> dataIngestionUri = default;
-            Optional<string> stateReason = default;
-            Optional<SynapseOptimizedAutoscale> optimizedAutoscale = default;
-            Optional<bool> enableStreamingIngest = default;
-            Optional<bool> enablePurge = default;
-            Optional<SynapseLanguageExtensionsList> languageExtensions = default;
-            Optional<Guid> workspaceUID = default;
+            SystemData systemData = default;
+            KustoPoolState? state = default;
+            ResourceProvisioningState? provisioningState = default;
+            Uri uri = default;
+            Uri dataIngestionUri = default;
+            string stateReason = default;
+            SynapseOptimizedAutoscale optimizedAutoscale = default;
+            bool? enableStreamingIngest = default;
+            bool? enablePurge = default;
+            SynapseLanguageExtensionsList languageExtensions = default;
+            Guid? workspaceUID = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -95,42 +161,40 @@ namespace Azure.ResourceManager.Synapse.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
+                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,96 +203,87 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new KustoPoolState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("uri"))
+                        if (property0.NameEquals("uri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataIngestionUri"))
+                        if (property0.NameEquals("dataIngestionUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dataIngestionUri = null;
                                 continue;
                             }
                             dataIngestionUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("stateReason"))
+                        if (property0.NameEquals("stateReason"u8))
                         {
                             stateReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("optimizedAutoscale"))
+                        if (property0.NameEquals("optimizedAutoscale"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value);
+                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("enableStreamingIngest"))
+                        if (property0.NameEquals("enableStreamingIngest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableStreamingIngest = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enablePurge"))
+                        if (property0.NameEquals("enablePurge"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePurge = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("languageExtensions"))
+                        if (property0.NameEquals("languageExtensions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value);
+                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("workspaceUID"))
+                        if (property0.NameEquals("workspaceUID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workspaceUID = property0.Value.GetGuid();
@@ -237,8 +292,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseKustoPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseKustoPoolPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                state,
+                provisioningState,
+                uri,
+                dataIngestionUri,
+                stateReason,
+                optimizedAutoscale,
+                enableStreamingIngest,
+                enablePurge,
+                languageExtensions,
+                workspaceUID,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseKustoPoolPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseKustoPoolPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseKustoPoolPatch IPersistableModel<SynapseKustoPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseKustoPoolPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseKustoPoolPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseKustoPoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

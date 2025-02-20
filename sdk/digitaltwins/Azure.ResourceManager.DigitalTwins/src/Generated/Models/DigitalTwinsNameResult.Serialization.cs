@@ -5,31 +5,118 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsNameResult
+    public partial class DigitalTwinsNameResult : IUtf8JsonSerializable, IJsonModel<DigitalTwinsNameResult>
     {
-        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsNameResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DigitalTwinsNameResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<DigitalTwinsNameUnavailableReason?> reason = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsNameResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsNameResult)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(IsNameAvailable))
+            {
+                writer.WritePropertyName("nameAvailable"u8);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                if (Message != null)
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+                else
+                {
+                    writer.WriteNull("message");
+                }
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                if (Reason != null)
+                {
+                    writer.WritePropertyName("reason"u8);
+                    writer.WriteStringValue(Reason.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("reason");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DigitalTwinsNameResult IJsonModel<DigitalTwinsNameResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsNameResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsNameResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsNameResult(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? nameAvailable = default;
+            string message = default;
+            DigitalTwinsNameUnavailableReason? reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nameAvailable"))
+                if (property.NameEquals("nameAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +126,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,8 +136,44 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     reason = new DigitalTwinsNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DigitalTwinsNameResult(nameAvailable, message, reason, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsNameResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsNameResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsNameResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DigitalTwinsNameResult IPersistableModel<DigitalTwinsNameResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsNameResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDigitalTwinsNameResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsNameResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DigitalTwinsNameResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

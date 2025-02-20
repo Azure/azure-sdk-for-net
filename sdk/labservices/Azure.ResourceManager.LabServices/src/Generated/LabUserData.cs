@@ -6,16 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    /// <summary> A class representing the LabUser data model. </summary>
+    /// <summary>
+    /// A class representing the LabUser data model.
+    /// User of a lab that can register for and use virtual machines within the lab.
+    /// </summary>
     public partial class LabUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/>. </summary>
         /// <param name="email"> Email address of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public LabUserData(string email)
@@ -25,20 +61,21 @@ namespace Azure.ResourceManager.LabServices
             Email = email;
         }
 
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalUsageQuota"> The amount of usage quota time the user gets in addition to the lab usage quota. </param>
         /// <param name="provisioningState"> Current provisioning state of the user resource. </param>
-        /// <param name="displayName"> Display name of the user, for example user&apos;s full name. </param>
+        /// <param name="displayName"> Display name of the user, for example user's full name. </param>
         /// <param name="email"> Email address of the user. </param>
-        /// <param name="registrationState"> State of the user&apos;s registration within the lab. </param>
+        /// <param name="registrationState"> State of the user's registration within the lab. </param>
         /// <param name="invitationState"> State of the invitation message for the user. </param>
         /// <param name="invitationSentOn"> Date and time when the invitation message was sent to the user. </param>
         /// <param name="totalUsage"> How long the user has used their virtual machines in this lab. </param>
-        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabUserRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabUserRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdditionalUsageQuota = additionalUsageQuota;
             ProvisioningState = provisioningState;
@@ -48,17 +85,23 @@ namespace Azure.ResourceManager.LabServices
             InvitationState = invitationState;
             InvitationSentOn = invitationSentOn;
             TotalUsage = totalUsage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/> for deserialization. </summary>
+        internal LabUserData()
+        {
         }
 
         /// <summary> The amount of usage quota time the user gets in addition to the lab usage quota. </summary>
         public TimeSpan? AdditionalUsageQuota { get; set; }
         /// <summary> Current provisioning state of the user resource. </summary>
         public LabServicesProvisioningState? ProvisioningState { get; }
-        /// <summary> Display name of the user, for example user&apos;s full name. </summary>
+        /// <summary> Display name of the user, for example user's full name. </summary>
         public string DisplayName { get; }
         /// <summary> Email address of the user. </summary>
         public string Email { get; set; }
-        /// <summary> State of the user&apos;s registration within the lab. </summary>
+        /// <summary> State of the user's registration within the lab. </summary>
         public LabUserRegistrationState? RegistrationState { get; }
         /// <summary> State of the invitation message for the user. </summary>
         public LabUserInvitationState? InvitationState { get; }

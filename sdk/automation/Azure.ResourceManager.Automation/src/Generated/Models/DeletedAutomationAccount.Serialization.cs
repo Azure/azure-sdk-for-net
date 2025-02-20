@@ -6,63 +6,133 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DeletedAutomationAccount
+    public partial class DeletedAutomationAccount : IUtf8JsonSerializable, IJsonModel<DeletedAutomationAccount>
     {
-        internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedAutomationAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DeletedAutomationAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AzureLocation> location = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AutomationAccountResourceId))
+            {
+                writer.WritePropertyName("automationAccountResourceId"u8);
+                writer.WriteStringValue(AutomationAccountResourceId);
+            }
+            if (Optional.IsDefined(AutomationAccountId))
+            {
+                writer.WritePropertyName("automationAccountId"u8);
+                writer.WriteStringValue(AutomationAccountId);
+            }
+            if (Optional.IsDefined(LocationPropertiesLocation))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(LocationPropertiesLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            {
+                writer.WritePropertyName("deletionTime"u8);
+                writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            writer.WriteEndObject();
+        }
+
+        DeletedAutomationAccount IJsonModel<DeletedAutomationAccount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedAutomationAccount(document.RootElement, options);
+        }
+
+        internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> automationAccountResourceId = default;
-            Optional<string> automationAccountId = default;
-            Optional<string> location0 = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            SystemData systemData = default;
+            ResourceIdentifier automationAccountResourceId = default;
+            string automationAccountId = default;
+            string location0 = default;
+            DateTimeOffset? deletionTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,31 +141,29 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("automationAccountResourceId"))
+                        if (property0.NameEquals("automationAccountResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             automationAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("automationAccountId"))
+                        if (property0.NameEquals("automationAccountId"u8))
                         {
                             automationAccountId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             location0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deletionTime"))
+                        if (property0.NameEquals("deletionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletionTime = property0.Value.GetDateTimeOffset("O");
@@ -104,8 +172,54 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeletedAutomationAccount(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                automationAccountResourceId,
+                automationAccountId,
+                location0,
+                deletionTime,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeletedAutomationAccount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeletedAutomationAccount IPersistableModel<DeletedAutomationAccount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeletedAutomationAccount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeletedAutomationAccount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

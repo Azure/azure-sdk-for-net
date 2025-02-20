@@ -6,45 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Online deployment scoring requests configuration. </summary>
     public partial class MachineLearningOnlineRequestSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineRequestSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineRequestSettings"/>. </summary>
         public MachineLearningOnlineRequestSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineRequestSettings. </summary>
-        /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineRequestSettings"/>. </summary>
         /// <param name="maxQueueWait">
-        /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
+        /// (Deprecated for Managed Online Endpoints) The maximum amount of time a request will stay in the queue in ISO 8601 format.
         /// Defaults to 500ms.
+        /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </param>
         /// <param name="requestTimeout">
         /// The scoring timeout in ISO 8601 format.
         /// Defaults to 5000ms.
         /// </param>
-        internal MachineLearningOnlineRequestSettings(int? maxConcurrentRequestsPerInstance, TimeSpan? maxQueueWait, TimeSpan? requestTimeout)
+        /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOnlineRequestSettings(TimeSpan? maxQueueWait, TimeSpan? requestTimeout, int? maxConcurrentRequestsPerInstance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxConcurrentRequestsPerInstance = maxConcurrentRequestsPerInstance;
             MaxQueueWait = maxQueueWait;
             RequestTimeout = requestTimeout;
+            MaxConcurrentRequestsPerInstance = maxConcurrentRequestsPerInstance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>
-        public int? MaxConcurrentRequestsPerInstance { get; set; }
         /// <summary>
-        /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
+        /// (Deprecated for Managed Online Endpoints) The maximum amount of time a request will stay in the queue in ISO 8601 format.
         /// Defaults to 500ms.
+        /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </summary>
+        [WirePath("maxQueueWait")]
         public TimeSpan? MaxQueueWait { get; set; }
         /// <summary>
         /// The scoring timeout in ISO 8601 format.
         /// Defaults to 5000ms.
         /// </summary>
+        [WirePath("requestTimeout")]
         public TimeSpan? RequestTimeout { get; set; }
+        /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>
+        [WirePath("maxConcurrentRequestsPerInstance")]
+        public int? MaxConcurrentRequestsPerInstance { get; set; }
     }
 }

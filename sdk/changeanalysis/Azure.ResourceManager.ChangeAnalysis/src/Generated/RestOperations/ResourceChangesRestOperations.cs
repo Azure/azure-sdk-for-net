@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ChangeAnalysis.Models;
@@ -37,6 +36,23 @@ namespace Azure.ResourceManager.ChangeAnalysis
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/providers/Microsoft.ChangeAnalysis/resourceChanges", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$startTime", startTime, "O", true);
+            uri.AppendQuery("$endTime", endTime, "O", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -60,7 +76,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             return message;
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
@@ -88,7 +104,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             }
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
@@ -116,6 +132,14 @@ namespace Azure.ResourceManager.ChangeAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -130,7 +154,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             return message;
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -160,7 +184,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             }
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>

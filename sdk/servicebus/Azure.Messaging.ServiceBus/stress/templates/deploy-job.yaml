@@ -1,0 +1,14 @@
+{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "stress.service-bus") -}}
+{{- define "stress.service-bus" -}}
+metadata:
+  labels:
+    testName: "net-sb-stress-{{ lower .Stress.scenarioName }}"
+    testInstance: "servicebus-{{ lower .Stress.scenarioName }}-{{ .Release.Name }}-{{ .Release.Revision }}"
+spec:
+  containers:
+    - name: role
+      image: {{ .Stress.imageTag }}
+      command: ['dotnet', "Azure.Messaging.ServiceBus.Stress.dll", "--test", "{{ .Stress.scenarioName }}", "--role", "$(JOB_COMPLETION_INDEX)"]
+      imagePullPolicy: Always
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
+{{- end -}}

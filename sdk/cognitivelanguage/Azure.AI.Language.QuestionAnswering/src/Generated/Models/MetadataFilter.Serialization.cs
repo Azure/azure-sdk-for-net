@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
@@ -27,10 +27,18 @@ namespace Azure.AI.Language.QuestionAnswering
             }
             if (Optional.IsDefined(LogicalOperation))
             {
-                writer.WritePropertyName("logicalOperation");
+                writer.WritePropertyName("logicalOperation"u8);
                 writer.WriteStringValue(LogicalOperation.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

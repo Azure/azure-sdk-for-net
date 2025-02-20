@@ -23,6 +23,18 @@ public class TestParameters : IDisposable
     public string EventHubsConnectionString = string.Empty;
 
     /// <summary>
+    ///   The job index of this test.
+    /// </summary>
+    ///
+    public int JobIndex = default;
+
+    /// <summary>
+    ///   If this instance of the test should run all the roles in parallel.
+    /// </summary>
+    ///
+    public bool RunAllRoles = false;
+
+    /// <summary>
     ///   The name of the Event Hub to use for a test run.
     /// </summary>
     ///

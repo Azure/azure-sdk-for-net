@@ -7,52 +7,52 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonLineStringData : IUtf8JsonSerializable
+    internal partial class GeoJsonLineStringData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteNumberValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonLineStringData DeserializeGeoJsonLineStringData(JsonElement element)
         {
-            IList<IList<double>> coordinates = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<IList<double>> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"))
+                if (property.NameEquals("coordinates"u8))
                 {
                     List<IList<double>> array = new List<IList<double>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<double> array0 = new List<double>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetDouble());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<double> array0 = new List<double>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetDouble());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     coordinates = array;
                     continue;
                 }
             }
             return new GeoJsonLineStringData(coordinates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonLineStringData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonLineStringData(document.RootElement);
         }
     }
 }

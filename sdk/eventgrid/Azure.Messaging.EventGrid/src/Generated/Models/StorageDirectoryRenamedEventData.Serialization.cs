@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,63 +16,82 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageDirectoryRenamedEventData DeserializeStorageDirectoryRenamedEventData(JsonElement element)
         {
-            Optional<string> api = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> sourceUrl = default;
-            Optional<string> destinationUrl = default;
-            Optional<string> sequencer = default;
-            Optional<string> identity = default;
-            Optional<object> storageDiagnostics = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string api = default;
+            string clientRequestId = default;
+            string requestId = default;
+            string sourceUrl = default;
+            string destinationUrl = default;
+            string sequencer = default;
+            string identity = default;
+            object storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     api = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceUrl"))
+                if (property.NameEquals("sourceUrl"u8))
                 {
                     sourceUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationUrl"))
+                if (property.NameEquals("destinationUrl"u8))
                 {
                     destinationUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequencer"))
+                if (property.NameEquals("sequencer"u8))
                 {
                     sequencer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageDiagnostics"))
+                if (property.NameEquals("storageDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
             }
-            return new StorageDirectoryRenamedEventData(api.Value, clientRequestId.Value, requestId.Value, sourceUrl.Value, destinationUrl.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageDirectoryRenamedEventData(
+                api,
+                clientRequestId,
+                requestId,
+                sourceUrl,
+                destinationUrl,
+                sequencer,
+                identity,
+                storageDiagnostics);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageDirectoryRenamedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageDirectoryRenamedEventData(document.RootElement);
         }
 
         internal partial class StorageDirectoryRenamedEventDataConverter : JsonConverter<StorageDirectoryRenamedEventData>
@@ -82,6 +100,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override StorageDirectoryRenamedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

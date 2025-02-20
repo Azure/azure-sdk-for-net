@@ -6,22 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabServicesRecurrencePattern : IUtf8JsonSerializable
+    public partial class LabServicesRecurrencePattern : IUtf8JsonSerializable, IJsonModel<LabServicesRecurrencePattern>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesRecurrencePattern>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LabServicesRecurrencePattern>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frequency");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesRecurrencePattern>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                writer.WritePropertyName("weekDays");
+                writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in WeekDays)
                 {
@@ -31,32 +48,65 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            writer.WritePropertyName("expirationDate");
+            writer.WritePropertyName("expirationDate"u8);
             writer.WriteStringValue(ExpireOn, "O");
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element)
+        LabServicesRecurrencePattern IJsonModel<LabServicesRecurrencePattern>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesRecurrencePattern>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabServicesRecurrencePattern(document.RootElement, options);
+        }
+
+        internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LabServicesRecurrenceFrequency frequency = default;
-            Optional<IList<LabServicesDayOfWeek>> weekDays = default;
-            Optional<int> interval = default;
+            IList<LabServicesDayOfWeek> weekDays = default;
+            int? interval = default;
             DateTimeOffset expirationDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     frequency = property.Value.GetString().ToLabServicesRecurrenceFrequency();
                     continue;
                 }
-                if (property.NameEquals("weekDays"))
+                if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LabServicesDayOfWeek> array = new List<LabServicesDayOfWeek>();
@@ -67,23 +117,58 @@ namespace Azure.ResourceManager.LabServices.Models
                     weekDays = array;
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabServicesRecurrencePattern(frequency, Optional.ToList(weekDays), Optional.ToNullable(interval), expirationDate);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LabServicesRecurrencePattern(frequency, weekDays ?? new ChangeTrackingList<LabServicesDayOfWeek>(), interval, expirationDate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabServicesRecurrencePattern>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesRecurrencePattern>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LabServicesRecurrencePattern IPersistableModel<LabServicesRecurrencePattern>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabServicesRecurrencePattern>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLabServicesRecurrencePattern(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LabServicesRecurrencePattern>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

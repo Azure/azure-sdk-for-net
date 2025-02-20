@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,65 +14,72 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static UsageStats DeserializeUsageStats(JsonElement element)
         {
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<int> activeSeriesCount = default;
-            Optional<int> allSeriesCount = default;
-            Optional<int> metricsCount = default;
-            Optional<int> dataFeedCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? timestamp = default;
+            int? activeSeriesCount = default;
+            int? allSeriesCount = default;
+            int? metricsCount = default;
+            int? dataFeedCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("activeSeriesCount"))
+                if (property.NameEquals("activeSeriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeSeriesCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allSeriesCount"))
+                if (property.NameEquals("allSeriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allSeriesCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("metricsCount"))
+                if (property.NameEquals("metricsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metricsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataFeedCount"))
+                if (property.NameEquals("dataFeedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataFeedCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount));
+            return new UsageStats(timestamp, activeSeriesCount, allSeriesCount, metricsCount, dataFeedCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static UsageStats FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUsageStats(document.RootElement);
         }
     }
 }

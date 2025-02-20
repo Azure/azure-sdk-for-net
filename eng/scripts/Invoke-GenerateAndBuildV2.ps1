@@ -41,7 +41,7 @@ $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
-$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
+$relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -79,7 +79,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
         }
     } else {
-        throw "No readme File path provided."
+        throw "[ERROR] Neither 'specFolder' nor 'headSha' is provided for `$readmeFile`. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
     }
 
     if ($autorestConfigYaml) {
@@ -87,6 +87,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
         $autorestConfigYaml = ConvertTo-YAML $yml
     }
     Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+    $generatedSDKPackages[$generatedSDKPackages.Count - 1]['readmeMd'] = @($readmeFile)
 }
 
 #update services without readme.md
@@ -102,56 +103,65 @@ foreach( $file in $inputFilePaths) {
             $inputFileToGen += @($file)
         }
     }
-   
+
 }
 
 if ($inputFileToGen) {
     UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
-# generate sdk from cadl file
-if ($relatedCadlProjectFolder) {
-    foreach ($cadlRelativeFolder in $relatedCadlProjectFolder) {
-        $cadlFolder = Resolve-Path (Join-Path $swaggerDir $cadlRelativeFolder)
-        $newPackageOutput = "newPackageOutput.json"
-
-        $cadlProjectYaml = Get-Content -Path (Join-Path "$cadlFolder" "cadl-project.yaml") -Raw
-
-        Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-        $yml = ConvertFrom-YAML $cadlProjectYaml
-        $service = ""
-        $namespace = ""
-        if ($yml) {
-            if ($yml["parameters"] -And $yml["parameters"]["service-directory-name"]) {
-                $service = $yml["parameters"]["service-directory-name"]["default"];
-            }
-            if ($yml["options"] -And $yml["options"]["@azure-tools/cadl-csharp"] -And $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]) {
-                $namespace = $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]
-            }
+$exitCode = 0
+# generate sdk from typespec file
+if ($relatedTypeSpecProjectFolder) {
+    foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
+        $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
+        $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
+        $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
+        $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
+        if (Test-Path -Path $sdkAutorestConfigFile) {
+            Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
+            Remove-Item -Path $sdkAutorestConfigFile
         }
-        if (!$service || !$namespace) {
-            throw "Not provide service name or namespace."
+        $serviceType = "data-plane"
+        $packageName = Split-Path $sdkProjectFolder -Leaf
+        if ($packageName.StartsWith("Azure.ResourceManager.")) {
+            $serviceType = "resource-manager"
         }
-        $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
-        New-CADLPackageFolder `
-            -service $service `
-            -namespace $namespace `
-            -sdkPath $sdkPath `
-            -relatedCadlProjectFolder $cadlRelativeFolder `
-            -specRoot $swaggerDir `
-            -outputJsonFile $newpackageoutput
-        $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
-        $relativeSdkPath = $newPackageOutputJson.path
-        GeneratePackage `
-            -projectFolder $projectFolder `
+        $repo = $repoHttpsUrl -replace "https://github.com/", ""
+        Write-host "Start to call tsp-client to generate package:$packageName"
+        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        if ($swaggerDir) {
+            $tspclientCommand += " --local-spec-repo $typespecFolder"
+        }
+        Write-Host $tspclientCommand
+        Invoke-Expression $tspclientCommand
+        if ($LASTEXITCODE) {
+          # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
+          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE."
+          Write-Error "[ERROR] Please review the detail errors for potential fixes."
+          Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+          $generatedSDKPackages.Add(@{
+            result = "failed";
+            path=@("");
+          })
+          $exitCode = $LASTEXITCODE
+        } else {
+            $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
+            GeneratePackage `
+            -projectFolder $sdkProjectFolder `
             -sdkRootPath $sdkPath `
             -path $relativeSdkPath `
             -downloadUrlPrefix $downloadUrlPrefix `
-            -serviceType "data-plane" `
-            -generatedSDKPackages $generatedSDKPackages
+            -serviceType $serviceType `
+            -skipGenerate `
+            -generatedSDKPackages $generatedSDKPackages `
+            -specRepoRoot $swaggerDir
+        }
+        $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
     }
 }
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
+exit $exitCode

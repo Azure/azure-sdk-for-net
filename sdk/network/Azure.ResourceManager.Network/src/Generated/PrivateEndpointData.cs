@@ -5,32 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PrivateEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateEndpoint data model.
+    /// Private endpoint resource.
+    /// </summary>
     public partial class PrivateEndpointData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         public PrivateEndpointData()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
             PrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
             CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
+            ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
+            IPConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The ID of the subnet from which the private IP will be allocated. </param>
@@ -39,7 +45,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs) : base(id, name, resourceType, location, tags)
+        /// <param name="applicationSecurityGroups"> Application security groups in which the private endpoint IP configuration is included. </param>
+        /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </param>
+        /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -49,6 +58,9 @@ namespace Azure.ResourceManager.Network
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             CustomDnsConfigs = customDnsConfigs;
+            ApplicationSecurityGroups = applicationSecurityGroups;
+            IPConfigurations = ipConfigurations;
+            CustomNetworkInterfaceName = customNetworkInterfaceName;
         }
 
         /// <summary> The extended location of the load balancer. </summary>
@@ -67,5 +79,11 @@ namespace Azure.ResourceManager.Network
         public IList<NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> An array of custom dns configurations. </summary>
         public IList<CustomDnsConfigProperties> CustomDnsConfigs { get; }
+        /// <summary> Application security groups in which the private endpoint IP configuration is included. </summary>
+        public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; }
+        /// <summary> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </summary>
+        public IList<PrivateEndpointIPConfiguration> IPConfigurations { get; }
+        /// <summary> The custom name of the network interface attached to the private endpoint. </summary>
+        public string CustomNetworkInterfaceName { get; set; }
     }
 }

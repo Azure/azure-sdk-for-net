@@ -3,9 +3,7 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -17,37 +15,44 @@ namespace Azure.Identity
 
         private CredentialPipeline(TokenCredentialOptions options)
         {
-            AuthorityHost = options.AuthorityHost;
-
-            HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
-
+            HttpPipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options) { RequestFailedDetailsParser = new ManagedIdentityRequestFailedDetailsParser() });
             Diagnostics = new ClientDiagnostics(options);
         }
 
-        public CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
+        public CredentialPipeline(HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
         {
-            AuthorityHost = authorityHost;
-
             HttpPipeline = httpPipeline;
-
             Diagnostics = diagnostics;
         }
 
-        public static CredentialPipeline GetInstance(TokenCredentialOptions options)
+        public static CredentialPipeline GetInstance(TokenCredentialOptions options, bool IsManagedIdentityCredential = false)
         {
-            return options is null ? s_singleton.Value : new CredentialPipeline(options);
+            return options switch
+            {
+                _ when IsManagedIdentityCredential => configureOptionsForManagedIdentity(options),
+                not null => new CredentialPipeline(options),
+                _ => s_singleton.Value,
+
+            };
         }
 
-        public Uri AuthorityHost { get; }
+        private static CredentialPipeline configureOptionsForManagedIdentity(TokenCredentialOptions options)
+        {
+            var clonedOptions = options switch
+            {
+                DefaultAzureCredentialOptions dac => dac.Clone<DefaultAzureCredentialOptions>(),
+                _ => options?.Clone<TokenCredentialOptions>() ?? new TokenCredentialOptions(),
+            };
+            // Set the custom retry policy
+            clonedOptions.Retry.MaxRetries = 5;
+            clonedOptions.RetryPolicy ??= new DefaultAzureCredentialImdsRetryPolicy(clonedOptions.Retry);
+            clonedOptions.IsChainedCredential = clonedOptions is DefaultAzureCredentialOptions;
+            return new CredentialPipeline(clonedOptions);
+        }
 
         public HttpPipeline HttpPipeline { get; }
 
         public ClientDiagnostics Diagnostics { get; }
-
-        public IConfidentialClientApplication CreateMsalConfidentialClient(string tenantId, string clientId, string clientSecret)
-        {
-            return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
-        }
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)
         {
@@ -57,7 +62,6 @@ namespace Azure.Identity
             scope.Start();
             return scope;
         }
-
         public CredentialDiagnosticScope StartGetTokenScopeGroup(string fullyQualifiedMethod, TokenRequestContext context)
         {
             var scopeHandler = new ScopeGroupHandler(fullyQualifiedMethod);
@@ -65,14 +69,6 @@ namespace Azure.Identity
             CredentialDiagnosticScope scope = new CredentialDiagnosticScope(Diagnostics, fullyQualifiedMethod, context, scopeHandler);
             scope.Start();
             return scope;
-        }
-
-        private class CredentialResponseClassifier : ResponseClassifier
-        {
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                return base.IsRetriableResponse(message) || message.Response.Status == 404;
-            }
         }
 
         private class ScopeHandler : IScopeHandler

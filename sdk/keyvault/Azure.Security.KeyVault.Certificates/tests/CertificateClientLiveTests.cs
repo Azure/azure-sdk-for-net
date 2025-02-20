@@ -907,7 +907,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [RecordedTest]
         public async Task DownloadECDsaCertificateSignRemoteVerifyLocal([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
         {
-#if NET461
+#if NET462
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
 #endif
             if (keyCurveName == CertificateKeyCurveName.P256K && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -972,7 +972,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [RecordedTest]
         public async Task DownloadECDsaCertificateSignLocalVerifyRemote([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
         {
-#if NET461
+#if NET462
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
 #endif
             if (keyCurveName == CertificateKeyCurveName.P256K && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -999,7 +999,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            try
+            {
+                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("An internal error has occurred"))
+            {
+                // This test fails often enough with an internal HTTP 500 to ignore.
+                Assert.Inconclusive("The service encountered an internal error");
+            }
 
             // Download the certificate and sign data locally.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));

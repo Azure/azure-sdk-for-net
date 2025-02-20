@@ -6,209 +6,262 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseMigrationSqlMIProperties : IUtf8JsonSerializable
+    public partial class DatabaseMigrationSqlMIProperties : IUtf8JsonSerializable, IJsonModel<DatabaseMigrationSqlMIProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationSqlMIProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DatabaseMigrationSqlMIProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupConfiguration))
-            {
-                writer.WritePropertyName("backupConfiguration");
-                writer.WriteObjectValue(BackupConfiguration);
-            }
-            if (Optional.IsDefined(OfflineConfiguration))
-            {
-                writer.WritePropertyName("offlineConfiguration");
-                writer.WriteObjectValue(OfflineConfiguration);
-            }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Scope))
-            {
-                writer.WritePropertyName("scope");
-                writer.WriteStringValue(Scope);
-            }
-            if (Optional.IsDefined(SourceSqlConnection))
-            {
-                writer.WritePropertyName("sourceSqlConnection");
-                writer.WriteObjectValue(SourceSqlConnection);
-            }
-            if (Optional.IsDefined(SourceDatabaseName))
-            {
-                writer.WritePropertyName("sourceDatabaseName");
-                writer.WriteStringValue(SourceDatabaseName);
-            }
-            if (Optional.IsDefined(MigrationService))
-            {
-                writer.WritePropertyName("migrationService");
-                writer.WriteStringValue(MigrationService);
-            }
-            if (Optional.IsDefined(MigrationOperationId))
-            {
-                writer.WritePropertyName("migrationOperationId");
-                writer.WriteStringValue(MigrationOperationId);
-            }
-            if (Optional.IsDefined(TargetDatabaseCollation))
-            {
-                writer.WritePropertyName("targetDatabaseCollation");
-                writer.WriteStringValue(TargetDatabaseCollation);
-            }
-            if (Optional.IsDefined(ProvisioningError))
-            {
-                writer.WritePropertyName("provisioningError");
-                writer.WriteStringValue(ProvisioningError);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DatabaseMigrationSqlMIProperties DeserializeDatabaseMigrationSqlMIProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<MigrationStatusDetails> migrationStatusDetails = default;
-            Optional<BackupConfiguration> backupConfiguration = default;
-            Optional<OfflineConfiguration> offlineConfiguration = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlMIProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
+            {
+                writer.WritePropertyName("migrationStatusDetails"u8);
+                writer.WriteObjectValue(MigrationStatusDetails, options);
+            }
+            if (Optional.IsDefined(BackupConfiguration))
+            {
+                writer.WritePropertyName("backupConfiguration"u8);
+                writer.WriteObjectValue(BackupConfiguration, options);
+            }
+            if (Optional.IsDefined(OfflineConfiguration))
+            {
+                writer.WritePropertyName("offlineConfiguration"u8);
+                writer.WriteObjectValue(OfflineConfiguration, options);
+            }
+        }
+
+        DatabaseMigrationSqlMIProperties IJsonModel<DatabaseMigrationSqlMIProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlMIProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseMigrationSqlMIProperties(document.RootElement, options);
+        }
+
+        internal static DatabaseMigrationSqlMIProperties DeserializeDatabaseMigrationSqlMIProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MigrationStatusDetails migrationStatusDetails = default;
+            BackupConfiguration backupConfiguration = default;
+            OfflineConfiguration offlineConfiguration = default;
             ResourceType kind = default;
-            Optional<string> scope = default;
-            Optional<string> provisioningState = default;
-            Optional<string> migrationStatus = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<SqlConnectionInformation> sourceSqlConnection = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> migrationService = default;
-            Optional<string> migrationOperationId = default;
-            Optional<ErrorInfo> migrationFailureError = default;
-            Optional<string> targetDatabaseCollation = default;
-            Optional<string> provisioningError = default;
+            string scope = default;
+            string provisioningState = default;
+            string migrationStatus = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            SqlConnectionInformation sourceSqlConnection = default;
+            string sourceDatabaseName = default;
+            string sourceServerName = default;
+            string migrationService = default;
+            string migrationOperationId = default;
+            ErrorInfo migrationFailureError = default;
+            string targetDatabaseCollation = default;
+            string provisioningError = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationStatusDetails"))
+                if (property.NameEquals("migrationStatusDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value);
+                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backupConfiguration"))
+                if (property.NameEquals("backupConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value);
+                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("offlineConfiguration"))
+                if (property.NameEquals("offlineConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value);
+                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationStatus"))
+                if (property.NameEquals("migrationStatus"u8))
                 {
                     migrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceSqlConnection"))
+                if (property.NameEquals("sourceSqlConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
+                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sourceDatabaseName"))
+                if (property.NameEquals("sourceDatabaseName"u8))
                 {
                     sourceDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerName"))
+                if (property.NameEquals("sourceServerName"u8))
                 {
                     sourceServerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationService"))
+                if (property.NameEquals("migrationService"u8))
                 {
                     migrationService = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationOperationId"))
+                if (property.NameEquals("migrationOperationId"u8))
                 {
                     migrationOperationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationFailureError"))
+                if (property.NameEquals("migrationFailureError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseCollation"))
+                if (property.NameEquals("targetDatabaseCollation"u8))
                 {
                     targetDatabaseCollation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningError"))
+                if (property.NameEquals("provisioningError"u8))
                 {
                     provisioningError = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseMigrationSqlMIProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DatabaseMigrationSqlMIProperties(
+                kind,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData,
+                migrationStatusDetails,
+                backupConfiguration,
+                offlineConfiguration);
         }
+
+        BinaryData IPersistableModel<DatabaseMigrationSqlMIProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlMIProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatabaseMigrationSqlMIProperties IPersistableModel<DatabaseMigrationSqlMIProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlMIProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabaseMigrationSqlMIProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseMigrationSqlMIProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

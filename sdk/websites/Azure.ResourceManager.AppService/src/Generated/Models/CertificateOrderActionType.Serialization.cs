@@ -32,20 +32,20 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static CertificateOrderActionType ToCertificateOrderActionType(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.Unknown;
-            if (string.Equals(value, "CertificateIssued", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateIssued;
-            if (string.Equals(value, "CertificateOrderCanceled", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateOrderCanceled;
-            if (string.Equals(value, "CertificateOrderCreated", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateOrderCreated;
-            if (string.Equals(value, "CertificateRevoked", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateRevoked;
-            if (string.Equals(value, "DomainValidationComplete", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.DomainValidationComplete;
-            if (string.Equals(value, "FraudDetected", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.FraudDetected;
-            if (string.Equals(value, "OrgNameChange", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.OrgNameChange;
-            if (string.Equals(value, "OrgValidationComplete", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.OrgValidationComplete;
-            if (string.Equals(value, "SanDrop", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.SanDrop;
-            if (string.Equals(value, "FraudCleared", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.FraudCleared;
-            if (string.Equals(value, "CertificateExpired", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateExpired;
-            if (string.Equals(value, "CertificateExpirationWarning", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateExpirationWarning;
-            if (string.Equals(value, "FraudDocumentationRequired", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.FraudDocumentationRequired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return CertificateOrderActionType.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateIssued")) return CertificateOrderActionType.CertificateIssued;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateOrderCanceled")) return CertificateOrderActionType.CertificateOrderCanceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateOrderCreated")) return CertificateOrderActionType.CertificateOrderCreated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateRevoked")) return CertificateOrderActionType.CertificateRevoked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DomainValidationComplete")) return CertificateOrderActionType.DomainValidationComplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FraudDetected")) return CertificateOrderActionType.FraudDetected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OrgNameChange")) return CertificateOrderActionType.OrgNameChange;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OrgValidationComplete")) return CertificateOrderActionType.OrgValidationComplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SanDrop")) return CertificateOrderActionType.SanDrop;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FraudCleared")) return CertificateOrderActionType.FraudCleared;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateExpired")) return CertificateOrderActionType.CertificateExpired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateExpirationWarning")) return CertificateOrderActionType.CertificateExpirationWarning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FraudDocumentationRequired")) return CertificateOrderActionType.FraudDocumentationRequired;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateOrderActionType value.");
         }
     }

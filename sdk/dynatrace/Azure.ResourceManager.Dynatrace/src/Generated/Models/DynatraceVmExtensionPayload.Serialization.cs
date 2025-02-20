@@ -5,31 +5,136 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceVmExtensionPayload
+    public partial class DynatraceVmExtensionPayload : IUtf8JsonSerializable, IJsonModel<DynatraceVmExtensionPayload>
     {
-        internal static DynatraceVmExtensionPayload DeserializeDynatraceVmExtensionPayload(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceVmExtensionPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DynatraceVmExtensionPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> ingestionKey = default;
-            Optional<string> environmentId = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceVmExtensionPayload>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(IngestionKey))
+            {
+                writer.WritePropertyName("ingestionKey"u8);
+                writer.WriteStringValue(IngestionKey);
+            }
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                writer.WritePropertyName("environmentId"u8);
+                writer.WriteStringValue(EnvironmentId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DynatraceVmExtensionPayload IJsonModel<DynatraceVmExtensionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceVmExtensionPayload>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceVmExtensionPayload(document.RootElement, options);
+        }
+
+        internal static DynatraceVmExtensionPayload DeserializeDynatraceVmExtensionPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string ingestionKey = default;
+            string environmentId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestionKey"))
+                if (property.NameEquals("ingestionKey"u8))
                 {
                     ingestionKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentId"))
+                if (property.NameEquals("environmentId"u8))
                 {
                     environmentId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynatraceVmExtensionPayload(ingestionKey.Value, environmentId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DynatraceVmExtensionPayload(ingestionKey, environmentId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DynatraceVmExtensionPayload>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceVmExtensionPayload>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DynatraceVmExtensionPayload IPersistableModel<DynatraceVmExtensionPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceVmExtensionPayload>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynatraceVmExtensionPayload(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynatraceVmExtensionPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

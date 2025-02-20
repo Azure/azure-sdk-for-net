@@ -5,83 +5,231 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionMeterDetails
+    public partial class ConsumptionMeterDetails : IUtf8JsonSerializable, IJsonModel<ConsumptionMeterDetails>
     {
-        internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionMeterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConsumptionMeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> meterName = default;
-            Optional<string> meterCategory = default;
-            Optional<string> meterSubCategory = default;
-            Optional<string> unit = default;
-            Optional<string> meterLocation = default;
-            Optional<decimal> totalIncludedQuantity = default;
-            Optional<decimal> pretaxStandardRate = default;
-            Optional<string> serviceName = default;
-            Optional<string> serviceTier = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(MeterName))
+            {
+                writer.WritePropertyName("meterName"u8);
+                writer.WriteStringValue(MeterName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
+            {
+                writer.WritePropertyName("meterCategory"u8);
+                writer.WriteStringValue(MeterCategory);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
+            {
+                writer.WritePropertyName("meterSubCategory"u8);
+                writer.WriteStringValue(MeterSubCategory);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MeterLocation))
+            {
+                writer.WritePropertyName("meterLocation"u8);
+                writer.WriteStringValue(MeterLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalIncludedQuantity))
+            {
+                writer.WritePropertyName("totalIncludedQuantity"u8);
+                writer.WriteNumberValue(TotalIncludedQuantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PretaxStandardRate))
+            {
+                writer.WritePropertyName("pretaxStandardRate"u8);
+                writer.WriteNumberValue(PretaxStandardRate.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceName))
+            {
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceTier))
+            {
+                writer.WritePropertyName("serviceTier"u8);
+                writer.WriteStringValue(ServiceTier);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ConsumptionMeterDetails IJsonModel<ConsumptionMeterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionMeterDetails(document.RootElement, options);
+        }
+
+        internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string meterName = default;
+            string meterCategory = default;
+            string meterSubCategory = default;
+            string unit = default;
+            string meterLocation = default;
+            decimal? totalIncludedQuantity = default;
+            decimal? pretaxStandardRate = default;
+            string serviceName = default;
+            string serviceTier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterName"))
+                if (property.NameEquals("meterName"u8))
                 {
                     meterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterCategory"))
+                if (property.NameEquals("meterCategory"u8))
                 {
                     meterCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterSubCategory"))
+                if (property.NameEquals("meterSubCategory"u8))
                 {
                     meterSubCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterLocation"))
+                if (property.NameEquals("meterLocation"u8))
                 {
                     meterLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalIncludedQuantity"))
+                if (property.NameEquals("totalIncludedQuantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalIncludedQuantity = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("pretaxStandardRate"))
+                if (property.NameEquals("pretaxStandardRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pretaxStandardRate = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     serviceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceTier"))
+                if (property.NameEquals("serviceTier"u8))
                 {
                     serviceTier = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionMeterDetails(meterName.Value, meterCategory.Value, meterSubCategory.Value, unit.Value, meterLocation.Value, Optional.ToNullable(totalIncludedQuantity), Optional.ToNullable(pretaxStandardRate), serviceName.Value, serviceTier.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionMeterDetails(
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unit,
+                meterLocation,
+                totalIncludedQuantity,
+                pretaxStandardRate,
+                serviceName,
+                serviceTier,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionMeterDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionMeterDetails IPersistableModel<ConsumptionMeterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionMeterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionMeterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

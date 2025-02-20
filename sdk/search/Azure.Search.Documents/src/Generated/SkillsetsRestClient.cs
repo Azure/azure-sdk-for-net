@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
@@ -34,7 +33,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2021-04-30-Preview")
+        public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-11-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -113,7 +112,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -150,7 +149,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -199,7 +198,7 @@ namespace Azure.Search.Documents
                 case 404:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -224,7 +223,7 @@ namespace Azure.Search.Documents
                 case 404:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -267,7 +266,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -294,7 +293,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -317,7 +316,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> List all skillsets in a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ListSkillsetsResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
@@ -333,12 +332,12 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> List all skillsets in a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListSkillsetsResult> List(string select = null, CancellationToken cancellationToken = default)
         {
@@ -354,7 +353,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -399,7 +398,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -426,11 +425,11 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateResetSkillsRequest(string skillsetName, ResetSkillsOptions skillNames)
+        internal HttpMessage CreateResetSkillsRequest(string skillsetName, ResetSkillsOptions resetSkillsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -445,62 +444,62 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(skillNames);
+            content.JsonWriter.WriteObjectValue(resetSkillsOptions);
             request.Content = content;
             return message;
         }
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to reset. </param>
-        /// <param name="skillNames"> The names of skills to reset. </param>
+        /// <param name="resetSkillsOptions"> The names of skills to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        public async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="resetSkillsOptions"/> is null. </exception>
+        public async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions resetSkillsOptions, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
-            if (skillNames == null)
+            if (resetSkillsOptions == null)
             {
-                throw new ArgumentNullException(nameof(skillNames));
+                throw new ArgumentNullException(nameof(resetSkillsOptions));
             }
 
-            using var message = CreateResetSkillsRequest(skillsetName, skillNames);
+            using var message = CreateResetSkillsRequest(skillsetName, resetSkillsOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to reset. </param>
-        /// <param name="skillNames"> The names of skills to reset. </param>
+        /// <param name="resetSkillsOptions"> The names of skills to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        public Response ResetSkills(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="resetSkillsOptions"/> is null. </exception>
+        public Response ResetSkills(string skillsetName, ResetSkillsOptions resetSkillsOptions, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
-            if (skillNames == null)
+            if (resetSkillsOptions == null)
             {
-                throw new ArgumentNullException(nameof(skillNames));
+                throw new ArgumentNullException(nameof(resetSkillsOptions));
             }
 
-            using var message = CreateResetSkillsRequest(skillsetName, skillNames);
+            using var message = CreateResetSkillsRequest(skillsetName, resetSkillsOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

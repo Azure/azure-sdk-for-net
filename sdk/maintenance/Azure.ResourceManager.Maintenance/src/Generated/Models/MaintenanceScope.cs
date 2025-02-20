@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         private const string HostValue = "Host";
+        private const string ResourceValue = "Resource";
         private const string OSImageValue = "OSImage";
         private const string ExtensionValue = "Extension";
         private const string InGuestPatchValue = "InGuestPatch";
@@ -31,6 +32,8 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> This maintenance scope controls installation of azure platform updates i.e. services on physical nodes hosting customer VMs. </summary>
         public static MaintenanceScope Host { get; } = new MaintenanceScope(HostValue);
+        /// <summary> This maintenance scope controls the default update maintenance of the Azure Resource. </summary>
+        public static MaintenanceScope Resource { get; } = new MaintenanceScope(ResourceValue);
         /// <summary> This maintenance scope controls os image installation on VM/VMSS. </summary>
         public static MaintenanceScope OSImage { get; } = new MaintenanceScope(OSImageValue);
         /// <summary> This maintenance scope controls extension installation on VM/VMSS. </summary>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator ==(MaintenanceScope left, MaintenanceScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are not the same. </summary>
         public static bool operator !=(MaintenanceScope left, MaintenanceScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenanceScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceScope"/>. </summary>
         public static implicit operator MaintenanceScope(string value) => new MaintenanceScope(value);
 
         /// <inheritdoc />
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

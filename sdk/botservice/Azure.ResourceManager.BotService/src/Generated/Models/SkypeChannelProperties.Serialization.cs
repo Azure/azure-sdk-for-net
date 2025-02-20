@@ -5,162 +5,256 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SkypeChannelProperties : IUtf8JsonSerializable
+    public partial class SkypeChannelProperties : IUtf8JsonSerializable, IJsonModel<SkypeChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkypeChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SkypeChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableMessaging))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("enableMessaging");
-                writer.WriteBooleanValue(EnableMessaging.Value);
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableMediaCards))
+
+            if (Optional.IsDefined(IsMessagingEnabled))
             {
-                writer.WritePropertyName("enableMediaCards");
-                writer.WriteBooleanValue(EnableMediaCards.Value);
+                writer.WritePropertyName("enableMessaging"u8);
+                writer.WriteBooleanValue(IsMessagingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableVideo))
+            if (Optional.IsDefined(IsMediaCardsEnabled))
             {
-                writer.WritePropertyName("enableVideo");
-                writer.WriteBooleanValue(EnableVideo.Value);
+                writer.WritePropertyName("enableMediaCards"u8);
+                writer.WriteBooleanValue(IsMediaCardsEnabled.Value);
             }
-            if (Optional.IsDefined(EnableCalling))
+            if (Optional.IsDefined(IsVideoEnabled))
             {
-                writer.WritePropertyName("enableCalling");
-                writer.WriteBooleanValue(EnableCalling.Value);
+                writer.WritePropertyName("enableVideo"u8);
+                writer.WriteBooleanValue(IsVideoEnabled.Value);
             }
-            if (Optional.IsDefined(EnableScreenSharing))
+            if (Optional.IsDefined(IsCallingEnabled))
             {
-                writer.WritePropertyName("enableScreenSharing");
-                writer.WriteBooleanValue(EnableScreenSharing.Value);
+                writer.WritePropertyName("enableCalling"u8);
+                writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableGroups))
+            if (Optional.IsDefined(IsScreenSharingEnabled))
             {
-                writer.WritePropertyName("enableGroups");
-                writer.WriteBooleanValue(EnableGroups.Value);
+                writer.WritePropertyName("enableScreenSharing"u8);
+                writer.WriteBooleanValue(IsScreenSharingEnabled.Value);
+            }
+            if (Optional.IsDefined(IsGroupsEnabled))
+            {
+                writer.WritePropertyName("enableGroups"u8);
+                writer.WriteBooleanValue(IsGroupsEnabled.Value);
             }
             if (Optional.IsDefined(GroupsMode))
             {
-                writer.WritePropertyName("groupsMode");
+                writer.WritePropertyName("groupsMode"u8);
                 writer.WriteStringValue(GroupsMode);
             }
             if (Optional.IsDefined(CallingWebHook))
             {
-                writer.WritePropertyName("callingWebHook");
+                writer.WritePropertyName("callingWebHook"u8);
                 writer.WriteStringValue(CallingWebHook);
             }
             if (Optional.IsDefined(IncomingCallRoute))
             {
-                writer.WritePropertyName("incomingCallRoute");
+                writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element)
+        SkypeChannelProperties IJsonModel<SkypeChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> enableMessaging = default;
-            Optional<bool> enableMediaCards = default;
-            Optional<bool> enableVideo = default;
-            Optional<bool> enableCalling = default;
-            Optional<bool> enableScreenSharing = default;
-            Optional<bool> enableGroups = default;
-            Optional<string> groupsMode = default;
-            Optional<string> callingWebHook = default;
-            Optional<string> incomingCallRoute = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkypeChannelProperties(document.RootElement, options);
+        }
+
+        internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? enableMessaging = default;
+            bool? enableMediaCards = default;
+            bool? enableVideo = default;
+            bool? enableCalling = default;
+            bool? enableScreenSharing = default;
+            bool? enableGroups = default;
+            string groupsMode = default;
+            string callingWebHook = default;
+            string incomingCallRoute = default;
             bool isEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableMessaging"))
+                if (property.NameEquals("enableMessaging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableMessaging = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableMediaCards"))
+                if (property.NameEquals("enableMediaCards"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableMediaCards = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableVideo"))
+                if (property.NameEquals("enableVideo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableVideo = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableCalling"))
+                if (property.NameEquals("enableCalling"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCalling = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableScreenSharing"))
+                if (property.NameEquals("enableScreenSharing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableScreenSharing = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableGroups"))
+                if (property.NameEquals("enableGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableGroups = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupsMode"))
+                if (property.NameEquals("groupsMode"u8))
                 {
                     groupsMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callingWebHook"))
+                if (property.NameEquals("callingWebHook"u8))
                 {
                     callingWebHook = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("incomingCallRoute"))
+                if (property.NameEquals("incomingCallRoute"u8))
                 {
                     incomingCallRoute = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SkypeChannelProperties(Optional.ToNullable(enableMessaging), Optional.ToNullable(enableMediaCards), Optional.ToNullable(enableVideo), Optional.ToNullable(enableCalling), Optional.ToNullable(enableScreenSharing), Optional.ToNullable(enableGroups), groupsMode.Value, callingWebHook.Value, incomingCallRoute.Value, isEnabled);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SkypeChannelProperties(
+                enableMessaging,
+                enableMediaCards,
+                enableVideo,
+                enableCalling,
+                enableScreenSharing,
+                enableGroups,
+                groupsMode,
+                callingWebHook,
+                incomingCallRoute,
+                isEnabled,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SkypeChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SkypeChannelProperties IPersistableModel<SkypeChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSkypeChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SkypeChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

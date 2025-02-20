@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The convention used when determining the session cookie&apos;s expiration. </summary>
+    /// <summary> The convention used when determining the session cookie's expiration. </summary>
     public enum CookieExpirationConvention
     {
         /// <summary> FixedTime. </summary>

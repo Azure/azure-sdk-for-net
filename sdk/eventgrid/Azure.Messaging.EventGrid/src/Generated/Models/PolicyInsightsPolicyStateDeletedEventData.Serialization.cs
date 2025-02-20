@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,57 +16,75 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static PolicyInsightsPolicyStateDeletedEventData DeserializePolicyInsightsPolicyStateDeletedEventData(JsonElement element)
         {
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> policyAssignmentId = default;
-            Optional<string> policyDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<string> complianceState = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> complianceReasonCode = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? timestamp = default;
+            string policyAssignmentId = default;
+            string policyDefinitionId = default;
+            string policyDefinitionReferenceId = default;
+            string complianceState = default;
+            string subscriptionId = default;
+            string complianceReasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentId"))
+                if (property.NameEquals("policyAssignmentId"u8))
                 {
                     policyAssignmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     policyDefinitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"))
+                if (property.NameEquals("policyDefinitionReferenceId"u8))
                 {
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     complianceState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceReasonCode"))
+                if (property.NameEquals("complianceReasonCode"u8))
                 {
                     complianceReasonCode = property.Value.GetString();
                     continue;
                 }
             }
-            return new PolicyInsightsPolicyStateDeletedEventData(Optional.ToNullable(timestamp), policyAssignmentId.Value, policyDefinitionId.Value, policyDefinitionReferenceId.Value, complianceState.Value, subscriptionId.Value, complianceReasonCode.Value);
+            return new PolicyInsightsPolicyStateDeletedEventData(
+                timestamp,
+                policyAssignmentId,
+                policyDefinitionId,
+                policyDefinitionReferenceId,
+                complianceState,
+                subscriptionId,
+                complianceReasonCode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyInsightsPolicyStateDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyInsightsPolicyStateDeletedEventData(document.RootElement);
         }
 
         internal partial class PolicyInsightsPolicyStateDeletedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateDeletedEventData>
@@ -76,6 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override PolicyInsightsPolicyStateDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

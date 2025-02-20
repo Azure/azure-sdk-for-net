@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,62 +16,79 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MachineLearningServicesRunStatusChangedEventData DeserializeMachineLearningServicesRunStatusChangedEventData(JsonElement element)
         {
-            Optional<string> experimentId = default;
-            Optional<string> experimentName = default;
-            Optional<string> runId = default;
-            Optional<string> runType = default;
-            Optional<object> runTags = default;
-            Optional<object> runProperties = default;
-            Optional<string> runStatus = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string experimentId = default;
+            string experimentName = default;
+            string runId = default;
+            string runType = default;
+            object runTags = default;
+            object runProperties = default;
+            string runStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("experimentId"))
+                if (property.NameEquals("experimentId"u8))
                 {
                     experimentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("experimentName"))
+                if (property.NameEquals("experimentName"u8))
                 {
                     experimentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runType"))
+                if (property.NameEquals("runType"u8))
                 {
                     runType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runTags"))
+                if (property.NameEquals("runTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runTags = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("runProperties"))
+                if (property.NameEquals("runProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runProperties = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("runStatus"))
+                if (property.NameEquals("runStatus"u8))
                 {
                     runStatus = property.Value.GetString();
                     continue;
                 }
             }
-            return new MachineLearningServicesRunStatusChangedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value, runStatus.Value);
+            return new MachineLearningServicesRunStatusChangedEventData(
+                experimentId,
+                experimentName,
+                runId,
+                runType,
+                runTags,
+                runProperties,
+                runStatus);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesRunStatusChangedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement);
         }
 
         internal partial class MachineLearningServicesRunStatusChangedEventDataConverter : JsonConverter<MachineLearningServicesRunStatusChangedEventData>
@@ -81,6 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesRunStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

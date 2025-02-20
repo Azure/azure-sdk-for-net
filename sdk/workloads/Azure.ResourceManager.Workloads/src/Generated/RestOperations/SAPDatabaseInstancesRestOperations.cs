@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Workloads.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Workloads
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-12-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName)
@@ -59,11 +74,11 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Gets the SAP Database Instance. </summary>
+        /// <summary> Gets the SAP Database Instance resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -92,11 +107,11 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Gets the SAP Database Instance. </summary>
+        /// <summary> Gets the SAP Database Instance resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -125,6 +140,22 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapDatabaseInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapDatabaseInstanceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -145,18 +176,18 @@ namespace Azure.ResourceManager.Workloads
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Puts the SAP Database Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error. </summary>
+        /// <summary> Creates the Database resource corresponding to the Virtual Instance for SAP solutions resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> The SAP Database Server instance request body. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> Request body of Database resource of a SAP system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/>, <paramref name="databaseInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -180,12 +211,12 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Puts the SAP Database Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error. </summary>
+        /// <summary> Creates the Database resource corresponding to the Virtual Instance for SAP solutions resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> The SAP Database Server instance request body. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> Request body of Database resource of a SAP system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/>, <paramref name="databaseInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -209,6 +240,22 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapDatabaseInstancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapDatabaseInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -229,18 +276,18 @@ namespace Azure.ResourceManager.Workloads
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Puts the SAP Database Instance. </summary>
+        /// <summary> Updates the Database resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="patch"> The SAP Database Server instance request body. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="patch"> Database resource update request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/>, <paramref name="databaseInstanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -264,12 +311,12 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Puts the SAP Database Instance. </summary>
+        /// <summary> Updates the Database resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="patch"> The SAP Database Server instance request body. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="patch"> Database resource update request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/>, <paramref name="databaseInstanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -291,6 +338,22 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName)
@@ -315,11 +378,11 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Deletes the SAP Database Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. Delete by end user will return a Bad Request error. </summary>
+        /// <summary> Deletes the Database resource corresponding to a Virtual Instance for SAP solutions resource. &lt;br&gt;&lt;br&gt;This will be used by service only. Delete by end user will return a Bad Request error. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -343,11 +406,11 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Deletes the SAP Database Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. Delete by end user will return a Bad Request error. </summary>
+        /// <summary> Deletes the Database resource corresponding to a Virtual Instance for SAP solutions resource. &lt;br&gt;&lt;br&gt;This will be used by service only. Delete by end user will return a Bad Request error. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -371,6 +434,21 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -392,10 +470,10 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Lists the SAP Database Instances in an SVI. </summary>
+        /// <summary> Lists the Database resources associated with a Virtual Instance for SAP solutions resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -421,10 +499,10 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Lists the SAP Database Instances in an SVI. </summary>
+        /// <summary> Lists the Database resources associated with a Virtual Instance for SAP solutions resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -450,6 +528,211 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateStartInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateStartInstanceRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Starts the database instance of the SAP system. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StartInstanceAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using var message = CreateStartInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, databaseInstanceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Starts the database instance of the SAP system. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response StartInstance(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using var message = CreateStartInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, databaseInstanceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateStopInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapStopContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateStopInstanceRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapStopContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/databaseInstances/", false);
+            uri.AppendPath(databaseInstanceName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
+            }
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Stops the database instance of the SAP system. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> Stop request for the database instance of the SAP system. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StopInstanceAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using var message = CreateStopInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, databaseInstanceName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Stops the database instance of the SAP system. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> Stop request for the database instance of the SAP system. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response StopInstance(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using var message = CreateStopInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, databaseInstanceName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -464,11 +747,11 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Lists the SAP Database Instances in an SVI. </summary>
+        /// <summary> Lists the Database resources associated with a Virtual Instance for SAP solutions resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -495,11 +778,11 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Lists the SAP Database Instances in an SVI. </summary>
+        /// <summary> Lists the Database resources associated with a Virtual Instance for SAP solutions resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>

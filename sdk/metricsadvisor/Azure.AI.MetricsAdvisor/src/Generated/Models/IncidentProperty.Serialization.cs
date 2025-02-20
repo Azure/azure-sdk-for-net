@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -14,28 +13,32 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static IncidentProperty DeserializeIncidentProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnomalySeverity maxSeverity = default;
             AnomalyIncidentStatus incidentStatus = default;
             double valueOfRootNode = default;
-            Optional<double?> expectedValueOfRootNode = default;
+            double? expectedValueOfRootNode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxSeverity"))
+                if (property.NameEquals("maxSeverity"u8))
                 {
                     maxSeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("incidentStatus"))
+                if (property.NameEquals("incidentStatus"u8))
                 {
                     incidentStatus = new AnomalyIncidentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("valueOfRootNode"))
+                if (property.NameEquals("valueOfRootNode"u8))
                 {
                     valueOfRootNode = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("expectedValueOfRootNode"))
+                if (property.NameEquals("expectedValueOfRootNode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +49,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, Optional.ToNullable(expectedValueOfRootNode));
+            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, expectedValueOfRootNode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IncidentProperty FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIncidentProperty(document.RootElement);
         }
     }
 }

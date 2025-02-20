@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAlertMinimalSeverity High { get; } = new SecurityAlertMinimalSeverity(HighValue);
         /// <summary> Get notifications on new alerts with medium or high severity. </summary>
         public static SecurityAlertMinimalSeverity Medium { get; } = new SecurityAlertMinimalSeverity(MediumValue);
-        /// <summary> Don&apos;t get notifications on new alerts with low, medium or high severity. </summary>
+        /// <summary> Don't get notifications on new alerts with low, medium or high severity. </summary>
         public static SecurityAlertMinimalSeverity Low { get; } = new SecurityAlertMinimalSeverity(LowValue);
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are not the same. </summary>
         public static bool operator !=(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
         public static implicit operator SecurityAlertMinimalSeverity(string value) => new SecurityAlertMinimalSeverity(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

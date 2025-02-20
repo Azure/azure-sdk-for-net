@@ -6,108 +6,65 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class Office365Source : IUtf8JsonSerializable
+    public partial class Office365Source : IUtf8JsonSerializable, IJsonModel<Office365Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365Source>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<Office365Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Office365Source>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Office365Source)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AllowedGroups))
             {
-                writer.WritePropertyName("allowedGroups");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AllowedGroups);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowedGroups.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("allowedGroups"u8);
+                JsonSerializer.Serialize(writer, AllowedGroups);
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
-                writer.WritePropertyName("userScopeFilterUri");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserScopeFilterUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserScopeFilterUri.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("userScopeFilterUri"u8);
+                JsonSerializer.Serialize(writer, UserScopeFilterUri);
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
-                writer.WritePropertyName("dateFilterColumn");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DateFilterColumn);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFilterColumn.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("dateFilterColumn"u8);
+                JsonSerializer.Serialize(writer, DateFilterColumn);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(StartOn);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(StartOn.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("startTime"u8);
+                JsonSerializer.Serialize(writer, StartOn);
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EndOn);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EndOn.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("endTime"u8);
+                JsonSerializer.Serialize(writer, EndOn);
             }
             if (Optional.IsDefined(OutputColumns))
             {
-                writer.WritePropertyName("outputColumns");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(OutputColumns);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(OutputColumns.ToString()).RootElement);
-#endif
-            }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
-            {
-                writer.WritePropertyName("sourceRetryCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(SourceRetryWait))
-            {
-                writer.WritePropertyName("sourceRetryWait");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("outputColumns"u8);
+                JsonSerializer.Serialize(writer, OutputColumns);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -115,138 +72,191 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static Office365Source DeserializeOffice365Source(JsonElement element)
+        Office365Source IJsonModel<Office365Source>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> allowedGroups = default;
-            Optional<BinaryData> userScopeFilterUri = default;
-            Optional<BinaryData> dateFilterColumn = default;
-            Optional<BinaryData> startTime = default;
-            Optional<BinaryData> endTime = default;
-            Optional<BinaryData> outputColumns = default;
+            var format = options.Format == "W" ? ((IPersistableModel<Office365Source>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Office365Source)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOffice365Source(document.RootElement, options);
+        }
+
+        internal static Office365Source DeserializeOffice365Source(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<IList<string>> allowedGroups = default;
+            DataFactoryElement<string> userScopeFilterUri = default;
+            DataFactoryElement<string> dateFilterColumn = default;
+            DataFactoryElement<string> startTime = default;
+            DataFactoryElement<string> endTime = default;
+            DataFactoryElement<IList<Office365TableOutputColumn>> outputColumns = default;
             string type = default;
-            Optional<BinaryData> sourceRetryCount = default;
-            Optional<BinaryData> sourceRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedGroups"))
+                if (property.NameEquals("allowedGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowedGroups = BinaryData.FromString(property.Value.GetRawText());
+                    allowedGroups = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("userScopeFilterUri"))
+                if (property.NameEquals("userScopeFilterUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userScopeFilterUri = BinaryData.FromString(property.Value.GetRawText());
+                    userScopeFilterUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("dateFilterColumn"))
+                if (property.NameEquals("dateFilterColumn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFilterColumn = BinaryData.FromString(property.Value.GetRawText());
+                    dateFilterColumn = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = BinaryData.FromString(property.Value.GetRawText());
+                    startTime = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = BinaryData.FromString(property.Value.GetRawText());
+                    endTime = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("outputColumns"))
+                if (property.NameEquals("outputColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputColumns = BinaryData.FromString(property.Value.GetRawText());
+                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<Office365TableOutputColumn>>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryCount"))
+                if (property.NameEquals("sourceRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sourceRetryWait"))
+                if (property.NameEquals("sourceRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+            return new Office365Source(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                allowedGroups,
+                userScopeFilterUri,
+                dateFilterColumn,
+                startTime,
+                endTime,
+                outputColumns);
         }
+
+        BinaryData IPersistableModel<Office365Source>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Office365Source>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Office365Source)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Office365Source IPersistableModel<Office365Source>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Office365Source>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOffice365Source(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Office365Source)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Office365Source>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

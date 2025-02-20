@@ -1,16 +1,20 @@
+parameters:
+- name: Location
+  displayName: Location
+  type: string
+  default: eastus
+
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
     TimeoutInMinutes: 180
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'canadacentral'
-      Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'centraluseuap'
-    Clouds: 'Public'
+        Location: '${{ parameters.Location }}'
+      # Canary regions are currently not supported in TME so disabling for now
+      # Canary:
+      #   Location: 'centraluseuap'
     SupportedClouds: 'Public, Canary'

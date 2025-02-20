@@ -5,30 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class GenericContainerExtendedInfo : IUtf8JsonSerializable
+    public partial class GenericContainerExtendedInfo : IUtf8JsonSerializable, IJsonModel<GenericContainerExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericContainerExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GenericContainerExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(RawCertData))
             {
-                writer.WritePropertyName("rawCertData");
+                writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
             if (Optional.IsDefined(ContainerIdentityInfo))
             {
-                writer.WritePropertyName("containerIdentityInfo");
-                writer.WriteObjectValue(ContainerIdentityInfo);
+                writer.WritePropertyName("containerIdentityInfo"u8);
+                writer.WriteObjectValue(ContainerIdentityInfo, options);
             }
             if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
-                writer.WritePropertyName("serviceEndpoints");
+                writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();
                 foreach (var item in ServiceEndpoints)
                 {
@@ -37,36 +55,68 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static GenericContainerExtendedInfo DeserializeGenericContainerExtendedInfo(JsonElement element)
+        GenericContainerExtendedInfo IJsonModel<GenericContainerExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> rawCertData = default;
-            Optional<ContainerIdentityInfo> containerIdentityInfo = default;
-            Optional<IDictionary<string, string>> serviceEndpoints = default;
+            var format = options.Format == "W" ? ((IPersistableModel<GenericContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenericContainerExtendedInfo(document.RootElement, options);
+        }
+
+        internal static GenericContainerExtendedInfo DeserializeGenericContainerExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string rawCertData = default;
+            ContainerIdentityInfo containerIdentityInfo = default;
+            IDictionary<string, string> serviceEndpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawCertData"))
+                if (property.NameEquals("rawCertData"u8))
                 {
                     rawCertData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerIdentityInfo"))
+                if (property.NameEquals("containerIdentityInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value);
+                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serviceEndpoints"))
+                if (property.NameEquals("serviceEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -77,8 +127,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     serviceEndpoints = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Optional.ToDictionary(serviceEndpoints));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GenericContainerExtendedInfo(rawCertData, containerIdentityInfo, serviceEndpoints ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GenericContainerExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GenericContainerExtendedInfo IPersistableModel<GenericContainerExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGenericContainerExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GenericContainerExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

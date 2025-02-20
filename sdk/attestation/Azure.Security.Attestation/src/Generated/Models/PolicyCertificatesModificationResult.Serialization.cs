@@ -20,12 +20,12 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateThumbprint))
             {
-                writer.WritePropertyName("x-ms-certificate-thumbprint");
+                writer.WritePropertyName("x-ms-certificate-thumbprint"u8);
                 writer.WriteStringValue(CertificateThumbprint);
             }
             if (Optional.IsDefined(CertificateResolution))
             {
-                writer.WritePropertyName("x-ms-policycertificates-result");
+                writer.WritePropertyName("x-ms-policycertificates-result"u8);
                 writer.WriteStringValue(CertificateResolution.Value.ToString());
             }
             writer.WriteEndObject();
@@ -33,27 +33,46 @@ namespace Azure.Security.Attestation
 
         internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element)
         {
-            Optional<string> xMsCertificateThumbprint = default;
-            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string xMsCertificateThumbprint = default;
+            PolicyCertificateResolution? xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x-ms-certificate-thumbprint"))
+                if (property.NameEquals("x-ms-certificate-thumbprint"u8))
                 {
                     xMsCertificateThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-policycertificates-result"))
+                if (property.NameEquals("x-ms-policycertificates-result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicycertificatesResult = new PolicyCertificateResolution(property.Value.GetString());
                     continue;
                 }
             }
-            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult));
+            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint, xMsPolicycertificatesResult);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificatesModificationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificatesModificationResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>
@@ -62,6 +81,7 @@ namespace Azure.Security.Attestation
             {
                 writer.WriteObjectValue(model);
             }
+
             public override PolicyCertificatesModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

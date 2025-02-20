@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -16,36 +15,37 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static Availability DeserializeAvailability(JsonElement element)
         {
-            Optional<DateTimeRange> range = default;
-            Optional<TimeSpan> intervalSize = default;
-            Optional<IReadOnlyDictionary<string, int>> distribution = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeRange range = default;
+            TimeSpan? intervalSize = default;
+            IReadOnlyDictionary<string, int> distribution = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("range"))
+                if (property.NameEquals("range"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     range = DateTimeRange.DeserializeDateTimeRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("intervalSize"))
+                if (property.NameEquals("intervalSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("distribution"))
+                if (property.NameEquals("distribution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -57,7 +57,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new Availability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution));
+            return new Availability(range, intervalSize, distribution ?? new ChangeTrackingDictionary<string, int>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Availability FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvailability(document.RootElement);
         }
     }
 }

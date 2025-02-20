@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Id != null)
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             else
@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             if (Text != null)
             {
-                writer.WritePropertyName("text");
+                writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
             else
@@ -35,10 +35,18 @@ namespace Azure.AI.TextAnalytics.Models
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

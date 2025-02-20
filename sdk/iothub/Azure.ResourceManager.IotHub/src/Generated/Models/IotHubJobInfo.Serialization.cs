@@ -6,87 +6,226 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubJobInfo
+    public partial class IotHubJobInfo : IUtf8JsonSerializable, IJsonModel<IotHubJobInfo>
     {
-        internal static IotHubJobInfo DeserializeIotHubJobInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubJobInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IotHubJobInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> jobId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IotHubJobType> type = default;
-            Optional<IotHubJobStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> statusMessage = default;
-            Optional<string> parentJobId = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubJobInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubJobInfo)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTimeUtc"u8);
+                writer.WriteStringValue(StartOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTimeUtc"u8);
+                writer.WriteStringValue(EndOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(JobType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailureReason))
+            {
+                writer.WritePropertyName("failureReason"u8);
+                writer.WriteStringValue(FailureReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            {
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteStringValue(StatusMessage);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ParentJobId))
+            {
+                writer.WritePropertyName("parentJobId"u8);
+                writer.WriteStringValue(ParentJobId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        IotHubJobInfo IJsonModel<IotHubJobInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubJobInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubJobInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubJobInfo(document.RootElement, options);
+        }
+
+        internal static IotHubJobInfo DeserializeIotHubJobInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string jobId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            IotHubJobType? type = default;
+            IotHubJobStatus? status = default;
+            string failureReason = default;
+            string statusMessage = default;
+            string parentJobId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTimeUtc = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
+                if (property.NameEquals("endTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTimeUtc = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new IotHubJobType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToIotHubJobStatus();
                     continue;
                 }
-                if (property.NameEquals("failureReason"))
+                if (property.NameEquals("failureReason"u8))
                 {
                     failureReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentJobId"))
+                if (property.NameEquals("parentJobId"u8))
                 {
                     parentJobId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubJobInfo(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), failureReason.Value, statusMessage.Value, parentJobId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IotHubJobInfo(
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                type,
+                status,
+                failureReason,
+                statusMessage,
+                parentJobId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubJobInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubJobInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubJobInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IotHubJobInfo IPersistableModel<IotHubJobInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubJobInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubJobInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubJobInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubJobInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

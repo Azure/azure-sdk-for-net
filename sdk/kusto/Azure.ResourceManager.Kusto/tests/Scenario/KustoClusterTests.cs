@@ -14,8 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Standard);
-        private readonly KustoSku _sku2 = new(KustoSkuName.StandardD14V2, 3, KustoSkuTier.Standard);
+        private readonly KustoSku _sku = new(KustoSkuName.StandardE2aV4, 2, KustoSkuTier.Standard, null);
 
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -28,6 +27,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await BaseSetUp();
         }
 
+        // TODO break this up into smaller tests
+
         [TestCase]
         [RecordedTest]
         public async Task ClusterTests()
@@ -36,22 +37,16 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var clusterName = GenerateAssetName("sdkCluster");
 
-            var clusterDataCreate = new KustoClusterData(Location, _sku1)
-            {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
+            var clusterDataCreate = new KustoClusterData(Location, _sku) {Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned), IsStreamingIngestEnabled = true};
 
-            var clusterDataUpdate = new KustoClusterData(Location, _sku2)
+            var clusterDataUpdate = new KustoClusterData(Location, _sku)
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned)
-                {
-                    UserAssignedIdentities = { [TE.UserAssignedIdentityId] = new UserAssignedIdentity() }
-                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned) {UserAssignedIdentities = {[TE.UserAssignedIdentityId] = new UserAssignedIdentity()}},
                 IsDiskEncryptionEnabled = true,
-                IsStreamingIngestEnabled = true,
-                OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100),
+                IsStreamingIngestEnabled = false,
+                OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 5),
                 PublicIPType = "DualStack",
-                TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TE.TenantId) },
+                TrustedExternalTenants = {new KustoClusterTrustedExternalTenant(TE.KustoTenantId, null)},
                 // TODO: figure out how to authenticate
                 // KeyVaultProperties = new KustoKeyVaultProperties(
                 //     TE.KeyName,
@@ -77,12 +72,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 ValidateCluster
             );
 
-            await ClusterResourceTests(clusterCollection, clusterName);
+            await ClusterStopStartTests(clusterCollection, clusterName);
 
             await DeletionTest(clusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
         }
 
-        private static async Task ClusterResourceTests(KustoClusterCollection clusterCollection, string clusterName)
+        private static async Task ClusterStopStartTests(KustoClusterCollection clusterCollection, string clusterName)
         {
             var cluster = (await clusterCollection.GetAsync(clusterName)).Value;
 
@@ -128,10 +123,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         private void IdentityEquals(ManagedServiceIdentity expected, ManagedServiceIdentity actual)
         {
-            var systemAssigned = new List<ManagedServiceIdentityType>
-            {
-                ManagedServiceIdentityType.SystemAssigned, ManagedServiceIdentityType.SystemAssignedUserAssigned
-            }.Contains(expected.ManagedServiceIdentityType);
+            var systemAssigned = new List<ManagedServiceIdentityType> {ManagedServiceIdentityType.SystemAssigned, ManagedServiceIdentityType.SystemAssignedUserAssigned}.Contains(expected.ManagedServiceIdentityType);
 
             if (systemAssigned)
             {
@@ -142,7 +134,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 Assert.IsNull(actual.PrincipalId);
             }
 
-            AssertEquality(Guid.Parse(TE.TenantId), actual.TenantId);
+            AssertEquality(Guid.Parse(TE.KustoTenantId), actual.TenantId);
             AssertEquality(expected.ManagedServiceIdentityType, actual.ManagedServiceIdentityType);
 
             CollectionAssert.AreEqual(

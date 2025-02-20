@@ -126,20 +126,6 @@
       "description": "The optional parameter specifies whether generate related pipline ci.yml and test-resources.json in parent folder.",
       "defaultValue": "true"
     },
-    "perfSampleLink": {
-      "type": "parameter",
-      "datatype": "text",
-      "isRequired": false,
-      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs",
-      "replaces": "PerfSampleLink"
-    },
-    "stressSampleLink": {
-      "type": "parameter",
-      "datatype": "text",
-      "isRequired": false,
-      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/stress/TemplateClientTest.cs",
-      "replaces": "StressSampleLink"
-    },
     "testSampleLink": {
       "type": "parameter",
       "datatype": "text",
@@ -185,7 +171,7 @@
     "ClientNameCapitalCase": {
       "type": "derived",
       "datatype": "text",
-      "valueSource": "ClientName",
+      "valueSource": "clientName",
       "valueTransform": "firstUpperCase",
       "replaces": "Template"
     },

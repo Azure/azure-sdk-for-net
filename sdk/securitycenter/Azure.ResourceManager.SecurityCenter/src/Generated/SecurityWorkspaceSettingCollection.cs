@@ -11,18 +11,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityWorkspaceSettingResource" /> and their operations.
-    /// Each <see cref="SecurityWorkspaceSettingResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityWorkspaceSettingCollection" /> instance call the GetSecurityWorkspaceSettings method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityWorkspaceSettingResource"/> and their operations.
+    /// Each <see cref="SecurityWorkspaceSettingResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityWorkspaceSettingCollection"/> instance call the GetSecurityWorkspaceSettings method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityWorkspaceSettingCollection : ArmCollection, IEnumerable<SecurityWorkspaceSettingResource>, IAsyncEnumerable<SecurityWorkspaceSettingResource>
     {
@@ -64,6 +63,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +89,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateAsync(Id.SubscriptionId, workspaceSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, workspaceSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +140,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Create(Id.SubscriptionId, workspaceSettingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, workspaceSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +164,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +210,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
@@ -220,15 +255,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityWorkspaceSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +285,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityWorkspaceSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +314,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +358,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>WorkspaceSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
@@ -315,6 +382,96 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceSettingName"> Name of the security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityWorkspaceSettingResource>> GetIfExistsAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
+
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.GetAsync(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityWorkspaceSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityWorkspaceSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceSettingName"> Name of the security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        public virtual NullableResponse<SecurityWorkspaceSettingResource> GetIfExists(string workspaceSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
+
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityWorkspaceSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

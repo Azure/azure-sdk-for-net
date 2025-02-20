@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -14,16 +13,28 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static TasksState DeserializeTasksState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalyzeTasks tasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tasks"))
+                if (property.NameEquals("tasks"u8))
                 {
                     tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;
                 }
             }
             return new TasksState(tasks);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TasksState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTasksState(document.RootElement);
         }
     }
 }

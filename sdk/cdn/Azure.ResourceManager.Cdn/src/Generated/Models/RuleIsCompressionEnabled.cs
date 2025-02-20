@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
+    /// <summary> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
     public readonly partial struct RuleIsCompressionEnabled : IEquatable<RuleIsCompressionEnabled>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RuleIsCompressionEnabled left, RuleIsCompressionEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleIsCompressionEnabled"/> values are not the same. </summary>
         public static bool operator !=(RuleIsCompressionEnabled left, RuleIsCompressionEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RuleIsCompressionEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleIsCompressionEnabled"/>. </summary>
         public static implicit operator RuleIsCompressionEnabled(string value) => new RuleIsCompressionEnabled(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

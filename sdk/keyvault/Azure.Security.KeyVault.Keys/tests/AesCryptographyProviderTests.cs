@@ -138,7 +138,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [TestCaseSource(nameof(GetEncryptionAlgorithms))]
-        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16968")]
         public void EncryptDecryptRoundtrips(EncryptionAlgorithm algorithm)
         {
             // Use a 256-bit key which will be truncated based on the selected algorithm.

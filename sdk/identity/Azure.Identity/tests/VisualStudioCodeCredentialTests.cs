@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
-    public class VisualStudioCodeCredentialTests : CredentialTestBase
+    public class VisualStudioCodeCredentialTests : CredentialTestBase<VisualStudioCodeCredentialOptions>
     {
         public VisualStudioCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -38,6 +38,8 @@ namespace Azure.Identity.Tests
                     new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
         }
 
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
+
         [SetUp]
         public void Setup()
         {
@@ -52,7 +54,7 @@ namespace Azure.Identity.Tests
             var environment = new IdentityTestEnvironment();
             var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, AdditionallyAllowedTenants = { TenantIdHint }, Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(environment.TenantId, context, TenantIdResolverBase.AllTenants);
 
             VisualStudioCodeCredential credential = InstrumentClient(
                 new VisualStudioCodeCredential(
@@ -68,51 +70,12 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            using var env = new TestEnvVar(new Dictionary<string, string> { { "IDENTITY_TENANT_ID", TenantId } });
-            var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions
-            {
-                TenantId = parameters.TenantId,
-                Transport = new MockTransport()
-            };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(
-                new VisualStudioCodeCredential(
-                    options,
-                    null,
-                    msalClientMock,
-                    CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
-                    new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
-        [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var credential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
-        }
-
         [Test]
         public void AdfsTenantThrowsCredentialUnavailable()
         {
             var options = new VisualStudioCodeCredentialOptions { TenantId = "adfs", Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope });
-            string expectedTenantId = TenantIdResolver.Resolve(null, context, TenantIdResolver.AllTenants);
+            string expectedTenantId = TenantIdResolverBase.Default.Resolve(null, context, TenantIdResolverBase.AllTenants);
 
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 

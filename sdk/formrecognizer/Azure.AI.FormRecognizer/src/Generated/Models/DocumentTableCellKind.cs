@@ -28,21 +28,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string StubHeadValue = "stubHead";
         private const string DescriptionValue = "description";
 
-        /// <summary> content. </summary>
+        /// <summary> Contains the main content/data. </summary>
         public static DocumentTableCellKind Content { get; } = new DocumentTableCellKind(ContentValue);
-        /// <summary> rowHeader. </summary>
+        /// <summary> Describes the content of the row. </summary>
         public static DocumentTableCellKind RowHeader { get; } = new DocumentTableCellKind(RowHeaderValue);
-        /// <summary> columnHeader. </summary>
+        /// <summary> Describes the content of the column. </summary>
         public static DocumentTableCellKind ColumnHeader { get; } = new DocumentTableCellKind(ColumnHeaderValue);
-        /// <summary> stubHead. </summary>
+        /// <summary> Describes the row headers, usually located at the top left corner of a table. </summary>
         public static DocumentTableCellKind StubHead { get; } = new DocumentTableCellKind(StubHeadValue);
-        /// <summary> description. </summary>
+        /// <summary> Describes the content in (parts of) the table. </summary>
         public static DocumentTableCellKind Description { get; } = new DocumentTableCellKind(DescriptionValue);
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are the same. </summary>
         public static bool operator ==(DocumentTableCellKind left, DocumentTableCellKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are not the same. </summary>
         public static bool operator !=(DocumentTableCellKind left, DocumentTableCellKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentTableCellKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentTableCellKind"/>. </summary>
         public static implicit operator DocumentTableCellKind(string value) => new DocumentTableCellKind(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

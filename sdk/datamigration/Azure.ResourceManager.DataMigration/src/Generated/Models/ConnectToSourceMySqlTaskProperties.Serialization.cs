@@ -5,124 +5,153 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceMySqlTaskProperties : IUtf8JsonSerializable
+    public partial class ConnectToSourceMySqlTaskProperties : IUtf8JsonSerializable, IJsonModel<ConnectToSourceMySqlTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceMySqlTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectToSourceMySqlTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
-            {
-                writer.WritePropertyName("input");
-                writer.WriteObjectValue(Input);
-            }
-            writer.WritePropertyName("taskType");
-            writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
-            {
-                writer.WritePropertyName("clientData");
-                writer.WriteStartObject();
-                foreach (var item in ClientData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ConnectToSourceMySqlTaskProperties DeserializeConnectToSourceMySqlTaskProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ConnectToSourceMySqlTaskInput> input = default;
-            Optional<IReadOnlyList<ConnectToSourceNonSqlTaskOutput>> output = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Input))
+            {
+                writer.WritePropertyName("input"u8);
+                writer.WriteObjectValue(Input, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStartArray();
+                foreach (var item in Output)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        ConnectToSourceMySqlTaskProperties IJsonModel<ConnectToSourceMySqlTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceMySqlTaskProperties(document.RootElement, options);
+        }
+
+        internal static ConnectToSourceMySqlTaskProperties DeserializeConnectToSourceMySqlTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ConnectToSourceMySqlTaskInput input = default;
+            IReadOnlyList<ConnectToSourceNonSqlTaskOutput> output = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    input = ConnectToSourceMySqlTaskInput.DeserializeConnectToSourceMySqlTaskInput(property.Value);
+                    input = ConnectToSourceMySqlTaskInput.DeserializeConnectToSourceMySqlTaskInput(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectToSourceNonSqlTaskOutput> array = new List<ConnectToSourceNonSqlTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectToSourceNonSqlTaskOutput.DeserializeConnectToSourceNonSqlTaskOutput(item));
+                        array.Add(ConnectToSourceNonSqlTaskOutput.DeserializeConnectToSourceNonSqlTaskOutput(item, options));
                     }
                     output = array;
                     continue;
                 }
-                if (property.NameEquals("taskType"))
+                if (property.NameEquals("taskType"u8))
                 {
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new TaskState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commands"))
+                if (property.NameEquals("commands"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("clientData"))
+                if (property.NameEquals("clientData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -133,8 +162,52 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToSourceMySqlTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToSourceMySqlTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<ConnectToSourceNonSqlTaskOutput>());
         }
+
+        BinaryData IPersistableModel<ConnectToSourceMySqlTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectToSourceMySqlTaskProperties IPersistableModel<ConnectToSourceMySqlTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectToSourceMySqlTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectToSourceMySqlTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

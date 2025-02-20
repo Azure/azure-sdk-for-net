@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
         private const string OfflineValue = "Offline";
         private const string PartiallyRunningValue = "PartiallyRunning";
         private const string UnavailableValue = "Unavailable";
+        private const string SoftShutdownValue = "SoftShutdown";
 
         /// <summary> Starting. </summary>
         public static SapVirtualInstanceStatus Starting { get; } = new SapVirtualInstanceStatus(StartingValue);
@@ -41,11 +42,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapVirtualInstanceStatus PartiallyRunning { get; } = new SapVirtualInstanceStatus(PartiallyRunningValue);
         /// <summary> Unavailable. </summary>
         public static SapVirtualInstanceStatus Unavailable { get; } = new SapVirtualInstanceStatus(UnavailableValue);
+        /// <summary> SoftShutdown. </summary>
+        public static SapVirtualInstanceStatus SoftShutdown { get; } = new SapVirtualInstanceStatus(SoftShutdownValue);
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are the same. </summary>
         public static bool operator ==(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are not the same. </summary>
         public static bool operator !=(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapVirtualInstanceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapVirtualInstanceStatus"/>. </summary>
         public static implicit operator SapVirtualInstanceStatus(string value) => new SapVirtualInstanceStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

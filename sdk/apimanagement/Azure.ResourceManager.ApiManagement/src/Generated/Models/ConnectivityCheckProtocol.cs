@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The request&apos;s protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
+    /// <summary> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
     public readonly partial struct ConnectivityCheckProtocol : IEquatable<ConnectivityCheckProtocol>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ConnectivityCheckProtocol left, ConnectivityCheckProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are not the same. </summary>
         public static bool operator !=(ConnectivityCheckProtocol left, ConnectivityCheckProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectivityCheckProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityCheckProtocol"/>. </summary>
         public static implicit operator ConnectivityCheckProtocol(string value) => new ConnectivityCheckProtocol(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

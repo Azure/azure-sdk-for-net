@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The reason why the name is not available. &apos;Invalid&apos; indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). &apos;AlreadyExists&apos; indicates that the name is already in use and is therefore unavailable. </summary>
+    /// <summary> The reason why the name is not available. 'Invalid' indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). 'AlreadyExists' indicates that the name is already in use and is therefore unavailable. </summary>
     public readonly partial struct SearchServiceNameUnavailableReason : IEquatable<SearchServiceNameUnavailableReason>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Search.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> The search service name doesn't match naming requirements. </summary>
         public static SearchServiceNameUnavailableReason Invalid { get; } = new SearchServiceNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary> The search service name is already assigned to a different search service. </summary>
         public static SearchServiceNameUnavailableReason AlreadyExists { get; } = new SearchServiceNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
         public static implicit operator SearchServiceNameUnavailableReason(string value) => new SearchServiceNameUnavailableReason(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

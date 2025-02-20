@@ -22,7 +22,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string ES384Value = "ES384";
         internal const string ES512Value = "ES512";
         internal const string ES256KValue = "ES256K";
-        internal const string EdDsaValue = "EdDSA";
 
         private readonly string _value;
 
@@ -86,11 +85,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static SignatureAlgorithm ES256K { get; } = new SignatureAlgorithm(ES256KValue);
 
         /// <summary>
-        /// Gets an ECDSA with a secp256k1 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc8032"/>.
-        /// </summary>
-        public static SignatureAlgorithm EdDsa { get; } = new SignatureAlgorithm(EdDsaValue);
-
-        /// <summary>
         /// Determines if two <see cref="SignatureAlgorithm"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="SignatureAlgorithm"/> to compare.</param>
@@ -126,6 +120,46 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         public override string ToString() => _value;
 
+        internal static SignatureAlgorithm FromHashAlgorithmName(HashAlgorithmName algorithm, RSASignaturePadding padding)
+        {
+            if (padding == RSASignaturePadding.Pkcs1)
+            {
+                if (algorithm == HashAlgorithmName.SHA256)
+                {
+                    return RS256;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA384)
+                {
+                    return RS384;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA512)
+                {
+                    return RS512;
+                }
+            }
+            else if (padding == RSASignaturePadding.Pss)
+            {
+                if (algorithm == HashAlgorithmName.SHA256)
+                {
+                    return PS256;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA384)
+                {
+                    return PS384;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA512)
+                {
+                    return PS512;
+                }
+            }
+
+            throw new NotSupportedException($"Hash algorithm {algorithm} with {padding} padding is not supported");
+        }
+
         internal HashAlgorithm GetHashAlgorithm()
         {
             switch (_value)
@@ -134,7 +168,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case PS256Value:
                 case ES256Value:
                 case ES256KValue:
-                case EdDsaValue:
                     return SHA256.Create();
 
                 case RS384Value:
@@ -160,7 +193,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case PS256Value:
                 case ES256Value:
                 case ES256KValue:
-                case EdDsaValue:
                     return HashAlgorithmName.SHA256;
 
                 case RS384Value:

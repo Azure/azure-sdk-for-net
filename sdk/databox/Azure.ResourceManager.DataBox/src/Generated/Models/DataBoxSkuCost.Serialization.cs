@@ -6,47 +6,154 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxSkuCost
+    public partial class DataBoxSkuCost : IUtf8JsonSerializable, IJsonModel<DataBoxSkuCost>
     {
-        internal static DataBoxSkuCost DeserializeDataBoxSkuCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuCost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxSkuCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<Guid> meterId = default;
-            Optional<string> meterType = default;
-            Optional<double> multiplier = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCost>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            {
+                writer.WritePropertyName("meterId"u8);
+                writer.WriteStringValue(MeterId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MeterType))
+            {
+                writer.WritePropertyName("meterType"u8);
+                writer.WriteStringValue(MeterType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            {
+                writer.WritePropertyName("multiplier"u8);
+                writer.WriteNumberValue(Multiplier.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DataBoxSkuCost IJsonModel<DataBoxSkuCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCost>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxSkuCost(document.RootElement, options);
+        }
+
+        internal static DataBoxSkuCost DeserializeDataBoxSkuCost(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Guid? meterId = default;
+            string meterType = default;
+            double? multiplier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterId"))
+                if (property.NameEquals("meterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meterId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("meterType"))
+                if (property.NameEquals("meterType"u8))
                 {
                     meterType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiplier"))
+                if (property.NameEquals("multiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multiplier = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxSkuCost(Optional.ToNullable(meterId), meterType.Value, Optional.ToNullable(multiplier));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxSkuCost(meterId, meterType, multiplier, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxSkuCost>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCost>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxSkuCost IPersistableModel<DataBoxSkuCost>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCost>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxSkuCost(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxSkuCost>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

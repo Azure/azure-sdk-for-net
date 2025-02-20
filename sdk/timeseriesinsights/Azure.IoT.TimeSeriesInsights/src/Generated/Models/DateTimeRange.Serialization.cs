@@ -16,31 +16,51 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("from");
+            writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To, "O");
             writer.WriteEndObject();
         }
 
         internal static DateTimeRange DeserializeDateTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset @from = default;
             DateTimeOffset to = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     @from = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
             return new DateTimeRange(@from, to);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DateTimeRange FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDateTimeRange(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

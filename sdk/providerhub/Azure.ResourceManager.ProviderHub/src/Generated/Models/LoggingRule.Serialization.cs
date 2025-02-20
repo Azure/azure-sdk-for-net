@@ -5,65 +5,153 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LoggingRule : IUtf8JsonSerializable
+    public partial class LoggingRule : IUtf8JsonSerializable, IJsonModel<LoggingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggingRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoggingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("action");
-            writer.WriteStringValue(Action);
-            writer.WritePropertyName("direction");
-            writer.WriteStringValue(Direction.ToString());
-            writer.WritePropertyName("detailLevel");
-            writer.WriteStringValue(DetailLevel.ToString());
-            if (Optional.IsDefined(HiddenPropertyPaths))
-            {
-                writer.WritePropertyName("hiddenPropertyPaths");
-                writer.WriteObjectValue(HiddenPropertyPaths);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static LoggingRule DeserializeLoggingRule(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoggingRule)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("action"u8);
+            writer.WriteStringValue(Action);
+            writer.WritePropertyName("direction"u8);
+            writer.WriteStringValue(Direction.ToString());
+            writer.WritePropertyName("detailLevel"u8);
+            writer.WriteStringValue(DetailLevel.ToString());
+            if (Optional.IsDefined(HiddenPropertyPaths))
+            {
+                writer.WritePropertyName("hiddenPropertyPaths"u8);
+                writer.WriteObjectValue(HiddenPropertyPaths, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        LoggingRule IJsonModel<LoggingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoggingRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoggingRule(document.RootElement, options);
+        }
+
+        internal static LoggingRule DeserializeLoggingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string action = default;
             LoggingDirection direction = default;
             LoggingDetail detailLevel = default;
-            Optional<LoggingRuleHiddenPropertyPaths> hiddenPropertyPaths = default;
+            LoggingHiddenPropertyPaths hiddenPropertyPaths = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new LoggingDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("detailLevel"))
+                if (property.NameEquals("detailLevel"u8))
                 {
                     detailLevel = new LoggingDetail(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hiddenPropertyPaths"))
+                if (property.NameEquals("hiddenPropertyPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hiddenPropertyPaths = LoggingRuleHiddenPropertyPaths.DeserializeLoggingRuleHiddenPropertyPaths(property.Value);
+                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoggingRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoggingRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoggingRule IPersistableModel<LoggingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoggingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoggingRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoggingRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoggingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

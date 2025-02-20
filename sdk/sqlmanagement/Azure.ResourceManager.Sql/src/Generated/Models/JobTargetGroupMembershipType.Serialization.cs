@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static JobTargetGroupMembershipType ToJobTargetGroupMembershipType(this string value)
         {
-            if (string.Equals(value, "Include", StringComparison.InvariantCultureIgnoreCase)) return JobTargetGroupMembershipType.Include;
-            if (string.Equals(value, "Exclude", StringComparison.InvariantCultureIgnoreCase)) return JobTargetGroupMembershipType.Exclude;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Include")) return JobTargetGroupMembershipType.Include;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Exclude")) return JobTargetGroupMembershipType.Exclude;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobTargetGroupMembershipType value.");
         }
     }

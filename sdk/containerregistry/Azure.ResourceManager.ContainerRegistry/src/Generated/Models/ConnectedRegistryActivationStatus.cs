@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ConnectedRegistryActivationStatus left, ConnectedRegistryActivationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectedRegistryActivationStatus"/> values are not the same. </summary>
         public static bool operator !=(ConnectedRegistryActivationStatus left, ConnectedRegistryActivationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectedRegistryActivationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectedRegistryActivationStatus"/>. </summary>
         public static implicit operator ConnectedRegistryActivationStatus(string value) => new ConnectedRegistryActivationStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

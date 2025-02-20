@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerRegistryPipelineRunResource" /> and their operations.
-    /// Each <see cref="ContainerRegistryPipelineRunResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
-    /// To get a <see cref="ContainerRegistryPipelineRunCollection" /> instance call the GetContainerRegistryPipelineRuns method from an instance of <see cref="ContainerRegistryResource" />.
+    /// A class representing a collection of <see cref="ContainerRegistryPipelineRunResource"/> and their operations.
+    /// Each <see cref="ContainerRegistryPipelineRunResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
+    /// To get a <see cref="ContainerRegistryPipelineRunCollection"/> instance call the GetContainerRegistryPipelineRuns method from an instance of <see cref="ContainerRegistryResource"/>.
     /// </summary>
     public partial class ContainerRegistryPipelineRunCollection : ArmCollection, IEnumerable<ContainerRegistryPipelineRunResource>, IAsyncEnumerable<ContainerRegistryPipelineRunResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryPipelineRunPipelineRunsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryPipelineRunResource>(new ContainerRegistryPipelineRunOperationSource(Client), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, _containerRegistryPipelineRunPipelineRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryPipelineRunResource>(new ContainerRegistryPipelineRunOperationSource(Client), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, _containerRegistryPipelineRunPipelineRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +111,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryPipelineRunPipelineRunsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryPipelineRunResource>(new ContainerRegistryPipelineRunOperationSource(Client), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, _containerRegistryPipelineRunPipelineRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryPipelineRunResource>(new ContainerRegistryPipelineRunOperationSource(Client), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, _containerRegistryPipelineRunPipelineRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +159,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +205,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineRunName"> The name of the pipeline run. </param>
@@ -219,15 +250,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryPipelineRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerRegistryPipelineRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryPipelineRunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryPipelineRunPipelineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryPipelineRunPipelineRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryPipelineRunResource(Client, ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(e)), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, "ContainerRegistryPipelineRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryPipelineRunResource(Client, ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(e)), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, "ContainerRegistryPipelineRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +280,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryPipelineRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryPipelineRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryPipelineRunResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryPipelineRunPipelineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryPipelineRunPipelineRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryPipelineRunResource(Client, ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(e)), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, "ContainerRegistryPipelineRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryPipelineRunResource(Client, ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(e)), _containerRegistryPipelineRunPipelineRunsClientDiagnostics, Pipeline, "ContainerRegistryPipelineRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +309,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +353,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineRunName"> The name of the pipeline run. </param>
@@ -314,6 +377,96 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 var response = _containerRegistryPipelineRunPipelineRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/pipelineRuns/{pipelineRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineRunName"> The name of the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineRunName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerRegistryPipelineRunResource>> GetIfExistsAsync(string pipelineRunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pipelineRunName, nameof(pipelineRunName));
+
+            using var scope = _containerRegistryPipelineRunPipelineRunsClientDiagnostics.CreateScope("ContainerRegistryPipelineRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerRegistryPipelineRunPipelineRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryPipelineRunResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryPipelineRunResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/pipelineRuns/{pipelineRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineRunName"> The name of the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineRunName"/> is null. </exception>
+        public virtual NullableResponse<ContainerRegistryPipelineRunResource> GetIfExists(string pipelineRunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pipelineRunName, nameof(pipelineRunName));
+
+            using var scope = _containerRegistryPipelineRunPipelineRunsClientDiagnostics.CreateScope("ContainerRegistryPipelineRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerRegistryPipelineRunPipelineRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineRunName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryPipelineRunResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryPipelineRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

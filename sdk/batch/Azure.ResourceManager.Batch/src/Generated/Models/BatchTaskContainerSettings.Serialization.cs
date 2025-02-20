@@ -5,76 +5,194 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchTaskContainerSettings : IUtf8JsonSerializable
+    public partial class BatchTaskContainerSettings : IUtf8JsonSerializable, IJsonModel<BatchTaskContainerSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskContainerSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BatchTaskContainerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerRunOptions))
-            {
-                writer.WritePropertyName("containerRunOptions");
-                writer.WriteStringValue(ContainerRunOptions);
-            }
-            writer.WritePropertyName("imageName");
-            writer.WriteStringValue(ImageName);
-            if (Optional.IsDefined(Registry))
-            {
-                writer.WritePropertyName("registry");
-                writer.WriteObjectValue(Registry);
-            }
-            if (Optional.IsDefined(WorkingDirectory))
-            {
-                writer.WritePropertyName("workingDirectory");
-                writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> containerRunOptions = default;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ContainerRunOptions))
+            {
+                writer.WritePropertyName("containerRunOptions"u8);
+                writer.WriteStringValue(ContainerRunOptions);
+            }
+            writer.WritePropertyName("imageName"u8);
+            writer.WriteStringValue(ImageName);
+            if (Optional.IsDefined(Registry))
+            {
+                writer.WritePropertyName("registry"u8);
+                writer.WriteObjectValue(Registry, options);
+            }
+            if (Optional.IsDefined(WorkingDirectory))
+            {
+                writer.WritePropertyName("workingDirectory"u8);
+                writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(ContainerHostBatchBindMounts))
+            {
+                writer.WritePropertyName("containerHostBatchBindMounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in ContainerHostBatchBindMounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        BatchTaskContainerSettings IJsonModel<BatchTaskContainerSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchTaskContainerSettings(document.RootElement, options);
+        }
+
+        internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string containerRunOptions = default;
             string imageName = default;
-            Optional<BatchVmContainerRegistry> registry = default;
-            Optional<BatchContainerWorkingDirectory> workingDirectory = default;
+            BatchVmContainerRegistry registry = default;
+            BatchContainerWorkingDirectory? workingDirectory = default;
+            IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerRunOptions"))
+                if (property.NameEquals("containerRunOptions"u8))
                 {
                     containerRunOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value);
+                    registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("workingDirectory"))
+                if (property.NameEquals("workingDirectory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workingDirectory = property.Value.GetString().ToBatchContainerWorkingDirectory();
                     continue;
                 }
+                if (property.NameEquals("containerHostBatchBindMounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerHostBatchBindMountEntry> array = new List<ContainerHostBatchBindMountEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerHostBatchBindMountEntry.DeserializeContainerHostBatchBindMountEntry(item, options));
+                    }
+                    containerHostBatchBindMounts = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchTaskContainerSettings(containerRunOptions.Value, imageName, registry.Value, Optional.ToNullable(workingDirectory));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchTaskContainerSettings(
+                containerRunOptions,
+                imageName,
+                registry,
+                workingDirectory,
+                containerHostBatchBindMounts ?? new ChangeTrackingList<ContainerHostBatchBindMountEntry>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchTaskContainerSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchTaskContainerSettings IPersistableModel<BatchTaskContainerSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchTaskContainerSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchTaskContainerSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

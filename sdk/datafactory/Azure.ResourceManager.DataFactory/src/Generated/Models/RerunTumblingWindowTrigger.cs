@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
-    public partial class RerunTumblingWindowTrigger : FactoryTriggerDefinition
+    public partial class RerunTumblingWindowTrigger : DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
         /// <param name="parentTrigger"> The parent trigger reference. </param>
         /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = "RerunTumblingWindowTrigger";
         }
 
-        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        internal RerunTumblingWindowTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal RerunTumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
             RequestedStartOn = requestedStartOn;
@@ -50,13 +49,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "RerunTumblingWindowTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/> for deserialization. </summary>
+        internal RerunTumblingWindowTrigger()
+        {
+        }
+
         /// <summary>
         /// The parent trigger reference.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

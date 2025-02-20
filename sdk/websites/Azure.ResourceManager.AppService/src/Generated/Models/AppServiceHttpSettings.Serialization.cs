@@ -5,73 +5,226 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceHttpSettings : IUtf8JsonSerializable
+    public partial class AppServiceHttpSettings : IUtf8JsonSerializable, IJsonModel<AppServiceHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHttpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppServiceHttpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IsHttpsRequired))
             {
-                writer.WritePropertyName("requireHttps");
+                writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(IsHttpsRequired.Value);
             }
             if (Optional.IsDefined(Routes))
             {
-                writer.WritePropertyName("routes");
-                writer.WriteObjectValue(Routes);
+                writer.WritePropertyName("routes"u8);
+                writer.WriteObjectValue(Routes, options);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
-                writer.WritePropertyName("forwardProxy");
-                writer.WriteObjectValue(ForwardProxy);
+                writer.WritePropertyName("forwardProxy"u8);
+                writer.WriteObjectValue(ForwardProxy, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppServiceHttpSettings DeserializeAppServiceHttpSettings(JsonElement element)
+        AppServiceHttpSettings IJsonModel<AppServiceHttpSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> requireHttps = default;
-            Optional<AppServiceHttpSettingsRoutes> routes = default;
-            Optional<AppServiceForwardProxy> forwardProxy = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceHttpSettings(document.RootElement, options);
+        }
+
+        internal static AppServiceHttpSettings DeserializeAppServiceHttpSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? requireHttps = default;
+            AppServiceHttpSettingsRoutes routes = default;
+            AppServiceForwardProxy forwardProxy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requireHttps"))
+                if (property.NameEquals("requireHttps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireHttps = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value);
+                    routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("forwardProxy"))
+                if (property.NameEquals("forwardProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value);
+                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AppServiceHttpSettings(Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppServiceHttpSettings(requireHttps, routes, forwardProxy, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHttpsRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requireHttps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHttpsRequired))
+                {
+                    builder.Append("  requireHttps: ");
+                    var boolValue = IsHttpsRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RoutesApiPrefix", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routes: ");
+                builder.AppendLine("{");
+                builder.Append("    apiPrefix: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Routes))
+                {
+                    builder.Append("  routes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Routes, options, 2, false, "  routes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForwardProxy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forwardProxy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForwardProxy))
+                {
+                    builder.Append("  forwardProxy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ForwardProxy, options, 2, false, "  forwardProxy: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppServiceHttpSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppServiceHttpSettings IPersistableModel<AppServiceHttpSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceHttpSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceHttpSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

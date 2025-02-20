@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> Properties related to EventGrid. </summary>
     public partial class DigitalTwinsEventGridProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventGridProperties"/>. </summary>
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicEndpoint"/> is null. </exception>
@@ -26,23 +26,29 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             EndpointType = EndpointType.EventGrid;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventGridProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
-        /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
+        /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
         /// <param name="identity"> Managed identity properties for the endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <param name="accessKey2"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
-        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData)
         {
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;
             AccessKey2 = accessKey2;
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventGridProperties"/> for deserialization. </summary>
+        internal DigitalTwinsEventGridProperties()
+        {
         }
 
         /// <summary> EventGrid Topic Endpoint. </summary>

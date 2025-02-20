@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -15,28 +14,31 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static KeyValueElement DeserializeKeyValueElement(JsonElement element)
         {
-            Optional<KeyValueType> type = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            KeyValueType? type = default;
             string text = default;
-            Optional<IReadOnlyList<float>> boundingBox = default;
-            Optional<IReadOnlyList<string>> elements = default;
+            IReadOnlyList<float> boundingBox = default;
+            IReadOnlyList<string> elements = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new KeyValueType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("boundingBox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
                     boundingBox = array;
                     continue;
                 }
-                if (property.NameEquals("elements"))
+                if (property.NameEquals("elements"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +69,15 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement(Optional.ToNullable(type), text, Optional.ToList(boundingBox), Optional.ToList(elements));
+            return new KeyValueElement(type, text, boundingBox ?? new ChangeTrackingList<float>(), elements ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyValueElement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyValueElement(document.RootElement);
         }
     }
 }

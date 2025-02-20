@@ -6,85 +6,210 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationRefundResponseProperties
+    public partial class ReservationRefundResponseProperties : IUtf8JsonSerializable, IJsonModel<ReservationRefundResponseProperties>
     {
-        internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ReservationRefundResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<Guid> sessionId = default;
-            Optional<int> quantity = default;
-            Optional<PurchasePrice> billingRefundAmount = default;
-            Optional<PurchasePrice> pricingRefundAmount = default;
-            Optional<RefundPolicyResult> policyResult = default;
-            Optional<ReservationRefundBillingInformation> billingInformation = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId.Value);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (Optional.IsDefined(BillingRefundAmount))
+            {
+                writer.WritePropertyName("billingRefundAmount"u8);
+                writer.WriteObjectValue(BillingRefundAmount, options);
+            }
+            if (Optional.IsDefined(PricingRefundAmount))
+            {
+                writer.WritePropertyName("pricingRefundAmount"u8);
+                writer.WriteObjectValue(PricingRefundAmount, options);
+            }
+            if (Optional.IsDefined(PolicyResult))
+            {
+                writer.WritePropertyName("policyResult"u8);
+                writer.WriteObjectValue(PolicyResult, options);
+            }
+            if (Optional.IsDefined(BillingInformation))
+            {
+                writer.WritePropertyName("billingInformation"u8);
+                writer.WriteObjectValue(BillingInformation, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ReservationRefundResponseProperties IJsonModel<ReservationRefundResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationRefundResponseProperties(document.RootElement, options);
+        }
+
+        internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Guid? sessionId = default;
+            int? quantity = default;
+            PurchasePrice billingRefundAmount = default;
+            PurchasePrice pricingRefundAmount = default;
+            RefundPolicyResult policyResult = default;
+            ReservationRefundBillingInformation billingInformation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quantity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("billingRefundAmount"))
+                if (property.NameEquals("billingRefundAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("pricingRefundAmount"))
+                if (property.NameEquals("pricingRefundAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pricingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    pricingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("policyResult"))
+                if (property.NameEquals("policyResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policyResult = RefundPolicyResult.DeserializeRefundPolicyResult(property.Value);
+                    policyResult = RefundPolicyResult.DeserializeRefundPolicyResult(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("billingInformation"))
+                if (property.NameEquals("billingInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingInformation = ReservationRefundBillingInformation.DeserializeReservationRefundBillingInformation(property.Value);
+                    billingInformation = ReservationRefundBillingInformation.DeserializeReservationRefundBillingInformation(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReservationRefundResponseProperties(
+                sessionId,
+                quantity,
+                billingRefundAmount,
+                pricingRefundAmount,
+                policyResult,
+                billingInformation,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationRefundResponseProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReservationRefundResponseProperties IPersistableModel<ReservationRefundResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationRefundResponseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationRefundResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,57 +5,139 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadItem : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownWorkloadItem))]
+    public partial class WorkloadItem : IUtf8JsonSerializable, IJsonModel<WorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WorkloadItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("workloadItemType");
+            writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static WorkloadItem DeserializeWorkloadItem(JsonElement element)
+        WorkloadItem IJsonModel<WorkloadItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadItem(document.RootElement, options);
+        }
+
+        internal static WorkloadItem DeserializeWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("workloadItemType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureVmWorkloadItem": return AzureVmWorkloadItem.DeserializeAzureVmWorkloadItem(element);
-                    case "SAPAseDatabase": return AzureVmWorkloadSAPAseDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPAseDatabaseWorkloadItem(element);
-                    case "SAPAseSystem": return AzureVmWorkloadSAPAseSystemWorkloadItem.DeserializeAzureVmWorkloadSAPAseSystemWorkloadItem(element);
-                    case "SAPHanaDatabase": return AzureVmWorkloadSAPHanaDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPHanaDatabaseWorkloadItem(element);
-                    case "SAPHanaSystem": return AzureVmWorkloadSAPHanaSystemWorkloadItem.DeserializeAzureVmWorkloadSAPHanaSystemWorkloadItem(element);
-                    case "SQLDataBase": return AzureVmWorkloadSQLDatabaseWorkloadItem.DeserializeAzureVmWorkloadSQLDatabaseWorkloadItem(element);
-                    case "SQLInstance": return AzureVmWorkloadSQLInstanceWorkloadItem.DeserializeAzureVmWorkloadSQLInstanceWorkloadItem(element);
+                    case "AzureVmWorkloadItem": return VmWorkloadItem.DeserializeVmWorkloadItem(element, options);
+                    case "SAPAseDatabase": return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element, options);
+                    case "SAPAseSystem": return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element, options);
+                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element, options);
+                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element, options);
+                    case "SQLDataBase": return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element, options);
+                    case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element, options);
                 }
             }
-            return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element);
+            return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element, options);
         }
+
+        BinaryData IPersistableModel<WorkloadItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadItem IPersistableModel<WorkloadItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkloadItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

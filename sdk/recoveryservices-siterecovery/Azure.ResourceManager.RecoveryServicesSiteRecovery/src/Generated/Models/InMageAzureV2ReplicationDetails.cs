@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -14,25 +15,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 provider specific settings. </summary>
     public partial class InMageAzureV2ReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReplicationDetails"/>. </summary>
         internal InMageAzureV2ReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>();
-            AzureVmDiskDetails = new ChangeTrackingList<AzureVmDiskDetails>();
+            AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
             VmNics = new ChangeTrackingList<VmNicDetails>();
             Datastores = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<HealthError>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             ProtectedManagedDisks = new ChangeTrackingList<InMageAzureV2ManagedDiskDetails>();
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
             SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
             SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageAzureV2SwitchProviderBlockingErrorDetails>();
+            SupportedOSVersions = new ChangeTrackingList<string>();
+            AllAvailableOSUpgradeConfigurations = new ChangeTrackingList<OSUpgradeSupportedVersions>();
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="infrastructureVmId"> The infrastructure VM Id. </param>
         /// <param name="vCenterInfrastructureId"> The vCenter infrastructure Id. </param>
         /// <param name="protectionStage"> The protection stage. </param>
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
         /// <param name="ipAddress"> The source IP address. </param>
         /// <param name="agentVersion"> The agent version. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="isAgentUpdateRequired"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="isRebootAfterUpdateRequired"> A value indicating whether the source server requires a restart after update. </param>
         /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
@@ -100,7 +104,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
         /// <param name="switchProviderDetails"> The switch provider blocking error information. </param>
-        internal InMageAzureV2ReplicationDetails(string instanceType, string infrastructureVmId, string vCenterInfrastructureId, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, int? resyncProgressPercentage, long? rpoInSeconds, double? compressedDataRateInMB, double? uncompressedDataRateInMB, string ipAddress, string agentVersion, DateTimeOffset? agentExpiryOn, string isAgentUpdateRequired, string isRebootAfterUpdateRequired, DateTimeOffset? lastHeartbeat, string processServerId, string processServerName, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, IReadOnlyList<InMageAzureV2ProtectedDiskDetails> protectedDisks, string diskResized, string masterTargetId, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, string osType, string vhdName, string osDiskId, IReadOnlyList<AzureVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, string recoveryAzureLogStorageAccountId, IReadOnlyList<VmNicDetails> vmNics, string selectedRecoveryAzureNetworkId, string selectedTfoAzureNetworkId, string selectedSourceNicId, string discoveryType, string enableRdpOnTargetOption, IReadOnlyList<string> datastores, string targetVmId, string recoveryAzureResourceGroupId, string recoveryAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, IReadOnlyList<HealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, IReadOnlyList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks, DateTimeOffset? lastRecoveryPointReceived, string firmwareType, string azureVmGeneration, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, InMageAzureV2SwitchProviderDetails switchProviderDetails) : base(instanceType)
+        /// <param name="supportedOSVersions"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="allAvailableOSUpgradeConfigurations"> A value indicating all available inplace OS Upgrade configurations. </param>
+        /// <param name="osName"> The name of the OS on the VM. </param>
+        internal InMageAzureV2ReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string infrastructureVmId, string vCenterInfrastructureId, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, int? resyncProgressPercentage, long? rpoInSeconds, double? compressedDataRateInMB, double? uncompressedDataRateInMB, IPAddress ipAddress, string agentVersion, DateTimeOffset? agentExpireOn, string isAgentUpdateRequired, string isRebootAfterUpdateRequired, DateTimeOffset? lastHeartbeat, Guid? processServerId, string processServerName, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, IReadOnlyList<InMageAzureV2ProtectedDiskDetails> protectedDisks, string diskResized, string masterTargetId, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, string osType, string vhdName, string osDiskId, IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, IReadOnlyList<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string discoveryType, string enableRdpOnTargetOption, IReadOnlyList<string> datastores, string targetVmId, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, IReadOnlyList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks, DateTimeOffset? lastRecoveryPointReceived, string firmwareType, string azureVmGeneration, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, InMageAzureV2SwitchProviderDetails switchProviderDetails, IReadOnlyList<string> supportedOSVersions, IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations, string osName) : base(instanceType, serializedAdditionalRawData)
         {
             InfrastructureVmId = infrastructureVmId;
             VCenterInfrastructureId = vCenterInfrastructureId;
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             UncompressedDataRateInMB = uncompressedDataRateInMB;
             IPAddress = ipAddress;
             AgentVersion = agentVersion;
-            AgentExpiryOn = agentExpiryOn;
+            AgentExpireOn = agentExpireOn;
             IsAgentUpdateRequired = isAgentUpdateRequired;
             IsRebootAfterUpdateRequired = isRebootAfterUpdateRequired;
             LastHeartbeat = lastHeartbeat;
@@ -169,6 +176,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetNicTags = targetNicTags;
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
             SwitchProviderDetails = switchProviderDetails;
+            SupportedOSVersions = supportedOSVersions;
+            AllAvailableOSUpgradeConfigurations = allAvailableOSUpgradeConfigurations;
+            OSName = osName;
             InstanceType = instanceType ?? "InMageAzureV2";
         }
 
@@ -193,11 +203,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The uncompressed data change rate in MB. </summary>
         public double? UncompressedDataRateInMB { get; }
         /// <summary> The source IP address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The agent version. </summary>
         public string AgentVersion { get; }
         /// <summary> Agent expiry date. </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary> A value indicating whether installed agent needs to be updated. </summary>
         public string IsAgentUpdateRequired { get; }
         /// <summary> A value indicating whether the source server requires a restart after update. </summary>
@@ -205,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The last heartbeat received from the source server. </summary>
         public DateTimeOffset? LastHeartbeat { get; }
         /// <summary> The process server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid? ProcessServerId { get; }
         /// <summary> The process server name. </summary>
         public string ProcessServerName { get; }
         /// <summary> The multi vm group Id. </summary>
@@ -231,7 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The id of the disk containing the OS. </summary>
         public string OSDiskId { get; }
         /// <summary> Azure VM Disk details. </summary>
-        public IReadOnlyList<AzureVmDiskDetails> AzureVmDiskDetails { get; }
+        public IReadOnlyList<SiteRecoveryVmDiskDetails> AzureVmDiskDetails { get; }
         /// <summary> Recovery Azure given name. </summary>
         public string RecoveryAzureVmName { get; }
         /// <summary> The Recovery Azure VM size. </summary>
@@ -239,13 +249,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The recovery Azure storage account. </summary>
         public string RecoveryAzureStorageAccount { get; }
         /// <summary> The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection. </summary>
-        public string RecoveryAzureLogStorageAccountId { get; }
+        public ResourceIdentifier RecoveryAzureLogStorageAccountId { get; }
         /// <summary> The PE Network details. </summary>
         public IReadOnlyList<VmNicDetails> VmNics { get; }
         /// <summary> The selected recovery azure network Id. </summary>
-        public string SelectedRecoveryAzureNetworkId { get; }
+        public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; }
         /// <summary> The test failover virtual network. </summary>
-        public string SelectedTfoAzureNetworkId { get; }
+        public ResourceIdentifier SelectedTfoAzureNetworkId { get; }
         /// <summary> The selected source nic Id which will be used as the primary nic during failover. </summary>
         public string SelectedSourceNicId { get; }
         /// <summary> A value indicating the discovery type of the machine. Value can be vCenter or physical. </summary>
@@ -257,13 +267,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The ARM Id of the target Azure VM. This value will be null until the VM is failed over. Only after failure it will be populated with the ARM Id of the Azure VM. </summary>
         public string TargetVmId { get; }
         /// <summary> The target resource group Id. </summary>
-        public string RecoveryAzureResourceGroupId { get; }
+        public ResourceIdentifier RecoveryAzureResourceGroupId { get; }
         /// <summary> The recovery availability set Id. </summary>
-        public string RecoveryAvailabilitySetId { get; }
+        public ResourceIdentifier RecoveryAvailabilitySetId { get; }
         /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; }
         /// <summary> The target proximity placement group Id. </summary>
-        public string TargetProximityPlacementGroupId { get; }
+        public ResourceIdentifier TargetProximityPlacementGroupId { get; }
         /// <summary> A value indicating whether managed disks should be used during failover. </summary>
         public string UseManagedDisks { get; }
         /// <summary> License Type of the VM to be used. </summary>
@@ -271,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The SQL Server license type. </summary>
         public string SqlServerLicenseType { get; }
         /// <summary> The validation errors of the on-premise machine Value can be list of validation errors. </summary>
-        public IReadOnlyList<HealthError> ValidationErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> ValidationErrors { get; }
         /// <summary> The last RPO calculated time. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
         /// <summary> The last update time received from on-prem components. </summary>
@@ -306,5 +316,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
         /// <summary> The switch provider blocking error information. </summary>
         public InMageAzureV2SwitchProviderDetails SwitchProviderDetails { get; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public IReadOnlyList<string> SupportedOSVersions { get; }
+        /// <summary> A value indicating all available inplace OS Upgrade configurations. </summary>
+        public IReadOnlyList<OSUpgradeSupportedVersions> AllAvailableOSUpgradeConfigurations { get; }
+        /// <summary> The name of the OS on the VM. </summary>
+        public string OSName { get; }
     }
 }

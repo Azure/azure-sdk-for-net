@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,38 +16,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DataBoxCopyStartedEventData DeserializeDataBoxCopyStartedEventData(JsonElement element)
         {
-            Optional<string> serialNumber = default;
-            Optional<DataBoxStageName> stageName = default;
-            Optional<DateTimeOffset> stageTime = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string serialNumber = default;
+            DataBoxStageName? stageName = default;
+            DateTimeOffset? stageTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageName = new DataBoxStageName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stageTime"))
+                if (property.NameEquals("stageTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new DataBoxCopyStartedEventData(serialNumber.Value, Optional.ToNullable(stageName), Optional.ToNullable(stageTime));
+            return new DataBoxCopyStartedEventData(serialNumber, stageName, stageTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataBoxCopyStartedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataBoxCopyStartedEventData(document.RootElement);
         }
 
         internal partial class DataBoxCopyStartedEventDataConverter : JsonConverter<DataBoxCopyStartedEventData>
@@ -57,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override DataBoxCopyStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

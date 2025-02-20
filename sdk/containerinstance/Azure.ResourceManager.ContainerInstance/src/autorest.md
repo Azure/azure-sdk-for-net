@@ -6,12 +6,20 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
-require: https://github.com/Azure/azure-rest-api-specs/blob/bf82b74acfa933165e8e30d3403195043d1149d5/specification/containerinstance/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/10b3107f2eafcd428a208ec5858f3ca9261b1123/specification/containerinstance/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -20,7 +28,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -98,4 +106,8 @@ rename-mapping:
   GpuSku: ContainerGpuSku
   LogAnalytics: ContainerGroupLogAnalytics
   LogAnalyticsLogType: ContainerGroupLogAnalyticsLogType
+  SecurityContextDefinition: ContainerSecurityContextDefinition
+  SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
+  SecurityContextDefinition.privileged: IsPrivileged
+  ContainerGroupProperties.properties.osType: ContainerGroupOsType
 ```

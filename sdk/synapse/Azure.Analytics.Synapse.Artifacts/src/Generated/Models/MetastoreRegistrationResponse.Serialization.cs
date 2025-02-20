@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,21 +16,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static MetastoreRegistrationResponse DeserializeMetastoreRegistrationResponse(JsonElement element)
         {
-            Optional<RequestStatus> status = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RequestStatus? status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new RequestStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new MetastoreRegistrationResponse(Optional.ToNullable(status));
+            return new MetastoreRegistrationResponse(status);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetastoreRegistrationResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetastoreRegistrationResponse(document.RootElement);
         }
 
         internal partial class MetastoreRegistrationResponseConverter : JsonConverter<MetastoreRegistrationResponse>
@@ -40,6 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override MetastoreRegistrationResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

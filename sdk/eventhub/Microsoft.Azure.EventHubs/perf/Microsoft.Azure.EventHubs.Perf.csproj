@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Version>1.0.0</Version>
     <OutputType>Exe</OutputType>
-    <LangVersion>latest</LangVersion>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
@@ -14,6 +13,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="Polly" />
   </ItemGroup>
 

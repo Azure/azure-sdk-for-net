@@ -16,14 +16,16 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountAccessTier.Hot => "Hot",
             StorageAccountAccessTier.Cool => "Cool",
             StorageAccountAccessTier.Premium => "Premium",
+            StorageAccountAccessTier.Cold => "Cold",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountAccessTier value.")
         };
 
         public static StorageAccountAccessTier ToStorageAccountAccessTier(this string value)
         {
-            if (string.Equals(value, "Hot", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountAccessTier.Hot;
-            if (string.Equals(value, "Cool", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountAccessTier.Cool;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountAccessTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hot")) return StorageAccountAccessTier.Hot;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cool")) return StorageAccountAccessTier.Cool;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return StorageAccountAccessTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cold")) return StorageAccountAccessTier.Cold;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountAccessTier value.");
         }
     }

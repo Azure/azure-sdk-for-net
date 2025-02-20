@@ -6,135 +6,256 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ResourceCertificateAndAadDetails
+    public partial class ResourceCertificateAndAadDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAadDetails>
     {
-        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateAndAadDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceCertificateAndAadDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("aadAuthority"u8);
+            writer.WriteStringValue(AadAuthority);
+            writer.WritePropertyName("aadTenantId"u8);
+            writer.WriteStringValue(AadTenantId);
+            writer.WritePropertyName("servicePrincipalClientId"u8);
+            writer.WriteStringValue(ServicePrincipalClientId);
+            writer.WritePropertyName("servicePrincipalObjectId"u8);
+            writer.WriteStringValue(ServicePrincipalObjectId);
+            writer.WritePropertyName("azureManagementEndpointAudience"u8);
+            writer.WriteStringValue(AzureManagementEndpointAudience);
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                writer.WritePropertyName("serviceResourceId"u8);
+                writer.WriteStringValue(ServiceResourceId);
+            }
+            if (Optional.IsDefined(AadAudience))
+            {
+                writer.WritePropertyName("aadAudience"u8);
+                writer.WriteStringValue(AadAudience);
+            }
+        }
+
+        ResourceCertificateAndAadDetails IJsonModel<ResourceCertificateAndAadDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
+        }
+
+        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aadAuthority = default;
-            string aadTenantId = default;
+            Guid aadTenantId = default;
             string servicePrincipalClientId = default;
             string servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
-            Optional<string> serviceResourceId = default;
-            Optional<string> aadAudience = default;
+            ResourceIdentifier serviceResourceId = default;
+            string aadAudience = default;
             string authType = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            byte[] certificate = default;
+            string friendlyName = default;
+            string issuer = default;
+            long? resourceId = default;
+            string subject = default;
+            BinaryData thumbprint = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validTo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aadAuthority"))
+                if (property.NameEquals("aadAuthority"u8))
                 {
                     aadAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadTenantId"))
+                if (property.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = property.Value.GetString();
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalClientId"))
+                if (property.NameEquals("servicePrincipalClientId"u8))
                 {
                     servicePrincipalClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalObjectId"))
+                if (property.NameEquals("servicePrincipalObjectId"u8))
                 {
                     servicePrincipalObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureManagementEndpointAudience"))
+                if (property.NameEquals("azureManagementEndpointAudience"u8))
                 {
                     azureManagementEndpointAudience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceResourceId"))
+                if (property.NameEquals("serviceResourceId"u8))
                 {
-                    serviceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadAudience"))
+                if (property.NameEquals("aadAudience"u8))
                 {
                     aadAudience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authType"))
+                if (property.NameEquals("authType"u8))
                 {
                     authType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certificate = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
-                {
-                    thumbprint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("validFrom"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("validFrom"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     validFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("validTo"))
+                if (property.NameEquals("validTo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validTo = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceCertificateAndAadDetails(
+                authType,
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validFrom,
+                validTo,
+                serializedAdditionalRawData,
+                aadAuthority,
+                aadTenantId,
+                servicePrincipalClientId,
+                servicePrincipalObjectId,
+                azureManagementEndpointAudience,
+                serviceResourceId,
+                aadAudience);
         }
+
+        BinaryData IPersistableModel<ResourceCertificateAndAadDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceCertificateAndAadDetails IPersistableModel<ResourceCertificateAndAadDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceCertificateAndAadDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

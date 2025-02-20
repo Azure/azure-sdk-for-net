@@ -12,9 +12,15 @@ namespace: Azure.ResourceManager.ManagedServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/55dd4f72d2b2769c1e02f2b952e597f806d40f9a/specification/managedservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - OperationsWithScope_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 requestion-path-to-parent:
   /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
@@ -48,7 +54,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -72,6 +78,7 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  - remove-operation: OperationsWithScope_List # this is an operation that lists all the RestApis in a scope. We have one operation to list operations on the tenant level in resourcemanager, therefore this operation should be here
   - remove-operation: MarketplaceRegistrationDefinitionsWithoutScope_List
   - remove-operation: MarketplaceRegistrationDefinitionsWithoutScope_Get
   - from: managedservices.json

@@ -5,6 +5,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -24,7 +25,7 @@ namespace Azure.Maps.Rendering
             MapTileIndex = mapTileIndex;
         }
 
-        /// <summary> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </summary>
+        /// <summary> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/rest/api/maps-creator/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </summary>
         public MapTileSetId MapTileSetId { get; }
         /// <summary>
         /// Zoom level, and coordinate of the tile on zoom grid.
@@ -34,7 +35,7 @@ namespace Azure.Maps.Rendering
         public MapTileIndex MapTileIndex { get; }
         /// <summary>
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by <see href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</see>. This parameter is only supported when <see cref="MapTileSetId"/> option is set to one of the values below.
-        /// <list>
+        /// <list type="bullet">
         /// <item> <c>microsoft.weather.infrared.main</c>: We provide tiles up to 3 hours in the past. Tiles are available in 10-minute intervals. We round the timeStamp value to the nearest 10-minute time frame. </item>
         /// <item> <c>microsoft.weather.radar.main</c>: We provide tiles up to 1.5 hours in the past and up to 2 hours in the future. Tiles are available in 5-minute intervals. We round the timeStamp value to the nearest 5-minute time frame. </item>
         /// </list>

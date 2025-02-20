@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,69 +16,89 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageBlobDeletedEventData DeserializeStorageBlobDeletedEventData(JsonElement element)
         {
-            Optional<string> api = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> contentType = default;
-            Optional<string> blobType = default;
-            Optional<string> url = default;
-            Optional<string> sequencer = default;
-            Optional<string> identity = default;
-            Optional<object> storageDiagnostics = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string api = default;
+            string clientRequestId = default;
+            string requestId = default;
+            string contentType = default;
+            string blobType = default;
+            string url = default;
+            string sequencer = default;
+            string identity = default;
+            object storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     api = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobType"))
+                if (property.NameEquals("blobType"u8))
                 {
                     blobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequencer"))
+                if (property.NameEquals("sequencer"u8))
                 {
                     sequencer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageDiagnostics"))
+                if (property.NameEquals("storageDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
             }
-            return new StorageBlobDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageBlobDeletedEventData(
+                api,
+                clientRequestId,
+                requestId,
+                contentType,
+                blobType,
+                url,
+                sequencer,
+                identity,
+                storageDiagnostics);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobDeletedEventData(document.RootElement);
         }
 
         internal partial class StorageBlobDeletedEventDataConverter : JsonConverter<StorageBlobDeletedEventData>
@@ -88,6 +107,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override StorageBlobDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

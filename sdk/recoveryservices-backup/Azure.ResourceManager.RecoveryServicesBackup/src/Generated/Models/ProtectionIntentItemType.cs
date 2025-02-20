@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string RecoveryServiceVaultItemValue = "RecoveryServiceVaultItem";
         private const string AzureWorkloadContainerAutoProtectionIntentValue = "AzureWorkloadContainerAutoProtectionIntent";
         private const string AzureWorkloadAutoProtectionIntentValue = "AzureWorkloadAutoProtectionIntent";
-        private const string AzureWorkloadSQLAutoProtectionIntentValue = "AzureWorkloadSQLAutoProtectionIntent";
+        private const string AzureWorkloadSqlAutoProtectionIntentValue = "AzureWorkloadSQLAutoProtectionIntent";
 
         /// <summary> Invalid. </summary>
         public static ProtectionIntentItemType Invalid { get; } = new ProtectionIntentItemType(InvalidValue);
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> AzureWorkloadAutoProtectionIntent. </summary>
         public static ProtectionIntentItemType AzureWorkloadAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadAutoProtectionIntentValue);
         /// <summary> AzureWorkloadSQLAutoProtectionIntent. </summary>
-        public static ProtectionIntentItemType AzureWorkloadSQLAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadSQLAutoProtectionIntentValue);
+        public static ProtectionIntentItemType AzureWorkloadSqlAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadSqlAutoProtectionIntentValue);
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are the same. </summary>
         public static bool operator ==(ProtectionIntentItemType left, ProtectionIntentItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are not the same. </summary>
         public static bool operator !=(ProtectionIntentItemType left, ProtectionIntentItemType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProtectionIntentItemType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProtectionIntentItemType"/>. </summary>
         public static implicit operator ProtectionIntentItemType(string value) => new ProtectionIntentItemType(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

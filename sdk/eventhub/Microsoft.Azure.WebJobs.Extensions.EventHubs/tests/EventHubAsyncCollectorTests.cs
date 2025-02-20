@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
@@ -20,20 +22,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.Throws<ArgumentNullException>(() => new EventHubAsyncCollector(null));
         }
 
-        public EventData CreateEvent(byte[] body, string partitionKey)
-        {
-            var data = new TestEventData(body, partitionKey: partitionKey);
-            return data;
-        }
-
         [Test]
         public async Task SendMultiplePartitions()
         {
             var client = new TestEventHubProducerClient();
             var collector = new EventHubAsyncCollector(client);
 
-            await collector.AddAsync(this.CreateEvent(new byte[] { 1 }, "pk1"));
-            await collector.AddAsync(CreateEvent(new byte[] { 2 }, "pk2"));
+            await collector.AddAsync(new EventData(new byte[] { 1 }), "pk1");
+            await collector.AddAsync(new EventData(new byte[] { 2 }), "pk2");
 
             // Not physically sent yet since we haven't flushed
             Assert.IsEmpty(client.SentBatches);
@@ -225,6 +221,33 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.IsEmpty(expected); // Some events where missed.
         }
 
+        [Test]
+        public async Task DoesNotLoseEventsOnBatchFlush()
+        {
+            // The test batch reserves some amount of bytes per event as overhead.
+            // This size limit should forces a the batch to be full after exactly two events.
+            var maxBatchBytes = (TestEventHubProducerClient.TestEventDataBatch.EventOverheadBytes * 2) + 2;
+
+            var client = new TestEventHubProducerClient(maxBatchBytes);
+            var collector = new EventHubAsyncCollector(client);
+
+            // Add two single-byte events; this should trigger a batch to be full,
+            // but no batch should have been sent.
+            await collector.AddAsync(new EventData(new byte[] { 0x1 }));
+            await collector.AddAsync(new EventData(new byte[] { 0x2 }));
+
+            Assert.AreEqual(0, client.SentBatches.Count);
+
+            // Adding a third event should trigger a batch with the first two events
+            // to be sent.
+            await collector.AddAsync(new EventData(new byte[] { 0x3 }));
+            Assert.AreEqual(1, client.SentBatches.Count);
+
+            // Flushing should trigger a batch with the third event to be sent.
+            await collector.FlushAsync();
+            Assert.AreEqual(2, client.SentBatches.Count);
+        }
+
         internal class TestEventHubProducerClient : IEventHubProducerClient
         {
             private readonly long _batchSize;
@@ -237,7 +260,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             public List<TestEventDataBatch> CreatedBatches { get; } = new List<TestEventDataBatch>();
             public List<TestEventDataBatch> SentBatches { get; } = new List<TestEventDataBatch>();
 
-            public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)
+            public Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken) =>
+                CreateBatchAsync(null, cancellationToken);
+
+            public async Task<IEventDataBatch> CreateBatchAsync(CreateBatchOptions options, CancellationToken cancellationToken)
             {
                 var batch = new TestEventDataBatch(_batchSize);
 
@@ -265,6 +291,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             {
                 private readonly long _batchSize;
 
+                public const int EventOverheadBytes = 400;
+
                 public TestEventDataBatch(long batchSize)
                 {
                     _batchSize = batchSize;
@@ -279,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
                 public bool TryAdd(EventData eventData)
                 {
-                    var size = eventData.Body.Length + 400; // Reserve a somewhat random amount for protocol overhead.
+                    var size = eventData.Body.Length + EventOverheadBytes; // Reserve a somewhat random amount for protocol overhead.
                     lock (this)
                     {
                         if (size + CurrentSizeInBytes > MaximumSizeInBytes)

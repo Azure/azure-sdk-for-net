@@ -30,11 +30,13 @@ namespace Azure.Messaging.EventHubs.Tests
             // Custom conditions.
 
             yield return new object[] { AmqpError.TimeoutError, typeof(EventHubsException), EventHubsException.FailureReason.ServiceTimeout };
+            yield return new object[] { AmqpError.DisabledError, typeof(EventHubsException), EventHubsException.FailureReason.ResourceNotFound };
             yield return new object[] { AmqpError.ServerBusyError, typeof(EventHubsException), EventHubsException.FailureReason.ServiceBusy };
             yield return new object[] { AmqpError.ProducerStolenError, typeof(EventHubsException), EventHubsException.FailureReason.ProducerDisconnected };
             yield return new object[] { AmqpError.SequenceOutOfOrderError, typeof(EventHubsException), EventHubsException.FailureReason.InvalidClientState };
             yield return new object[] { AmqpError.ArgumentError, typeof(ArgumentException), null };
             yield return new object[] { AmqpError.ArgumentOutOfRangeError, typeof(ArgumentOutOfRangeException), null };
+            yield return new object[] { AmqpError.InvalidGeolocationOffset, typeof(FormatException), null } ;
 
             // Stock conditions.
 

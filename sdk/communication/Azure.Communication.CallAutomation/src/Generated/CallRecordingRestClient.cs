@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -30,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-09-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,7 +37,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateStartRecordingRequest(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateStartRecordingRequest(StartCallRecordingRequestInternal startCallRecording)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -48,14 +47,8 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/calling/recordings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -66,22 +59,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Start recording the call. </summary>
         /// <param name="startCallRecording"> The request body of start call recording request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
-        public async Task<Response<RecordingStateResult>> StartRecordingAsync(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordingStateResult>> StartRecordingAsync(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {
                 throw new ArgumentNullException(nameof(startCallRecording));
             }
 
-            using var message = CreateStartRecordingRequest(startCallRecording, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateStartRecordingRequest(startCallRecording);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         RecordingStateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -89,28 +81,27 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Start recording the call. </summary>
         /// <param name="startCallRecording"> The request body of start call recording request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
-        public Response<RecordingStateResult> StartRecording(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<RecordingStateResult> StartRecording(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {
                 throw new ArgumentNullException(nameof(startCallRecording));
             }
 
-            using var message = CreateStartRecordingRequest(startCallRecording, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateStartRecordingRequest(startCallRecording);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         RecordingStateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -118,7 +109,7 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -160,7 +151,7 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -187,7 +178,7 @@ namespace Azure.Communication.CallAutomation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -224,7 +215,7 @@ namespace Azure.Communication.CallAutomation
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -246,7 +237,7 @@ namespace Azure.Communication.CallAutomation
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -284,7 +275,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -306,7 +297,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -344,7 +335,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -366,7 +357,77 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRecordingResultRequest(string recordingId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/recordings/", false);
+            uri.AppendPath(recordingId, true);
+            uri.AppendPath("/result", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
+        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        public async Task<Response<RecordingResult>> GetRecordingResultAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            if (recordingId == null)
+            {
+                throw new ArgumentNullException(nameof(recordingId));
+            }
+
+            using var message = CreateGetRecordingResultRequest(recordingId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RecordingResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RecordingResult.DeserializeRecordingResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
+        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        public Response<RecordingResult> GetRecordingResult(string recordingId, CancellationToken cancellationToken = default)
+        {
+            if (recordingId == null)
+            {
+                throw new ArgumentNullException(nameof(recordingId));
+            }
+
+            using var message = CreateGetRecordingResultRequest(recordingId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RecordingResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RecordingResult.DeserializeRecordingResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

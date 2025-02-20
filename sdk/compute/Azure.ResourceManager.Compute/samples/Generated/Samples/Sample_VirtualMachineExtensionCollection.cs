@@ -6,25 +6,21 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineExtensionCollection
     {
-        // VirtualMachineExtensions_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_VirtualMachineExtensionsCreateOrUpdateMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_VirtualMachineExtensionCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,44 +49,34 @@ namespace Azure.ResourceManager.Compute.Samples
                 TypeHandlerVersion = "1.2",
                 AutoUpgradeMinorVersion = true,
                 EnableAutomaticUpgrade = true,
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
-                ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
-                InstanceView = new VirtualMachineExtensionInstanceView()
+                Settings = BinaryData.FromObjectAsJson(new object()),
+                ProtectedSettings = BinaryData.FromObjectAsJson(new object()),
+                InstanceView = new VirtualMachineExtensionInstanceView
                 {
                     Name = "aaaaaaaaaaaaaaaaa",
                     VirtualMachineExtensionInstanceViewType = "aaaaaaaaa",
                     TypeHandlerVersion = "aaaaaaaaaaaaaaaaaaaaaaaaaa",
-                    Substatuses =
-{
-new InstanceViewStatus()
+                    Substatuses = {new InstanceViewStatus
 {
 Code = "aaaaaaaaaaaaaaaaaaaaaaa",
 Level = ComputeStatusLevelType.Info,
 DisplayStatus = "aaaaaa",
 Message = "a",
 Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
-}
-},
-                    Statuses =
-{
-new InstanceViewStatus()
+}},
+                    Statuses = {new InstanceViewStatus
 {
 Code = "aaaaaaaaaaaaaaaaaaaaaaa",
 Level = ComputeStatusLevelType.Info,
 DisplayStatus = "aaaaaa",
 Message = "a",
 Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
-}
-},
+}},
                 },
                 SuppressFailures = true,
                 Tags =
 {
-["key9183"] = "aa",
+["key9183"] = "aa"
 },
             };
             ArmOperation<VirtualMachineExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmExtensionName, data);
@@ -103,12 +89,11 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineExtensions_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_VirtualMachineExtensionsCreateOrUpdateMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_VirtualMachineExtensionCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_CreateOrUpdate_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_CreateOrUpdate_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +105,7 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string vmName = "aaaa";
+            string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
@@ -128,7 +113,7 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
 
             // invoke the operation
-            string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaa";
+            string vmExtensionName = "myVMExtension";
             VirtualMachineExtensionData data = new VirtualMachineExtensionData(new AzureLocation("westus"));
             ArmOperation<VirtualMachineExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmExtensionName, data);
             VirtualMachineExtensionResource result = lro.Value;
@@ -140,12 +125,11 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineExtensions_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_VirtualMachineExtensionsGetMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_VirtualMachineExtensionGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,12 +160,11 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineExtensions_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_VirtualMachineExtensionsGetMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_VirtualMachineExtensionGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -193,7 +176,7 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
@@ -201,39 +184,7 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
 
             // invoke the operation
-            string vmExtensionName = "aaaaaaa";
-            string expand = "aaaaaa";
-            bool result = await collection.ExistsAsync(vmExtensionName, expand: expand);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachineExtensions_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_VirtualMachineExtensionsGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "a";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // get the collection of this VirtualMachineExtensionResource
-            VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
-
-            // invoke the operation
-            string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string vmExtensionName = "myVMExtension";
             VirtualMachineExtensionResource result = await collection.GetAsync(vmExtensionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -243,43 +194,11 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachineExtensions_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_VirtualMachineExtensionsGetMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_VirtualMachineExtensionListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "a";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // get the collection of this VirtualMachineExtensionResource
-            VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
-
-            // invoke the operation
-            string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool result = await collection.ExistsAsync(vmExtensionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachineExtensions_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_VirtualMachineExtensionsListMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineExtensions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,15 +228,14 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineExtensions_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_VirtualMachineExtensionsListMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_VirtualMachineExtensionListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineExamples/VirtualMachineExtensions_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineExtensions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -346,7 +264,153 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_VirtualMachineExtensionGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // get the collection of this VirtualMachineExtensionResource
+            VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
+
+            // invoke the operation
+            string vmExtensionName = "aaaaaaa";
+            string expand = "aaaaaa";
+            bool result = await collection.ExistsAsync(vmExtensionName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_VirtualMachineExtensionGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // get the collection of this VirtualMachineExtensionResource
+            VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
+
+            // invoke the operation
+            string vmExtensionName = "myVMExtension";
+            bool result = await collection.ExistsAsync(vmExtensionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_VirtualMachineExtensionGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // get the collection of this VirtualMachineExtensionResource
+            VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
+
+            // invoke the operation
+            string vmExtensionName = "aaaaaaa";
+            string expand = "aaaaaa";
+            NullableResponse<VirtualMachineExtensionResource> response = await collection.GetIfExistsAsync(vmExtensionName, expand: expand);
+            VirtualMachineExtensionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineExtensionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_VirtualMachineExtensionGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachineExtension_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // get the collection of this VirtualMachineExtensionResource
+            VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
+
+            // invoke the operation
+            string vmExtensionName = "myVMExtension";
+            NullableResponse<VirtualMachineExtensionResource> response = await collection.GetIfExistsAsync(vmExtensionName);
+            VirtualMachineExtensionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineExtensionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

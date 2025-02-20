@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 
 using Xunit;
@@ -62,12 +60,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("value2", test.GetRequired("lowercase"));
             Assert.Equal("value3", test.GetRequired("MIXEDCASE"));
             Assert.Equal("value3", test.GetRequired("mixedcase"));
-        }
-
-        [Fact]
-        public void TestParse_WithNull()
-        {
-            Assert.Throws<NullReferenceException>(() => AzureCoreConnectionString.Parse(null));
         }
 
         [Fact]

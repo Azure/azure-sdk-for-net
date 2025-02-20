@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
+            writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedOrigins)
             {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (MaxAgeInSeconds != null)
                 {
-                    writer.WritePropertyName("maxAgeInSeconds");
+                    writer.WritePropertyName("maxAgeInSeconds"u8);
                     writer.WriteNumberValue(MaxAgeInSeconds.Value);
                 }
                 else
@@ -40,11 +40,15 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CorsOptions DeserializeCorsOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowedOrigins = default;
-            Optional<long?> maxAgeInSeconds = default;
+            long? maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -54,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     allowedOrigins = array;
                     continue;
                 }
-                if (property.NameEquals("maxAgeInSeconds"))
+                if (property.NameEquals("maxAgeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CorsOptions(allowedOrigins, Optional.ToNullable(maxAgeInSeconds));
+            return new CorsOptions(allowedOrigins, maxAgeInSeconds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CorsOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCorsOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

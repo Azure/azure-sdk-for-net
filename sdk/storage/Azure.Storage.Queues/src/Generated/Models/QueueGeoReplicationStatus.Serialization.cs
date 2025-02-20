@@ -21,9 +21,9 @@ namespace Azure.Storage.Queues.Models
 
         public static QueueGeoReplicationStatus ToQueueGeoReplicationStatus(this string value)
         {
-            if (string.Equals(value, "live", StringComparison.InvariantCultureIgnoreCase)) return QueueGeoReplicationStatus.Live;
-            if (string.Equals(value, "bootstrap", StringComparison.InvariantCultureIgnoreCase)) return QueueGeoReplicationStatus.Bootstrap;
-            if (string.Equals(value, "unavailable", StringComparison.InvariantCultureIgnoreCase)) return QueueGeoReplicationStatus.Unavailable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "live")) return QueueGeoReplicationStatus.Live;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bootstrap")) return QueueGeoReplicationStatus.Bootstrap;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable")) return QueueGeoReplicationStatus.Unavailable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueueGeoReplicationStatus value.");
         }
     }

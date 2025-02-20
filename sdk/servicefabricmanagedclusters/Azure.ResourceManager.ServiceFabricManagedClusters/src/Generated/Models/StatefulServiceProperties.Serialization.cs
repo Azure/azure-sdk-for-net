@@ -6,315 +6,340 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class StatefulServiceProperties : IUtf8JsonSerializable
+    public partial class StatefulServiceProperties : IUtf8JsonSerializable, IJsonModel<StatefulServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatefulServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StatefulServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(HasPersistedState))
             {
-                writer.WritePropertyName("hasPersistedState");
+                writer.WritePropertyName("hasPersistedState"u8);
                 writer.WriteBooleanValue(HasPersistedState.Value);
             }
             if (Optional.IsDefined(TargetReplicaSetSize))
             {
-                writer.WritePropertyName("targetReplicaSetSize");
+                writer.WritePropertyName("targetReplicaSetSize"u8);
                 writer.WriteNumberValue(TargetReplicaSetSize.Value);
             }
             if (Optional.IsDefined(MinReplicaSetSize))
             {
-                writer.WritePropertyName("minReplicaSetSize");
+                writer.WritePropertyName("minReplicaSetSize"u8);
                 writer.WriteNumberValue(MinReplicaSetSize.Value);
             }
             if (Optional.IsDefined(ReplicaRestartWaitDuration))
             {
-                writer.WritePropertyName("replicaRestartWaitDuration");
+                writer.WritePropertyName("replicaRestartWaitDuration"u8);
                 writer.WriteStringValue(ReplicaRestartWaitDuration.Value, "c");
             }
             if (Optional.IsDefined(QuorumLossWaitDuration))
             {
-                writer.WritePropertyName("quorumLossWaitDuration");
+                writer.WritePropertyName("quorumLossWaitDuration"u8);
                 writer.WriteStringValue(QuorumLossWaitDuration.Value, "c");
             }
             if (Optional.IsDefined(StandByReplicaKeepDuration))
             {
-                writer.WritePropertyName("standByReplicaKeepDuration");
+                writer.WritePropertyName("standByReplicaKeepDuration"u8);
                 writer.WriteStringValue(StandByReplicaKeepDuration.Value, "c");
             }
             if (Optional.IsDefined(ServicePlacementTimeLimit))
             {
-                writer.WritePropertyName("servicePlacementTimeLimit");
+                writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
             }
-            writer.WritePropertyName("serviceKind");
-            writer.WriteStringValue(ServiceKind.ToString());
-            writer.WritePropertyName("serviceTypeName");
-            writer.WriteStringValue(ServiceTypeName);
-            writer.WritePropertyName("partitionDescription");
-            writer.WriteObjectValue(PartitionDescription);
-            if (Optional.IsDefined(ServicePackageActivationMode))
-            {
-                writer.WritePropertyName("servicePackageActivationMode");
-                writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
-            }
-            if (Optional.IsDefined(PlacementConstraints))
-            {
-                writer.WritePropertyName("placementConstraints");
-                writer.WriteStringValue(PlacementConstraints);
-            }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
-            {
-                writer.WritePropertyName("correlationScheme");
-                writer.WriteStartArray();
-                foreach (var item in CorrelationScheme)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
-            {
-                writer.WritePropertyName("serviceLoadMetrics");
-                writer.WriteStartArray();
-                foreach (var item in ServiceLoadMetrics)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
-            {
-                writer.WritePropertyName("servicePlacementPolicies");
-                writer.WriteStartArray();
-                foreach (var item in ServicePlacementPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DefaultMoveCost))
-            {
-                writer.WritePropertyName("defaultMoveCost");
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(ScalingPolicies))
-            {
-                writer.WritePropertyName("scalingPolicies");
-                writer.WriteStartArray();
-                foreach (var item in ScalingPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static StatefulServiceProperties DeserializeStatefulServiceProperties(JsonElement element)
+        StatefulServiceProperties IJsonModel<StatefulServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> hasPersistedState = default;
-            Optional<int> targetReplicaSetSize = default;
-            Optional<int> minReplicaSetSize = default;
-            Optional<TimeSpan> replicaRestartWaitDuration = default;
-            Optional<TimeSpan> quorumLossWaitDuration = default;
-            Optional<TimeSpan> standByReplicaKeepDuration = default;
-            Optional<TimeSpan> servicePlacementTimeLimit = default;
-            Optional<string> provisioningState = default;
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatefulServiceProperties(document.RootElement, options);
+        }
+
+        internal static StatefulServiceProperties DeserializeStatefulServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? hasPersistedState = default;
+            int? targetReplicaSetSize = default;
+            int? minReplicaSetSize = default;
+            TimeSpan? replicaRestartWaitDuration = default;
+            TimeSpan? quorumLossWaitDuration = default;
+            TimeSpan? standByReplicaKeepDuration = default;
+            TimeSpan? servicePlacementTimeLimit = default;
+            string provisioningState = default;
             ServiceKind serviceKind = default;
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> placementConstraints = default;
-            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            ManagedServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
+            string placementConstraints = default;
+            IList<ManagedServiceCorrelation> correlationScheme = default;
+            IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
+            IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
+            ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
+            IList<ManagedServiceScalingPolicy> scalingPolicies = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hasPersistedState"))
+                if (property.NameEquals("hasPersistedState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasPersistedState = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("targetReplicaSetSize"))
+                if (property.NameEquals("targetReplicaSetSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetReplicaSetSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minReplicaSetSize"))
+                if (property.NameEquals("minReplicaSetSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minReplicaSetSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("replicaRestartWaitDuration"))
+                if (property.NameEquals("replicaRestartWaitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicaRestartWaitDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("quorumLossWaitDuration"))
+                if (property.NameEquals("quorumLossWaitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quorumLossWaitDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("standByReplicaKeepDuration"))
+                if (property.NameEquals("standByReplicaKeepDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     standByReplicaKeepDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("servicePlacementTimeLimit"))
+                if (property.NameEquals("servicePlacementTimeLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePlacementTimeLimit = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceKind"))
+                if (property.NameEquals("serviceKind"u8))
                 {
                     serviceKind = new ServiceKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceTypeName"))
+                if (property.NameEquals("serviceTypeName"u8))
                 {
                     serviceTypeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("partitionDescription"))
+                if (property.NameEquals("partitionDescription"u8))
                 {
-                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value);
+                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("servicePackageActivationMode"))
+                if (property.NameEquals("servicePackageActivationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePackageActivationMode = new ManagedServicePackageActivationMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("placementConstraints"))
+                if (property.NameEquals("serviceDnsName"u8))
+                {
+                    serviceDnsName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("placementConstraints"u8))
                 {
                     placementConstraints = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationScheme"))
+                if (property.NameEquals("correlationScheme"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServiceCorrelation> array = new List<ManagedServiceCorrelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item));
+                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item, options));
                     }
                     correlationScheme = array;
                     continue;
                 }
-                if (property.NameEquals("serviceLoadMetrics"))
+                if (property.NameEquals("serviceLoadMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServiceLoadMetric> array = new List<ManagedServiceLoadMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item));
+                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item, options));
                     }
                     serviceLoadMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("servicePlacementPolicies"))
+                if (property.NameEquals("servicePlacementPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicePlacementPolicy> array = new List<ManagedServicePlacementPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item));
+                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item, options));
                     }
                     servicePlacementPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("defaultMoveCost"))
+                if (property.NameEquals("defaultMoveCost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultMoveCost = new ServiceFabricManagedServiceMoveCost(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scalingPolicies"))
+                if (property.NameEquals("scalingPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServiceScalingPolicy> array = new List<ManagedServiceScalingPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item));
+                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item, options));
                     }
                     scalingPolicies = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StatefulServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StatefulServiceProperties(
+                placementConstraints,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                defaultMoveCost,
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData,
+                provisioningState,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                servicePackageActivationMode,
+                serviceDnsName,
+                hasPersistedState,
+                targetReplicaSetSize,
+                minReplicaSetSize,
+                replicaRestartWaitDuration,
+                quorumLossWaitDuration,
+                standByReplicaKeepDuration,
+                servicePlacementTimeLimit);
         }
+
+        BinaryData IPersistableModel<StatefulServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StatefulServiceProperties IPersistableModel<StatefulServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStatefulServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StatefulServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

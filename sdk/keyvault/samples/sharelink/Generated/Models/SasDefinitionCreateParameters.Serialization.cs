@@ -15,20 +15,20 @@ namespace Azure.Security.KeyVault.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("templateUri");
+            writer.WritePropertyName("templateUri"u8);
             writer.WriteStringValue(TemplateUri);
-            writer.WritePropertyName("sasType");
+            writer.WritePropertyName("sasType"u8);
             writer.WriteStringValue(SasType.ToString());
-            writer.WritePropertyName("validityPeriod");
+            writer.WritePropertyName("validityPeriod"u8);
             writer.WriteStringValue(ValidityPeriod);
             if (Optional.IsDefined(SasDefinitionAttributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(SasDefinitionAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -38,6 +38,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

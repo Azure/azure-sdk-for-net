@@ -15,31 +15,51 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("referencePointParameter");
+            writer.WritePropertyName("referencePointParameter"u8);
             writer.WriteStringValue(ReferencePointParameter);
-            writer.WritePropertyName("boostingDistance");
+            writer.WritePropertyName("boostingDistance"u8);
             writer.WriteNumberValue(BoostingDistance);
             writer.WriteEndObject();
         }
 
         internal static DistanceScoringParameters DeserializeDistanceScoringParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string referencePointParameter = default;
             double boostingDistance = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referencePointParameter"))
+                if (property.NameEquals("referencePointParameter"u8))
                 {
                     referencePointParameter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boostingDistance"))
+                if (property.NameEquals("boostingDistance"u8))
                 {
                     boostingDistance = property.Value.GetDouble();
                     continue;
                 }
             }
             return new DistanceScoringParameters(referencePointParameter, boostingDistance);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DistanceScoringParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDistanceScoringParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

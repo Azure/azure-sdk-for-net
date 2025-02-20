@@ -41,6 +41,7 @@ namespace Azure.Communication.CallingServer.Tests
         private const string PhoneNumber = "+11234567";
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task GetCallConnectionPropertiesAsync_200OK()
         {
             var callConnection = CreateMockCallConnection(200, CreateOrAnswerCallOrGetCallConnectionPayload);
@@ -53,6 +54,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetCallConnectionProperties_200OK()
         {
             var callConnection = CreateMockCallConnection(200, CreateOrAnswerCallOrGetCallConnectionPayload);
@@ -64,6 +66,7 @@ namespace Azure.Communication.CallingServer.Tests
             verifyCallConnectionProperties(response);
         }
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetCallConnectionPropertiesAsync_404NotFound()
         {
             var callConnection = CreateMockCallConnection(404);
@@ -74,6 +77,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetCallConnectionProperties_404NotFound()
         {
             var callConnection = CreateMockCallConnection(404);
@@ -84,6 +88,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task HangupCallAsync_204NoContent()
         {
             var callConnection = CreateMockCallConnection(204);
@@ -93,6 +98,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void HangupCall_204NoContent()
         {
             var callConnection = CreateMockCallConnection(204);
@@ -102,6 +108,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void HangUpCallAsync_404NotFound()
         {
             var callConnection = CreateMockCallConnection(404);
@@ -112,6 +119,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void HangUpCall_404NotFound()
         {
             var callConnection = CreateMockCallConnection(404);
@@ -122,6 +130,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task TransferCallToParticipantAsync_202Accepted(CommunicationIdentifier targetParticipant)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
@@ -132,6 +141,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void TransferCallToParticipant_202Accepted(CommunicationIdentifier targetParticipant)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
@@ -142,6 +152,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void TransferCallToParticipantAsync_404NotFound(CommunicationIdentifier targetParticipant)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -152,6 +163,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void TransferCallToParticipant_404NotFound(CommunicationIdentifier targetParticipant)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -162,6 +174,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task AddParticipantsAsync_202Accepted(CommunicationIdentifier[] participantsToAdd)
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
@@ -172,6 +185,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AddParticipants_202Accepted(CommunicationIdentifier[] participantsToAdd)
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
@@ -182,6 +196,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AddParticipantsAsync_404NotFound(CommunicationIdentifier[] participantsToAdd)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -192,6 +207,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AddParticipants_404NotFound(CommunicationIdentifier[] participantsToAdd)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -202,6 +218,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task GetParticipantAsync_200OK(string participantMri)
         {
             var callConnection = CreateMockCallConnection(200, GetParticipantPayload);
@@ -212,6 +229,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetParticipant_200OK(string participantMri)
         {
             var callConnection = CreateMockCallConnection(200, GetParticipantPayload);
@@ -222,6 +240,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetParticipantAsync_404NotFound(string participantMri)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -232,6 +251,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetParticipant_404NotFound(string participantMri)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -242,6 +262,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task GetParticipantsAsync_200OK()
         {
             var callConnection = CreateMockCallConnection(200, GetParticipantsPayload);
@@ -252,6 +273,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetParticipants_200OK()
         {
             var callConnection = CreateMockCallConnection(200, GetParticipantsPayload);
@@ -262,6 +284,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetParticipantsAsync_404NotFound()
         {
             var callConnection = CreateMockCallConnection(404);
@@ -272,6 +295,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetParticipants_404NotFound()
         {
             var callConnection = CreateMockCallConnection(404);
@@ -282,6 +306,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task RemoveParticipantsAsync_202Accepted(CommunicationIdentifier[] participants)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
@@ -292,6 +317,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RemoveParticipants_202Accepted(CommunicationIdentifier[] participants)
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
@@ -302,6 +328,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RemoveParticipantsAsync_404NotFound(CommunicationIdentifier[] participants)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -312,6 +339,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RemoveParticipants_404NotFound(CommunicationIdentifier[] participants)
         {
             var callConnection = CreateMockCallConnection(404);
@@ -322,6 +350,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetCallMediaTest()
         {
             var connectionId = "someId";

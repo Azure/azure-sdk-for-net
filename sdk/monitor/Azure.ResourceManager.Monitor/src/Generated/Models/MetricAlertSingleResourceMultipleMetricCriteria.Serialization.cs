@@ -6,65 +6,100 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertSingleResourceMultipleMetricCriteria : IUtf8JsonSerializable
+    public partial class MetricAlertSingleResourceMultipleMetricCriteria : IUtf8JsonSerializable, IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricAlertSingleResourceMultipleMetricCriteria)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AllOf))
             {
-                writer.WritePropertyName("allOf");
+                writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("odata.type");
-            writer.WriteStringValue(OdataType.ToString());
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static MetricAlertSingleResourceMultipleMetricCriteria DeserializeMetricAlertSingleResourceMultipleMetricCriteria(JsonElement element)
+        MetricAlertSingleResourceMultipleMetricCriteria IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<MetricCriteria>> allOf = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricAlertSingleResourceMultipleMetricCriteria)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricAlertSingleResourceMultipleMetricCriteria(document.RootElement, options);
+        }
+
+        internal static MetricAlertSingleResourceMultipleMetricCriteria DeserializeMetricAlertSingleResourceMultipleMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<MetricCriteria> allOf = default;
             MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allOf"))
+                if (property.NameEquals("allOf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricCriteria> array = new List<MetricCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricCriteria.DeserializeMetricCriteria(item));
+                        array.Add(MetricCriteria.DeserializeMetricCriteria(item, options));
                     }
                     allOf = array;
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = new MonitorOdataType(property.Value.GetString());
                     continue;
@@ -72,7 +107,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricAlertSingleResourceMultipleMetricCriteria(odataType, additionalProperties, Optional.ToList(allOf));
+            return new MetricAlertSingleResourceMultipleMetricCriteria(odataType, additionalProperties, allOf ?? new ChangeTrackingList<MetricCriteria>());
         }
+
+        BinaryData IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MetricAlertSingleResourceMultipleMetricCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MetricAlertSingleResourceMultipleMetricCriteria IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMetricAlertSingleResourceMultipleMetricCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricAlertSingleResourceMultipleMetricCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

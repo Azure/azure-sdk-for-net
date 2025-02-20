@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automanage.Models;
@@ -37,7 +36,21 @@ namespace Azure.ResourceManager.Automanage
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfileData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automanage/configurationProfiles/", false);
+            uri.AppendPath(configurationProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,7 +68,7 @@ namespace Azure.ResourceManager.Automanage
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -69,7 +82,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configurationProfileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationProfileData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomanageConfigurationProfileData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,9 +96,9 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                 case 201:
                     {
-                        ConfigurationProfileData value = default;
+                        AutomanageConfigurationProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfigurationProfileData.DeserializeConfigurationProfileData(document.RootElement);
+                        value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +114,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configurationProfileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationProfileData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfileData data, CancellationToken cancellationToken = default)
+        public Response<AutomanageConfigurationProfileData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -115,14 +128,28 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                 case 201:
                     {
-                        ConfigurationProfileData value = default;
+                        AutomanageConfigurationProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfigurationProfileData.DeserializeConfigurationProfileData(document.RootElement);
+                        value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string configurationProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automanage/configurationProfiles/", false);
+            uri.AppendPath(configurationProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string configurationProfileName)
@@ -152,7 +179,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomanageConfigurationProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -164,13 +191,13 @@ namespace Azure.ResourceManager.Automanage
             {
                 case 200:
                     {
-                        ConfigurationProfileData value = default;
+                        AutomanageConfigurationProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfigurationProfileData.DeserializeConfigurationProfileData(document.RootElement);
+                        value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConfigurationProfileData)null, message.Response);
+                    return Response.FromValue((AutomanageConfigurationProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -183,7 +210,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationProfileData> Get(string subscriptionId, string resourceGroupName, string configurationProfileName, CancellationToken cancellationToken = default)
+        public Response<AutomanageConfigurationProfileData> Get(string subscriptionId, string resourceGroupName, string configurationProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -195,16 +222,30 @@ namespace Azure.ResourceManager.Automanage
             {
                 case 200:
                     {
-                        ConfigurationProfileData value = default;
+                        AutomanageConfigurationProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfigurationProfileData.DeserializeConfigurationProfileData(document.RootElement);
+                        value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConfigurationProfileData)null, message.Response);
+                    return Response.FromValue((AutomanageConfigurationProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string configurationProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automanage/configurationProfiles/", false);
+            uri.AppendPath(configurationProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string configurationProfileName)
@@ -277,7 +318,21 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfilePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automanage/configurationProfiles/", false);
+            uri.AppendPath(configurationProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -295,7 +350,7 @@ namespace Azure.ResourceManager.Automanage
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -309,7 +364,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configurationProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationProfileData>> UpdateAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomanageConfigurationProfileData>> UpdateAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,9 +377,9 @@ namespace Azure.ResourceManager.Automanage
             {
                 case 200:
                     {
-                        ConfigurationProfileData value = default;
+                        AutomanageConfigurationProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfigurationProfileData.DeserializeConfigurationProfileData(document.RootElement);
+                        value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,7 +395,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configurationProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationProfileData> Update(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
+        public Response<AutomanageConfigurationProfileData> Update(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -353,14 +408,27 @@ namespace Azure.ResourceManager.Automanage
             {
                 case 200:
                     {
-                        ConfigurationProfileData value = default;
+                        AutomanageConfigurationProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfigurationProfileData.DeserializeConfigurationProfileData(document.RootElement);
+                        value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automanage/configurationProfiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -434,6 +502,17 @@ namespace Azure.ResourceManager.Automanage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Automanage/configurationProfiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,13 +13,18 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceLimits DeserializeSearchServiceLimits(JsonElement element)
         {
-            Optional<int?> maxFieldsPerIndex = default;
-            Optional<int?> maxFieldNestingDepthPerIndex = default;
-            Optional<int?> maxComplexCollectionFieldsPerIndex = default;
-            Optional<int?> maxComplexObjectsInCollectionsPerDocument = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? maxFieldsPerIndex = default;
+            int? maxFieldNestingDepthPerIndex = default;
+            int? maxComplexCollectionFieldsPerIndex = default;
+            int? maxComplexObjectsInCollectionsPerDocument = default;
+            long? maxStoragePerIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxFieldsPerIndex"))
+                if (property.NameEquals("maxFieldsPerIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxFieldsPerIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxFieldNestingDepthPerIndex"))
+                if (property.NameEquals("maxFieldNestingDepthPerIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxFieldNestingDepthPerIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxComplexCollectionFieldsPerIndex"))
+                if (property.NameEquals("maxComplexCollectionFieldsPerIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxComplexCollectionFieldsPerIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxComplexObjectsInCollectionsPerDocument"))
+                if (property.NameEquals("maxComplexObjectsInCollectionsPerDocument"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,8 +64,26 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxComplexObjectsInCollectionsPerDocument = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("maxStoragePerIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxStoragePerIndex = null;
+                        continue;
+                    }
+                    maxStoragePerIndex = property.Value.GetInt64();
+                    continue;
+                }
             }
-            return new SearchServiceLimits(Optional.ToNullable(maxFieldsPerIndex), Optional.ToNullable(maxFieldNestingDepthPerIndex), Optional.ToNullable(maxComplexCollectionFieldsPerIndex), Optional.ToNullable(maxComplexObjectsInCollectionsPerDocument));
+            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndex);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchServiceLimits FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchServiceLimits(document.RootElement);
         }
     }
 }

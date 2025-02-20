@@ -5,125 +5,451 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable
+    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable, IJsonModel<PaymentMethodProjectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodProjectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PaymentMethodProjectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
-            {
-                writer.WritePropertyName("family");
-                writer.WriteStringValue(Family.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Logos))
-            {
-                writer.WritePropertyName("logos");
-                writer.WriteStartArray();
-                foreach (var item in Logos)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> id = default;
-            Optional<PaymentMethodFamily> family = default;
-            Optional<string> type = default;
-            Optional<string> accountHolderName = default;
-            Optional<string> expiration = default;
-            Optional<string> lastFourDigits = default;
-            Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
-            Optional<PaymentMethodStatus> status = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(PaymentMethodId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
+            {
+                writer.WritePropertyName("accountHolderName"u8);
+                writer.WriteStringValue(AccountHolderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Expiration))
+            {
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteStringValue(Expiration);
+            }
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastFourDigits))
+            {
+                writer.WritePropertyName("lastFourDigits"u8);
+                writer.WriteStringValue(LastFourDigits);
+            }
+            if (Optional.IsCollectionDefined(Logos))
+            {
+                writer.WritePropertyName("logos"u8);
+                writer.WriteStartArray();
+                foreach (var item in Logos)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodType))
+            {
+                writer.WritePropertyName("paymentMethodType"u8);
+                writer.WriteStringValue(PaymentMethodType);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        PaymentMethodProjectionProperties IJsonModel<PaymentMethodProjectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
+        }
+
+        internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string accountHolderName = default;
+            string displayName = default;
+            string expiration = default;
+            PaymentMethodFamily? family = default;
+            string lastFourDigits = default;
+            IList<PaymentMethodLogo> logos = default;
+            string paymentMethodType = default;
+            PaymentMethodStatus? status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("accountHolderName"u8))
+                {
+                    accountHolderName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expiration"u8))
+                {
+                    expiration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("family"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     family = new PaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("accountHolderName"))
-                {
-                    accountHolderName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("expiration"))
-                {
-                    expiration = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastFourDigits"))
+                if (property.NameEquals("lastFourDigits"u8))
                 {
                     lastFourDigits = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("logos"))
+                if (property.NameEquals("logos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item));
+                        array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item, options));
                     }
                     logos = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("paymentMethodType"u8))
+                {
+                    paymentMethodType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new PaymentMethodStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PaymentMethodProjectionProperties(
+                id,
+                accountHolderName,
+                displayName,
+                expiration,
+                family,
+                lastFourDigits,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
+                paymentMethodType,
+                status,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentMethodId))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{PaymentMethodId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountHolderName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountHolderName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountHolderName))
+                {
+                    builder.Append("  accountHolderName: ");
+                    if (AccountHolderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccountHolderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccountHolderName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expiration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expiration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Expiration))
+                {
+                    builder.Append("  expiration: ");
+                    if (Expiration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Expiration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Expiration}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  family: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Family))
+                {
+                    builder.Append("  family: ");
+                    builder.AppendLine($"'{Family.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastFourDigits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastFourDigits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastFourDigits))
+                {
+                    builder.Append("  lastFourDigits: ");
+                    if (LastFourDigits.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastFourDigits}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastFourDigits}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Logos), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logos: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Logos))
+                {
+                    if (Logos.Any())
+                    {
+                        builder.Append("  logos: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Logos)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  logos: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paymentMethodType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentMethodType))
+                {
+                    builder.Append("  paymentMethodType: ");
+                    if (PaymentMethodType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PaymentMethodType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PaymentMethodType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PaymentMethodProjectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PaymentMethodProjectionProperties IPersistableModel<PaymentMethodProjectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PaymentMethodProjectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

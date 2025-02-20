@@ -1,15 +1,21 @@
 # Azure Monitor Exporter client library for .NET
 
-
-
-The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet) exporters which send [telemetry data](https://docs.microsoft.com/azure/azure-monitor/app/data-model) to [Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview) following the [OpenTelemetry Specification](https://github.com/open-telemetry/opentelemetry-specification).
+The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet) exporters which send [telemetry data](https://learn.microsoft.com/azure/azure-monitor/app/data-model) to [Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) following the [OpenTelemetry Specification](https://github.com/open-telemetry/opentelemetry-specification).
 
 ## Getting started
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Monitor Exporter for [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet), you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
-- **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#find-your-connection-string).
+- **Azure Subscription:**  To use Azure services, including Azure Monitor Exporter for [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet), you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
+- **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://learn.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://learn.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#find-your-connection-string).
+
+### Migrating from Application Insights SDK
+
+If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=console). 
+
+### Already using OpenTelemetry?
+
+If you are currently using OpenTelemetry and want to send telemetry data to Azure Monitor, please follow our [getting started guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=net).
 
 ### Install the package
 
@@ -17,7 +23,7 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter --prerelease
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
 #### Nightly builds
@@ -29,10 +35,12 @@ These are provided without support and are not intended for production workloads
 
 The following examples demonstrate how to add the `AzureMonitorExporter` to your OpenTelemetry configuration.
 
+It's important to keep the `TracerProvider`, `MeterProvider`, and `LoggerFactory` instances active throughout the process lifetime. These must be properly disposed when your application is shutting down to flush any remaining telemetry items.
+
 - Traces
     ```csharp
-    Sdk.CreateTracerProviderBuilder()
-        .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+    var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
         .Build();
     ```
 
@@ -40,8 +48,8 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 - Metrics
     ```csharp
-    Sdk.CreateMeterProviderBuilder()
-        .AddAzureMonitorMetricExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+    var meterProvider = Sdk.CreateMeterProviderBuilder()
+        .AddAzureMonitorMetricExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
         .Build();
     ```
 
@@ -49,11 +57,11 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 - Logs
     ```csharp
-    LoggerFactory.Create(builder =>
+    var loggerFactory = LoggerFactory.Create(builder =>
     {
-        builder.AddOpenTelemetry(options =>
+        builder.AddOpenTelemetry(logging =>
         {
-            options.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+            logging.AddAzureMonitorLogExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
         });
     });
     ```
@@ -62,7 +70,34 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 ### Authenticate the client
 
-Exporter does not use authentication. 
+Azure Active Directory (AAD) authentication is an optional feature that can be used with the Azure Monitor Exporter.
+This is made easy with the [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md), which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+
+There are two options to enable AAD authentication. Note that if both have been set AzureMonitorExporterOptions will take precedence.
+
+1. Set your `Credential` to the `AzureMonitorExporterOptions`.
+
+    ```csharp
+    var credential = new DefaultAzureCredential();
+
+    var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(options =>
+        {
+            options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+            options.Credential = credential;
+        })
+        .Build();
+    ```
+
+2. Provide your `Credential` to the AddAzureMonitorExporter method.
+
+    ```csharp
+    var credential = new DefaultAzureCredential();
+
+    var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000", credential)
+        .Build();
+    ```
 
 ## Key concepts
 
@@ -76,7 +111,7 @@ Some key concepts for .NET include:
 
 Some key concepts for Azure Monitor include:
 
-- [IP Addresses used by Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/app/ip-addresses#outgoing-ports):
+- [IP Addresses used by Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/app/ip-addresses#outgoing-ports):
   This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
   You might need to know IP addresses if the app or infrastructure that you're monitoring is hosted behind a firewall.
 
@@ -108,9 +143,49 @@ For more information on the OpenTelemetry project, please review the [OpenTeleme
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Program.cs) for a complete demo.
 
+### Log Scopes
+
+Log [scopes](https://learn.microsoft.com/dotnet/core/extensions/logging#log-scopes) allow you to add additional properties to the logs generated by your application.
+Although the Azure Monitor Exporter does support scopes, this feature is off by default in OpenTelemetry.
+To leverage log scopes, you must explicitly enable them.
+
+To include the scope with your logs, set `OpenTelemetryLoggerOptions.IncludeScopes` to `true` in your application's configuration:
+```csharp
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder.AddOpenTelemetry(logging =>
+    {
+        logging.AddAzureMonitorLogExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+        logging.IncludeScopes = true;
+    });
+});
+```
+
+When using `ILogger` scopes, use a `List<KeyValuePair<string, object?>>` or `IReadOnlyList<KeyValue<string, object?>>` as the state for best performance.
+All logs written within the context of the scope will include the specified information.
+Azure Monitor will add these scope values to the Log's CustomProperties.
+```csharp
+List<KeyValuePair<string, object?>> scope =
+[
+    new("scopeKey", "scopeValue")
+];
+
+using (logger.BeginScope(scope))
+{
+    logger.LogInformation("Example message.");
+}
+```
+
+In scenarios involving multiple scopes or a single scope with multiple key-value pairs, if duplicate keys are present,
+only the first occurrence of the key-value pair from the outermost scope will be recorded.
+However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
+
 ## Troubleshooting
 
 The Azure Monitor exporter uses EventSource for its own internal logging. The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-Exporter".
+
+OpenTelemetry also provides it's own [self-diagnostics feature](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/README.md#troubleshooting) to collect internal logs.
+An example of this is available in our demo project [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/OTEL_DIAGNOSTICS.json).
 
 ## Next steps
 
@@ -119,9 +194,3 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
-
-## Release Schedule
-
-This exporter is under active development.
-
-The library is not yet _generally available_, and is not officially supported. Future releases will not attempt to maintain backwards compatibility with previous releases. Each beta release includes significant changes to the exporter package, making them incompatible with each other.

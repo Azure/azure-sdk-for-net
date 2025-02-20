@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: &apos;Highest critical impact&apos;, also known as the &apos;Emergency - Severe impact&apos; level in the Azure portal is reserved only for our Premium customers. </summary>
+    /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
     public readonly partial struct SupportSeverityLevel : IEquatable<SupportSeverityLevel>
     {
         private readonly string _value;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(SupportSeverityLevel left, SupportSeverityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportSeverityLevel"/> values are not the same. </summary>
         public static bool operator !=(SupportSeverityLevel left, SupportSeverityLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SupportSeverityLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportSeverityLevel"/>. </summary>
         public static implicit operator SupportSeverityLevel(string value) => new SupportSeverityLevel(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

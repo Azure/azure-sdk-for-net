@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </summary>
+    /// <summary> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </summary>
     public readonly partial struct AppPlatformSkuRestrictionsReasonCode : IEquatable<AppPlatformSkuRestrictionsReasonCode>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformSkuRestrictionsReasonCode left, AppPlatformSkuRestrictionsReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSkuRestrictionsReasonCode"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformSkuRestrictionsReasonCode left, AppPlatformSkuRestrictionsReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformSkuRestrictionsReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformSkuRestrictionsReasonCode"/>. </summary>
         public static implicit operator AppPlatformSkuRestrictionsReasonCode(string value) => new AppPlatformSkuRestrictionsReasonCode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

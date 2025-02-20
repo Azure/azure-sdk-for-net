@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
+    /// <summary> The alerts' productName on which the cases will be generated. </summary>
     public readonly partial struct MicrosoftSecurityProductName : IEquatable<MicrosoftSecurityProductName>
     {
         private readonly string _value;
@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AzureAdvancedThreatProtectionValue = "Azure Advanced Threat Protection";
         private const string AzureActiveDirectoryIdentityProtectionValue = "Azure Active Directory Identity Protection";
         private const string AzureSecurityCenterForIotValue = "Azure Security Center for IoT";
+        private const string Office365AdvancedThreatProtectionValue = "Office 365 Advanced Threat Protection";
+        private const string MicrosoftDefenderAdvancedThreatProtectionValue = "Microsoft Defender Advanced Threat Protection";
 
         /// <summary> Microsoft Cloud App Security. </summary>
         public static MicrosoftSecurityProductName MicrosoftCloudAppSecurity { get; } = new MicrosoftSecurityProductName(MicrosoftCloudAppSecurityValue);
@@ -38,11 +40,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static MicrosoftSecurityProductName AzureActiveDirectoryIdentityProtection { get; } = new MicrosoftSecurityProductName(AzureActiveDirectoryIdentityProtectionValue);
         /// <summary> Azure Security Center for IoT. </summary>
         public static MicrosoftSecurityProductName AzureSecurityCenterForIot { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterForIotValue);
+        /// <summary> Office 365 Advanced Threat Protection. </summary>
+        public static MicrosoftSecurityProductName Office365AdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(Office365AdvancedThreatProtectionValue);
+        /// <summary> Microsoft Defender Advanced Threat Protection. </summary>
+        public static MicrosoftSecurityProductName MicrosoftDefenderAdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(MicrosoftDefenderAdvancedThreatProtectionValue);
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are the same. </summary>
         public static bool operator ==(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are not the same. </summary>
         public static bool operator !=(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MicrosoftSecurityProductName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MicrosoftSecurityProductName"/>. </summary>
         public static implicit operator MicrosoftSecurityProductName(string value) => new MicrosoftSecurityProductName(value);
 
         /// <inheritdoc />
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

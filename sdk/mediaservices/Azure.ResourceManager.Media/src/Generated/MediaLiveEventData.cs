@@ -13,10 +13,45 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaLiveEvent data model. </summary>
+    /// <summary>
+    /// A class representing the MediaLiveEvent data model.
+    /// The live event.
+    /// </summary>
     public partial class MediaLiveEventData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MediaLiveEventData(AzureLocation location) : base(location)
         {
@@ -24,7 +59,7 @@ namespace Azure.ResourceManager.Media
             StreamOptions = new ChangeTrackingList<StreamOptionsFlag>();
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,10 +76,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="crossSiteAccessPolicies"> Live event cross site access policies. </param>
         /// <param name="useStaticHostname"> Specifies whether a static hostname would be assigned to the live event preview and ingest endpoints. This value can only be updated if the live event is in Standby state. </param>
         /// <param name="hostnamePrefix"> When useStaticHostname is set to true, the hostnamePrefix specifies the first part of the hostname assigned to the live event preview and ingest endpoints. The final hostname would be a combination of this prefix, the media service account name and a short code for the Azure Media Services data center. </param>
-        /// <param name="streamOptions"> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are &apos;Default&apos; and &apos;LowLatency&apos;. </param>
+        /// <param name="streamOptions"> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are 'Default' and 'LowLatency'. </param>
         /// <param name="createdOn"> The creation time for the live event. </param>
         /// <param name="lastModifiedOn"> The last modified time of the live event. </param>
-        internal MediaLiveEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, LiveEventInput input, LiveEventPreview preview, LiveEventEncoding encoding, IList<LiveEventTranscription> transcriptions, string provisioningState, LiveEventResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, bool? useStaticHostname, string hostnamePrefix, IList<StreamOptionsFlag> streamOptions, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, LiveEventInput input, LiveEventPreview preview, LiveEventEncoding encoding, IList<LiveEventTranscription> transcriptions, string provisioningState, LiveEventResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, bool? useStaticHostname, string hostnamePrefix, IList<StreamOptionsFlag> streamOptions, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Input = input;
@@ -59,6 +95,12 @@ namespace Azure.ResourceManager.Media
             StreamOptions = streamOptions;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventData"/> for deserialization. </summary>
+        internal MediaLiveEventData()
+        {
         }
 
         /// <summary> A description for the live event. </summary>
@@ -81,7 +123,7 @@ namespace Azure.ResourceManager.Media
         public bool? UseStaticHostname { get; set; }
         /// <summary> When useStaticHostname is set to true, the hostnamePrefix specifies the first part of the hostname assigned to the live event preview and ingest endpoints. The final hostname would be a combination of this prefix, the media service account name and a short code for the Azure Media Services data center. </summary>
         public string HostnamePrefix { get; set; }
-        /// <summary> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are &apos;Default&apos; and &apos;LowLatency&apos;. </summary>
+        /// <summary> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are 'Default' and 'LowLatency'. </summary>
         public IList<StreamOptionsFlag> StreamOptions { get; }
         /// <summary> The creation time for the live event. </summary>
         public DateTimeOffset? CreatedOn { get; }

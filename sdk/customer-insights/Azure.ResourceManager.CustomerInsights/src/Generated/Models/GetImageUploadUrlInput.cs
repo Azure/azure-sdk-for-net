@@ -5,14 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> Input type for getting image upload url. </summary>
     public partial class GetImageUploadUrlInput
     {
-        /// <summary> Initializes a new instance of GetImageUploadUrlInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
         public GetImageUploadUrlInput()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
+        /// <param name="entityType"> Type of entity. Can be Profile or Interaction. </param>
+        /// <param name="entityTypeName"> Name of the entity type. </param>
+        /// <param name="relativePath"> Relative path of the image. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetImageUploadUrlInput(string entityType, string entityTypeName, string relativePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EntityType = entityType;
+            EntityTypeName = entityTypeName;
+            RelativePath = relativePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of entity. Can be Profile or Interaction. </summary>

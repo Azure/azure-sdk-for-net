@@ -15,23 +15,43 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("changePointValue");
+            writer.WritePropertyName("changePointValue"u8);
             writer.WriteStringValue(ChangePointValue.ToString());
             writer.WriteEndObject();
         }
 
         internal static ChangePointFeedbackValue DeserializeChangePointFeedbackValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ChangePointValue changePointValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("changePointValue"))
+                if (property.NameEquals("changePointValue"u8))
                 {
                     changePointValue = new ChangePointValue(property.Value.GetString());
                     continue;
                 }
             }
             return new ChangePointFeedbackValue(changePointValue);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChangePointFeedbackValue FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChangePointFeedbackValue(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

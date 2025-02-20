@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -15,27 +14,30 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrManifests DeserializeAcrManifests(JsonElement element)
         {
-            Optional<string> registry = default;
-            Optional<string> imageName = default;
-            Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;
-            Optional<string> link = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string registry = default;
+            string imageName = default;
+            IReadOnlyList<ManifestAttributesBase> manifests = default;
+            string link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifests"))
+                if (property.NameEquals("manifests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManifestAttributesBase> array = new List<ManifestAttributesBase>();
@@ -46,13 +48,21 @@ namespace Azure.Containers.ContainerRegistry
                     manifests = array;
                     continue;
                 }
-                if (property.NameEquals("link"))
+                if (property.NameEquals("link"u8))
                 {
                     link = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value);
+            return new AcrManifests(registry, imageName, manifests ?? new ChangeTrackingList<ManifestAttributesBase>(), link);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcrManifests FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcrManifests(document.RootElement);
         }
     }
 }

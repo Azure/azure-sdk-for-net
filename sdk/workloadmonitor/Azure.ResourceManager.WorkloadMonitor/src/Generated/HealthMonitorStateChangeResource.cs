@@ -10,22 +10,27 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary>
     /// A Class representing a HealthMonitorStateChange along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthMonitorStateChangeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthMonitorStateChangeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthMonitorResource" /> using the GetHealthMonitorStateChange method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthMonitorStateChangeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthMonitorStateChangeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthMonitorResource"/> using the GetHealthMonitorStateChange method.
     /// </summary>
     public partial class HealthMonitorStateChangeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthMonitorStateChangeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="providerName"> The providerName. </param>
+        /// <param name="resourceCollectionName"> The resourceCollectionName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="monitorId"> The monitorId. </param>
+        /// <param name="timestampUnix"> The timestampUnix. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.WorkloadMonitor
         private readonly HealthMonitorsRestOperations _healthMonitorStateChangeHealthMonitorsRestClient;
         private readonly HealthMonitorStateChangeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors/history";
+
         /// <summary> Initializes a new instance of the <see cref="HealthMonitorStateChangeResource"/> class for mocking. </summary>
         protected HealthMonitorStateChangeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthMonitorStateChangeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthMonitorStateChangeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthMonitorStateChangeResource(ArmClient client, HealthMonitorStateChangeData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors/history";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,7 +121,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             scope.Start();
             try
             {
-                var response = await _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
@@ -121,7 +134,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,6 +143,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +162,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             scope.Start();
             try
             {
-                var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());

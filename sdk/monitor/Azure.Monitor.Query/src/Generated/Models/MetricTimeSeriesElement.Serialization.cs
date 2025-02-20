@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,15 +14,18 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricTimeSeriesElement DeserializeMetricTimeSeriesElement(JsonElement element)
         {
-            Optional<IReadOnlyList<MetadataValue>> metadatavalues = default;
-            Optional<IReadOnlyList<MetricValue>> data = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<MetadataValue> metadatavalues = default;
+            IReadOnlyList<MetricValue> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadatavalues"))
+                if (property.NameEquals("metadatavalues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetadataValue> array = new List<MetadataValue>();
@@ -34,11 +36,10 @@ namespace Azure.Monitor.Query.Models
                     metadatavalues = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricValue> array = new List<MetricValue>();
@@ -50,7 +51,15 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
+            return new MetricTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MetadataValue>(), data ?? new ChangeTrackingList<MetricValue>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricTimeSeriesElement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricTimeSeriesElement(document.RootElement);
         }
     }
 }

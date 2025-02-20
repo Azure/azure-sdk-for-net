@@ -13,10 +13,45 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseWorkspace data model.
+    /// A workspace
+    /// </summary>
     public partial class SynapseWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapseWorkspaceData(AzureLocation location) : base(location)
         {
@@ -26,7 +61,7 @@ namespace Azure.ResourceManager.Synapse
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,12 +71,12 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
         /// <param name="defaultDataLakeStorage"> Workspace default data lake storage account details. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
-        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </param>
+        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="sqlAdministratorLogin"> Login for workspace SQL active directory administrator. </param>
         /// <param name="virtualNetworkProfile"> Virtual Network profile. </param>
         /// <param name="connectivityEndpoints"> Connectivity endpoints. </param>
-        /// <param name="managedVirtualNetwork"> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
+        /// <param name="managedVirtualNetwork"> Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the workspace. </param>
         /// <param name="encryption"> The encryption details of the workspace. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
@@ -55,7 +90,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="settings"> Workspace settings. </param>
         /// <param name="isAadOnlyAuthenticationEnabled"> Enable or Disable AzureADOnlyAuthentication on All Workspace subresource. </param>
         /// <param name="isTrustedServiceBypassEnabled"> Is trustedServiceBypassEnabled for the workspace. </param>
-        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUid, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, ResourceIdentifier adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? isAadOnlyAuthenticationEnabled, bool? isTrustedServiceBypassEnabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUid, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, ResourceIdentifier adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? isAadOnlyAuthenticationEnabled, bool? isTrustedServiceBypassEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -79,6 +115,12 @@ namespace Azure.ResourceManager.Synapse
             Settings = settings;
             IsAadOnlyAuthenticationEnabled = isAadOnlyAuthenticationEnabled;
             IsTrustedServiceBypassEnabled = isTrustedServiceBypassEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/> for deserialization. </summary>
+        internal SynapseWorkspaceData()
+        {
         }
 
         /// <summary> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </summary>
@@ -87,7 +129,7 @@ namespace Azure.ResourceManager.Synapse
         public SynapseDataLakeStorageAccountDetails DefaultDataLakeStorage { get; set; }
         /// <summary> SQL administrator login password. </summary>
         public string SqlAdministratorLoginPassword { get; set; }
-        /// <summary> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </summary>
+        /// <summary> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </summary>
         public string ManagedResourceGroupName { get; set; }
         /// <summary> Resource provisioning state. </summary>
         public string ProvisioningState { get; }
@@ -109,7 +151,7 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary> Connectivity endpoints. </summary>
         public IDictionary<string, string> ConnectivityEndpoints { get; }
-        /// <summary> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </summary>
+        /// <summary> Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </summary>
         public string ManagedVirtualNetwork { get; set; }
         /// <summary> Private endpoint connections to the workspace. </summary>
         public IList<SynapsePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
@@ -123,7 +165,7 @@ namespace Azure.ResourceManager.Synapse
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -190,7 +232,7 @@ namespace Azure.ResourceManager.Synapse
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

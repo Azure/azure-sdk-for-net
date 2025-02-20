@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+        private const string IsDisabledValue = "Disabled";
+        private const string IsEnabledValue = "Enabled";
 
         /// <summary> Disabled. </summary>
-        public static LocalAdminStatus Disabled { get; } = new LocalAdminStatus(DisabledValue);
+        public static LocalAdminStatus IsDisabled { get; } = new LocalAdminStatus(IsDisabledValue);
         /// <summary> Enabled. </summary>
-        public static LocalAdminStatus Enabled { get; } = new LocalAdminStatus(EnabledValue);
+        public static LocalAdminStatus IsEnabled { get; } = new LocalAdminStatus(IsEnabledValue);
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are the same. </summary>
         public static bool operator ==(LocalAdminStatus left, LocalAdminStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are not the same. </summary>
         public static bool operator !=(LocalAdminStatus left, LocalAdminStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LocalAdminStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalAdminStatus"/>. </summary>
         public static implicit operator LocalAdminStatus(string value) => new LocalAdminStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
@@ -41,26 +41,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -70,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -78,131 +88,146 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            writer.WritePropertyName("sink");
+            writer.WritePropertyName("sink"u8);
             writer.WriteObjectValue(Sink);
             if (Optional.IsDefined(Translator))
             {
-                writer.WritePropertyName("translator");
-                writer.WriteObjectValue(Translator);
+                writer.WritePropertyName("translator"u8);
+                writer.WriteObjectValue<object>(Translator);
             }
             if (Optional.IsDefined(EnableStaging))
             {
-                writer.WritePropertyName("enableStaging");
-                writer.WriteObjectValue(EnableStaging);
+                writer.WritePropertyName("enableStaging"u8);
+                writer.WriteObjectValue<object>(EnableStaging);
             }
             if (Optional.IsDefined(StagingSettings))
             {
-                writer.WritePropertyName("stagingSettings");
+                writer.WritePropertyName("stagingSettings"u8);
                 writer.WriteObjectValue(StagingSettings);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
-                writer.WritePropertyName("parallelCopies");
-                writer.WriteObjectValue(ParallelCopies);
+                writer.WritePropertyName("parallelCopies"u8);
+                writer.WriteObjectValue<object>(ParallelCopies);
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
-                writer.WritePropertyName("dataIntegrationUnits");
-                writer.WriteObjectValue(DataIntegrationUnits);
+                writer.WritePropertyName("dataIntegrationUnits"u8);
+                writer.WriteObjectValue<object>(DataIntegrationUnits);
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
-                writer.WritePropertyName("enableSkipIncompatibleRow");
-                writer.WriteObjectValue(EnableSkipIncompatibleRow);
+                writer.WritePropertyName("enableSkipIncompatibleRow"u8);
+                writer.WriteObjectValue<object>(EnableSkipIncompatibleRow);
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
-                writer.WritePropertyName("redirectIncompatibleRowSettings");
+                writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
                 writer.WriteObjectValue(RedirectIncompatibleRowSettings);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
-                writer.WritePropertyName("logStorageSettings");
+                writer.WritePropertyName("logStorageSettings"u8);
                 writer.WriteObjectValue(LogStorageSettings);
             }
             if (Optional.IsDefined(LogSettings))
             {
-                writer.WritePropertyName("logSettings");
+                writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
-                writer.WritePropertyName("preserveRules");
+                writer.WritePropertyName("preserveRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreserveRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Preserve))
             {
-                writer.WritePropertyName("preserve");
+                writer.WritePropertyName("preserve"u8);
                 writer.WriteStartArray();
                 foreach (var item in Preserve)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ValidateDataConsistency))
             {
-                writer.WritePropertyName("validateDataConsistency");
-                writer.WriteObjectValue(ValidateDataConsistency);
+                writer.WritePropertyName("validateDataConsistency"u8);
+                writer.WriteObjectValue<object>(ValidateDataConsistency);
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
-                writer.WritePropertyName("skipErrorFile");
+                writer.WritePropertyName("skipErrorFile"u8);
                 writer.WriteObjectValue(SkipErrorFile);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static CopyActivity DeserializeCopyActivity(JsonElement element)
         {
-            Optional<IList<DatasetReference>> inputs = default;
-            Optional<IList<DatasetReference>> outputs = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<DatasetReference> inputs = default;
+            IList<DatasetReference> outputs = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
-            Optional<object> translator = default;
-            Optional<object> enableStaging = default;
-            Optional<StagingSettings> stagingSettings = default;
-            Optional<object> parallelCopies = default;
-            Optional<object> dataIntegrationUnits = default;
-            Optional<object> enableSkipIncompatibleRow = default;
-            Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
-            Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<LogSettings> logSettings = default;
-            Optional<IList<object>> preserveRules = default;
-            Optional<IList<object>> preserve = default;
-            Optional<object> validateDataConsistency = default;
-            Optional<SkipErrorFile> skipErrorFile = default;
+            object translator = default;
+            object enableStaging = default;
+            StagingSettings stagingSettings = default;
+            object parallelCopies = default;
+            object dataIntegrationUnits = default;
+            object enableSkipIncompatibleRow = default;
+            RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default;
+            LogStorageSettings logStorageSettings = default;
+            LogSettings logSettings = default;
+            IList<object> preserveRules = default;
+            IList<object> preserve = default;
+            object validateDataConsistency = default;
+            SkipErrorFile skipErrorFile = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DatasetReference> array = new List<DatasetReference>();
@@ -213,11 +238,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DatasetReference> array = new List<DatasetReference>();
@@ -228,46 +252,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     outputs = array;
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dependsOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<ActivityDependency> array = new List<ActivityDependency>();
@@ -278,11 +317,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UserProperty> array = new List<UserProperty>();
@@ -293,7 +331,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -302,151 +340,152 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             source = CopySource.DeserializeCopySource(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sink"))
+                        if (property0.NameEquals("sink"u8))
                         {
                             sink = CopySink.DeserializeCopySink(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("translator"))
+                        if (property0.NameEquals("translator"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             translator = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("enableStaging"))
+                        if (property0.NameEquals("enableStaging"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableStaging = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("stagingSettings"))
+                        if (property0.NameEquals("stagingSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             stagingSettings = StagingSettings.DeserializeStagingSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("parallelCopies"))
+                        if (property0.NameEquals("parallelCopies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             parallelCopies = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("dataIntegrationUnits"))
+                        if (property0.NameEquals("dataIntegrationUnits"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataIntegrationUnits = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("enableSkipIncompatibleRow"))
+                        if (property0.NameEquals("enableSkipIncompatibleRow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableSkipIncompatibleRow = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("redirectIncompatibleRowSettings"))
+                        if (property0.NameEquals("redirectIncompatibleRowSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redirectIncompatibleRowSettings = RedirectIncompatibleRowSettings.DeserializeRedirectIncompatibleRowSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logStorageSettings"))
+                        if (property0.NameEquals("logStorageSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logSettings"))
+                        if (property0.NameEquals("logSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logSettings = LogSettings.DeserializeLogSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("preserveRules"))
+                        if (property0.NameEquals("preserveRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetObject());
+                                }
                             }
                             preserveRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("preserve"))
+                        if (property0.NameEquals("preserve"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetObject());
+                                }
                             }
                             preserve = array;
                             continue;
                         }
-                        if (property0.NameEquals("validateDataConsistency"))
+                        if (property0.NameEquals("validateDataConsistency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validateDataConsistency = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("skipErrorFile"))
+                        if (property0.NameEquals("skipErrorFile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             skipErrorFile = SkipErrorFile.DeserializeSkipErrorFile(property0.Value);
@@ -458,7 +497,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
+            return new CopyActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                inputs ?? new ChangeTrackingList<DatasetReference>(),
+                outputs ?? new ChangeTrackingList<DatasetReference>(),
+                source,
+                sink,
+                translator,
+                enableStaging,
+                stagingSettings,
+                parallelCopies,
+                dataIntegrationUnits,
+                enableSkipIncompatibleRow,
+                redirectIncompatibleRowSettings,
+                logStorageSettings,
+                logSettings,
+                preserveRules ?? new ChangeTrackingList<object>(),
+                preserve ?? new ChangeTrackingList<object>(),
+                validateDataConsistency,
+                skipErrorFile);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CopyActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class CopyActivityConverter : JsonConverter<CopyActivity>
@@ -467,6 +549,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CopyActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

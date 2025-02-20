@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -12,100 +14,223 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheNetworkSettings : IUtf8JsonSerializable
+    public partial class StorageCacheNetworkSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheNetworkSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheNetworkSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StorageCacheNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Mtu))
             {
-                writer.WritePropertyName("mtu");
+                writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(UtilityAddresses))
+            {
+                writer.WritePropertyName("utilityAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in UtilityAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
+                writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsSearchDomain))
             {
-                writer.WritePropertyName("dnsSearchDomain");
+                writer.WritePropertyName("dnsSearchDomain"u8);
                 writer.WriteStringValue(DnsSearchDomain);
             }
             if (Optional.IsDefined(NtpServer))
             {
-                writer.WritePropertyName("ntpServer");
+                writer.WritePropertyName("ntpServer"u8);
                 writer.WriteStringValue(NtpServer);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static StorageCacheNetworkSettings DeserializeStorageCacheNetworkSettings(JsonElement element)
+        StorageCacheNetworkSettings IJsonModel<StorageCacheNetworkSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<int> mtu = default;
-            Optional<IReadOnlyList<IPAddress>> utilityAddresses = default;
-            Optional<IList<IPAddress>> dnsServers = default;
-            Optional<string> dnsSearchDomain = default;
-            Optional<string> ntpServer = default;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
+        }
+
+        internal static StorageCacheNetworkSettings DeserializeStorageCacheNetworkSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? mtu = default;
+            IReadOnlyList<IPAddress> utilityAddresses = default;
+            IList<IPAddress> dnsServers = default;
+            string dnsSearchDomain = default;
+            string ntpServer = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mtu"))
+                if (property.NameEquals("mtu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mtu = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("utilityAddresses"))
+                if (property.NameEquals("utilityAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     utilityAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("dnsSearchDomain"))
+                if (property.NameEquals("dnsSearchDomain"u8))
                 {
                     dnsSearchDomain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ntpServer"))
+                if (property.NameEquals("ntpServer"u8))
                 {
                     ntpServer = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageCacheNetworkSettings(Optional.ToNullable(mtu), Optional.ToList(utilityAddresses), Optional.ToList(dnsServers), dnsSearchDomain.Value, ntpServer.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageCacheNetworkSettings(
+                mtu,
+                utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
+                dnsServers ?? new ChangeTrackingList<IPAddress>(),
+                dnsSearchDomain,
+                ntpServer,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageCacheNetworkSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageCacheNetworkSettings IPersistableModel<StorageCacheNetworkSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageCacheNetworkSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

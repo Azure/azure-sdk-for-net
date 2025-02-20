@@ -86,5 +86,19 @@ namespace Azure.ResourceManager.Logic.Tests
             flag = await _logicWorkflowCollection.ExistsAsync(logicWorkflowName);
             Assert.IsFalse(flag);
         }
+
+        [RecordedTest]
+        public async Task Update()
+        {
+            string logicWorkflowName = Recording.GenerateAssetName("workflow");
+            var logicWorkflow = await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
+
+            var input = ConstructLogicWorkflowData(_resourceGroup.Data.Location, _integrationAccountIdentifier);
+            input.Tags.Add("testKey", "testVal");
+            var lro = await logicWorkflow.UpdateAsync(WaitUntil.Completed, input);
+            var updatedLogicWorkflow = lro.Value;
+
+            Assert.AreEqual(updatedLogicWorkflow.Data.Tags.Count, 1);
+        }
     }
 }

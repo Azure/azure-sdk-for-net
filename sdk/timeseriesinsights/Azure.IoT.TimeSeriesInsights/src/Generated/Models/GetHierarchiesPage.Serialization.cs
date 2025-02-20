@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,15 +14,18 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetHierarchiesPage DeserializeGetHierarchiesPage(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesHierarchy>> hierarchies = default;
-            Optional<string> continuationToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<TimeSeriesHierarchy> hierarchies = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hierarchies"))
+                if (property.NameEquals("hierarchies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesHierarchy> array = new List<TimeSeriesHierarchy>();
@@ -34,13 +36,21 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchies = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new GetHierarchiesPage(continuationToken.Value, Optional.ToList(hierarchies));
+            return new GetHierarchiesPage(continuationToken, hierarchies ?? new ChangeTrackingList<TimeSeriesHierarchy>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GetHierarchiesPage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetHierarchiesPage(document.RootElement);
         }
     }
 }

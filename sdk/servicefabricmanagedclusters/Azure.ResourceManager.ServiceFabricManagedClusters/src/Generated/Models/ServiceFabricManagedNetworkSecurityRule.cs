@@ -7,14 +7,45 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes a network security rule. </summary>
     public partial class ServiceFabricManagedNetworkSecurityRule
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedNetworkSecurityRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/>. </summary>
         /// <param name="name"> Network security rule name. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="access"> The network traffic is allowed or denied. </param>
@@ -36,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Direction = direction;
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedNetworkSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/>. </summary>
         /// <param name="name"> Network security rule name. </param>
         /// <param name="description"> Network security rule description. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
@@ -44,14 +75,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="destinationAddressPrefixes"> The destination address prefixes. CIDR or destination IP ranges. </param>
         /// <param name="sourcePortRanges"> The source port ranges. </param>
         /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. If this is an ingress rule, specifies where network traffic originates from. </param>
-        /// <param name="destinationAddressPrefix"> The destination address prefix. CIDR or destination IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. </param>
-        /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
-        /// <param name="destinationPortRange"> he destination port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
+        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from. </param>
+        /// <param name="destinationAddressPrefix"> The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. </param>
+        /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </param>
+        /// <param name="destinationPortRange"> he destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </param>
         /// <param name="access"> The network traffic is allowed or denied. </param>
         /// <param name="priority"> The priority of the rule. The value can be in the range 1000 to 3000. Values outside this range are reserved for Service Fabric ManagerCluster Resource Provider. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> Network security rule direction. </param>
-        internal ServiceFabricManagedNetworkSecurityRule(string name, string description, ServiceFabricManagedNsgProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, string sourcePortRange, string destinationPortRange, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedNetworkSecurityRule(string name, string description, ServiceFabricManagedNsgProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, string sourcePortRange, string destinationPortRange, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -67,6 +99,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Access = access;
             Priority = priority;
             Direction = direction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/> for deserialization. </summary>
+        internal ServiceFabricManagedNetworkSecurityRule()
+        {
         }
 
         /// <summary> Network security rule name. </summary>
@@ -83,13 +121,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public IList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. </summary>
         public IList<string> DestinationPortRanges { get; }
-        /// <summary> The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
+        /// <summary> The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
         public string SourceAddressPrefix { get; set; }
-        /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. </summary>
+        /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. </summary>
         public string DestinationAddressPrefix { get; set; }
-        /// <summary> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </summary>
+        /// <summary> The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public string SourcePortRange { get; set; }
-        /// <summary> he destination port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </summary>
+        /// <summary> he destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public string DestinationPortRange { get; set; }
         /// <summary> The network traffic is allowed or denied. </summary>
         public ServiceFabricManagedNetworkTrafficAccess Access { get; set; }

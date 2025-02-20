@@ -17,17 +17,17 @@ namespace Azure.AI.MetricsAdvisor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartsOn, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndsOn, "O");
-            writer.WritePropertyName("value");
-            writer.WriteObjectValue(ValueInternal);
+            writer.WritePropertyName("value"u8);
+            writer.WriteObjectValue<AnomalyFeedbackValue>(ValueInternal);
             if (Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
                 {
-                    writer.WritePropertyName("anomalyDetectionConfigurationId");
+                    writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
                     writer.WriteStringValue(DetectionConfigurationId);
                 }
                 else
@@ -39,54 +39,58 @@ namespace Azure.AI.MetricsAdvisor
             {
                 if (DetectionConfigurationSnapshot != null)
                 {
-                    writer.WritePropertyName("anomalyDetectionConfigurationSnapshot");
-                    writer.WriteObjectValue(DetectionConfigurationSnapshot);
+                    writer.WritePropertyName("anomalyDetectionConfigurationSnapshot"u8);
+                    writer.WriteObjectValue<AnomalyDetectionConfiguration>(DetectionConfigurationSnapshot);
                 }
                 else
                 {
                     writer.WriteNull("anomalyDetectionConfigurationSnapshot");
                 }
             }
-            writer.WritePropertyName("feedbackType");
+            writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
-            writer.WritePropertyName("metricId");
+            writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
-            writer.WritePropertyName("dimensionFilter");
-            writer.WriteObjectValue(DimensionFilter);
+            writer.WritePropertyName("dimensionFilter"u8);
+            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             writer.WriteEndObject();
         }
 
         internal static MetricAnomalyFeedback DeserializeMetricAnomalyFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;
-            Optional<string> anomalyDetectionConfigurationId = default;
-            Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
+            string anomalyDetectionConfigurationId = default;
+            AnomalyDetectionConfiguration anomalyDetectionConfigurationSnapshot = default;
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            string feedbackId = default;
+            DateTimeOffset? createdTime = default;
+            string userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = AnomalyFeedbackValue.DeserializeAnomalyFeedbackValue(property.Value);
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectionConfigurationId"))
+                if (property.NameEquals("anomalyDetectionConfigurationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +100,7 @@ namespace Azure.AI.MetricsAdvisor
                     anomalyDetectionConfigurationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectionConfigurationSnapshot"))
+                if (property.NameEquals("anomalyDetectionConfigurationSnapshot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,43 +110,69 @@ namespace Azure.AI.MetricsAdvisor
                     anomalyDetectionConfigurationSnapshot = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("feedbackType"))
+                if (property.NameEquals("feedbackType"u8))
                 {
                     feedbackType = new MetricFeedbackKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("feedbackId"))
+                if (property.NameEquals("feedbackId"u8))
                 {
                     feedbackId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("userPrincipal"))
+                if (property.NameEquals("userPrincipal"u8))
                 {
                     userPrincipal = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricId"))
+                if (property.NameEquals("metricId"u8))
                 {
                     metricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensionFilter"))
+                if (property.NameEquals("dimensionFilter"u8))
                 {
                     dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(
+                feedbackType,
+                feedbackId,
+                createdTime,
+                userPrincipal,
+                metricId,
+                dimensionFilter,
+                startTime,
+                endTime,
+                value,
+                anomalyDetectionConfigurationId,
+                anomalyDetectionConfigurationSnapshot);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MetricAnomalyFeedback FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricAnomalyFeedback(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

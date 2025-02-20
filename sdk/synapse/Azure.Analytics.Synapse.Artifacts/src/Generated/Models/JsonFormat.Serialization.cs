@@ -21,133 +21,130 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilePattern))
             {
-                writer.WritePropertyName("filePattern");
-                writer.WriteObjectValue(FilePattern);
+                writer.WritePropertyName("filePattern"u8);
+                writer.WriteObjectValue<object>(FilePattern);
             }
             if (Optional.IsDefined(NestingSeparator))
             {
-                writer.WritePropertyName("nestingSeparator");
-                writer.WriteObjectValue(NestingSeparator);
+                writer.WritePropertyName("nestingSeparator"u8);
+                writer.WriteObjectValue<object>(NestingSeparator);
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
-                writer.WriteObjectValue(EncodingName);
+                writer.WritePropertyName("encodingName"u8);
+                writer.WriteObjectValue<object>(EncodingName);
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
-                writer.WritePropertyName("jsonNodeReference");
-                writer.WriteObjectValue(JsonNodeReference);
+                writer.WritePropertyName("jsonNodeReference"u8);
+                writer.WriteObjectValue<object>(JsonNodeReference);
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {
-                writer.WritePropertyName("jsonPathDefinition");
-                writer.WriteObjectValue(JsonPathDefinition);
+                writer.WritePropertyName("jsonPathDefinition"u8);
+                writer.WriteObjectValue<object>(JsonPathDefinition);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
-                writer.WriteObjectValue(Serializer);
+                writer.WritePropertyName("serializer"u8);
+                writer.WriteObjectValue<object>(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
-                writer.WriteObjectValue(Deserializer);
+                writer.WritePropertyName("deserializer"u8);
+                writer.WriteObjectValue<object>(Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static JsonFormat DeserializeJsonFormat(JsonElement element)
         {
-            Optional<object> filePattern = default;
-            Optional<object> nestingSeparator = default;
-            Optional<object> encodingName = default;
-            Optional<object> jsonNodeReference = default;
-            Optional<object> jsonPathDefinition = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object filePattern = default;
+            object nestingSeparator = default;
+            object encodingName = default;
+            object jsonNodeReference = default;
+            object jsonPathDefinition = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePattern"))
+                if (property.NameEquals("filePattern"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filePattern = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("nestingSeparator"))
+                if (property.NameEquals("nestingSeparator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nestingSeparator = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("encodingName"))
+                if (property.NameEquals("encodingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encodingName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("jsonNodeReference"))
+                if (property.NameEquals("jsonNodeReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jsonNodeReference = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("jsonPathDefinition"))
+                if (property.NameEquals("jsonPathDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jsonPathDefinition = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serializer = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deserializer = property.Value.GetObject();
@@ -156,7 +153,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
+            return new JsonFormat(
+                type,
+                serializer,
+                deserializer,
+                additionalProperties,
+                filePattern,
+                nestingSeparator,
+                encodingName,
+                jsonNodeReference,
+                jsonPathDefinition);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new JsonFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJsonFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>
@@ -165,6 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override JsonFormat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

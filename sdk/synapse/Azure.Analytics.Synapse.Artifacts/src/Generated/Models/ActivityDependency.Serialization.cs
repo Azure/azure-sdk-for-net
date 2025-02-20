@@ -19,9 +19,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("activity");
+            writer.WritePropertyName("activity"u8);
             writer.WriteStringValue(Activity);
-            writer.WritePropertyName("dependencyConditions");
+            writer.WritePropertyName("dependencyConditions"u8);
             writer.WriteStartArray();
             foreach (var item in DependencyConditions)
             {
@@ -31,25 +31,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ActivityDependency DeserializeActivityDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string activity = default;
             IList<DependencyCondition> dependencyConditions = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activity"))
+                if (property.NameEquals("activity"u8))
                 {
                     activity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependencyConditions"))
+                if (property.NameEquals("dependencyConditions"u8))
                 {
                     List<DependencyCondition> array = new List<DependencyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -65,12 +69,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ActivityDependency(activity, dependencyConditions, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ActivityDependency FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeActivityDependency(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ActivityDependencyConverter : JsonConverter<ActivityDependency>
         {
             public override void Write(Utf8JsonWriter writer, ActivityDependency model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ActivityDependency Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

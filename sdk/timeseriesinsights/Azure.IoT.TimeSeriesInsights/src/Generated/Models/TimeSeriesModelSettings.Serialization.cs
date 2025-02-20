@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,21 +14,24 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static TimeSeriesModelSettings DeserializeTimeSeriesModelSettings(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<IReadOnlyList<TimeSeriesIdProperty>> timeSeriesIdProperties = default;
-            Optional<string> defaultTypeId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = default;
+            string defaultTypeId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeSeriesIdProperties"))
+                if (property.NameEquals("timeSeriesIdProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesIdProperty> array = new List<TimeSeriesIdProperty>();
@@ -40,13 +42,21 @@ namespace Azure.IoT.TimeSeriesInsights
                     timeSeriesIdProperties = array;
                     continue;
                 }
-                if (property.NameEquals("defaultTypeId"))
+                if (property.NameEquals("defaultTypeId"u8))
                 {
                     defaultTypeId = property.Value.GetString();
                     continue;
                 }
             }
-            return new TimeSeriesModelSettings(name.Value, Optional.ToList(timeSeriesIdProperties), defaultTypeId.Value);
+            return new TimeSeriesModelSettings(name, timeSeriesIdProperties ?? new ChangeTrackingList<TimeSeriesIdProperty>(), defaultTypeId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesModelSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesModelSettings(document.RootElement);
         }
     }
 }

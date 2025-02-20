@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TaskName))
             {
-                writer.WritePropertyName("taskName");
+                writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
             writer.WriteEndObject();
@@ -25,16 +25,36 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static TaskIdentifier DeserializeTaskIdentifier(JsonElement element)
         {
-            Optional<string> taskName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("taskName"))
+                if (property.NameEquals("taskName"u8))
                 {
                     taskName = property.Value.GetString();
                     continue;
                 }
             }
-            return new TaskIdentifier(taskName.Value);
+            return new TaskIdentifier(taskName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TaskIdentifier FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTaskIdentifier(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static bool operator ==(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NginxPrivateIPAllocationMethod"/> values are not the same. </summary>
         public static bool operator !=(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
         public static implicit operator NginxPrivateIPAllocationMethod(string value) => new NginxPrivateIPAllocationMethod(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

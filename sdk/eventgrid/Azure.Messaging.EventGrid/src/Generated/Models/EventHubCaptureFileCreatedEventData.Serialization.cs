@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,94 +16,109 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static EventHubCaptureFileCreatedEventData DeserializeEventHubCaptureFileCreatedEventData(JsonElement element)
         {
-            Optional<string> fileUrl = default;
-            Optional<string> fileType = default;
-            Optional<string> partitionId = default;
-            Optional<int> sizeInBytes = default;
-            Optional<int> eventCount = default;
-            Optional<int> firstSequenceNumber = default;
-            Optional<int> lastSequenceNumber = default;
-            Optional<DateTimeOffset> firstEnqueueTime = default;
-            Optional<DateTimeOffset> lastEnqueueTime = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string fileUrl = default;
+            string fileType = default;
+            string partitionId = default;
+            int? sizeInBytes = default;
+            int? eventCount = default;
+            int? firstSequenceNumber = default;
+            int? lastSequenceNumber = default;
+            DateTimeOffset? firstEnqueueTime = default;
+            DateTimeOffset? lastEnqueueTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileUrl"))
+                if (property.NameEquals("fileUrl"u8))
                 {
                     fileUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileType"))
+                if (property.NameEquals("fileType"u8))
                 {
                     fileType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("partitionId"))
+                if (property.NameEquals("partitionId"u8))
                 {
                     partitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sizeInBytes"))
+                if (property.NameEquals("sizeInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeInBytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("eventCount"))
+                if (property.NameEquals("eventCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstSequenceNumber"))
+                if (property.NameEquals("firstSequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstSequenceNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastSequenceNumber"))
+                if (property.NameEquals("lastSequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSequenceNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstEnqueueTime"))
+                if (property.NameEquals("firstEnqueueTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastEnqueueTime"))
+                if (property.NameEquals("lastEnqueueTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime));
+            return new EventHubCaptureFileCreatedEventData(
+                fileUrl,
+                fileType,
+                partitionId,
+                sizeInBytes,
+                eventCount,
+                firstSequenceNumber,
+                lastSequenceNumber,
+                firstEnqueueTime,
+                lastEnqueueTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EventHubCaptureFileCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
         }
 
         internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>
@@ -113,6 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override EventHubCaptureFileCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

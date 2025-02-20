@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -14,33 +13,44 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkServiceError DeserializeSparkServiceError(JsonElement element)
         {
-            Optional<string> message = default;
-            Optional<string> errorCode = default;
-            Optional<SparkErrorSource> source = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string message = default;
+            string errorCode = default;
+            SparkErrorSource? source = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = new SparkErrorSource(property.Value.GetString());
                     continue;
                 }
             }
-            return new SparkServiceError(message.Value, errorCode.Value, Optional.ToNullable(source));
+            return new SparkServiceError(message, errorCode, source);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkServiceError(document.RootElement);
         }
     }
 }

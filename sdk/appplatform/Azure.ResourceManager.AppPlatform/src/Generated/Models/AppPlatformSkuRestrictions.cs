@@ -5,37 +5,71 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Restrictions where the SKU cannot be used. </summary>
     public partial class AppPlatformSkuRestrictions
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuRestrictions"/>. </summary>
         internal AppPlatformSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
-        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </param>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuRestrictions"/>. </summary>
+        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
         /// location. This would be different locations where the SKU is restricted.
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
-        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </param>
-        internal AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, AppPlatformSkuRestrictionInfo restrictionInfo, AppPlatformSkuRestrictionsReasonCode? reasonCode)
+        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, AppPlatformSkuRestrictionInfo restrictionInfo, AppPlatformSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </summary>
+        /// <summary> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </summary>
         public AppPlatformSkuRestrictionsType? RestrictionsType { get; }
         /// <summary>
         /// Gets the value of restrictions. If the restriction type is set to
@@ -44,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public IReadOnlyList<string> Values { get; }
         /// <summary> Gets the information about the restriction where the SKU cannot be used. </summary>
         public AppPlatformSkuRestrictionInfo RestrictionInfo { get; }
-        /// <summary> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </summary>
+        /// <summary> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </summary>
         public AppPlatformSkuRestrictionsReasonCode? ReasonCode { get; }
     }
 }

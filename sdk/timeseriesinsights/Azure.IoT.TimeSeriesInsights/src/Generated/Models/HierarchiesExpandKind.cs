@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Kind of the expansion of hierarchy nodes. When it is set to &apos;UntilChildren&apos;, the hierarchy nodes are expanded recursively until there is more than one child. When it is set to &apos;OneLevel&apos;, the hierarchies are expanded only at the single level matching path search instances parameter. Optional, default is &apos;UntilChildren&apos;. </summary>
+    /// <summary> Kind of the expansion of hierarchy nodes. When it is set to 'UntilChildren', the hierarchy nodes are expanded recursively until there is more than one child. When it is set to 'OneLevel', the hierarchies are expanded only at the single level matching path search instances parameter. Optional, default is 'UntilChildren'. </summary>
     internal readonly partial struct HierarchiesExpandKind : IEquatable<HierarchiesExpandKind>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static bool operator ==(HierarchiesExpandKind left, HierarchiesExpandKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HierarchiesExpandKind"/> values are not the same. </summary>
         public static bool operator !=(HierarchiesExpandKind left, HierarchiesExpandKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HierarchiesExpandKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HierarchiesExpandKind"/>. </summary>
         public static implicit operator HierarchiesExpandKind(string value) => new HierarchiesExpandKind(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

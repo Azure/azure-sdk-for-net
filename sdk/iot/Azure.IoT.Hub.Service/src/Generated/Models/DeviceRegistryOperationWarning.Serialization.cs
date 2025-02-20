@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -14,28 +13,44 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceRegistryOperationWarning DeserializeDeviceRegistryOperationWarning(JsonElement element)
         {
-            Optional<string> deviceId = default;
-            Optional<string> warningCode = default;
-            Optional<string> warningStatus = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string deviceId = default;
+            DeviceRegistryOperationWarningCode? warningCode = default;
+            string warningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warningCode"))
+                if (property.NameEquals("warningCode"u8))
                 {
-                    warningCode = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    warningCode = new DeviceRegistryOperationWarningCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("warningStatus"))
+                if (property.NameEquals("warningStatus"u8))
                 {
                     warningStatus = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeviceRegistryOperationWarning(deviceId.Value, warningCode.Value, warningStatus.Value);
+            return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceRegistryOperationWarning FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceRegistryOperationWarning(document.RootElement);
         }
     }
 }

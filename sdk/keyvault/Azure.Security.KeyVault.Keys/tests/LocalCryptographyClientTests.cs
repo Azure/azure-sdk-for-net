@@ -384,10 +384,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             switch (type.ToString())
             {
-#if NET461
+#if NET462
                 case KeyType.EcValue:
                 case KeyType.EcHsmValue:
-                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net461.");
+                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
                 case KeyType.EcValue:
                 case KeyType.EcHsmValue:
@@ -400,11 +400,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyType.OctValue:
                 case KeyType.OctHsmValue:
                     return new JsonWebKey(Aes.Create(), keyOps);
-
-                case KeyType.OkpValue:
-                case KeyType.OkpHsmValue:
-                    // TODO: Support OKP keys and Ed25519 curves: https://github.com/Azure/azure-sdk-for-net/issues/32232
-                    throw new IgnoreException("Creating client-side OKP keys is not supported.");
 
                 default:
                     throw new NotSupportedException(@$"Key type ""{type}"" is not supported");

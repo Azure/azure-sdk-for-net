@@ -6,48 +6,68 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettings : IUtf8JsonSerializable
+    public partial class SiteAuthSettings : IUtf8JsonSerializable, IJsonModel<SiteAuthSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SiteAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             if (Optional.IsDefined(UnauthenticatedClientAction))
             {
-                writer.WritePropertyName("unauthenticatedClientAction");
+                writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsTokenStoreEnabled))
             {
-                writer.WritePropertyName("tokenStoreEnabled");
+                writer.WritePropertyName("tokenStoreEnabled"u8);
                 writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
-                writer.WritePropertyName("allowedExternalRedirectUrls");
+                writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedExternalRedirectUrls)
                 {
@@ -57,51 +77,47 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(DefaultProvider))
             {
-                writer.WritePropertyName("defaultProvider");
+                writer.WritePropertyName("defaultProvider"u8);
                 writer.WriteStringValue(DefaultProvider.Value.ToSerialString());
             }
             if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
-                writer.WritePropertyName("tokenRefreshExtensionHours");
+                writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
-                writer.WritePropertyName("clientSecretSettingName");
+                writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
-                writer.WritePropertyName("clientSecretCertificateThumbprint");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientSecretCertificateThumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientSecretCertificateThumbprint.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
+                writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
             if (Optional.IsDefined(Issuer))
             {
-                writer.WritePropertyName("issuer");
+                writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
             if (Optional.IsDefined(ValidateIssuer))
             {
-                writer.WritePropertyName("validateIssuer");
+                writer.WritePropertyName("validateIssuer"u8);
                 writer.WriteBooleanValue(ValidateIssuer.Value);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
-                writer.WritePropertyName("allowedAudiences");
+                writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedAudiences)
                 {
@@ -111,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AdditionalLoginParams))
             {
-                writer.WritePropertyName("additionalLoginParams");
+                writer.WritePropertyName("additionalLoginParams"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLoginParams)
                 {
@@ -121,27 +137,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(AadClaimsAuthorization))
             {
-                writer.WritePropertyName("aadClaimsAuthorization");
+                writer.WritePropertyName("aadClaimsAuthorization"u8);
                 writer.WriteStringValue(AadClaimsAuthorization);
             }
             if (Optional.IsDefined(GoogleClientId))
             {
-                writer.WritePropertyName("googleClientId");
+                writer.WritePropertyName("googleClientId"u8);
                 writer.WriteStringValue(GoogleClientId);
             }
             if (Optional.IsDefined(GoogleClientSecret))
             {
-                writer.WritePropertyName("googleClientSecret");
+                writer.WritePropertyName("googleClientSecret"u8);
                 writer.WriteStringValue(GoogleClientSecret);
             }
             if (Optional.IsDefined(GoogleClientSecretSettingName))
             {
-                writer.WritePropertyName("googleClientSecretSettingName");
+                writer.WritePropertyName("googleClientSecretSettingName"u8);
                 writer.WriteStringValue(GoogleClientSecretSettingName);
             }
             if (Optional.IsCollectionDefined(GoogleOAuthScopes))
             {
-                writer.WritePropertyName("googleOAuthScopes");
+                writer.WritePropertyName("googleOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in GoogleOAuthScopes)
                 {
@@ -151,22 +167,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(FacebookAppId))
             {
-                writer.WritePropertyName("facebookAppId");
+                writer.WritePropertyName("facebookAppId"u8);
                 writer.WriteStringValue(FacebookAppId);
             }
             if (Optional.IsDefined(FacebookAppSecret))
             {
-                writer.WritePropertyName("facebookAppSecret");
+                writer.WritePropertyName("facebookAppSecret"u8);
                 writer.WriteStringValue(FacebookAppSecret);
             }
             if (Optional.IsDefined(FacebookAppSecretSettingName))
             {
-                writer.WritePropertyName("facebookAppSecretSettingName");
+                writer.WritePropertyName("facebookAppSecretSettingName"u8);
                 writer.WriteStringValue(FacebookAppSecretSettingName);
             }
             if (Optional.IsCollectionDefined(FacebookOAuthScopes))
             {
-                writer.WritePropertyName("facebookOAuthScopes");
+                writer.WritePropertyName("facebookOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in FacebookOAuthScopes)
                 {
@@ -176,22 +192,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(GitHubClientId))
             {
-                writer.WritePropertyName("gitHubClientId");
+                writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
             if (Optional.IsDefined(GitHubClientSecret))
             {
-                writer.WritePropertyName("gitHubClientSecret");
+                writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteStringValue(GitHubClientSecret);
             }
             if (Optional.IsDefined(GitHubClientSecretSettingName))
             {
-                writer.WritePropertyName("gitHubClientSecretSettingName");
+                writer.WritePropertyName("gitHubClientSecretSettingName"u8);
                 writer.WriteStringValue(GitHubClientSecretSettingName);
             }
             if (Optional.IsCollectionDefined(GitHubOAuthScopes))
             {
-                writer.WritePropertyName("gitHubOAuthScopes");
+                writer.WritePropertyName("gitHubOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in GitHubOAuthScopes)
                 {
@@ -201,37 +217,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(TwitterConsumerKey))
             {
-                writer.WritePropertyName("twitterConsumerKey");
+                writer.WritePropertyName("twitterConsumerKey"u8);
                 writer.WriteStringValue(TwitterConsumerKey);
             }
             if (Optional.IsDefined(TwitterConsumerSecret))
             {
-                writer.WritePropertyName("twitterConsumerSecret");
+                writer.WritePropertyName("twitterConsumerSecret"u8);
                 writer.WriteStringValue(TwitterConsumerSecret);
             }
             if (Optional.IsDefined(TwitterConsumerSecretSettingName))
             {
-                writer.WritePropertyName("twitterConsumerSecretSettingName");
+                writer.WritePropertyName("twitterConsumerSecretSettingName"u8);
                 writer.WriteStringValue(TwitterConsumerSecretSettingName);
             }
             if (Optional.IsDefined(MicrosoftAccountClientId))
             {
-                writer.WritePropertyName("microsoftAccountClientId");
+                writer.WritePropertyName("microsoftAccountClientId"u8);
                 writer.WriteStringValue(MicrosoftAccountClientId);
             }
             if (Optional.IsDefined(MicrosoftAccountClientSecret))
             {
-                writer.WritePropertyName("microsoftAccountClientSecret");
+                writer.WritePropertyName("microsoftAccountClientSecret"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecret);
             }
             if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
             {
-                writer.WritePropertyName("microsoftAccountClientSecretSettingName");
+                writer.WritePropertyName("microsoftAccountClientSecretSettingName"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecretSettingName);
             }
             if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
             {
-                writer.WritePropertyName("microsoftAccountOAuthScopes");
+                writer.WritePropertyName("microsoftAccountOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in MicrosoftAccountOAuthScopes)
                 {
@@ -241,101 +257,119 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(IsAuthFromFile))
             {
-                writer.WritePropertyName("isAuthFromFile");
+                writer.WritePropertyName("isAuthFromFile"u8);
                 writer.WriteStringValue(IsAuthFromFile);
             }
             if (Optional.IsDefined(AuthFilePath))
             {
-                writer.WritePropertyName("authFilePath");
+                writer.WritePropertyName("authFilePath"u8);
                 writer.WriteStringValue(AuthFilePath);
             }
             if (Optional.IsDefined(ConfigVersion))
             {
-                writer.WritePropertyName("configVersion");
+                writer.WritePropertyName("configVersion"u8);
                 writer.WriteStringValue(ConfigVersion);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element)
+        SiteAuthSettings IJsonModel<SiteAuthSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> kind = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteAuthSettings(document.RootElement, options);
+        }
+
+        internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<string> runtimeVersion = default;
-            Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
-            Optional<bool> tokenStoreEnabled = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<BuiltInAuthenticationProvider> defaultProvider = default;
-            Optional<double> tokenRefreshExtensionHours = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<BinaryData> clientSecretCertificateThumbprint = default;
-            Optional<string> issuer = default;
-            Optional<bool> validateIssuer = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<IList<string>> additionalLoginParams = default;
-            Optional<string> aadClaimsAuthorization = default;
-            Optional<string> googleClientId = default;
-            Optional<string> googleClientSecret = default;
-            Optional<string> googleClientSecretSettingName = default;
-            Optional<IList<string>> googleOAuthScopes = default;
-            Optional<string> facebookAppId = default;
-            Optional<string> facebookAppSecret = default;
-            Optional<string> facebookAppSecretSettingName = default;
-            Optional<IList<string>> facebookOAuthScopes = default;
-            Optional<string> gitHubClientId = default;
-            Optional<string> gitHubClientSecret = default;
-            Optional<string> gitHubClientSecretSettingName = default;
-            Optional<IList<string>> gitHubOAuthScopes = default;
-            Optional<string> twitterConsumerKey = default;
-            Optional<string> twitterConsumerSecret = default;
-            Optional<string> twitterConsumerSecretSettingName = default;
-            Optional<string> microsoftAccountClientId = default;
-            Optional<string> microsoftAccountClientSecret = default;
-            Optional<string> microsoftAccountClientSecretSettingName = default;
-            Optional<IList<string>> microsoftAccountOAuthScopes = default;
-            Optional<string> isAuthFromFile = default;
-            Optional<string> authFilePath = default;
-            Optional<string> configVersion = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            string runtimeVersion = default;
+            UnauthenticatedClientAction? unauthenticatedClientAction = default;
+            bool? tokenStoreEnabled = default;
+            IList<string> allowedExternalRedirectUrls = default;
+            BuiltInAuthenticationProvider? defaultProvider = default;
+            double? tokenRefreshExtensionHours = default;
+            string clientId = default;
+            string clientSecret = default;
+            string clientSecretSettingName = default;
+            string clientSecretCertificateThumbprint = default;
+            string issuer = default;
+            bool? validateIssuer = default;
+            IList<string> allowedAudiences = default;
+            IList<string> additionalLoginParams = default;
+            string aadClaimsAuthorization = default;
+            string googleClientId = default;
+            string googleClientSecret = default;
+            string googleClientSecretSettingName = default;
+            IList<string> googleOAuthScopes = default;
+            string facebookAppId = default;
+            string facebookAppSecret = default;
+            string facebookAppSecretSettingName = default;
+            IList<string> facebookOAuthScopes = default;
+            string gitHubClientId = default;
+            string gitHubClientSecret = default;
+            string gitHubClientSecretSettingName = default;
+            IList<string> gitHubOAuthScopes = default;
+            string twitterConsumerKey = default;
+            string twitterConsumerSecret = default;
+            string twitterConsumerSecretSettingName = default;
+            string microsoftAccountClientId = default;
+            string microsoftAccountClientSecret = default;
+            string microsoftAccountClientSecretSettingName = default;
+            IList<string> microsoftAccountOAuthScopes = default;
+            string isAuthFromFile = default;
+            string authFilePath = default;
+            string configVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -344,46 +378,42 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("runtimeVersion"))
+                        if (property0.NameEquals("runtimeVersion"u8))
                         {
                             runtimeVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("unauthenticatedClientAction"))
+                        if (property0.NameEquals("unauthenticatedClientAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             unauthenticatedClientAction = property0.Value.GetString().ToUnauthenticatedClientAction();
                             continue;
                         }
-                        if (property0.NameEquals("tokenStoreEnabled"))
+                        if (property0.NameEquals("tokenStoreEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tokenStoreEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowedExternalRedirectUrls"))
+                        if (property0.NameEquals("allowedExternalRedirectUrls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -394,71 +424,62 @@ namespace Azure.ResourceManager.AppService.Models
                             allowedExternalRedirectUrls = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultProvider"))
+                        if (property0.NameEquals("defaultProvider"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultProvider = property0.Value.GetString().ToBuiltInAuthenticationProvider();
                             continue;
                         }
-                        if (property0.NameEquals("tokenRefreshExtensionHours"))
+                        if (property0.NameEquals("tokenRefreshExtensionHours"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tokenRefreshExtensionHours = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecret"))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecretSettingName"))
+                        if (property0.NameEquals("clientSecretSettingName"u8))
                         {
                             clientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecretCertificateThumbprint"))
+                        if (property0.NameEquals("clientSecretCertificateThumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clientSecretCertificateThumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            clientSecretCertificateThumbprint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("issuer"))
+                        if (property0.NameEquals("issuer"u8))
                         {
                             issuer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("validateIssuer"))
+                        if (property0.NameEquals("validateIssuer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validateIssuer = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowedAudiences"))
+                        if (property0.NameEquals("allowedAudiences"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -469,11 +490,10 @@ namespace Azure.ResourceManager.AppService.Models
                             allowedAudiences = array;
                             continue;
                         }
-                        if (property0.NameEquals("additionalLoginParams"))
+                        if (property0.NameEquals("additionalLoginParams"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -484,31 +504,30 @@ namespace Azure.ResourceManager.AppService.Models
                             additionalLoginParams = array;
                             continue;
                         }
-                        if (property0.NameEquals("aadClaimsAuthorization"))
+                        if (property0.NameEquals("aadClaimsAuthorization"u8))
                         {
                             aadClaimsAuthorization = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleClientId"))
+                        if (property0.NameEquals("googleClientId"u8))
                         {
                             googleClientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleClientSecret"))
+                        if (property0.NameEquals("googleClientSecret"u8))
                         {
                             googleClientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleClientSecretSettingName"))
+                        if (property0.NameEquals("googleClientSecretSettingName"u8))
                         {
                             googleClientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleOAuthScopes"))
+                        if (property0.NameEquals("googleOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -519,26 +538,25 @@ namespace Azure.ResourceManager.AppService.Models
                             googleOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("facebookAppId"))
+                        if (property0.NameEquals("facebookAppId"u8))
                         {
                             facebookAppId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("facebookAppSecret"))
+                        if (property0.NameEquals("facebookAppSecret"u8))
                         {
                             facebookAppSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("facebookAppSecretSettingName"))
+                        if (property0.NameEquals("facebookAppSecretSettingName"u8))
                         {
                             facebookAppSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("facebookOAuthScopes"))
+                        if (property0.NameEquals("facebookOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -549,26 +567,25 @@ namespace Azure.ResourceManager.AppService.Models
                             facebookOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("gitHubClientId"))
+                        if (property0.NameEquals("gitHubClientId"u8))
                         {
                             gitHubClientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubClientSecret"))
+                        if (property0.NameEquals("gitHubClientSecret"u8))
                         {
                             gitHubClientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubClientSecretSettingName"))
+                        if (property0.NameEquals("gitHubClientSecretSettingName"u8))
                         {
                             gitHubClientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubOAuthScopes"))
+                        if (property0.NameEquals("gitHubOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -579,41 +596,40 @@ namespace Azure.ResourceManager.AppService.Models
                             gitHubOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("twitterConsumerKey"))
+                        if (property0.NameEquals("twitterConsumerKey"u8))
                         {
                             twitterConsumerKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("twitterConsumerSecret"))
+                        if (property0.NameEquals("twitterConsumerSecret"u8))
                         {
                             twitterConsumerSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("twitterConsumerSecretSettingName"))
+                        if (property0.NameEquals("twitterConsumerSecretSettingName"u8))
                         {
                             twitterConsumerSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountClientId"))
+                        if (property0.NameEquals("microsoftAccountClientId"u8))
                         {
                             microsoftAccountClientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountClientSecret"))
+                        if (property0.NameEquals("microsoftAccountClientSecret"u8))
                         {
                             microsoftAccountClientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountClientSecretSettingName"))
+                        if (property0.NameEquals("microsoftAccountClientSecretSettingName"u8))
                         {
                             microsoftAccountClientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountOAuthScopes"))
+                        if (property0.NameEquals("microsoftAccountOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -624,17 +640,17 @@ namespace Azure.ResourceManager.AppService.Models
                             microsoftAccountOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("isAuthFromFile"))
+                        if (property0.NameEquals("isAuthFromFile"u8))
                         {
                             isAuthFromFile = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authFilePath"))
+                        if (property0.NameEquals("authFilePath"u8))
                         {
                             authFilePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("configVersion"))
+                        if (property0.NameEquals("configVersion"u8))
                         {
                             configVersion = property0.Value.GetString();
                             continue;
@@ -642,8 +658,1104 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SiteAuthSettings(
+                id,
+                name,
+                type,
+                systemData,
+                enabled,
+                runtimeVersion,
+                unauthenticatedClientAction,
+                tokenStoreEnabled,
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                defaultProvider,
+                tokenRefreshExtensionHours,
+                clientId,
+                clientSecret,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprint,
+                issuer,
+                validateIssuer,
+                allowedAudiences ?? new ChangeTrackingList<string>(),
+                additionalLoginParams ?? new ChangeTrackingList<string>(),
+                aadClaimsAuthorization,
+                googleClientId,
+                googleClientSecret,
+                googleClientSecretSettingName,
+                googleOAuthScopes ?? new ChangeTrackingList<string>(),
+                facebookAppId,
+                facebookAppSecret,
+                facebookAppSecretSettingName,
+                facebookOAuthScopes ?? new ChangeTrackingList<string>(),
+                gitHubClientId,
+                gitHubClientSecret,
+                gitHubClientSecretSettingName,
+                gitHubOAuthScopes ?? new ChangeTrackingList<string>(),
+                twitterConsumerKey,
+                twitterConsumerSecret,
+                twitterConsumerSecretSettingName,
+                microsoftAccountClientId,
+                microsoftAccountClientSecret,
+                microsoftAccountClientSecretSettingName,
+                microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(),
+                isAuthFromFile,
+                authFilePath,
+                configVersion,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
+                {
+                    builder.Append("    enabled: ");
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    runtimeVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeVersion))
+                {
+                    builder.Append("    runtimeVersion: ");
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuntimeVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    unauthenticatedClientAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UnauthenticatedClientAction))
+                {
+                    builder.Append("    unauthenticatedClientAction: ");
+                    builder.AppendLine($"'{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTokenStoreEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tokenStoreEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsTokenStoreEnabled))
+                {
+                    builder.Append("    tokenStoreEnabled: ");
+                    var boolValue = IsTokenStoreEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowedExternalRedirectUrls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+                {
+                    if (AllowedExternalRedirectUrls.Any())
+                    {
+                        builder.Append("    allowedExternalRedirectUrls: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedExternalRedirectUrls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultProvider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultProvider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultProvider))
+                {
+                    builder.Append("    defaultProvider: ");
+                    builder.AppendLine($"'{DefaultProvider.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenRefreshExtensionHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tokenRefreshExtensionHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenRefreshExtensionHours))
+                {
+                    builder.Append("    tokenRefreshExtensionHours: ");
+                    builder.AppendLine($"'{TokenRefreshExtensionHours.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("    clientId: ");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecret))
+                {
+                    builder.Append("    clientSecret: ");
+                    if (ClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientSecretSettingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecretSettingName))
+                {
+                    builder.Append("    clientSecretSettingName: ");
+                    if (ClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprintString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientSecretCertificateThumbprint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
+                {
+                    builder.Append("    clientSecretCertificateThumbprint: ");
+                    if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretCertificateThumbprintString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    issuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Issuer))
+                {
+                    builder.Append("    issuer: ");
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Issuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateIssuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validateIssuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidateIssuer))
+                {
+                    builder.Append("    validateIssuer: ");
+                    var boolValue = ValidateIssuer.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowedAudiences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedAudiences))
+                {
+                    if (AllowedAudiences.Any())
+                    {
+                        builder.Append("    allowedAudiences: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedAudiences)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalLoginParams), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    additionalLoginParams: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdditionalLoginParams))
+                {
+                    if (AdditionalLoginParams.Any())
+                    {
+                        builder.Append("    additionalLoginParams: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AdditionalLoginParams)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClaimsAuthorization), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    aadClaimsAuthorization: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadClaimsAuthorization))
+                {
+                    builder.Append("    aadClaimsAuthorization: ");
+                    if (AadClaimsAuthorization.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AadClaimsAuthorization}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AadClaimsAuthorization}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    googleClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GoogleClientId))
+                {
+                    builder.Append("    googleClientId: ");
+                    if (GoogleClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GoogleClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GoogleClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    googleClientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GoogleClientSecret))
+                {
+                    builder.Append("    googleClientSecret: ");
+                    if (GoogleClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GoogleClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GoogleClientSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecretSettingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    googleClientSecretSettingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GoogleClientSecretSettingName))
+                {
+                    builder.Append("    googleClientSecretSettingName: ");
+                    if (GoogleClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GoogleClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GoogleClientSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleOAuthScopes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    googleOAuthScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GoogleOAuthScopes))
+                {
+                    if (GoogleOAuthScopes.Any())
+                    {
+                        builder.Append("    googleOAuthScopes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in GoogleOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    facebookAppId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FacebookAppId))
+                {
+                    builder.Append("    facebookAppId: ");
+                    if (FacebookAppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FacebookAppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FacebookAppId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    facebookAppSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FacebookAppSecret))
+                {
+                    builder.Append("    facebookAppSecret: ");
+                    if (FacebookAppSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FacebookAppSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FacebookAppSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecretSettingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    facebookAppSecretSettingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FacebookAppSecretSettingName))
+                {
+                    builder.Append("    facebookAppSecretSettingName: ");
+                    if (FacebookAppSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FacebookAppSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FacebookAppSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookOAuthScopes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    facebookOAuthScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FacebookOAuthScopes))
+                {
+                    if (FacebookOAuthScopes.Any())
+                    {
+                        builder.Append("    facebookOAuthScopes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FacebookOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gitHubClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHubClientId))
+                {
+                    builder.Append("    gitHubClientId: ");
+                    if (GitHubClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GitHubClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GitHubClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gitHubClientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHubClientSecret))
+                {
+                    builder.Append("    gitHubClientSecret: ");
+                    if (GitHubClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GitHubClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GitHubClientSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecretSettingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gitHubClientSecretSettingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHubClientSecretSettingName))
+                {
+                    builder.Append("    gitHubClientSecretSettingName: ");
+                    if (GitHubClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GitHubClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GitHubClientSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubOAuthScopes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gitHubOAuthScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GitHubOAuthScopes))
+                {
+                    if (GitHubOAuthScopes.Any())
+                    {
+                        builder.Append("    gitHubOAuthScopes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in GitHubOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    twitterConsumerKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TwitterConsumerKey))
+                {
+                    builder.Append("    twitterConsumerKey: ");
+                    if (TwitterConsumerKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TwitterConsumerKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TwitterConsumerKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    twitterConsumerSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TwitterConsumerSecret))
+                {
+                    builder.Append("    twitterConsumerSecret: ");
+                    if (TwitterConsumerSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TwitterConsumerSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TwitterConsumerSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecretSettingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    twitterConsumerSecretSettingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TwitterConsumerSecretSettingName))
+                {
+                    builder.Append("    twitterConsumerSecretSettingName: ");
+                    if (TwitterConsumerSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TwitterConsumerSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TwitterConsumerSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    microsoftAccountClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MicrosoftAccountClientId))
+                {
+                    builder.Append("    microsoftAccountClientId: ");
+                    if (MicrosoftAccountClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MicrosoftAccountClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MicrosoftAccountClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    microsoftAccountClientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MicrosoftAccountClientSecret))
+                {
+                    builder.Append("    microsoftAccountClientSecret: ");
+                    if (MicrosoftAccountClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MicrosoftAccountClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MicrosoftAccountClientSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecretSettingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    microsoftAccountClientSecretSettingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
+                {
+                    builder.Append("    microsoftAccountClientSecretSettingName: ");
+                    if (MicrosoftAccountClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MicrosoftAccountClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MicrosoftAccountClientSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountOAuthScopes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    microsoftAccountOAuthScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
+                {
+                    if (MicrosoftAccountOAuthScopes.Any())
+                    {
+                        builder.Append("    microsoftAccountOAuthScopes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MicrosoftAccountOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthFromFile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isAuthFromFile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAuthFromFile))
+                {
+                    builder.Append("    isAuthFromFile: ");
+                    if (IsAuthFromFile.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IsAuthFromFile}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IsAuthFromFile}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthFilePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authFilePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthFilePath))
+                {
+                    builder.Append("    authFilePath: ");
+                    if (AuthFilePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthFilePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthFilePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    configVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigVersion))
+                {
+                    builder.Append("    configVersion: ");
+                    if (ConfigVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConfigVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConfigVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteAuthSettings IPersistableModel<SiteAuthSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteAuthSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteAuthSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

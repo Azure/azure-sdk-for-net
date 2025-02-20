@@ -17,22 +17,22 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MethodName))
             {
-                writer.WritePropertyName("methodName");
+                writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
             if (Optional.IsDefined(Payload))
             {
-                writer.WritePropertyName("payload");
-                writer.WriteObjectValue(Payload);
+                writer.WritePropertyName("payload"u8);
+                writer.WriteObjectValue<object>(Payload);
             }
             if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
-                writer.WritePropertyName("responseTimeoutInSeconds");
+                writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(ConnectTimeoutInSeconds))
             {
-                writer.WritePropertyName("connectTimeoutInSeconds");
+                writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -40,49 +40,66 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static CloudToDeviceMethodRequest DeserializeCloudToDeviceMethodRequest(JsonElement element)
         {
-            Optional<string> methodName = default;
-            Optional<object> payload = default;
-            Optional<int> responseTimeoutInSeconds = default;
-            Optional<int> connectTimeoutInSeconds = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string methodName = default;
+            object payload = default;
+            int? responseTimeoutInSeconds = default;
+            int? connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("methodName"))
+                if (property.NameEquals("methodName"u8))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("payload"))
+                if (property.NameEquals("payload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     payload = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("responseTimeoutInSeconds"))
+                if (property.NameEquals("responseTimeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     responseTimeoutInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("connectTimeoutInSeconds"))
+                if (property.NameEquals("connectTimeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectTimeoutInSeconds = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds));
+            return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CloudToDeviceMethodRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCloudToDeviceMethodRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

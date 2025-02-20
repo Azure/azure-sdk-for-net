@@ -18,77 +18,140 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Pfx))
             {
-                writer.WritePropertyName("pfx");
+                writer.WritePropertyName("pfx"u8);
                 writer.WriteObjectValue(Pfx);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
-                writer.WriteStringValue(Username);
+                writer.WritePropertyName("username"u8);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource");
-                writer.WriteStringValue(Resource);
+                writer.WritePropertyName("resource"u8);
+                writer.WriteObjectValue<object>(Resource);
+            }
+            if (Optional.IsDefined(UserTenant))
+            {
+                writer.WritePropertyName("userTenant"u8);
+                writer.WriteObjectValue<object>(UserTenant);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
         }
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
-            Optional<SecretBase> pfx = default;
-            Optional<string> username = default;
-            Optional<SecretBase> password = default;
-            Optional<string> resource = default;
+            SecretBase pfx = default;
+            object username = default;
+            SecretBase password = default;
+            object resource = default;
+            object userTenant = default;
+            CredentialReference credential = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pfx"))
+                if (property.NameEquals("pfx"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pfx = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("username"))
-                {
-                    username = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("username"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    username = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("password"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resource"))
+                if (property.NameEquals("resource"u8))
                 {
-                    resource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resource = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("userTenant"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userTenant = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("credential"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value);
+            return new WebActivityAuthentication(
+                type,
+                pfx,
+                username,
+                password,
+                resource,
+                userTenant,
+                credential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebActivityAuthentication FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebActivityAuthentication(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>
@@ -97,6 +160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override WebActivityAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

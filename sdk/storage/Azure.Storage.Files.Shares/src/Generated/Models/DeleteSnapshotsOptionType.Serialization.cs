@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static DeleteSnapshotsOptionType ToDeleteSnapshotsOptionType(this string value)
         {
-            if (string.Equals(value, "include", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOptionType.Include;
-            if (string.Equals(value, "include-leased", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOptionType.IncludeLeased;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include")) return DeleteSnapshotsOptionType.Include;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include-leased")) return DeleteSnapshotsOptionType.IncludeLeased;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOptionType value.");
         }
     }

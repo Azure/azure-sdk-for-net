@@ -5,25 +5,65 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.Common
+namespace Microsoft.Azure.WebPubSub.Common;
+
+#nullable enable
+
+internal class WebPubSubClientCertificateJsonConverter : JsonConverter<WebPubSubClientCertificate>
 {
-    internal class WebPubSubClientCertificateJsonConverter : JsonConverter<WebPubSubClientCertificate>
+    public override WebPubSubClientCertificate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        public override WebPubSubClientCertificate Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            using var jsonDocument = JsonDocument.ParseValue(ref reader);
-            var element = jsonDocument.RootElement;
+        string? thumbprint = null;
+        string? content = null;
 
-            return new WebPubSubClientCertificate(
-                element.ReadString(WebPubSubClientCertificate.ThumbprintProperty));
+        while (reader.Read())
+        {
+            if (reader.TokenType == JsonTokenType.EndObject)
+            {
+                break;
+            }
+
+            if (reader.TokenType == JsonTokenType.PropertyName)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case WebPubSubClientCertificate.ThumbprintProperty:
+                        thumbprint = reader.GetString();
+                        break;
+
+                    case WebPubSubClientCertificate.ContentProperty:
+                        content = reader.GetString();
+                        break;
+
+                    default:
+                        reader.Skip();
+                        break;
+                }
+            }
         }
 
-        public override void Write(Utf8JsonWriter writer, WebPubSubClientCertificate value, JsonSerializerOptions options)
+        // Ensure that the required 'thumbprint' property is present
+        if (thumbprint == null && content == null)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName(WebPubSubClientCertificate.ThumbprintProperty);
-            JsonSerializer.Serialize(writer, value.Thumbprint, options);
-            writer.WriteEndObject();
+            return null;
         }
+
+        return new WebPubSubClientCertificate(thumbprint!, content);
+    }
+
+    public override void Write(Utf8JsonWriter writer, WebPubSubClientCertificate value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        writer.WritePropertyName(WebPubSubClientCertificate.ThumbprintProperty);
+        JsonSerializer.Serialize(writer, value.Thumbprint, options);
+        if (value.Content != null)
+        {
+            writer.WritePropertyName(WebPubSubClientCertificate.ContentProperty);
+            JsonSerializer.Serialize(writer, value.Content, options);
+        }
+        writer.WriteEndObject();
     }
 }

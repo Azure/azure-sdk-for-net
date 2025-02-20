@@ -1,10 +1,5 @@
 <Project Sdk="Microsoft.Build.Traversal">
-  <Import Project="eng\mgmt\Directory.Build.Mgmt.props" />
-
   <ItemGroup>
-    <ProjectReference Include="eng\mgmt.proj">
-      <AdditionalProperties Condition="'$(Scope)' != ''">Scope=$(Scope)</AdditionalProperties>
-    </ProjectReference>
     <ProjectReference Include="eng\service.proj">
       <AdditionalProperties Condition="'$(Scope)' != ''">Scope=$(Scope)</AdditionalProperties>
     </ProjectReference>

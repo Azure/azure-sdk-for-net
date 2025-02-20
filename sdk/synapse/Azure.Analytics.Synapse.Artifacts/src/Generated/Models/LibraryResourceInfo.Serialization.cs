@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,69 +16,89 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LibraryResourceInfo DeserializeLibraryResourceInfo(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<int> recordId = default;
-            Optional<string> state = default;
-            Optional<string> created = default;
-            Optional<string> changed = default;
-            Optional<string> type = default;
-            Optional<string> name = default;
-            Optional<string> operationId = default;
-            Optional<string> artifactId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            int? recordId = default;
+            string state = default;
+            string created = default;
+            string changed = default;
+            string type = default;
+            string name = default;
+            string operationId = default;
+            string artifactId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordId"))
+                if (property.NameEquals("recordId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     created = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("changed"))
+                if (property.NameEquals("changed"u8))
                 {
                     changed = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("artifactId"))
+                if (property.NameEquals("artifactId"u8))
                 {
                     artifactId = property.Value.GetString();
                     continue;
                 }
             }
-            return new LibraryResourceInfo(id.Value, Optional.ToNullable(recordId), state.Value, created.Value, changed.Value, type.Value, name.Value, operationId.Value, artifactId.Value);
+            return new LibraryResourceInfo(
+                id,
+                recordId,
+                state,
+                created,
+                changed,
+                type,
+                name,
+                operationId,
+                artifactId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LibraryResourceInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLibraryResourceInfo(document.RootElement);
         }
 
         internal partial class LibraryResourceInfoConverter : JsonConverter<LibraryResourceInfo>
@@ -88,6 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override LibraryResourceInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

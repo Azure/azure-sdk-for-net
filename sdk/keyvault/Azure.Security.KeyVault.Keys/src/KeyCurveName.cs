@@ -16,7 +16,6 @@ namespace Azure.Security.KeyVault.Keys
         private const string P256KValue = "P-256K";
         private const string P384Value = "P-384";
         private const string P521Value = "P-521";
-        private const string Ed25519Value = "Ed25519";
 
         private const string P256OidValue = "1.2.840.10045.3.1.7";
         private const string P256KOidValue = "1.3.132.0.10";
@@ -57,12 +56,6 @@ namespace Azure.Security.KeyVault.Keys
         /// For more information, see <see href="https://learn.microsoft.com/azure/key-vault/keys/about-keys#curve-types">Curve types</see>.
         /// </summary>
         public static KeyCurveName P521 { get; } = new KeyCurveName(P521Value);
-
-        /// <summary>
-        /// The Ed25519 Edwards curve.
-        /// For more information, see <see href="https://learn.microsoft.com/azure/key-vault/keys/about-keys#curve-types">Curve types</see>.
-        /// </summary>
-        public static KeyCurveName Ed25519 { get; } = new KeyCurveName(Ed25519Value);
 
         /// <summary>
         /// Determines if two <see cref="KeyCurveName"/> values are the same.
@@ -164,7 +157,6 @@ namespace Azure.Security.KeyVault.Keys
                     case P521Value:
                         return true;
 
-                    // TODO: Add local Ed25519 support: https://github.com/Azure/azure-sdk-for-net/issues/32232
                     default:
                         return false;
                 }

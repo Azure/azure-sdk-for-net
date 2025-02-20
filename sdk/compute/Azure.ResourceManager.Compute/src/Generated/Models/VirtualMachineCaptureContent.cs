@@ -6,15 +6,47 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Capture Virtual Machine parameters. </summary>
     public partial class VirtualMachineCaptureContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineCaptureContent. </summary>
-        /// <param name="vhdPrefix"> The captured virtual hard disk&apos;s name prefix. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/>. </summary>
+        /// <param name="vhdPrefix"> The captured virtual hard disk's name prefix. </param>
         /// <param name="destinationContainerName"> The destination container name. </param>
         /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vhdPrefix"/> or <paramref name="destinationContainerName"/> is null. </exception>
@@ -28,7 +60,25 @@ namespace Azure.ResourceManager.Compute.Models
             OverwriteVhds = overwriteVhds;
         }
 
-        /// <summary> The captured virtual hard disk&apos;s name prefix. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/>. </summary>
+        /// <param name="vhdPrefix"> The captured virtual hard disk's name prefix. </param>
+        /// <param name="destinationContainerName"> The destination container name. </param>
+        /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineCaptureContent(string vhdPrefix, string destinationContainerName, bool overwriteVhds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VhdPrefix = vhdPrefix;
+            DestinationContainerName = destinationContainerName;
+            OverwriteVhds = overwriteVhds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/> for deserialization. </summary>
+        internal VirtualMachineCaptureContent()
+        {
+        }
+
+        /// <summary> The captured virtual hard disk's name prefix. </summary>
         public string VhdPrefix { get; }
         /// <summary> The destination container name. </summary>
         public string DestinationContainerName { get; }

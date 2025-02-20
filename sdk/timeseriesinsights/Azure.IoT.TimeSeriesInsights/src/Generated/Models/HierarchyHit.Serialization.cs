@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -14,38 +13,48 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static HierarchyHit DeserializeHierarchyHit(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<int> cumulativeInstanceCount = default;
-            Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            int? cumulativeInstanceCount = default;
+            SearchHierarchyNodesResponse hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cumulativeInstanceCount"))
+                if (property.NameEquals("cumulativeInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cumulativeInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hierarchyNodes"))
+                if (property.NameEquals("hierarchyNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);
                     continue;
                 }
             }
-            return new HierarchyHit(name.Value, Optional.ToNullable(cumulativeInstanceCount), hierarchyNodes.Value);
+            return new HierarchyHit(name, cumulativeInstanceCount, hierarchyNodes);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HierarchyHit FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHierarchyHit(document.RootElement);
         }
     }
 }

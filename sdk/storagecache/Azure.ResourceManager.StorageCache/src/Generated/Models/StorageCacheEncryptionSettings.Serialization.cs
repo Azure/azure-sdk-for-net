@@ -5,57 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheEncryptionSettings : IUtf8JsonSerializable
+    public partial class StorageCacheEncryptionSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheEncryptionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheEncryptionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StorageCacheEncryptionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyEncryptionKey))
-            {
-                writer.WritePropertyName("keyEncryptionKey");
-                writer.WriteObjectValue(KeyEncryptionKey);
-            }
-            if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
-            {
-                writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
-                writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(KeyEncryptionKey))
+            {
+                writer.WritePropertyName("keyEncryptionKey"u8);
+                writer.WriteObjectValue(KeyEncryptionKey, options);
+            }
+            if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
+            {
+                writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
+                writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        StorageCacheEncryptionSettings IJsonModel<StorageCacheEncryptionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheEncryptionSettings(document.RootElement, options);
+        }
+
+        internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyEncryptionKey"))
+                if (property.NameEquals("keyEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value);
+                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("rotationToLatestKeyVersionEnabled"))
+                if (property.NameEquals("rotationToLatestKeyVersionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rotationToLatestKeyVersionEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageCacheEncryptionSettings(keyEncryptionKey, rotationToLatestKeyVersionEnabled, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageCacheEncryptionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageCacheEncryptionSettings IPersistableModel<StorageCacheEncryptionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageCacheEncryptionSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageCacheEncryptionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

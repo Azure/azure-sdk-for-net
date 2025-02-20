@@ -1,6 +1,6 @@
 # Requesting Azure Storage Service Versions
 
-This sample demonstrates configuring the Blob Storage client to use a specific version of the service, rather than the default.  This is useful when the Azure environment that you are targeting supports a different version of Blob Storage service than is available in the Azure public cloud.  For example, if you are running Event Hubs on an Azure Stack Hub version 2002, the highest available  version for the Storage service is version 2017-11-09. In this case, you will need to use the following code to change the Blob Storage service API version to 2017-11-09. For more information on the Azure Storage service versions supported on Azure Stack Hub, please refer to the [Azure Stack documentation](https://docs.microsoft.com/azure-stack/user/azure-stack-acs-differences).
+This sample demonstrates configuring the Blob Storage client to use a specific version of the service, rather than the default.  This is useful when the Azure environment that you are targeting supports a different version of Blob Storage service than is available in the Azure public cloud.  For example, if you are running Event Hubs on an Azure Stack Hub version 2002, the highest available  version for the Storage service is version 2017-11-09. In this case, you will need to use the following code to change the Blob Storage service API version to 2017-11-09. For more information on the Azure Storage service versions supported on Azure Stack Hub, please refer to the [Azure Stack documentation](https://learn.microsoft.com/azure-stack/user/azure-stack-acs-differences).
 
 To begin, please ensure that you're familiar with the items discussed in the [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md) sample.  You'll also need to have the prerequisites and connection string information available, as discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.
 
@@ -10,7 +10,7 @@ To begin, please ensure that you're familiar with the items discussed in the [Ev
 
 ## Configuring the Blob Storage client
 
- This sample demonstrates using an [Azure.Core](https://docs.microsoft.com/dotnet/api/overview/azure/core-readme) pipeline policy to request the Blob  Storage client request use of a specific service version.  
+ This sample demonstrates using an [Azure.Core](https://learn.microsoft.com/dotnet/api/overview/azure/core-readme) pipeline policy to request the Blob  Storage client request use of a specific service version.
 
 ```C# Snippet:EventHubs_Processor_Sample06_StorageVersionPolicy
 /// <summary>
@@ -50,10 +50,12 @@ private class StorageApiVersionPolicy : HttpPipelineSynchronousPolicy
 ```
 
 ```C# Snippet:EventHubs_Processor_Sample06_ChooseStorageVersion
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var credential = new DefaultAzureCredential();
+
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
@@ -63,16 +65,22 @@ storageClientOptions.AddPolicy(
     new StorageApiVersionPolicy(),
     HttpPipelinePosition.PerCall);
 
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
+
 var storageClient = new BlobContainerClient(
-    storageConnectionString,
-    blobContainerName,
+    blobUriBuilder.ToUri(),
+    credential,
     storageClientOptions);
 
 var processor = new EventProcessorClient(
     storageClient,
     consumerGroup,
-    eventHubsConnectionString,
-    eventHubName);
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {

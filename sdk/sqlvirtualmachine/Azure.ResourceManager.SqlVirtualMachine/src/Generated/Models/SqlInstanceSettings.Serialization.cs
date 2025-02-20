@@ -5,132 +5,223 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlInstanceSettings : IUtf8JsonSerializable
+    public partial class SqlInstanceSettings : IUtf8JsonSerializable, IJsonModel<SqlInstanceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlInstanceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlInstanceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(MaxDop))
             {
-                writer.WritePropertyName("maxDop");
+                writer.WritePropertyName("maxDop"u8);
                 writer.WriteNumberValue(MaxDop.Value);
             }
             if (Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
             {
-                writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled");
+                writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled"u8);
                 writer.WriteBooleanValue(IsOptimizeForAdHocWorkloadsEnabled.Value);
             }
             if (Optional.IsDefined(MinServerMemoryInMB))
             {
-                writer.WritePropertyName("minServerMemoryMB");
+                writer.WritePropertyName("minServerMemoryMB"u8);
                 writer.WriteNumberValue(MinServerMemoryInMB.Value);
             }
             if (Optional.IsDefined(MaxServerMemoryInMB))
             {
-                writer.WritePropertyName("maxServerMemoryMB");
+                writer.WritePropertyName("maxServerMemoryMB"u8);
                 writer.WriteNumberValue(MaxServerMemoryInMB.Value);
             }
             if (Optional.IsDefined(IsLpimEnabled))
             {
-                writer.WritePropertyName("isLpimEnabled");
+                writer.WritePropertyName("isLpimEnabled"u8);
                 writer.WriteBooleanValue(IsLpimEnabled.Value);
             }
             if (Optional.IsDefined(IsIfiEnabled))
             {
-                writer.WritePropertyName("isIfiEnabled");
+                writer.WritePropertyName("isIfiEnabled"u8);
                 writer.WriteBooleanValue(IsIfiEnabled.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SqlInstanceSettings DeserializeSqlInstanceSettings(JsonElement element)
+        SqlInstanceSettings IJsonModel<SqlInstanceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> collation = default;
-            Optional<int> maxDop = default;
-            Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;
-            Optional<int> minServerMemoryMB = default;
-            Optional<int> maxServerMemoryMB = default;
-            Optional<bool> isLpimEnabled = default;
-            Optional<bool> isIfiEnabled = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlInstanceSettings(document.RootElement, options);
+        }
+
+        internal static SqlInstanceSettings DeserializeSqlInstanceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string collation = default;
+            int? maxDop = default;
+            bool? isOptimizeForAdHocWorkloadsEnabled = default;
+            int? minServerMemoryMB = default;
+            int? maxServerMemoryMB = default;
+            bool? isLpimEnabled = default;
+            bool? isIfiEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("collation"))
+                if (property.NameEquals("collation"u8))
                 {
                     collation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxDop"))
+                if (property.NameEquals("maxDop"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDop = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isOptimizeForAdHocWorkloadsEnabled"))
+                if (property.NameEquals("isOptimizeForAdHocWorkloadsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOptimizeForAdHocWorkloadsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minServerMemoryMB"))
+                if (property.NameEquals("minServerMemoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minServerMemoryMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxServerMemoryMB"))
+                if (property.NameEquals("maxServerMemoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxServerMemoryMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isLpimEnabled"))
+                if (property.NameEquals("isLpimEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isLpimEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isIfiEnabled"))
+                if (property.NameEquals("isIfiEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isIfiEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlInstanceSettings(
+                collation,
+                maxDop,
+                isOptimizeForAdHocWorkloadsEnabled,
+                minServerMemoryMB,
+                maxServerMemoryMB,
+                isLpimEnabled,
+                isIfiEnabled,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlInstanceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlInstanceSettings IPersistableModel<SqlInstanceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlInstanceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlInstanceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

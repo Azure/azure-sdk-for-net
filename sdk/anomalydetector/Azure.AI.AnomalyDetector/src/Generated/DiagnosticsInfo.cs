@@ -5,33 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Diagnostics information to help inspect the states of model or variable. </summary>
+    /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
     public partial class DiagnosticsInfo
     {
-        /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
-        public DiagnosticsInfo()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
+        internal DiagnosticsInfo()
         {
             VariableStates = new ChangeTrackingList<VariableState>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
-        /// <param name="modelState"></param>
-        /// <param name="variableStates"></param>
-        internal DiagnosticsInfo(ModelState modelState, IList<VariableState> variableStates)
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
+        /// <param name="modelState"> Model status. </param>
+        /// <param name="variableStates"> Variable status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticsInfo(ModelState modelState, IReadOnlyList<VariableState> variableStates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelState = modelState;
-            VariableStates = variableStates.ToList();
+            VariableStates = variableStates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the model state. </summary>
-        public ModelState ModelState { get; set; }
-        /// <summary> Gets the variable states. </summary>
-        public IList<VariableState> VariableStates { get; }
+        /// <summary> Model status. </summary>
+        public ModelState ModelState { get; }
+        /// <summary> Variable status. </summary>
+        public IReadOnlyList<VariableState> VariableStates { get; }
     }
 }

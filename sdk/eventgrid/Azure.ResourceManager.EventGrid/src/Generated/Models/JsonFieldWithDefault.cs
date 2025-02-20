@@ -5,33 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// This is used to express the source of an input schema mapping for a single target field
-    /// in the Event Grid Event schema. This is currently used in the mappings for the &apos;subject&apos;,
-    /// &apos;eventtype&apos; and &apos;dataversion&apos; properties. This represents a field in the input event schema
+    /// in the Event Grid Event schema. This is currently used in the mappings for the 'subject',
+    /// 'eventtype' and 'dataversion' properties. This represents a field in the input event schema
     /// along with a default value to be used, and at least one of these two properties should be provided.
     /// </summary>
     public partial class JsonFieldWithDefault
     {
-        /// <summary> Initializes a new instance of JsonFieldWithDefault. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JsonFieldWithDefault"/>. </summary>
         public JsonFieldWithDefault()
         {
         }
 
-        /// <summary> Initializes a new instance of JsonFieldWithDefault. </summary>
-        /// <param name="sourceField"> Name of a field in the input event schema that&apos;s to be used as the source of a mapping. </param>
-        /// <param name="defaultValue"> The default value to be used for mapping when a SourceField is not provided or if there&apos;s no property with the specified name in the published JSON event payload. </param>
-        internal JsonFieldWithDefault(string sourceField, string defaultValue)
+        /// <summary> Initializes a new instance of <see cref="JsonFieldWithDefault"/>. </summary>
+        /// <param name="sourceField"> Name of a field in the input event schema that's to be used as the source of a mapping. </param>
+        /// <param name="defaultValue"> The default value to be used for mapping when a SourceField is not provided or if there's no property with the specified name in the published JSON event payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JsonFieldWithDefault(string sourceField, string defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceField = sourceField;
             DefaultValue = defaultValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of a field in the input event schema that&apos;s to be used as the source of a mapping. </summary>
+        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
+        [WirePath("sourceField")]
         public string SourceField { get; set; }
-        /// <summary> The default value to be used for mapping when a SourceField is not provided or if there&apos;s no property with the specified name in the published JSON event payload. </summary>
+        /// <summary> The default value to be used for mapping when a SourceField is not provided or if there's no property with the specified name in the published JSON event payload. </summary>
+        [WirePath("defaultValue")]
         public string DefaultValue { get; set; }
     }
 }

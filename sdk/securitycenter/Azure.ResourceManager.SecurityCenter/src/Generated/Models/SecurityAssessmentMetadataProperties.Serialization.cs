@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentMetadataProperties : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataProperties : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentMetadataProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityAssessmentMetadataProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("displayName");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
+            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionId))
+            {
+                writer.WritePropertyName("policyDefinitionId"u8);
+                writer.WriteStringValue(PolicyDefinitionId);
+            }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(RemediationDescription))
             {
-                writer.WritePropertyName("remediationDescription");
+                writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -38,21 +61,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("severity");
+            writer.WritePropertyName("severity"u8);
             writer.WriteStringValue(Severity.ToString());
             if (Optional.IsDefined(UserImpact))
             {
-                writer.WritePropertyName("userImpact");
+                writer.WritePropertyName("userImpact"u8);
                 writer.WriteStringValue(UserImpact.Value.ToString());
             }
             if (Optional.IsDefined(ImplementationEffort))
             {
-                writer.WritePropertyName("implementationEffort");
+                writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Threats))
             {
-                writer.WritePropertyName("threats");
+                writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
                 foreach (var item in Threats)
                 {
@@ -62,65 +85,97 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsDefined(IsPreview))
             {
-                writer.WritePropertyName("preview");
+                writer.WritePropertyName("preview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            writer.WritePropertyName("assessmentType");
+            writer.WritePropertyName("assessmentType"u8);
             writer.WriteStringValue(AssessmentType.ToString());
             if (Optional.IsDefined(PartnerData))
             {
-                writer.WritePropertyName("partnerData");
-                writer.WriteObjectValue(PartnerData);
+                writer.WritePropertyName("partnerData"u8);
+                writer.WriteObjectValue(PartnerData, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element)
+        SecurityAssessmentMetadataProperties IJsonModel<SecurityAssessmentMetadataProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAssessmentMetadataProperties(document.RootElement, options);
+        }
+
+        internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
-            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string description = default;
+            string remediationDescription = default;
+            IList<SecurityAssessmentResourceCategory> categories = default;
             SecurityAssessmentSeverity severity = default;
-            Optional<SecurityAssessmentUserImpact> userImpact = default;
-            Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<SecurityThreat>> threats = default;
-            Optional<bool> preview = default;
+            SecurityAssessmentUserImpact? userImpact = default;
+            ImplementationEffort? implementationEffort = default;
+            IList<SecurityThreat> threats = default;
+            bool? preview = default;
             SecurityAssessmentType assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
+            SecurityAssessmentMetadataPartner partnerData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remediationDescription"))
+                if (property.NameEquals("remediationDescription"u8))
                 {
                     remediationDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityAssessmentResourceCategory> array = new List<SecurityAssessmentResourceCategory>();
@@ -131,36 +186,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = new SecurityAssessmentSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userImpact"))
+                if (property.NameEquals("userImpact"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userImpact = new SecurityAssessmentUserImpact(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("implementationEffort"))
+                if (property.NameEquals("implementationEffort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     implementationEffort = new ImplementationEffort(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("threats"))
+                if (property.NameEquals("threats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityThreat> array = new List<SecurityThreat>();
@@ -171,33 +223,80 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     threats = array;
                     continue;
                 }
-                if (property.NameEquals("preview"))
+                if (property.NameEquals("preview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preview = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("assessmentType"))
+                if (property.NameEquals("assessmentType"u8))
                 {
                     assessmentType = new SecurityAssessmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("partnerData"))
+                if (property.NameEquals("partnerData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value);
+                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityAssessmentMetadataProperties(
+                displayName,
+                policyDefinitionId,
+                description,
+                remediationDescription,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                severity,
+                userImpact,
+                implementationEffort,
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                preview,
+                assessmentType,
+                partnerData,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityAssessmentMetadataProperties IPersistableModel<SecurityAssessmentMetadataProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityAssessmentMetadataProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityAssessmentMetadataProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

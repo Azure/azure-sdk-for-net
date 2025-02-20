@@ -5,52 +5,196 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class PrivateDnsMXRecordInfo : IUtf8JsonSerializable
+    public partial class PrivateDnsMXRecordInfo : IUtf8JsonSerializable, IJsonModel<PrivateDnsMXRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsMXRecordInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PrivateDnsMXRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Preference))
             {
-                writer.WritePropertyName("preference");
+                writer.WritePropertyName("preference"u8);
                 writer.WriteNumberValue(Preference.Value);
             }
             if (Optional.IsDefined(Exchange))
             {
-                writer.WritePropertyName("exchange");
+                writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static PrivateDnsMXRecordInfo DeserializePrivateDnsMXRecordInfo(JsonElement element)
+        PrivateDnsMXRecordInfo IJsonModel<PrivateDnsMXRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<int> preference = default;
-            Optional<string> exchange = default;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateDnsMXRecordInfo(document.RootElement, options);
+        }
+
+        internal static PrivateDnsMXRecordInfo DeserializePrivateDnsMXRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? preference = default;
+            string exchange = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preference"))
+                if (property.NameEquals("preference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preference = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("exchange"))
+                if (property.NameEquals("exchange"u8))
                 {
                     exchange = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateDnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateDnsMXRecordInfo(preference, exchange, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Preference), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preference: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Preference))
+                {
+                    builder.Append("  preference: ");
+                    builder.AppendLine($"{Preference.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exchange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exchange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Exchange))
+                {
+                    builder.Append("  exchange: ");
+                    if (Exchange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Exchange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Exchange}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PrivateDnsMXRecordInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateDnsMXRecordInfo IPersistableModel<PrivateDnsMXRecordInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateDnsMXRecordInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateDnsMXRecordInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

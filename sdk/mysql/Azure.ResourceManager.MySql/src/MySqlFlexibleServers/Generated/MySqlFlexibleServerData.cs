@@ -13,16 +13,52 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary> A class representing the MySqlFlexibleServer data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlFlexibleServer data model.
+    /// Represents a server.
+    /// </summary>
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MySqlFlexibleServerData(AzureLocation location) : base(location)
         {
+            PrivateEndpointConnections = new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
         /// <param name="version"> Server version. </param>
         /// <param name="availabilityZone"> availability Zone information of the server. </param>
@@ -47,8 +83,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="backup"> Backup related properties of a server. </param>
         /// <param name="highAvailability"> High availability related properties of a server. </param>
         /// <param name="network"> Network related properties of a server. </param>
+        /// <param name="privateEndpointConnections"> PrivateEndpointConnections related properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, MySqlFlexibleServerMaintenanceWindow maintenanceWindow) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="importSourceProperties"> Source properties for import from storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -68,14 +107,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Backup = backup;
             HighAvailability = highAvailability;
             Network = network;
+            PrivateEndpointConnections = privateEndpointConnections;
             MaintenanceWindow = maintenanceWindow;
+            ImportSourceProperties = importSourceProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/> for deserialization. </summary>
+        internal MySqlFlexibleServerData()
+        {
         }
 
         /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlFlexibleServerSku Sku { get; set; }
-        /// <summary> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login (required for server creation). </summary>
         public string AdministratorLoginPassword { get; set; }
@@ -107,7 +154,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public MySqlFlexibleServerHighAvailability HighAvailability { get; set; }
         /// <summary> Network related properties of a server. </summary>
         public MySqlFlexibleServerNetwork Network { get; set; }
+        /// <summary> PrivateEndpointConnections related properties of a server. </summary>
+        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Maintenance window of a server. </summary>
         public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
+        /// <summary> Source properties for import from storage. </summary>
+        public ImportSourceProperties ImportSourceProperties { get; set; }
     }
 }

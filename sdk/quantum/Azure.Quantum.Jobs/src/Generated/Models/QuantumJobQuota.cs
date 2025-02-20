@@ -10,19 +10,19 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Quota information. </summary>
     public partial class QuantumJobQuota
     {
-        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumJobQuota"/>. </summary>
         internal QuantumJobQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumJobQuota"/>. </summary>
         /// <param name="dimension"> The name of the dimension associated with the quota. </param>
         /// <param name="scope"> The scope at which the quota is applied. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
         /// <param name="utilization"> The amount of the usage that has been applied for the current period. </param>
         /// <param name="holds"> The amount of the usage that has been reserved but not applied for the current period. </param>
         /// <param name="limit"> The maximum amount of usage allowed for the current period. </param>
-        /// <param name="period"> The time period in which the quota&apos;s underlying meter is accumulated. Based on calendar year. &apos;None&apos; is used for concurrent quotas. </param>
+        /// <param name="period"> The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas. </param>
         internal QuantumJobQuota(string dimension, DimensionScope? scope, string providerId, float? utilization, float? holds, float? limit, MeterPeriod? period)
         {
             Dimension = dimension;
@@ -46,7 +46,7 @@ namespace Azure.Quantum.Jobs.Models
         public float? Holds { get; }
         /// <summary> The maximum amount of usage allowed for the current period. </summary>
         public float? Limit { get; }
-        /// <summary> The time period in which the quota&apos;s underlying meter is accumulated. Based on calendar year. &apos;None&apos; is used for concurrent quotas. </summary>
+        /// <summary> The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas. </summary>
         public MeterPeriod? Period { get; }
     }
 }

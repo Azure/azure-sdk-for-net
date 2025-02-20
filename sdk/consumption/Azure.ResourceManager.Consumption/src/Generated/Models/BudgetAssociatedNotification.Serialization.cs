@@ -5,24 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetAssociatedNotification : IUtf8JsonSerializable
+    public partial class BudgetAssociatedNotification : IUtf8JsonSerializable, IJsonModel<BudgetAssociatedNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetAssociatedNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BudgetAssociatedNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            writer.WritePropertyName("threshold");
+            writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            writer.WritePropertyName("contactEmails");
+            writer.WritePropertyName("contactEmails"u8);
             writer.WriteStartArray();
             foreach (var item in ContactEmails)
             {
@@ -31,7 +49,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ContactRoles))
             {
-                writer.WritePropertyName("contactRoles");
+                writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContactRoles)
                 {
@@ -41,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             if (Optional.IsCollectionDefined(ContactGroups))
             {
-                writer.WritePropertyName("contactGroups");
+                writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContactGroups)
                 {
@@ -51,45 +69,79 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             if (Optional.IsDefined(ThresholdType))
             {
-                writer.WritePropertyName("thresholdType");
+                writer.WritePropertyName("thresholdType"u8);
                 writer.WriteStringValue(ThresholdType.Value.ToString());
             }
             if (Optional.IsDefined(Locale))
             {
-                writer.WritePropertyName("locale");
+                writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element)
+        BudgetAssociatedNotification IJsonModel<BudgetAssociatedNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBudgetAssociatedNotification(document.RootElement, options);
+        }
+
+        internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             NotificationAlertTriggerType @operator = default;
             decimal threshold = default;
             IList<string> contactEmails = default;
-            Optional<IList<string>> contactRoles = default;
-            Optional<IList<string>> contactGroups = default;
-            Optional<NotificationThresholdType> thresholdType = default;
-            Optional<RecipientNotificationLanguageCode> locale = default;
+            IList<string> contactRoles = default;
+            IList<string> contactGroups = default;
+            NotificationThresholdType? thresholdType = default;
+            RecipientNotificationLanguageCode? locale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new NotificationAlertTriggerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("contactEmails"))
+                if (property.NameEquals("contactEmails"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -99,11 +151,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     contactEmails = array;
                     continue;
                 }
-                if (property.NameEquals("contactRoles"))
+                if (property.NameEquals("contactRoles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -114,11 +165,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     contactRoles = array;
                     continue;
                 }
-                if (property.NameEquals("contactGroups"))
+                if (property.NameEquals("contactGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -129,28 +179,71 @@ namespace Azure.ResourceManager.Consumption.Models
                     contactGroups = array;
                     continue;
                 }
-                if (property.NameEquals("thresholdType"))
+                if (property.NameEquals("thresholdType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thresholdType = new NotificationThresholdType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("locale"))
+                if (property.NameEquals("locale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     locale = new RecipientNotificationLanguageCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Optional.ToList(contactRoles), Optional.ToList(contactGroups), Optional.ToNullable(thresholdType), Optional.ToNullable(locale));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BudgetAssociatedNotification(
+                enabled,
+                @operator,
+                threshold,
+                contactEmails,
+                contactRoles ?? new ChangeTrackingList<string>(),
+                contactGroups ?? new ChangeTrackingList<string>(),
+                thresholdType,
+                locale,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BudgetAssociatedNotification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BudgetAssociatedNotification IPersistableModel<BudgetAssociatedNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBudgetAssociatedNotification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BudgetAssociatedNotification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

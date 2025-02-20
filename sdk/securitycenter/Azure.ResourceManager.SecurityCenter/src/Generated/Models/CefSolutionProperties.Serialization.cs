@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,40 +14,42 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CefSolutionProperties : IUtf8JsonSerializable
+    public partial class CefSolutionProperties : IUtf8JsonSerializable, IJsonModel<CefSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CefSolutionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CefSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CefSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(Agent))
             {
-                writer.WritePropertyName("agent");
+                writer.WritePropertyName("agent"u8);
                 writer.WriteStringValue(Agent);
             }
             if (Optional.IsDefined(LastEventReceived))
             {
-                writer.WritePropertyName("lastEventReceived");
+                writer.WritePropertyName("lastEventReceived"u8);
                 writer.WriteStringValue(LastEventReceived);
-            }
-            if (Optional.IsDefined(DeviceVendor))
-            {
-                writer.WritePropertyName("deviceVendor");
-                writer.WriteStringValue(DeviceVendor);
-            }
-            if (Optional.IsDefined(DeviceType))
-            {
-                writer.WritePropertyName("deviceType");
-                writer.WriteStringValue(DeviceType);
-            }
-            if (Optional.IsDefined(Workspace))
-            {
-                writer.WritePropertyName("workspace");
-                JsonSerializer.Serialize(writer, Workspace);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -54,54 +57,73 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element)
+        CefSolutionProperties IJsonModel<CefSolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> hostname = default;
-            Optional<string> agent = default;
-            Optional<string> lastEventReceived = default;
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            var format = options.Format == "W" ? ((IPersistableModel<CefSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCefSolutionProperties(document.RootElement, options);
+        }
+
+        internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string hostname = default;
+            string agent = default;
+            string lastEventReceived = default;
+            string deviceVendor = default;
+            string deviceType = default;
+            WritableSubResource workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agent"))
+                if (property.NameEquals("agent"u8))
                 {
                     agent = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastEventReceived"))
+                if (property.NameEquals("lastEventReceived"u8))
                 {
                     lastEventReceived = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceVendor"))
+                if (property.NameEquals("deviceVendor"u8))
                 {
                     deviceVendor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceType"))
+                if (property.NameEquals("deviceType"u8))
                 {
                     deviceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspace"))
+                if (property.NameEquals("workspace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspace = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -110,7 +132,45 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CefSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, hostname.Value, agent.Value, lastEventReceived.Value);
+            return new CefSolutionProperties(
+                deviceVendor,
+                deviceType,
+                workspace,
+                additionalProperties,
+                hostname,
+                agent,
+                lastEventReceived);
         }
+
+        BinaryData IPersistableModel<CefSolutionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CefSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CefSolutionProperties IPersistableModel<CefSolutionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CefSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCefSolutionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CefSolutionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

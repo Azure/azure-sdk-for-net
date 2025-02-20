@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;). </summary>
+    /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </summary>
     public readonly partial struct RedisTlsVersion : IEquatable<RedisTlsVersion>
     {
         private readonly string _value;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Redis.Models
         public static bool operator ==(RedisTlsVersion left, RedisTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(RedisTlsVersion left, RedisTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisTlsVersion"/>. </summary>
         public static implicit operator RedisTlsVersion(string value) => new RedisTlsVersion(value);
 
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

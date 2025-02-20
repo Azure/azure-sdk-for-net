@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.DigitalTwins.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Samples
 {
     public partial class Sample_DigitalTwinsEndpointResource
     {
-        // Get a DigitalTwinsInstance endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADigitalTwinsInstanceEndpoint()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointGet_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointGet_example.json
             // this example is just showing the usage of "DigitalTwinsEndpoint_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a DigitalTwinsInstance endpoint with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADigitalTwinsInstanceEndpointWithIdentity()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointGet_WithIdentity_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointGet_WithIdentity_example.json
             // this example is just showing the usage of "DigitalTwinsEndpoint_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,12 +78,75 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put a DigitalTwinsEndpoint resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteADigitalTwinsInstanceEndpoint()
+        {
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointDelete_example.json
+            // this example is just showing the usage of "DigitalTwinsEndpoint_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DigitalTwinsEndpointResource created on azure
+            // for more information of creating DigitalTwinsEndpointResource, please refer to the document of DigitalTwinsEndpointResource
+            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string resourceGroupName = "resRg";
+            string resourceName = "myDigitalTwinsService";
+            string endpointName = "myendpoint";
+            ResourceIdentifier digitalTwinsEndpointResourceId = DigitalTwinsEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, endpointName);
+            DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
+
+            // invoke the operation
+            ArmOperation<DigitalTwinsEndpointResource> lro = await digitalTwinsEndpointResource.DeleteAsync(WaitUntil.Completed);
+            DigitalTwinsEndpointResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DigitalTwinsEndpointResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteADigitalTwinsInstanceEndpointWithIdentity()
+        {
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointDelete_WithIdentity_example.json
+            // this example is just showing the usage of "DigitalTwinsEndpoint_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DigitalTwinsEndpointResource created on azure
+            // for more information of creating DigitalTwinsEndpointResource, please refer to the document of DigitalTwinsEndpointResource
+            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string resourceGroupName = "resRg";
+            string resourceName = "myDigitalTwinsService";
+            string endpointName = "myendpoint";
+            ResourceIdentifier digitalTwinsEndpointResourceId = DigitalTwinsEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, endpointName);
+            DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
+
+            // invoke the operation
+            ArmOperation<DigitalTwinsEndpointResource> lro = await digitalTwinsEndpointResource.DeleteAsync(WaitUntil.Completed);
+            DigitalTwinsEndpointResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DigitalTwinsEndpointResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PutADigitalTwinsEndpointResource()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointPut_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointPut_example.json
             // this example is just showing the usage of "DigitalTwinsEndpoint_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +164,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
 
             // invoke the operation
-            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties()
+            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties
             {
                 PrimaryConnectionString = "Endpoint=sb://mysb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xyzxyzoX4=;EntityPath=abcabc",
                 SecondaryConnectionString = "Endpoint=sb://mysb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xyzxyzoX4=;EntityPath=abcabc",
@@ -121,12 +180,11 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put a DigitalTwinsEndpoint resource with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PutADigitalTwinsEndpointResourceWithIdentity()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointPut_WithIdentity_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointPut_WithIdentity_example.json
             // this example is just showing the usage of "DigitalTwinsEndpoint_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +202,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
 
             // invoke the operation
-            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties()
+            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties
             {
                 EndpointUri = new Uri("sb://mysb.servicebus.windows.net/"),
                 EntityPath = "mysbtopic",
@@ -160,12 +218,11 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put a DigitalTwinsEndpoint resource with user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PutADigitalTwinsEndpointResourceWithUserAssignedIdentity()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointPut_WithUserIdentity_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsEndpointPut_WithUserIdentity_example.json
             // this example is just showing the usage of "DigitalTwinsEndpoint_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,84 +240,18 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
 
             // invoke the operation
-            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties()
+            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties
             {
                 EndpointUri = new Uri("sb://mysb.servicebus.windows.net/"),
                 EntityPath = "mysbtopic",
                 AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
-                Identity = new DigitalTwinsManagedIdentityReference()
+                Identity = new DigitalTwinsManagedIdentityReference
                 {
                     IdentityType = DigitalTwinsManagedIdentityType.UserAssigned,
                     UserAssignedIdentity = "/subscriptions/50016170-c839-41ba-a724-51e9df440b9e/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity",
                 },
             });
             ArmOperation<DigitalTwinsEndpointResource> lro = await digitalTwinsEndpointResource.UpdateAsync(WaitUntil.Completed, data);
-            DigitalTwinsEndpointResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DigitalTwinsEndpointResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete a DigitalTwinsInstance endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteADigitalTwinsInstanceEndpoint()
-        {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointDelete_example.json
-            // this example is just showing the usage of "DigitalTwinsEndpoint_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DigitalTwinsEndpointResource created on azure
-            // for more information of creating DigitalTwinsEndpointResource, please refer to the document of DigitalTwinsEndpointResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            string resourceGroupName = "resRg";
-            string resourceName = "myDigitalTwinsService";
-            string endpointName = "myendpoint";
-            ResourceIdentifier digitalTwinsEndpointResourceId = DigitalTwinsEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, endpointName);
-            DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
-
-            // invoke the operation
-            ArmOperation<DigitalTwinsEndpointResource> lro = await digitalTwinsEndpointResource.DeleteAsync(WaitUntil.Completed);
-            DigitalTwinsEndpointResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DigitalTwinsEndpointResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete a DigitalTwinsInstance endpoint with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteADigitalTwinsInstanceEndpointWithIdentity()
-        {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/DigitalTwinsEndpointDelete_WithIdentity_example.json
-            // this example is just showing the usage of "DigitalTwinsEndpoint_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DigitalTwinsEndpointResource created on azure
-            // for more information of creating DigitalTwinsEndpointResource, please refer to the document of DigitalTwinsEndpointResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            string resourceGroupName = "resRg";
-            string resourceName = "myDigitalTwinsService";
-            string endpointName = "myendpoint";
-            ResourceIdentifier digitalTwinsEndpointResourceId = DigitalTwinsEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, endpointName);
-            DigitalTwinsEndpointResource digitalTwinsEndpointResource = client.GetDigitalTwinsEndpointResource(digitalTwinsEndpointResourceId);
-
-            // invoke the operation
-            ArmOperation<DigitalTwinsEndpointResource> lro = await digitalTwinsEndpointResource.DeleteAsync(WaitUntil.Completed);
             DigitalTwinsEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

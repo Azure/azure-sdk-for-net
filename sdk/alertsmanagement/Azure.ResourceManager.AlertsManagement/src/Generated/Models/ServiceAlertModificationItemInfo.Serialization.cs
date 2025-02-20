@@ -5,107 +5,203 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertModificationItemInfo : IUtf8JsonSerializable
+    public partial class ServiceAlertModificationItemInfo : IUtf8JsonSerializable, IJsonModel<ServiceAlertModificationItemInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertModificationItemInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceAlertModificationItemInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ModificationEvent))
             {
-                writer.WritePropertyName("modificationEvent");
+                writer.WritePropertyName("modificationEvent"u8);
                 writer.WriteStringValue(ModificationEvent.Value.ToSerialString());
             }
             if (Optional.IsDefined(OldValue))
             {
-                writer.WritePropertyName("oldValue");
+                writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
             if (Optional.IsDefined(NewValue))
             {
-                writer.WritePropertyName("newValue");
+                writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
             if (Optional.IsDefined(ModifiedAt))
             {
-                writer.WritePropertyName("modifiedAt");
+                writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedAt);
             }
             if (Optional.IsDefined(ModifiedBy))
             {
-                writer.WritePropertyName("modifiedBy");
+                writer.WritePropertyName("modifiedBy"u8);
                 writer.WriteStringValue(ModifiedBy);
             }
             if (Optional.IsDefined(Comments))
             {
-                writer.WritePropertyName("comments");
+                writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ServiceAlertModificationItemInfo DeserializeServiceAlertModificationItemInfo(JsonElement element)
+        ServiceAlertModificationItemInfo IJsonModel<ServiceAlertModificationItemInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ServiceAlertModificationEvent> modificationEvent = default;
-            Optional<string> oldValue = default;
-            Optional<string> newValue = default;
-            Optional<string> modifiedAt = default;
-            Optional<string> modifiedBy = default;
-            Optional<string> comments = default;
-            Optional<string> description = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAlertModificationItemInfo(document.RootElement, options);
+        }
+
+        internal static ServiceAlertModificationItemInfo DeserializeServiceAlertModificationItemInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ServiceAlertModificationEvent? modificationEvent = default;
+            string oldValue = default;
+            string newValue = default;
+            string modifiedAt = default;
+            string modifiedBy = default;
+            string comments = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modificationEvent"))
+                if (property.NameEquals("modificationEvent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modificationEvent = property.Value.GetString().ToServiceAlertModificationEvent();
                     continue;
                 }
-                if (property.NameEquals("oldValue"))
+                if (property.NameEquals("oldValue"u8))
                 {
                     oldValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("newValue"))
+                if (property.NameEquals("newValue"u8))
                 {
                     newValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifiedAt"))
+                if (property.NameEquals("modifiedAt"u8))
                 {
                     modifiedAt = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifiedBy"))
+                if (property.NameEquals("modifiedBy"u8))
                 {
                     modifiedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("comments"))
+                if (property.NameEquals("comments"u8))
                 {
                     comments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAlertModificationItemInfo(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, modifiedAt.Value, modifiedBy.Value, comments.Value, description.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceAlertModificationItemInfo(
+                modificationEvent,
+                oldValue,
+                newValue,
+                modifiedAt,
+                modifiedBy,
+                comments,
+                description,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceAlertModificationItemInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceAlertModificationItemInfo IPersistableModel<ServiceAlertModificationItemInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAlertModificationItemInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAlertModificationItemInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

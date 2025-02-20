@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(Span))
             {
-                writer.WritePropertyName("span");
+                writer.WritePropertyName("span"u8);
                 writer.WriteStringValue(Span.Value, "P");
             }
             writer.WriteEndObject();
@@ -26,21 +26,40 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static InterpolationBoundary DeserializeInterpolationBoundary(JsonElement element)
         {
-            Optional<TimeSpan> span = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TimeSpan? span = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("span"))
+                if (property.NameEquals("span"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     span = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new InterpolationBoundary(Optional.ToNullable(span));
+            return new InterpolationBoundary(span);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InterpolationBoundary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInterpolationBoundary(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

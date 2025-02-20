@@ -7,51 +7,203 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageAccountResource
     {
-        // StorageAccountCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckStorageAccountNameAvailability_StorageAccountCheckNameAvailability()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetAsyncSkuConversionStatus()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountCheckNameAvailability.json
-            // this example is just showing the usage of "StorageAccounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
             string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "res9407";
+            string accountName = "sto8596";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountNameAvailabilityContent content = new StorageAccountNameAvailabilityContent("sto3363");
-            StorageAccountNameAvailabilityResult result = await subscriptionResource.CheckStorageAccountNameAvailabilityAsync(content);
+            StorageAccountResource result = await storageAccount.GetAsync();
 
-            Console.WriteLine($"Succeeded: {result}");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetProperties()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetProperties.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            string accountName = "sto8596";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            StorageAccountResource result = await storageAccount.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesCMKEnabled()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetPropertiesCMKEnabled.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            string accountName = "sto8596";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            StorageAccountResource result = await storageAccount.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesCMKVersionExpirationTime()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            string accountName = "sto8596";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            StorageAccountResource result = await storageAccount.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            string accountName = "sto8596";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
+            StorageAccountResource result = await storageAccount.GetAsync(expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            string accountName = "sto8596";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
+            StorageAccountResource result = await storageAccount.GetAsync(expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_StorageAccountDelete()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountDelete.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountDelete.json
             // this example is just showing the usage of "StorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,139 +222,14 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             await storageAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountGetAsyncSkuConversionStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_StorageAccountGetAsyncSkuConversionStatus()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountResource created on azure
-            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            string accountName = "sto8596";
-            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
-
-            // invoke the operation
-            StorageAccountResource result = await storageAccount.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // StorageAccountGetProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_StorageAccountGetProperties()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetProperties.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountResource created on azure
-            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            string accountName = "sto8596";
-            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
-
-            // invoke the operation
-            StorageAccountResource result = await storageAccount.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // StorageAccountGetPropertiesCMKEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_StorageAccountGetPropertiesCMKEnabled()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetPropertiesCMKEnabled.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountResource created on azure
-            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            string accountName = "sto8596";
-            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
-
-            // invoke the operation
-            StorageAccountResource result = await storageAccount.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // StorageAccountGetPropertiesCMKVersionExpirationTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_StorageAccountGetPropertiesCMKVersionExpirationTime()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountResource created on azure
-            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            string accountName = "sto8596";
-            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
-
-            // invoke the operation
-            StorageAccountResource result = await storageAccount.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // StorageAccountEnableAD
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountEnableAD()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountEnableAD.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountEnableAD.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +246,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AD)
                 {
@@ -243,12 +270,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountEnableCMK
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountEnableCMK()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountEnableCMK.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountEnableCMK.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -265,25 +291,25 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
@@ -300,12 +326,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdate()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountUpdate.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdate.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -322,18 +347,18 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -345,18 +370,16 @@ namespace Azure.ResourceManager.Storage.Samples
                 KeyExpirationPeriodInDays = 20,
                 IsSftpEnabled = true,
                 IsLocalUserEnabled = true,
+                IsExtendedGroupEnabled = true,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -376,12 +399,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateAllowedCopyScopeToAAD
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateAllowedCopyScopeToAAD()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountUpdateAllowedCopyScopeToAAD.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateAllowedCopyScopeToAAD.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -398,18 +420,18 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -421,16 +443,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 KeyExpirationPeriodInDays = 20,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -450,12 +469,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateDisablePublicNetworkAccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateDisablePublicNetworkAccess()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountUpdateDisablePublicNetworkAccess.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateDisablePublicNetworkAccess.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -472,18 +490,18 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -495,16 +513,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 KeyExpirationPeriodInDays = 20,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -524,12 +539,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -546,40 +560,40 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 Sku = new StorageSku(StorageSkuName.StandardLrs),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity()
 },
                 },
                 Kind = StorageKind.Storage,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                     },
@@ -594,12 +608,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -616,40 +629,40 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 Sku = new StorageSku(StorageSkuName.StandardLrs),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity()
 },
                 },
                 Kind = StorageKind.Storage,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                         EncryptionFederatedIdentityClientId = "3109d1c4-a5de-4d84-8832-feabb916a4b6",
@@ -665,12 +678,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateWithImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateWithImmutabilityPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountUpdateWithImmutabilityPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateWithImmutabilityPolicy.json
             // this example is just showing the usage of "StorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -687,12 +699,12 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                ImmutableStorageWithVersioning = new ImmutableStorageAccount()
+                ImmutableStorageWithVersioning = new ImmutableStorageAccount
                 {
                     IsEnabled = true,
-                    ImmutabilityPolicy = new AccountImmutabilityPolicy()
+                    ImmutabilityPolicy = new AccountImmutabilityPolicy
                     {
                         ImmutabilityPeriodSinceCreationInDays = 15,
                         State = AccountImmutabilityPolicyState.Locked,
@@ -709,44 +721,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetStorageAccounts_StorageAccountList()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountList.json
-            // this example is just showing the usage of "StorageAccounts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (StorageAccountResource item in subscriptionResource.GetStorageAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // StorageAccountListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_StorageAccountListKeys()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListKeys.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountListKeys.json
             // this example is just showing the usage of "StorageAccounts_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -768,15 +747,14 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountRegenerateKerbKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_StorageAccountRegenerateKerbKey()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountRegenerateKerbKey.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountRegenerateKerbKey.json
             // this example is just showing the usage of "StorageAccounts_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -799,15 +777,14 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_StorageAccountRegenerateKey()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountRegenerateKey.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountRegenerateKey.json
             // this example is just showing the usage of "StorageAccounts_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -830,16 +807,15 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountListAccountSAS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccountSas_StorageAccountListAccountSAS()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListAccountSAS.json
-            // this example is just showing the usage of "StorageAccounts_ListAccountSAS" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountListAccountSAS.json
+            // this example is just showing the usage of "StorageAccounts_ListAccountSas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -866,13 +842,12 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountListServiceSAS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServiceSas_StorageAccountListServiceSAS()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListServiceSAS.json
-            // this example is just showing the usage of "StorageAccounts_ListServiceSAS" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountListServiceSAS.json
+            // this example is just showing the usage of "StorageAccounts_ListServiceSas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -899,12 +874,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountFailover
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Failover_StorageAccountFailover()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountFailover.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountFailover.json
             // this example is just showing the usage of "StorageAccounts_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -923,15 +897,14 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             // invoke the operation
             await storageAccount.FailoverAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountFailoverPlanned
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Failover_StorageAccountFailoverPlanned()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountFailoverPlanned.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountFailoverPlanned.json
             // this example is just showing the usage of "StorageAccounts_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -951,15 +924,14 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountFailoverType? failoverType = StorageAccountFailoverType.Planned;
             await storageAccount.FailoverAsync(WaitUntil.Completed, failoverType: failoverType);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountHierarchicalNamespaceMigration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableHierarchicalNamespace_StorageAccountHierarchicalNamespaceMigration()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountHierarchicalNamespaceMigration.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountHierarchicalNamespaceMigration.json
             // this example is just showing the usage of "StorageAccounts_HierarchicalNamespaceMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -979,15 +951,14 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             string requestType = "HnsOnValidationRequest";
             await storageAccount.EnableHierarchicalNamespaceAsync(WaitUntil.Completed, requestType);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountAbortHierarchicalNamespaceMigration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AbortHierarchicalNamespaceMigration_StorageAccountAbortHierarchicalNamespaceMigration()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountAbortHierarchicalNamespaceMigration.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountAbortHierarchicalNamespaceMigration.json
             // this example is just showing the usage of "StorageAccounts_AbortHierarchicalNamespaceMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1006,15 +977,41 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             // invoke the operation
             await storageAccount.AbortHierarchicalNamespaceMigrationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BlobRangesRestore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CustomerInitiatedMigration_StorageAccountPostMigration()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountPostMigration.json
+            // this example is just showing the usage of "StorageAccounts_CustomerInitiatedMigration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "resource-group-name";
+            string accountName = "accountname";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            StorageAccountMigrationData data = new StorageAccountMigrationData(StorageSkuName.StandardZrs);
+            await storageAccount.CustomerInitiatedMigrationAsync(WaitUntil.Completed, data);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RestoreBlobRanges_BlobRangesRestore()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobRangesRestore.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobRangesRestore.json
             // this example is just showing the usage of "StorageAccounts_RestoreBlobRanges" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1031,21 +1028,22 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            BlobRestoreContent content = new BlobRestoreContent(DateTimeOffset.Parse("placeholder"), new BlobRestoreRange[]
+            BlobRestoreContent content = new BlobRestoreContent(default, new BlobRestoreRange[]
             {
-new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestoreRange("container2/blobpath3","")
+new BlobRestoreRange("container/blobpath1", "container/blobpath2"),
+new BlobRestoreRange("container2/blobpath3", "")
             });
-            await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            ArmOperation<BlobRestoreStatus> lro = await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            BlobRestoreStatus result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountRevokeUserDelegationKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevokeUserDelegationKeys_StorageAccountRevokeUserDelegationKeys()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountRevokeUserDelegationKeys.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountRevokeUserDelegationKeys.json
             // this example is just showing the usage of "StorageAccounts_RevokeUserDelegationKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1064,15 +1062,14 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
             // invoke the operation
             await storageAccount.RevokeUserDelegationKeysAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountListPrivateLinkResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_StorageAccountListPrivateLinkResources()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountListPrivateLinkResources.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountListPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_ListByStorageAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1094,7 +1091,36 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetStorageTaskAssignmentsInstancesReports_ListStorageTaskAssignmentsInstancesReportSummary()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/storageTaskAssignmentsList/ListStorageTaskAssignmentsInstancesReportSummary.json
+            // this example is just showing the usage of "StorageTaskAssignmentsInstancesReport_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string resourceGroupName = "res4228";
+            string accountName = "sto4445";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (StorageTaskReportInstance item in storageAccount.GetStorageTaskAssignmentsInstancesReportsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

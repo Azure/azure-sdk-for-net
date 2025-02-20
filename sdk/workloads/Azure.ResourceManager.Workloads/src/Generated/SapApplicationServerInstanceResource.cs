@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
 
@@ -21,13 +19,17 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapApplicationServerInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapApplicationServerInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapApplicationServerInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SapVirtualInstanceResource" /> using the GetSapApplicationServerInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapApplicationServerInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapApplicationServerInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SapVirtualInstanceResource"/> using the GetSapApplicationServerInstance method.
     /// </summary>
     public partial class SapApplicationServerInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapApplicationServerInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sapVirtualInstanceName"> The sapVirtualInstanceName. </param>
+        /// <param name="applicationInstanceName"> The applicationInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}";
@@ -38,12 +40,15 @@ namespace Azure.ResourceManager.Workloads
         private readonly SAPApplicationServerInstancesRestOperations _sapApplicationServerInstanceSapApplicationServerInstancesRestClient;
         private readonly SapApplicationServerInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/sapVirtualInstances/applicationInstances";
+
         /// <summary> Initializes a new instance of the <see cref="SapApplicationServerInstanceResource"/> class for mocking. </summary>
         protected SapApplicationServerInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapApplicationServerInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapApplicationServerInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapApplicationServerInstanceResource(ArmClient client, SapApplicationServerInstanceData data) : this(client, data.Id)
@@ -64,9 +69,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/sapVirtualInstances/applicationInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Application Server Instance.
+        /// Gets the SAP Application Server Instance corresponding to the Virtual Instance for SAP solutions resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -99,6 +101,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +132,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Application Server Instance.
+        /// Gets the SAP Application Server Instance corresponding to the Virtual Instance for SAP solutions resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -131,6 +141,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,7 +172,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes the SAP Application Server Instance. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
+        /// Deletes the SAP Application Server Instance resource. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -163,6 +181,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +214,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes the SAP Application Server Instance. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
+        /// Deletes the SAP Application Server Instance resource. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -197,6 +223,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,7 +256,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Application Server Instance.
+        /// Puts the SAP Application Server Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -232,10 +266,18 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The SAP Application Server instance request body. </param>
+        /// <param name="patch"> The SAP Application Server Instance resource request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SapApplicationServerInstanceResource>> UpdateAsync(WaitUntil waitUntil, SapApplicationServerInstancePatch patch, CancellationToken cancellationToken = default)
@@ -260,7 +302,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Application Server Instance.
+        /// Puts the SAP Application Server Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -270,10 +312,18 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The SAP Application Server instance request body. </param>
+        /// <param name="patch"> The SAP Application Server Instance resource request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SapApplicationServerInstanceResource> Update(WaitUntil waitUntil, SapApplicationServerInstancePatch patch, CancellationToken cancellationToken = default)
@@ -298,6 +348,176 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
+        /// Starts the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPApplicationServerInstances_StartInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StartInstanceAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.StartInstance");
+            scope.Start();
+            try
+            {
+                var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.StartInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateStartInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPApplicationServerInstances_StartInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<OperationStatusResult> StartInstance(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.StartInstance");
+            scope.Start();
+            try
+            {
+                var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.StartInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateStartInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPApplicationServerInstances_StopInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> SAP Application server instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StopInstanceAsync(WaitUntil waitUntil, SapStopContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.StopInstance");
+            scope.Start();
+            try
+            {
+                var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.StopInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateStopInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPApplicationServerInstances_StopInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> SAP Application server instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<OperationStatusResult> StopInstance(WaitUntil waitUntil, SapStopContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.StopInstance");
+            scope.Start();
+            try
+            {
+                var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.StopInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateStopInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -307,6 +527,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +590,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -416,6 +652,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -465,6 +709,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -513,6 +765,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -565,6 +825,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

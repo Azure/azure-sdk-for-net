@@ -2,79 +2,51 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The AppendBlobStorageResource class.
     /// </summary>
-    public class AppendBlobStorageResource : StorageResource
+    internal class AppendBlobStorageResource : StorageResourceItemInternal
     {
-        private AppendBlobClient _blobClient;
-        private AppendBlobStorageResourceOptions _options;
-        private long? _length;
+        internal AppendBlobClient BlobClient { get; set; }
+        internal AppendBlobStorageResourceOptions _options;
 
-        /// <summary>
-        /// Gets the URL of the storage resource.
-        /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.AppendBlob;
 
-        /// <summary>
-        /// Gets the path of the storage resource.
-        /// </summary>
-        public override string Path => _blobClient.Name;
+        public override Uri Uri => BlobClient.Uri;
 
-        /// <summary>
-        /// Defines whether the storage resource type can produce a URL.
-        /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+        public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Returns the preferred method of how to perform service to service
-        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="AppendBlobStorageResourceOptions.CopyMethod"/>
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
+        protected override TransferOrder TransferType => TransferOrder.Sequential;
 
-        /// <summary>
-        /// Defines the recommended Transfer Type for the storage resource.
-        /// </summary>
-        public override TransferType TransferType => TransferType.Sequential;
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
-        public override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
+        protected override long MaxSupportedChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
-        public override long? Length => _length;
+        protected override long? Length => ResourceProperties?.ResourceLength;
+
+        internal AppendBlobStorageResource()
+        {
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
-        /// <param name="blobClient">The blob client <see cref="BlobClient"/>
+        /// <param name="blobClient">The blob client <see cref="Storage.Blobs.BlobClient"/>
         /// which will service the storage resource operations.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         public AppendBlobStorageResource(AppendBlobClient blobClient, AppendBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _options = options;
         }
 
@@ -82,15 +54,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Internal Constructor for constructing the resource retrieved by a GetStorageResources.
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
-        /// <param name="length">The content length of the blob.</param>
+        /// <param name="resourceProperties">Properties specific to the resource.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         internal AppendBlobStorageResource(
             AppendBlobClient blobClient,
-            long? length,
+            StorageResourceItemProperties resourceProperties,
             AppendBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
-            _length = length;
+            ResourceProperties = resourceProperties;
         }
 
         /// <summary>
@@ -106,56 +78,68 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        /// <returns>The <see cref="StorageResourceReadStreamResult"/> resulting from the upload operation.</returns>
+        protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length)),
+            Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), ResourceProperties?.ETag),
                 cancellationToken).ConfigureAwait(false);
+
+            // Set the resource properties if we currently do not have any stored on the resource.
+            if (ResourceProperties == default)
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
             return response.Value.ToReadStreamStorageResourceInfo();
         }
 
         /// <summary>
         /// Consumes the readable stream to upload.
         /// </summary>
-        /// <param name="position">The offset at which which the stream will be copied to. Default value is 0.</param>
-        /// <param name="overwrite">
-        /// If set to true, will overwrite the blob if it currently exists.
+        /// <param name="stream">
+        /// The stream containing the data to be consumed and uploaded.
         /// </param>
         /// <param name="streamLength">
         /// The length of the content stream.
         /// </param>
-        /// <param name="completeLength">
-        /// The expected complete length of the blob.
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
-        /// <param name="stream">The stream containing the data to be consumed and uploaded.</param>
-        /// <param name="options">Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.</param>
+        /// <param name="completeLength">
+        /// The expected complete length of the resource item.
+        /// </param>
+        /// <param name="options">
+        /// Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
+        protected override async Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
-            long position = 0,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
-                await _blobClient.CreateAsync(
-                    _options.ToCreateOptions(overwrite),
+                await BlobClient.CreateAsync(
+                    DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
-                await _blobClient.AppendBlockAsync(
+                await BlobClient.AppendBlockAsync(
                     content: stream,
                     options: _options.ToAppendBlockOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -165,7 +149,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
@@ -179,30 +163,29 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyFromUriAsync(
-            StorageResource sourceResource,
+        protected override async Task CopyFromUriAsync(
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
-            {
-                await _blobClient.StartCopyFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
-            {
-                // Create Append blob beforehand
-                await _blobClient.CreateAsync(
-                    options: _options.ToCreateOptions(overwrite),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            // Create Append blob beforehand
+            await BlobClient.CreateAsync(
+                options: DataMovementBlobsExtensions.GetCreateOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceProperties),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                await _blobClient.SyncCopyFromUriAsync(
+            // There is no synchronous single-call copy API for Append/Page -> Append Blob
+            // so use a single Append Block from URL instead.
+            if (completeLength > 0)
+            {
+                HttpRange range = new HttpRange(0, completeLength);
+                await BlobClient.AppendBlockFromUriAsync(
                     sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    options: _options.ToAppendBlockFromUriOptions(overwrite, range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -210,7 +193,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it already exists.
@@ -225,55 +208,120 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+        protected override async Task CopyBlockFromUriAsync(
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            if (range.Offset == 0)
             {
-                if (range.Offset == 0)
-                {
-                    await _blobClient.CreateAsync(
-                        _options.ToCreateOptions(overwrite),
-                        cancellationToken).ConfigureAwait(false);
-                }
-                await _blobClient.AppendBlockFromUriAsync(
+                await BlobClient.CreateAsync(
+                    DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
+                    cancellationToken).ConfigureAwait(false);
+            }
+
+            await BlobClient.AppendBlockFromUriAsync(
                 sourceResource.Uri,
                 options: _options.ToAppendBlockFromUriOptions(
                     overwrite,
                     range,
                     options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            // The properties could be populated during construction (from enumeration)
+            if (ResourceProperties != default)
+            {
+                return ResourceProperties;
             }
             else
             {
-                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
+                BlobProperties blobProperties = (await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
+                StorageResourceItemProperties resourceProperties = blobProperties.ToStorageResourceProperties();
+
+                ResourceProperties = resourceProperties;
+                return ResourceProperties;
             }
         }
 
         /// <summary>
-        /// Get properties of the resource.
-        ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// Gets the Authorization Header for the storage resource if available.
         /// </summary>
-        /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return properties.ToStorageResourceProperties();
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
         }
+
+        /// <summary>
+        /// Deletes the respective storage resource.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the storage resource exists and is deleted, true will be returned.
+        /// Otherwise if the storage resource does not exist, false will be returned.
+        /// </returns>
+        protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
+        {
+            return new BlobSourceCheckpointDetails();
+        }
+
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
+        {
+            return new BlobDestinationCheckpointDetails(
+                isBlobTypeSet: true,
+                blobType: BlobType.Append,
+                blobOptions: _options);
+        }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

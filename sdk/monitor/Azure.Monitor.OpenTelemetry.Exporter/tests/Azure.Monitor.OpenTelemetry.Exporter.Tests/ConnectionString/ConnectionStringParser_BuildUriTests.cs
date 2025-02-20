@@ -22,10 +22,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 location: "westus2.",
                 prefix: "dc",
                 suffix: ".applicationinsights.azure.com",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
 
         [Fact]
@@ -35,10 +35,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 location: "westus2",
                 prefix: "dc",
                 suffix: "applicationinsights.azure.com",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
 
         [Fact]
@@ -48,10 +48,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 location: null,
                 prefix: "dc",
                 suffix: "applicationinsights.azure.com",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     location: "westus2/",
                     prefix: "dc",
                     suffix: "applicationinsights.azure.com",
-                    uri: out Uri uri));
+                    uri: out Uri? uri));
         }
 
         [Fact]
@@ -72,10 +72,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 location: " westus2 ",
                 prefix: "dc",
                 suffix: "   applicationinsights.azure.com   ",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
     }
 }

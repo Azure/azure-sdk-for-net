@@ -5,25 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm appliance specific details. </summary>
-    public partial class InMageRcmApplianceSpecificDetails : ApplianceSpecificDetails
+    public partial class InMageRcmApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceSpecificDetails"/>. </summary>
         internal InMageRcmApplianceSpecificDetails()
         {
             Appliances = new ChangeTrackingList<InMageRcmApplianceDetails>();
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="appliances"> The list of appliances. </param>
-        internal InMageRcmApplianceSpecificDetails(string instanceType, IReadOnlyList<InMageRcmApplianceDetails> appliances) : base(instanceType)
+        internal InMageRcmApplianceSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<InMageRcmApplianceDetails> appliances) : base(instanceType, serializedAdditionalRawData)
         {
             Appliances = appliances;
             InstanceType = instanceType ?? "InMageRcm";

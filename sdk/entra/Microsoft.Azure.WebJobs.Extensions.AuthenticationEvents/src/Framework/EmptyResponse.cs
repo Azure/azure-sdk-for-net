@@ -3,26 +3,26 @@
 
 using System.Net.Http;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
-    internal class EmptyResponse : AuthenticationEventResponse
+    internal class EmptyResponse : WebJobsAuthenticationEventResponse
     {
         internal override void InstanceCreated(AuthenticationEventJsonElement payload) { }
-        internal override void Invalidate() { }
+        internal override void BuildJsonElement() { }
 
         #region Empty Response/Data
 
-        internal class EmptyData : AuthenticationEventData { }
+        internal class EmptyData : WebJobsAuthenticationEventData { }
 
-        internal class EmptyRequest : AuthenticationEventRequest<EmptyResponse, EmptyData>
+        internal class EmptyRequest : WebJobsAuthenticationEventRequest<EmptyResponse, EmptyData>
         {
             public EmptyRequest(HttpRequestMessage request) : base(request)
             {
-                Payload = new EmptyData();
+                Data = new EmptyData();
                 Response = new EmptyResponse();
             }
 
-            internal override AuthenticationEventResponse GetResponseObject()
+            internal override WebJobsAuthenticationEventResponse GetResponseObject()
             {
                 return Response;
             }

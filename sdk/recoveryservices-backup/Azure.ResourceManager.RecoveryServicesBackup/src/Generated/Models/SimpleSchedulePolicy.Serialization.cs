@@ -6,25 +6,43 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable
+    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable, IJsonModel<SimpleSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimpleSchedulePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SimpleSchedulePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ScheduleRunFrequency))
             {
-                writer.WritePropertyName("scheduleRunFrequency");
+                writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ScheduleRunDays))
             {
-                writer.WritePropertyName("scheduleRunDays");
+                writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScheduleRunDays)
                 {
@@ -34,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(ScheduleRunTimes))
             {
-                writer.WritePropertyName("scheduleRunTimes");
+                writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScheduleRunTimes)
                 {
@@ -44,59 +62,73 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(HourlySchedule))
             {
-                writer.WritePropertyName("hourlySchedule");
-                writer.WriteObjectValue(HourlySchedule);
+                writer.WritePropertyName("hourlySchedule"u8);
+                writer.WriteObjectValue(HourlySchedule, options);
             }
             if (Optional.IsDefined(ScheduleWeeklyFrequency))
             {
-                writer.WritePropertyName("scheduleWeeklyFrequency");
+                writer.WritePropertyName("scheduleWeeklyFrequency"u8);
                 writer.WriteNumberValue(ScheduleWeeklyFrequency.Value);
             }
-            writer.WritePropertyName("schedulePolicyType");
-            writer.WriteStringValue(SchedulePolicyType);
-            writer.WriteEndObject();
         }
 
-        internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element)
+        SimpleSchedulePolicy IJsonModel<SimpleSchedulePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Optional<IList<DayOfWeek>> scheduleRunDays = default;
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
-            Optional<HourlySchedule> hourlySchedule = default;
-            Optional<int> scheduleWeeklyFrequency = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimpleSchedulePolicy(document.RootElement, options);
+        }
+
+        internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ScheduleRunType? scheduleRunFrequency = default;
+            IList<BackupDayOfWeek> scheduleRunDays = default;
+            IList<DateTimeOffset> scheduleRunTimes = default;
+            BackupHourlySchedule hourlySchedule = default;
+            int? scheduleWeeklyFrequency = default;
             string schedulePolicyType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleRunFrequency"))
+                if (property.NameEquals("scheduleRunFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduleRunFrequency = new ScheduleRunType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduleRunDays"))
+                if (property.NameEquals("scheduleRunDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<BackupDayOfWeek> array = new List<BackupDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToBackupDayOfWeek());
                     }
                     scheduleRunDays = array;
                     continue;
                 }
-                if (property.NameEquals("scheduleRunTimes"))
+                if (property.NameEquals("scheduleRunTimes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
@@ -107,33 +139,74 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleRunTimes = array;
                     continue;
                 }
-                if (property.NameEquals("hourlySchedule"))
+                if (property.NameEquals("hourlySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hourlySchedule = HourlySchedule.DeserializeHourlySchedule(property.Value);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scheduleWeeklyFrequency"))
+                if (property.NameEquals("scheduleWeeklyFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduleWeeklyFrequency = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("schedulePolicyType"))
+                if (property.NameEquals("schedulePolicyType"u8))
                 {
                     schedulePolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SimpleSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SimpleSchedulePolicy(
+                schedulePolicyType,
+                serializedAdditionalRawData,
+                scheduleRunFrequency,
+                scheduleRunDays ?? new ChangeTrackingList<BackupDayOfWeek>(),
+                scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                hourlySchedule,
+                scheduleWeeklyFrequency);
         }
+
+        BinaryData IPersistableModel<SimpleSchedulePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SimpleSchedulePolicy IPersistableModel<SimpleSchedulePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSimpleSchedulePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SimpleSchedulePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

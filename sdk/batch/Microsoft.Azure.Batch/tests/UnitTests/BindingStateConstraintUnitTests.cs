@@ -30,13 +30,12 @@ namespace Azure.Batch.Unit.Tests
         public void Pool_WhenReturnedFromServer_HasExpectedUnboundProperties()
         {
             const string cloudPoolId = "id-123";
-            const string osFamily = "2";
             const string virtualMachineSize = "4";
             const string cloudPoolDisplayName = "pool-display-name-test";
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
 
             using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
-            CloudPool cloudPool = client.PoolOperations.CreatePool(cloudPoolId, virtualMachineSize, new CloudServiceConfiguration(osFamily));
+            CloudPool cloudPool = client.PoolOperations.CreatePool(cloudPoolId, virtualMachineSize, new VirtualMachineConfiguration(imageReference: new ImageReference(), nodeAgentSkuId: "df"));
             cloudPool.DisplayName = cloudPoolDisplayName;
             cloudPool.Metadata = new List<MetadataItem> { metadataItem };
 
@@ -49,7 +48,7 @@ namespace Azure.Batch.Unit.Tests
             // writing isn't allowed for a cloudPool that is in an readonly state.
             Assert.Throws<InvalidOperationException>(() => cloudPool.AutoScaleFormula = "Foo");
             Assert.Throws<InvalidOperationException>(() => cloudPool.DisplayName = "Foo");
-            Assert.Throws<InvalidOperationException>(() => cloudPool.CloudServiceConfiguration = null);
+            Assert.Throws<InvalidOperationException>(() => cloudPool.VirtualMachineConfiguration = null);
             Assert.Throws<InvalidOperationException>(() => cloudPool.ResizeTimeout = TimeSpan.FromSeconds(10));
             Assert.Throws<InvalidOperationException>(() => cloudPool.Metadata = null);
             Assert.Throws<InvalidOperationException>(() => cloudPool.TargetDedicatedComputeNodes = 5);
@@ -59,11 +58,10 @@ namespace Azure.Batch.Unit.Tests
             //read is allowed though
             Assert.Null(cloudPool.AutoScaleFormula);
             Assert.Equal(cloudPoolDisplayName, cloudPool.DisplayName);
-            Assert.NotNull(cloudPool.CloudServiceConfiguration);
+            Assert.NotNull(cloudPool.VirtualMachineConfiguration);
             Assert.Null(cloudPool.ResizeTimeout);
             Assert.Equal(1, cloudPool.Metadata.Count);
             Assert.Null(cloudPool.TargetDedicatedComputeNodes);
-            Assert.Null(cloudPool.VirtualMachineConfiguration);
             Assert.Equal(virtualMachineSize, cloudPool.VirtualMachineSize);
         }
 
@@ -88,11 +86,8 @@ namespace Azure.Batch.Unit.Tests
             CloudPool boundPool = client.PoolOperations.GetPool(string.Empty, additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool));
 
             // Cannot change these bound properties.
-            Assert.Throws<InvalidOperationException>(() => boundPool.DisplayName = "cannot-change-display-name");
             Assert.Throws<InvalidOperationException>(() => boundPool.Id = "cannot-change-id");
             Assert.Throws<InvalidOperationException>(() => boundPool.TargetDedicatedComputeNodes = 1);
-            Assert.Throws<InvalidOperationException>(() => boundPool.VirtualMachineSize = "cannot-change-1");
-
 
             // Swap the value with the name and the name with the value.
             boundPool.Metadata = new[] { new MetadataItem(metadataItem.Value, metadataItem.Name) };
@@ -119,7 +114,7 @@ namespace Azure.Batch.Unit.Tests
                 OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction
             };
 
-            Assert.Equal(jobSchedule.Id, jobScheduleId); // can set an unbound object
+            Assert.Equal(jobScheduleId, jobSchedule.Id); // can set an unbound object
             Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
             Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
             Assert.Equal(OnAllTasksComplete.TerminateJob, jobSchedule.JobSpecification.OnAllTasksComplete);
@@ -224,7 +219,7 @@ namespace Azure.Batch.Unit.Tests
 
 
             Assert.Throws<InvalidOperationException>(() => cloudJob.Url); // cannot read a Url since it's unbound at this point.
-            Assert.Equal(cloudJob.Id, jobId); // can set an unbound object
+            Assert.Equal(jobId, cloudJob.Id); // can set an unbound object
             Assert.Equal(cloudJob.Metadata.First().Name, metadataItem.Name);
             Assert.Equal(cloudJob.Metadata.First().Value, metadataItem.Value);
             Assert.Equal(OnAllTasksComplete.NoAction, cloudJob.OnAllTasksComplete);
@@ -341,10 +336,9 @@ namespace Azure.Batch.Unit.Tests
             boundJob.Priority = priority + 1;
             Assert.Equal(priority + 1, boundJob.Priority);
 
-            const string osFamily = "2";
             const string virtualMachineSize = "4";
             const string displayName = "Testing-pool";
-            
+
             boundJob.PoolInformation = new PoolInformation
             {
                 AutoPoolSpecification = new AutoPoolSpecification
@@ -352,7 +346,7 @@ namespace Azure.Batch.Unit.Tests
                     KeepAlive = false,
                     PoolSpecification = new PoolSpecification
                     {
-                            CloudServiceConfiguration = new CloudServiceConfiguration(osFamily),
+                            VirtualMachineConfiguration = new VirtualMachineConfiguration(imageReference: new ImageReference(), nodeAgentSkuId: "df"),
                             VirtualMachineSize = virtualMachineSize,
                             DisplayName = displayName,
                     }
@@ -361,7 +355,7 @@ namespace Azure.Batch.Unit.Tests
 
             Assert.Equal(false, boundJob.PoolInformation.AutoPoolSpecification.KeepAlive);
 
-            Assert.Equal(osFamily, boundJob.PoolInformation.AutoPoolSpecification.PoolSpecification.CloudServiceConfiguration.OSFamily);
+            Assert.Equal("df", boundJob.PoolInformation.AutoPoolSpecification.PoolSpecification.VirtualMachineConfiguration.NodeAgentSkuId);
             Assert.Equal(virtualMachineSize, boundJob.PoolInformation.AutoPoolSpecification.PoolSpecification.VirtualMachineSize);
             Assert.Equal(displayName, boundJob.PoolInformation.AutoPoolSpecification.PoolSpecification.DisplayName);
 

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -15,26 +13,17 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
-        /// <param name="targets"></param>
-        /// <param name="callSource"></param>
-        /// <param name="callbackUri"></param>
-        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        public CreateCallOptions(CallInvite callInvite, Uri callbackUri)
         {
-            Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
-            CallSource = callSource;
+            CallInvite = callInvite;
             CallbackUri = callbackUri;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
-        /// The targets of the call.
+        /// Call invitee information.
         /// </summary>
-        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
-
-        /// <summary>
-        /// The source of the call.
-        /// </summary>
-        public CallSource CallSource { get; }
+        /// <value></value>
+        public CallInvite CallInvite { get; }
 
         /// <summary>
         /// The callback Uri.
@@ -52,13 +41,20 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-        /// Repeatability Headers.
+        /// Live Transcription Configuration.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+        public TranscriptionOptions TranscriptionOptions { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+
+        /// <summary>
+        /// Overrides default client source by a MicrosoftTeamsAppIdentifier type source.
+        /// Required for creating call with Teams resource account ID.
+        /// This is per-operation setting and does not change the client's default source.
+        /// </summary>
+        public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
     }
 }

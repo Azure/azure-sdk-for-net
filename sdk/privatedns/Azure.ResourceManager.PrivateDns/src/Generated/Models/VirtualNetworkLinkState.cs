@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </summary>
+    /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </summary>
     public readonly partial struct VirtualNetworkLinkState : IEquatable<VirtualNetworkLinkState>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static bool operator ==(VirtualNetworkLinkState left, VirtualNetworkLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkLinkState"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkLinkState left, VirtualNetworkLinkState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkLinkState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkLinkState"/>. </summary>
         public static implicit operator VirtualNetworkLinkState(string value) => new VirtualNetworkLinkState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

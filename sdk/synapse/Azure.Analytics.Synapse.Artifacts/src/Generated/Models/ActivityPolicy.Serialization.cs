@@ -21,93 +21,92 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
-                writer.WriteObjectValue(Timeout);
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteObjectValue<object>(Timeout);
             }
             if (Optional.IsDefined(Retry))
             {
-                writer.WritePropertyName("retry");
-                writer.WriteObjectValue(Retry);
+                writer.WritePropertyName("retry"u8);
+                writer.WriteObjectValue<object>(Retry);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
-                writer.WritePropertyName("retryIntervalInSeconds");
+                writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(SecureInput))
             {
-                writer.WritePropertyName("secureInput");
+                writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
             if (Optional.IsDefined(SecureOutput))
             {
-                writer.WritePropertyName("secureOutput");
+                writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
-            Optional<object> timeout = default;
-            Optional<object> retry = default;
-            Optional<int> retryIntervalInSeconds = default;
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object timeout = default;
+            object retry = default;
+            int? retryIntervalInSeconds = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("retry"))
+                if (property.NameEquals("retry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retry = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("retryIntervalInSeconds"))
+                if (property.NameEquals("retryIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retryIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("secureInput"))
+                if (property.NameEquals("secureInput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secureInput = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("secureOutput"))
+                if (property.NameEquals("secureOutput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secureOutput = property.Value.GetBoolean();
@@ -116,7 +115,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+            return new ActivityPolicy(
+                timeout,
+                retry,
+                retryIntervalInSeconds,
+                secureInput,
+                secureOutput,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ActivityPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeActivityPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ActivityPolicyConverter : JsonConverter<ActivityPolicy>
@@ -125,6 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ActivityPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

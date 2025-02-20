@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <GenerateAPIListing>true</GenerateAPIListing>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library</AssemblyTitle>
+    <Version>12.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>12.0.0</ApiCompatVersion>
+    <DefineConstants>ShareDataMovementSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage DataMovement Files AzureStorage AzureFiles azureofficial</PackageTags>
+    <Description>
+      This client library enables high-performance, multi-threaded uploading, downloading and copying Azure File Share files and directories.
+      The package depends on the Azure.Storage.DataMovement package and can be used in conjuction with other Data Movement sub-packages, such as Azure.Storage.DataMovement.Blobs to transfer data between services.
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/CHANGELOG.md
+    </Description>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <RootNamespace>Azure.Storage.DataMovement.Files.Shares</RootNamespace>
+    <PackageId />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Storage.Files.Shares" />
+    <!--<ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />-->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+    <PackageReference Include="System.Threading.Channels" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)ContentRange.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)Errors.DataMovement.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)CheckpointerExtensions.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceCheckpointDetailsInternal.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceItemInternal.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Shared\ShareModelExtensions.cs" />
+  </ItemGroup>
+</Project>

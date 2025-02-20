@@ -6,74 +6,169 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogSingleSignOnProperties : IUtf8JsonSerializable
+    public partial class DatadogSingleSignOnProperties : IUtf8JsonSerializable, IJsonModel<DatadogSingleSignOnProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogSingleSignOnProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DatadogSingleSignOnProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(SingleSignOnState))
             {
-                writer.WritePropertyName("singleSignOnState");
+                writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
             if (Optional.IsDefined(EnterpriseAppId))
             {
-                writer.WritePropertyName("enterpriseAppId");
+                writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(SingleSignOnUri))
+            {
+                writer.WritePropertyName("singleSignOnUrl"u8);
+                writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element)
+        DatadogSingleSignOnProperties IJsonModel<DatadogSingleSignOnProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SingleSignOnState> singleSignOnState = default;
-            Optional<string> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogSingleSignOnProperties(document.RootElement, options);
+        }
+
+        internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ProvisioningState? provisioningState = default;
+            SingleSignOnState? singleSignOnState = default;
+            string enterpriseAppId = default;
+            Uri singleSignOnUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("singleSignOnState"))
+                if (property.NameEquals("singleSignOnState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     singleSignOnState = new SingleSignOnState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enterpriseAppId"))
+                if (property.NameEquals("enterpriseAppId"u8))
                 {
                     enterpriseAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("singleSignOnUrl"))
+                if (property.NameEquals("singleSignOnUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        singleSignOnUrl = null;
                         continue;
                     }
                     singleSignOnUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatadogSingleSignOnProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUrl, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatadogSingleSignOnProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatadogSingleSignOnProperties IPersistableModel<DatadogSingleSignOnProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatadogSingleSignOnProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatadogSingleSignOnProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

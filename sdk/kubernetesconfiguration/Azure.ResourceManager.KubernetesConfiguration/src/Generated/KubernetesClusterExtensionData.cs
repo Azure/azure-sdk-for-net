@@ -7,17 +7,51 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    /// <summary> A class representing the KubernetesClusterExtension data model. </summary>
+    /// <summary>
+    /// A class representing the KubernetesClusterExtension data model.
+    /// The Extension object.
+    /// </summary>
     public partial class KubernetesClusterExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionData"/>. </summary>
         public KubernetesClusterExtensionData()
         {
             ConfigurationSettings = new ChangeTrackingDictionary<string, string>();
@@ -26,7 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             CustomLocationSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,8 +69,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="plan"> The plan information. </param>
         /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
-        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is &apos;true&apos;. </param>
-        /// <param name="version"> User-specified version of the extension for this extension to &apos;pin&apos;. To use &apos;version&apos;, autoUpgradeMinorVersion must be &apos;false&apos;. </param>
+        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
+        /// <param name="version"> User-specified version of the extension for this extension to 'pin'. To use 'version', autoUpgradeMinorVersion must be 'false'. </param>
         /// <param name="scope"> Scope at which the extension is installed. </param>
         /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
         /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
@@ -48,7 +82,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="packageUri"> Uri of the Helm package. </param>
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
-        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Plan = plan;
@@ -67,41 +102,59 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             PackageUri = packageUri;
             AksAssignedIdentity = aksAssignedIdentity;
             IsSystemExtension = isSystemExtension;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identity of the Extension resource. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The plan information. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
         /// <summary> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </summary>
+        [WirePath("properties.extensionType")]
         public string ExtensionType { get; set; }
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>
+        [WirePath("properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
-        /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is &apos;true&apos;. </summary>
+        /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </summary>
+        [WirePath("properties.releaseTrain")]
         public string ReleaseTrain { get; set; }
-        /// <summary> User-specified version of the extension for this extension to &apos;pin&apos;. To use &apos;version&apos;, autoUpgradeMinorVersion must be &apos;false&apos;. </summary>
+        /// <summary> User-specified version of the extension for this extension to 'pin'. To use 'version', autoUpgradeMinorVersion must be 'false'. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Scope at which the extension is installed. </summary>
+        [WirePath("properties.scope")]
         public KubernetesClusterExtensionScope Scope { get; set; }
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
+        [WirePath("properties.configurationSettings")]
         public IDictionary<string, string> ConfigurationSettings { get; set; }
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
+        [WirePath("properties.configurationProtectedSettings")]
         public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
         /// <summary> Currently installed version of the extension. </summary>
+        [WirePath("properties.currentVersion")]
         public string CurrentVersion { get; }
         /// <summary> Status of installation of this extension. </summary>
+        [WirePath("properties.provisioningState")]
         public KubernetesConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Status from this extension. </summary>
+        [WirePath("properties.statuses")]
         public IList<KubernetesClusterExtensionStatus> Statuses { get; set; }
         /// <summary> Error information from the Agent - e.g. errors during installation. </summary>
+        [WirePath("properties.errorInfo")]
         public ResponseError ErrorInfo { get; }
         /// <summary> Custom Location settings properties. </summary>
+        [WirePath("properties.customLocationSettings")]
         public IReadOnlyDictionary<string, string> CustomLocationSettings { get; }
         /// <summary> Uri of the Helm package. </summary>
+        [WirePath("properties.packageUri")]
         public Uri PackageUri { get; }
         /// <summary> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </summary>
+        [WirePath("properties.aksAssignedIdentity")]
         public ManagedServiceIdentity AksAssignedIdentity { get; set; }
         /// <summary> Flag to note if this extension is a system extension. </summary>
+        [WirePath("properties.isSystemExtension")]
         public bool? IsSystemExtension { get; }
     }
 }

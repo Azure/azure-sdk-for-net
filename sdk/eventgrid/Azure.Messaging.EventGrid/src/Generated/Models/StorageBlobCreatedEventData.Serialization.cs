@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,97 +16,125 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageBlobCreatedEventData DeserializeStorageBlobCreatedEventData(JsonElement element)
         {
-            Optional<string> api = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> eTag = default;
-            Optional<string> contentType = default;
-            Optional<long> contentLength = default;
-            Optional<long> contentOffset = default;
-            Optional<string> blobType = default;
-            Optional<string> url = default;
-            Optional<string> sequencer = default;
-            Optional<string> identity = default;
-            Optional<object> storageDiagnostics = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string api = default;
+            string clientRequestId = default;
+            string requestId = default;
+            string eTag = default;
+            string contentType = default;
+            long? contentLength = default;
+            long? contentOffset = default;
+            string blobType = default;
+            StorageBlobAccessTier accessTier = default;
+            string url = default;
+            string sequencer = default;
+            string identity = default;
+            object storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     api = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     eTag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentLength"))
+                if (property.NameEquals("contentLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contentLength = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("contentOffset"))
+                if (property.NameEquals("contentOffset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contentOffset = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("blobType"))
+                if (property.NameEquals("blobType"u8))
                 {
                     blobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("accessTier"u8))
+                {
+                    accessTier = new StorageBlobAccessTier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequencer"))
+                if (property.NameEquals("sequencer"u8))
                 {
                     sequencer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageDiagnostics"))
+                if (property.NameEquals("storageDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
             }
-            return new StorageBlobCreatedEventData(api.Value, clientRequestId.Value, requestId.Value, eTag.Value, contentType.Value, Optional.ToNullable(contentLength), Optional.ToNullable(contentOffset), blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageBlobCreatedEventData(
+                api,
+                clientRequestId,
+                requestId,
+                eTag,
+                contentType,
+                contentLength,
+                contentOffset,
+                blobType,
+                accessTier,
+                url,
+                sequencer,
+                identity,
+                storageDiagnostics);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobCreatedEventData(document.RootElement);
         }
 
         internal partial class StorageBlobCreatedEventDataConverter : JsonConverter<StorageBlobCreatedEventData>
@@ -116,6 +143,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override StorageBlobCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

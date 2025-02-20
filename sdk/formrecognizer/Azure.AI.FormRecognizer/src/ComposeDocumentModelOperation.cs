@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
+            _operationInternal = new(this, _diagnostics, rawResponse: postResponse);
 
             Id = location.Split('/').Last().Split('?').FirstOrDefault();
         }
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Id = operationId;
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(ComposeDocumentModelOperation));
+            _operationInternal = new(this, _diagnostics, rawResponse: null, nameof(ComposeDocumentModelOperation));
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<DocumentModelDetails>> IOperation<DocumentModelDetails>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<OperationDetails> response = async
-                ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetOperation(Id, cancellationToken);
+                ? await _serviceClient.MiscellaneousGetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.MiscellaneousGetOperation(Id, cancellationToken);
 
             DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
@@ -182,9 +182,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == DocumentOperationStatus.Failed)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
-                    .ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(rawResponse, response.Value.Error);
 
                 return OperationState<DocumentModelDetails>.Failure(rawResponse, requestFailedException);
             }

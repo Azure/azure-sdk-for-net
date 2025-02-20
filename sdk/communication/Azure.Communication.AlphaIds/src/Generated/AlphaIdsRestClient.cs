@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Communication.AlphaIds.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +52,7 @@ namespace Azure.Communication.AlphaIds
             return message;
         }
 
-        /// <summary> Get the Alpha IDs configuration that&apos;s applied for the current resource. </summary>
+        /// <summary> Get the Alpha IDs configuration that's applied for the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<AlphaIdConfiguration>> GetConfigurationAsync(CancellationToken cancellationToken = default)
         {
@@ -69,11 +68,11 @@ namespace Azure.Communication.AlphaIds
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get the Alpha IDs configuration that&apos;s applied for the current resource. </summary>
+        /// <summary> Get the Alpha IDs configuration that's applied for the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<AlphaIdConfiguration> GetConfiguration(CancellationToken cancellationToken = default)
         {
@@ -89,7 +88,7 @@ namespace Azure.Communication.AlphaIds
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.Communication.AlphaIds
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -150,7 +149,7 @@ namespace Azure.Communication.AlphaIds
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

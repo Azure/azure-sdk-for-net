@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
@@ -37,8 +38,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainName = Recording.GenerateAssetName("sdk-Domain-");
             var domainTopicName1 = Recording.GenerateAssetName("sdk-DomainTopic-");
             var domainTopicName2 = Recording.GenerateAssetName("sdk-DomainTopic-");
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
 
-            var domain = new EventGridDomainData(DefaultLocation)
+            var domain = new EventGridDomainData(location)
             {
                 Tags = {
                     {"originalTag1", "originalValue1"},
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var getDomainResponse = (await DomainCollection.GetAsync(domainName)).Value;
             Assert.NotNull(getDomainResponse);
             Assert.AreEqual(EventGridDomainProvisioningState.Succeeded, getDomainResponse.Data.ProvisioningState);
-            Assert.AreEqual(DefaultLocation, getDomainResponse.Data.Location);
+            Assert.AreEqual(location, getDomainResponse.Data.Location);
             Assert.IsTrue(getDomainResponse.Data.Tags.Keys.Contains("originalTag1"));
             Assert.AreEqual(getDomainResponse.Data.Tags["originalTag1"], "originalValue1");
             Assert.IsTrue(getDomainResponse.Data.Tags.Keys.Contains("originalTag2"));
@@ -170,13 +172,50 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
+        public async Task DomainNSPTests()
+        {
+            await SetCollection();
+
+            var domainName = Recording.GenerateAssetName("sdk-Domain-");
+            AzureLocation location = new AzureLocation("eastus", "eastus");
+
+            var domain = new EventGridDomainData(location)
+            {
+                Tags = {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                },
+                InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
+                InputSchemaMapping = new EventGridJsonInputSchemaMapping()
+                {
+                    Topic = new JsonField("myTopicField", null)
+                }
+            };
+
+            var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
+
+            Assert.NotNull(createDomainResponse);
+            Assert.AreEqual(createDomainResponse.Data.Name, domainName);
+
+            var NspCollection = createDomainResponse.GetDomainNetworkSecurityPerimeterConfigurations();
+            var listNSPConfigs = await NspCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(0, listNSPConfigs.Count());
+
+            // Delete domain
+            await createDomainResponse.DeleteAsync(WaitUntil.Completed);
+            var falseResult = (await DomainCollection.ExistsAsync(domainName)).Value;
+            Assert.IsFalse(falseResult);
+        }
+
+        [Test]
         public async Task DomainDisableLocalAuthAndAutoCreateAndAutoDelete()
         {
             await SetCollection();
 
             var domainName = Recording.GenerateAssetName("sdk-Domain-");
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
 
-            var domain = new EventGridDomainData(DefaultLocation)
+            var domain = new EventGridDomainData(location)
             {
                 Tags = {
                     {"originalTag1", "originalValue1"},
@@ -188,7 +227,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 AutoDeleteTopicWithLastSubscription = false,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 

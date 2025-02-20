@@ -5,59 +5,176 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class PolicyEventsQueryResults
+    internal partial class PolicyEventsQueryResults : IUtf8JsonSerializable, IJsonModel<PolicyEventsQueryResults>
     {
-        internal static PolicyEventsQueryResults DeserializePolicyEventsQueryResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEventsQueryResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PolicyEventsQueryResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
-            Optional<IReadOnlyList<PolicyEvent>> value = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyEventsQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ODataContext))
+            {
+                writer.WritePropertyName("@odata.context"u8);
+                writer.WriteStringValue(ODataContext);
+            }
+            if (Optional.IsDefined(ODataCount))
+            {
+                writer.WritePropertyName("@odata.count"u8);
+                writer.WriteNumberValue(ODataCount.Value);
+            }
+            if (Optional.IsDefined(ODataNextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(ODataNextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        PolicyEventsQueryResults IJsonModel<PolicyEventsQueryResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyEventsQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyEventsQueryResults(document.RootElement, options);
+        }
+
+        internal static PolicyEventsQueryResults DeserializePolicyEventsQueryResults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string odataContext = default;
+            int? odataCount = default;
+            string odataNextLink = default;
+            IReadOnlyList<PolicyEvent> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.context"))
+                if (property.NameEquals("@odata.context"u8))
                 {
                     odataContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.count"))
+                if (property.NameEquals("@odata.count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     odataCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.nextLink"))
+                if (property.NameEquals("@odata.nextLink"u8))
                 {
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicyEvent> array = new List<PolicyEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyEvent.DeserializePolicyEvent(item));
+                        array.Add(PolicyEvent.DeserializePolicyEvent(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyEventsQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PolicyEventsQueryResults(odataContext, odataCount, odataNextLink, value ?? new ChangeTrackingList<PolicyEvent>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyEventsQueryResults>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyEventsQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PolicyEventsQueryResults IPersistableModel<PolicyEventsQueryResults>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyEventsQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyEventsQueryResults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyEventsQueryResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

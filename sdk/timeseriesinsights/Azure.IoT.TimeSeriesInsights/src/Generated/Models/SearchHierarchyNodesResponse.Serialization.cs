@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,16 +14,19 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static SearchHierarchyNodesResponse DeserializeSearchHierarchyNodesResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<HierarchyHit>> hits = default;
-            Optional<int> hitCount = default;
-            Optional<string> continuationToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<HierarchyHit> hits = default;
+            int? hitCount = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hits"))
+                if (property.NameEquals("hits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HierarchyHit> array = new List<HierarchyHit>();
@@ -35,23 +37,30 @@ namespace Azure.IoT.TimeSeriesInsights
                     hits = array;
                     continue;
                 }
-                if (property.NameEquals("hitCount"))
+                if (property.NameEquals("hitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hitCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchHierarchyNodesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value);
+            return new SearchHierarchyNodesResponse(hits ?? new ChangeTrackingList<HierarchyHit>(), hitCount, continuationToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchHierarchyNodesResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchHierarchyNodesResponse(document.RootElement);
         }
     }
 }

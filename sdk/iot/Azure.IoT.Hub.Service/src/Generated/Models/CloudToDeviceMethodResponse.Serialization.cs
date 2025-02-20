@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -14,32 +13,42 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static CloudToDeviceMethodResponse DeserializeCloudToDeviceMethodResponse(JsonElement element)
         {
-            Optional<int> status = default;
-            Optional<object> payload = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? status = default;
+            object payload = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("payload"))
+                if (property.NameEquals("payload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     payload = property.Value.GetObject();
                     continue;
                 }
             }
-            return new CloudToDeviceMethodResponse(Optional.ToNullable(status), payload.Value);
+            return new CloudToDeviceMethodResponse(status, payload);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CloudToDeviceMethodResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCloudToDeviceMethodResponse(document.RootElement);
         }
     }
 }

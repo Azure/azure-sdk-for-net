@@ -5,69 +5,162 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ContainerIdentityInfo : IUtf8JsonSerializable
+    public partial class ContainerIdentityInfo : IUtf8JsonSerializable, IJsonModel<ContainerIdentityInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerIdentityInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerIdentityInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(UniqueName))
             {
-                writer.WritePropertyName("uniqueName");
+                writer.WritePropertyName("uniqueName"u8);
                 writer.WriteStringValue(UniqueName);
             }
             if (Optional.IsDefined(AadTenantId))
             {
-                writer.WritePropertyName("aadTenantId");
-                writer.WriteStringValue(AadTenantId);
+                writer.WritePropertyName("aadTenantId"u8);
+                writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(ServicePrincipalClientId))
             {
-                writer.WritePropertyName("servicePrincipalClientId");
+                writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId);
             }
             if (Optional.IsDefined(Audience))
             {
-                writer.WritePropertyName("audience");
+                writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ContainerIdentityInfo DeserializeContainerIdentityInfo(JsonElement element)
+        ContainerIdentityInfo IJsonModel<ContainerIdentityInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> uniqueName = default;
-            Optional<string> aadTenantId = default;
-            Optional<string> servicePrincipalClientId = default;
-            Optional<string> audience = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerIdentityInfo(document.RootElement, options);
+        }
+
+        internal static ContainerIdentityInfo DeserializeContainerIdentityInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string uniqueName = default;
+            Guid? aadTenantId = default;
+            string servicePrincipalClientId = default;
+            string audience = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueName"))
+                if (property.NameEquals("uniqueName"u8))
                 {
                     uniqueName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadTenantId"))
+                if (property.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalClientId"))
+                if (property.NameEquals("servicePrincipalClientId"u8))
                 {
                     servicePrincipalClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audience"))
+                if (property.NameEquals("audience"u8))
                 {
                     audience = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerIdentityInfo(uniqueName.Value, aadTenantId.Value, servicePrincipalClientId.Value, audience.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerIdentityInfo(uniqueName, aadTenantId, servicePrincipalClientId, audience, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerIdentityInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerIdentityInfo IPersistableModel<ContainerIdentityInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerIdentityInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerIdentityInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

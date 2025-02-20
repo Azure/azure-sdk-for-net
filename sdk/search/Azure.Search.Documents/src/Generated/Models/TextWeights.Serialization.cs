@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("weights");
+            writer.WritePropertyName("weights"u8);
             writer.WriteStartObject();
             foreach (var item in Weights)
             {
@@ -29,10 +29,14 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static TextWeights DeserializeTextWeights(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, double> weights = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("weights"))
+                if (property.NameEquals("weights"u8))
                 {
                     Dictionary<string, double> dictionary = new Dictionary<string, double>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -44,6 +48,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new TextWeights(weights);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextWeights FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextWeights(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

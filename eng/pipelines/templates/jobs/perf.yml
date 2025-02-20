@@ -1,8 +1,9 @@
 parameters:
-- name: ServiceDirectory
+# LanguageVersion in context of .NET perf tests corresponds to the .NET framework version and is set in individual perf.yml files
+- name: LanguageVersion
   type: string
   default: ''
-- name: Services
+- name: ServiceDirectory
   type: string
   default: ''
 - name: PackageVersions
@@ -13,10 +14,13 @@ parameters:
   default: '.*'
 - name: Arguments
   type: string
-  default: '.*' 
+  default: '.*'
 - name: Iterations
   type: number
   default: '5'
+- name: Profile
+  type: boolean
+  default: false
 - name: AdditionalArguments
   type: string
   default: ''
@@ -30,15 +34,23 @@ extends:
     Variables:
     - template: /eng/pipelines/templates/variables/globals.yml
     Language: Net
+    LanguageVersion: ${{ parameters.LanguageVersion }}
     InstallLanguageSteps:
     - template: /eng/pipelines/templates/steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
+    - ${{ if parameters.Profile }}:
+      - task: PowerShell@2
+        displayName: 'Install dotnet-trace'
+        inputs:
+          targetType: 'inline'
+          script: 'dotnet tool install -g dotnet-trace'
+          workingDirectory: '$(Build.SourcesDirectory)/sdk'
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
-    Services: ${{ parameters.Services }}
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
     Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
     AdditionalArguments: ${{ parameters.AdditionalArguments }}
     EnvVars: ${{ parameters.EnvVars}}

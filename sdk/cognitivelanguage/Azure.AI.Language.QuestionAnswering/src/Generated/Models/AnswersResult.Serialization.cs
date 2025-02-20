@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -15,14 +14,17 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static AnswersResult DeserializeAnswersResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KnowledgeBaseAnswer>> answers = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<KnowledgeBaseAnswer> answers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("answers"))
+                if (property.NameEquals("answers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KnowledgeBaseAnswer> array = new List<KnowledgeBaseAnswer>();
@@ -34,7 +36,15 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new AnswersResult(Optional.ToList(answers));
+            return new AnswersResult(answers ?? new ChangeTrackingList<KnowledgeBaseAnswer>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnswersResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnswersResult(document.RootElement);
         }
     }
 }

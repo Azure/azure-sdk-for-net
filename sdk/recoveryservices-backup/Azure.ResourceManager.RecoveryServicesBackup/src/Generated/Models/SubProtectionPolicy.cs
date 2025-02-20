@@ -5,30 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Sub-protection policy which includes schedule and retention. </summary>
     public partial class SubProtectionPolicy
     {
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         public SubProtectionPolicy()
         {
-            TieringPolicy = new ChangeTrackingDictionary<string, TieringPolicy>();
+            TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
         }
 
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         /// <param name="policyType"> Type of backup policy type. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
-        /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </param>
         /// <param name="retentionPolicy">
         /// Retention policy with the details on backup copy retention ranges.
-        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
         /// <param name="tieringPolicy">
@@ -36,33 +68,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
-        internal SubProtectionPolicy(PolicyType? policyType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy)
+        /// <param name="snapshotBackupAdditionalDetails"> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             TieringPolicy = tieringPolicy;
+            SnapshotBackupAdditionalDetails = snapshotBackupAdditionalDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of backup policy type. </summary>
-        public PolicyType? PolicyType { get; set; }
+        public SubProtectionPolicyType? PolicyType { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
-        /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </summary>
-        public SchedulePolicy SchedulePolicy { get; set; }
+        public BackupSchedulePolicy SchedulePolicy { get; set; }
         /// <summary>
         /// Retention policy with the details on backup copy retention ranges.
-        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public BackupRetentionPolicy RetentionPolicy { get; set; }
         /// <summary>
         /// Tiering policy to automatically move RPs to another tier.
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </summary>
-        public IDictionary<string, TieringPolicy> TieringPolicy { get; }
+        public IDictionary<string, BackupTieringPolicy> TieringPolicy { get; }
+        /// <summary> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </summary>
+        public SnapshotBackupAdditionalDetails SnapshotBackupAdditionalDetails { get; set; }
     }
 }

@@ -5,110 +5,201 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleSet : IUtf8JsonSerializable
+    public partial class ManagedRuleSet : IUtf8JsonSerializable, IJsonModel<ManagedRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleSetType");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleSet)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
-            writer.WritePropertyName("ruleSetVersion");
+            writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
             if (Optional.IsDefined(RuleSetAction))
             {
-                writer.WritePropertyName("ruleSetAction");
+                writer.WritePropertyName("ruleSetAction"u8);
                 writer.WriteStringValue(RuleSetAction.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Exclusions))
             {
-                writer.WritePropertyName("exclusions");
+                writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
-                writer.WritePropertyName("ruleGroupOverrides");
+                writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ManagedRuleSet DeserializeManagedRuleSet(JsonElement element)
+        ManagedRuleSet IJsonModel<ManagedRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleSet)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleSet(document.RootElement, options);
+        }
+
+        internal static ManagedRuleSet DeserializeManagedRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ManagedRuleSetActionType> ruleSetAction = default;
-            Optional<IList<ManagedRuleExclusion>> exclusions = default;
-            Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
+            ManagedRuleSetActionType? ruleSetAction = default;
+            IList<ManagedRuleExclusion> exclusions = default;
+            IList<ManagedRuleGroupOverride> ruleGroupOverrides = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleSetType"))
+                if (property.NameEquals("ruleSetType"u8))
                 {
                     ruleSetType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleSetVersion"))
+                if (property.NameEquals("ruleSetVersion"u8))
                 {
                     ruleSetVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleSetAction"))
+                if (property.NameEquals("ruleSetAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleSetAction = new ManagedRuleSetActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exclusions"))
+                if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item));
+                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
                 }
-                if (property.NameEquals("ruleGroupOverrides"))
+                if (property.NameEquals("ruleGroupOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleGroupOverride> array = new List<ManagedRuleGroupOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item));
+                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item, options));
                     }
                     ruleGroupOverrides = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(ruleSetAction), Optional.ToList(exclusions), Optional.ToList(ruleGroupOverrides));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                ruleSetAction,
+                exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(),
+                ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedRuleSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleSet)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedRuleSet IPersistableModel<ManagedRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedRuleSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleSet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

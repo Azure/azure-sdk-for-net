@@ -30,8 +30,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath);
             var signature = BuildSignature(includeFilePath: true, constants, shareName, filePath);
 
+            string stringToSign = null;
+
             // Act
-            var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out stringToSign);
 
             // Assert
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
@@ -46,6 +48,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

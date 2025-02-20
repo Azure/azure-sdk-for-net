@@ -5,100 +5,191 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryTargetExtendedLocation : IUtf8JsonSerializable
+    public partial class GalleryTargetExtendedLocation : IUtf8JsonSerializable, IJsonModel<GalleryTargetExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryTargetExtendedLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GalleryTargetExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
-                writer.WritePropertyName("extendedLocationReplicaCount");
+                writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
-                writer.WriteObjectValue(Encryption);
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element)
+        GalleryTargetExtendedLocation IJsonModel<GalleryTargetExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> name = default;
-            Optional<GalleryExtendedLocation> extendedLocation = default;
-            Optional<int> extendedLocationReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryTargetExtendedLocation(document.RootElement, options);
+        }
+
+        internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            GalleryExtendedLocation extendedLocation = default;
+            int? extendedLocationReplicaCount = default;
+            EdgeZoneStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value);
+                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("extendedLocationReplicaCount"))
+                if (property.NameEquals("extendedLocationReplicaCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocationReplicaCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    storageAccountType = new EdgeZoneStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("encryption"))
+                if (property.NameEquals("encryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GalleryTargetExtendedLocation(
+                name,
+                extendedLocation,
+                extendedLocationReplicaCount,
+                storageAccountType,
+                encryption,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GalleryTargetExtendedLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GalleryTargetExtendedLocation IPersistableModel<GalleryTargetExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGalleryTargetExtendedLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GalleryTargetExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -15,20 +14,23 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static ConfigurationQueriesTestResponse DeserializeConfigurationQueriesTestResponse(JsonElement element)
         {
-            Optional<string> targetConditionError = default;
-            Optional<IReadOnlyDictionary<string, string>> customMetricQueryErrors = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string targetConditionError = default;
+            IReadOnlyDictionary<string, string> customMetricQueryErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConditionError"))
+                if (property.NameEquals("targetConditionError"u8))
                 {
                     targetConditionError = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customMetricQueryErrors"))
+                if (property.NameEquals("customMetricQueryErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -40,7 +42,15 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationQueriesTestResponse(targetConditionError.Value, Optional.ToDictionary(customMetricQueryErrors));
+            return new ConfigurationQueriesTestResponse(targetConditionError, customMetricQueryErrors ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ConfigurationQueriesTestResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeConfigurationQueriesTestResponse(document.RootElement);
         }
     }
 }

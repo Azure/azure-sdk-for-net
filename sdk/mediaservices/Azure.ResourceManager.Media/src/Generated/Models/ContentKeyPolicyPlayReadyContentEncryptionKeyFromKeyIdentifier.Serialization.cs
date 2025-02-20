@@ -6,37 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (KeyId != null)
             {
-                writer.WritePropertyName("keyId");
+                writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.Value);
             }
             else
             {
                 writer.WriteNull("keyId");
             }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(JsonElement element)
+        ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier IJsonModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid? keyId = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyId"))
+                if (property.NameEquals("keyId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,13 +82,49 @@ namespace Azure.ResourceManager.Media.Models
                     keyId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(odataType, keyId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(odataType, serializedAdditionalRawData, keyId);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

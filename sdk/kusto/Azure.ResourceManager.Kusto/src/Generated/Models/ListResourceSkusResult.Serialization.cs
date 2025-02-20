@@ -5,36 +5,139 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    internal partial class ListResourceSkusResult
+    internal partial class ListResourceSkusResult : IUtf8JsonSerializable, IJsonModel<ListResourceSkusResult>
     {
-        internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListResourceSkusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ListResourceSkusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<KustoAvailableSkuDetails>> value = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ListResourceSkusResult IJsonModel<ListResourceSkusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeListResourceSkusResult(document.RootElement, options);
+        }
+
+        internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<KustoAvailableSkuDetails> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KustoAvailableSkuDetails> array = new List<KustoAvailableSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item));
+                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ListResourceSkusResult(Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ListResourceSkusResult(value ?? new ChangeTrackingList<KustoAvailableSkuDetails>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ListResourceSkusResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ListResourceSkusResult IPersistableModel<ListResourceSkusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeListResourceSkusResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListResourceSkusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

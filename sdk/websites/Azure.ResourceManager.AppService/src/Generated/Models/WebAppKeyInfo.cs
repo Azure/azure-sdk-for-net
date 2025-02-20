@@ -5,28 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function key info. </summary>
     public partial class WebAppKeyInfo
     {
-        /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyInfo"/>. </summary>
         public WebAppKeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
-        /// <param name="name"> Key name. </param>
-        /// <param name="value"> Key value. </param>
-        internal WebAppKeyInfo(string name, string value)
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyInfo"/>. </summary>
+        /// <param name="properties"> Properties of function key info. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppKeyInfo(WebAppKeyInfoProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Value = value;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Key name. </summary>
-        public string Name { get; set; }
-        /// <summary> Key value. </summary>
-        public string Value { get; set; }
+        /// <summary> Properties of function key info. </summary>
+        [WirePath("properties")]
+        public WebAppKeyInfoProperties Properties { get; set; }
     }
 }

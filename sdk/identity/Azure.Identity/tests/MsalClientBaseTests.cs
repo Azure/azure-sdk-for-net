@@ -36,18 +36,18 @@ namespace Azure.Identity.Tests
                 EventLevel.Verbose);
 
             var client_1 = new MockMsalClient(
-                new CredentialPipeline(new Uri("https://w.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
+                new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                new InteractiveBrowserCredentialOptions(){ IsLoggingPIIEnabled = logPii });
+                new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = logPii });
 
             var client_2 = new MockMsalClient(
-                new CredentialPipeline(new Uri("https://w.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
+                new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                new InteractiveBrowserCredentialOptions(){ IsLoggingPIIEnabled = false }); // never log PII
+                new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = false }); // never log PII
 
-            Assert.AreEqual(logPii, client_1.IsPiiLoggingEnabled);
+            Assert.AreEqual(logPii, client_1.IsSupportLoggingEnabled);
 
             client_1.Log(client1Message, true);
             client_2.Log(client2Message, true);
@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
 
             public ManualResetEventSlim Evt { get; set; }
 
-            protected override ValueTask<IClientApplicationBase> CreateClientAsync(bool async, CancellationToken cancellationToken)
+            protected override ValueTask<IClientApplicationBase> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
                 => throw new NotImplementedException();
 
             public void Log(string message, bool isPii)

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Using longest idle distribution mode
@@ -34,11 +33,11 @@ RouterAdministrationClient routerAdministrationClient = new RouterAdministration
 // Create distribution policy
 string distributionPolicyId = "distribution-policy-id-5";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
-    options: new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId, offerTtl: TimeSpan.FromMinutes(5), mode: new LongestIdleMode()) { Name = "Simple longest idle" });
+    options: new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId, offerExpiresAfter: TimeSpan.FromMinutes(5), mode: new LongestIdleMode()) { Name = "Simple longest idle" });
 
 // Create queue
 string queueId = "queue-id-1";
-Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: queueId,
     distributionPolicyId: distributionPolicyId));
 
@@ -47,32 +46,27 @@ string worker1Id = "worker-id-1";
 string worker2Id = "worker-id-2";
 
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>()
-            {
-                ["general"] = new ChannelConfiguration(10),
-            },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+        Channels = { new RouterChannel("general", 10), },
+        Queues = { queueId },
     });
 
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+        Channels = { new RouterChannel("general", 10), },
+        Queues = { queueId },
     });
 
 // Register worker1
-worker1 = await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(worker1Id) { AvailableForOffers = true });
+worker1 = await routerClient.UpdateWorkerAsync(new RouterWorker(worker1Id) { AvailableForOffers = true });
 
 // wait for 5 seconds to simulate worker 1 has been idle longer
 await Task.Delay(TimeSpan.FromSeconds(5));
 
 // Register worker2
-worker2 = await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(worker2Id) { AvailableForOffers = true });
+worker2 = await routerClient.UpdateWorkerAsync(new RouterWorker(worker2Id) { AvailableForOffers = true });
 
 // Create a job
 string jobId = "job-id-1";
@@ -108,36 +102,31 @@ string distributionPolicyId = "distribution-policy-id-6";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     options: new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(5),
+        offerExpiresAfter: TimeSpan.FromMinutes(5),
         mode: new RoundRobinMode()) { Name = "Simple round robin" });
 
 // Create queue
 string queueId = "queue-id-1";
-Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
 
 // Setting up 2 identical workers
 string worker1Id = "worker-id-1";
 string worker2Id = "worker-id-2";
 
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>()
-            {
-                ["general"] = new ChannelConfiguration(5),
-            },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-        AvailableForOffers = true,  // register worker upon creation
+        Channels = { new RouterChannel("general", 5), },
+        Queues = { queueId },
+        AvailableForOffers = true
     });
 
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(5), },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-        AvailableForOffers = true,  // register worker upon creation
+        Channels = { new RouterChannel("general",5), },
+        Queues = { queueId },
+        AvailableForOffers = true, // register worker upon creation
     });
 
 // Setting up two identical jobs
@@ -186,12 +175,12 @@ string distributionPolicyId = "distribution-policy-id-7";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     options: new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(5),
+        offerExpiresAfter: TimeSpan.FromMinutes(5),
         mode: new BestWorkerMode()) { Name = "Default best worker mode" });
 
 // Create queue
 string queueId = "queue-id-1";
-Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: queueId,
     distributionPolicyId: distributionPolicyId));
 
@@ -201,56 +190,50 @@ string worker2Id = "worker-id-2";
 string worker3Id = "worker-id-3";
 
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>()
-            {
-                ["general"] = new ChannelConfiguration(10),
-            },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-        Labels = new Dictionary<string, LabelValue>()
+        Channels = { new RouterChannel("general",10), },
+        Queues = { queueId },
+        Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Region"] = new LabelValue("NA"),
-            ["Hardware_Support"] = new LabelValue(true),
-            ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
-            ["Language_Skill_Level_EN_US"] = new LabelValue(10),
+            ["Location"] = new RouterValue("United States"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Region"] = new RouterValue("NA"),
+            ["Hardware_Support"] = new RouterValue(true),
+            ["Hardware_Support_SurfaceLaptop"] = new RouterValue(true),
+            ["Language_Skill_Level_EN_US"] = new RouterValue(10),
         }
     });
 
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-        Labels = new Dictionary<string, LabelValue>()
+        Channels = { new RouterChannel("general",10), },
+        Queues = { queueId },
+        Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Region"] = new LabelValue("NA"),
-            ["Hardware_Support"] = new LabelValue(true),
-            ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
-            ["Language_Skill_Level_EN_US"] = new LabelValue(20),
+            ["Location"] = new RouterValue("United States"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Region"] = new RouterValue("NA"),
+            ["Hardware_Support"] = new RouterValue(true),
+            ["Hardware_Support_SurfaceLaptop"] = new RouterValue(true),
+            ["Language_Skill_Level_EN_US"] = new RouterValue(20),
         }
     });
 
 Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker3Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker3Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-        Labels = new Dictionary<string, LabelValue>()
+        Channels = { new RouterChannel("general", 10), },
+        Queues = { queueId },
+        Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Region"] = new LabelValue("NA"),
-            ["Hardware_Support"] = new LabelValue(true),
-            ["Hardware_Support_SurfaceLaptop"] = new LabelValue(false),
-            ["Language_Skill_Level_EN_US"] = new LabelValue(1),
+            ["Location"] = new RouterValue("United States"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Region"] = new RouterValue("NA"),
+            ["Hardware_Support"] = new RouterValue(true),
+            ["Hardware_Support_SurfaceLaptop"] = new RouterValue(false),
+            ["Language_Skill_Level_EN_US"] = new RouterValue(1),
         }
     });
 
@@ -258,17 +241,17 @@ string jobId = "job-id-1";
 Response<RouterJob> job = await routerClient.CreateJobAsync(
     options: new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId)
     {
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Region"] = new LabelValue("NA"),
-            ["Hardware_Support"] = new LabelValue(true),
-            ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
+            ["Location"] = new RouterValue("United States"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Region"] = new RouterValue("NA"),
+            ["Hardware_Support"] = new RouterValue(true),
+            ["Hardware_Support_SurfaceLaptop"] = new RouterValue(true),
         },
-        RequestedWorkerSelectors = new List<WorkerSelector>()
+        RequestedWorkerSelectors =
         {
-            new WorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanEqual, new LabelValue(0)),
+            new RouterWorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanOrEqual, new RouterValue(0)),
         }
     });
 
@@ -300,15 +283,19 @@ Console.WriteLine($"Worker 3 has not received an offer for job: {queriedWorker3.
 
 // Create distribution policy
 string distributionPolicyId = "distribution-policy-id-8";
-Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
-    options: new CreateDistributionPolicyOptions(
-        distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(5),
-        mode: new LongestIdleMode(minConcurrentOffers: 1, maxConcurrentOffers: 2)) { Name = "Simple longest idle" });
+Response<DistributionPolicy> distributionPolicy =
+    await routerAdministrationClient.CreateDistributionPolicyAsync(
+        options: new CreateDistributionPolicyOptions(
+            distributionPolicyId: distributionPolicyId,
+            offerExpiresAfter: TimeSpan.FromMinutes(5),
+            mode: new LongestIdleMode { MinConcurrentOffers = 1, MaxConcurrentOffers = 2 })
+        {
+            Name = "Simple longest idle"
+        });
 
 // Create queue
 string queueId = "queue-id-1";
-Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: queueId,
     distributionPolicyId: distributionPolicyId));
 
@@ -317,23 +304,18 @@ string worker1Id = "worker-id-1";
 string worker2Id = "worker-id-2";
 
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>()
-            {
-                ["general"] = new ChannelConfiguration(10),
-            },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+        Channels = { new RouterChannel("general", 10), },
+        Queues = { queueId, },
         AvailableForOffers = true,
     });
 
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+        Channels = { new RouterChannel("general", 10), },
+        Queues = { queueId, },
         AvailableForOffers = true,
     });
 

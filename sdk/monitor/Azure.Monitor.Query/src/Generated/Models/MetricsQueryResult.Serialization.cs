@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -16,50 +15,52 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element)
         {
-            Optional<int> cost = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? cost = default;
             string timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            string resourceregion = default;
             IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cost = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timespan"))
+                if (property.NameEquals("timespan"u8))
                 {
                     timespan = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceregion"))
+                if (property.NameEquals("resourceregion"u8))
                 {
                     resourceregion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<MetricResult> array = new List<MetricResult>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -70,7 +71,21 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MetricsQueryResult(
+                cost,
+                timespan,
+                interval,
+                @namespace,
+                resourceregion,
+                value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricsQueryResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricsQueryResult(document.RootElement);
         }
     }
 }

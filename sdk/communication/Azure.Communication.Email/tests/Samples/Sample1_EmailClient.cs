@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 #region Snippet:Azure_Communication_Email_UsingStatements
 //@@ using Azure.Communication.Email;
-using Azure.Communication.Email.Models;
 #endregion Snippet:Azure_Communication_Email_UsingStatements
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Net.Mime;
+using System.Threading;
 
 namespace Azure.Communication.Email.Tests.Samples
 {
@@ -21,64 +21,106 @@ namespace Azure.Communication.Email.Tests.Samples
 
         [Test]
         [SyncOnly]
-        public void SendEmail()
+        public void SendSimpleEmailWithAutomaticPollingForStatus()
         {
-            EmailClient client = CreateEmailClient();
+            EmailClient emailClient = CreateEmailClient();
 
-            #region Snippet:Azure_Communication_Email_Send
+            #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
+            //@@ try
+            //@@ {
+                var emailSendOperation = emailClient.Send(
+                    wait: WaitUntil.Completed,
+                    //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                    //@@ recipientAddress: "<recipient email address>"
+                    /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                    /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                    subject: "This is the subject",
+                    htmlContent: "<html><body>This is the html body</body></html>");
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
+            #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
+
+            Assert.False(string.IsNullOrEmpty(operationId));
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SendEmailWithMoreOptions()
+        {
+            EmailClient emailClient = CreateEmailClient();
+
+            #region Snippet:Azure_Communication_Email_Send_With_MoreOptions
             // Create the email content
-            var emailContent = new EmailContent("This is the subject");
-            emailContent.PlainText = "This is the body";
-
-            // Create the recipient list
-            var emailRecipients = new EmailRecipients(
-                new List<EmailAddress>
-                {
-                    new EmailAddress(
-                        //@@ email: "<recipient email address>"
-                        //@@ displayName: "<recipient displayname>"
-                        /*@@*/ email: TestEnvironment.RecipientAddress,
-                        /*@@*/ displayName: "Customer Name")
-                });
+            var emailContent = new EmailContent("This is the subject")
+            {
+                PlainText = "This is the body",
+                Html = "<html><body>This is the html body</body></html>"
+            };
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                content: emailContent);
 
-            SendEmailResult sendResult = client.Send(emailMessage);
+            //@@ try
+            //@@ {
+                var emailSendOperation = emailClient.Send(
+                    wait: WaitUntil.Completed,
+                    message: emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-            Console.WriteLine($"Email id: {sendResult.MessageId}");
-            #endregion Snippet:Azure_Communication_Email_Send
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
+            #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions
 
-            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+            Assert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]
         [SyncOnly]
         public void SendEmailToMultipleRecipients()
         {
-            EmailClient client = CreateEmailClient();
+            EmailClient emailClient = CreateEmailClient();
 
             #region Snippet:Azure_Communication_Email_Send_Multiple_Recipients
             // Create the email content
-            var emailContent = new EmailContent("This is the subject");
-            emailContent.PlainText = "This is the body";
+            var emailContent = new EmailContent("This is the subject")
+            {
+                PlainText = "This is the body",
+                Html = "<html><body>This is the html body</body></html>"
+            };
 
             // Create the To list
             var toRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
 
@@ -86,14 +128,14 @@ namespace Azure.Communication.Email.Tests.Samples
             var ccRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
 
@@ -101,14 +143,14 @@ namespace Azure.Communication.Email.Tests.Samples
             var bccRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
 
@@ -116,105 +158,190 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                emailRecipients,
+                emailContent);
 
-            SendEmailResult sendResult = client.Send(emailMessage);
+            //@@ try
+            //@@ {
+                EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-            Console.WriteLine($"Email id: {sendResult.MessageId}");
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients
 
-            Console.WriteLine(sendResult.MessageId);
-            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+            Assert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]
         [SyncOnly]
         public void SendEmailWithAttachment()
         {
-            EmailClient client = CreateEmailClient();
+            EmailClient emailClient = CreateEmailClient();
 
-            var emailContent = new EmailContent("This is the subject");
-            emailContent.PlainText = "This is the body";
-
-            var emailRecipients = new EmailRecipients(
-                  new List<EmailAddress>
-                  {
-                        new EmailAddress(
-                            //@@ email: "<recipient email address>"
-                            //@@ displayName: "<recipient displayname>"
-                            /*@@*/ email: TestEnvironment.RecipientAddress,
-                            /*@@*/ displayName: "Customer Name")
-                  });
+            // Create the email content
+            var emailContent = new EmailContent("This is the subject")
+            {
+                PlainText = "This is the body",
+                Html = "<html><body>This is the html body</body></html>"
+            };
 
             #region Snippet:Azure_Communication_Email_Send_With_Attachments
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                content: emailContent);
 
 #if SNIPPET
             var filePath = "<path to your file>";
             var attachmentName = "<name of your attachment>";
-            EmailAttachmentType attachmentType = EmailAttachmentType.Txt;
+            var contentType = MediaTypeNames.Text.Plain;
 #endif
 
-            // Convert the file content into a Base64 string
 #if SNIPPET
-            byte[] bytes = File.ReadAllBytes(filePath);
-            string attachmentFileInBytes = Convert.ToBase64String(bytes);
+            var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
 #else
             string attachmentName = "Attachment.txt";
-            EmailAttachmentType attachmentType = EmailAttachmentType.Txt;
-            var attachmentFileInBytes = "VGhpcyBpcyBhIHRlc3Q=";
+            string contentType = MediaTypeNames.Text.Plain;
+            var content = new BinaryData("This is attachment file content.");
 #endif
-            var emailAttachment = new EmailAttachment(attachmentName, attachmentType, attachmentFileInBytes);
+            var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
 
             emailMessage.Attachments.Add(emailAttachment);
 
-            SendEmailResult sendResult = client.Send(emailMessage);
-#endregion Snippet:Azure_Communication_Email_Send_With_Attachments
+            //@@ try
+            //@@ {
+                EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
+            #endregion Snippet:Azure_Communication_Email_Send_With_Attachments
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
-        public void GetSendEmailStatus()
+        public void SendEmailWithInlineAttachment()
         {
-            EmailClient client = CreateEmailClient();
+            EmailClient emailClient = CreateEmailClient();
 
-            // Create the email content
-            var emailContent = new EmailContent("This is the subject");
-            emailContent.PlainText = "This is the body";
-
-            // Create the recipient list
-            var emailRecipients = new EmailRecipients(
-                new List<EmailAddress>
-                {
-                    new EmailAddress(
-                        //@@ email: "<recipient email address>"
-                        //@@ displayName: "<recipient displayname>"
-                        /*@@*/ email: TestEnvironment.RecipientAddress,
-                        /*@@*/ displayName: "Customer Name")
-                });
+            #region Snippet:Azure_Communication_Email_Send_With_Inline_Attachments
+            // Create the email content and reference any inline attachments.
+            var emailContent = new EmailContent("This is the subject")
+            {
+                PlainText = "This is the body",
+                Html = "<html><body>This is the html body<img src=\"cid:myInlineAttachmentContentId\"></body></html>"
+            };
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                content: emailContent);
 
-#region Snippet:Azure_Communication_Email_GetSendStatus
-            SendEmailResult sendResult = client.Send(emailMessage);
+#if SNIPPET
+            var filePath = "<path to your file>";
+            var attachmentName = "<name of your attachment>";
+            var contentType = MediaTypeNames.Text.Plain;
+            var contentId = "myInlineAttachmentContentId";
+#endif
 
-            SendStatusResult status = client.GetSendStatus(sendResult.MessageId);
-#endregion Snippet:Azure_Communication_Email_GetSendStatus
+#if SNIPPET
+            var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
+#else
+            string attachmentName = "InlineImage.jpg";
+            string contentType = MediaTypeNames.Image.Jpeg;
+            var content = new BinaryData("This is image file content.");
+            var contentId = "myInlineAttachmentContentId";
+#endif
+            var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+            emailAttachment.ContentId = contentId;
 
-            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+            emailMessage.Attachments.Add(emailAttachment);
+
+            //@@ try
+            //@@ {
+                EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
+            #endregion Snippet:Azure_Communication_Email_Send_With_Inline_Attachments
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void SendSimpleEmailWithManualPollingForStatus()
+        {
+            EmailClient emailClient = CreateEmailClient();
+
+            #region Snippet:Azure_Communication_Email_Send_Simple_ManualPolling
+            /// Send the email message with WaitUntil.Started
+            var emailSendOperation = emailClient.Send(
+                wait: WaitUntil.Started,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                subject: "This is the subject",
+                htmlContent: "<html><body>This is the html body</body></html>");
+
+            /// Call UpdateStatus on the email send operation to poll for the status
+            /// manually.
+            try
+            {
+                while (true)
+                {
+                    emailSendOperation.UpdateStatus();
+                    if (emailSendOperation.HasCompleted)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(100);
+                }
+
+                if (emailSendOperation.HasValue)
+                {
+                    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Email send failed with Code = {ex.ErrorCode} and Message = {ex.Message}");
+            }
+
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
+            #endregion: Azure_Communication_Email_Send_Simple_ManualPolling
         }
     }
 }

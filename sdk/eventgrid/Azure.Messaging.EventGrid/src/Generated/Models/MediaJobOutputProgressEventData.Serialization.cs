@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,31 +17,33 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutputProgressEventData DeserializeMediaJobOutputProgressEventData(JsonElement element)
         {
-            Optional<string> label = default;
-            Optional<long> progress = default;
-            Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string label = default;
+            long? progress = default;
+            IReadOnlyDictionary<string, string> jobCorrelationData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progress = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("jobCorrelationData"))
+                if (property.NameEquals("jobCorrelationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -54,7 +55,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputProgressEventData(label.Value, Optional.ToNullable(progress), Optional.ToDictionary(jobCorrelationData));
+            return new MediaJobOutputProgressEventData(label, progress, jobCorrelationData ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaJobOutputProgressEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobOutputProgressEventData(document.RootElement);
         }
 
         internal partial class MediaJobOutputProgressEventDataConverter : JsonConverter<MediaJobOutputProgressEventData>
@@ -63,6 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaJobOutputProgressEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

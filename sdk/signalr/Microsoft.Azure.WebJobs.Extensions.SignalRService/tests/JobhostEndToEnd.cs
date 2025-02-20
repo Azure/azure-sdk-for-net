@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -179,10 +180,10 @@ namespace SignalRServiceExtension.Tests
             var accessKeys = new List<string> { DefaultAccessKey, DefaultAttributeAccessKey };
             var validationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = false,
-                ValidateAudience = false,
                 IssuerSigningKeyResolver = (token, securityToken, kid, validationParas) => from key in accessKeys
-                                                                                           select new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+                                                                                           select new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                ValidAudience = "http://localhostmakesurenotoneusedxxxxx/client/?hub=testhub",
+                ValidIssuer = "azure-signalr",
             };
             handler.ValidateToken(connectionInfo.AccessToken, validationParameters, out var validatedToken);
             var validatedAccessKey = Encoding.UTF8.GetString((validatedToken.SigningKey as SymmetricSecurityKey)?.Key);
@@ -203,7 +204,7 @@ namespace SignalRServiceExtension.Tests
                         Arguments = new[] { "message" }
                     });
             }
-            catch (AzureSignalRInaccessibleEndpointException)
+            catch (AzureSignalRException ex) when (ex.InnerException is HttpRequestException)
             {
                 // ignore, since we don't really connect to Azure SignalR Service
             }

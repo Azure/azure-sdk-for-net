@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,14 +14,17 @@ namespace Azure.Monitor.Query.Models
     {
         internal static BatchResponse DeserializeBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<BatchQueryResponse>> responses = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<BatchQueryResponse> responses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("responses"))
+                if (property.NameEquals("responses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchQueryResponse> array = new List<BatchQueryResponse>();
@@ -34,7 +36,15 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new BatchResponse(Optional.ToList(responses));
+            return new BatchResponse(responses ?? new ChangeTrackingList<BatchQueryResponse>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BatchResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchResponse(document.RootElement);
         }
     }
 }

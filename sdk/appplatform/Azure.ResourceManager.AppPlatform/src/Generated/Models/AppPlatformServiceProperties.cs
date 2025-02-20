@@ -6,36 +6,71 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Service properties payload. </summary>
     public partial class AppPlatformServiceProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceProperties"/>. </summary>
         public AppPlatformServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
         /// <param name="vnetAddons"> Additional Service settings in vnet injection instance. </param>
         /// <param name="version"> Version of the Service. </param>
-        /// <param name="serviceId"> ServiceInstanceEntity GUID which uniquely identifies a created resource. </param>
+        /// <param name="serviceInstanceId"> ServiceInstanceEntity GUID which uniquely identifies a created resource. </param>
         /// <param name="powerState"> Power state of the Service. </param>
         /// <param name="isZoneRedundant"></param>
         /// <param name="fqdn"> Fully qualified dns name of the service instance. </param>
-        internal AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState, AppPlatformServiceNetworkProfile networkProfile, ServiceVnetAddons vnetAddons, int? version, Guid? serviceId, AppPlatformServicePowerState? powerState, bool? isZoneRedundant, string fqdn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState, AppPlatformServiceNetworkProfile networkProfile, ServiceVnetAddons vnetAddons, int? version, string serviceInstanceId, AppPlatformServicePowerState? powerState, bool? isZoneRedundant, string fqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
             VnetAddons = vnetAddons;
             Version = version;
-            ServiceId = serviceId;
+            ServiceInstanceId = serviceInstanceId;
             PowerState = powerState;
             IsZoneRedundant = isZoneRedundant;
             Fqdn = fqdn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the Service. </summary>
@@ -59,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Version of the Service. </summary>
         public int? Version { get; }
         /// <summary> ServiceInstanceEntity GUID which uniquely identifies a created resource. </summary>
-        public Guid? ServiceId { get; }
+        public string ServiceInstanceId { get; }
         /// <summary> Power state of the Service. </summary>
         public AppPlatformServicePowerState? PowerState { get; }
         /// <summary> Gets or sets the is zone redundant. </summary>

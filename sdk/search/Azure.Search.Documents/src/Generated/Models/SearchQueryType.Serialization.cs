@@ -21,9 +21,9 @@ namespace Azure.Search.Documents.Models
 
         public static SearchQueryType ToSearchQueryType(this string value)
         {
-            if (string.Equals(value, "simple", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Simple;
-            if (string.Equals(value, "full", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Full;
-            if (string.Equals(value, "semantic", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Semantic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "simple")) return SearchQueryType.Simple;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "full")) return SearchQueryType.Full;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "semantic")) return SearchQueryType.Semantic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
         }
     }

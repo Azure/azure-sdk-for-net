@@ -5,73 +5,159 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabDataDiskProperties : IUtf8JsonSerializable
+    public partial class DevTestLabDataDiskProperties : IUtf8JsonSerializable, IJsonModel<DevTestLabDataDiskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabDataDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevTestLabDataDiskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
-                writer.WritePropertyName("attachNewDataDiskOptions");
-                writer.WriteObjectValue(AttachNewDataDiskOptions);
+                writer.WritePropertyName("attachNewDataDiskOptions"u8);
+                writer.WriteObjectValue(AttachNewDataDiskOptions, options);
             }
             if (Optional.IsDefined(ExistingLabDiskId))
             {
-                writer.WritePropertyName("existingLabDiskId");
+                writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);
             }
             if (Optional.IsDefined(HostCaching))
             {
-                writer.WritePropertyName("hostCaching");
+                writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DevTestLabDataDiskProperties DeserializeDevTestLabDataDiskProperties(JsonElement element)
+        DevTestLabDataDiskProperties IJsonModel<DevTestLabDataDiskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
-            Optional<ResourceIdentifier> existingLabDiskId = default;
-            Optional<DevTestLabHostCachingOption> hostCaching = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabDataDiskProperties(document.RootElement, options);
+        }
+
+        internal static DevTestLabDataDiskProperties DeserializeDevTestLabDataDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AttachNewDataDiskDetails attachNewDataDiskOptions = default;
+            ResourceIdentifier existingLabDiskId = default;
+            DevTestLabHostCachingOption? hostCaching = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attachNewDataDiskOptions"))
+                if (property.NameEquals("attachNewDataDiskOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value);
+                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("existingLabDiskId"))
+                if (property.NameEquals("existingLabDiskId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     existingLabDiskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostCaching"))
+                if (property.NameEquals("hostCaching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostCaching = new DevTestLabHostCachingOption(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions.Value, existingLabDiskId.Value, Optional.ToNullable(hostCaching));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions, existingLabDiskId, hostCaching, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabDataDiskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabDataDiskProperties IPersistableModel<DevTestLabDataDiskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabDataDiskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabDataDiskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

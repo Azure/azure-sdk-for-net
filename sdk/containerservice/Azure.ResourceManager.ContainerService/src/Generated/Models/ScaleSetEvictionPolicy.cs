@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string DeleteValue = "Delete";
         private const string DeallocateValue = "Deallocate";
 
-        /// <summary> Nodes in the underlying Scale Set of the node pool are deleted when they&apos;re evicted. </summary>
+        /// <summary> Nodes in the underlying Scale Set of the node pool are deleted when they're evicted. </summary>
         public static ScaleSetEvictionPolicy Delete { get; } = new ScaleSetEvictionPolicy(DeleteValue);
         /// <summary> Nodes in the underlying Scale Set of the node pool are set to the stopped-deallocated state upon eviction. Nodes in the stopped-deallocated state count against your compute quota and can cause issues with cluster scaling or upgrading. </summary>
         public static ScaleSetEvictionPolicy Deallocate { get; } = new ScaleSetEvictionPolicy(DeallocateValue);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ScaleSetEvictionPolicy left, ScaleSetEvictionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleSetEvictionPolicy"/> values are not the same. </summary>
         public static bool operator !=(ScaleSetEvictionPolicy left, ScaleSetEvictionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScaleSetEvictionPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScaleSetEvictionPolicy"/>. </summary>
         public static implicit operator ScaleSetEvictionPolicy(string value) => new ScaleSetEvictionPolicy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -17,12 +17,12 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryThumbprint))
             {
-                writer.WritePropertyName("primaryThumbprint");
+                writer.WritePropertyName("primaryThumbprint"u8);
                 writer.WriteStringValue(PrimaryThumbprint);
             }
             if (Optional.IsDefined(SecondaryThumbprint))
             {
-                writer.WritePropertyName("secondaryThumbprint");
+                writer.WritePropertyName("secondaryThumbprint"u8);
                 writer.WriteStringValue(SecondaryThumbprint);
             }
             writer.WriteEndObject();
@@ -30,22 +30,42 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static X509Thumbprint DeserializeX509Thumbprint(JsonElement element)
         {
-            Optional<string> primaryThumbprint = default;
-            Optional<string> secondaryThumbprint = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string primaryThumbprint = default;
+            string secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryThumbprint"))
+                if (property.NameEquals("primaryThumbprint"u8))
                 {
                     primaryThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryThumbprint"))
+                if (property.NameEquals("secondaryThumbprint"u8))
                 {
                     secondaryThumbprint = property.Value.GetString();
                     continue;
                 }
             }
-            return new X509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
+            return new X509Thumbprint(primaryThumbprint, secondaryThumbprint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static X509Thumbprint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeX509Thumbprint(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

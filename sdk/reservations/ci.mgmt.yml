@@ -17,7 +17,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: reservations
-    BuildSnippets: true
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Reservations

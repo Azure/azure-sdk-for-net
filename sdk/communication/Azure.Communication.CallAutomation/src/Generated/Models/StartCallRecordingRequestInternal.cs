@@ -5,29 +5,59 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload start for call recording operation with call locator. </summary>
     internal partial class StartCallRecordingRequestInternal
     {
-        /// <summary> Initializes a new instance of StartCallRecordingRequestInternal. </summary>
-        /// <param name="callLocator"> The call locator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
+        /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
+        public StartCallRecordingRequestInternal()
         {
-            Argument.AssertNotNull(callLocator, nameof(callLocator));
-
-            CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();
+            ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
-        /// <summary> The call locator. </summary>
-        public CallLocatorInternal CallLocator { get; }
+        /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
+        /// <param name="callLocator"> The call locator. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="callConnectionId"> The call connectionId. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
+        /// <param name="recordingContentType"> The content type of call recording. </param>
+        /// <param name="recordingChannelType"> The channel type of call recording. </param>
+        /// <param name="recordingFormatType"> The format type of call recording. </param>
+        /// <param name="audioChannelParticipantOrdering">
+        /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
+        /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
+        /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
+        /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
+        /// </param>
+        /// <param name="channelAffinity">
+        /// The channel affinity of call recording
+        /// When 'recordingChannelType' is set to 'unmixed', if channelAffinity is not specified, 'channel' will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </param>
+        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
+        /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
+        {
+            CallLocator = callLocator;
+            CallConnectionId = callConnectionId;
+            RecordingStateCallbackUri = recordingStateCallbackUri;
+            RecordingContentType = recordingContentType;
+            RecordingChannelType = recordingChannelType;
+            RecordingFormatType = recordingFormatType;
+            AudioChannelParticipantOrdering = audioChannelParticipantOrdering;
+            ChannelAffinity = channelAffinity;
+            PauseOnStart = pauseOnStart;
+            ExternalStorage = externalStorage;
+        }
+
+        /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
+        public CallLocatorInternal CallLocator { get; set; }
+        /// <summary> The call connectionId. (Only one of callLocator or callConnectionId to be used). </summary>
+        public string CallConnectionId { get; set; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>
@@ -38,12 +68,21 @@ namespace Azure.Communication.CallAutomation
         public RecordingFormat? RecordingFormatType { get; set; }
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
-        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos; and `audioChannelParticipantOrdering is not specified,
+        /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
         /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
         /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
         /// </summary>
         public IList<CommunicationIdentifierModel> AudioChannelParticipantOrdering { get; }
-        /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
-        public RecordingStorageType? RecordingStorageType { get; set; }
+        /// <summary>
+        /// The channel affinity of call recording
+        /// When 'recordingChannelType' is set to 'unmixed', if channelAffinity is not specified, 'channel' will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </summary>
+        public IList<ChannelAffinityInternal> ChannelAffinity { get; }
+        /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
+        public bool? PauseOnStart { get; set; }
+        /// <summary> Optional property to specify location where recording will be stored. </summary>
+        public RecordingStorageInternal ExternalStorage { get; set; }
     }
 }

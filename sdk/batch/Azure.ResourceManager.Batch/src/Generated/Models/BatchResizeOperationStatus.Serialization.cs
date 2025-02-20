@@ -6,80 +6,165 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchResizeOperationStatus
+    public partial class BatchResizeOperationStatus : IUtf8JsonSerializable, IJsonModel<BatchResizeOperationStatus>
     {
-        internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchResizeOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BatchResizeOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<int> targetDedicatedNodes = default;
-            Optional<int> targetLowPriorityNodes = default;
-            Optional<TimeSpan> resizeTimeout = default;
-            Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<IReadOnlyList<ResponseError>> errors = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResizeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchResizeOperationStatus)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(TargetDedicatedNodes))
+            {
+                writer.WritePropertyName("targetDedicatedNodes"u8);
+                writer.WriteNumberValue(TargetDedicatedNodes.Value);
+            }
+            if (Optional.IsDefined(TargetLowPriorityNodes))
+            {
+                writer.WritePropertyName("targetLowPriorityNodes"u8);
+                writer.WriteNumberValue(TargetLowPriorityNodes.Value);
+            }
+            if (Optional.IsDefined(ResizeTimeout))
+            {
+                writer.WritePropertyName("resizeTimeout"u8);
+                writer.WriteStringValue(ResizeTimeout.Value, "P");
+            }
+            if (Optional.IsDefined(NodeDeallocationOption))
+            {
+                writer.WritePropertyName("nodeDeallocationOption"u8);
+                writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        BatchResizeOperationStatus IJsonModel<BatchResizeOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResizeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchResizeOperationStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchResizeOperationStatus(document.RootElement, options);
+        }
+
+        internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? targetDedicatedNodes = default;
+            int? targetLowPriorityNodes = default;
+            TimeSpan? resizeTimeout = default;
+            BatchNodeDeallocationOption? nodeDeallocationOption = default;
+            DateTimeOffset? startTime = default;
+            IReadOnlyList<ResponseError> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetDedicatedNodes"))
+                if (property.NameEquals("targetDedicatedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDedicatedNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetLowPriorityNodes"))
+                if (property.NameEquals("targetLowPriorityNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetLowPriorityNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resizeTimeout"))
+                if (property.NameEquals("resizeTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resizeTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("nodeDeallocationOption"))
+                if (property.NameEquals("nodeDeallocationOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeDeallocationOption = property.Value.GetString().ToBatchNodeDeallocationOption();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResponseError> array = new List<ResponseError>();
@@ -90,8 +175,51 @@ namespace Azure.ResourceManager.Batch.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), Optional.ToList(errors));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchResizeOperationStatus(
+                targetDedicatedNodes,
+                targetLowPriorityNodes,
+                resizeTimeout,
+                nodeDeallocationOption,
+                startTime,
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchResizeOperationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResizeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchResizeOperationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchResizeOperationStatus IPersistableModel<BatchResizeOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchResizeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchResizeOperationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchResizeOperationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchResizeOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

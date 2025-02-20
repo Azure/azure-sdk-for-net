@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchWindowsLoginMode ToBatchWindowsLoginMode(this string value)
         {
-            if (string.Equals(value, "Batch", StringComparison.InvariantCultureIgnoreCase)) return BatchWindowsLoginMode.Batch;
-            if (string.Equals(value, "Interactive", StringComparison.InvariantCultureIgnoreCase)) return BatchWindowsLoginMode.Interactive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Batch")) return BatchWindowsLoginMode.Batch;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Interactive")) return BatchWindowsLoginMode.Interactive;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchWindowsLoginMode value.");
         }
     }

@@ -6,35 +6,35 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class FsLayer : IUtf8JsonSerializable
+    internal partial class FsLayer
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BlobSum))
-            {
-                writer.WritePropertyName("blobSum");
-                writer.WriteStringValue(BlobSum);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static FsLayer DeserializeFsLayer(JsonElement element)
         {
-            Optional<string> blobSum = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string blobSum = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobSum"))
+                if (property.NameEquals("blobSum"u8))
                 {
                     blobSum = property.Value.GetString();
                     continue;
                 }
             }
-            return new FsLayer(blobSum.Value);
+            return new FsLayer(blobSum);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FsLayer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFsLayer(document.RootElement);
         }
     }
 }

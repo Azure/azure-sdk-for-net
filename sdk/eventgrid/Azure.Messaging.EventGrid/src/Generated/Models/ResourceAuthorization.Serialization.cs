@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,26 +14,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ResourceAuthorization DeserializeResourceAuthorization(JsonElement element)
         {
-            Optional<string> scope = default;
-            Optional<string> action = default;
-            Optional<IReadOnlyDictionary<string, string>> evidence = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string scope = default;
+            string action = default;
+            IReadOnlyDictionary<string, string> evidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("evidence"))
+                if (property.NameEquals("evidence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -46,7 +48,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceAuthorization(scope.Value, action.Value, Optional.ToDictionary(evidence));
+            return new ResourceAuthorization(scope, action, evidence ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceAuthorization FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceAuthorization(document.RootElement);
         }
     }
 }

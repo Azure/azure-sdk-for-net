@@ -5,49 +5,175 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubResourceKeys
+    public partial class NotificationHubResourceKeys : IUtf8JsonSerializable, IJsonModel<NotificationHubResourceKeys>
     {
-        internal static NotificationHubResourceKeys DeserializeNotificationHubResourceKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubResourceKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NotificationHubResourceKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubResourceKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NotificationHubResourceKeys)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
+            {
+                writer.WritePropertyName("primaryConnectionString"u8);
+                writer.WriteStringValue(PrimaryConnectionString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
+            {
+                writer.WritePropertyName("secondaryConnectionString"u8);
+                writer.WriteStringValue(SecondaryConnectionString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            {
+                writer.WritePropertyName("primaryKey"u8);
+                writer.WriteStringValue(PrimaryKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            {
+                writer.WritePropertyName("secondaryKey"u8);
+                writer.WriteStringValue(SecondaryKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            {
+                writer.WritePropertyName("keyName"u8);
+                writer.WriteStringValue(KeyName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        NotificationHubResourceKeys IJsonModel<NotificationHubResourceKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubResourceKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NotificationHubResourceKeys)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubResourceKeys(document.RootElement, options);
+        }
+
+        internal static NotificationHubResourceKeys DeserializeNotificationHubResourceKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryConnectionString"))
+                if (property.NameEquals("primaryConnectionString"u8))
                 {
                     primaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryConnectionString"))
+                if (property.NameEquals("secondaryConnectionString"u8))
                 {
                     secondaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotificationHubResourceKeys(primaryConnectionString.Value, secondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NotificationHubResourceKeys(
+                primaryConnectionString,
+                secondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationHubResourceKeys>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubResourceKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubResourceKeys)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NotificationHubResourceKeys IPersistableModel<NotificationHubResourceKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubResourceKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNotificationHubResourceKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubResourceKeys)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NotificationHubResourceKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

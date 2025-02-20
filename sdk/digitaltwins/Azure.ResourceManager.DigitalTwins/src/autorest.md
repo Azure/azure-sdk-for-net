@@ -8,12 +8,17 @@ azure-arm: true
 csharp: true
 library-name: DigitalTwins
 namespace: Azure.ResourceManager.DigitalTwins
-require: https://github.com/Azure/azure-rest-api-specs/blob/fc0c0316bf5187af413a256c484c1e2a259e18b8/specification/digitaltwins/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/71e8a754d34d1af32bf81f23445f286422ca4c40/specification/digitaltwins/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+deserialize-null-collection-as-null-value: true
 
 rename-mapping:
   AzureDataExplorerConnectionProperties.adxResourceId: -|arm-id
@@ -52,7 +57,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

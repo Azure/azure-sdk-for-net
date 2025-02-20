@@ -24,13 +24,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         private const string MediaTypeValue = "mediaType";
 
-        /// <summary> The stream&apos;s MIME type or subtype: audio, video or application. </summary>
+        /// <summary> The stream's MIME type or subtype: audio, video or application. </summary>
         public static OutputSelectorProperty MediaType { get; } = new OutputSelectorProperty(MediaTypeValue);
         /// <summary> Determines if two <see cref="OutputSelectorProperty"/> values are the same. </summary>
         public static bool operator ==(OutputSelectorProperty left, OutputSelectorProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputSelectorProperty"/> values are not the same. </summary>
         public static bool operator !=(OutputSelectorProperty left, OutputSelectorProperty right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutputSelectorProperty"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutputSelectorProperty"/>. </summary>
         public static implicit operator OutputSelectorProperty(string value) => new OutputSelectorProperty(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

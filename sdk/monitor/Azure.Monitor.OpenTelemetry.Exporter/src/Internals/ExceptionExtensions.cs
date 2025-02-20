@@ -24,9 +24,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static Exception LogAsyncException(this Exception exception)
+        internal static Exception FlattenException(this Exception exception)
         {
-            return exception is AggregateException aggregateException ? aggregateException.InnerException : exception;
+            return exception is AggregateException aggregateException ? aggregateException.Flatten() : exception;
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -14,21 +13,32 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static ServiceStatistics DeserializeServiceStatistics(JsonElement element)
         {
-            Optional<long> connectedDeviceCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            long? connectedDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectedDeviceCount"))
+                if (property.NameEquals("connectedDeviceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectedDeviceCount = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new ServiceStatistics(Optional.ToNullable(connectedDeviceCount));
+            return new ServiceStatistics(connectedDeviceCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceStatistics(document.RootElement);
         }
     }
 }

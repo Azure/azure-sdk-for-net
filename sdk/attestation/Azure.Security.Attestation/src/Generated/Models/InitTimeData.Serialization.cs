@@ -17,15 +17,23 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteBase64StringValue(Data, "U");
             }
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

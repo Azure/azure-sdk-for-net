@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -15,14 +14,17 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static EventSchema DeserializeEventSchema(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesInsightsEventProperty>> properties = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<TimeSeriesInsightsEventProperty> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesInsightsEventProperty> array = new List<TimeSeriesInsightsEventProperty>();
@@ -34,7 +36,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new EventSchema(Optional.ToList(properties));
+            return new EventSchema(properties ?? new ChangeTrackingList<TimeSeriesInsightsEventProperty>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EventSchema FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventSchema(document.RootElement);
         }
     }
 }

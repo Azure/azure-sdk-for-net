@@ -5,75 +5,176 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildResultProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuildResultProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBuildResultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuildResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformBuildResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(BuildPodName))
-            {
-                writer.WritePropertyName("buildPodName");
-                writer.WriteStringValue(BuildPodName);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformBuildResultProperties DeserializeAppPlatformBuildResultProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> name = default;
-            Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
-            Optional<string> buildPodName = default;
-            Optional<IReadOnlyList<AppPlatformBuildStageProperties>> buildStages = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(BuildPodName))
+            {
+                writer.WritePropertyName("buildPodName"u8);
+                writer.WriteStringValue(BuildPodName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BuildStages))
+            {
+                writer.WritePropertyName("buildStages"u8);
+                writer.WriteStartArray();
+                foreach (var item in BuildStages)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AppPlatformBuildResultProperties IJsonModel<AppPlatformBuildResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformBuildResultProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformBuildResultProperties DeserializeAppPlatformBuildResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            AppPlatformBuildResultProvisioningState? provisioningState = default;
+            string buildPodName = default;
+            IReadOnlyList<AppPlatformBuildStageProperties> buildStages = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformBuildResultProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("buildPodName"))
+                if (property.NameEquals("buildPodName"u8))
                 {
                     buildPodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("buildStages"))
+                if (property.NameEquals("buildStages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformBuildStageProperties> array = new List<AppPlatformBuildStageProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformBuildStageProperties.DeserializeAppPlatformBuildStageProperties(item));
+                        array.Add(AppPlatformBuildStageProperties.DeserializeAppPlatformBuildStageProperties(item, options));
                     }
                     buildStages = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformBuildResultProperties(name.Value, Optional.ToNullable(provisioningState), buildPodName.Value, Optional.ToList(buildStages));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages ?? new ChangeTrackingList<AppPlatformBuildStageProperties>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformBuildResultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformBuildResultProperties IPersistableModel<AppPlatformBuildResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformBuildResultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformBuildResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

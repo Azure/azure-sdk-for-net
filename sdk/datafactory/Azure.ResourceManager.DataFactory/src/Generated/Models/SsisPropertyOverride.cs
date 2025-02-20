@@ -6,39 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS property override. </summary>
     public partial class SsisPropertyOverride
     {
-        /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
-        /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SsisPropertyOverride(BinaryData value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value;
-        }
-
-        /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
-        /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
-        /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
-        internal SsisPropertyOverride(BinaryData value, bool? isSensitive)
-        {
-            Value = value;
-            IsSensitive = isSensitive;
-        }
-
         /// <summary>
-        /// SSIS package property override value. Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -62,7 +44,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Value { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisPropertyOverride"/>. </summary>
+        /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SsisPropertyOverride(DataFactoryElement<string> value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisPropertyOverride"/>. </summary>
+        /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
+        /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisPropertyOverride(DataFactoryElement<string> value, bool? isSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            IsSensitive = isSensitive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisPropertyOverride"/> for deserialization. </summary>
+        internal SsisPropertyOverride()
+        {
+        }
+
+        /// <summary> SSIS package property override value. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Value { get; set; }
         /// <summary> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </summary>
         public bool? IsSensitive { get; set; }
     }

@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private const string DisabledValue = "Disabled";
         private const string InactiveValue = "Inactive";
         private const string StoppedValue = "Stopped";
+        private const string UnmonitoredValue = "Unmonitored";
 
         /// <summary> CheckingEndpoint. </summary>
         public static TrafficManagerEndpointMonitorStatus CheckingEndpoint { get; } = new TrafficManagerEndpointMonitorStatus(CheckingEndpointValue);
@@ -41,11 +42,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficManagerEndpointMonitorStatus Inactive { get; } = new TrafficManagerEndpointMonitorStatus(InactiveValue);
         /// <summary> Stopped. </summary>
         public static TrafficManagerEndpointMonitorStatus Stopped { get; } = new TrafficManagerEndpointMonitorStatus(StoppedValue);
+        /// <summary> Unmonitored. </summary>
+        public static TrafficManagerEndpointMonitorStatus Unmonitored { get; } = new TrafficManagerEndpointMonitorStatus(UnmonitoredValue);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are the same. </summary>
         public static bool operator ==(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are not the same. </summary>
         public static bool operator !=(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
         public static implicit operator TrafficManagerEndpointMonitorStatus(string value) => new TrafficManagerEndpointMonitorStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

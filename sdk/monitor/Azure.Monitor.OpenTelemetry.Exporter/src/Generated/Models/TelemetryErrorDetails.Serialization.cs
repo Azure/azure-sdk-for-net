@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -14,38 +13,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element)
         {
-            Optional<int> index = default;
-            Optional<int> statusCode = default;
-            Optional<string> message = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? index = default;
+            int? statusCode = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("index"))
+                if (property.NameEquals("index"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     index = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new TelemetryErrorDetails(Optional.ToNullable(index), Optional.ToNullable(statusCode), message.Value);
+            return new TelemetryErrorDetails(index, statusCode, message);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TelemetryErrorDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTelemetryErrorDetails(document.RootElement);
         }
     }
 }

@@ -5,82 +5,301 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBAccountCorsPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBAccountCorsPolicy : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountCorsPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountCorsPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CosmosDBAccountCorsPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountCorsPolicy)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStringValue(AllowedOrigins);
             if (Optional.IsDefined(AllowedMethods))
             {
-                writer.WritePropertyName("allowedMethods");
+                writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStringValue(AllowedMethods);
             }
             if (Optional.IsDefined(AllowedHeaders))
             {
-                writer.WritePropertyName("allowedHeaders");
+                writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStringValue(AllowedHeaders);
             }
             if (Optional.IsDefined(ExposedHeaders))
             {
-                writer.WritePropertyName("exposedHeaders");
+                writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStringValue(ExposedHeaders);
             }
             if (Optional.IsDefined(MaxAgeInSeconds))
             {
-                writer.WritePropertyName("maxAgeInSeconds");
+                writer.WritePropertyName("maxAgeInSeconds"u8);
                 writer.WriteNumberValue(MaxAgeInSeconds.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static CosmosDBAccountCorsPolicy DeserializeCosmosDBAccountCorsPolicy(JsonElement element)
+        CosmosDBAccountCorsPolicy IJsonModel<CosmosDBAccountCorsPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountCorsPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBAccountCorsPolicy(document.RootElement, options);
+        }
+
+        internal static CosmosDBAccountCorsPolicy DeserializeCosmosDBAccountCorsPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string allowedOrigins = default;
-            Optional<string> allowedMethods = default;
-            Optional<string> allowedHeaders = default;
-            Optional<string> exposedHeaders = default;
-            Optional<long> maxAgeInSeconds = default;
+            string allowedMethods = default;
+            string allowedHeaders = default;
+            string exposedHeaders = default;
+            long? maxAgeInSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     allowedOrigins = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedMethods"))
+                if (property.NameEquals("allowedMethods"u8))
                 {
                     allowedMethods = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedHeaders"))
+                if (property.NameEquals("allowedHeaders"u8))
                 {
                     allowedHeaders = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exposedHeaders"))
+                if (property.NameEquals("exposedHeaders"u8))
                 {
                     exposedHeaders = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxAgeInSeconds"))
+                if (property.NameEquals("maxAgeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAgeInSeconds = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBAccountCorsPolicy(allowedOrigins, allowedMethods.Value, allowedHeaders.Value, exposedHeaders.Value, Optional.ToNullable(maxAgeInSeconds));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CosmosDBAccountCorsPolicy(
+                allowedOrigins,
+                allowedMethods,
+                allowedHeaders,
+                exposedHeaders,
+                maxAgeInSeconds,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedOrigins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedOrigins))
+                {
+                    builder.Append("  allowedOrigins: ");
+                    if (AllowedOrigins.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AllowedOrigins}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AllowedOrigins}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedMethods), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedMethods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedMethods))
+                {
+                    builder.Append("  allowedMethods: ");
+                    if (AllowedMethods.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AllowedMethods}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AllowedMethods}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedHeaders), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedHeaders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedHeaders))
+                {
+                    builder.Append("  allowedHeaders: ");
+                    if (AllowedHeaders.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AllowedHeaders}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AllowedHeaders}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedHeaders), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exposedHeaders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExposedHeaders))
+                {
+                    builder.Append("  exposedHeaders: ");
+                    if (ExposedHeaders.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExposedHeaders}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExposedHeaders}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxAgeInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxAgeInSeconds))
+                {
+                    builder.Append("  maxAgeInSeconds: ");
+                    builder.AppendLine($"'{MaxAgeInSeconds.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CosmosDBAccountCorsPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBAccountCorsPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBAccountCorsPolicy IPersistableModel<CosmosDBAccountCorsPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBAccountCorsPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBAccountCorsPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBAccountCorsPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

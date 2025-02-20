@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -15,16 +14,19 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static JobDetailsList DeserializeJobDetailsList(JsonElement element)
         {
-            Optional<IReadOnlyList<JobDetails>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<JobDetails> value = default;
+            long? count = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<JobDetails> array = new List<JobDetails>();
@@ -35,23 +37,30 @@ namespace Azure.Quantum.Jobs.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new JobDetailsList(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
+            return new JobDetailsList(value ?? new ChangeTrackingList<JobDetails>(), count, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JobDetailsList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJobDetailsList(document.RootElement);
         }
     }
 }

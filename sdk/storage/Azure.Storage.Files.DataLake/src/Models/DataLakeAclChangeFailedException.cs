@@ -4,6 +4,7 @@
 using System;
 using System.Runtime.Serialization;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -46,6 +47,9 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <inheritdoc />
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
         protected DataLakeAclChangeFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -53,6 +57,9 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <inheritdoc />
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             Argument.AssertNotNull(info, nameof(info));

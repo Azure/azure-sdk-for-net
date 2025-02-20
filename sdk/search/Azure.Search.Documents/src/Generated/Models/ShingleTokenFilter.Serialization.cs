@@ -17,115 +17,139 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxShingleSize))
             {
-                writer.WritePropertyName("maxShingleSize");
+                writer.WritePropertyName("maxShingleSize"u8);
                 writer.WriteNumberValue(MaxShingleSize.Value);
             }
             if (Optional.IsDefined(MinShingleSize))
             {
-                writer.WritePropertyName("minShingleSize");
+                writer.WritePropertyName("minShingleSize"u8);
                 writer.WriteNumberValue(MinShingleSize.Value);
             }
             if (Optional.IsDefined(OutputUnigrams))
             {
-                writer.WritePropertyName("outputUnigrams");
+                writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
             }
             if (Optional.IsDefined(OutputUnigramsIfNoShingles))
             {
-                writer.WritePropertyName("outputUnigramsIfNoShingles");
+                writer.WritePropertyName("outputUnigramsIfNoShingles"u8);
                 writer.WriteBooleanValue(OutputUnigramsIfNoShingles.Value);
             }
             if (Optional.IsDefined(TokenSeparator))
             {
-                writer.WritePropertyName("tokenSeparator");
+                writer.WritePropertyName("tokenSeparator"u8);
                 writer.WriteStringValue(TokenSeparator);
             }
             if (Optional.IsDefined(FilterToken))
             {
-                writer.WritePropertyName("filterToken");
+                writer.WritePropertyName("filterToken"u8);
                 writer.WriteStringValue(FilterToken);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static ShingleTokenFilter DeserializeShingleTokenFilter(JsonElement element)
         {
-            Optional<int> maxShingleSize = default;
-            Optional<int> minShingleSize = default;
-            Optional<bool> outputUnigrams = default;
-            Optional<bool> outputUnigramsIfNoShingles = default;
-            Optional<string> tokenSeparator = default;
-            Optional<string> filterToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? maxShingleSize = default;
+            int? minShingleSize = default;
+            bool? outputUnigrams = default;
+            bool? outputUnigramsIfNoShingles = default;
+            string tokenSeparator = default;
+            string filterToken = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxShingleSize"))
+                if (property.NameEquals("maxShingleSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxShingleSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minShingleSize"))
+                if (property.NameEquals("minShingleSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minShingleSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("outputUnigrams"))
+                if (property.NameEquals("outputUnigrams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputUnigrams = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("outputUnigramsIfNoShingles"))
+                if (property.NameEquals("outputUnigramsIfNoShingles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputUnigramsIfNoShingles = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tokenSeparator"))
+                if (property.NameEquals("tokenSeparator"u8))
                 {
                     tokenSeparator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filterToken"))
+                if (property.NameEquals("filterToken"u8))
                 {
                     filterToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new ShingleTokenFilter(odataType, name, Optional.ToNullable(maxShingleSize), Optional.ToNullable(minShingleSize), Optional.ToNullable(outputUnigrams), Optional.ToNullable(outputUnigramsIfNoShingles), tokenSeparator.Value, filterToken.Value);
+            return new ShingleTokenFilter(
+                odataType,
+                name,
+                maxShingleSize,
+                minShingleSize,
+                outputUnigrams,
+                outputUnigramsIfNoShingles,
+                tokenSeparator,
+                filterToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ShingleTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShingleTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

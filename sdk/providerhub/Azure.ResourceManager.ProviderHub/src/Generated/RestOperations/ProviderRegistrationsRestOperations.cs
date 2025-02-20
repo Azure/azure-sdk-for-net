@@ -6,11 +6,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -34,8 +32,20 @@ namespace Azure.ResourceManager.ProviderHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-09-01-preview";
+            _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace)
@@ -114,6 +124,18 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, ProviderRegistrationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, ProviderRegistrationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -130,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -184,6 +206,18 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string providerNamespace)
@@ -250,6 +284,17 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -272,7 +317,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderRegistrationArrayResponseWithContinuation>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderRegistrationListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -282,9 +327,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        ProviderRegistrationArrayResponseWithContinuation value = default;
+                        ProviderRegistrationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderRegistrationArrayResponseWithContinuation.DeserializeProviderRegistrationArrayResponseWithContinuation(document.RootElement);
+                        value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -297,7 +342,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderRegistrationArrayResponseWithContinuation> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ProviderRegistrationListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -307,9 +352,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        ProviderRegistrationArrayResponseWithContinuation value = default;
+                        ProviderRegistrationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderRegistrationArrayResponseWithContinuation.DeserializeProviderRegistrationArrayResponseWithContinuation(document.RootElement);
+                        value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -317,87 +362,12 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal HttpMessage CreateGenerateOperationsRequest(string subscriptionId, string providerNamespace)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/generateOperations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Generates the operations api for the given provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<OperationsDefinition>>> GenerateOperationsAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-
-            using var message = CreateGenerateOperationsRequest(subscriptionId, providerNamespace);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<OperationsDefinition> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<OperationsDefinition> array = new List<OperationsDefinition>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(OperationsDefinition.DeserializeOperationsDefinition(item));
-                        }
-                        value = array;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Generates the operations api for the given provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<OperationsDefinition>> GenerateOperations(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-
-            using var message = CreateGenerateOperationsRequest(subscriptionId, providerNamespace);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<OperationsDefinition> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<OperationsDefinition> array = new List<OperationsDefinition>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(OperationsDefinition.DeserializeOperationsDefinition(item));
-                        }
-                        value = array;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -420,7 +390,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderRegistrationArrayResponseWithContinuation>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderRegistrationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -431,9 +401,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        ProviderRegistrationArrayResponseWithContinuation value = default;
+                        ProviderRegistrationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderRegistrationArrayResponseWithContinuation.DeserializeProviderRegistrationArrayResponseWithContinuation(document.RootElement);
+                        value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -447,7 +417,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderRegistrationArrayResponseWithContinuation> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ProviderRegistrationListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -458,9 +428,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        ProviderRegistrationArrayResponseWithContinuation value = default;
+                        ProviderRegistrationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderRegistrationArrayResponseWithContinuation.DeserializeProviderRegistrationArrayResponseWithContinuation(document.RootElement);
+                        value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

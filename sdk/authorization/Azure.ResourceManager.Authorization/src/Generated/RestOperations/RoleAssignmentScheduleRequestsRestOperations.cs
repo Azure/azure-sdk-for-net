@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.Authorization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string scope, string roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/", false);
+            uri.AppendPath(roleAssignmentScheduleRequestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string scope, string roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData data)
         {
             var message = _pipeline.CreateMessage();
@@ -53,14 +64,14 @@ namespace Azure.ResourceManager.Authorization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates a role assignment schedule request. </summary>
-        /// <param name="scope"> The scope of the role assignment schedule request to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+        /// <param name="scope"> The scope of the role assignment schedule request to create. The scope can be any REST resource instance. For example, use '/subscriptions/{subscription-id}/' for a subscription, '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource. </param>
         /// <param name="roleAssignmentScheduleRequestName"> A GUID for the role assignment to create. The name must be unique and different for each role assignment. </param>
         /// <param name="data"> Parameters for the role assignment schedule request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +100,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Creates a role assignment schedule request. </summary>
-        /// <param name="scope"> The scope of the role assignment schedule request to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+        /// <param name="scope"> The scope of the role assignment schedule request to create. The scope can be any REST resource instance. For example, use '/subscriptions/{subscription-id}/' for a subscription, '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource. </param>
         /// <param name="roleAssignmentScheduleRequestName"> A GUID for the role assignment to create. The name must be unique and different for each role assignment. </param>
         /// <param name="data"> Parameters for the role assignment schedule request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,6 +126,18 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string roleAssignmentScheduleRequestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/", false);
+            uri.AppendPath(roleAssignmentScheduleRequestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string roleAssignmentScheduleRequestName)
@@ -193,6 +216,21 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        internal RequestUriBuilder CreateListForScopeRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleRequests", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListForScopeRequest(string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -264,6 +302,19 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string scope, string roleAssignmentScheduleRequestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/", false);
+            uri.AppendPath(roleAssignmentScheduleRequestName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string scope, string roleAssignmentScheduleRequestName)
         {
             var message = _pipeline.CreateMessage();
@@ -327,6 +378,19 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        internal RequestUriBuilder CreateValidateRequestUri(string scope, string roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/", false);
+            uri.AppendPath(roleAssignmentScheduleRequestName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateRequest(string scope, string roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData data)
         {
             var message = _pipeline.CreateMessage();
@@ -344,7 +408,7 @@ namespace Azure.ResourceManager.Authorization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -406,6 +470,14 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope, string filter)

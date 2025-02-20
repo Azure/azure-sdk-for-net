@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static ActionRetryableState ToActionRetryableState(this string value)
         {
-            if (string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase)) return ActionRetryableState.Yes;
-            if (string.Equals(value, "No", StringComparison.InvariantCultureIgnoreCase)) return ActionRetryableState.No;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Yes")) return ActionRetryableState.Yes;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "No")) return ActionRetryableState.No;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ActionRetryableState value.");
         }
     }

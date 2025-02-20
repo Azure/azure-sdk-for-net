@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -15,15 +16,17 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void Chat()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27);
+            AnswersResult answers = QuestionAnsweringModelFactory.AnswersResult(new[]
+            {
+                QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27),
+            });
 
             #region Snippet:QuestionAnsweringClient_Chat
             string projectName = "{ProjectName}";
             string deploymentName = "{DeploymentName}";
-#if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-#else
+#if !SNIPPET
             projectName = TestEnvironment.ProjectName;
             deploymentName = TestEnvironment.DeploymentName;
 #endif
@@ -51,15 +54,17 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public async Task ChatAsync()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27);
+            AnswersResult answers = QuestionAnsweringModelFactory.AnswersResult(new[]
+            {
+                QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27),
+            });
 
             #region Snippet:QuestionAnsweringClient_ChatAsync
             string projectName = "{ProjectName}";
             string deploymentName = "{DeploymentName}";
-#if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-#else
+#if !SNIPPET
             projectName = TestEnvironment.ProjectName;
             deploymentName = TestEnvironment.DeploymentName;
 #endif

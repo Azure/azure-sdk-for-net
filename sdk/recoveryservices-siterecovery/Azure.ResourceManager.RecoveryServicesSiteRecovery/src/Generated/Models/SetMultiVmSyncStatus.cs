@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct SetMultiVmSyncStatus : IEquatable<SetMultiVmSyncStatus>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SetMultiVmSyncStatus left, SetMultiVmSyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SetMultiVmSyncStatus"/> values are not the same. </summary>
         public static bool operator !=(SetMultiVmSyncStatus left, SetMultiVmSyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SetMultiVmSyncStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SetMultiVmSyncStatus"/>. </summary>
         public static implicit operator SetMultiVmSyncStatus(string value) => new SetMultiVmSyncStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

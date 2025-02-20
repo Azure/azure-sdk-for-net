@@ -17,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsIotEdgeDevice))
             {
-                writer.WritePropertyName("iotEdge");
+                writer.WritePropertyName("iotEdge"u8);
                 writer.WriteBooleanValue(IsIotEdgeDevice.Value);
             }
             writer.WriteEndObject();
@@ -25,21 +25,40 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static DeviceCapabilities DeserializeDeviceCapabilities(JsonElement element)
         {
-            Optional<bool> iotEdge = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("iotEdge"))
+                if (property.NameEquals("iotEdge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iotEdge = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
+            return new DeviceCapabilities(iotEdge);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceCapabilities FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceCapabilities(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

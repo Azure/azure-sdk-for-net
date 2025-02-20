@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Net;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Store the fabric details specific to the VMware fabric. </summary>
     public partial class VMwareDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         internal VMwareDetails()
         {
-            ProcessServers = new ChangeTrackingList<ProcessServer>();
+            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServer>();
             MasterTargetServers = new ChangeTrackingList<MasterTargetServer>();
-            RunAsAccounts = new ChangeTrackingList<RunAsAccount>();
+            RunAsAccounts = new ChangeTrackingList<SiteRecoveryRunAsAccount>();
             SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>();
             InstanceType = "VMware";
         }
 
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
         /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>
         /// <param name="runAsAccounts"> The list of run as accounts created on the server. </param>
@@ -53,13 +54,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hostName"> The host name. </param>
         /// <param name="lastHeartbeat"> The last heartbeat received from CS server. </param>
         /// <param name="versionStatus"> Version status. </param>
-        /// <param name="sslCertExpiryOn"> CS SSL cert expiry date. </param>
+        /// <param name="sslCertExpireOn"> CS SSL cert expiry date. </param>
         /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
         /// <param name="psTemplateVersion"> PS template version. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="agentVersionDetails"> The agent version details. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
-        internal VMwareDetails(string instanceType, IReadOnlyList<ProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<RunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, string ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpiryOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpiryOn, VersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType)
+        internal VMwareDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SiteRecoveryProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, IPAddress ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType, serializedAdditionalRawData)
         {
             ProcessServers = processServers;
             MasterTargetServers = masterTargetServers;
@@ -88,21 +89,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HostName = hostName;
             LastHeartbeat = lastHeartbeat;
             VersionStatus = versionStatus;
-            SslCertExpiryOn = sslCertExpiryOn;
+            SslCertExpireOn = sslCertExpireOn;
             SslCertExpiryRemainingDays = sslCertExpiryRemainingDays;
-            PsTemplateVersion = psTemplateVersion;
-            AgentExpiryOn = agentExpiryOn;
+            PSTemplateVersion = psTemplateVersion;
+            AgentExpireOn = agentExpireOn;
             AgentVersionDetails = agentVersionDetails;
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
             InstanceType = instanceType ?? "VMware";
         }
 
         /// <summary> The list of Process Servers associated with the fabric. </summary>
-        public IReadOnlyList<ProcessServer> ProcessServers { get; }
+        public IReadOnlyList<SiteRecoveryProcessServer> ProcessServers { get; }
         /// <summary> The list of Master Target servers associated with the fabric. </summary>
         public IReadOnlyList<MasterTargetServer> MasterTargetServers { get; }
         /// <summary> The list of run as accounts created on the server. </summary>
-        public IReadOnlyList<RunAsAccount> RunAsAccounts { get; }
+        public IReadOnlyList<SiteRecoveryRunAsAccount> RunAsAccounts { get; }
         /// <summary> The number of replication pairs configured in this CS. </summary>
         public string ReplicationPairCount { get; }
         /// <summary> The number of process servers. </summary>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The CS service status. </summary>
         public string CsServiceStatus { get; }
         /// <summary> The IP address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The agent Version. </summary>
         public string AgentVersion { get; }
         /// <summary> The host name. </summary>
@@ -152,15 +153,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Version status. </summary>
         public string VersionStatus { get; }
         /// <summary> CS SSL cert expiry date. </summary>
-        public DateTimeOffset? SslCertExpiryOn { get; }
+        public DateTimeOffset? SslCertExpireOn { get; }
         /// <summary> CS SSL cert expiry date. </summary>
         public int? SslCertExpiryRemainingDays { get; }
         /// <summary> PS template version. </summary>
-        public string PsTemplateVersion { get; }
+        public string PSTemplateVersion { get; }
         /// <summary> Agent expiry date. </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary> The agent version details. </summary>
-        public VersionDetails AgentVersionDetails { get; }
+        public SiteRecoveryVersionDetails AgentVersionDetails { get; }
         /// <summary> The switch provider blocking error information. </summary>
         public IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
     }

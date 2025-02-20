@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The &quot;NotAvailableForSubscription&quot; is related to capacity at DC. </summary>
+    /// <summary> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </summary>
     public readonly partial struct StorageRestrictionReasonCode : IEquatable<StorageRestrictionReasonCode>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageRestrictionReasonCode left, StorageRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageRestrictionReasonCode"/> values are not the same. </summary>
         public static bool operator !=(StorageRestrictionReasonCode left, StorageRestrictionReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageRestrictionReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageRestrictionReasonCode"/>. </summary>
         public static implicit operator StorageRestrictionReasonCode(string value) => new StorageRestrictionReasonCode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

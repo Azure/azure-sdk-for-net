@@ -7,51 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_FirewallPolicyResource
     {
-        // Delete Firewall Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteFirewallPolicy()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/FirewallPolicyDelete.json
-            // this example is just showing the usage of "FirewallPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // invoke the operation
-            await firewallPolicy.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get FirewallPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/FirewallPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyGet.json
             // this example is just showing the usage of "FirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,13 +46,12 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create FirewallPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateFirewallPolicy()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/FirewallPolicyPut.json
-            // this example is just showing the usage of "FirewallPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyDelete.json
+            // this example is just showing the usage of "FirewallPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,104 +67,41 @@ namespace Azure.ResourceManager.Network.Samples
             FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
 
             // invoke the operation
-            FirewallPolicyData data = new FirewallPolicyData()
+            await firewallPolicy.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateFirewallPolicyTags()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyPatch.json
+            // this example is just showing the usage of "FirewallPolicies_UpdateTags" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subId";
+            string resourceGroupName = "myResourceGroup";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // invoke the operation
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
-                ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
-                ThreatIntelWhitelist = new FirewallPolicyThreatIntelWhitelist()
-                {
-                    IPAddresses =
-{
-"20.3.4.5"
-},
-                    Fqdns =
-{
-"*.microsoft.com"
-},
-                },
-                Insights = new FirewallPolicyInsights()
-                {
-                    IsEnabled = true,
-                    RetentionDays = 100,
-                    LogAnalyticsResources = new FirewallPolicyLogAnalyticsResources()
-                    {
-                        Workspaces =
-{
-new FirewallPolicyLogAnalyticsWorkspace()
-{
-Region = "westus",
-WorkspaceIdId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/workspace1"),
-},new FirewallPolicyLogAnalyticsWorkspace()
-{
-Region = "eastus",
-WorkspaceIdId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/workspace2"),
-}
-},
-                        DefaultWorkspaceIdId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/defaultWorkspace"),
-                    },
-                },
-                SnatPrivateRanges =
-{
-"IANAPrivateRanges"
-},
-                DnsSettings = new DnsSettings()
-                {
-                    Servers =
-{
-"30.3.4.5"
-},
-                    EnableProxy = true,
-                    RequireProxyForNetworkRules = false,
-                },
-                IntrusionDetection = new FirewallPolicyIntrusionDetection()
-                {
-                    Mode = FirewallPolicyIntrusionDetectionStateType.Alert,
-                    Configuration = new FirewallPolicyIntrusionDetectionConfiguration()
-                    {
-                        SignatureOverrides =
-{
-new FirewallPolicyIntrusionDetectionSignatureSpecification()
-{
-Id = "2525004",
-Mode = FirewallPolicyIntrusionDetectionStateType.Deny,
-}
-},
-                        BypassTrafficSettings =
-{
-new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications()
-{
-Name = "bypassRule1",
-Description = "Rule 1",
-Protocol = FirewallPolicyIntrusionDetectionProtocol.Tcp,
-SourceAddresses =
-{
-"1.2.3.4"
-},
-DestinationAddresses =
-{
-"5.6.7.8"
-},
-DestinationPorts =
-{
-"*"
-},
-}
-},
-                    },
-                },
-                TransportSecurityCertificateAuthority = new FirewallPolicyCertificateAuthority()
-                {
-                    KeyVaultSecretId = "https://kv/secret",
-                    Name = "clientcert",
-                },
-                SkuTier = FirewallPolicySkuTier.Premium,
-                Location = new AzureLocation("West US"),
                 Tags =
 {
 ["key1"] = "value1",
+["key2"] = "value2"
 },
             };
-            ArmOperation<FirewallPolicyResource> lro = await firewallPolicy.UpdateAsync(WaitUntil.Completed, data);
-            FirewallPolicyResource result = lro.Value;
+            FirewallPolicyResource result = await firewallPolicy.UpdateAsync(networkTagsObject);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -205,36 +110,102 @@ DestinationPorts =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all Firewall Policies for a given subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetFirewallPolicies_ListAllFirewallPoliciesForAGivenSubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFirewallPolicyIdpsSignature_QuerySignatureOverrides()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/FirewallPolicyListBySubscription.json
-            // this example is just showing the usage of "FirewallPolicies_ListAll" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyQuerySignatureOverrides.json
+            // this example is just showing the usage of "FirewallPolicyIdpsSignatures_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (FirewallPolicyResource item in subscriptionResource.GetFirewallPoliciesAsync())
+            // invoke the operation
+            IdpsQueryContent content = new IdpsQueryContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FirewallPolicyData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Filters = {new IdpsQueryFilterItems
+{
+Field = "Mode",
+Values = {"Deny"},
+}},
+                Search = "",
+                OrderBy = new IdpsQueryOrderBy
+                {
+                    Field = "severity",
+                    Order = FirewallPolicyIdpsQuerySortOrder.Ascending,
+                },
+                ResultsPerPage = 20,
+                Skip = 0,
+            };
+            IdpsSignatureListResult result = await firewallPolicy.GetFirewallPolicyIdpsSignatureAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFirewallPolicyIdpsSignaturesFilterValue_QuerySignatureOverrides()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyQuerySignatureOverridesFilterValues.json
+            // this example is just showing the usage of "FirewallPolicyIdpsSignaturesFilterValues_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // invoke the operation
+            SignatureOverridesFilterValuesQueryContent content = new SignatureOverridesFilterValuesQueryContent
+            {
+                FilterName = "severity",
+            };
+            SignatureOverridesFilterValuesResult result = await firewallPolicy.GetFirewallPolicyIdpsSignaturesFilterValueAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeployFirewallPolicyDeployment_DeployFirewallPolicyDraft()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyDraftDeploy.json
+            // this example is just showing the usage of "FirewallPolicyDeployments_Deploy" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // invoke the operation
+            await firewallPolicy.DeployFirewallPolicyDeploymentAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

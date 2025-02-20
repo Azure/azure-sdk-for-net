@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -53,13 +54,13 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
-        /// <summary> The answers query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
-        public IList<AnswerResult> Answers { get; internal set; }
+        /// <summary>
+        /// Gets the semantic search result.
+        /// </summary>
+        public SemanticSearchResults SemanticSearch { get; internal set; }
 
-        /// <summary> The captions query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryCaption"/> parameter was not specified or set to <see cref="QueryCaptionType.None"/>. </summary>
-        public IList<CaptionResult> Captions { get; internal set; }
+        /// <summary> Debug information that applies to the search results as a whole. </summary>
+        public DebugInfo DebugInfo { get; internal set; }
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -186,6 +187,7 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SearchResults<T> results = new SearchResults<T>();
+            results.SemanticSearch = new SemanticSearchResults();
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
@@ -208,6 +210,7 @@ namespace Azure.Search.Documents.Models
                         foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
                         {
                             Dictionary<string, object> facetValues = new Dictionary<string, object>();
+                            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
                             long? facetCount = null;
                             foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
@@ -218,13 +221,39 @@ namespace Azure.Search.Documents.Models
                                         facetCount = facetProperty.Value.GetInt64();
                                     }
                                 }
+                                else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
+                                    foreach (var property0 in facetProperty.Value.EnumerateObject())
+                                    {
+                                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary.Add(property0.Name, null);
+                                        }
+                                        else
+                                        {
+                                            List<FacetResult> array = new List<FacetResult>();
+                                            foreach (var item in property0.Value.EnumerateArray())
+                                            {
+                                                array.Add(FacetResult.DeserializeFacetResult(item));
+                                            }
+                                            dictionary.Add(property0.Name, array);
+                                        }
+                                    }
+                                    searchFacets = dictionary;
+                                    continue;
+                                }
                                 else
                                 {
                                     object value = facetProperty.Value.GetSearchObject();
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, facetValues));
+                            facets.Add(new FacetResult(facetCount, searchFacets, facetValues));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
@@ -238,23 +267,35 @@ namespace Azure.Search.Documents.Models
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
                 }
+                else if (prop.NameEquals(Constants.SearchSemanticErrorReasonKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticSearch.ErrorReason = new SemanticErrorReason(prop.Value.GetString());
+                }
+                else if (prop.NameEquals(Constants.SearchSemanticSearchResultsTypeKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticSearch.ResultsType = new SemanticSearchResultsType(prop.Value.GetString());
+                }
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.Answers = new List<AnswerResult>();
+                    List<QueryAnswerResult> answerResults = new List<QueryAnswerResult>();
                     foreach (JsonElement answerValue in prop.Value.EnumerateArray())
                     {
-                        results.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
+                        answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue));
                     }
+                    results.SemanticSearch.Answers = answerResults;
                 }
-                else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
+                if (prop.NameEquals(Constants.SearchSemanticQueryRewritesResultTypeKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.Captions = new List<CaptionResult>();
-                    foreach (JsonElement captionValue in prop.Value.EnumerateArray())
-                    {
-                        results.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
-                    }
+                    results.SemanticSearch.SemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
+                }
+                if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value);
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
@@ -273,6 +314,25 @@ namespace Azure.Search.Documents.Models
             }
             return results;
         }
+    }
+
+    /// <summary>
+    /// Semantic search results from an index.
+    /// </summary>
+    public class SemanticSearchResults
+    {
+        /// <summary> The answers query results for the search operation;
+        /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
+        public IReadOnlyList<QueryAnswerResult> Answers { get; internal set; }
+
+        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+        public SemanticErrorReason? ErrorReason { get; internal set; }
+
+        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+        public SemanticSearchResultsType? ResultsType { get; internal set; }
+
+        /// <summary> Type of query rewrite that was used to retrieve documents. </summary>
+        public SemanticQueryRewritesResultType? SemanticQueryRewritesResultType { get; internal set; }
     }
 
     /// <summary>
@@ -321,6 +381,16 @@ namespace Azure.Search.Documents.Models
         /// <see cref="SearchOptions.Facets"/>.
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets => _results.Facets;
+
+        /// <summary>
+        /// Semantic search results from an index.
+        /// </summary>
+        public SemanticSearchResults SemanticSearch => _results.SemanticSearch;
+
+        /// <summary>
+        /// Debug information that applies to the search results as a whole.
+        /// </summary>
+        public DebugInfo DebugInfo => _results.DebugInfo;
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>
@@ -419,6 +489,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
         /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
         /// <returns>A new SearchResults instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchResults<T> SearchResults<T>(
             IEnumerable<SearchResult<T>> values,
             long? totalCount,
@@ -436,6 +507,110 @@ namespace Azure.Search.Documents.Models
             results.Values.AddRange(values);
             return results;
         }
+
+        /// <summary> Initializes a new instance of SearchResults. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="values">The search result values.</param>
+        /// <param name="totalCount">The total count of results found by the search operation.</param>
+        /// <param name="facets">The facet query results for the search operation.</param>
+        /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
+        /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
+        /// <param name="semanticSearch">The semantic search result.</param>
+        /// <returns>A new SearchResults instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchResults<T> SearchResults<T>(
+            IEnumerable<SearchResult<T>> values,
+            long? totalCount,
+            IDictionary<string, IList<FacetResult>> facets,
+            double? coverage,
+            Response rawResponse,
+            SemanticSearchResults semanticSearch)
+        {
+            var results = new SearchResults<T>()
+            {
+                TotalCount = totalCount,
+                Coverage = coverage,
+                Facets = facets,
+                RawResponse = rawResponse,
+                SemanticSearch = semanticSearch
+            };
+            results.Values.AddRange(values);
+            return results;
+        }
+
+        /// <summary> Initializes a new instance of SearchResults. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="values">The search result values.</param>
+        /// <param name="totalCount">The total count of results found by the search operation.</param>
+        /// <param name="facets">The facet query results for the search operation.</param>
+        /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
+        /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
+        /// <param name="semanticSearch">The semantic search result.</param>
+        /// <param name="debugInfo"> Debug information that applies to the search results as a whole. </param>
+        /// <returns>A new SearchResults instance for mocking.</returns>
+        public static SearchResults<T> SearchResults<T>(
+            IEnumerable<SearchResult<T>> values,
+            long? totalCount,
+            IDictionary<string, IList<FacetResult>> facets,
+            double? coverage,
+            Response rawResponse,
+            SemanticSearchResults semanticSearch,
+            DebugInfo debugInfo)
+        {
+            var results = new SearchResults<T>()
+            {
+                TotalCount = totalCount,
+                Coverage = coverage,
+                Facets = facets,
+                RawResponse = rawResponse,
+                SemanticSearch = semanticSearch,
+                DebugInfo = debugInfo
+            };
+            results.Values.AddRange(values);
+            return results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SemanticSearchResults"/>. </summary>
+        /// <param name="answers"> The answers query results for the search operation. </param>
+        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
+        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
+        /// <returns> A new <see cref="Models.SemanticSearchResults"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SemanticSearchResults SemanticSearchResults(
+            IReadOnlyList<QueryAnswerResult> answers,
+            SemanticErrorReason? errorReason,
+            SemanticSearchResultsType? resultsType) =>
+            new SemanticSearchResults()
+            {
+                Answers = answers,
+                ErrorReason = errorReason,
+                ResultsType = resultsType
+            };
+
+        /// <summary> Initializes a new instance of <see cref="Models.SemanticSearchResults"/>. </summary>
+        /// <param name="answers"> The answers query results for the search operation. </param>
+        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
+        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
+        /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
+        /// <returns> A new <see cref="Models.SemanticSearchResults"/> instance for mocking. </returns>
+        public static SemanticSearchResults SemanticSearchResults(
+            IReadOnlyList<QueryAnswerResult> answers,
+            SemanticErrorReason? errorReason,
+            SemanticSearchResultsType? resultsType,
+            SemanticQueryRewritesResultType? semanticQueryRewritesResultType) =>
+            new SemanticSearchResults()
+            {
+                Answers = answers,
+                ErrorReason = errorReason,
+                ResultsType = resultsType,
+                SemanticQueryRewritesResultType = semanticQueryRewritesResultType
+            };
 
         /// <summary> Initializes a new instance of SearchResultsPage. </summary>
         /// <typeparam name="T">

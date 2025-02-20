@@ -5,99 +5,179 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSyncCompleteCommandProperties : IUtf8JsonSerializable
+    public partial class MigrateSyncCompleteCommandProperties : IUtf8JsonSerializable, IJsonModel<MigrateSyncCompleteCommandProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSyncCompleteCommandProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MigrateSyncCompleteCommandProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
-            {
-                writer.WritePropertyName("input");
-                writer.WriteObjectValue(Input);
-            }
-            if (Optional.IsDefined(CommandId))
-            {
-                writer.WritePropertyName("commandId");
-                writer.WriteStringValue(CommandId);
-            }
-            writer.WritePropertyName("commandType");
-            writer.WriteStringValue(CommandType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MigrateSyncCompleteCommandProperties DeserializeMigrateSyncCompleteCommandProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<MigrateSyncCompleteCommandInput> input = default;
-            Optional<MigrateSyncCompleteCommandOutput> output = default;
-            Optional<string> commandId = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Input))
+            {
+                writer.WritePropertyName("input"u8);
+                writer.WriteObjectValue(Input, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteObjectValue(Output, options);
+            }
+            if (Optional.IsDefined(CommandId))
+            {
+                writer.WritePropertyName("commandId"u8);
+                writer.WriteStringValue(CommandId);
+            }
+        }
+
+        MigrateSyncCompleteCommandProperties IJsonModel<MigrateSyncCompleteCommandProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSyncCompleteCommandProperties(document.RootElement, options);
+        }
+
+        internal static MigrateSyncCompleteCommandProperties DeserializeMigrateSyncCompleteCommandProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MigrateSyncCompleteCommandInput input = default;
+            MigrateSyncCompleteCommandOutput output = default;
+            string commandId = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
+            IReadOnlyList<ODataError> errors = default;
+            CommandState? state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    input = MigrateSyncCompleteCommandInput.DeserializeMigrateSyncCompleteCommandInput(property.Value);
+                    input = MigrateSyncCompleteCommandInput.DeserializeMigrateSyncCompleteCommandInput(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    output = MigrateSyncCompleteCommandOutput.DeserializeMigrateSyncCompleteCommandOutput(property.Value);
+                    output = MigrateSyncCompleteCommandOutput.DeserializeMigrateSyncCompleteCommandOutput(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("commandId"))
+                if (property.NameEquals("commandId"u8))
                 {
                     commandId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commandType"))
+                if (property.NameEquals("commandType"u8))
                 {
                     commandType = new CommandType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new CommandState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSyncCompleteCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value, output.Value, commandId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSyncCompleteCommandProperties(
+                commandType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                serializedAdditionalRawData,
+                input,
+                output,
+                commandId);
         }
+
+        BinaryData IPersistableModel<MigrateSyncCompleteCommandProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrateSyncCompleteCommandProperties IPersistableModel<MigrateSyncCompleteCommandProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSyncCompleteCommandProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSyncCompleteCommandProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

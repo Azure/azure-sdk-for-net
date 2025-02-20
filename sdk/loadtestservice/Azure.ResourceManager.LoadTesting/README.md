@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Load Testing management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.LoadTesting --prerelease
+dotnet add package Azure.ResourceManager.LoadTesting
 ```
 
 ### Prerequisites
@@ -39,7 +39,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
@@ -200,7 +200,7 @@ LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuot
 Response<LoadTestingQuotaResource> quotaResponse = await QuotaCollection.GetAsync("maxConcurrentTestRuns");
 LoadTestingQuotaResource quotaResource = quotaResponse.Value;
 
-LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions("<subscription-id>", AzureLocation.WestUS2);
+LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions("<subscription-id>", AzureLocation.WestUS2, null);
 LoadTestingQuotaBucketContent quotaAvailabilityPayload = new LoadTestingQuotaBucketContent(
     quotaResponse.Value.Data.Id,
     quotaResource.Data.Name,
@@ -209,7 +209,7 @@ LoadTestingQuotaBucketContent quotaAvailabilityPayload = new LoadTestingQuotaBuc
     quotaResource.Data.Usage,
     quotaResource.Data.Limit,
     50, // new quota value
-    dimensions);
+    dimensions, null);
 
 Response<LoadTestingQuotaAvailabilityResult> checkAvailabilityResult = await quotaResponse.Value.CheckLoadTestingQuotaAvailabilityAsync(quotaAvailabilityPayload);
 // IsAvailable property indicates whether the requested quota is available.

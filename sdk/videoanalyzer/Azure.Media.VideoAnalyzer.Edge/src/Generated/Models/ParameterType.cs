@@ -28,21 +28,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string DoubleValue = "double";
         private const string BoolValue = "bool";
 
-        /// <summary> The parameter&apos;s value is a string. </summary>
+        /// <summary> The parameter's value is a string. </summary>
         public static ParameterType String { get; } = new ParameterType(StringValue);
-        /// <summary> The parameter&apos;s value is a string that holds sensitive information. </summary>
+        /// <summary> The parameter's value is a string that holds sensitive information. </summary>
         public static ParameterType SecretString { get; } = new ParameterType(SecretStringValue);
-        /// <summary> The parameter&apos;s value is a 32-bit signed integer. </summary>
+        /// <summary> The parameter's value is a 32-bit signed integer. </summary>
         public static ParameterType Int { get; } = new ParameterType(IntValue);
-        /// <summary> The parameter&apos;s value is a 64-bit double-precision floating point. </summary>
+        /// <summary> The parameter's value is a 64-bit double-precision floating point. </summary>
         public static ParameterType Double { get; } = new ParameterType(DoubleValue);
-        /// <summary> The parameter&apos;s value is a boolean value that is either true or false. </summary>
+        /// <summary> The parameter's value is a boolean value that is either true or false. </summary>
         public static ParameterType Bool { get; } = new ParameterType(BoolValue);
         /// <summary> Determines if two <see cref="ParameterType"/> values are the same. </summary>
         public static bool operator ==(ParameterType left, ParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterType"/> values are not the same. </summary>
         public static bool operator !=(ParameterType left, ParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParameterType"/>. </summary>
         public static implicit operator ParameterType(string value) => new ParameterType(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

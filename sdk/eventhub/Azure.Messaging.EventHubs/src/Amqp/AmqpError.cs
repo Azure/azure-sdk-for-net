@@ -30,6 +30,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol TimeoutError { get; } = AmqpConstants.Vendor + ":timeout";
 
         /// <summary>
+        ///   Indicates that an entity was disabled.
+        /// </summary>
+        ///
+        public static AmqpSymbol DisabledError { get; } = AmqpConstants.Vendor + ":entity-disabled";
+
+        /// <summary>
         ///   Indicates that the server was busy and could not allow the requested operation.
         /// </summary>
         ///
@@ -58,6 +64,12 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public static AmqpSymbol ProducerStolenError { get; } = AmqpConstants.Vendor + ":producer-epoch-stolen";
+
+        /// <summary>
+        ///   Indicates that an offset is invalid for a GeoDR-enabled namespace.
+        /// </summary>
+        ///
+        public static AmqpSymbol InvalidGeolocationOffset { get; } = AmqpConstants.Vendor + ":georeplication:invalid-offset";
 
         /// <summary>
         ///   The expression to test for when the service returns a "Not Found" response to determine the context.
@@ -171,6 +183,13 @@ namespace Azure.Messaging.EventHubs
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ServiceTimeout, innerException);
             }
 
+            // The Event Hubs resource was disabled.
+
+            if (string.Equals(condition, DisabledError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ResourceNotFound, innerException);
+            }
+
             // The Event Hubs service was busy; this likely means that requests are being throttled.
 
             if (string.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
@@ -209,6 +228,13 @@ namespace Azure.Messaging.EventHubs
             if (string.Equals(condition, SequenceOutOfOrderError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.InvalidClientState, innerException);
+            }
+
+            // An offset was rejected as invalid for a GeoDR-enabled namespace.
+
+            if (string.Equals(condition, InvalidGeolocationOffset.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new FormatException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             // Authorization was denied.

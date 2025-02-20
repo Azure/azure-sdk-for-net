@@ -6,216 +6,562 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMajorVersion : IUtf8JsonSerializable
+    public partial class StackMajorVersion : IUtf8JsonSerializable, IJsonModel<StackMajorVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StackMajorVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StackMajorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DisplayVersion))
             {
-                writer.WritePropertyName("displayVersion");
+                writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isDefault");
+                writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsCollectionDefined(MinorVersions))
             {
-                writer.WritePropertyName("minorVersions");
+                writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MinorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsApplicationInsights))
             {
-                writer.WritePropertyName("applicationInsights");
+                writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteBooleanValue(IsApplicationInsights.Value);
             }
             if (Optional.IsDefined(IsPreview))
             {
-                writer.WritePropertyName("isPreview");
+                writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
             if (Optional.IsDefined(IsDeprecated))
             {
-                writer.WritePropertyName("isDeprecated");
+                writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
             if (Optional.IsDefined(IsHidden))
             {
-                writer.WritePropertyName("isHidden");
+                writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
             if (Optional.IsCollectionDefined(AppSettingsDictionary))
             {
-                writer.WritePropertyName("appSettingsDictionary");
+                writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
                 foreach (var item in AppSettingsDictionary)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
             {
-                writer.WritePropertyName("siteConfigPropertiesDictionary");
+                writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteStartObject();
                 foreach (var item in SiteConfigPropertiesDictionary)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
-                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
-        internal static StackMajorVersion DeserializeStackMajorVersion(JsonElement element)
+        StackMajorVersion IJsonModel<StackMajorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> displayVersion = default;
-            Optional<string> runtimeVersion = default;
-            Optional<bool> isDefault = default;
-            Optional<IList<StackMinorVersion>> minorVersions = default;
-            Optional<bool> applicationInsights = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<IDictionary<string, BinaryData>> appSettingsDictionary = default;
-            Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStackMajorVersion(document.RootElement, options);
+        }
+
+        internal static StackMajorVersion DeserializeStackMajorVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string displayVersion = default;
+            string runtimeVersion = default;
+            bool? isDefault = default;
+            IList<StackMinorVersion> minorVersions = default;
+            bool? applicationInsights = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            IDictionary<string, BinaryData> appSettingsDictionary = default;
+            IDictionary<string, BinaryData> siteConfigPropertiesDictionary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayVersion"))
+                if (property.NameEquals("displayVersion"u8))
                 {
                     displayVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minorVersions"))
+                if (property.NameEquals("minorVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StackMinorVersion> array = new List<StackMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMinorVersion.DeserializeStackMinorVersion(item));
+                        array.Add(StackMinorVersion.DeserializeStackMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;
                 }
-                if (property.NameEquals("applicationInsights"))
+                if (property.NameEquals("applicationInsights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationInsights = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPreview"))
+                if (property.NameEquals("isPreview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeprecated"))
+                if (property.NameEquals("isDeprecated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDeprecated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isHidden"))
+                if (property.NameEquals("isHidden"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isHidden = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("appSettingsDictionary"))
+                if (property.NameEquals("appSettingsDictionary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     appSettingsDictionary = dictionary;
                     continue;
                 }
-                if (property.NameEquals("siteConfigPropertiesDictionary"))
+                if (property.NameEquals("siteConfigPropertiesDictionary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     siteConfigPropertiesDictionary = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToList(minorVersions), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToDictionary(appSettingsDictionary), Optional.ToDictionary(siteConfigPropertiesDictionary));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StackMajorVersion(
+                displayVersion,
+                runtimeVersion,
+                isDefault,
+                minorVersions ?? new ChangeTrackingList<StackMinorVersion>(),
+                applicationInsights,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayVersion))
+                {
+                    builder.Append("  displayVersion: ");
+                    if (DisplayVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  runtimeVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeVersion))
+                {
+                    builder.Append("  runtimeVersion: ");
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuntimeVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDefault))
+                {
+                    builder.Append("  isDefault: ");
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinorVersions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minorVersions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MinorVersions))
+                {
+                    if (MinorVersions.Any())
+                    {
+                        builder.Append("  minorVersions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MinorVersions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  minorVersions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApplicationInsights), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  applicationInsights: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsApplicationInsights))
+                {
+                    builder.Append("  applicationInsights: ");
+                    var boolValue = IsApplicationInsights.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isPreview: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPreview))
+                {
+                    builder.Append("  isPreview: ");
+                    var boolValue = IsPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isDeprecated: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDeprecated))
+                {
+                    builder.Append("  isDeprecated: ");
+                    var boolValue = IsDeprecated.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isHidden: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHidden))
+                {
+                    builder.Append("  isHidden: ");
+                    var boolValue = IsHidden.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSettingsDictionary), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  appSettingsDictionary: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AppSettingsDictionary))
+                {
+                    if (AppSettingsDictionary.Any())
+                    {
+                        builder.Append("  appSettingsDictionary: ");
+                        builder.AppendLine("{");
+                        foreach (var item in AppSettingsDictionary)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteConfigPropertiesDictionary), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  siteConfigPropertiesDictionary: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
+                {
+                    if (SiteConfigPropertiesDictionary.Any())
+                    {
+                        builder.Append("  siteConfigPropertiesDictionary: ");
+                        builder.AppendLine("{");
+                        foreach (var item in SiteConfigPropertiesDictionary)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<StackMajorVersion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StackMajorVersion IPersistableModel<StackMajorVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStackMajorVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StackMajorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

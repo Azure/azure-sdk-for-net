@@ -5,55 +5,168 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackEventDetails
+    public partial class InMageRcmFailbackEventDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackEventDetails>
     {
-        internal static InMageRcmFailbackEventDetails DeserializeInMageRcmFailbackEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackEventDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InMageRcmFailbackEventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> applianceName = default;
-            Optional<string> serverType = default;
-            Optional<string> componentDisplayName = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
+            {
+                writer.WritePropertyName("protectedItemName"u8);
+                writer.WriteStringValue(ProtectedItemName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmName))
+            {
+                writer.WritePropertyName("vmName"u8);
+                writer.WriteStringValue(VmName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
+            {
+                writer.WritePropertyName("applianceName"u8);
+                writer.WriteStringValue(ApplianceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
+            {
+                writer.WritePropertyName("serverType"u8);
+                writer.WriteStringValue(ServerType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ComponentDisplayName))
+            {
+                writer.WritePropertyName("componentDisplayName"u8);
+                writer.WriteStringValue(ComponentDisplayName);
+            }
+        }
+
+        InMageRcmFailbackEventDetails IJsonModel<InMageRcmFailbackEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmFailbackEventDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmFailbackEventDetails DeserializeInMageRcmFailbackEventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string protectedItemName = default;
+            string vmName = default;
+            string applianceName = default;
+            string serverType = default;
+            string componentDisplayName = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectedItemName"))
+                if (property.NameEquals("protectedItemName"u8))
                 {
                     protectedItemName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmName"))
+                if (property.NameEquals("vmName"u8))
                 {
                     vmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applianceName"))
+                if (property.NameEquals("applianceName"u8))
                 {
                     applianceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverType"))
+                if (property.NameEquals("serverType"u8))
                 {
                     serverType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentDisplayName"))
+                if (property.NameEquals("componentDisplayName"u8))
                 {
                     componentDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmFailbackEventDetails(instanceType, protectedItemName.Value, vmName.Value, applianceName.Value, serverType.Value, componentDisplayName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageRcmFailbackEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                protectedItemName,
+                vmName,
+                applianceName,
+                serverType,
+                componentDisplayName);
         }
+
+        BinaryData IPersistableModel<InMageRcmFailbackEventDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmFailbackEventDetails IPersistableModel<InMageRcmFailbackEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmFailbackEventDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmFailbackEventDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

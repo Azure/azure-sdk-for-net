@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,42 +14,196 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernReservationTransaction
+    public partial class ConsumptionModernReservationTransaction : IUtf8JsonSerializable, IJsonModel<ConsumptionModernReservationTransaction>
     {
-        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernReservationTransaction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConsumptionModernReservationTransaction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<IReadOnlyList<string>> tags = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tags)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("amount"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            {
+                writer.WritePropertyName("armSkuName"u8);
+                writer.WriteStringValue(ArmSkuName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
+            {
+                writer.WritePropertyName("billingFrequency"u8);
+                writer.WriteStringValue(BillingFrequency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            {
+                writer.WritePropertyName("billingProfileId"u8);
+                writer.WriteStringValue(BillingProfileId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileName))
+            {
+                writer.WritePropertyName("billingProfileName"u8);
+                writer.WriteStringValue(BillingProfileName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
+            {
+                writer.WritePropertyName("eventDate"u8);
+                writer.WriteStringValue(TransactOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Invoice))
+            {
+                writer.WritePropertyName("invoice"u8);
+                writer.WriteStringValue(Invoice);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceId))
+            {
+                writer.WritePropertyName("invoiceId"u8);
+                writer.WriteStringValue(InvoiceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
+            {
+                writer.WritePropertyName("invoiceSectionId"u8);
+                writer.WriteStringValue(InvoiceSectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionName))
+            {
+                writer.WritePropertyName("invoiceSectionName"u8);
+                writer.WriteStringValue(InvoiceSectionName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionGuid))
+            {
+                writer.WritePropertyName("purchasingSubscriptionGuid"u8);
+                writer.WriteStringValue(PurchasingSubscriptionGuid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionName))
+            {
+                writer.WritePropertyName("purchasingSubscriptionName"u8);
+                writer.WriteStringValue(PurchasingSubscriptionName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderId))
+            {
+                writer.WritePropertyName("reservationOrderId"u8);
+                writer.WriteStringValue(ReservationOrderId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderName))
+            {
+                writer.WritePropertyName("reservationOrderName"u8);
+                writer.WriteStringValue(ReservationOrderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Term))
+            {
+                writer.WritePropertyName("term"u8);
+                writer.WriteStringValue(Term);
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionModernReservationTransaction IJsonModel<ConsumptionModernReservationTransaction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionModernReservationTransaction(document.RootElement, options);
+        }
+
+        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<decimal> amount = default;
-            Optional<string> armSkuName = default;
-            Optional<string> billingFrequency = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> currency = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> eventDate = default;
-            Optional<string> eventType = default;
-            Optional<string> invoice = default;
-            Optional<ResourceIdentifier> invoiceId = default;
-            Optional<ResourceIdentifier> invoiceSectionId = default;
-            Optional<string> invoiceSectionName = default;
-            Optional<Guid> purchasingSubscriptionGuid = default;
-            Optional<string> purchasingSubscriptionName = default;
-            Optional<decimal> quantity = default;
-            Optional<string> region = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationOrderName = default;
-            Optional<string> term = default;
+            SystemData systemData = default;
+            decimal? amount = default;
+            string armSkuName = default;
+            string billingFrequency = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileName = default;
+            string currency = default;
+            string description = default;
+            DateTimeOffset? eventDate = default;
+            string eventType = default;
+            string invoice = default;
+            ResourceIdentifier invoiceId = default;
+            ResourceIdentifier invoiceSectionId = default;
+            string invoiceSectionName = default;
+            Guid? purchasingSubscriptionGuid = default;
+            string purchasingSubscriptionName = default;
+            decimal? quantity = default;
+            string region = default;
+            string reservationOrderId = default;
+            string reservationOrderName = default;
+            string term = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -59,32 +214,31 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,137 +247,130 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("amount"))
+                        if (property0.NameEquals("amount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             amount = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("armSkuName"))
+                        if (property0.NameEquals("armSkuName"u8))
                         {
                             armSkuName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingFrequency"))
+                        if (property0.NameEquals("billingFrequency"u8))
                         {
                             billingFrequency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileId"))
+                        if (property0.NameEquals("billingProfileId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingProfileId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileName"))
+                        if (property0.NameEquals("billingProfileName"u8))
                         {
                             billingProfileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currency"))
+                        if (property0.NameEquals("currency"u8))
                         {
                             currency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("eventDate"))
+                        if (property0.NameEquals("eventDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("eventType"))
+                        if (property0.NameEquals("eventType"u8))
                         {
                             eventType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("invoice"))
+                        if (property0.NameEquals("invoice"u8))
                         {
                             invoice = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("invoiceId"))
+                        if (property0.NameEquals("invoiceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invoiceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("invoiceSectionId"))
+                        if (property0.NameEquals("invoiceSectionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invoiceSectionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("invoiceSectionName"))
+                        if (property0.NameEquals("invoiceSectionName"u8))
                         {
                             invoiceSectionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purchasingSubscriptionGuid"))
+                        if (property0.NameEquals("purchasingSubscriptionGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasingSubscriptionGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("purchasingSubscriptionName"))
+                        if (property0.NameEquals("purchasingSubscriptionName"u8))
                         {
                             purchasingSubscriptionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("quantity"))
+                        if (property0.NameEquals("quantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("region"))
+                        if (property0.NameEquals("region"u8))
                         {
                             region = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservationOrderId"))
+                        if (property0.NameEquals("reservationOrderId"u8))
                         {
                             reservationOrderId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservationOrderName"))
+                        if (property0.NameEquals("reservationOrderName"u8))
                         {
                             reservationOrderName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("term"))
+                        if (property0.NameEquals("term"u8))
                         {
                             term = property0.Value.GetString();
                             continue;
@@ -231,8 +378,70 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionModernReservationTransaction(
+                id,
+                name,
+                type,
+                systemData,
+                amount,
+                armSkuName,
+                billingFrequency,
+                billingProfileId,
+                billingProfileName,
+                currency,
+                description,
+                eventDate,
+                eventType,
+                invoice,
+                invoiceId,
+                invoiceSectionId,
+                invoiceSectionName,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                quantity,
+                region,
+                reservationOrderId,
+                reservationOrderName,
+                term,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionModernReservationTransaction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionModernReservationTransaction IPersistableModel<ConsumptionModernReservationTransaction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionModernReservationTransaction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionModernReservationTransaction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

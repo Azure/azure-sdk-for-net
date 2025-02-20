@@ -9,6 +9,11 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)\..\src\Azure.Maps.Common.csproj" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\MapsSasCredentialPolicy.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

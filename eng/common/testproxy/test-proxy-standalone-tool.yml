@@ -1,0 +1,84 @@
+# This template sets variable PROXY_PID to be used for shutdown later.
+parameters:
+  rootFolder: '$(Build.SourcesDirectory)'
+  runProxy: true
+  targetVersion: ''
+  templateRoot: '$(Build.SourcesDirectory)'
+  condition: true
+
+steps:
+  - pwsh: |
+        ${{ parameters.templateRoot }}/eng/common/scripts/trust-proxy-certificate.ps1
+    displayName: 'Language Specific Certificate Trust'
+    condition: and(succeeded(), ${{ parameters.condition }})
+
+  - task: PowerShell@2
+    displayName: 'Override proxy version if necessary'
+    condition: and(succeeded(), ${{ parameters.condition }}, ne('${{ parameters.targetVersion }}', ''))
+    inputs:
+      targetType: filePath
+      filePath: '${{ parameters.templateRoot }}/eng/common/testproxy/scripts/override-proxy-version.ps1'
+      arguments: '-TargetVersion "${{ parameters.targetVersion }}"'
+      pwsh: true
+
+  - pwsh: |
+      $standardVersion = "${{ parameters.templateRoot }}/eng/common/testproxy/target_version.txt"
+      $overrideVersion = "${{ parameters.templateRoot }}/eng/target_proxy_version.txt"
+
+      $version = $(Get-Content $standardVersion -Raw).Trim()
+
+      if (Test-Path $overrideVersion) {
+        $version = $(Get-Content $overrideVersion -Raw).Trim()
+      }
+
+      Write-Host "Installing test-proxy version $version"
+      ${{ parameters.templateRoot }}/eng/common/testproxy/install-test-proxy.ps1 -Version $version -InstallDirectory $(Build.BinariesDirectory)/test-proxy
+    displayName: "Install test-proxy"
+    condition: and(succeeded(), ${{ parameters.condition }})
+
+  - pwsh: |
+      Write-Host "##vso[task.prependpath]$(Build.BinariesDirectory)/test-proxy"
+    displayName: "Prepend path with test-proxy tool install location"
+
+  - ${{ if eq(parameters.runProxy, 'true') }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx"
+        Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
+        Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+      displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
+      condition: and(succeeded(), ${{ parameters.condition }})
+
+    - pwsh: |
+        $Process = Start-Process $(PROXY_EXE) `
+          -ArgumentList "start -u --storage-location ${{ parameters.rootFolder }}" `
+          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log `
+          -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
+
+        Write-Host "##vso[task.setvariable variable=PROXY_PID]$($Process.Id)"
+      displayName: 'Run the testproxy - windows'
+      condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+
+    # nohup does NOT continue beyond the current session if you use it within powershell
+    - bash: |
+        nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
+
+        echo $! > $(Build.SourcesDirectory)/test-proxy.pid
+        echo "##vso[task.setvariable variable=PROXY_PID]$(cat $(Build.SourcesDirectory)/test-proxy.pid)"
+      displayName: "Run the testproxy - linux/mac"
+      condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+      workingDirectory: "${{ parameters.rootFolder }}"
+
+    - pwsh: |
+        for ($i = 0; $i -lt 10; $i++) {
+            try {
+                Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                exit 0
+            } catch {
+                Write-Warning "Failed to successfully connect to test proxy. Retrying..."
+                Start-Sleep 6
+            }
+        }
+        Write-Error "Could not connect to test proxy."
+        exit 1
+      displayName: Test Proxy IsAlive
+      condition: and(succeeded(), ${{ parameters.condition }})

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,26 +15,28 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static Models DeserializeModels(JsonElement element)
         {
-            Optional<ModelsSummary> summary = default;
-            Optional<IReadOnlyList<CustomFormModelInfo>> modelList = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ModelsSummary summary = default;
+            IReadOnlyList<CustomFormModelInfo> modelList = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = ModelsSummary.DeserializeModelsSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelList"))
+                if (property.NameEquals("modelList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CustomFormModelInfo> array = new List<CustomFormModelInfo>();
@@ -46,13 +47,21 @@ namespace Azure.AI.FormRecognizer.Models
                     modelList = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value);
+            return new Models(summary, modelList ?? new ChangeTrackingList<CustomFormModelInfo>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Models FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeModels(document.RootElement);
         }
     }
 }

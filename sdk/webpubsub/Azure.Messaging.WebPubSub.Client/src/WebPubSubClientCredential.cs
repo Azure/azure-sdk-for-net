@@ -34,11 +34,18 @@ namespace Azure.Messaging.WebPubSub.Clients
         }
 
         /// <summary>
+        /// Initialize a WebPubSubClientCredential instance for mock or derived class
+        /// </summary>
+        protected WebPubSubClientCredential()
+        {
+        }
+
+        /// <summary>
         /// GetClientAccessUri
         /// </summary>
         /// <param name="token">The cancellation token used to cancel the operation.</param>
         /// <returns></returns>
-        public ValueTask<Uri> GetClientAccessUriAsync(CancellationToken token = default)
+        public virtual ValueTask<Uri> GetClientAccessUriAsync(CancellationToken token = default)
         {
             return _clientAccessUriProvider.Invoke(token);
         }

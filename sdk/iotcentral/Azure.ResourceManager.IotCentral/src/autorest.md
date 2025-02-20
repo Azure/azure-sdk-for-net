@@ -11,9 +11,13 @@ namespace: Azure.ResourceManager.IotCentral
 require: https://github.com/Azure/azure-rest-api-specs/blob/6cb07747e61d4068750cb2666ab1b32197037dbf/specification/iotcentral/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 override-operation-name:
   Apps_CheckNameAvailability: CheckIotCentralAppNameAvailability
@@ -38,7 +42,7 @@ prepend-rp-prefix:
   - AppTemplate
   - AppTemplatesResult
   - NetworkAction
-  - NetworkRuleSetIPRule
+  - NetworkRuleSetIpRule
   - NetworkRuleSets
   - ProvisioningState
   - PublicNetworkAccess
@@ -51,7 +55,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -15,14 +14,17 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrErrors DeserializeAcrErrors(JsonElement element)
         {
-            Optional<IReadOnlyList<AcrErrorInfo>> errors = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<AcrErrorInfo> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AcrErrorInfo> array = new List<AcrErrorInfo>();
@@ -34,7 +36,15 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrErrors(Optional.ToList(errors));
+            return new AcrErrors(errors ?? new ChangeTrackingList<AcrErrorInfo>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcrErrors FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcrErrors(document.RootElement);
         }
     }
 }

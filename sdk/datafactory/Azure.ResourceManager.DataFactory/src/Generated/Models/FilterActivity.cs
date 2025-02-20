@@ -7,19 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Filter and return results from input array based on the conditions. </summary>
     public partial class FilterActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of FilterActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
-        public FilterActivity(string name, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name)
+        public FilterActivity(string name, DataFactoryExpression items, DataFactoryExpression condition) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(items, nameof(items));
@@ -30,25 +29,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Filter";
         }
 
-        /// <summary> Initializes a new instance of FilterActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
-        internal FilterActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal FilterActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryExpression items, DataFactoryExpression condition) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Items = items;
             Condition = condition;
             ActivityType = activityType ?? "Filter";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/> for deserialization. </summary>
+        internal FilterActivity()
+        {
+        }
+
         /// <summary> Input array on which filter should be applied. </summary>
-        public FactoryExpressionDefinition Items { get; set; }
+        public DataFactoryExpression Items { get; set; }
         /// <summary> Condition to be used for filtering the input. </summary>
-        public FactoryExpressionDefinition Condition { get; set; }
+        public DataFactoryExpression Condition { get; set; }
     }
 }

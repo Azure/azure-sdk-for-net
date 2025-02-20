@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    /// <summary> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </summary>
+    /// <summary> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </summary>
     public readonly partial struct DigitalTwinsAuthenticationType : IEquatable<DigitalTwinsAuthenticationType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator ==(DigitalTwinsAuthenticationType left, DigitalTwinsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(DigitalTwinsAuthenticationType left, DigitalTwinsAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DigitalTwinsAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DigitalTwinsAuthenticationType"/>. </summary>
         public static implicit operator DigitalTwinsAuthenticationType(string value) => new DigitalTwinsAuthenticationType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

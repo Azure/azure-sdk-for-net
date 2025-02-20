@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentimentResponseDocumentsItem. </summary>
     internal partial class SentimentResponseDocumentsItem : SentimentDocumentResult
     {
-        /// <summary> Initializes a new instance of SentimentResponseDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentResponseDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
@@ -30,20 +28,15 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(sentences, nameof(sentences));
         }
 
-        /// <summary> Initializes a new instance of SentimentResponseDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentResponseDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="confidenceScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
-        /// <param name="detectedLanguage"> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal SentimentResponseDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, TextSentiment sentiment, SentimentConfidenceScores confidenceScores, IList<SentenceSentimentInternal> sentences, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, sentiment, confidenceScores, sentences)
+        internal SentimentResponseDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, TextSentiment sentiment, SentimentConfidenceScores confidenceScores, IList<SentenceSentimentInternal> sentences) : base(id, warnings, statistics, sentiment, confidenceScores, sentences)
         {
-            DetectedLanguage = detectedLanguage;
         }
-
-        /// <summary> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
-        public DetectedLanguageInternal? DetectedLanguage { get; set; }
     }
 }

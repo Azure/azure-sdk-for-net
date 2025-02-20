@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class OnBehalfOfCredentialTests : CredentialTestBase
+    public class OnBehalfOfCredentialTests : CredentialTestBase<OnBehalfOfCredentialOptions>
     {
         public OnBehalfOfCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -41,6 +41,40 @@ namespace Azure.Identity.Tests
                     mockConfidentialMsalClient));
         }
 
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new OnBehalfOfCredentialOptions
+            {
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
+            };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(
+                new OnBehalfOfCredential(
+                    config.TenantId,
+                    ClientId,
+                    "secret",
+                    expectedUserAssertion,
+                    options,
+                    pipeline,
+                    config.MockConfidentialMsalClient));
+        }
+
         [Test]
         public void CtorValidation()
         {
@@ -58,7 +92,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion, null);
             // Assert
-            Assert.AreEqual(clientSecret, cred._client._clientSecret);
+            Assert.AreEqual(clientSecret, cred.Client._clientSecret);
 
             Assert.Throws<ArgumentNullException>(() =>
                 new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion));
@@ -70,7 +104,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion);
             // Assert
-            Assert.NotNull(cred._client._certificateProvider);
+            Assert.NotNull(cred.Client._certificateProvider);
 
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
@@ -79,7 +113,7 @@ namespace Azure.Identity.Tests
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null, new OnBehalfOfCredentialOptions()));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions());
             // Assert
-            Assert.NotNull(cred._client._certificateProvider);
+            Assert.NotNull(cred.Client._certificateProvider);
         }
 
         [Test]
@@ -90,8 +124,8 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             options = new OnBehalfOfCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
-            var context = new TokenRequestContext(new[] {Scope}, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
                     TenantId,
@@ -106,40 +140,19 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
-            {
-                Assert.Ignore("Null TenantId test does not apply to this credential");
-            }
-
-            var options = new OnBehalfOfCredentialOptions();
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(new OnBehalfOfCredential(parameters.TenantId, ClientId, "secret", "userAssertion", options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
         [Test]
         public async Task SendCertificateChain([Values(true, false)] bool sendCertChain)
         {
             TestSetup();
-            var _transport = Createx5cValidatingTransport(sendCertChain);
-            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
-            options = new OnBehalfOfCredentialOptions();
+            options = new OnBehalfOfCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost")
+            };
             ((OnBehalfOfCredentialOptions)options).SendCertificateChain = sendCertChain;
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
@@ -148,11 +161,56 @@ namespace Azure.Identity.Tests
                     mockCert,
                     expectedUserAssertion,
                     options as OnBehalfOfCredentialOptions,
-                    new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)),
+                    new CredentialPipeline(_pipeline, new ClientDiagnostics(options)),
                     null));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public async Task ValidatesClientAssertionIsCorrect()
+        {
+            var expectedToken = Guid.NewGuid().ToString();
+            var expectedClientAssertion = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => expectedToken,
+                RequestValidator = req =>
+                {
+                    if (req.Content != null)
+                    {
+                        var stream = new MemoryStream();
+                        req.Content.WriteTo(stream, default);
+                        var content = new BinaryData(stream.ToArray()).ToString();
+                        Assert.That(content, Does.Contain($"client_assertion={expectedClientAssertion}"));
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var _transport = new MockTransport(factory);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            options = new OnBehalfOfCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost"),
+                Transport = _transport
+            };
+            OnBehalfOfCredential client =
+                InstrumentClient(new OnBehalfOfCredential(
+                    TenantId,
+                    ClientId,
+                    IsAsync ? null : () => expectedClientAssertion,
+                    IsAsync ? (_) => Task.FromResult(expectedClientAssertion) : null,
+                    expectedUserAssertion,
+                    options as OnBehalfOfCredentialOptions,
+                    new CredentialPipeline(_pipeline, new ClientDiagnostics(options)),
+                    null));
+
+            var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
         }
     }
 }

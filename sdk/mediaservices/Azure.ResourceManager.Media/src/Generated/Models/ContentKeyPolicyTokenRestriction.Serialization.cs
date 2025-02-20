@@ -5,25 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyTokenRestriction : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyTokenRestriction : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyTokenRestriction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyTokenRestriction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContentKeyPolicyTokenRestriction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("issuer");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyTokenRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("issuer"u8);
             writer.WriteStringValue(Issuer);
-            writer.WritePropertyName("audience");
+            writer.WritePropertyName("audience"u8);
             writer.WriteStringValue(Audience);
             if (PrimaryVerificationKey != null)
             {
-                writer.WritePropertyName("primaryVerificationKey");
-                writer.WriteObjectValue(PrimaryVerificationKey);
+                writer.WritePropertyName("primaryVerificationKey"u8);
+                writer.WriteObjectValue(PrimaryVerificationKey, options);
             }
             else
             {
@@ -31,115 +50,175 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsCollectionDefined(AlternateVerificationKeys))
             {
-                writer.WritePropertyName("alternateVerificationKeys");
+                writer.WritePropertyName("alternateVerificationKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(RequiredClaims))
             {
-                writer.WritePropertyName("requiredClaims");
+                writer.WritePropertyName("requiredClaims"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("restrictionTokenType");
+            writer.WritePropertyName("restrictionTokenType"u8);
             writer.WriteStringValue(RestrictionTokenType.ToString());
             if (Optional.IsDefined(OpenIdConnectDiscoveryDocument))
             {
-                writer.WritePropertyName("openIdConnectDiscoveryDocument");
+                writer.WritePropertyName("openIdConnectDiscoveryDocument"u8);
                 writer.WriteStringValue(OpenIdConnectDiscoveryDocument);
             }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
-            writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element)
+        ContentKeyPolicyTokenRestriction IJsonModel<ContentKeyPolicyTokenRestriction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyTokenRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyTokenRestriction(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string issuer = default;
             string audience = default;
             ContentKeyPolicyRestrictionTokenKey primaryVerificationKey = default;
-            Optional<IList<ContentKeyPolicyRestrictionTokenKey>> alternateVerificationKeys = default;
-            Optional<IList<ContentKeyPolicyTokenClaim>> requiredClaims = default;
+            IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys = default;
+            IList<ContentKeyPolicyTokenClaim> requiredClaims = default;
             ContentKeyPolicyRestrictionTokenType restrictionTokenType = default;
-            Optional<string> openIdConnectDiscoveryDocument = default;
+            string openIdConnectDiscoveryDocument = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audience"))
+                if (property.NameEquals("audience"u8))
                 {
                     audience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryVerificationKey"))
+                if (property.NameEquals("primaryVerificationKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         primaryVerificationKey = null;
                         continue;
                     }
-                    primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value);
+                    primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("alternateVerificationKeys"))
+                if (property.NameEquals("alternateVerificationKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContentKeyPolicyRestrictionTokenKey> array = new List<ContentKeyPolicyRestrictionTokenKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(item));
+                        array.Add(ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(item, options));
                     }
                     alternateVerificationKeys = array;
                     continue;
                 }
-                if (property.NameEquals("requiredClaims"))
+                if (property.NameEquals("requiredClaims"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContentKeyPolicyTokenClaim> array = new List<ContentKeyPolicyTokenClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyTokenClaim.DeserializeContentKeyPolicyTokenClaim(item));
+                        array.Add(ContentKeyPolicyTokenClaim.DeserializeContentKeyPolicyTokenClaim(item, options));
                     }
                     requiredClaims = array;
                     continue;
                 }
-                if (property.NameEquals("restrictionTokenType"))
+                if (property.NameEquals("restrictionTokenType"u8))
                 {
                     restrictionTokenType = new ContentKeyPolicyRestrictionTokenType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("openIdConnectDiscoveryDocument"))
+                if (property.NameEquals("openIdConnectDiscoveryDocument"u8))
                 {
                     openIdConnectDiscoveryDocument = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyTokenRestriction(odataType, issuer, audience, primaryVerificationKey, Optional.ToList(alternateVerificationKeys), Optional.ToList(requiredClaims), restrictionTokenType, openIdConnectDiscoveryDocument.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentKeyPolicyTokenRestriction(
+                odataType,
+                serializedAdditionalRawData,
+                issuer,
+                audience,
+                primaryVerificationKey,
+                alternateVerificationKeys ?? new ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey>(),
+                requiredClaims ?? new ChangeTrackingList<ContentKeyPolicyTokenClaim>(),
+                restrictionTokenType,
+                openIdConnectDiscoveryDocument);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyTokenRestriction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyTokenRestriction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyTokenRestriction IPersistableModel<ContentKeyPolicyTokenRestriction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyTokenRestriction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyTokenRestriction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyTokenRestriction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

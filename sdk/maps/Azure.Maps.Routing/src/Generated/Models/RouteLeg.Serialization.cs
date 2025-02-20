@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,25 +15,27 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteLeg DeserializeRouteLeg(JsonElement element)
         {
-            Optional<RouteLegSummary> summary = default;
-            Optional<IReadOnlyList<LatLongPair>> points = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RouteLegSummary summary = default;
+            IReadOnlyList<LatLongPair> points = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = RouteLegSummary.DeserializeRouteLegSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("points"))
+                if (property.NameEquals("points"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LatLongPair> array = new List<LatLongPair>();
@@ -45,7 +47,15 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteLeg(summary.Value, Optional.ToList(points));
+            return new RouteLeg(summary, points ?? new ChangeTrackingList<LatLongPair>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteLeg FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteLeg(document.RootElement);
         }
     }
 }

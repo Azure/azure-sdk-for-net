@@ -5,74 +5,161 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyContentKey : IUtf8JsonSerializable
+    public partial class StreamingPolicyContentKey : IUtf8JsonSerializable, IJsonModel<StreamingPolicyContentKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPolicyContentKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StreamingPolicyContentKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
-                writer.WritePropertyName("tracks");
+                writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static StreamingPolicyContentKey DeserializeStreamingPolicyContentKey(JsonElement element)
+        StreamingPolicyContentKey IJsonModel<StreamingPolicyContentKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> label = default;
-            Optional<string> policyName = default;
-            Optional<IList<MediaTrackSelection>> tracks = default;
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingPolicyContentKey(document.RootElement, options);
+        }
+
+        internal static StreamingPolicyContentKey DeserializeStreamingPolicyContentKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string label = default;
+            string policyName = default;
+            IList<MediaTrackSelection> tracks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tracks"))
+                if (property.NameEquals("tracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     tracks = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingPolicyContentKey(label.Value, policyName.Value, Optional.ToList(tracks));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StreamingPolicyContentKey(label, policyName, tracks ?? new ChangeTrackingList<MediaTrackSelection>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingPolicyContentKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamingPolicyContentKey IPersistableModel<StreamingPolicyContentKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingPolicyContentKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingPolicyContentKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

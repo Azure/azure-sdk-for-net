@@ -884,12 +884,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
+                    bool sessionLockLostEventRaised = false;
+                    args.SessionLockLostAsync += (lockLostArgs) =>
+                    {
+                        sessionLockLostEventRaised = true;
+                        return Task.CompletedTask;
+                    };
+
                     var message = args.Message;
                     // wait 2x lock duration in case the
                     // lock was renewed already
                     await Task.Delay(lockDuration.Add(lockDuration));
                     var lockedUntil = args.SessionLockedUntil;
                     Assert.AreEqual(lockedUntil, args.SessionLockedUntil);
+                    Assert.IsTrue(sessionLockLostEventRaised);
                     try
                     {
                         await args.CompleteMessageAsync(message, args.CancellationToken);
@@ -1953,13 +1961,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]
+        [TestCase(50)]
         public async Task CanReleaseSession(int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = CreateNoRetryClient();
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 10;
+                int messageCount = 100;
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
@@ -2008,8 +2017,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.CloseAsync();
 
-                Assert.AreEqual(10, receivedCount);
-                if (firstCloseCount < 10)
+                Assert.AreEqual(messageCount, receivedCount);
+                if (firstCloseCount < messageCount)
                 {
                     Assert.AreEqual(2, sessionCloseCount);
                 }
@@ -2219,6 +2228,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanUpdateMaxCallsPerSessionConcurrencyWithSessionIdsSet()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 200;
+                int stopCount = 100;
+                string sessionId = "sessionId";
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, sessionId));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1,
+                    SessionIds = { sessionId }
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == stopCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (count == 5)
+                    {
+                        processor.UpdateConcurrency(10, 20);
+                        Assert.AreEqual(10, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+                    }
+
+                    if (count == 100)
+                    {
+                        // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
+                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         public async Task CanUpdateSessionPrefetchCount()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
@@ -2372,7 +2440,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
-                ConcurrentDictionary<long, byte> sequenceNumbers = new();
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
@@ -2390,19 +2457,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     capturedArgs ??= args;
 
-                    IReadOnlyList<ServiceBusReceivedMessage> receivedDeferredMessages = null;
+                    ServiceBusReceivedMessage receivedDeferredMessage = null;
                     var count = Interlocked.Increment(ref receivedCount);
 
-                    // defer first two messages
-                    if (count <= 2)
+                    // defer first message
+                    if (count == 1)
                     {
                         await args.DeferMessageAsync(args.Message);
-                        sequenceNumbers[args.Message.SequenceNumber] = default;
-                    }
-
-                    if (count == 2)
-                    {
-                        receivedDeferredMessages = await args.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
                     }
 
                     // lock renewal should happen for messages received in callback
@@ -2412,16 +2474,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         // do not attempt to complete the deferred message as we will only be able to complete it
                         // after receiving using ReceiveDeferredMessageAsync
-                        if (!sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
+                        if (count > 1)
                         {
                             await args.CompleteMessageAsync(args.Message);
                         }
-                        if (receivedDeferredMessages != null)
+                        else
                         {
-                            foreach (var message in receivedDeferredMessages)
-                            {
-                                await args.CompleteMessageAsync(message);
-                            }
+                            await args.CompleteMessageAsync(receivedDeferredMessage);
                         }
                     }
 
@@ -2534,6 +2593,201 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.Fail($"Session '{args.Message.SessionId}' has a time on bus greater than 30 seconds: {timeOnBus}");
                     }
                     Interlocked.Increment(ref processedCount);
+                    return Task.CompletedTask;
+                }
+            }
+        }
+
+        [Test]
+        public async Task SessionLockLostEventRaisedAfterExpiration()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1,
+                    MaxConcurrentSessions = 1,
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                bool sessionLockLostEventRaised = false;
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    args.SessionLockLostAsync += (lockLostArgs) =>
+                    {
+                        sessionLockLostEventRaised = true;
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    Assert.IsTrue(sessionLockLostEventRaised);
+                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    tcs.SetResult(true);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
+
+        [Test]
+        public async Task SessionLockLostEventRaisedAfterConnectionDropped()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1,
+                    MaxConcurrentSessions = 1,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                bool sessionLockLostEventRaised = false;
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    args.SessionLockLostAsync += (lockLostArgs) =>
+                    {
+                        sessionLockLostEventRaised = true;
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
+                        var lockLostException = lockLostArgs.Exception as ServiceBusException;
+                        Assert.IsNotNull(lockLostException);
+                        Assert.AreEqual(ServiceBusFailureReason.SessionLockLost, lockLostException.Reason);
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    SimulateNetworkFailure(client);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    Assert.IsTrue(sessionLockLostEventRaised);
+                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    tcs.SetResult(true);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
+
+        [Test]
+        public async Task SessionLockLostHandlerNotRaisedAfterProcessMessageCompletes()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1,
+                    MaxConcurrentSessions = 1,
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                bool sessionLockLostEventRaised = false;
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    args.SessionLockLostAsync += (lockLostArgs) =>
+                    {
+                        sessionLockLostEventRaised = true;
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    Assert.IsFalse(sessionLockLostEventRaised);
+                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    tcs.SetResult(true);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await Task.Delay(lockDuration.Add(lockDuration));
+                Assert.IsFalse(sessionLockLostEventRaised);
+                await processor.CloseAsync();
+            }
+        }
+
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task SessionOrderingIsGuaranteedProcessor(bool prefetch, bool useSpecificSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                long lastSequenceNumber = 0;
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1, MaxConcurrentSessions = 1, PrefetchCount = prefetch ? 5 : 0
+                };
+                if (useSpecificSession)
+                {
+                    options.SessionIds.Add("session");
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                var sender = client.CreateSender(scope.QueueName);
+
+                CancellationTokenSource cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(60));
+                await processor.StartProcessingAsync();
+                await SendMessagesAsync();
+
+                await processor.StopProcessingAsync();
+
+                async Task SendMessagesAsync()
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                    }
+                }
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    Assert.That(
+                        args.Message.SequenceNumber,
+                        Is.EqualTo(lastSequenceNumber + 1),
+                        $"Last sequence number: {lastSequenceNumber}, current sequence number: {args.Message.SequenceNumber}");
+
+                    lastSequenceNumber = args.Message.SequenceNumber;
                     return Task.CompletedTask;
                 }
             }

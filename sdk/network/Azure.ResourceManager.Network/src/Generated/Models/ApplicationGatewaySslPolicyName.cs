@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string AppGwSslPolicy20150501Value = "AppGwSslPolicy20150501";
         private const string AppGwSslPolicy20170401Value = "AppGwSslPolicy20170401";
         private const string AppGwSslPolicy20170401SValue = "AppGwSslPolicy20170401S";
+        private const string AppGwSslPolicy20220101Value = "AppGwSslPolicy20220101";
+        private const string AppGwSslPolicy20220101SValue = "AppGwSslPolicy20220101S";
 
         /// <summary> AppGwSslPolicy20150501. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20150501 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20150501Value);
@@ -32,11 +34,15 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20170401 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20170401Value);
         /// <summary> AppGwSslPolicy20170401S. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20170401S { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20170401SValue);
+        /// <summary> AppGwSslPolicy20220101. </summary>
+        public static ApplicationGatewaySslPolicyName AppGwSslPolicy20220101 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20220101Value);
+        /// <summary> AppGwSslPolicy20220101S. </summary>
+        public static ApplicationGatewaySslPolicyName AppGwSslPolicy20220101S { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20220101SValue);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySslPolicyName left, ApplicationGatewaySslPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewaySslPolicyName left, ApplicationGatewaySslPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
         public static implicit operator ApplicationGatewaySslPolicyName(string value) => new ApplicationGatewaySslPolicyName(value);
 
         /// <inheritdoc />
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

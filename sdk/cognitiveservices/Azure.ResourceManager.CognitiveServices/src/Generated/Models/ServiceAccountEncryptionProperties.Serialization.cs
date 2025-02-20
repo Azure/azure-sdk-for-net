@@ -6,110 +6,191 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountEncryptionProperties : IUtf8JsonSerializable
+    public partial class ServiceAccountEncryptionProperties : IUtf8JsonSerializable, IJsonModel<ServiceAccountEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountEncryptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceAccountEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeySource))
-            {
-                writer.WritePropertyName("keySource");
-                writer.WriteStringValue(KeySource.Value.ToString());
-            }
-            writer.WritePropertyName("keyVaultProperties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
-            {
-                writer.WritePropertyName("keyName");
-                writer.WriteStringValue(KeyName);
-            }
-            if (Optional.IsDefined(KeyVersion))
-            {
-                writer.WritePropertyName("keyVersion");
-                writer.WriteStringValue(KeyVersion);
-            }
-            if (Optional.IsDefined(KeyVaultUri))
-            {
-                writer.WritePropertyName("keyVaultUri");
-                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(IdentityClientId))
-            {
-                writer.WritePropertyName("identityClientId");
-                writer.WriteStringValue(IdentityClientId.Value);
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ServiceAccountEncryptionProperties DeserializeServiceAccountEncryptionProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ServiceAccountEncryptionKeySource> keySource = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<Guid> identityClientId = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(KeyVaultProperties))
+            {
+                writer.WritePropertyName("keyVaultProperties"u8);
+                writer.WriteObjectValue(KeyVaultProperties, options);
+            }
+            if (Optional.IsDefined(KeySource))
+            {
+                writer.WritePropertyName("keySource"u8);
+                writer.WriteStringValue(KeySource.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ServiceAccountEncryptionProperties IJsonModel<ServiceAccountEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountEncryptionProperties(document.RootElement, options);
+        }
+
+        internal static ServiceAccountEncryptionProperties DeserializeServiceAccountEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CognitiveServicesKeyVaultProperties keyVaultProperties = default;
+            ServiceAccountEncryptionKeySource? keySource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keySource"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("keySource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     keySource = new ServiceAccountEncryptionKeySource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultProperties"))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("keyName"))
-                        {
-                            keyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVersion"))
-                        {
-                            keyVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaultUri"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keyVaultUri = null;
-                                continue;
-                            }
-                            keyVaultUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("identityClientId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            identityClientId = property0.Value.GetGuid();
-                            continue;
-                        }
-                    }
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ServiceAccountEncryptionProperties(Optional.ToNullable(keySource), keyName.Value, keyVersion.Value, keyVaultUri.Value, Optional.ToNullable(identityClientId));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceAccountEncryptionProperties(keyVaultProperties, keySource, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVaultProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultProperties))
+                {
+                    builder.Append("  keyVaultProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 2, false, "  keyVaultProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keySource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeySource))
+                {
+                    builder.Append("  keySource: ");
+                    builder.AppendLine($"'{KeySource.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ServiceAccountEncryptionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceAccountEncryptionProperties IPersistableModel<ServiceAccountEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAccountEncryptionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAccountEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

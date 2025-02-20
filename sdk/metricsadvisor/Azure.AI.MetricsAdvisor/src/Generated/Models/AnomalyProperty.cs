@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyProperty. </summary>
     internal partial class AnomalyProperty
     {
-        /// <summary> Initializes a new instance of AnomalyProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyProperty"/>. </summary>
         /// <param name="anomalySeverity"> anomaly severity. </param>
         /// <param name="value"> value of the anomaly. </param>
         internal AnomalyProperty(AnomalySeverity anomalySeverity, double value)
@@ -19,11 +19,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of AnomalyProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyProperty"/>. </summary>
         /// <param name="anomalySeverity"> anomaly severity. </param>
         /// <param name="anomalyStatus">
         /// anomaly status
-        /// 
+        ///
         /// only return for alerting anomaly result
         /// </param>
         /// <param name="value"> value of the anomaly. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalySeverity AnomalySeverity { get; }
         /// <summary>
         /// anomaly status
-        /// 
+        ///
         /// only return for alerting anomaly result
         /// </summary>
         public AnomalyStatus? AnomalyStatus { get; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> Defines the type of insights that you want the service to generate. The allowed values are &apos;AudioInsightsOnly&apos;, &apos;VideoInsightsOnly&apos;, and &apos;AllInsights&apos;. The default is AllInsights. If you set this to AllInsights and the input is audio only, then only audio insights are generated. Similarly if the input is video only, then only video insights are generated. It is recommended that you not use AudioInsightsOnly if you expect some of your inputs to be video only; or use VideoInsightsOnly if you expect some of your inputs to be audio only. Your Jobs in such conditions would error out. </summary>
+    /// <summary> Defines the type of insights that you want the service to generate. The allowed values are 'AudioInsightsOnly', 'VideoInsightsOnly', and 'AllInsights'. The default is AllInsights. If you set this to AllInsights and the input is audio only, then only audio insights are generated. Similarly if the input is video only, then only video insights are generated. It is recommended that you not use AudioInsightsOnly if you expect some of your inputs to be video only; or use VideoInsightsOnly if you expect some of your inputs to be audio only. Your Jobs in such conditions would error out. </summary>
     public readonly partial struct InsightsType : IEquatable<InsightsType>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(InsightsType left, InsightsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InsightsType"/> values are not the same. </summary>
         public static bool operator !=(InsightsType left, InsightsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InsightsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InsightsType"/>. </summary>
         public static implicit operator InsightsType(string value) => new InsightsType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -15,21 +14,24 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> questions = default;
-            Optional<string> answer = default;
-            Optional<double> confidenceScore = default;
-            Optional<int> id = default;
-            Optional<string> source = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
-            Optional<KnowledgeBaseAnswerDialog> dialog = default;
-            Optional<AnswerSpan> answerSpan = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> questions = default;
+            string answer = default;
+            double? confidenceScore = default;
+            int? id = default;
+            string source = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            KnowledgeBaseAnswerDialog dialog = default;
+            AnswerSpan answerSpan = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("questions"))
+                if (property.NameEquals("questions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -40,41 +42,38 @@ namespace Azure.AI.Language.QuestionAnswering
                     questions = array;
                     continue;
                 }
-                if (property.NameEquals("answer"))
+                if (property.NameEquals("answer"u8))
                 {
                     answer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -85,28 +84,42 @@ namespace Azure.AI.Language.QuestionAnswering
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dialog"))
+                if (property.NameEquals("dialog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dialog = KnowledgeBaseAnswerDialog.DeserializeKnowledgeBaseAnswerDialog(property.Value);
                     continue;
                 }
-                if (property.NameEquals("answerSpan"))
+                if (property.NameEquals("answerSpan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value);
+            return new KnowledgeBaseAnswer(
+                questions ?? new ChangeTrackingList<string>(),
+                answer,
+                confidenceScore,
+                id,
+                source,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                dialog,
+                answerSpan);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KnowledgeBaseAnswer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKnowledgeBaseAnswer(document.RootElement);
         }
     }
 }

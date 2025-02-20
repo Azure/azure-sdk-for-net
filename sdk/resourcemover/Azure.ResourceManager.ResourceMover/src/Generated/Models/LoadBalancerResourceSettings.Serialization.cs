@@ -5,20 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class LoadBalancerResourceSettings : IUtf8JsonSerializable
+    public partial class LoadBalancerResourceSettings : IUtf8JsonSerializable, IJsonModel<LoadBalancerResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoadBalancerResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,57 +48,72 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
-                writer.WritePropertyName("frontendIPConfigurations");
+                writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(BackendAddressPools))
             {
-                writer.WritePropertyName("backendAddressPools");
+                writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
-            writer.WritePropertyName("resourceType");
-            writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
-            writer.WriteStringValue(TargetResourceName);
-            writer.WriteEndObject();
         }
 
-        internal static LoadBalancerResourceSettings DeserializeLoadBalancerResourceSettings(JsonElement element)
+        LoadBalancerResourceSettings IJsonModel<LoadBalancerResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> sku = default;
-            Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
-            Optional<IList<LoadBalancerBackendAddressPoolResourceSettings>> backendAddressPools = default;
-            Optional<string> zones = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerResourceSettings(document.RootElement, options);
+        }
+
+        internal static LoadBalancerResourceSettings DeserializeLoadBalancerResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            string sku = default;
+            IList<LoadBalancerFrontendIPConfigurationResourceSettings> frontendIPConfigurations = default;
+            IList<LoadBalancerBackendAddressPoolResourceSettings> backendAddressPools = default;
+            string zones = default;
             string resourceType = default;
             string targetResourceName = default;
+            string targetResourceGroupName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -90,58 +124,106 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("frontendIPConfigurations"))
+                if (property.NameEquals("frontendIPConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerFrontendIPConfigurationResourceSettings> array = new List<LoadBalancerFrontendIPConfigurationResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerFrontendIPConfigurationResourceSettings.DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(item));
+                        array.Add(LoadBalancerFrontendIPConfigurationResourceSettings.DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(item, options));
                     }
                     frontendIPConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("backendAddressPools"))
+                if (property.NameEquals("backendAddressPools"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerBackendAddressPoolResourceSettings> array = new List<LoadBalancerBackendAddressPoolResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerBackendAddressPoolResourceSettings.DeserializeLoadBalancerBackendAddressPoolResourceSettings(item));
+                        array.Add(LoadBalancerBackendAddressPoolResourceSettings.DeserializeLoadBalancerBackendAddressPoolResourceSettings(item, options));
                     }
                     backendAddressPools = array;
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     zones = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), sku.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), zones.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoadBalancerResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>(),
+                backendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>(),
+                zones);
         }
+
+        BinaryData IPersistableModel<LoadBalancerResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoadBalancerResourceSettings IPersistableModel<LoadBalancerResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoadBalancerResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadBalancerResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

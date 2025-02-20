@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         public static ChannelMapping FrontRight { get; } = new ChannelMapping(FrontRightValue);
         /// <summary> The Center Channel. </summary>
         public static ChannelMapping Center { get; } = new ChannelMapping(CenterValue);
-        /// <summary> Low Frequency Effects Channel.  Sometimes referred to as the Subwoofer. </summary>
+        /// <summary> Low Frequency Effects Channel.  Sometimes referred to as the subwoofer. </summary>
         public static ChannelMapping LowFrequencyEffects { get; } = new ChannelMapping(LowFrequencyEffectsValue);
         /// <summary> The Back Left Channel.  Sometimes referred to as the Left Surround Channel. </summary>
         public static ChannelMapping BackLeft { get; } = new ChannelMapping(BackLeftValue);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(ChannelMapping left, ChannelMapping right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChannelMapping"/> values are not the same. </summary>
         public static bool operator !=(ChannelMapping left, ChannelMapping right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChannelMapping"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChannelMapping"/>. </summary>
         public static implicit operator ChannelMapping(string value) => new ChannelMapping(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

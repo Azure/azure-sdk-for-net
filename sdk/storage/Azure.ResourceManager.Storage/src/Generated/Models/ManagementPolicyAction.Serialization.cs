@@ -5,73 +5,222 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyAction : IUtf8JsonSerializable
+    public partial class ManagementPolicyAction : IUtf8JsonSerializable, IJsonModel<ManagementPolicyAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagementPolicyAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseBlob))
-            {
-                writer.WritePropertyName("baseBlob");
-                writer.WriteObjectValue(BaseBlob);
-            }
-            if (Optional.IsDefined(Snapshot))
-            {
-                writer.WritePropertyName("snapshot");
-                writer.WriteObjectValue(Snapshot);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version");
-                writer.WriteObjectValue(Version);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ManagementPolicyBaseBlob> baseBlob = default;
-            Optional<ManagementPolicySnapShot> snapshot = default;
-            Optional<ManagementPolicyVersion> version = default;
-            foreach (var property in element.EnumerateObject())
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("baseBlob"))
+                throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(BaseBlob))
+            {
+                writer.WritePropertyName("baseBlob"u8);
+                writer.WriteObjectValue(BaseBlob, options);
+            }
+            if (Optional.IsDefined(Snapshot))
+            {
+                writer.WritePropertyName("snapshot"u8);
+                writer.WriteObjectValue(Snapshot, options);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteObjectValue(Version, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("snapshot"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value);
         }
+
+        ManagementPolicyAction IJsonModel<ManagementPolicyAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementPolicyAction(document.RootElement, options);
+        }
+
+        internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ManagementPolicyBaseBlob baseBlob = default;
+            ManagementPolicySnapShot snapshot = default;
+            ManagementPolicyVersion version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("baseBlob"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("snapshot"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagementPolicyAction(baseBlob, snapshot, version, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseBlob), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  baseBlob: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BaseBlob))
+                {
+                    builder.Append("  baseBlob: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BaseBlob, options, 2, false, "  baseBlob: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Snapshot), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  snapshot: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Snapshot))
+                {
+                    builder.Append("  snapshot: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Snapshot, options, 2, false, "  snapshot: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("  version: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Version, options, 2, false, "  version: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagementPolicyAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagementPolicyAction IPersistableModel<ManagementPolicyAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagementPolicyAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagementPolicyAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

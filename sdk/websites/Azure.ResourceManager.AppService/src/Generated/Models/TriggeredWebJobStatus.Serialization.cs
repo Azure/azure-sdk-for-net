@@ -16,14 +16,18 @@ namespace Azure.ResourceManager.AppService.Models
             TriggeredWebJobStatus.Success => "Success",
             TriggeredWebJobStatus.Failed => "Failed",
             TriggeredWebJobStatus.Error => "Error",
+            TriggeredWebJobStatus.Aborted => "Aborted",
+            TriggeredWebJobStatus.Running => "Running",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TriggeredWebJobStatus value.")
         };
 
         public static TriggeredWebJobStatus ToTriggeredWebJobStatus(this string value)
         {
-            if (string.Equals(value, "Success", StringComparison.InvariantCultureIgnoreCase)) return TriggeredWebJobStatus.Success;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return TriggeredWebJobStatus.Failed;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return TriggeredWebJobStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success")) return TriggeredWebJobStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return TriggeredWebJobStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return TriggeredWebJobStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Aborted")) return TriggeredWebJobStatus.Aborted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return TriggeredWebJobStatus.Running;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TriggeredWebJobStatus value.");
         }
     }

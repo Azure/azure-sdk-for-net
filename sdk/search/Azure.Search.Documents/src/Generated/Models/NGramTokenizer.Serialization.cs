@@ -18,17 +18,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinGram))
             {
-                writer.WritePropertyName("minGram");
+                writer.WritePropertyName("minGram"u8);
                 writer.WriteNumberValue(MinGram.Value);
             }
             if (Optional.IsDefined(MaxGram))
             {
-                writer.WritePropertyName("maxGram");
+                writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
             if (Optional.IsCollectionDefined(TokenChars))
             {
-                writer.WritePropertyName("tokenChars");
+                writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();
                 foreach (var item in TokenChars)
                 {
@@ -36,47 +36,48 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static NGramTokenizer DeserializeNGramTokenizer(JsonElement element)
         {
-            Optional<int> minGram = default;
-            Optional<int> maxGram = default;
-            Optional<IList<TokenCharacterKind>> tokenChars = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? minGram = default;
+            int? maxGram = default;
+            IList<TokenCharacterKind> tokenChars = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minGram"))
+                if (property.NameEquals("minGram"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minGram = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxGram"))
+                if (property.NameEquals("maxGram"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxGram = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tokenChars"))
+                if (property.NameEquals("tokenChars"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TokenCharacterKind> array = new List<TokenCharacterKind>();
@@ -87,18 +88,34 @@ namespace Azure.Search.Documents.Indexes.Models
                     tokenChars = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new NGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), Optional.ToList(tokenChars));
+            return new NGramTokenizer(odataType, name, minGram, maxGram, tokenChars ?? new ChangeTrackingList<TokenCharacterKind>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new NGramTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNGramTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

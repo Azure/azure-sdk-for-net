@@ -5,110 +5,123 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpServiceCommunity : IUtf8JsonSerializable
+    public partial class BgpServiceCommunity : IUtf8JsonSerializable, IJsonModel<BgpServiceCommunity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpServiceCommunity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BgpServiceCommunity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpServiceCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(BgpServiceCommunity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("properties");
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceName))
             {
-                writer.WritePropertyName("serviceName");
+                writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
             if (Optional.IsCollectionDefined(BgpCommunities))
             {
-                writer.WritePropertyName("bgpCommunities");
+                writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteStartArray();
                 foreach (var item in BgpCommunities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static BgpServiceCommunity DeserializeBgpServiceCommunity(JsonElement element)
+        BgpServiceCommunity IJsonModel<BgpServiceCommunity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> serviceName = default;
-            Optional<IList<BgpCommunity>> bgpCommunities = default;
+            var format = options.Format == "W" ? ((IPersistableModel<BgpServiceCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpServiceCommunity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBgpServiceCommunity(document.RootElement, options);
+        }
+
+        internal static BgpServiceCommunity DeserializeBgpServiceCommunity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string serviceName = default;
+            IList<BgpCommunity> bgpCommunities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -119,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,22 +141,21 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serviceName"))
+                        if (property0.NameEquals("serviceName"u8))
                         {
                             serviceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("bgpCommunities"))
+                        if (property0.NameEquals("bgpCommunities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BgpCommunity> array = new List<BgpCommunity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BgpCommunity.DeserializeBgpCommunity(item));
+                                array.Add(BgpCommunity.DeserializeBgpCommunity(item, options));
                             }
                             bgpCommunities = array;
                             continue;
@@ -151,8 +163,52 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BgpServiceCommunity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serviceName.Value, Optional.ToList(bgpCommunities));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BgpServiceCommunity(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                serviceName,
+                bgpCommunities ?? new ChangeTrackingList<BgpCommunity>());
         }
+
+        BinaryData IPersistableModel<BgpServiceCommunity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpServiceCommunity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BgpServiceCommunity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BgpServiceCommunity IPersistableModel<BgpServiceCommunity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpServiceCommunity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBgpServiceCommunity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BgpServiceCommunity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BgpServiceCommunity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

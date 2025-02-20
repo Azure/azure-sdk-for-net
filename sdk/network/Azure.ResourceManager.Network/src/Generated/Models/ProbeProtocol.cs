@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The protocol of the end point. If &apos;Tcp&apos; is specified, a received ACK is required for the probe to be successful. If &apos;Http&apos; or &apos;Https&apos; is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
+    /// <summary> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
     public readonly partial struct ProbeProtocol : IEquatable<ProbeProtocol>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ProbeProtocol left, ProbeProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProbeProtocol"/> values are not the same. </summary>
         public static bool operator !=(ProbeProtocol left, ProbeProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProbeProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProbeProtocol"/>. </summary>
         public static implicit operator ProbeProtocol(string value) => new ProbeProtocol(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

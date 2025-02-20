@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> A cluster must have at least one &apos;System&apos; Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </summary>
+    /// <summary> A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </summary>
     public readonly partial struct AgentPoolMode : IEquatable<AgentPoolMode>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(AgentPoolMode left, AgentPoolMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are not the same. </summary>
         public static bool operator !=(AgentPoolMode left, AgentPoolMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgentPoolMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolMode"/>. </summary>
         public static implicit operator AgentPoolMode(string value) => new AgentPoolMode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

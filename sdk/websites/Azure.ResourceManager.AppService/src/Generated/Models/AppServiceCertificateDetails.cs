@@ -6,51 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL certificate details. </summary>
     public partial class AppServiceCertificateDetails
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
-        internal AppServiceCertificateDetails()
-        {
-        }
-
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
-        /// <param name="version"> Certificate Version. </param>
-        /// <param name="serialNumber"> Certificate Serial Number. </param>
-        /// <param name="thumbprint"> Certificate Thumbprint. </param>
-        /// <param name="subject"> Certificate Subject. </param>
-        /// <param name="notBefore"> Date Certificate is valid from. </param>
-        /// <param name="notAfter"> Date Certificate is valid to. </param>
-        /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
-        /// <param name="issuer"> Certificate Issuer. </param>
-        /// <param name="rawData"> Raw certificate data. </param>
-        internal AppServiceCertificateDetails(int? version, string serialNumber, BinaryData thumbprint, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData)
-        {
-            Version = version;
-            SerialNumber = serialNumber;
-            Thumbprint = thumbprint;
-            Subject = subject;
-            NotBefore = notBefore;
-            NotAfter = notAfter;
-            SignatureAlgorithm = signatureAlgorithm;
-            Issuer = issuer;
-            RawData = rawData;
-        }
-
-        /// <summary> Certificate Version. </summary>
-        public int? Version { get; }
-        /// <summary> Certificate Serial Number. </summary>
-        public string SerialNumber { get; }
         /// <summary>
-        /// Certificate Thumbprint.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -74,18 +43,64 @@ namespace Azure.ResourceManager.AppService.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Thumbprint { get; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
+        internal AppServiceCertificateDetails()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
+        /// <param name="version"> Certificate Version. </param>
+        /// <param name="serialNumber"> Certificate Serial Number. </param>
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
+        /// <param name="subject"> Certificate Subject. </param>
+        /// <param name="notBefore"> Date Certificate is valid from. </param>
+        /// <param name="notAfter"> Date Certificate is valid to. </param>
+        /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
+        /// <param name="issuer"> Certificate Issuer. </param>
+        /// <param name="rawData"> Raw certificate data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateDetails(int? version, string serialNumber, string thumbprintString, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            SerialNumber = serialNumber;
+            ThumbprintString = thumbprintString;
+            Subject = subject;
+            NotBefore = notBefore;
+            NotAfter = notAfter;
+            SignatureAlgorithm = signatureAlgorithm;
+            Issuer = issuer;
+            RawData = rawData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Certificate Version. </summary>
+        [WirePath("version")]
+        public int? Version { get; }
+        /// <summary> Certificate Serial Number. </summary>
+        [WirePath("serialNumber")]
+        public string SerialNumber { get; }
+        /// <summary> Certificate Thumbprint. </summary>
+        [WirePath("thumbprint")]
+        public string ThumbprintString { get; }
         /// <summary> Certificate Subject. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
         /// <summary> Date Certificate is valid from. </summary>
+        [WirePath("notBefore")]
         public DateTimeOffset? NotBefore { get; }
         /// <summary> Date Certificate is valid to. </summary>
+        [WirePath("notAfter")]
         public DateTimeOffset? NotAfter { get; }
         /// <summary> Certificate Signature algorithm. </summary>
+        [WirePath("signatureAlgorithm")]
         public string SignatureAlgorithm { get; }
         /// <summary> Certificate Issuer. </summary>
+        [WirePath("issuer")]
         public string Issuer { get; }
         /// <summary> Raw certificate data. </summary>
+        [WirePath("rawData")]
         public string RawData { get; }
     }
 }

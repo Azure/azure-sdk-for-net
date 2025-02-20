@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.IoT.Hub.Service.Models;
@@ -85,7 +84,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -117,7 +116,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -180,7 +179,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -218,7 +217,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -281,7 +280,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -319,7 +318,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -367,7 +366,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -399,7 +398,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -448,7 +447,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -480,11 +479,11 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateIdentityRequest(string id, string mid, ModuleIdentity module, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateIdentityRequest(string id, string mid, ModuleIdentity moduleIdentity, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -504,7 +503,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(module);
+            content.JsonWriter.WriteObjectValue(moduleIdentity);
             request.Content = content;
             return message;
         }
@@ -512,11 +511,11 @@ namespace Azure.IoT.Hub.Service
         /// <summary> Creates or updates the module identity for a device in the IoT Hub. The moduleId and generationId cannot be updated by the user. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="module"> The module identity. </param>
+        /// <param name="moduleIdentity"> The module identity. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="module"/> is null. </exception>
-        public async Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="moduleIdentity"/> is null. </exception>
+        public async Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(string id, string mid, ModuleIdentity moduleIdentity, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -526,12 +525,12 @@ namespace Azure.IoT.Hub.Service
             {
                 throw new ArgumentNullException(nameof(mid));
             }
-            if (module == null)
+            if (moduleIdentity == null)
             {
-                throw new ArgumentNullException(nameof(module));
+                throw new ArgumentNullException(nameof(moduleIdentity));
             }
 
-            using var message = CreateCreateOrUpdateIdentityRequest(id, mid, module, ifMatch);
+            using var message = CreateCreateOrUpdateIdentityRequest(id, mid, moduleIdentity, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -544,18 +543,18 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Creates or updates the module identity for a device in the IoT Hub. The moduleId and generationId cannot be updated by the user. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="module"> The module identity. </param>
+        /// <param name="moduleIdentity"> The module identity. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="module"/> is null. </exception>
-        public Response<ModuleIdentity> CreateOrUpdateIdentity(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="moduleIdentity"/> is null. </exception>
+        public Response<ModuleIdentity> CreateOrUpdateIdentity(string id, string mid, ModuleIdentity moduleIdentity, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -565,12 +564,12 @@ namespace Azure.IoT.Hub.Service
             {
                 throw new ArgumentNullException(nameof(mid));
             }
-            if (module == null)
+            if (moduleIdentity == null)
             {
-                throw new ArgumentNullException(nameof(module));
+                throw new ArgumentNullException(nameof(moduleIdentity));
             }
 
-            using var message = CreateCreateOrUpdateIdentityRequest(id, mid, module, ifMatch);
+            using var message = CreateCreateOrUpdateIdentityRequest(id, mid, moduleIdentity, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -583,7 +582,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -631,7 +630,7 @@ namespace Azure.IoT.Hub.Service
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -659,7 +658,7 @@ namespace Azure.IoT.Hub.Service
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -718,7 +717,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -755,7 +754,7 @@ namespace Azure.IoT.Hub.Service
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

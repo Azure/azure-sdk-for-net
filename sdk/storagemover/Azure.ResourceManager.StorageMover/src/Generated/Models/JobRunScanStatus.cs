@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The status of Agent&apos;s scanning of source. </summary>
+    /// <summary> The status of Agent's scanning of source. </summary>
     public readonly partial struct JobRunScanStatus : IEquatable<JobRunScanStatus>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator ==(JobRunScanStatus left, JobRunScanStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobRunScanStatus"/> values are not the same. </summary>
         public static bool operator !=(JobRunScanStatus left, JobRunScanStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobRunScanStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobRunScanStatus"/>. </summary>
         public static implicit operator JobRunScanStatus(string value) => new JobRunScanStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

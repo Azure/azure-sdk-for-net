@@ -5,47 +5,200 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppLogAnalyticsConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppLogAnalyticsConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppLogAnalyticsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppLogAnalyticsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerAppLogAnalyticsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogAnalyticsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(CustomerId))
             {
-                writer.WritePropertyName("customerId");
+                writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
             if (Optional.IsDefined(SharedKey))
             {
-                writer.WritePropertyName("sharedKey");
+                writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ContainerAppLogAnalyticsConfiguration DeserializeContainerAppLogAnalyticsConfiguration(JsonElement element)
+        ContainerAppLogAnalyticsConfiguration IJsonModel<ContainerAppLogAnalyticsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> customerId = default;
-            Optional<string> sharedKey = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogAnalyticsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppLogAnalyticsConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppLogAnalyticsConfiguration DeserializeContainerAppLogAnalyticsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string customerId = default;
+            string sharedKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customerId"))
+                if (property.NameEquals("customerId"u8))
                 {
                     customerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sharedKey"))
+                if (property.NameEquals("sharedKey"u8))
                 {
                     sharedKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppLogAnalyticsConfiguration(customerId.Value, sharedKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customerId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomerId))
+                {
+                    builder.Append("  customerId: ");
+                    if (CustomerId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomerId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomerId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sharedKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedKey))
+                {
+                    builder.Append("  sharedKey: ");
+                    if (SharedKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SharedKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SharedKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerAppLogAnalyticsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogAnalyticsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppLogAnalyticsConfiguration IPersistableModel<ContainerAppLogAnalyticsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogAnalyticsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppLogAnalyticsConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppLogAnalyticsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

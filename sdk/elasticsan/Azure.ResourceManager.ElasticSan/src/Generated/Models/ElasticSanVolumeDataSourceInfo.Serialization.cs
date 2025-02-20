@@ -6,57 +6,143 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanVolumeDataSourceInfo : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeDataSourceInfo : IUtf8JsonSerializable, IJsonModel<ElasticSanVolumeDataSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeDataSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ElasticSanVolumeDataSourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateSource))
-            {
-                writer.WritePropertyName("createSource");
-                writer.WriteStringValue(CreateSource.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceUri))
-            {
-                writer.WritePropertyName("sourceUri");
-                writer.WriteStringValue(SourceUri.AbsoluteUri);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ElasticSanVolumeDataSourceInfo DeserializeElasticSanVolumeDataSourceInfo(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ElasticSanVolumeCreateOption> createSource = default;
-            Optional<Uri> sourceUri = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeDataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(CreateSource))
+            {
+                writer.WritePropertyName("createSource"u8);
+                writer.WriteStringValue(CreateSource.Value.ToString());
+            }
+            if (Optional.IsDefined(SourceId))
+            {
+                writer.WritePropertyName("sourceId"u8);
+                writer.WriteStringValue(SourceId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ElasticSanVolumeDataSourceInfo IJsonModel<ElasticSanVolumeDataSourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeDataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticSanVolumeDataSourceInfo(document.RootElement, options);
+        }
+
+        internal static ElasticSanVolumeDataSourceInfo DeserializeElasticSanVolumeDataSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ElasticSanVolumeCreateOption? createSource = default;
+            ResourceIdentifier sourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createSource"))
+                if (property.NameEquals("createSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createSource = new ElasticSanVolumeCreateOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceUri"))
+                if (property.NameEquals("sourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceUri = null;
                         continue;
                     }
-                    sourceUri = new Uri(property.Value.GetString());
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceUri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticSanVolumeDataSourceInfo(createSource, sourceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticSanVolumeDataSourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeDataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticSanVolumeDataSourceInfo IPersistableModel<ElasticSanVolumeDataSourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeDataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeElasticSanVolumeDataSourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticSanVolumeDataSourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

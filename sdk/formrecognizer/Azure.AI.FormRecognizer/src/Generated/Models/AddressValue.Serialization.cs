@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -14,58 +13,120 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static AddressValue DeserializeAddressValue(JsonElement element)
         {
-            Optional<string> houseNumber = default;
-            Optional<string> poBox = default;
-            Optional<string> road = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
-            Optional<string> postalCode = default;
-            Optional<string> countryRegion = default;
-            Optional<string> streetAddress = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string houseNumber = default;
+            string poBox = default;
+            string road = default;
+            string city = default;
+            string state = default;
+            string postalCode = default;
+            string countryRegion = default;
+            string streetAddress = default;
+            string unit = default;
+            string cityDistrict = default;
+            string stateDistrict = default;
+            string suburb = default;
+            string house = default;
+            string level = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("houseNumber"))
+                if (property.NameEquals("houseNumber"u8))
                 {
                     houseNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poBox"))
+                if (property.NameEquals("poBox"u8))
                 {
                     poBox = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("road"))
+                if (property.NameEquals("road"u8))
                 {
                     road = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryRegion"))
+                if (property.NameEquals("countryRegion"u8))
                 {
                     countryRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress"))
+                if (property.NameEquals("streetAddress"u8))
                 {
                     streetAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("unit"u8))
+                {
+                    unit = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("cityDistrict"u8))
+                {
+                    cityDistrict = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("stateDistrict"u8))
+                {
+                    stateDistrict = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("suburb"u8))
+                {
+                    suburb = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("house"u8))
+                {
+                    house = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("level"u8))
+                {
+                    level = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AddressValue(houseNumber.Value, poBox.Value, road.Value, city.Value, state.Value, postalCode.Value, countryRegion.Value, streetAddress.Value);
+            return new AddressValue(
+                houseNumber,
+                poBox,
+                road,
+                city,
+                state,
+                postalCode,
+                countryRegion,
+                streetAddress,
+                unit,
+                cityDistrict,
+                stateDistrict,
+                suburb,
+                house,
+                level);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddressValue FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAddressValue(document.RootElement);
         }
     }
 }

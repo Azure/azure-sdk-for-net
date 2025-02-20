@@ -6,134 +6,308 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsMailMessageEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsMailMessageEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityInsightsMailMessageEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            {
+                writer.WritePropertyName("additionalData"u8);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(FileEntityIds))
+            {
+                writer.WritePropertyName("fileEntityIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in FileEntityIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Recipient))
+            {
+                writer.WritePropertyName("recipient"u8);
+                writer.WriteStringValue(Recipient);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Uris))
+            {
+                writer.WritePropertyName("urls"u8);
+                writer.WriteStartArray();
+                foreach (var item in Uris)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.AbsoluteUri);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
+            {
+                writer.WritePropertyName("threats"u8);
+                writer.WriteStartArray();
+                foreach (var item in Threats)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(P1Sender))
+            {
+                writer.WritePropertyName("p1Sender"u8);
+                writer.WriteStringValue(P1Sender);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P1SenderDisplayName))
+            {
+                writer.WritePropertyName("p1SenderDisplayName"u8);
+                writer.WriteStringValue(P1SenderDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P1SenderDomain))
+            {
+                writer.WritePropertyName("p1SenderDomain"u8);
+                writer.WriteStringValue(P1SenderDomain);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SenderIP))
+            {
+                writer.WritePropertyName("senderIP"u8);
+                writer.WriteStringValue(SenderIP.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(P2Sender))
+            {
+                writer.WritePropertyName("p2Sender"u8);
+                writer.WriteStringValue(P2Sender);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P2SenderDisplayName))
+            {
+                writer.WritePropertyName("p2SenderDisplayName"u8);
+                writer.WriteStringValue(P2SenderDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P2SenderDomain))
+            {
+                writer.WritePropertyName("p2SenderDomain"u8);
+                writer.WriteStringValue(P2SenderDomain);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReceiveOn))
+            {
+                writer.WritePropertyName("receiveDate"u8);
+                writer.WriteStringValue(ReceiveOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkMessageId))
+            {
+                writer.WritePropertyName("networkMessageId"u8);
+                writer.WriteStringValue(NetworkMessageId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InternetMessageId))
+            {
+                writer.WritePropertyName("internetMessageId"u8);
+                writer.WriteStringValue(InternetMessageId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatDetectionMethods))
+            {
+                writer.WritePropertyName("threatDetectionMethods"u8);
+                writer.WriteStartArray();
+                foreach (var item in ThreatDetectionMethods)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(BodyFingerprintBin1))
             {
-                writer.WritePropertyName("bodyFingerprintBin1");
+                writer.WritePropertyName("bodyFingerprintBin1"u8);
                 writer.WriteNumberValue(BodyFingerprintBin1.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin2))
             {
-                writer.WritePropertyName("bodyFingerprintBin2");
+                writer.WritePropertyName("bodyFingerprintBin2"u8);
                 writer.WriteNumberValue(BodyFingerprintBin2.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin3))
             {
-                writer.WritePropertyName("bodyFingerprintBin3");
+                writer.WritePropertyName("bodyFingerprintBin3"u8);
                 writer.WriteNumberValue(BodyFingerprintBin3.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin4))
             {
-                writer.WritePropertyName("bodyFingerprintBin4");
+                writer.WritePropertyName("bodyFingerprintBin4"u8);
                 writer.WriteNumberValue(BodyFingerprintBin4.Value);
             }
             if (Optional.IsDefined(BodyFingerprintBin5))
             {
-                writer.WritePropertyName("bodyFingerprintBin5");
+                writer.WritePropertyName("bodyFingerprintBin5"u8);
                 writer.WriteNumberValue(BodyFingerprintBin5.Value);
             }
             if (Optional.IsDefined(AntispamDirection))
             {
-                writer.WritePropertyName("antispamDirection");
+                writer.WritePropertyName("antispamDirection"u8);
                 writer.WriteStringValue(AntispamDirection.Value.ToString());
             }
             if (Optional.IsDefined(DeliveryAction))
             {
-                writer.WritePropertyName("deliveryAction");
+                writer.WritePropertyName("deliveryAction"u8);
                 writer.WriteStringValue(DeliveryAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeliveryLocation))
             {
-                writer.WritePropertyName("deliveryLocation");
+                writer.WritePropertyName("deliveryLocation"u8);
                 writer.WriteStringValue(DeliveryLocation.Value.ToSerialString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element)
+        SecurityInsightsMailMessageEntity IJsonModel<SecurityInsightsMailMessageEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsMailMessageEntity(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> fileEntityIds = default;
-            Optional<string> recipient = default;
-            Optional<IReadOnlyList<Uri>> urls = default;
-            Optional<IReadOnlyList<string>> threats = default;
-            Optional<string> p1Sender = default;
-            Optional<string> p1SenderDisplayName = default;
-            Optional<string> p1SenderDomain = default;
-            Optional<IPAddress> senderIP = default;
-            Optional<string> p2Sender = default;
-            Optional<string> p2SenderDisplayName = default;
-            Optional<string> p2SenderDomain = default;
-            Optional<DateTimeOffset> receiveDate = default;
-            Optional<Guid> networkMessageId = default;
-            Optional<string> internetMessageId = default;
-            Optional<string> subject = default;
-            Optional<string> language = default;
-            Optional<IReadOnlyList<string>> threatDetectionMethods = default;
-            Optional<int> bodyFingerprintBin1 = default;
-            Optional<int> bodyFingerprintBin2 = default;
-            Optional<int> bodyFingerprintBin3 = default;
-            Optional<int> bodyFingerprintBin4 = default;
-            Optional<int> bodyFingerprintBin5 = default;
-            Optional<AntispamMailDirection> antispamDirection = default;
-            Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
-            Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            IReadOnlyList<string> fileEntityIds = default;
+            string recipient = default;
+            IReadOnlyList<Uri> urls = default;
+            IReadOnlyList<string> threats = default;
+            string p1Sender = default;
+            string p1SenderDisplayName = default;
+            string p1SenderDomain = default;
+            IPAddress senderIP = default;
+            string p2Sender = default;
+            string p2SenderDisplayName = default;
+            string p2SenderDomain = default;
+            DateTimeOffset? receiveDate = default;
+            Guid? networkMessageId = default;
+            string internetMessageId = default;
+            string subject = default;
+            string language = default;
+            IReadOnlyList<string> threatDetectionMethods = default;
+            int? bodyFingerprintBin1 = default;
+            int? bodyFingerprintBin2 = default;
+            int? bodyFingerprintBin3 = default;
+            int? bodyFingerprintBin4 = default;
+            int? bodyFingerprintBin5 = default;
+            AntispamMailDirection? antispamDirection = default;
+            SecurityInsightsMailMessageDeliveryAction? deliveryAction = default;
+            SecurityInsightsMailMessageDeliveryLocation? deliveryLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SecurityInsightsEntityKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,31 +316,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             additionalData = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fileEntityIds"))
+                        if (property0.NameEquals("fileEntityIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -177,31 +356,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             fileEntityIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("recipient"))
+                        if (property0.NameEquals("recipient"u8))
                         {
                             recipient = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("urls"))
+                        if (property0.NameEquals("urls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new Uri(item.GetString()));
+                                }
                             }
                             urls = array;
                             continue;
                         }
-                        if (property0.NameEquals("threats"))
+                        if (property0.NameEquals("threats"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -212,86 +396,82 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threats = array;
                             continue;
                         }
-                        if (property0.NameEquals("p1Sender"))
+                        if (property0.NameEquals("p1Sender"u8))
                         {
                             p1Sender = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p1SenderDisplayName"))
+                        if (property0.NameEquals("p1SenderDisplayName"u8))
                         {
                             p1SenderDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p1SenderDomain"))
+                        if (property0.NameEquals("p1SenderDomain"u8))
                         {
                             p1SenderDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("senderIP"))
+                        if (property0.NameEquals("senderIP"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             senderIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("p2Sender"))
+                        if (property0.NameEquals("p2Sender"u8))
                         {
                             p2Sender = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p2SenderDisplayName"))
+                        if (property0.NameEquals("p2SenderDisplayName"u8))
                         {
                             p2SenderDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("p2SenderDomain"))
+                        if (property0.NameEquals("p2SenderDomain"u8))
                         {
                             p2SenderDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("receiveDate"))
+                        if (property0.NameEquals("receiveDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             receiveDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("networkMessageId"))
+                        if (property0.NameEquals("networkMessageId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkMessageId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("internetMessageId"))
+                        if (property0.NameEquals("internetMessageId"u8))
                         {
                             internetMessageId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subject"))
+                        if (property0.NameEquals("subject"u8))
                         {
                             subject = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             language = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("threatDetectionMethods"))
+                        if (property0.NameEquals("threatDetectionMethods"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -302,81 +482,73 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threatDetectionMethods = array;
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin1"))
+                        if (property0.NameEquals("bodyFingerprintBin1"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bodyFingerprintBin1 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin2"))
+                        if (property0.NameEquals("bodyFingerprintBin2"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bodyFingerprintBin2 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin3"))
+                        if (property0.NameEquals("bodyFingerprintBin3"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bodyFingerprintBin3 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin4"))
+                        if (property0.NameEquals("bodyFingerprintBin4"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bodyFingerprintBin4 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("bodyFingerprintBin5"))
+                        if (property0.NameEquals("bodyFingerprintBin5"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bodyFingerprintBin5 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("antispamDirection"))
+                        if (property0.NameEquals("antispamDirection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             antispamDirection = new AntispamMailDirection(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deliveryAction"))
+                        if (property0.NameEquals("deliveryAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deliveryAction = property0.Value.GetString().ToSecurityInsightsMailMessageDeliveryAction();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryLocation"))
+                        if (property0.NameEquals("deliveryLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deliveryLocation = property0.Value.GetString().ToSecurityInsightsMailMessageDeliveryLocation();
@@ -385,8 +557,746 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityInsightsMailMessageEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                fileEntityIds ?? new ChangeTrackingList<string>(),
+                recipient,
+                urls ?? new ChangeTrackingList<Uri>(),
+                threats ?? new ChangeTrackingList<string>(),
+                p1Sender,
+                p1SenderDisplayName,
+                p1SenderDomain,
+                senderIP,
+                p2Sender,
+                p2SenderDisplayName,
+                p2SenderDomain,
+                receiveDate,
+                networkMessageId,
+                internetMessageId,
+                subject,
+                language,
+                threatDetectionMethods ?? new ChangeTrackingList<string>(),
+                bodyFingerprintBin1,
+                bodyFingerprintBin2,
+                bodyFingerprintBin3,
+                bodyFingerprintBin4,
+                bodyFingerprintBin5,
+                antispamDirection,
+                deliveryAction,
+                deliveryLocation);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine($"'{Kind.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    additionalData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdditionalData))
+                {
+                    if (AdditionalData.Any())
+                    {
+                        builder.Append("    additionalData: ");
+                        builder.AppendLine("{");
+                        foreach (var item in AdditionalData)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    friendlyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FriendlyName))
+                {
+                    builder.Append("    friendlyName: ");
+                    if (FriendlyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FriendlyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FriendlyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileEntityIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    fileEntityIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FileEntityIds))
+                {
+                    if (FileEntityIds.Any())
+                    {
+                        builder.Append("    fileEntityIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FileEntityIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Recipient), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recipient: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Recipient))
+                {
+                    builder.Append("    recipient: ");
+                    if (Recipient.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Recipient}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Recipient}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uris), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    urls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Uris))
+                {
+                    if (Uris.Any())
+                    {
+                        builder.Append("    urls: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Uris)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.AbsoluteUri}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Threats), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    threats: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Threats))
+                {
+                    if (Threats.Any())
+                    {
+                        builder.Append("    threats: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Threats)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(P1Sender), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    p1Sender: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(P1Sender))
+                {
+                    builder.Append("    p1Sender: ");
+                    if (P1Sender.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{P1Sender}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{P1Sender}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(P1SenderDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    p1SenderDisplayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(P1SenderDisplayName))
+                {
+                    builder.Append("    p1SenderDisplayName: ");
+                    if (P1SenderDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{P1SenderDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{P1SenderDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(P1SenderDomain), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    p1SenderDomain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(P1SenderDomain))
+                {
+                    builder.Append("    p1SenderDomain: ");
+                    if (P1SenderDomain.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{P1SenderDomain}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{P1SenderDomain}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SenderIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    senderIP: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SenderIP))
+                {
+                    builder.Append("    senderIP: ");
+                    builder.AppendLine($"'{SenderIP.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(P2Sender), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    p2Sender: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(P2Sender))
+                {
+                    builder.Append("    p2Sender: ");
+                    if (P2Sender.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{P2Sender}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{P2Sender}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(P2SenderDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    p2SenderDisplayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(P2SenderDisplayName))
+                {
+                    builder.Append("    p2SenderDisplayName: ");
+                    if (P2SenderDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{P2SenderDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{P2SenderDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(P2SenderDomain), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    p2SenderDomain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(P2SenderDomain))
+                {
+                    builder.Append("    p2SenderDomain: ");
+                    if (P2SenderDomain.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{P2SenderDomain}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{P2SenderDomain}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReceiveOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    receiveDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReceiveOn))
+                {
+                    builder.Append("    receiveDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ReceiveOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkMessageId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    networkMessageId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkMessageId))
+                {
+                    builder.Append("    networkMessageId: ");
+                    builder.AppendLine($"'{NetworkMessageId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternetMessageId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    internetMessageId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InternetMessageId))
+                {
+                    builder.Append("    internetMessageId: ");
+                    if (InternetMessageId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InternetMessageId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InternetMessageId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subject), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subject: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Subject))
+                {
+                    builder.Append("    subject: ");
+                    if (Subject.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Subject}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Subject}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Language), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    language: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Language))
+                {
+                    builder.Append("    language: ");
+                    if (Language.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Language}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Language}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatDetectionMethods), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    threatDetectionMethods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ThreatDetectionMethods))
+                {
+                    if (ThreatDetectionMethods.Any())
+                    {
+                        builder.Append("    threatDetectionMethods: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ThreatDetectionMethods)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyFingerprintBin1), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    bodyFingerprintBin1: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BodyFingerprintBin1))
+                {
+                    builder.Append("    bodyFingerprintBin1: ");
+                    builder.AppendLine($"{BodyFingerprintBin1.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyFingerprintBin2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    bodyFingerprintBin2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BodyFingerprintBin2))
+                {
+                    builder.Append("    bodyFingerprintBin2: ");
+                    builder.AppendLine($"{BodyFingerprintBin2.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyFingerprintBin3), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    bodyFingerprintBin3: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BodyFingerprintBin3))
+                {
+                    builder.Append("    bodyFingerprintBin3: ");
+                    builder.AppendLine($"{BodyFingerprintBin3.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyFingerprintBin4), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    bodyFingerprintBin4: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BodyFingerprintBin4))
+                {
+                    builder.Append("    bodyFingerprintBin4: ");
+                    builder.AppendLine($"{BodyFingerprintBin4.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyFingerprintBin5), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    bodyFingerprintBin5: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BodyFingerprintBin5))
+                {
+                    builder.Append("    bodyFingerprintBin5: ");
+                    builder.AppendLine($"{BodyFingerprintBin5.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AntispamDirection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    antispamDirection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AntispamDirection))
+                {
+                    builder.Append("    antispamDirection: ");
+                    builder.AppendLine($"'{AntispamDirection.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeliveryAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deliveryAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeliveryAction))
+                {
+                    builder.Append("    deliveryAction: ");
+                    builder.AppendLine($"'{DeliveryAction.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeliveryLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deliveryLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeliveryLocation))
+                {
+                    builder.Append("    deliveryLocation: ");
+                    builder.AppendLine($"'{DeliveryLocation.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SecurityInsightsMailMessageEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsMailMessageEntity IPersistableModel<SecurityInsightsMailMessageEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsMailMessageEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsMailMessageEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

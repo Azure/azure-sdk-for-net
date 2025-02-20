@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -17,22 +15,26 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
             {
-                writer.WritePropertyName("taskName");
+                writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
-            writer.WritePropertyName("lastUpdateDateTime");
+            writer.WritePropertyName("lastUpdateDateTime"u8);
             writer.WriteStringValue(LastUpdateDateTime, "O");
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WriteEndObject();
         }
 
         internal static AnalyzeTextLROResult DeserializeAnalyzeTextLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -50,34 +52,23 @@ namespace Azure.AI.TextAnalytics.Models
                     case "SentimentAnalysisLROResults": return SentimentLROResult.DeserializeSentimentLROResult(element);
                 }
             }
-            AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
-            DateTimeOffset lastUpdateDateTime = default;
-            TextAnalyticsOperationStatus status = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new AnalyzeTextLROResultsKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("taskName"))
-                {
-                    taskName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastUpdateDateTime"))
-                {
-                    lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("status"))
-                {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName.Value);
+            return UnknownAnalyzeTextLROResult.DeserializeUnknownAnalyzeTextLROResult(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AnalyzeTextLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeTextLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

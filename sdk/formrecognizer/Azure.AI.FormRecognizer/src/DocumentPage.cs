@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentPage")]
     public partial class DocumentPage
     {
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -20,7 +19,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="words"> Extracted words from the page. </param>
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        /// <param name="barcodes"> Extracted barcodes from the page. </param>
+        /// <param name="formulas"> Extracted formulas from the page. </param>
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas)
         {
             PageNumber = pageNumber;
             Angle = angle;
@@ -31,6 +32,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = words;
             SelectionMarks = selectionMarks;
             Lines = lines;
+            Barcodes = barcodes;
+            Formulas = formulas;
 
             foreach (DocumentLine line in Lines)
             {
@@ -41,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentPage. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, DocumentPageLengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, DocumentPageLengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas)
         {
             PageNumber = pageNumber;
             Angle = angle;
@@ -52,6 +55,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = words;
             SelectionMarks = selectionMarks;
             Lines = lines;
+            Barcodes = barcodes;
+            Formulas = formulas;
 
             foreach (DocumentLine line in Lines)
             {

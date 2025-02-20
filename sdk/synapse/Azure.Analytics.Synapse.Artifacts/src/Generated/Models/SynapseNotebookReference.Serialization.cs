@@ -18,25 +18,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("referenceName");
-            writer.WriteObjectValue(ReferenceName);
+            writer.WritePropertyName("referenceName"u8);
+            writer.WriteObjectValue<object>(ReferenceName);
             writer.WriteEndObject();
         }
 
         internal static SynapseNotebookReference DeserializeSynapseNotebookReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NotebookReferenceType type = default;
             object referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new NotebookReferenceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("referenceName"))
+                if (property.NameEquals("referenceName"u8))
                 {
                     referenceName = property.Value.GetObject();
                     continue;
@@ -45,12 +49,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SynapseNotebookReference(type, referenceName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SynapseNotebookReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSynapseNotebookReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SynapseNotebookReferenceConverter : JsonConverter<SynapseNotebookReference>
         {
             public override void Write(Utf8JsonWriter writer, SynapseNotebookReference model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SynapseNotebookReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

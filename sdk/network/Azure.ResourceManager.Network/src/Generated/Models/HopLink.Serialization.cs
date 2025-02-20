@@ -5,56 +5,166 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class HopLink
+    public partial class HopLink : IUtf8JsonSerializable, IJsonModel<HopLink>
     {
-        internal static HopLink DeserializeHopLink(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HopLink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HopLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> nextHopId = default;
-            Optional<string> linkType = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
-            Optional<IReadOnlyDictionary<string, string>> context = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<long> roundTripTimeMin = default;
-            Optional<long> roundTripTimeAvg = default;
-            Optional<long> roundTripTimeMax = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HopLink)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(NextHopId))
+            {
+                writer.WritePropertyName("nextHopId"u8);
+                writer.WriteStringValue(NextHopId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkType))
+            {
+                writer.WritePropertyName("linkType"u8);
+                writer.WriteStringValue(LinkType);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            {
+                writer.WritePropertyName("issues"u8);
+                writer.WriteStartArray();
+                foreach (var item in Issues)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
+            {
+                writer.WritePropertyName("context"u8);
+                writer.WriteStartObject();
+                foreach (var item in Context)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeMin))
+            {
+                writer.WritePropertyName("roundTripTimeMin"u8);
+                writer.WriteNumberValue(RoundTripTimeMin.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeAvg))
+            {
+                writer.WritePropertyName("roundTripTimeAvg"u8);
+                writer.WriteNumberValue(RoundTripTimeAvg.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeMax))
+            {
+                writer.WritePropertyName("roundTripTimeMax"u8);
+                writer.WriteNumberValue(RoundTripTimeMax.Value);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        HopLink IJsonModel<HopLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HopLink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHopLink(document.RootElement, options);
+        }
+
+        internal static HopLink DeserializeHopLink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextHopId = default;
+            string linkType = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
+            IReadOnlyDictionary<string, string> context = default;
+            ResourceIdentifier resourceId = default;
+            long? roundTripTimeMin = default;
+            long? roundTripTimeAvg = default;
+            long? roundTripTimeMax = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextHopId"))
+                if (property.NameEquals("nextHopId"u8))
                 {
                     nextHopId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkType"))
+                if (property.NameEquals("linkType"u8))
                 {
                     linkType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -65,17 +175,16 @@ namespace Azure.ResourceManager.Network.Models
                     context = dictionary;
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,31 +193,28 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("roundTripTimeMin"))
+                        if (property0.NameEquals("roundTripTimeMin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roundTripTimeMin = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("roundTripTimeAvg"))
+                        if (property0.NameEquals("roundTripTimeAvg"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roundTripTimeAvg = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("roundTripTimeMax"))
+                        if (property0.NameEquals("roundTripTimeMax"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roundTripTimeMax = property0.Value.GetInt64();
@@ -117,8 +223,53 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HopLink(nextHopId.Value, linkType.Value, Optional.ToList(issues), Optional.ToDictionary(context), resourceId.Value, Optional.ToNullable(roundTripTimeMin), Optional.ToNullable(roundTripTimeAvg), Optional.ToNullable(roundTripTimeMax));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HopLink(
+                nextHopId,
+                linkType,
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                context ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId,
+                roundTripTimeMin,
+                roundTripTimeAvg,
+                roundTripTimeMax,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HopLink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HopLink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HopLink IPersistableModel<HopLink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHopLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HopLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HopLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

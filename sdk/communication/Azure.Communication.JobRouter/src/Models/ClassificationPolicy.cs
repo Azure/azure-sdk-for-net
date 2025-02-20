@@ -3,30 +3,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ClassificationPolicy")]
-    [CodeGenSuppress("ClassificationPolicy")]
     public partial class ClassificationPolicy
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        internal ClassificationPolicy()
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        public ClassificationPolicy(string classificationPolicyId)
         {
-            QueueSelectors = new ChangeTrackingList<QueueSelectorAttachment>();
-            WorkerSelectors = new ChangeTrackingList<WorkerSelectorAttachment>();
+            Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
+
+            Id = classificationPolicyId;
         }
 
-        /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-        [CodeGenMember("QueueSelectors")]
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IList<QueueSelectorAttachment> QueueSelectors { get; set; }
+        /// <summary> Queue selector attachments used to resolve a queue for a job. </summary>
+        public IList<QueueSelectorAttachment> QueueSelectorAttachments { get; } = new List<QueueSelectorAttachment>();
 
-        /// <summary> The worker label selectors to attach to a given job. </summary>
-        [CodeGenMember("WorkerSelectors")]
-        public IList<WorkerSelectorAttachment> WorkerSelectors { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        /// <summary> Worker selector attachments used to attach worker selectors to a job. </summary>
+        public IList<WorkerSelectorAttachment> WorkerSelectorAttachments { get; } = new List<WorkerSelectorAttachment>();
+
+        /// <summary> Friendly name of this policy. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Id of a fallback queue to select if queue selector attachments doesn't find a match. </summary>
+        public string FallbackQueueId { get; set; }
+
+        /// <summary>
+        /// A rule to determine a priority score for a job.
+        /// </summary>
+        public RouterRule PrioritizationRule { get; set; }
+
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

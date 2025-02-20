@@ -5,77 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class PeriodicTimerEventTrigger : IUtf8JsonSerializable
+    public partial class PeriodicTimerEventTrigger : IUtf8JsonSerializable, IJsonModel<PeriodicTimerEventTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicTimerEventTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PeriodicTimerEventTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WritePropertyName("sourceInfo");
-            writer.WriteObjectValue(SourceInfo);
-            writer.WritePropertyName("sinkInfo");
-            writer.WriteObjectValue(SinkInfo);
-            if (Optional.IsDefined(CustomContextTag))
-            {
-                writer.WritePropertyName("customContextTag");
-                writer.WriteStringValue(CustomContextTag);
-            }
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static PeriodicTimerEventTrigger DeserializePeriodicTimerEventTrigger(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("sourceInfo"u8);
+            writer.WriteObjectValue(SourceInfo, options);
+            writer.WritePropertyName("sinkInfo"u8);
+            writer.WriteObjectValue(SinkInfo, options);
+            if (Optional.IsDefined(CustomContextTag))
+            {
+                writer.WritePropertyName("customContextTag"u8);
+                writer.WriteStringValue(CustomContextTag);
+            }
+            writer.WriteEndObject();
+        }
+
+        PeriodicTimerEventTrigger IJsonModel<PeriodicTimerEventTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeriodicTimerEventTrigger(document.RootElement, options);
+        }
+
+        internal static PeriodicTimerEventTrigger DeserializePeriodicTimerEventTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TriggerEventType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             PeriodicTimerSourceInfo sourceInfo = default;
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
-            Optional<string> customContextTag = default;
+            string customContextTag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new TriggerEventType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,17 +120,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sourceInfo"))
+                        if (property0.NameEquals("sourceInfo"u8))
                         {
-                            sourceInfo = PeriodicTimerSourceInfo.DeserializePeriodicTimerSourceInfo(property0.Value);
+                            sourceInfo = PeriodicTimerSourceInfo.DeserializePeriodicTimerSourceInfo(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("sinkInfo"))
+                        if (property0.NameEquals("sinkInfo"u8))
                         {
-                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value);
+                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("customContextTag"))
+                        if (property0.NameEquals("customContextTag"u8))
                         {
                             customContextTag = property0.Value.GetString();
                             continue;
@@ -102,8 +138,53 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeriodicTimerEventTrigger(id, name, type, systemData.Value, kind, sourceInfo, sinkInfo, customContextTag.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PeriodicTimerEventTrigger(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                sourceInfo,
+                sinkInfo,
+                customContextTag);
         }
+
+        BinaryData IPersistableModel<PeriodicTimerEventTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PeriodicTimerEventTrigger IPersistableModel<PeriodicTimerEventTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePeriodicTimerEventTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeriodicTimerEventTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,14 +16,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
         {
-            Optional<DateTimeOffset?> submittedAt = default;
-            Optional<DateTimeOffset?> scheduledAt = default;
-            Optional<DateTimeOffset?> endedAt = default;
-            Optional<DateTimeOffset?> cancellationRequestedAt = default;
-            Optional<SchedulerCurrentState> currentState = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? submittedAt = default;
+            DateTimeOffset? scheduledAt = default;
+            DateTimeOffset? endedAt = default;
+            DateTimeOffset? cancellationRequestedAt = default;
+            SchedulerCurrentState? currentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("submittedAt"))
+                if (property.NameEquals("submittedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     submittedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduledAt"))
+                if (property.NameEquals("scheduledAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     scheduledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedAt"))
+                if (property.NameEquals("endedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     endedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cancellationRequestedAt"))
+                if (property.NameEquals("cancellationRequestedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,18 +67,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentState = new SchedulerCurrentState(property.Value.GetString());
                     continue;
                 }
             }
-            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
+            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkScheduler FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkScheduler(document.RootElement);
         }
 
         internal partial class SparkSchedulerConverter : JsonConverter<SparkScheduler>
@@ -84,6 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override SparkScheduler Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

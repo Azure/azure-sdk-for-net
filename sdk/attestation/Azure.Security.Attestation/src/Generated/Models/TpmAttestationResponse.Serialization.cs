@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -14,16 +13,28 @@ namespace Azure.Security.Attestation
     {
         internal static TpmAttestationResponse DeserializeTpmAttestationResponse(JsonElement element)
         {
-            Optional<string> data = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = property.Value.GetString();
                     continue;
                 }
             }
-            return new TpmAttestationResponse(data.Value);
+            return new TpmAttestationResponse(data);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TpmAttestationResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTpmAttestationResponse(document.RootElement);
         }
     }
 }

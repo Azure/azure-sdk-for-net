@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -140,6 +140,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options)
             : base(connectionString, fileSystemName, filePath, options)
         {
+            Argument.AssertNotNullOrWhiteSpace(filePath, nameof(filePath));
         }
 
         /// <summary>
@@ -236,7 +237,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
+            : this(fileUri, credential, new DataLakeClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -258,7 +259,13 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
+            : this(
+                fileUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -288,7 +295,13 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
-            : base(fileUri, authentication, options, storageSharedKeyCredential)
+            : base(
+                  fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: storageSharedKeyCredential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -317,7 +330,46 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             AzureSasCredential sasCredential)
-            : base(fileUri, authentication, options, sasCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: sasCredential,
+                  tokenCredential: null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Token credential.
+        /// </param>
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            TokenCredential tokenCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: tokenCredential)
         {
         }
 
@@ -885,8 +937,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path
-        /// deletion. The path is later deleted during
-        /// garbage collection which could take several minutes.
+        /// deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -935,8 +986,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified path
-        /// deletion. The path is later deleted during
-        /// garbage collection which could take several minutes.
+        /// deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -988,8 +1038,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete If Exists
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified file
-        /// for deletion, if the file exists. The file is later deleted during
-        /// garbage collection which could take several minutes.
+        /// for deletion, if the file exists.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1038,8 +1087,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified file
-        /// for deletion, if the file exists. The file is later deleted during
-        /// garbage collection which could take several minutes.
+        /// for deletion, if the file exists.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1135,11 +1183,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = base.Rename(
-                    destinationFileSystem,
-                    destinationPath,
-                    sourceConditions,
-                    destinationConditions,
-                    cancellationToken);
+                    destinationPath: destinationPath,
+                    destinationFileSystem: destinationFileSystem,
+                    sourceConditions: sourceConditions,
+                    destinationConditions: destinationConditions,
+                    cancellationToken: cancellationToken);
 
                 return Response.FromValue(
                     new DataLakeFileClient(response.Value.DfsUri, response.Value.ClientConfiguration),
@@ -1202,11 +1250,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = await base.RenameAsync(
-                    destinationFileSystem,
-                    destinationPath,
-                    sourceConditions,
-                    destinationConditions,
-                    cancellationToken)
+                    destinationPath: destinationPath,
+                    destinationFileSystem: destinationFileSystem,
+                    sourceConditions: sourceConditions,
+                    destinationConditions: destinationConditions,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
@@ -1380,6 +1428,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetAccessControlList(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -1444,6 +1493,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetAccessControlListAsync(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -1511,6 +1561,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetPermissions(
             PathPermissions permissions,
             string owner = default,
@@ -1575,6 +1626,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
             PathPermissions permissions,
             string owner = default,
@@ -2224,10 +2276,10 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="leaseAction">
         /// Lease action.
-        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
-        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
+        /// <see cref="DataLakeLeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
+        /// <see cref="DataLakeLeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
+        /// <see cref="DataLakeLeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
+        /// <see cref="DataLakeLeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
         /// </param>
         /// <param name="leaseDuration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -2235,7 +2287,7 @@ namespace Azure.Storage.Files.DataLake
         /// A non-infinite lease can be between 15 and 60 seconds.
         /// </param>
         /// <param name="proposedLeaseId">
-        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
+        /// Proposed lease ID. Valid with <see cref="DataLakeLeaseAction.Acquire"/> and <see cref="DataLakeLeaseAction.AcquireRelease"/>.
         /// </param>
         /// <param name="progressHandler">
         /// Progress handler for append operation.
@@ -2263,7 +2315,7 @@ namespace Azure.Storage.Files.DataLake
             long? offset,
             UploadTransferValidationOptions validationOptionsOverride,
             string leaseId,
-            LeaseAction? leaseAction,
+            DataLakeLeaseAction? leaseAction,
             TimeSpan? leaseDuration,
             string proposedLeaseId,
             IProgress<long> progressHandler,
@@ -2276,7 +2328,11 @@ namespace Azure.Storage.Files.DataLake
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
+                ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                    content,
+                    validationOptions,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
 
                 content = content?.WithNoDispose().WithProgress(progressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2631,10 +2687,10 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="leaseAction">
         /// Lease action.
-        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
-        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeRequestConditions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeRequestConditions.LeaseId"/>.
+        /// <see cref="DataLakeLeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.
+        /// <see cref="DataLakeLeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
+        /// <see cref="DataLakeLeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeRequestConditions.LeaseId"/>.
+        /// <see cref="DataLakeLeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeRequestConditions.LeaseId"/>.
         /// </param>
         /// <param name="leaseDuration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -2642,7 +2698,7 @@ namespace Azure.Storage.Files.DataLake
         /// A non-infinite lease can be between 15 and 60 seconds.
         /// </param>
         /// <param name="proposedLeaseId">
-        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
+        /// Proposed lease ID. Valid with <see cref="DataLakeLeaseAction.Acquire"/> and <see cref="DataLakeLeaseAction.AcquireRelease"/>.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2665,7 +2721,7 @@ namespace Azure.Storage.Files.DataLake
             bool? close,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
-            LeaseAction? leaseAction,
+            DataLakeLeaseAction? leaseAction,
             TimeSpan? leaseDuration,
             string proposedLeaseId,
             bool async,
@@ -2767,6 +2823,8 @@ namespace Azure.Storage.Files.DataLake
         #endregion
 
         #region Read Data
+
+        #region Deprecated
         /// <summary>
         /// The <see cref="Read()"/> operation downloads a file from
         /// the service, including its metadata and properties.
@@ -2784,6 +2842,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read()
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
@@ -2795,7 +2854,7 @@ namespace Azure.Storage.Files.DataLake
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2826,6 +2885,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync()
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
@@ -2838,7 +2898,7 @@ namespace Azure.Storage.Files.DataLake
                     = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2873,6 +2933,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
             CancellationToken cancellationToken = default)
         {
@@ -2885,7 +2946,7 @@ namespace Azure.Storage.Files.DataLake
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2920,6 +2981,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
             CancellationToken cancellationToken = default)
         {
@@ -2933,7 +2995,7 @@ namespace Azure.Storage.Files.DataLake
                     = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2957,12 +3019,12 @@ namespace Azure.Storage.Files.DataLake
         /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the file in the specified
+        /// If provided, only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// donwloading this file.
+        /// downloading this file.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -3007,7 +3069,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3031,12 +3093,12 @@ namespace Azure.Storage.Files.DataLake
         /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the file in the specified
+        /// If provided, only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// donwloading this file.
+        /// downloading this file.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -3082,7 +3144,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3097,7 +3159,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Read(HttpRange, DataLakeRequestConditions?, Boolean, CancellationToken)"/>
+        /// The <see cref="Read(DataLakeFileReadOptions, CancellationToken)"/>
         /// operation downloads a file from the service, including its metadata
         /// and properties.
         ///
@@ -3121,6 +3183,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
             DataLakeFileReadOptions options = default,
             CancellationToken cancellationToken = default)
@@ -3136,7 +3199,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3151,7 +3214,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ReadAsync(HttpRange, DataLakeRequestConditions?, Boolean, CancellationToken)"/>
+        /// The <see cref="ReadAsync(DataLakeFileReadOptions, CancellationToken)"/>
         /// operation downloads a file from the service, including its metadata
         /// and properties.
         ///
@@ -3175,6 +3238,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
             DataLakeFileReadOptions options = default,
             CancellationToken cancellationToken = default)
@@ -3191,7 +3255,598 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Deprecated
+
+        /// <summary>
+        /// The <see cref="ReadStreaming()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreamingAsync()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync()
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreaming(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreamingAsync(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync(
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreaming(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadStreamingAsync(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadStreamingResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadStreamingResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadStreamingResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContent()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadResult> ReadContent()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = _blockBlobClient.DownloadContent();
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContentAsync()"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync()
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = await _blockBlobClient.DownloadContentAsync()
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContent(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadResult> ReadContent(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = _blockBlobClient.DownloadContent(
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContentAsync(CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = await _blockBlobClient.DownloadContentAsync(
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContent(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileReadResult> ReadContent(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = _blockBlobClient.DownloadContent(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadContentAsync(DataLakeFileReadOptions, CancellationToken)"/>
+        /// operation downloads a file from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeFileReadResult}"/> describing the
+        /// downloaded file.  <see cref="DataLakeFileReadResult.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
+            DataLakeFileReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobDownloadResult> response = await _blockBlobClient.DownloadContentAsync(
+                    options: options.ToBlobBaseDownloadOptions(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToDataLakeFileReadResult(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4402,7 +5057,7 @@ namespace Azure.Storage.Files.DataLake
 
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
-                validationOptions: options?.TransferValidation,
+                validationOptions: options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4655,7 +5310,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4706,7 +5361,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4811,7 +5466,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -4868,7 +5523,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -4887,8 +5542,27 @@ namespace Azure.Storage.Files.DataLake
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => allowfileModifications ? OpenRead(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
-                : OpenRead(position, bufferSize, null, cancellationToken);
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return _blockBlobClient.OpenRead(
+                allowfileModifications,
+                position,
+                bufferSize,
+                cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -4899,7 +5573,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -4956,7 +5630,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -4975,8 +5649,27 @@ namespace Azure.Storage.Files.DataLake
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await (allowfileModifications ? OpenReadAsync(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
-                : OpenReadAsync(position, bufferSize, null, cancellationToken)).ConfigureAwait(false);
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return await _blockBlobClient.OpenReadAsync(
+                allowfileModifications,
+                position,
+                bufferSize,
+                cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion OpenRead
 
         #region OpenWrite
@@ -5099,6 +5792,7 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -5145,6 +5839,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: default,
                             timeToExpire: default,
                             expiresOn: default,
+                            encryptionContext: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)
@@ -5167,7 +5862,7 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    validationOptions: options?.TransferValidation,
+                    validationOptions: options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -5213,10 +5908,11 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: args.EncryptionContext,
                         conditions: args.Conditions,
                         async: async,
                         cancellationToken: cancellationToken).ConfigureAwait(false),
-                SingleUpload = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                SingleUploadStreaming = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -5252,9 +5948,58 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                {
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
+                    long newPosition = content.ToMemory().Length;
+
+                    // Append data
+                    await client.AppendInternal(
+                        content.ToStream(),
+                        offset: 0,
+                        validationOptions,
+                        args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        progressHandler,
+                        flush: null,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    // Flush data
+                    return await client.FlushInternal(
+                        position: newPosition,
+                        retainUncommittedData: default,
+                        close: args.Close,
+                        args.HttpHeaders,
+                        args.Conditions,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     => await client.AppendInternal(
                         stream,
+                        offset,
+                        validationOptions,
+                        args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        progressHandler,
+                        flush: null,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                    => await client.AppendInternal(
+                        content.ToStream(),
                         offset,
                         validationOptions,
                         args?.Conditions?.LeaseId,

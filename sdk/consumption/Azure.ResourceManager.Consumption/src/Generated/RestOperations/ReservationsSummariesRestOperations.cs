@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -37,6 +36,22 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByReservationOrderRequestUri(string reservationOrderId, ReservationSummaryDataGrain grain, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("grain", grain.ToString(), true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByReservationOrderRequest(string reservationOrderId, ReservationSummaryDataGrain grain, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -62,7 +77,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -89,7 +104,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -111,6 +126,24 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByReservationOrderAndReservationRequestUri(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("grain", grain.ToString(), true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByReservationOrderAndReservationRequest(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter)
@@ -141,7 +174,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -170,7 +203,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -193,6 +226,38 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("grain", grain.ToString(), true);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (reservationId != null)
+            {
+                uri.AppendQuery("reservationId", reservationId, true);
+            }
+            if (reservationOrderId != null)
+            {
+                uri.AppendQuery("reservationOrderId", reservationOrderId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
@@ -234,11 +299,11 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for BillingAccount scope (legacy), and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope (modern). </param>
+        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
         /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Not applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,11 +329,11 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for BillingAccount scope (legacy), and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope (modern). </param>
+        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
         /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Not applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,6 +358,14 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByReservationOrderNextPageRequestUri(string nextLink, string reservationOrderId, ReservationSummaryDataGrain grain, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByReservationOrderNextPageRequest(string nextLink, string reservationOrderId, ReservationSummaryDataGrain grain, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -311,7 +384,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -340,7 +413,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -365,6 +438,14 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByReservationOrderAndReservationNextPageRequestUri(string nextLink, string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByReservationOrderAndReservationNextPageRequest(string nextLink, string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -384,7 +465,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -415,7 +496,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -441,6 +522,14 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
         {
             var message = _pipeline.CreateMessage();
@@ -457,11 +546,11 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for BillingAccount scope (legacy), and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope (modern). </param>
+        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
         /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Not applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -489,11 +578,11 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for BillingAccount scope (legacy), and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope (modern). </param>
+        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
         /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Not applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

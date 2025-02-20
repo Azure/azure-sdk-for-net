@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppConfiguration;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
     public partial class Sample_AppConfigurationKeyValueCollection
     {
-        // KeyValues_ListByConfigurationStore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_KeyValuesListByConfigurationStore()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_KeyValuesCreateOrUpdate()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2022-05-01/examples/ConfigurationStoresListKeyValues.json
-            // this example is just showing the usage of "KeyValues_ListByConfigurationStore" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresCreateKeyValue.json
+            // this example is just showing the usage of "KeyValues_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,25 +38,32 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             // get the collection of this AppConfigurationKeyValueResource
             AppConfigurationKeyValueCollection collection = appConfigurationStore.GetAppConfigurationKeyValues();
 
-            // invoke the operation and iterate over the result
-            await foreach (AppConfigurationKeyValueResource item in collection.GetAllAsync())
+            // invoke the operation
+            string keyValueName = "myKey$myLabel";
+            AppConfigurationKeyValueData data = new AppConfigurationKeyValueData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AppConfigurationKeyValueData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Value = "myValue",
+                Tags =
+{
+["tag1"] = "tagValue1",
+["tag2"] = "tagValue2"
+},
+            };
+            ArmOperation<AppConfigurationKeyValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, keyValueName, data);
+            AppConfigurationKeyValueResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AppConfigurationKeyValueData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KeyValues_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KeyValuesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2022-05-01/examples/ConfigurationStoresGetKeyValue.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetKeyValue.json
             // this example is just showing the usage of "KeyValues_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,12 +93,11 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KeyValues_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_KeyValuesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2022-05-01/examples/ConfigurationStoresGetKeyValue.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetKeyValue.json
             // this example is just showing the usage of "KeyValues_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,13 +123,12 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KeyValues_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_KeyValuesCreateOrUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_KeyValuesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2022-05-01/examples/ConfigurationStoresCreateKeyValue.json
-            // this example is just showing the usage of "KeyValues_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetKeyValue.json
+            // this example is just showing the usage of "KeyValues_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -146,23 +148,21 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
 
             // invoke the operation
             string keyValueName = "myKey$myLabel";
-            AppConfigurationKeyValueData data = new AppConfigurationKeyValueData()
-            {
-                Value = "myValue",
-                Tags =
-{
-["tag1"] = "tagValue1",
-["tag2"] = "tagValue2",
-},
-            };
-            ArmOperation<AppConfigurationKeyValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, keyValueName, data);
-            AppConfigurationKeyValueResource result = lro.Value;
+            NullableResponse<AppConfigurationKeyValueResource> response = await collection.GetIfExistsAsync(keyValueName);
+            AppConfigurationKeyValueResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AppConfigurationKeyValueData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppConfigurationKeyValueData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

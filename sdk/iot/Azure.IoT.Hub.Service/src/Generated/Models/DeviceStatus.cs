@@ -33,7 +33,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator ==(DeviceStatus left, DeviceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceStatus"/> values are not the same. </summary>
         public static bool operator !=(DeviceStatus left, DeviceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceStatus"/>. </summary>
         public static implicit operator DeviceStatus(string value) => new DeviceStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.IoT.Hub.Service.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

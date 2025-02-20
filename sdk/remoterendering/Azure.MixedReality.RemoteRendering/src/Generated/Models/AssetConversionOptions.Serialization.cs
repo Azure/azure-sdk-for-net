@@ -15,31 +15,51 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputLocation");
-            writer.WriteObjectValue(InputOptions);
-            writer.WritePropertyName("outputLocation");
-            writer.WriteObjectValue(OutputOptions);
+            writer.WritePropertyName("inputLocation"u8);
+            writer.WriteObjectValue<AssetConversionInputOptions>(InputOptions);
+            writer.WritePropertyName("outputLocation"u8);
+            writer.WriteObjectValue<AssetConversionOutputOptions>(OutputOptions);
             writer.WriteEndObject();
         }
 
         internal static AssetConversionOptions DeserializeAssetConversionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AssetConversionInputOptions inputLocation = default;
             AssetConversionOutputOptions outputLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputLocation"))
+                if (property.NameEquals("inputLocation"u8))
                 {
                     inputLocation = AssetConversionInputOptions.DeserializeAssetConversionInputOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("outputLocation"))
+                if (property.NameEquals("outputLocation"u8))
                 {
                     outputLocation = AssetConversionOutputOptions.DeserializeAssetConversionOutputOptions(property.Value);
                     continue;
                 }
             }
             return new AssetConversionOptions(inputLocation, outputLocation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetConversionOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

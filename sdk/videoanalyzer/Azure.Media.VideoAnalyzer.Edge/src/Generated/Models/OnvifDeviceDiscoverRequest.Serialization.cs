@@ -17,12 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiscoveryDuration))
             {
-                writer.WritePropertyName("discoveryDuration");
+                writer.WritePropertyName("discoveryDuration"u8);
                 writer.WriteStringValue(DiscoveryDuration);
             }
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("@apiVersion");
+                writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
@@ -30,28 +32,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDeviceDiscoverRequest DeserializeOnvifDeviceDiscoverRequest(JsonElement element)
         {
-            Optional<string> discoveryDuration = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string discoveryDuration = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("discoveryDuration"))
+                if (property.NameEquals("discoveryDuration"u8))
                 {
                     discoveryDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("methodName"))
+                if (property.NameEquals("methodName"u8))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@apiVersion"))
+                if (property.NameEquals("@apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new OnvifDeviceDiscoverRequest(methodName, apiVersion.Value, discoveryDuration.Value);
+            return new OnvifDeviceDiscoverRequest(methodName, apiVersion, discoveryDuration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new OnvifDeviceDiscoverRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifDeviceDiscoverRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

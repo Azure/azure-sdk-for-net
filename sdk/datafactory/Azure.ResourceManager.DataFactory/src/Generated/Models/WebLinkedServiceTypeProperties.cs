@@ -6,7 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,32 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        protected WebLinkedServiceTypeProperties(BinaryData uri)
-        {
-            Argument.AssertNotNull(uri, nameof(uri));
-
-            Uri = uri;
-        }
-
-        /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal WebLinkedServiceTypeProperties(BinaryData uri, WebAuthenticationType authenticationType)
-        {
-            Uri = uri;
-            AuthenticationType = authenticationType;
-        }
-
         /// <summary>
-        /// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -66,7 +48,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Uri { get; set; }
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/>. </summary>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        protected WebLinkedServiceTypeProperties(DataFactoryElement<string> uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            Uri = uri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/>. </summary>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebLinkedServiceTypeProperties(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uri = uri;
+            AuthenticationType = authenticationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/> for deserialization. </summary>
+        internal WebLinkedServiceTypeProperties()
+        {
+        }
+
+        /// <summary> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Type of authentication used to connect to the web table source. </summary>
         internal WebAuthenticationType AuthenticationType { get; set; }
     }

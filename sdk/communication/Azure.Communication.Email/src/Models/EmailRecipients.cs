@@ -6,10 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Email.Extensions;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailRecipients")]
     public partial class EmailRecipients
@@ -29,12 +28,12 @@ namespace Azure.Communication.Email.Models
         {
             if (cc != null)
             {
-                CC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(cc.ToList()));
+                CC = new ChangeTrackingList<EmailAddress>((IList<EmailAddress>)cc.ToList());
             }
 
             if (bcc != null)
             {
-                BCC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(bcc.ToList()));
+                BCC = new ChangeTrackingList<EmailAddress>((IList<EmailAddress>)bcc.ToList());
             }
         }
 
@@ -44,12 +43,6 @@ namespace Azure.Communication.Email.Models
             {
                 throw new ArgumentException(ErrorMessages.EmptyToRecipients);
             }
-
-            To.Validate();
-
-            CC.Validate();
-
-            BCC.Validate();
         }
     }
 }

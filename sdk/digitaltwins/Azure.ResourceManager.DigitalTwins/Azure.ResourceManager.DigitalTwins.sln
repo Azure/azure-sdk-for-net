@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33402.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{4F3CE10C-3900-4501-9C5C-E19187D36B9F}") = "Azure.ResourceManager.DigitalTwins", "src\Azure.ResourceManager.DigitalTwins.csproj", "{2A5038EF-61E5-4B88-B854-83D6A08555F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DigitalTwins", "src\Azure.ResourceManager.DigitalTwins.csproj", "{2A5038EF-61E5-4B88-B854-83D6A08555F2}"
 EndProject
-Project("{4F3CE10C-3900-4501-9C5C-E19187D36B9F}") = "Azure.ResourceManager.DigitalTwins.Tests", "tests\Azure.ResourceManager.DigitalTwins.Tests.csproj", "{812C9F5B-2F44-45A6-8B59-B9B6528886EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DigitalTwins.Tests", "tests\Azure.ResourceManager.DigitalTwins.Tests.csproj", "{812C9F5B-2F44-45A6-8B59-B9B6528886EF}"
 EndProject
-Project("{4F3CE10C-3900-4501-9C5C-E19187D36B9F}") = "Azure.ResourceManager.DigitalTwins.Samples", "samples\Azure.ResourceManager.DigitalTwins.Samples.csproj", "{0D714EBB-E344-4B44-8F80-623D183953BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DigitalTwins.Samples", "samples\Azure.ResourceManager.DigitalTwins.Samples.csproj", "{0D714EBB-E344-4B44-8F80-623D183953BE}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A3A2AFB0-2100-481D-A412-A380EE183B26}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{812C9F5B-2F44-45A6-8B59-B9B6528886EF}.Release|x64.Build.0 = Release|Any CPU
 		{812C9F5B-2F44-45A6-8B59-B9B6528886EF}.Release|x86.ActiveCfg = Release|Any CPU
 		{812C9F5B-2F44-45A6-8B59-B9B6528886EF}.Release|x86.Build.0 = Release|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x64.Build.0 = Debug|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x86.Build.0 = Debug|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x64.ActiveCfg = Release|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x64.Build.0 = Release|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x86.ActiveCfg = Release|Any CPU
+		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3A2AFB0-2100-481D-A412-A380EE183B26}
 	EndGlobalSection
 EndGlobal

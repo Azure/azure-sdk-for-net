@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,57 +16,75 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventTrackDiscontinuityDetectedEventData DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(JsonElement element)
         {
-            Optional<string> trackType = default;
-            Optional<string> trackName = default;
-            Optional<long> bitrate = default;
-            Optional<string> previousTimestamp = default;
-            Optional<string> newTimestamp = default;
-            Optional<string> timescale = default;
-            Optional<string> discontinuityGap = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string trackType = default;
+            string trackName = default;
+            long? bitrate = default;
+            string previousTimestamp = default;
+            string newTimestamp = default;
+            string timescale = default;
+            string discontinuityGap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackType"))
+                if (property.NameEquals("trackType"u8))
                 {
                     trackType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("previousTimestamp"))
+                if (property.NameEquals("previousTimestamp"u8))
                 {
                     previousTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("newTimestamp"))
+                if (property.NameEquals("newTimestamp"u8))
                 {
                     newTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("discontinuityGap"))
+                if (property.NameEquals("discontinuityGap"u8))
                 {
                     discontinuityGap = property.Value.GetString();
                     continue;
                 }
             }
-            return new MediaLiveEventTrackDiscontinuityDetectedEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), previousTimestamp.Value, newTimestamp.Value, timescale.Value, discontinuityGap.Value);
+            return new MediaLiveEventTrackDiscontinuityDetectedEventData(
+                trackType,
+                trackName,
+                bitrate,
+                previousTimestamp,
+                newTimestamp,
+                timescale,
+                discontinuityGap);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventTrackDiscontinuityDetectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(document.RootElement);
         }
 
         internal partial class MediaLiveEventTrackDiscontinuityDetectedEventDataConverter : JsonConverter<MediaLiveEventTrackDiscontinuityDetectedEventData>
@@ -76,6 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventTrackDiscontinuityDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -6,186 +6,116 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HiveLinkedService : IUtf8JsonSerializable
+    public partial class HiveLinkedService : IUtf8JsonSerializable, IJsonModel<HiveLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HiveLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HiveLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HiveLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("connectVia");
-                writer.WriteObjectValue(ConnectVia);
+                throw new FormatException($"The model {nameof(HiveLinkedService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters");
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations");
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("typeProperties");
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("host");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Host);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
-#endif
+            writer.WritePropertyName("host"u8);
+            JsonSerializer.Serialize(writer, Host);
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Port);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Port.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("port"u8);
+                JsonSerializer.Serialize(writer, Port);
             }
             if (Optional.IsDefined(ServerType))
             {
-                writer.WritePropertyName("serverType");
+                writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
             if (Optional.IsDefined(ThriftTransportProtocol))
             {
-                writer.WritePropertyName("thriftTransportProtocol");
+                writer.WritePropertyName("thriftTransportProtocol"u8);
                 writer.WriteStringValue(ThriftTransportProtocol.Value.ToString());
             }
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(ServiceDiscoveryMode))
             {
-                writer.WritePropertyName("serviceDiscoveryMode");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServiceDiscoveryMode);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServiceDiscoveryMode.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("serviceDiscoveryMode"u8);
+                JsonSerializer.Serialize(writer, ServiceDiscoveryMode);
             }
             if (Optional.IsDefined(ZooKeeperNameSpace))
             {
-                writer.WritePropertyName("zooKeeperNameSpace");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ZooKeeperNameSpace);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ZooKeeperNameSpace.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("zooKeeperNameSpace"u8);
+                JsonSerializer.Serialize(writer, ZooKeeperNameSpace);
             }
             if (Optional.IsDefined(UseNativeQuery))
             {
-                writer.WritePropertyName("useNativeQuery");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseNativeQuery);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseNativeQuery.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("useNativeQuery"u8);
+                JsonSerializer.Serialize(writer, UseNativeQuery);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("username"u8);
+                JsonSerializer.Serialize(writer, Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
-                writer.WriteObjectValue(Password);
+                writer.WritePropertyName("password"u8);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(HttpPath))
             {
-                writer.WritePropertyName("httpPath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(HttpPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpPath.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("httpPath"u8);
+                JsonSerializer.Serialize(writer, HttpPath);
             }
             if (Optional.IsDefined(EnableSsl))
             {
-                writer.WritePropertyName("enableSsl");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableSsl);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableSsl.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("enableSsl"u8);
+                JsonSerializer.Serialize(writer, EnableSsl);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
-                writer.WritePropertyName("trustedCertPath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TrustedCertPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TrustedCertPath.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("trustedCertPath"u8);
+                JsonSerializer.Serialize(writer, TrustedCertPath);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
-                writer.WritePropertyName("useSystemTrustStore");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseSystemTrustStore);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemTrustStore.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("useSystemTrustStore"u8);
+                JsonSerializer.Serialize(writer, UseSystemTrustStore);
             }
             if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
-                writer.WritePropertyName("allowHostNameCNMismatch");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AllowHostNameCNMismatch);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowHostNameCNMismatch.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("allowHostNameCNMismatch"u8);
+                JsonSerializer.Serialize(writer, AllowHostNameCNMismatch);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
-                writer.WritePropertyName("allowSelfSignedServerCert");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AllowSelfSignedServerCert);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowSelfSignedServerCert.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("allowSelfSignedServerCert"u8);
+                JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
-                writer.WritePropertyName("encryptedCredential");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("encryptedCredential"u8);
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -194,91 +124,121 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static HiveLinkedService DeserializeHiveLinkedService(JsonElement element)
+        HiveLinkedService IJsonModel<HiveLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HiveLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HiveLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHiveLinkedService(document.RootElement, options);
+        }
+
+        internal static HiveLinkedService DeserializeHiveLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            BinaryData host = default;
-            Optional<BinaryData> port = default;
-            Optional<HiveServerType> serverType = default;
-            Optional<HiveThriftTransportProtocol> thriftTransportProtocol = default;
+            string version = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> host = default;
+            DataFactoryElement<int> port = default;
+            HiveServerType? serverType = default;
+            HiveThriftTransportProtocol? thriftTransportProtocol = default;
             HiveAuthenticationType authenticationType = default;
-            Optional<BinaryData> serviceDiscoveryMode = default;
-            Optional<BinaryData> zooKeeperNameSpace = default;
-            Optional<BinaryData> useNativeQuery = default;
-            Optional<BinaryData> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> httpPath = default;
-            Optional<BinaryData> enableSsl = default;
-            Optional<BinaryData> trustedCertPath = default;
-            Optional<BinaryData> useSystemTrustStore = default;
-            Optional<BinaryData> allowHostNameCNMismatch = default;
-            Optional<BinaryData> allowSelfSignedServerCert = default;
-            Optional<BinaryData> encryptedCredential = default;
+            DataFactoryElement<bool> serviceDiscoveryMode = default;
+            DataFactoryElement<string> zooKeeperNameSpace = default;
+            DataFactoryElement<bool> useNativeQuery = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
+            DataFactoryElement<string> httpPath = default;
+            DataFactoryElement<bool> enableSsl = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactoryElement<bool> allowHostNameCNMismatch = default;
+            DataFactoryElement<bool> allowSelfSignedServerCert = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -287,164 +247,145 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("host"))
+                        if (property0.NameEquals("host"u8))
                         {
-                            host = BinaryData.FromString(property0.Value.GetRawText());
+                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            port = BinaryData.FromString(property0.Value.GetRawText());
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("serverType"))
+                        if (property0.NameEquals("serverType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverType = new HiveServerType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("thriftTransportProtocol"))
+                        if (property0.NameEquals("thriftTransportProtocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             thriftTransportProtocol = new HiveThriftTransportProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("authenticationType"))
+                        if (property0.NameEquals("authenticationType"u8))
                         {
                             authenticationType = new HiveAuthenticationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceDiscoveryMode"))
+                        if (property0.NameEquals("serviceDiscoveryMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serviceDiscoveryMode = BinaryData.FromString(property0.Value.GetRawText());
+                            serviceDiscoveryMode = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("zooKeeperNameSpace"))
+                        if (property0.NameEquals("zooKeeperNameSpace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            zooKeeperNameSpace = BinaryData.FromString(property0.Value.GetRawText());
+                            zooKeeperNameSpace = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("useNativeQuery"))
+                        if (property0.NameEquals("useNativeQuery"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useNativeQuery = BinaryData.FromString(property0.Value.GetRawText());
+                            useNativeQuery = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("username"))
+                        if (property0.NameEquals("username"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            username = BinaryData.FromString(property0.Value.GetRawText());
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("httpPath"))
+                        if (property0.NameEquals("httpPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            httpPath = BinaryData.FromString(property0.Value.GetRawText());
+                            httpPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("enableSsl"))
+                        if (property0.NameEquals("enableSsl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableSsl = BinaryData.FromString(property0.Value.GetRawText());
+                            enableSsl = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("trustedCertPath"))
+                        if (property0.NameEquals("trustedCertPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedCertPath = BinaryData.FromString(property0.Value.GetRawText());
+                            trustedCertPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("useSystemTrustStore"))
+                        if (property0.NameEquals("useSystemTrustStore"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useSystemTrustStore = BinaryData.FromString(property0.Value.GetRawText());
+                            useSystemTrustStore = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("allowHostNameCNMismatch"))
+                        if (property0.NameEquals("allowHostNameCNMismatch"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            allowHostNameCNMismatch = BinaryData.FromString(property0.Value.GetRawText());
+                            allowHostNameCNMismatch = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("allowSelfSignedServerCert"))
+                        if (property0.NameEquals("allowSelfSignedServerCert"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            allowSelfSignedServerCert = BinaryData.FromString(property0.Value.GetRawText());
+                            allowSelfSignedServerCert = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("encryptedCredential"))
+                        if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -453,7 +394,62 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HiveLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, serviceDiscoveryMode.Value, zooKeeperNameSpace.Value, useNativeQuery.Value, username.Value, password.Value, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new HiveLinkedService(
+                type,
+                version,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                port,
+                serverType,
+                thriftTransportProtocol,
+                authenticationType,
+                serviceDiscoveryMode,
+                zooKeeperNameSpace,
+                useNativeQuery,
+                username,
+                password,
+                httpPath,
+                enableSsl,
+                trustedCertPath,
+                useSystemTrustStore,
+                allowHostNameCNMismatch,
+                allowSelfSignedServerCert,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<HiveLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HiveLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HiveLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HiveLinkedService IPersistableModel<HiveLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HiveLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHiveLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HiveLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HiveLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

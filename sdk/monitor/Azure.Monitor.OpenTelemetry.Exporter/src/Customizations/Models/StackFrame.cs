@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class StackFrame
@@ -12,15 +14,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             string fullName, assemblyName;
 
-            var methodInfo = stackFrame.GetMethod();
+            var methodInfo = stackFrame.GetMethodWithoutWarning();
             if (methodInfo == null)
             {
-                fullName = "unknown";
+                // In an AOT scenario GetMethod() will return null. Note this can happen even in non AOT scenarios.
+                // Instead, call ToString() which gives a string like this:
+                // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
+                fullName = stackFrame.ToString();
                 assemblyName = "unknown";
             }
             else
             {
-                assemblyName = methodInfo.Module.Assembly.FullName;
+                assemblyName = methodInfo.Module.Assembly.FullName ?? "unknown";
                 if (methodInfo.DeclaringType != null)
                 {
                     fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name;

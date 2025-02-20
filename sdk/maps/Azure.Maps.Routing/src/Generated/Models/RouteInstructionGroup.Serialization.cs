@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,49 +13,58 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteInstructionGroup DeserializeRouteInstructionGroup(JsonElement element)
         {
-            Optional<int> firstInstructionIndex = default;
-            Optional<int> lastInstructionIndex = default;
-            Optional<int> groupLengthInMeters = default;
-            Optional<string> groupMessage = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? firstInstructionIndex = default;
+            int? lastInstructionIndex = default;
+            int? groupLengthInMeters = default;
+            string groupMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstInstructionIndex"))
+                if (property.NameEquals("firstInstructionIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstInstructionIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastInstructionIndex"))
+                if (property.NameEquals("lastInstructionIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastInstructionIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupLengthInMeters"))
+                if (property.NameEquals("groupLengthInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     groupLengthInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupMessage"))
+                if (property.NameEquals("groupMessage"u8))
                 {
                     groupMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new RouteInstructionGroup(Optional.ToNullable(firstInstructionIndex), Optional.ToNullable(lastInstructionIndex), Optional.ToNullable(groupLengthInMeters), groupMessage.Value);
+            return new RouteInstructionGroup(firstInstructionIndex, lastInstructionIndex, groupLengthInMeters, groupMessage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteInstructionGroup FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteInstructionGroup(document.RootElement);
         }
     }
 }

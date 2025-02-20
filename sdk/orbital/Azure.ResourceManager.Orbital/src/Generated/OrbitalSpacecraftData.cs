@@ -5,25 +5,60 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalSpacecraft data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalSpacecraft data model.
+    /// Customer creates a spacecraft resource to schedule a contact.
+    /// </summary>
     public partial class OrbitalSpacecraftData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OrbitalSpacecraftData(AzureLocation location) : base(location)
         {
             Links = new ChangeTrackingList<OrbitalSpacecraftLink>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +66,14 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The current state of the resource&apos;s creation, deletion, or modification. </param>
+        /// <param name="provisioningState"> The current state of the resource's creation, deletion, or modification. </param>
         /// <param name="noradId"> NORAD ID of the spacecraft. </param>
         /// <param name="titleLine"> Title line of the two-line element set (TLE). </param>
         /// <param name="tleLine1"> Line 1 of the two-line element set (TLE). </param>
         /// <param name="tleLine2"> Line 2 of the two-line element set (TLE). </param>
         /// <param name="links"> Immutable list of Spacecraft links. </param>
-        internal OrbitalSpacecraftData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, OrbitalProvisioningState? provisioningState, string noradId, string titleLine, string tleLine1, string tleLine2, IList<OrbitalSpacecraftLink> links) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalSpacecraftData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, OrbitalProvisioningState? provisioningState, string noradId, string titleLine, string tleLine1, string tleLine2, IList<OrbitalSpacecraftLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -46,11 +82,17 @@ namespace Azure.ResourceManager.Orbital
             TleLine1 = tleLine1;
             TleLine2 = tleLine2;
             Links = links;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftData"/> for deserialization. </summary>
+        internal OrbitalSpacecraftData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary> The current state of the resource&apos;s creation, deletion, or modification. </summary>
+        /// <summary> The current state of the resource's creation, deletion, or modification. </summary>
         public OrbitalProvisioningState? ProvisioningState { get; set; }
         /// <summary> NORAD ID of the spacecraft. </summary>
         public string NoradId { get; set; }

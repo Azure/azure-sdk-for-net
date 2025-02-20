@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Which authentication method Cassandra should use to authenticate clients. &apos;None&apos; turns off authentication, so should not be used except in emergencies. &apos;Cassandra&apos; is the default password based authentication. The default is &apos;Cassandra&apos;. </summary>
+    /// <summary> Which authentication method Cassandra should use to authenticate clients. 'None' turns off authentication, so should not be used except in emergencies. 'Cassandra' is the default password based authentication. The default is 'Cassandra'. </summary>
     public readonly partial struct CassandraAuthenticationMethod : IEquatable<CassandraAuthenticationMethod>
     {
         private readonly string _value;
@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string NoneValue = "None";
         private const string CassandraValue = "Cassandra";
+        private const string LdapValue = "Ldap";
 
         /// <summary> None. </summary>
         public static CassandraAuthenticationMethod None { get; } = new CassandraAuthenticationMethod(NoneValue);
         /// <summary> Cassandra. </summary>
         public static CassandraAuthenticationMethod Cassandra { get; } = new CassandraAuthenticationMethod(CassandraValue);
+        /// <summary> Ldap. </summary>
+        public static CassandraAuthenticationMethod Ldap { get; } = new CassandraAuthenticationMethod(LdapValue);
         /// <summary> Determines if two <see cref="CassandraAuthenticationMethod"/> values are the same. </summary>
         public static bool operator ==(CassandraAuthenticationMethod left, CassandraAuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraAuthenticationMethod"/> values are not the same. </summary>
         public static bool operator !=(CassandraAuthenticationMethod left, CassandraAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CassandraAuthenticationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraAuthenticationMethod"/>. </summary>
         public static implicit operator CassandraAuthenticationMethod(string value) => new CassandraAuthenticationMethod(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

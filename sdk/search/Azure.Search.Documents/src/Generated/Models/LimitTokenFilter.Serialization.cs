@@ -17,61 +17,79 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxTokenCount))
             {
-                writer.WritePropertyName("maxTokenCount");
+                writer.WritePropertyName("maxTokenCount"u8);
                 writer.WriteNumberValue(MaxTokenCount.Value);
             }
             if (Optional.IsDefined(ConsumeAllTokens))
             {
-                writer.WritePropertyName("consumeAllTokens");
+                writer.WritePropertyName("consumeAllTokens"u8);
                 writer.WriteBooleanValue(ConsumeAllTokens.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static LimitTokenFilter DeserializeLimitTokenFilter(JsonElement element)
         {
-            Optional<int> maxTokenCount = default;
-            Optional<bool> consumeAllTokens = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? maxTokenCount = default;
+            bool? consumeAllTokens = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxTokenCount"))
+                if (property.NameEquals("maxTokenCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTokenCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("consumeAllTokens"))
+                if (property.NameEquals("consumeAllTokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     consumeAllTokens = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new LimitTokenFilter(odataType, name, Optional.ToNullable(maxTokenCount), Optional.ToNullable(consumeAllTokens));
+            return new LimitTokenFilter(odataType, name, maxTokenCount, consumeAllTokens);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LimitTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLimitTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

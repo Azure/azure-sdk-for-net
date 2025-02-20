@@ -6,155 +6,254 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ShareSynchronization : IUtf8JsonSerializable
+    public partial class ShareSynchronization : IUtf8JsonSerializable, IJsonModel<ShareSynchronization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSynchronization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ShareSynchronization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ShareSynchronization)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ConsumerEmail))
             {
-                writer.WritePropertyName("consumerEmail");
+                writer.WritePropertyName("consumerEmail"u8);
                 writer.WriteStringValue(ConsumerEmail);
             }
             if (Optional.IsDefined(ConsumerName))
             {
-                writer.WritePropertyName("consumerName");
+                writer.WritePropertyName("consumerName"u8);
                 writer.WriteStringValue(ConsumerName);
             }
             if (Optional.IsDefined(ConsumerTenantName))
             {
-                writer.WritePropertyName("consumerTenantName");
+                writer.WritePropertyName("consumerTenantName"u8);
                 writer.WriteStringValue(ConsumerTenantName);
             }
             if (Optional.IsDefined(DurationInMilliSeconds))
             {
-                writer.WritePropertyName("durationMs");
+                writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(SynchronizationId))
             {
-                writer.WritePropertyName("synchronizationId");
+                writer.WritePropertyName("synchronizationId"u8);
                 writer.WriteStringValue(SynchronizationId.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
+            {
+                writer.WritePropertyName("synchronizationMode"u8);
+                writer.WriteStringValue(SynchronizationMode.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ShareSynchronization DeserializeShareSynchronization(JsonElement element)
+        ShareSynchronization IJsonModel<ShareSynchronization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> consumerEmail = default;
-            Optional<string> consumerName = default;
-            Optional<string> consumerTenantName = default;
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
-            Optional<Guid> synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ShareSynchronization)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeShareSynchronization(document.RootElement, options);
+        }
+
+        internal static ShareSynchronization DeserializeShareSynchronization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string consumerEmail = default;
+            string consumerName = default;
+            string consumerTenantName = default;
+            int? durationMs = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            DateTimeOffset? startTime = default;
+            string status = default;
+            Guid? synchronizationId = default;
+            SynchronizationMode? synchronizationMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("consumerEmail"))
+                if (property.NameEquals("consumerEmail"u8))
                 {
                     consumerEmail = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consumerName"))
+                if (property.NameEquals("consumerName"u8))
                 {
                     consumerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consumerTenantName"))
+                if (property.NameEquals("consumerTenantName"u8))
                 {
                     consumerTenantName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("durationMs"))
+                if (property.NameEquals("durationMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("synchronizationId"))
+                if (property.NameEquals("synchronizationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     synchronizationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("synchronizationMode"))
+                if (property.NameEquals("synchronizationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     synchronizationMode = new SynchronizationMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, Optional.ToNullable(synchronizationId), Optional.ToNullable(synchronizationMode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ShareSynchronization(
+                consumerEmail,
+                consumerName,
+                consumerTenantName,
+                durationMs,
+                endTime,
+                message,
+                startTime,
+                status,
+                synchronizationId,
+                synchronizationMode,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ShareSynchronization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ShareSynchronization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ShareSynchronization IPersistableModel<ShareSynchronization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeShareSynchronization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareSynchronization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareSynchronization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

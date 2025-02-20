@@ -10,9 +10,22 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Changeable attributes. </summary>
     internal partial class ManifestWriteableProperties
     {
-        /// <summary> Initializes a new instance of ManifestWriteableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestWriteableProperties"/>. </summary>
         public ManifestWriteableProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManifestWriteableProperties"/>. </summary>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        internal ManifestWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        {
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
         }
 
         /// <summary> Delete enabled. </summary>

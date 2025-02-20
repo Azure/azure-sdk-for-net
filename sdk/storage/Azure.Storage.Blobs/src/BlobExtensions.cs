@@ -245,6 +245,34 @@ namespace Azure.Storage.Blobs
                 IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
             };
         }
+
+        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<BlobGetAccountInfoHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new AccountInfo
+            {
+                SkuName = response.Headers.SkuName.GetValueOrDefault(),
+                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
+                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
+            };
+        }
+
+        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ContainerGetAccountInfoHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new AccountInfo
+            {
+                SkuName = response.Headers.SkuName.GetValueOrDefault(),
+                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
+                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
+            };
+        }
         #endregion
 
         #region ToBlobContainerInfo
@@ -890,7 +918,8 @@ namespace Azure.Storage.Blobs
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
                     ImmutabilityPolicy = immutabilityPolicy,
-                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
+                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault()
                 }
             };
         }
@@ -1312,7 +1341,7 @@ namespace Azure.Storage.Blobs
                 LeaseStatus = response.Headers.LeaseStatus,
                 LeaseState = response.Headers.LeaseState,
                 LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
-                PublicAccess = response.Headers.BlobPublicAccess,
+                PublicAccess = response.Headers.BlobPublicAccess ?? PublicAccessType.None,
                 HasImmutabilityPolicy = response.Headers.HasImmutabilityPolicy,
                 HasLegalHold = response.Headers.HasLegalHold,
                 DefaultEncryptionScope = response.Headers.DefaultEncryptionScope,
@@ -1493,9 +1522,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1525,9 +1552,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1557,9 +1582,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1588,9 +1611,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1636,9 +1657,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }

@@ -7,23 +7,60 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsBookmark data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsBookmark data model.
+    /// Represents a bookmark in Azure Security Insights.
+    /// </summary>
     public partial class SecurityInsightsBookmarkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         public SecurityInsightsBookmarkData()
         {
             Labels = new ChangeTrackingList<string>();
+            EntityMappings = new ChangeTrackingList<BookmarkEntityMappings>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,8 +78,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="queryStartOn"> The start time for the query. </param>
         /// <param name="queryEndOn"> The end time for the query. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
+        /// <param name="entityMappings"> Describes the entity mappings of the bookmark. </param>
+        /// <param name="tactics"> A list of relevant mitre attacks. </param>
+        /// <param name="techniques"> A list of relevant mitre techniques. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             CreatedBy = createdBy;
@@ -57,36 +98,63 @@ namespace Azure.ResourceManager.SecurityInsights
             QueryStartOn = queryStartOn;
             QueryEndOn = queryEndOn;
             IncidentInfo = incidentInfo;
+            EntityMappings = entityMappings;
+            Tactics = tactics;
+            Techniques = techniques;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time the bookmark was created. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Describes a user that created the bookmark. </summary>
+        [WirePath("properties.createdBy")]
         public SecurityInsightsUserInfo CreatedBy { get; set; }
         /// <summary> The display name of the bookmark. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> List of labels relevant to this bookmark. </summary>
+        [WirePath("properties.labels")]
         public IList<string> Labels { get; }
         /// <summary> The notes of the bookmark. </summary>
+        [WirePath("properties.notes")]
         public string Notes { get; set; }
         /// <summary> The query of the bookmark. </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
         /// <summary> The query result of the bookmark. </summary>
+        [WirePath("properties.queryResult")]
         public string QueryResult { get; set; }
         /// <summary> The last time the bookmark was updated. </summary>
+        [WirePath("properties.updated")]
         public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Describes a user that updated the bookmark. </summary>
+        [WirePath("properties.updatedBy")]
         public SecurityInsightsUserInfo UpdatedBy { get; set; }
         /// <summary> The bookmark event time. </summary>
+        [WirePath("properties.eventTime")]
         public DateTimeOffset? EventOn { get; set; }
         /// <summary> The start time for the query. </summary>
+        [WirePath("properties.queryStartTime")]
         public DateTimeOffset? QueryStartOn { get; set; }
         /// <summary> The end time for the query. </summary>
+        [WirePath("properties.queryEndTime")]
         public DateTimeOffset? QueryEndOn { get; set; }
         /// <summary> Describes an incident that relates to bookmark. </summary>
+        [WirePath("properties.incidentInfo")]
         public SecurityInsightsBookmarkIncidentInfo IncidentInfo { get; set; }
+        /// <summary> Describes the entity mappings of the bookmark. </summary>
+        [WirePath("properties.entityMappings")]
+        public IList<BookmarkEntityMappings> EntityMappings { get; }
+        /// <summary> A list of relevant mitre attacks. </summary>
+        [WirePath("properties.tactics")]
+        public IList<SecurityInsightsAttackTactic> Tactics { get; }
+        /// <summary> A list of relevant mitre techniques. </summary>
+        [WirePath("properties.techniques")]
+        public IList<string> Techniques { get; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

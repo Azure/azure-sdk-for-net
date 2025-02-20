@@ -18,19 +18,11 @@ namespace Azure.Security.KeyVault.Keys.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             KeyVaultKey key = Client.GetKey(KeyName);
-            KeyType keyType = key.Key.KeyType;
-#if DEBUG
-            Assert.AreEqual(KeyType.Rsa, keyType);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             KeyVaultKey key = await Client.GetKeyAsync(KeyName);
-            KeyType keyType = key.Key.KeyType;
-#if DEBUG
-            Assert.AreEqual(KeyType.Rsa, keyType);
-#endif
         }
     }
 }

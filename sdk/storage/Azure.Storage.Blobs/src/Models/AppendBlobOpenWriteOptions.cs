@@ -12,8 +12,10 @@ namespace Azure.Storage.Blobs.Models
     public class AppendBlobOpenWriteOptions
     {
         /// <summary>
-        /// The size of the buffer to use.  Default is 4 MB,
-        /// max is 4 MB. See <see cref="AppendBlobClient.AppendBlobMaxAppendBlockBytes"/>.
+        /// The size of the buffer to use.  Default is 4 MB.
+        /// Beginning with x-ms-version 2022-11-02, the max buffer size is 100 MB.
+        /// For previous versions, the max buffer size is 4 MB.
+        /// See <see cref="AppendBlobClient.AppendBlobMaxAppendBlockBytes"/>.
         /// </summary>
         public long? BufferSize { get; set; }
 

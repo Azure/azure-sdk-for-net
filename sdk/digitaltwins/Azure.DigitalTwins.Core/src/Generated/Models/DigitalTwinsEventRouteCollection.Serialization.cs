@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -15,11 +14,15 @@ namespace Azure.DigitalTwins.Core
     {
         internal static DigitalTwinsEventRouteCollection DeserializeDigitalTwinsEventRouteCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DigitalTwinsEventRoute> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<DigitalTwinsEventRoute> array = new List<DigitalTwinsEventRoute>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,13 +32,21 @@ namespace Azure.DigitalTwins.Core
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DigitalTwinsEventRouteCollection(value, nextLink.Value);
+            return new DigitalTwinsEventRouteCollection(value, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DigitalTwinsEventRouteCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDigitalTwinsEventRouteCollection(document.RootElement);
         }
     }
 }

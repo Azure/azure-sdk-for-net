@@ -5,22 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable
+    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable, IJsonModel<MoverVirtualNetworkResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverVirtualNetworkResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MoverVirtualNetworkResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverVirtualNetworkResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
                     foreach (var item in Tags)
                     {
@@ -38,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (EnableDdosProtection != null)
                 {
-                    writer.WritePropertyName("enableDdosProtection");
+                    writer.WritePropertyName("enableDdosProtection"u8);
                     writer.WriteBooleanValue(EnableDdosProtection.Value);
                 }
                 else
@@ -50,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (AddressSpace != null)
                 {
-                    writer.WritePropertyName("addressSpace");
+                    writer.WritePropertyName("addressSpace"u8);
                     writer.WriteStartArray();
                     foreach (var item in AddressSpace)
                     {
@@ -67,7 +86,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (DnsServers != null)
                 {
-                    writer.WritePropertyName("dnsServers");
+                    writer.WritePropertyName("dnsServers"u8);
                     writer.WriteStartArray();
                     foreach (var item in DnsServers)
                     {
@@ -84,11 +103,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (Subnets != null)
                 {
-                    writer.WritePropertyName("subnets");
+                    writer.WritePropertyName("subnets"u8);
                     writer.WriteStartArray();
                     foreach (var item in Subnets)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -97,25 +116,41 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("subnets");
                 }
             }
-            writer.WritePropertyName("resourceType");
-            writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
-            writer.WriteStringValue(TargetResourceName);
-            writer.WriteEndObject();
         }
 
-        internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element)
+        MoverVirtualNetworkResourceSettings IJsonModel<MoverVirtualNetworkResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool?> enableDdosProtection = default;
-            Optional<IList<string>> addressSpace = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<SubnetResourceSettings>> subnets = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MoverVirtualNetworkResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverVirtualNetworkResourceSettings(document.RootElement, options);
+        }
+
+        internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            bool? enableDdosProtection = default;
+            IList<string> addressSpace = default;
+            IList<string> dnsServers = default;
+            IList<SubnetResourceSettings> subnets = default;
             string resourceType = default;
             string targetResourceName = default;
+            string targetResourceGroupName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +165,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableDdosProtection"))
+                if (property.NameEquals("enableDdosProtection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +175,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     enableDdosProtection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("addressSpace"))
+                if (property.NameEquals("addressSpace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +190,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     addressSpace = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,7 +205,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("subnets"))
+                if (property.NameEquals("subnets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,23 +215,73 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item));
+                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item, options));
                     }
                     subnets = array;
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MoverVirtualNetworkResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                enableDdosProtection,
+                addressSpace ?? new ChangeTrackingList<string>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                subnets ?? new ChangeTrackingList<SubnetResourceSettings>());
         }
+
+        BinaryData IPersistableModel<MoverVirtualNetworkResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverVirtualNetworkResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MoverVirtualNetworkResourceSettings IPersistableModel<MoverVirtualNetworkResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverVirtualNetworkResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMoverVirtualNetworkResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MoverVirtualNetworkResourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MoverVirtualNetworkResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

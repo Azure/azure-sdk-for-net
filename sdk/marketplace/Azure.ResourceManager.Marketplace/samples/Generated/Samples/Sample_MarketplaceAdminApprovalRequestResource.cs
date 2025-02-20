@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Marketplace;
 using Azure.ResourceManager.Marketplace.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Marketplace.Samples
 {
     public partial class Sample_MarketplaceAdminApprovalRequestResource
     {
-        // GetAdminRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAdminRequestApproval()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/GetAdminRequestApproval.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetAdminRequestApproval.json
             // this example is just showing the usage of "PrivateStore_GetAdminRequestApproval" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.Marketplace.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateAdminRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAdminRequestApproval()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/UpdateAdminRequestApproval.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/UpdateAdminRequestApproval.json
             // this example is just showing the usage of "PrivateStore_UpdateAdminRequestApproval" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,19 +66,13 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceAdminApprovalRequestResource marketplaceAdminApprovalRequest = client.GetMarketplaceAdminApprovalRequestResource(marketplaceAdminApprovalRequestResourceId);
 
             // invoke the operation
-            MarketplaceAdminApprovalRequestData data = new MarketplaceAdminApprovalRequestData()
+            MarketplaceAdminApprovalRequestData data = new MarketplaceAdminApprovalRequestData
             {
                 PublisherId = "marketplacetestthirdparty",
                 AdminAction = MarketplaceAdminAction.Approved,
-                ApprovedPlans =
-{
-"testPlan"
-},
+                ApprovedPlans = { "testPlan" },
                 Comment = "I'm ok with that",
-                CollectionIds =
-{
-Guid.Parse("f8ee227e-85d7-477d-abbf-854d6decaf70"),Guid.Parse("39246ad6-c521-4fed-8de7-77dede2e873f")
-},
+                CollectionIds = { Guid.Parse("f8ee227e-85d7-477d-abbf-854d6decaf70"), Guid.Parse("39246ad6-c521-4fed-8de7-77dede2e873f") },
             };
             ArmOperation<MarketplaceAdminApprovalRequestResource> lro = await marketplaceAdminApprovalRequest.UpdateAsync(WaitUntil.Completed, data);
             MarketplaceAdminApprovalRequestResource result = lro.Value;

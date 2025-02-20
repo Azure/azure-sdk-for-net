@@ -8,13 +8,20 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-require: https://github.com/Azure/azure-rest-api-specs/blob/53b1affe357b3bfbb53721d0a2002382a046d3b0/specification/servicefabricmanagedclusters/resource-manager/readme.md
-tag: package-2022-01
+require:  https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/readme.md
+#tag: package-2024-09-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
@@ -28,7 +35,15 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+models-to-treat-empty-string-as-null:
+  - ManagedClusterSubnet
+  - NodeTypeFrontendConfiguration
+  - ServiceFabricManagedClusterData
+  - ServiceFabricManagedClusterVersion
+  - ServiceFabricManagedNodeTypeData
+  - VmManagedIdentity
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -59,6 +74,7 @@ override-operation-name:
   managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
   managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
+  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
 
 rename-mapping:
   ApplicationResource: ServiceFabricManagedApplication
@@ -79,6 +95,8 @@ rename-mapping:
   ManagedCluster.properties.ipv4Address: -|ip-address
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
+  ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
+  
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
   Subnet.networkSecurityGroupId: -|arm-id
@@ -91,7 +109,7 @@ rename-mapping:
   ClusterUpgradeMode: ManagedClusterUpgradeMode
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
-  IPTag: ManagedClusterIPTag
+  IpTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
   NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
   Direction: ServiceFabricManagedNetworkSecurityRuleDirection
@@ -105,6 +123,8 @@ rename-mapping:
   NodeType.properties.enableEncryptionAtHost: IsEncryptionAtHostEnabled
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
+  NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
+  VmApplication : ServiceFabricManagedVmApplication
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension
@@ -145,6 +165,26 @@ rename-mapping:
   ServicePlacementPolicy: ManagedServicePlacementPolicy
   ManagedVMSize: ServiceFabricManagedUnsupportedVmSize
   AddRemoveIncrementalNamedPartitionScalingMechanism: NamedPartitionAddOrRemoveScalingMechanism
+  NodeType.properties.enableNodePublicIP: IsNodePublicIPEnabled
+  NodeType.properties.secureBootEnabled: IsSecureBootEnabled
+  EvictionPolicyType: SpotNodeVmEvictionPolicyType
+  ResourceAzStatus.resourceType: -|resource-type
+  SecurityType: ServiceFabricManagedClusterSecurityType
+  UpdateType: ServiceFabricManagedClusterUpdateType
+  ClusterHealthPolicy: ManagedClusterHealthPolicy
+  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
+  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
+  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
+  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
+  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
+  IpConfiguration: ServiceFabricManagedClusterIPConfiguration
+  IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
+  ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
+  ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
+  ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn
+
+suppress-abstract-base-class:
+- ManagedServiceProperties
 
 directive:
   - remove-operation: OperationStatus_Get
@@ -165,5 +205,28 @@ directive:
     where: $.definitions
     transform: >
       $.ManagedClusterVersionDetails.properties.supportExpiryUtc['format'] = 'date-time';
-
+  - from: nodetype.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}'].patch
+    transform: >
+      $['responses'] = {
+          "200": {
+            "description": "The operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/NodeType"
+            }
+          },
+          "202": {
+            "description": "The operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/NodeType"
+            }
+          },
+          "default": {
+            "description": "The detailed error response.",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+    reason: response status 202 missing
 ```

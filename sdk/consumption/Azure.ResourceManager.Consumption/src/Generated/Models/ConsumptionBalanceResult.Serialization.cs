@@ -5,56 +5,201 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionBalanceResult
+    public partial class ConsumptionBalanceResult : IUtf8JsonSerializable, IJsonModel<ConsumptionBalanceResult>
     {
-        internal static ConsumptionBalanceResult DeserializeConsumptionBalanceResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBalanceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConsumptionBalanceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BeginningBalance))
+            {
+                writer.WritePropertyName("beginningBalance"u8);
+                writer.WriteNumberValue(BeginningBalance.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndingBalance))
+            {
+                writer.WritePropertyName("endingBalance"u8);
+                writer.WriteNumberValue(EndingBalance.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewPurchases))
+            {
+                writer.WritePropertyName("newPurchases"u8);
+                writer.WriteNumberValue(NewPurchases.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
+            {
+                writer.WritePropertyName("adjustments"u8);
+                writer.WriteNumberValue(Adjustments.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Utilized))
+            {
+                writer.WritePropertyName("utilized"u8);
+                writer.WriteNumberValue(Utilized.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceOverage))
+            {
+                writer.WritePropertyName("serviceOverage"u8);
+                writer.WriteNumberValue(ServiceOverage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            {
+                writer.WritePropertyName("chargesBilledSeparately"u8);
+                writer.WriteNumberValue(ChargesBilledSeparately.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalOverage))
+            {
+                writer.WritePropertyName("totalOverage"u8);
+                writer.WriteNumberValue(TotalOverage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalUsage))
+            {
+                writer.WritePropertyName("totalUsage"u8);
+                writer.WriteNumberValue(TotalUsage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureMarketplaceServiceCharges))
+            {
+                writer.WritePropertyName("azureMarketplaceServiceCharges"u8);
+                writer.WriteNumberValue(AzureMarketplaceServiceCharges.Value);
+            }
+            if (Optional.IsDefined(BillingFrequency))
+            {
+                writer.WritePropertyName("billingFrequency"u8);
+                writer.WriteStringValue(BillingFrequency.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPriceHidden))
+            {
+                writer.WritePropertyName("priceHidden"u8);
+                writer.WriteBooleanValue(IsPriceHidden.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NewPurchasesDetails))
+            {
+                writer.WritePropertyName("newPurchasesDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in NewPurchasesDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdjustmentDetails))
+            {
+                writer.WritePropertyName("adjustmentDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdjustmentDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionBalanceResult IJsonModel<ConsumptionBalanceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionBalanceResult(document.RootElement, options);
+        }
+
+        internal static ConsumptionBalanceResult DeserializeConsumptionBalanceResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> currency = default;
-            Optional<decimal> beginningBalance = default;
-            Optional<decimal> endingBalance = default;
-            Optional<decimal> newPurchases = default;
-            Optional<decimal> adjustments = default;
-            Optional<decimal> utilized = default;
-            Optional<decimal> serviceOverage = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> totalOverage = default;
-            Optional<decimal> totalUsage = default;
-            Optional<decimal> azureMarketplaceServiceCharges = default;
-            Optional<ConsumptionBillingFrequency> billingFrequency = default;
-            Optional<bool> priceHidden = default;
-            Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
-            Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
+            SystemData systemData = default;
+            string currency = default;
+            decimal? beginningBalance = default;
+            decimal? endingBalance = default;
+            decimal? newPurchases = default;
+            decimal? adjustments = default;
+            decimal? utilized = default;
+            decimal? serviceOverage = default;
+            decimal? chargesBilledSeparately = default;
+            decimal? totalOverage = default;
+            decimal? totalUsage = default;
+            decimal? azureMarketplaceServiceCharges = default;
+            ConsumptionBillingFrequency? billingFrequency = default;
+            bool? priceHidden = default;
+            IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default;
+            IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -65,32 +210,31 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,157 +243,143 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("currency"))
+                        if (property0.NameEquals("currency"u8))
                         {
                             currency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("beginningBalance"))
+                        if (property0.NameEquals("beginningBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             beginningBalance = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("endingBalance"))
+                        if (property0.NameEquals("endingBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endingBalance = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("newPurchases"))
+                        if (property0.NameEquals("newPurchases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             newPurchases = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("adjustments"))
+                        if (property0.NameEquals("adjustments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adjustments = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("utilized"))
+                        if (property0.NameEquals("utilized"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             utilized = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("serviceOverage"))
+                        if (property0.NameEquals("serviceOverage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceOverage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("chargesBilledSeparately"))
+                        if (property0.NameEquals("chargesBilledSeparately"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             chargesBilledSeparately = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("totalOverage"))
+                        if (property0.NameEquals("totalOverage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalOverage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("totalUsage"))
+                        if (property0.NameEquals("totalUsage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalUsage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("azureMarketplaceServiceCharges"))
+                        if (property0.NameEquals("azureMarketplaceServiceCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureMarketplaceServiceCharges = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("billingFrequency"))
+                        if (property0.NameEquals("billingFrequency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingFrequency = new ConsumptionBillingFrequency(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("priceHidden"))
+                        if (property0.NameEquals("priceHidden"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             priceHidden = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("newPurchasesDetails"))
+                        if (property0.NameEquals("newPurchasesDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConsumptionBalanceNewPurchasesDetail> array = new List<ConsumptionBalanceNewPurchasesDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item));
+                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item, options));
                             }
                             newPurchasesDetails = array;
                             continue;
                         }
-                        if (property0.NameEquals("adjustmentDetails"))
+                        if (property0.NameEquals("adjustmentDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConsumptionBalanceAdjustmentDetail> array = new List<ConsumptionBalanceAdjustmentDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item));
+                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item, options));
                             }
                             adjustmentDetails = array;
                             continue;
@@ -257,8 +387,66 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionBalanceResult(
+                id,
+                name,
+                type,
+                systemData,
+                currency,
+                beginningBalance,
+                endingBalance,
+                newPurchases,
+                adjustments,
+                utilized,
+                serviceOverage,
+                chargesBilledSeparately,
+                totalOverage,
+                totalUsage,
+                azureMarketplaceServiceCharges,
+                billingFrequency,
+                priceHidden,
+                newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
+                adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionBalanceResult IPersistableModel<ConsumptionBalanceResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionBalanceResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionBalanceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

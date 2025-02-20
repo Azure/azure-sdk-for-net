@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             },
             DnsZone = new WritableSubResource
             {
-                Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/cdntest/providers/Microsoft.Network/dnszones/azuretest.net")
+                Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/dnsZones/azuretest.net")
             }
         };
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 WafPolicy = new WritableSubResource
                 {
-                    Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf")
+                    Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
                 }
             }
         };
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Properties = new CustomerCertificateProperties(new WritableSubResource
             {
-                Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFDTest/certificates/testCertificate")
+                Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/CliDevReservedGroup/providers/Microsoft.KeyVault/vaults/clibyoc-int/secrets/localdev-multi")
             })
             {
                 UseLatestVersion = true

@@ -6,45 +6,62 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayApiRoute : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayApiRoute : IUtf8JsonSerializable, IJsonModel<AppPlatformGatewayApiRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayApiRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformGatewayApiRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayApiRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsSsoEnabled))
             {
-                writer.WritePropertyName("ssoEnabled");
+                writer.WritePropertyName("ssoEnabled"u8);
                 writer.WriteBooleanValue(IsSsoEnabled.Value);
             }
             if (Optional.IsDefined(IsTokenRelayed))
             {
-                writer.WritePropertyName("tokenRelay");
+                writer.WritePropertyName("tokenRelay"u8);
                 writer.WriteBooleanValue(IsTokenRelayed.Value);
             }
             if (Optional.IsCollectionDefined(Predicates))
             {
-                writer.WritePropertyName("predicates");
+                writer.WritePropertyName("predicates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Predicates)
                 {
@@ -54,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
@@ -64,12 +81,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(Order))
             {
-                writer.WritePropertyName("order");
+                writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
@@ -77,67 +94,97 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AppPlatformGatewayApiRoute DeserializeAppPlatformGatewayApiRoute(JsonElement element)
+        AppPlatformGatewayApiRoute IJsonModel<AppPlatformGatewayApiRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
-            Optional<bool> ssoEnabled = default;
-            Optional<bool> tokenRelay = default;
-            Optional<IList<string>> predicates = default;
-            Optional<IList<string>> filters = default;
-            Optional<int> order = default;
-            Optional<IList<string>> tags = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayApiRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayApiRoute(document.RootElement, options);
+        }
+
+        internal static AppPlatformGatewayApiRoute DeserializeAppPlatformGatewayApiRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string title = default;
+            string description = default;
+            Uri uri = default;
+            bool? ssoEnabled = default;
+            bool? tokenRelay = default;
+            IList<string> predicates = default;
+            IList<string> filters = default;
+            int? order = default;
+            IList<string> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ssoEnabled"))
+                if (property.NameEquals("ssoEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssoEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tokenRelay"))
+                if (property.NameEquals("tokenRelay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tokenRelay = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("predicates"))
+                if (property.NameEquals("predicates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -148,11 +195,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     predicates = array;
                     continue;
                 }
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("filters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -163,21 +209,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     filters = array;
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -188,8 +232,54 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     tags = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformGatewayApiRoute(
+                title,
+                description,
+                uri,
+                ssoEnabled,
+                tokenRelay,
+                predicates ?? new ChangeTrackingList<string>(),
+                filters ?? new ChangeTrackingList<string>(),
+                order,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformGatewayApiRoute>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayApiRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformGatewayApiRoute IPersistableModel<AppPlatformGatewayApiRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayApiRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformGatewayApiRoute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformGatewayApiRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

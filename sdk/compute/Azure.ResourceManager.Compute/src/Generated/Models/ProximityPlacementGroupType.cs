@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </summary>
+    /// <summary> Specifies the type of the proximity placement group. Possible values are: **Standard** : Co-locate resources within an Azure region or Availability Zone. **Ultra** : For future use. </summary>
     public readonly partial struct ProximityPlacementGroupType : IEquatable<ProximityPlacementGroupType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ProximityPlacementGroupType left, ProximityPlacementGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProximityPlacementGroupType"/> values are not the same. </summary>
         public static bool operator !=(ProximityPlacementGroupType left, ProximityPlacementGroupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProximityPlacementGroupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProximityPlacementGroupType"/>. </summary>
         public static implicit operator ProximityPlacementGroupType(string value) => new ProximityPlacementGroupType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

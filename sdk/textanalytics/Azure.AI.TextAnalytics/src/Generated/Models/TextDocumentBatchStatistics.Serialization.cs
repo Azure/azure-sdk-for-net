@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,56 +15,67 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("documentsCount");
+            writer.WritePropertyName("documentsCount"u8);
             writer.WriteNumberValue(DocumentCount);
-            writer.WritePropertyName("validDocumentsCount");
+            writer.WritePropertyName("validDocumentsCount"u8);
             writer.WriteNumberValue(ValidDocumentCount);
-            writer.WritePropertyName("erroneousDocumentsCount");
+            writer.WritePropertyName("erroneousDocumentsCount"u8);
             writer.WriteNumberValue(InvalidDocumentCount);
-            writer.WritePropertyName("transactionsCount");
+            writer.WritePropertyName("transactionsCount"u8);
             writer.WriteNumberValue(TransactionCount);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
             writer.WriteEndObject();
         }
 
         internal static TextDocumentBatchStatistics DeserializeTextDocumentBatchStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int documentsCount = default;
             int validDocumentsCount = default;
             int erroneousDocumentsCount = default;
             long transactionsCount = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documentsCount"))
+                if (property.NameEquals("documentsCount"u8))
                 {
                     documentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("validDocumentsCount"))
+                if (property.NameEquals("validDocumentsCount"u8))
                 {
                     validDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("erroneousDocumentsCount"))
+                if (property.NameEquals("erroneousDocumentsCount"u8))
                 {
                     erroneousDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionsCount"))
+                if (property.NameEquals("transactionsCount"u8))
                 {
                     transactionsCount = property.Value.GetInt64();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
-            additionalProperties = additionalPropertiesDictionary;
-            return new TextDocumentBatchStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalProperties);
+            return new TextDocumentBatchStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextDocumentBatchStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextDocumentBatchStatistics(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

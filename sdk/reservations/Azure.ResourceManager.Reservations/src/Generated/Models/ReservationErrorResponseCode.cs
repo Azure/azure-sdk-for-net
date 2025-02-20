@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationErrorResponseCode. </summary>
+    /// <summary> Error code describing the reason that service is not able to process the incoming request. </summary>
     public readonly partial struct ReservationErrorResponseCode : IEquatable<ReservationErrorResponseCode>
     {
         private readonly string _value;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(ReservationErrorResponseCode left, ReservationErrorResponseCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationErrorResponseCode"/> values are not the same. </summary>
         public static bool operator !=(ReservationErrorResponseCode left, ReservationErrorResponseCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservationErrorResponseCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationErrorResponseCode"/>. </summary>
         public static implicit operator ReservationErrorResponseCode(string value) => new ReservationErrorResponseCode(value);
 
         /// <inheritdoc />
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

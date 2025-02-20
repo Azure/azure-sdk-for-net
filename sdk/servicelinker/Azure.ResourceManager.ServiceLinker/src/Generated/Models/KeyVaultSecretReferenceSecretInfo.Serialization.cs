@@ -5,26 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class KeyVaultSecretReferenceSecretInfo : IUtf8JsonSerializable
+    public partial class KeyVaultSecretReferenceSecretInfo : IUtf8JsonSerializable, IJsonModel<KeyVaultSecretReferenceSecretInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultSecretReferenceSecretInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KeyVaultSecretReferenceSecretInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReferenceSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeyVaultSecretReferenceSecretInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
-                    writer.WritePropertyName("version");
+                    writer.WritePropertyName("version"u8);
                     writer.WriteStringValue(Version);
                 }
                 else
@@ -32,24 +52,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("version");
                 }
             }
-            writer.WritePropertyName("secretType");
-            writer.WriteStringValue(SecretType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static KeyVaultSecretReferenceSecretInfo DeserializeKeyVaultSecretReferenceSecretInfo(JsonElement element)
+        KeyVaultSecretReferenceSecretInfo IJsonModel<KeyVaultSecretReferenceSecretInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> name = default;
-            Optional<string> version = default;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReferenceSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeyVaultSecretReferenceSecretInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultSecretReferenceSecretInfo(document.RootElement, options);
+        }
+
+        internal static KeyVaultSecretReferenceSecretInfo DeserializeKeyVaultSecretReferenceSecretInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string version = default;
             LinkerSecretType secretType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,13 +96,49 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretType"))
+                if (property.NameEquals("secretType"u8))
                 {
                     secretType = new LinkerSecretType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultSecretReferenceSecretInfo(secretType, name.Value, version.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KeyVaultSecretReferenceSecretInfo(secretType, serializedAdditionalRawData, name, version);
         }
+
+        BinaryData IPersistableModel<KeyVaultSecretReferenceSecretInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReferenceSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultSecretReferenceSecretInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KeyVaultSecretReferenceSecretInfo IPersistableModel<KeyVaultSecretReferenceSecretInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReferenceSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeyVaultSecretReferenceSecretInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultSecretReferenceSecretInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeyVaultSecretReferenceSecretInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The token that the alias path is referring to has no attributes. </summary>
         public static ResourceTypeAliasPathAttributes None { get; } = new ResourceTypeAliasPathAttributes(NoneValue);
-        /// <summary> The token that the alias path is referring to is modifiable by policies with &apos;modify&apos; effect. </summary>
+        /// <summary> The token that the alias path is referring to is modifiable by policies with 'modify' effect. </summary>
         public static ResourceTypeAliasPathAttributes Modifiable { get; } = new ResourceTypeAliasPathAttributes(ModifiableValue);
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathAttributes"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeAliasPathAttributes left, ResourceTypeAliasPathAttributes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathAttributes"/> values are not the same. </summary>
         public static bool operator !=(ResourceTypeAliasPathAttributes left, ResourceTypeAliasPathAttributes right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceTypeAliasPathAttributes"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeAliasPathAttributes"/>. </summary>
         public static implicit operator ResourceTypeAliasPathAttributes(string value) => new ResourceTypeAliasPathAttributes(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

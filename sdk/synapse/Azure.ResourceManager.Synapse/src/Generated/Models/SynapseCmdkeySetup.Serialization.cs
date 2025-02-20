@@ -6,52 +6,94 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseCmdkeySetup : IUtf8JsonSerializable
+    public partial class SynapseCmdkeySetup : IUtf8JsonSerializable, IJsonModel<SynapseCmdkeySetup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseCmdkeySetup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseCmdkeySetup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(CustomSetupBaseType);
-            writer.WritePropertyName("typeProperties");
-            writer.WriteStartObject();
-            writer.WritePropertyName("targetName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TargetName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetName.ToString()).RootElement);
-#endif
-            writer.WritePropertyName("userName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
-            writer.WritePropertyName("password");
-            writer.WriteObjectValue(Password);
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseCmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseCmdkeySetup)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("typeProperties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("targetName"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TargetName);
+#else
+            using (JsonDocument document = JsonDocument.Parse(TargetName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
+            writer.WritePropertyName("userName"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+            using (JsonDocument document = JsonDocument.Parse(UserName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
+            writer.WritePropertyName("password"u8);
+            writer.WriteObjectValue(Password, options);
+            writer.WriteEndObject();
+        }
+
+        SynapseCmdkeySetup IJsonModel<SynapseCmdkeySetup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseCmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseCmdkeySetup)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseCmdkeySetup(document.RootElement, options);
+        }
+
+        internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;
             SynapseSecretBase password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,26 +102,62 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("targetName"))
+                        if (property0.NameEquals("targetName"u8))
                         {
                             targetName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             userName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
-                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
+                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseCmdkeySetup(type, targetName, userName, password);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseCmdkeySetup(type, serializedAdditionalRawData, targetName, userName, password);
         }
+
+        BinaryData IPersistableModel<SynapseCmdkeySetup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseCmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseCmdkeySetup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseCmdkeySetup IPersistableModel<SynapseCmdkeySetup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseCmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseCmdkeySetup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseCmdkeySetup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseCmdkeySetup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

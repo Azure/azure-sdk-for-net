@@ -6,25 +6,23 @@
 #nullable disable
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.AppContainers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
     public partial class Sample_ContainerAppManagedEnvironmentCertificateCollection
     {
-        // List Certificates by Managed Environment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListCertificatesByManagedEnvironment()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/Certificates_ListByManagedEnvironment.json
-            // this example is just showing the usage of "Certificates_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Certificate_CreateOrUpdate.json
+            // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -42,25 +40,31 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // get the collection of this ContainerAppManagedEnvironmentCertificateResource
             ContainerAppManagedEnvironmentCertificateCollection collection = containerAppManagedEnvironment.GetContainerAppManagedEnvironmentCertificates();
 
-            // invoke the operation and iterate over the result
-            await foreach (ContainerAppManagedEnvironmentCertificateResource item in collection.GetAllAsync())
+            // invoke the operation
+            string certificateName = "certificate-firendly-name";
+            ContainerAppCertificateData data = new ContainerAppCertificateData(new AzureLocation("East US"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ContainerAppCertificateData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Properties = new ContainerAppCertificateProperties
+                {
+                    Password = "private key password",
+                    Value = Encoding.UTF8.GetBytes("Y2VydA=="),
+                },
+            };
+            ArmOperation<ContainerAppManagedEnvironmentCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
+            ContainerAppManagedEnvironmentCertificateResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerAppCertificateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/Certificate_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Certificate_Get.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,12 +94,47 @@ namespace Azure.ResourceManager.AppContainers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListCertificatesByManagedEnvironment()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Certificates_ListByManagedEnvironment.json
+            // this example is just showing the usage of "Certificates_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
+            // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "examplerg";
+            string environmentName = "testcontainerenv";
+            ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
+            ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
+
+            // get the collection of this ContainerAppManagedEnvironmentCertificateResource
+            ContainerAppManagedEnvironmentCertificateCollection collection = containerAppManagedEnvironment.GetContainerAppManagedEnvironmentCertificates();
+
+            // invoke the operation and iterate over the result
+            await foreach (ContainerAppManagedEnvironmentCertificateResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ContainerAppCertificateData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/Certificate_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Certificate_Get.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,13 +160,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Create or Update Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateCertificate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/Certificate_CreateOrUpdate.json
-            // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Certificate_Get.json
+            // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -147,22 +185,21 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // invoke the operation
             string certificateName = "certificate-firendly-name";
-            ContainerAppCertificateData data = new ContainerAppCertificateData(new AzureLocation("East US"))
-            {
-                Properties = new ContainerAppCertificateProperties()
-                {
-                    Password = "private key password",
-                    Value = Convert.FromBase64String("Y2VydA=="),
-                },
-            };
-            ArmOperation<ContainerAppManagedEnvironmentCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
-            ContainerAppManagedEnvironmentCertificateResource result = lro.Value;
+            NullableResponse<ContainerAppManagedEnvironmentCertificateResource> response = await collection.GetIfExistsAsync(certificateName);
+            ContainerAppManagedEnvironmentCertificateResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerAppCertificateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ContainerAppCertificateData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

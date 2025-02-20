@@ -17,22 +17,22 @@ namespace Azure.Security.KeyVault.Administration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleName))
             {
-                writer.WritePropertyName("roleName");
+                writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(RoleType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Permissions))
             {
-                writer.WritePropertyName("permissions");
+                writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             if (Optional.IsCollectionDefined(AssignableScopes))
             {
-                writer.WritePropertyName("assignableScopes");
+                writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AssignableScopes)
                 {
@@ -51,6 +51,14 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

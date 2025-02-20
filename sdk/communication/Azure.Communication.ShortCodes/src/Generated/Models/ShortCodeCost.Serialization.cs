@@ -15,39 +15,59 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("amount");
+            writer.WritePropertyName("amount"u8);
             writer.WriteNumberValue(Amount);
-            writer.WritePropertyName("currencyCode");
+            writer.WritePropertyName("currencyCode"u8);
             writer.WriteStringValue(CurrencyCode);
-            writer.WritePropertyName("billingFrequency");
+            writer.WritePropertyName("billingFrequency"u8);
             writer.WriteStringValue(BillingFrequency.ToString());
             writer.WriteEndObject();
         }
 
         internal static ShortCodeCost DeserializeShortCodeCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double amount = default;
             string currencyCode = default;
             BillingFrequency billingFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     amount = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingFrequency"))
+                if (property.NameEquals("billingFrequency"u8))
                 {
                     billingFrequency = new BillingFrequency(property.Value.GetString());
                     continue;
                 }
             }
             return new ShortCodeCost(amount, currencyCode, billingFrequency);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ShortCodeCost FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShortCodeCost(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

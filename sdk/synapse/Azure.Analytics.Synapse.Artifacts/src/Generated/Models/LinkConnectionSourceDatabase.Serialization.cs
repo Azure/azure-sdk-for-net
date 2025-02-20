@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
-                writer.WritePropertyName("linkedService");
+                writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(TypeProperties))
             {
-                writer.WritePropertyName("typeProperties");
+                writer.WritePropertyName("typeProperties"u8);
                 writer.WriteObjectValue(TypeProperties);
             }
             writer.WriteEndObject();
@@ -33,32 +33,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionSourceDatabase DeserializeLinkConnectionSourceDatabase(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<LinkConnectionSourceDatabaseTypeProperties> typeProperties = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            LinkedServiceReference linkedService = default;
+            LinkConnectionSourceDatabaseTypeProperties typeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedService"))
+                if (property.NameEquals("linkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     typeProperties = LinkConnectionSourceDatabaseTypeProperties.DeserializeLinkConnectionSourceDatabaseTypeProperties(property.Value);
                     continue;
                 }
             }
-            return new LinkConnectionSourceDatabase(linkedService.Value, typeProperties.Value);
+            return new LinkConnectionSourceDatabase(linkedService, typeProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionSourceDatabase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionSourceDatabase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class LinkConnectionSourceDatabaseConverter : JsonConverter<LinkConnectionSourceDatabase>
@@ -67,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LinkConnectionSourceDatabase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -13,10 +13,45 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    /// <summary> A class representing the KubernetesFluxConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the KubernetesFluxConfiguration data model.
+    /// The Flux Configuration object returned in Get &amp; Put response.
+    /// </summary>
     public partial class KubernetesFluxConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationData"/>. </summary>
         public KubernetesFluxConfigurationData()
         {
             Kustomizations = new ChangeTrackingDictionary<string, Kustomization>();
@@ -24,7 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Statuses = new ChangeTrackingList<KubernetesObjectStatus>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +81,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="complianceState"> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </param>
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
-        internal KubernetesFluxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubernetesConfigurationScope? scope, string @namespace, KubernetesConfigurationSourceKind? sourceKind, bool? isReconciliationSuspended, KubernetesGitRepository gitRepository, KubernetesBucket bucket, KubernetesAzureBlob azureBlob, IDictionary<string, Kustomization> kustomizations, IDictionary<string, string> configurationProtectedSettings, IReadOnlyList<KubernetesObjectStatus> statuses, string repositoryPublicKey, string sourceSyncedCommitId, DateTimeOffset? sourceUpdatedOn, DateTimeOffset? statusUpdatedOn, KubernetesFluxComplianceState? complianceState, KubernetesConfigurationProvisioningState? provisioningState, string errorMessage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesFluxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubernetesConfigurationScope? scope, string @namespace, KubernetesConfigurationSourceKind? sourceKind, bool? isReconciliationSuspended, KubernetesGitRepository gitRepository, KubernetesBucket bucket, KubernetesAzureBlob azureBlob, IDictionary<string, Kustomization> kustomizations, IDictionary<string, string> configurationProtectedSettings, IReadOnlyList<KubernetesObjectStatus> statuses, string repositoryPublicKey, string sourceSyncedCommitId, DateTimeOffset? sourceUpdatedOn, DateTimeOffset? statusUpdatedOn, KubernetesFluxComplianceState? complianceState, KubernetesConfigurationProvisioningState? provisioningState, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             Namespace = @namespace;
@@ -65,41 +101,59 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ComplianceState = complianceState;
             ProvisioningState = provisioningState;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Scope at which the operator will be installed. </summary>
+        [WirePath("properties.scope")]
         public KubernetesConfigurationScope? Scope { get; set; }
         /// <summary> The namespace to which this configuration is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </summary>
+        [WirePath("properties.namespace")]
         public string Namespace { get; set; }
         /// <summary> Source Kind to pull the configuration data from. </summary>
+        [WirePath("properties.sourceKind")]
         public KubernetesConfigurationSourceKind? SourceKind { get; set; }
         /// <summary> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </summary>
+        [WirePath("properties.suspend")]
         public bool? IsReconciliationSuspended { get; set; }
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
+        [WirePath("properties.gitRepository")]
         public KubernetesGitRepository GitRepository { get; set; }
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
+        [WirePath("properties.bucket")]
         public KubernetesBucket Bucket { get; set; }
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
+        [WirePath("properties.azureBlob")]
         public KubernetesAzureBlob AzureBlob { get; set; }
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
+        [WirePath("properties.kustomizations")]
         public IDictionary<string, Kustomization> Kustomizations { get; set; }
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
+        [WirePath("properties.configurationProtectedSettings")]
         public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
         /// <summary> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </summary>
+        [WirePath("properties.statuses")]
         public IReadOnlyList<KubernetesObjectStatus> Statuses { get; }
         /// <summary> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </summary>
+        [WirePath("properties.repositoryPublicKey")]
         public string RepositoryPublicKey { get; }
         /// <summary> Branch and/or SHA of the source commit synced with the cluster. </summary>
+        [WirePath("properties.sourceSyncedCommitId")]
         public string SourceSyncedCommitId { get; }
         /// <summary> Datetime the fluxConfiguration synced its source on the cluster. </summary>
+        [WirePath("properties.sourceUpdatedAt")]
         public DateTimeOffset? SourceUpdatedOn { get; }
         /// <summary> Datetime the fluxConfiguration synced its status on the cluster with Azure. </summary>
+        [WirePath("properties.statusUpdatedAt")]
         public DateTimeOffset? StatusUpdatedOn { get; }
         /// <summary> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </summary>
+        [WirePath("properties.complianceState")]
         public KubernetesFluxComplianceState? ComplianceState { get; }
         /// <summary> Status of the creation of the fluxConfiguration. </summary>
+        [WirePath("properties.provisioningState")]
         public KubernetesConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Error message returned to the user in the case of provisioning failure. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
     }
 }

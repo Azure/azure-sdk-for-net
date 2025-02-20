@@ -28,43 +28,43 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ResourceIdentifier projectId = new ResourceIdentifier(TestEnvironment.DefaultProjectId);
             ResourceIdentifier devBoxDefinitionId = new ResourceIdentifier(TestEnvironment.DefaultMarketplaceDefinitionId);
 
-            var projectResponse = await Client.GetProjectResource(projectId).GetAsync();
+            var projectResponse = await Client.GetDevCenterProjectResource(projectId).GetAsync();
             var projectResource = projectResponse.Value;
 
-            PoolCollection resourceCollection = projectResource.GetPools();
+            DevCenterPoolCollection resourceCollection = projectResource.GetDevCenterPools();
 
             string resourceName = "sdktest-pool";
 
             // Create a Pool resource
 
-            var poolData = new PoolData(new AzureLocation(TestEnvironment.Location))
+            var poolData = new DevCenterPoolData(new AzureLocation(TestEnvironment.Location))
             {
                 DevBoxDefinitionName = devBoxDefinitionId.Name,
                 NetworkConnectionName = TestEnvironment.DefaultAttachedNetworkName,
-                LicenseType = LicenseType.WindowsClient,
-                LocalAdministrator = LocalAdminStatus.Enabled,
+                LicenseType = DevCenterLicenseType.WindowsClient,
+                LocalAdministrator = LocalAdminStatus.IsEnabled,
             };
-            ArmOperation<PoolResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, poolData);
-            PoolResource createdResource = createdResourceResponse.Value;
+            ArmOperation<DevCenterPoolResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, poolData);
+            DevCenterPoolResource createdResource = createdResourceResponse.Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List
-            List<PoolResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterPoolResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<PoolResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
+            Response<DevCenterPoolResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
             Assert.NotNull(retrievedResource.Value);
             Assert.NotNull(retrievedResource.Value.Data);
 
             // Update
-            PoolPatch updateRequest = new PoolPatch()
+            DevCenterPoolPatch updateRequest = new DevCenterPoolPatch()
             {
-                LocalAdministrator = LocalAdminStatus.Disabled,
+                LocalAdministrator = LocalAdminStatus.IsDisabled,
             };
-            ArmOperation<PoolResource> updateResponse = await retrievedResource.Value.UpdateAsync(WaitUntil.Completed, updateRequest);
+            ArmOperation<DevCenterPoolResource> updateResponse = await retrievedResource.Value.UpdateAsync(WaitUntil.Completed, updateRequest);
 
             // Delete
             ArmOperation deleteOp = await updateResponse.Value.DeleteAsync(WaitUntil.Completed);

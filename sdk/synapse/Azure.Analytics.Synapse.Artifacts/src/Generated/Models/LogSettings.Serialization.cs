@@ -20,53 +20,71 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
-                writer.WritePropertyName("enableCopyActivityLog");
-                writer.WriteObjectValue(EnableCopyActivityLog);
+                writer.WritePropertyName("enableCopyActivityLog"u8);
+                writer.WriteObjectValue<object>(EnableCopyActivityLog);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
-                writer.WritePropertyName("copyActivityLogSettings");
+                writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
             }
-            writer.WritePropertyName("logLocationSettings");
+            writer.WritePropertyName("logLocationSettings"u8);
             writer.WriteObjectValue(LogLocationSettings);
             writer.WriteEndObject();
         }
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
-            Optional<object> enableCopyActivityLog = default;
-            Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object enableCopyActivityLog = default;
+            CopyActivityLogSettings copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableCopyActivityLog"))
+                if (property.NameEquals("enableCopyActivityLog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCopyActivityLog = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("copyActivityLogSettings"))
+                if (property.NameEquals("copyActivityLogSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logLocationSettings"))
+                if (property.NameEquals("logLocationSettings"u8))
                 {
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
                     continue;
                 }
             }
-            return new LogSettings(enableCopyActivityLog.Value, copyActivityLogSettings.Value, logLocationSettings);
+            return new LogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class LogSettingsConverter : JsonConverter<LogSettings>
@@ -75,6 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

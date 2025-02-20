@@ -25,15 +25,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string SelectedValue = "selected";
         private const string UnselectedValue = "unselected";
 
-        /// <summary> selected. </summary>
+        /// <summary> The selection mark is selected, often indicated by a check ✓ or cross X inside the selection mark. </summary>
         public static V3SelectionMarkState Selected { get; } = new V3SelectionMarkState(SelectedValue);
-        /// <summary> unselected. </summary>
+        /// <summary> The selection mark is not selected. </summary>
         public static V3SelectionMarkState Unselected { get; } = new V3SelectionMarkState(UnselectedValue);
         /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are the same. </summary>
         public static bool operator ==(V3SelectionMarkState left, V3SelectionMarkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are not the same. </summary>
         public static bool operator !=(V3SelectionMarkState left, V3SelectionMarkState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="V3SelectionMarkState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="V3SelectionMarkState"/>. </summary>
         public static implicit operator V3SelectionMarkState(string value) => new V3SelectionMarkState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,89 +5,174 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabConnectionProfile : IUtf8JsonSerializable
+    public partial class LabConnectionProfile : IUtf8JsonSerializable, IJsonModel<LabConnectionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabConnectionProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LabConnectionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(WebSshAccess))
             {
-                writer.WritePropertyName("webSshAccess");
+                writer.WritePropertyName("webSshAccess"u8);
                 writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(WebRdpAccess))
             {
-                writer.WritePropertyName("webRdpAccess");
+                writer.WritePropertyName("webRdpAccess"u8);
                 writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClientSshAccess))
             {
-                writer.WritePropertyName("clientSshAccess");
+                writer.WritePropertyName("clientSshAccess"u8);
                 writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClientRdpAccess))
             {
-                writer.WritePropertyName("clientRdpAccess");
+                writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element)
+        LabConnectionProfile IJsonModel<LabConnectionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<LabVirtualMachineConnectionType> webSshAccess = default;
-            Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
-            Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
-            Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
+            var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabConnectionProfile(document.RootElement, options);
+        }
+
+        internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            LabVirtualMachineConnectionType? webSshAccess = default;
+            LabVirtualMachineConnectionType? webRdpAccess = default;
+            LabVirtualMachineConnectionType? clientSshAccess = default;
+            LabVirtualMachineConnectionType? clientRdpAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("webSshAccess"))
+                if (property.NameEquals("webSshAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webSshAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
-                if (property.NameEquals("webRdpAccess"))
+                if (property.NameEquals("webRdpAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
-                if (property.NameEquals("clientSshAccess"))
+                if (property.NameEquals("clientSshAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSshAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
-                if (property.NameEquals("clientRdpAccess"))
+                if (property.NameEquals("clientRdpAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LabConnectionProfile(webSshAccess, webRdpAccess, clientSshAccess, clientRdpAccess, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabConnectionProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LabConnectionProfile IPersistableModel<LabConnectionProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLabConnectionProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LabConnectionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

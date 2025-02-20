@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ConnectionString != null)
                 {
-                    writer.WritePropertyName("connectionString");
+                    writer.WritePropertyName("connectionString"u8);
                     writer.WriteStringValue(ConnectionString);
                 }
                 else
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Table != null)
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
             else
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Query != null)
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             else
@@ -50,12 +50,16 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureTableParameter DeserializeAzureTableParameter(JsonElement element)
         {
-            Optional<string> connectionString = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string connectionString = default;
             string table = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("table"))
+                if (property.NameEquals("table"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     table = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,23 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureTableParameter(connectionString.Value, table, query);
+            return new AzureTableParameter(connectionString, table, query);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AzureTableParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureTableParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

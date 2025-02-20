@@ -15,11 +15,11 @@ namespace Azure.Communication.Chat
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("topic");
+            writer.WritePropertyName("topic"u8);
             writer.WriteStringValue(Topic);
             if (Optional.IsCollectionDefined(Participants))
             {
-                writer.WritePropertyName("participants");
+                writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
@@ -28,6 +28,14 @@ namespace Azure.Communication.Chat
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

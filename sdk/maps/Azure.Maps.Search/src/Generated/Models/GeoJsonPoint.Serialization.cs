@@ -7,34 +7,24 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonPoint : IUtf8JsonSerializable
+    internal partial class GeoJsonPoint
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates");
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonPoint DeserializeGeoJsonPoint(JsonElement element)
         {
-            IList<double> coordinates = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<double> coordinates = default;
             GeoJsonObjectType type = default;
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"))
+                if (property.NameEquals("coordinates"u8))
                 {
                     List<double> array = new List<double>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,13 +34,35 @@ namespace Azure.Maps.Search.Models
                     coordinates = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bbox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonPoint(type, coordinates);
+            return new GeoJsonPoint(type, bbox ?? new ChangeTrackingList<double>(), coordinates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonPoint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonPoint(document.RootElement);
         }
     }
 }

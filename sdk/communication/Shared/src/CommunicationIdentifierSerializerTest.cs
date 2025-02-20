@@ -13,6 +13,7 @@ namespace Azure.Communication
         private const string TestPhoneNumber = "+12223334444";
         private const string TestPhoneNumberRawId = "4:+12223334444";
         private const string TestTeamsUserId = "Microsoft Teams User Id";
+        private const string TestTeamsAppId = "Microsoft Teams App Id";
         private const string TestTeamsCloud = "gcch";
 
         [Test]
@@ -38,6 +39,24 @@ namespace Azure.Communication
                     PhoneNumber = new PhoneNumberIdentifierModel(TestPhoneNumber),
                     MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId, isAnonymous: true, CommunicationCloudEnvironmentModel.Public),
                 },
+                 new CommunicationIdentifierModel
+                {
+                    RawId = TestRawId,
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestTeamsAppId),
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsAppId, CommunicationCloudEnvironmentModel.Public),
+                },
+                new CommunicationIdentifierModel
+                {
+                    RawId = TestRawId,
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestTeamsAppId),
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsAppId, CommunicationCloudEnvironmentModel.Dod),
+                },
+                new CommunicationIdentifierModel
+                {
+                    RawId = TestRawId,
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestTeamsAppId),
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsAppId, CommunicationCloudEnvironmentModel.Gcch),
+                },
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithTooManyNestedObjects)
@@ -52,6 +71,7 @@ namespace Azure.Communication
                 new CommunicationIdentifierModel(), // Missing RawId
                 new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId) { Cloud = CommunicationCloudEnvironmentModel.Public } }, // Missing IsAnonymous
                 new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId) { IsAnonymous = true, } }, // Missing Cloud
+                new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsUserId) } // Missing cloud
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithMissingMandatoryProperty)
@@ -271,6 +291,76 @@ namespace Azure.Communication
                 new CommunicationIdentifierModel
                 {
                     Kind = CommunicationIdentifierModelKind.MicrosoftTeamsUser,
+                    RawId = TestRawId,
+                });
+
+            UnknownIdentifier expectedIdentifier = new(TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void SerializeMicrosoftTeamsApp()
+        {
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(
+                new MicrosoftTeamsAppIdentifier(TestTeamsAppId, CommunicationCloudEnvironment.Dod));
+
+            Assert.AreEqual(TestTeamsAppId, model.MicrosoftTeamsApp.AppId);
+            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsApp.Cloud);
+            Assert.AreEqual($"28:dod:{TestTeamsAppId}", model.RawId);
+        }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsApp()
+        {
+            MicrosoftTeamsAppIdentifier identifier = (MicrosoftTeamsAppIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsAppId)
+                    {
+                        Cloud = TestTeamsCloud,
+                    },
+                    RawId = TestRawId,
+                });
+
+            MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch);
+
+            Assert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
+            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsApp_WithKind_DeserializesSuccessfully()
+        {
+            MicrosoftTeamsAppIdentifier identifier = (MicrosoftTeamsAppIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsApp,
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsAppId)
+                    {
+                        Cloud = TestTeamsCloud,
+                    },
+                    RawId = TestRawId,
+                });
+
+            MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch);
+
+            Assert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
+            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsApp_WithKindAndNoUser_DeserializesUnknownIdentifier()
+        {
+            UnknownIdentifier identifier = (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsApp,
                     RawId = TestRawId,
                 });
 

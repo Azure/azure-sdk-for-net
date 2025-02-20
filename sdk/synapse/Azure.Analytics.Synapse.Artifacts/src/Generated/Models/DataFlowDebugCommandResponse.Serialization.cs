@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,22 +16,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static DataFlowDebugCommandResponse DeserializeDataFlowDebugCommandResponse(JsonElement element)
         {
-            Optional<string> status = default;
-            Optional<string> data = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string status = default;
+            string data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataFlowDebugCommandResponse(status.Value, data.Value);
+            return new DataFlowDebugCommandResponse(status, data);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowDebugCommandResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowDebugCommandResponse(document.RootElement);
         }
 
         internal partial class DataFlowDebugCommandResponseConverter : JsonConverter<DataFlowDebugCommandResponse>
@@ -41,6 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override DataFlowDebugCommandResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

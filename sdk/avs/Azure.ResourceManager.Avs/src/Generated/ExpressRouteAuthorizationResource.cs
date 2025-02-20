@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an ExpressRouteAuthorization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteAuthorizationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteAuthorizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetExpressRouteAuthorization method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteAuthorizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteAuthorizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetExpressRouteAuthorization method.
     /// </summary>
     public partial class ExpressRouteAuthorizationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteAuthorizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="authorizationName"> The authorizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Avs
         private readonly AuthorizationsRestOperations _expressRouteAuthorizationAuthorizationsRestClient;
         private readonly ExpressRouteAuthorizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/authorizations";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationResource"/> class for mocking. </summary>
         protected ExpressRouteAuthorizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteAuthorizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteAuthorizationResource(ArmClient client, ExpressRouteAuthorizationData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/authorizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an ExpressRoute Circuit Authorization by name in a private cloud
+        /// Get a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,6 +98,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Authorizations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +129,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an ExpressRoute Circuit Authorization by name in a private cloud
+        /// Get a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Authorizations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +169,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete an ExpressRoute Circuit Authorization in a private cloud
+        /// Delete a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Authorizations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +211,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete an ExpressRoute Circuit Authorization in a private cloud
+        /// Delete a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -194,6 +220,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Authorizations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +253,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+        /// Create a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,10 +263,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> An ExpressRoute Circuit Authorization. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteAuthorizationResource>> UpdateAsync(WaitUntil waitUntil, ExpressRouteAuthorizationData data, CancellationToken cancellationToken = default)
@@ -244,7 +286,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -257,7 +299,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+        /// Create a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,10 +309,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Authorizations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> An ExpressRoute Circuit Authorization. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteAuthorizationResource> Update(WaitUntil waitUntil, ExpressRouteAuthorizationData data, CancellationToken cancellationToken = default)
@@ -282,7 +332,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

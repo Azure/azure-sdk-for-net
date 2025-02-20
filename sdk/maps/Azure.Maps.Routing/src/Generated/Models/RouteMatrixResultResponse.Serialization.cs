@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -14,21 +13,32 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrixResultResponse DeserializeRouteMatrixResultResponse(JsonElement element)
         {
-            Optional<RouteLegSummary> routeSummary = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RouteLegSummary routeSummary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routeSummary"))
+                if (property.NameEquals("routeSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routeSummary = RouteLegSummary.DeserializeRouteLegSummary(property.Value);
                     continue;
                 }
             }
-            return new RouteMatrixResultResponse(routeSummary.Value);
+            return new RouteMatrixResultResponse(routeSummary);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteMatrixResultResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteMatrixResultResponse(document.RootElement);
         }
     }
 }

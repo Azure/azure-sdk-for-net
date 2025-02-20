@@ -7,48 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationCertificateResource
     {
-        // Delete a certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteACertificate()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteCertificate.json
-            // this example is just showing the usage of "Certificate_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationCertificateResource created on azure
-            // for more information of creating AutomationCertificateResource, please refer to the document of AutomationCertificateResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount33";
-            string certificateName = "testCert";
-            ResourceIdentifier automationCertificateResourceId = AutomationCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, certificateName);
-            AutomationCertificateResource automationCertificate = client.GetAutomationCertificateResource(automationCertificateResourceId);
-
-            // invoke the operation
-            await automationCertificate.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACertificate()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getCertificate.json
@@ -78,9 +47,35 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteACertificate()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteCertificate.json
+            // this example is just showing the usage of "Certificate_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationCertificateResource created on azure
+            // for more information of creating AutomationCertificateResource, please refer to the document of AutomationCertificateResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount33";
+            string certificateName = "testCert";
+            ResourceIdentifier automationCertificateResourceId = AutomationCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, certificateName);
+            AutomationCertificateResource automationCertificate = client.GetAutomationCertificateResource(automationCertificateResourceId);
+
+            // invoke the operation
+            await automationCertificate.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateACertificate()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/updateCertificate.json
@@ -101,7 +96,7 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationCertificateResource automationCertificate = client.GetAutomationCertificateResource(automationCertificateResourceId);
 
             // invoke the operation
-            AutomationCertificatePatch patch = new AutomationCertificatePatch()
+            AutomationCertificatePatch patch = new AutomationCertificatePatch
             {
                 Name = "testCert",
                 Description = "sample certificate. Description updated",

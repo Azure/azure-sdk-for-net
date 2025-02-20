@@ -15,16 +15,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("metricDisplayName");
+                writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("metricDescription");
+                writer.WritePropertyName("metricDescription"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -32,34 +32,54 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static DataFeedMetric DeserializeDataFeedMetric(JsonElement element)
         {
-            Optional<string> metricId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string metricId = default;
             string metricName = default;
-            Optional<string> metricDisplayName = default;
-            Optional<string> metricDescription = default;
+            string metricDisplayName = default;
+            string metricDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricId"))
+                if (property.NameEquals("metricId"u8))
                 {
                     metricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricDisplayName"))
+                if (property.NameEquals("metricDisplayName"u8))
                 {
                     metricDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricDescription"))
+                if (property.NameEquals("metricDescription"u8))
                 {
                     metricDescription = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataFeedMetric(metricId.Value, metricName, metricDisplayName.Value, metricDescription.Value);
+            return new DataFeedMetric(metricId, metricName, metricDisplayName, metricDescription);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFeedMetric FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFeedMetric(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

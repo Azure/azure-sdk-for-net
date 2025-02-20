@@ -6,125 +6,163 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisPackageLocation : IUtf8JsonSerializable
+    public partial class SsisPackageLocation : IUtf8JsonSerializable, IJsonModel<SsisPackageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisPackageLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SsisPackageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisPackageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(PackagePath))
             {
-                writer.WritePropertyName("packagePath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PackagePath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PackagePath.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("packagePath"u8);
+                JsonSerializer.Serialize(writer, PackagePath);
             }
             if (Optional.IsDefined(LocationType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToString());
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PackagePassword))
             {
-                writer.WritePropertyName("packagePassword");
-                writer.WriteObjectValue(PackagePassword);
+                writer.WritePropertyName("packagePassword"u8);
+                JsonSerializer.Serialize(writer, PackagePassword);
             }
             if (Optional.IsDefined(AccessCredential))
             {
-                writer.WritePropertyName("accessCredential");
-                writer.WriteObjectValue(AccessCredential);
+                writer.WritePropertyName("accessCredential"u8);
+                writer.WriteObjectValue(AccessCredential, options);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
-                writer.WritePropertyName("configurationPath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConfigurationPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConfigurationPath.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("configurationPath"u8);
+                JsonSerializer.Serialize(writer, ConfigurationPath);
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
-                writer.WritePropertyName("configurationAccessCredential");
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                writer.WritePropertyName("configurationAccessCredential"u8);
+                writer.WriteObjectValue(ConfigurationAccessCredential, options);
             }
             if (Optional.IsDefined(PackageName))
             {
-                writer.WritePropertyName("packageName");
+                writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             if (Optional.IsDefined(PackageContent))
             {
-                writer.WritePropertyName("packageContent");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PackageContent);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PackageContent.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("packageContent"u8);
+                JsonSerializer.Serialize(writer, PackageContent);
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
-                writer.WritePropertyName("packageLastModifiedDate");
+                writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
             if (Optional.IsCollectionDefined(ChildPackages))
             {
-                writer.WritePropertyName("childPackages");
+                writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element)
+        SsisPackageLocation IJsonModel<SsisPackageLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<BinaryData> packagePath = default;
-            Optional<SsisPackageLocationType> type = default;
-            Optional<FactorySecretBaseDefinition> packagePassword = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<BinaryData> configurationPath = default;
-            Optional<SsisAccessCredential> configurationAccessCredential = default;
-            Optional<string> packageName = default;
-            Optional<BinaryData> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
-            Optional<IList<SsisChildPackage>> childPackages = default;
+            var format = options.Format == "W" ? ((IPersistableModel<SsisPackageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisPackageLocation(document.RootElement, options);
+        }
+
+        internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> packagePath = default;
+            SsisPackageLocationType? type = default;
+            DataFactorySecret packagePassword = default;
+            SsisAccessCredential accessCredential = default;
+            DataFactoryElement<string> configurationPath = default;
+            SsisAccessCredential configurationAccessCredential = default;
+            string packageName = default;
+            DataFactoryElement<string> packageContent = default;
+            string packageLastModifiedDate = default;
+            IList<SsisChildPackage> childPackages = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("packagePath"))
+                if (property.NameEquals("packagePath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    packagePath = BinaryData.FromString(property.Value.GetRawText());
+                    packagePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new SsisPackageLocationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,77 +171,71 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("packagePassword"))
+                        if (property0.NameEquals("packagePassword"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            packagePassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            packagePassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("accessCredential"))
+                        if (property0.NameEquals("accessCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("configurationPath"))
+                        if (property0.NameEquals("configurationPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configurationPath = BinaryData.FromString(property0.Value.GetRawText());
+                            configurationPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("configurationAccessCredential"))
+                        if (property0.NameEquals("configurationAccessCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("packageName"))
+                        if (property0.NameEquals("packageName"u8))
                         {
                             packageName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("packageContent"))
+                        if (property0.NameEquals("packageContent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            packageContent = BinaryData.FromString(property0.Value.GetRawText());
+                            packageContent = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("packageLastModifiedDate"))
+                        if (property0.NameEquals("packageLastModifiedDate"u8))
                         {
                             packageLastModifiedDate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("childPackages"))
+                        if (property0.NameEquals("childPackages"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SsisChildPackage> array = new List<SsisChildPackage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item));
+                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item, options));
                             }
                             childPackages = array;
                             continue;
@@ -211,8 +243,55 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SsisPackageLocation(
+                packagePath,
+                type,
+                packagePassword,
+                accessCredential,
+                configurationPath,
+                configurationAccessCredential,
+                packageName,
+                packageContent,
+                packageLastModifiedDate,
+                childPackages ?? new ChangeTrackingList<SsisChildPackage>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SsisPackageLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisPackageLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SsisPackageLocation IPersistableModel<SsisPackageLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisPackageLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSsisPackageLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SsisPackageLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SsisPackageLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

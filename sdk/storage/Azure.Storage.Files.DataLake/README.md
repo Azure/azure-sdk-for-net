@@ -2,8 +2,8 @@
 
 > Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
-Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists, 
-and analysts to store data of any size, shape, and speed, and do all types of processing and analytics 
+Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists,
+and analysts to store data of any size, shape, and speed, and do all types of processing and analytics
 across platforms and languages. It removes the complexities of ingesting and storing all of your data
 while making it faster to get up and running with batch, streaming, and interactive analytics.
 
@@ -59,7 +59,7 @@ Data Lake Storage Gen2 offers two types of resources:
 
 |ADLS Gen2 	                | Blob       |
 | --------------------------| ---------- |
-|Filesystem                 | Container  | 
+|Filesystem                 | Container  |
 |Path (File or Directory)   | Blob       |
 
 Note: This client library does not support hierarchical namespace (HNS) disabled storage accounts.
@@ -74,7 +74,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -96,7 +96,7 @@ StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(
 DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
 
 // Create a DataLake Filesystem
-DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem");
 filesystem.Create();
 ```
 
@@ -108,11 +108,11 @@ StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(
 DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
 
 // Get a reference to a filesystem named "sample-filesystem-append" and then create it
-DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem-append");
 filesystem.Create();
 
 // Create
-DataLakeDirectoryClient directory = filesystem.GetDirectoryClient(Randomize("sample-file"));
+DataLakeDirectoryClient directory = filesystem.GetDirectoryClient("sample-file");
 directory.Create();
 ```
 
@@ -121,29 +121,29 @@ directory.Create();
 Create DataLakeFileClient from a DataLakeDirectoryClient
 ```C# Snippet:SampleSnippetDataLakeFileClient_Create_Directory
 // Create a DataLake Directory
-DataLakeDirectoryClient directory = filesystem.CreateDirectory(Randomize("sample-directory"));
+DataLakeDirectoryClient directory = filesystem.CreateDirectory("sample-directory");
 directory.Create();
 
 // Create a DataLake File using a DataLake Directory
-DataLakeFileClient file = directory.GetFileClient(Randomize("sample-file"));
+DataLakeFileClient file = directory.GetFileClient("sample-file");
 file.Create();
 ```
 
 Create DataLakeFileClient from a DataLakeFileSystemClient
 ```C# Snippet:SampleSnippetDataLakeFileClient_Create
 // Create a DataLake Filesystem
-DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem");
 filesystem.Create();
 
 // Create a DataLake file using a DataLake Filesystem
-DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+DataLakeFileClient file = filesystem.GetFileClient("sample-file");
 file.Create();
 ```
 
 ### Appending Data to a DataLake File
 ```C# Snippet:SampleSnippetDataLakeFileClient_Append
 // Create a file
-DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+DataLakeFileClient file = filesystem.GetFileClient("sample-file");
 file.Create();
 
 // Append data to the DataLake File
@@ -154,6 +154,18 @@ file.Flush(SampleFileContent.Length);
 ### Reading Data from a DataLake File
 ```C# Snippet:SampleSnippetDataLakeFileClient_Read
 Response<FileDownloadInfo> fileContents = file.Read();
+```
+
+### Reading Streaming Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+Response<DataLakeFileReadStreamingResult> fileContents = file.ReadStreaming();
+Stream readStream = fileContents.Value.Content;
+```
+
+### Reading Content Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_ReadContent
+Response<DataLakeFileReadResult> fileContents = file.ReadContent();
+BinaryData readData = fileContents.Value.Content;
 ```
 
 ### Listing/Traversing through a DataLake Filesystem
@@ -167,7 +179,7 @@ foreach (PathItem pathItem in filesystem.GetPaths())
 ### Set Permissions on a DataLake File
 ```C# Snippet:SampleSnippetDataLakeFileClient_SetPermissions
 // Create a DataLake file so we can set the Access Controls on the files
-DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
+DataLakeFileClient fileClient = filesystem.GetFileClient("sample-file");
 fileClient.Create();
 
 // Set the Permissions of the file
@@ -178,7 +190,7 @@ fileClient.SetPermissions(permissions: pathPermissions);
 ### Set Access Controls (ACLs) on a DataLake File
 ```C# Snippet:SampleSnippetDataLakeFileClient_SetAcls
 // Create a DataLake file so we can set the Access Controls on the files
-DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
+DataLakeFileClient fileClient = filesystem.GetFileClient("sample-file");
 fileClient.Create();
 
 // Set Access Control List
@@ -242,25 +254,23 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2FREADME.png)
-
 <!-- LINKS -->
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.storage.files.datalake
-[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/filesystem
-[product_docs]: https://docs.microsoft.com/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+[docs]: https://learn.microsoft.com/dotnet/api/azure.storage.files.datalake
+[rest_docs]: https://learn.microsoft.com/rest/api/storageservices/datalakestoragegen2/filesystem
+[product_docs]: https://learn.microsoft.com/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
+[error_codes]: https://learn.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

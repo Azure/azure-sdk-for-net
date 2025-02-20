@@ -6,121 +6,258 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel
+    public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>
     {
-        internal static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> databaseName = default;
-            Optional<MigrationState> state = default;
-            Optional<SchemaMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> databaseErrorResultPrefix = default;
-            Optional<string> schemaErrorResultPrefix = default;
-            Optional<long> numberOfSuccessfulOperations = default;
-            Optional<long> numberOfFailedOperations = default;
-            Optional<string> fileId = default;
-            Optional<string> id = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Stage))
+            {
+                writer.WritePropertyName("stage"u8);
+                writer.WriteStringValue(Stage.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            {
+                writer.WritePropertyName("startedOn"u8);
+                writer.WriteStringValue(StartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            {
+                writer.WritePropertyName("endedOn"u8);
+                writer.WriteStringValue(EndedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(DatabaseErrorResultPrefix))
+            {
+                writer.WritePropertyName("databaseErrorResultPrefix"u8);
+                writer.WriteStringValue(DatabaseErrorResultPrefix);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SchemaErrorResultPrefix))
+            {
+                writer.WritePropertyName("schemaErrorResultPrefix"u8);
+                writer.WriteStringValue(SchemaErrorResultPrefix);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfSuccessfulOperations))
+            {
+                writer.WritePropertyName("numberOfSuccessfulOperations"u8);
+                writer.WriteNumberValue(NumberOfSuccessfulOperations.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFailedOperations))
+            {
+                writer.WritePropertyName("numberOfFailedOperations"u8);
+                writer.WriteNumberValue(NumberOfFailedOperations.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FileId))
+            {
+                writer.WritePropertyName("fileId"u8);
+                writer.WriteStringValue(FileId);
+            }
+        }
+
+        MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(document.RootElement, options);
+        }
+
+        internal static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string databaseName = default;
+            MigrationState? state = default;
+            SchemaMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string databaseErrorResultPrefix = default;
+            string schemaErrorResultPrefix = default;
+            long? numberOfSuccessfulOperations = default;
+            long? numberOfFailedOperations = default;
+            string fileId = default;
+            string id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new MigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stage"))
+                if (property.NameEquals("stage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stage = new SchemaMigrationStage(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("databaseErrorResultPrefix"))
+                if (property.NameEquals("databaseErrorResultPrefix"u8))
                 {
                     databaseErrorResultPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaErrorResultPrefix"))
+                if (property.NameEquals("schemaErrorResultPrefix"u8))
                 {
                     schemaErrorResultPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfSuccessfulOperations"))
+                if (property.NameEquals("numberOfSuccessfulOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfSuccessfulOperations = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("numberOfFailedOperations"))
+                if (property.NameEquals("numberOfFailedOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfFailedOperations = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fileId"))
+                if (property.NameEquals("fileId"u8))
                 {
                     fileId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                databaseErrorResultPrefix,
+                schemaErrorResultPrefix,
+                numberOfSuccessfulOperations,
+                numberOfFailedOperations,
+                fileId);
         }
+
+        BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

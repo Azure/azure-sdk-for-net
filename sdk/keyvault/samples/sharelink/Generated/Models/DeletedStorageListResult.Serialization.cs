@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -15,15 +14,18 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static DeletedStorageListResult DeserializeDeletedStorageListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedStorageAccountItem>> value = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<DeletedStorageAccountItem> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeletedStorageAccountItem> array = new List<DeletedStorageAccountItem>();
@@ -34,13 +36,21 @@ namespace Azure.Security.KeyVault.Storage.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeletedStorageListResult(Optional.ToList(value), nextLink.Value);
+            return new DeletedStorageListResult(value ?? new ChangeTrackingList<DeletedStorageAccountItem>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeletedStorageListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeletedStorageListResult(document.RootElement);
         }
     }
 }

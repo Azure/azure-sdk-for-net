@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct KustoClusterNetworkAccessFlag : IEquatable<KustoClusterNetworkAccessFlag>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoClusterNetworkAccessFlag left, KustoClusterNetworkAccessFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterNetworkAccessFlag"/> values are not the same. </summary>
         public static bool operator !=(KustoClusterNetworkAccessFlag left, KustoClusterNetworkAccessFlag right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
         public static implicit operator KustoClusterNetworkAccessFlag(string value) => new KustoClusterNetworkAccessFlag(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

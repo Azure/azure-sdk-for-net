@@ -5,162 +5,190 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSchemaSqlServerSqlDBTaskProperties : IUtf8JsonSerializable
+    public partial class MigrateSchemaSqlServerSqlDBTaskProperties : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MigrateSchemaSqlServerSqlDBTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Input))
             {
-                writer.WritePropertyName("input");
-                writer.WriteObjectValue(Input);
+                writer.WritePropertyName("input"u8);
+                writer.WriteObjectValue(Input, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStartArray();
+                foreach (var item in Output)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdOn");
+                writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
             if (Optional.IsDefined(TaskId))
             {
-                writer.WritePropertyName("taskId");
+                writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
             if (Optional.IsDefined(IsCloneable))
             {
-                writer.WritePropertyName("isCloneable");
+                writer.WritePropertyName("isCloneable"u8);
                 writer.WriteBooleanValue(IsCloneable.Value);
             }
-            writer.WritePropertyName("taskType");
-            writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
-            {
-                writer.WritePropertyName("clientData");
-                writer.WriteStartObject();
-                foreach (var item in ClientData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static MigrateSchemaSqlServerSqlDBTaskProperties DeserializeMigrateSchemaSqlServerSqlDBTaskProperties(JsonElement element)
+        MigrateSchemaSqlServerSqlDBTaskProperties IJsonModel<MigrateSchemaSqlServerSqlDBTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<MigrateSchemaSqlServerSqlDBTaskInput> input = default;
-            Optional<IReadOnlyList<MigrateSchemaSqlServerSqlDBTaskOutput>> output = default;
-            Optional<string> createdOn = default;
-            Optional<string> taskId = default;
-            Optional<bool> isCloneable = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSchemaSqlServerSqlDBTaskProperties(document.RootElement, options);
+        }
+
+        internal static MigrateSchemaSqlServerSqlDBTaskProperties DeserializeMigrateSchemaSqlServerSqlDBTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MigrateSchemaSqlServerSqlDBTaskInput input = default;
+            IReadOnlyList<MigrateSchemaSqlServerSqlDBTaskOutput> output = default;
+            string createdOn = default;
+            string taskId = default;
+            bool? isCloneable = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    input = MigrateSchemaSqlServerSqlDBTaskInput.DeserializeMigrateSchemaSqlServerSqlDBTaskInput(property.Value);
+                    input = MigrateSchemaSqlServerSqlDBTaskInput.DeserializeMigrateSchemaSqlServerSqlDBTaskInput(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MigrateSchemaSqlServerSqlDBTaskOutput> array = new List<MigrateSchemaSqlServerSqlDBTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSchemaSqlServerSqlDBTaskOutput.DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(item));
+                        array.Add(MigrateSchemaSqlServerSqlDBTaskOutput.DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(item, options));
                     }
                     output = array;
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
+                if (property.NameEquals("createdOn"u8))
                 {
                     createdOn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskId"))
+                if (property.NameEquals("taskId"u8))
                 {
                     taskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCloneable"))
+                if (property.NameEquals("isCloneable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCloneable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("taskType"))
+                if (property.NameEquals("taskType"u8))
                 {
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new TaskState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commands"))
+                if (property.NameEquals("commands"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("clientData"))
+                if (property.NameEquals("clientData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -171,8 +199,55 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSchemaSqlServerSqlDBTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), createdOn.Value, taskId.Value, Optional.ToNullable(isCloneable));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSchemaSqlServerSqlDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MigrateSchemaSqlServerSqlDBTaskOutput>(),
+                createdOn,
+                taskId,
+                isCloneable);
         }
+
+        BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrateSchemaSqlServerSqlDBTaskProperties IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSchemaSqlServerSqlDBTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

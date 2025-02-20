@@ -6,123 +6,234 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceProperties : IUtf8JsonSerializable
+    public partial class AppPlatformServiceProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkProfile))
-            {
-                writer.WritePropertyName("networkProfile");
-                writer.WriteObjectValue(NetworkProfile);
-            }
-            if (Optional.IsDefined(VnetAddons))
-            {
-                writer.WritePropertyName("vnetAddons");
-                writer.WriteObjectValue(VnetAddons);
-            }
-            if (Optional.IsDefined(IsZoneRedundant))
-            {
-                writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(IsZoneRedundant.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformServiceProperties DeserializeAppPlatformServiceProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AppPlatformServiceProvisioningState> provisioningState = default;
-            Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
-            Optional<ServiceVnetAddons> vnetAddons = default;
-            Optional<int> version = default;
-            Optional<Guid> serviceId = default;
-            Optional<AppPlatformServicePowerState> powerState = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<string> fqdn = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                writer.WritePropertyName("networkProfile"u8);
+                writer.WriteObjectValue(NetworkProfile, options);
+            }
+            if (Optional.IsDefined(VnetAddons))
+            {
+                writer.WritePropertyName("vnetAddons"u8);
+                writer.WriteObjectValue(VnetAddons, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceInstanceId))
+            {
+                writer.WritePropertyName("serviceId"u8);
+                writer.WriteStringValue(ServiceInstanceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            {
+                writer.WritePropertyName("powerState"u8);
+                writer.WriteStringValue(PowerState.Value.ToString());
+            }
+            if (Optional.IsDefined(IsZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        AppPlatformServiceProperties IJsonModel<AppPlatformServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformServiceProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformServiceProperties DeserializeAppPlatformServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AppPlatformServiceProvisioningState? provisioningState = default;
+            AppPlatformServiceNetworkProfile networkProfile = default;
+            ServiceVnetAddons vnetAddons = default;
+            int? version = default;
+            string serviceId = default;
+            AppPlatformServicePowerState? powerState = default;
+            bool? zoneRedundant = default;
+            string fqdn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformServiceProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkProfile"))
+                if (property.NameEquals("networkProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value);
+                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vnetAddons"))
+                if (property.NameEquals("vnetAddons"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value);
+                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("serviceId"))
+                if (property.NameEquals("serviceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    serviceId = property.Value.GetGuid();
+                    serviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("powerState"))
+                if (property.NameEquals("powerState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     powerState = new AppPlatformServicePowerState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zoneRedundant"))
+                if (property.NameEquals("zoneRedundant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), Optional.ToNullable(serviceId), Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformServiceProperties(
+                provisioningState,
+                networkProfile,
+                vnetAddons,
+                version,
+                serviceId,
+                powerState,
+                zoneRedundant,
+                fqdn,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformServiceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformServiceProperties IPersistableModel<AppPlatformServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformServiceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

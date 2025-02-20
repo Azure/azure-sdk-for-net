@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoAttachedDatabaseConfigurationCollection
     {
-        // KustoAttachedDatabaseConfigurationsListByCluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_KustoAttachedDatabaseConfigurationsListByCluster()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_AttachedDatabaseConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsListByCluster.json
-            // this example is just showing the usage of "AttachedDatabaseConfigurations_ListByCluster" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json
+            // this example is just showing the usage of "AttachedDatabaseConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -42,25 +39,40 @@ namespace Azure.ResourceManager.Kusto.Samples
             // get the collection of this KustoAttachedDatabaseConfigurationResource
             KustoAttachedDatabaseConfigurationCollection collection = kustoCluster.GetKustoAttachedDatabaseConfigurations();
 
-            // invoke the operation and iterate over the result
-            await foreach (KustoAttachedDatabaseConfigurationResource item in collection.GetAllAsync())
+            // invoke the operation
+            string attachedDatabaseConfigurationName = "attachedDatabaseConfigurationsTest";
+            KustoAttachedDatabaseConfigurationData data = new KustoAttachedDatabaseConfigurationData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                KustoAttachedDatabaseConfigurationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Location = new AzureLocation("westus"),
+                DatabaseName = "kustodatabase",
+                ClusterResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/kustoCluster2"),
+                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Union,
+                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties
+                {
+                    TablesToInclude = { "Table1" },
+                    TablesToExclude = { "Table2" },
+                    ExternalTablesToInclude = { "ExternalTable1" },
+                    ExternalTablesToExclude = { "ExternalTable2" },
+                    MaterializedViewsToInclude = { "MaterializedViewTable1" },
+                    MaterializedViewsToExclude = { "MaterializedViewTable2" },
+                },
+                DatabaseNameOverride = "overridekustodatabase",
+            };
+            ArmOperation<KustoAttachedDatabaseConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, attachedDatabaseConfigurationName, data);
+            KustoAttachedDatabaseConfigurationResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            KustoAttachedDatabaseConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttachedDatabaseConfigurationsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AttachedDatabaseConfigurationsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoAttachedDatabaseConfigurationsGet.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,12 +102,47 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttachedDatabaseConfigurationsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_KustoAttachedDatabaseConfigurationsListByCluster()
+        {
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoAttachedDatabaseConfigurationsListByCluster.json
+            // this example is just showing the usage of "AttachedDatabaseConfigurations_ListByCluster" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KustoClusterResource created on azure
+            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string clusterName = "kustoCluster2";
+            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
+
+            // get the collection of this KustoAttachedDatabaseConfigurationResource
+            KustoAttachedDatabaseConfigurationCollection collection = kustoCluster.GetKustoAttachedDatabaseConfigurations();
+
+            // invoke the operation and iterate over the result
+            await foreach (KustoAttachedDatabaseConfigurationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                KustoAttachedDatabaseConfigurationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AttachedDatabaseConfigurationsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoAttachedDatabaseConfigurationsGet.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,13 +168,12 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AttachedDatabaseConfigurationsCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_AttachedDatabaseConfigurationsCreateOrUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_AttachedDatabaseConfigurationsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json
-            // this example is just showing the usage of "AttachedDatabaseConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoAttachedDatabaseConfigurationsGet.json
+            // this example is just showing the usage of "AttachedDatabaseConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -147,49 +193,21 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // invoke the operation
             string attachedDatabaseConfigurationName = "attachedDatabaseConfigurationsTest";
-            KustoAttachedDatabaseConfigurationData data = new KustoAttachedDatabaseConfigurationData()
-            {
-                Location = new AzureLocation("westus"),
-                DatabaseName = "kustodatabase",
-                ClusterResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/kustoCluster2"),
-                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Union,
-                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties()
-                {
-                    TablesToInclude =
-{
-"Table1"
-},
-                    TablesToExclude =
-{
-"Table2"
-},
-                    ExternalTablesToInclude =
-{
-"ExternalTable1"
-},
-                    ExternalTablesToExclude =
-{
-"ExternalTable2"
-},
-                    MaterializedViewsToInclude =
-{
-"MaterializedViewTable1"
-},
-                    MaterializedViewsToExclude =
-{
-"MaterializedViewTable2"
-},
-                },
-                DatabaseNameOverride = "overridekustodatabase",
-            };
-            ArmOperation<KustoAttachedDatabaseConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, attachedDatabaseConfigurationName, data);
-            KustoAttachedDatabaseConfigurationResource result = lro.Value;
+            NullableResponse<KustoAttachedDatabaseConfigurationResource> response = await collection.GetIfExistsAsync(attachedDatabaseConfigurationName);
+            KustoAttachedDatabaseConfigurationResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            KustoAttachedDatabaseConfigurationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                KustoAttachedDatabaseConfigurationData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

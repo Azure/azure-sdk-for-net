@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class DicomServiceCorsConfiguration : IUtf8JsonSerializable
+    public partial class DicomServiceCorsConfiguration : IUtf8JsonSerializable, IJsonModel<DicomServiceCorsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomServiceCorsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DicomServiceCorsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceCorsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DicomServiceCorsConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Origins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
@@ -28,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
@@ -38,7 +56,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsCollectionDefined(Methods))
             {
-                writer.WritePropertyName("methods");
+                writer.WritePropertyName("methods"u8);
                 writer.WriteStartArray();
                 foreach (var item in Methods)
                 {
@@ -48,31 +66,64 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsDefined(MaxAge))
             {
-                writer.WritePropertyName("maxAge");
+                writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
             if (Optional.IsDefined(AllowCredentials))
             {
-                writer.WritePropertyName("allowCredentials");
+                writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DicomServiceCorsConfiguration DeserializeDicomServiceCorsConfiguration(JsonElement element)
+        DicomServiceCorsConfiguration IJsonModel<DicomServiceCorsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> origins = default;
-            Optional<IList<string>> headers = default;
-            Optional<IList<string>> methods = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceCorsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DicomServiceCorsConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDicomServiceCorsConfiguration(document.RootElement, options);
+        }
+
+        internal static DicomServiceCorsConfiguration DeserializeDicomServiceCorsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> origins = default;
+            IList<string> headers = default;
+            IList<string> methods = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("origins"))
+                if (property.NameEquals("origins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -83,11 +134,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     origins = array;
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -98,11 +148,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     headers = array;
                     continue;
                 }
-                if (property.NameEquals("methods"))
+                if (property.NameEquals("methods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -113,28 +162,68 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     methods = array;
                     continue;
                 }
-                if (property.NameEquals("maxAge"))
+                if (property.NameEquals("maxAge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAge = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowCredentials"))
+                if (property.NameEquals("allowCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowCredentials = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DicomServiceCorsConfiguration(Optional.ToList(origins), Optional.ToList(headers), Optional.ToList(methods), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DicomServiceCorsConfiguration(
+                origins ?? new ChangeTrackingList<string>(),
+                headers ?? new ChangeTrackingList<string>(),
+                methods ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DicomServiceCorsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceCorsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DicomServiceCorsConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DicomServiceCorsConfiguration IPersistableModel<DicomServiceCorsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceCorsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDicomServiceCorsConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DicomServiceCorsConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DicomServiceCorsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

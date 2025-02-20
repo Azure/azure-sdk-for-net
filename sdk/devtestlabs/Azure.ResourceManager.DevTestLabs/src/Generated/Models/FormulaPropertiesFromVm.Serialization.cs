@@ -5,36 +5,125 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class FormulaPropertiesFromVm : IUtf8JsonSerializable
+    internal partial class FormulaPropertiesFromVm : IUtf8JsonSerializable, IJsonModel<FormulaPropertiesFromVm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormulaPropertiesFromVm>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FormulaPropertiesFromVm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabVmId))
-            {
-                writer.WritePropertyName("labVmId");
-                writer.WriteStringValue(LabVmId);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static FormulaPropertiesFromVm DeserializeFormulaPropertiesFromVm(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> labVmId = default;
+            var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(LabVmId))
+            {
+                writer.WritePropertyName("labVmId"u8);
+                writer.WriteStringValue(LabVmId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        FormulaPropertiesFromVm IJsonModel<FormulaPropertiesFromVm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFormulaPropertiesFromVm(document.RootElement, options);
+        }
+
+        internal static FormulaPropertiesFromVm DeserializeFormulaPropertiesFromVm(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string labVmId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("labVmId"))
+                if (property.NameEquals("labVmId"u8))
                 {
                     labVmId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FormulaPropertiesFromVm(labVmId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FormulaPropertiesFromVm(labVmId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FormulaPropertiesFromVm>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FormulaPropertiesFromVm IPersistableModel<FormulaPropertiesFromVm>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFormulaPropertiesFromVm(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FormulaPropertiesFromVm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,14 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Snowflake export command settings. </summary>
     public partial class SnowflakeExportCopyCommand : ExportSettings
     {
-        /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowflakeExportCopyCommand"/>. </summary>
         public SnowflakeExportCopyCommand()
         {
             AdditionalCopyOptions = new ChangeTrackingDictionary<string, BinaryData>();
@@ -22,25 +22,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExportSettingsType = "SnowflakeExportCopyCommand";
         }
 
-        /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowflakeExportCopyCommand"/>. </summary>
         /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }. </param>
-        /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;OVERWRITE&quot;: &quot;TRUE&quot;, &quot;MAX_FILE_SIZE&quot;: &quot;&apos;FALSE&apos;&quot; }. </param>
-        internal SnowflakeExportCopyCommand(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions) : base(exportSettingsType, additionalProperties)
+        /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }. </param>
+        /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }. </param>
+        /// <param name="storageIntegration"> The name of the snowflake storage integration to use for the copy operation. Type: string (or Expression with resultType string). </param>
+        internal SnowflakeExportCopyCommand(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions, DataFactoryElement<string> storageIntegration) : base(exportSettingsType, additionalProperties)
         {
             AdditionalCopyOptions = additionalCopyOptions;
             AdditionalFormatOptions = additionalFormatOptions;
+            StorageIntegration = storageIntegration;
             ExportSettingsType = exportSettingsType ?? "SnowflakeExportCopyCommand";
         }
 
         /// <summary>
-        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }
+        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -66,12 +68,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public IDictionary<string, BinaryData> AdditionalCopyOptions { get; }
         /// <summary>
-        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;OVERWRITE&quot;: &quot;TRUE&quot;, &quot;MAX_FILE_SIZE&quot;: &quot;&apos;FALSE&apos;&quot; }
+        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -96,5 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> AdditionalFormatOptions { get; }
+        /// <summary> The name of the snowflake storage integration to use for the copy operation. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StorageIntegration { get; set; }
     }
 }

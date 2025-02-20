@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,20 +17,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static BigDataPoolResourceInfoListResult DeserializeBigDataPoolResourceInfoListResult(JsonElement element)
         {
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BigDataPoolResourceInfo>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextLink = default;
+            IReadOnlyList<BigDataPoolResourceInfo> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BigDataPoolResourceInfo> array = new List<BigDataPoolResourceInfo>();
@@ -43,7 +45,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfoListResult(nextLink.Value, Optional.ToList(value));
+            return new BigDataPoolResourceInfoListResult(nextLink, value ?? new ChangeTrackingList<BigDataPoolResourceInfo>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BigDataPoolResourceInfoListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
         }
 
         internal partial class BigDataPoolResourceInfoListResultConverter : JsonConverter<BigDataPoolResourceInfoListResult>
@@ -52,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override BigDataPoolResourceInfoListResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

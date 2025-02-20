@@ -19,17 +19,17 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(SchemaVersion))
             {
-                writer.WritePropertyName("schemaVersion");
+                writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
                 foreach (var item in Labels)
                 {
@@ -40,42 +40,42 @@ namespace Azure.IoT.Hub.Service.Models
             }
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
                 writer.WriteObjectValue(Content);
             }
             if (Optional.IsDefined(TargetCondition))
             {
-                writer.WritePropertyName("targetCondition");
+                writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
             if (Optional.IsDefined(CreatedTimeUtc))
             {
-                writer.WritePropertyName("createdTimeUtc");
+                writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
-                writer.WritePropertyName("lastUpdatedTimeUtc");
+                writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(SystemMetrics))
             {
-                writer.WritePropertyName("systemMetrics");
+                writer.WritePropertyName("systemMetrics"u8);
                 writer.WriteObjectValue(SystemMetrics);
             }
             if (Optional.IsDefined(Metrics))
             {
-                writer.WritePropertyName("metrics");
+                writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics);
             }
             if (Optional.IsDefined(Etag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
             writer.WriteEndObject();
@@ -83,34 +83,37 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static TwinConfiguration DeserializeTwinConfiguration(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> schemaVersion = default;
-            Optional<IDictionary<string, string>> labels = default;
-            Optional<ConfigurationContent> content = default;
-            Optional<string> targetCondition = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<int> priority = default;
-            Optional<ConfigurationMetrics> systemMetrics = default;
-            Optional<ConfigurationMetrics> metrics = default;
-            Optional<string> etag = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string schemaVersion = default;
+            IDictionary<string, string> labels = default;
+            ConfigurationContent content = default;
+            string targetCondition = default;
+            DateTimeOffset? createdTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            int? priority = default;
+            ConfigurationMetrics systemMetrics = default;
+            ConfigurationMetrics metrics = default;
+            string etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     schemaVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -121,78 +124,99 @@ namespace Azure.IoT.Hub.Service.Models
                     labels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     content = ConfigurationContent.DeserializeConfigurationContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetCondition"))
+                if (property.NameEquals("targetCondition"u8))
                 {
                     targetCondition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTimeUtc"))
+                if (property.NameEquals("createdTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTimeUtc"))
+                if (property.NameEquals("lastUpdatedTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("systemMetrics"))
+                if (property.NameEquals("systemMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemMetrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
             }
-            return new TwinConfiguration(id.Value, schemaVersion.Value, Optional.ToDictionary(labels), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
+            return new TwinConfiguration(
+                id,
+                schemaVersion,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                content,
+                targetCondition,
+                createdTimeUtc,
+                lastUpdatedTimeUtc,
+                priority,
+                systemMetrics,
+                metrics,
+                etag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TwinConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTwinConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

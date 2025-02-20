@@ -7,13 +7,22 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/containerregistry/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0a27976a58c16279e827bda36004d1b74b3d922a/specification/containerregistry/resource-manager/readme.md
+#tag: package-2024-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -27,7 +36,7 @@ format-by-name-rules:
   'tokenId': 'arm-id'
   'scopeMapId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -57,74 +66,83 @@ keep-plural-enums:
   - ContainerRegistryOS
 
 prepend-rp-prefix:
-  - KeyVaultProperties
-  - PlatformProperties
-  - TaskStepProperties
-  - Run
-  - RunPatch
-  - RunStatus
-  - RunType
-  - RunListResult
-  - Task
-  - TaskRun
-  - TaskPatch
-  - TaskStatus
-  - TaskListResult
-  - TaskRunListResult
-  - ProvisioningState
-  - Policies
-  - PolicyStatus
-  - Replication
-  - ReplicationPatch
-  - ReplicationListResult
-  - Webhook
-  - IPRule
   - AgentPool
-  - AgentPoolPatch
-  - AgentPoolQueueStatus
-  - NetworkRuleSet
-  - DockerBuildStep
-  - TriggerProperties
-  - EncryptionStatus
-  - ExportPolicy
-  - ExportPolicyStatus
-  - FileTaskStep
-  - ImageDescriptor
-  - ImageUpdateTrigger
-  - ImportImageParameters
-  - ImportMode
-  - ImportSource
-  - ImportSourceCredentials
-  - PublicNetworkAccess
-  - RetentionPolicy
-  - RunGetLogResult
-  - SecretObject
-  - SecretObjectType
-  - SourceTrigger
-  - SourceTriggerDescriptor
-  - SourceTriggerEvent
-  - TimerTrigger
-  - TimerTriggerDescriptor
-  - TriggerStatus
-  - TrustPolicy
-  - TrustPolicyType
-  - WebhookAction
-  - WebhookPatch
-  - WebhookStatus
-  - ZoneRedundancy
-  - PasswordName
   - AgentPoolListResult
+  - AgentPoolQueueStatus
   - AgentProperties
-  - EncodedTaskStep
-  - OverrideTaskStepProperties
-  - QuarantinePolicy
-  - UpdateTriggerPayloadType
-  - WebhookListResult
+  - Archive
+  - ArchiveVersion
+  - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - CacheRule
+  - CertificateType
+  - CredentialName
+  - CredentialHealth
+  - CredentialHealthStatus
   - Credentials
+  - CredentialSet
+  - DockerBuildStep
+  - EncodedTaskStep
+  - EncryptionStatus
+  - ExportPipeline
+  - ExportPolicy
+  - ExportPolicyStatus
+  - FileTaskStep
+  - GenerateCredentialsResult
+  - ImageDescriptor
+  - ImageUpdateTrigger
+  - ImportImageParameters
+  - ImportMode
+  - ImportPipeline
+  - ImportSource
+  - ImportSourceCredentials
+  - IPRule
+  - KeyVaultProperties
+  - MetadataSearch
+  - NetworkRuleSet
+  - OverrideTaskStepProperties
+  - PasswordName
+  - PipelineOptions
+  - PipelineRun
+  - PipelineRunSourceProperties
+  - PipelineRunSourceType
+  - PipelineRunTargetProperties
+  - PipelineRunTargetType
+  - PipelineSourceType
+  - PlatformProperties
+  - Policies
+  - PolicyStatus
+  - ProvisioningState
+  - PublicNetworkAccess
+  - QuarantinePolicy
+  - Replication
+  - ReplicationListResult
+  - RetentionPolicy
+  - Run
+  - RunGetLogResult
+  - RunListResult
+  - RunStatus
+  - RunType
+  - SecretObject
+  - SecretObjectType
+  - SoftDeletePolicy
+  - SourceTrigger
+  - SourceTriggerDescriptor
+  - SourceTriggerEvent
+  - Task
+  - TaskListResult
+  - TaskRun
+  - TaskRunListResult
+  - TaskStatus
+  - TaskStepProperties
+  - TimerTrigger
+  - TimerTriggerDescriptor
+  - TlsCertificateProperties
+  - TlsProperties
+  - TlsStatus
   - Token
   - TokenCertificate
   - TokenCertificateName
@@ -132,9 +150,16 @@ prepend-rp-prefix:
   - TokenPassword
   - TokenPasswordName
   - TokenStatus
-  - PipelineRun
-  - GenerateCredentialsResult
-  - SoftDeletePolicy
+  - TriggerProperties
+  - TriggerStatus
+  - TrustPolicy
+  - TrustPolicyType
+  - UpdateTriggerPayloadType
+  - Webhook
+  - WebhookAction
+  - WebhookListResult
+  - WebhookStatus
+  - ZoneRedundancy
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -208,10 +233,10 @@ rename-mapping:
   RegistryListResult: ContainerRegistryListResult
   RegistryUsageListResult: ContainerRegistryUsageListResult
   StepType: ContainerRegistryTaskStepType
+  TaskStepProperties.type: ContainerRegistryTaskStepType
   ImageUpdateTrigger.id: -|uuid
   SourceTriggerDescriptor.id: -|uuid
   EventContent.id: -|uuid
-  Event.id: -|uuid
   EventInfo.id: -|uuid
   Request.id: -|uuid
   ActivationProperties: ConnectedRegistryActivation
@@ -223,11 +248,11 @@ rename-mapping:
   LoggingProperties: ConnectedRegistryLogging
   StatusDetailProperties: ConnectedRegistryStatusDetail
   StatusDetailProperties.type: StatusDetailType
+  StatusDetailProperties.correlationId: -|uuid
   AuditLogStatus: ConnectedRegistryAuditLogStatus
-  CertificateType: TlsCertificateLocationType
   GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
   LogLevel: ConnectedRegistryLogLevel
-  PipelineRunRequest: PipelineRunContent
+  PipelineRunRequest: ConnectedRegistryPipelineRunContent
   PipelineRunResponse: PipelineRunResult
   ProgressProperties: PipelineProgress
   SyncProperties: ConnectedRegistrySyncProperties
@@ -238,6 +263,8 @@ rename-mapping:
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
   ImportSource.registryUri: RegistryAddress
+  AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
+  PackageSourceType: ArchivePackageSourceType
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -267,4 +294,8 @@ directive:
     where: $.definitions..expiry
     transform: >
       $['x-ms-client-name'] = 'ExpireOn';
+  - from: types.json
+    where: $.parameters.SubscriptionIdParameter.format
+    transform: >
+      return undefined;
 ```

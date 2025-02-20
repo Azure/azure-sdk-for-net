@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Logic.Models
 
         public static EdifactDecimalIndicator ToEdifactDecimalIndicator(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return EdifactDecimalIndicator.NotSpecified;
-            if (string.Equals(value, "Comma", StringComparison.InvariantCultureIgnoreCase)) return EdifactDecimalIndicator.Comma;
-            if (string.Equals(value, "Decimal", StringComparison.InvariantCultureIgnoreCase)) return EdifactDecimalIndicator.Decimal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return EdifactDecimalIndicator.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Comma")) return EdifactDecimalIndicator.Comma;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Decimal")) return EdifactDecimalIndicator.Decimal;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EdifactDecimalIndicator value.");
         }
     }

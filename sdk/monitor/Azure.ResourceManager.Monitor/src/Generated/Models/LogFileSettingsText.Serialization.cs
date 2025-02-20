@@ -5,33 +5,106 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class LogFileSettingsText : IUtf8JsonSerializable
+    internal partial class LogFileSettingsText : IUtf8JsonSerializable, IJsonModel<LogFileSettingsText>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogFileSettingsText>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LogFileSettingsText>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recordStartTimestampFormat");
-            writer.WriteStringValue(RecordStartTimestampFormat.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static LogFileSettingsText DeserializeLogFileSettingsText(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogFileSettingsText>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogFileSettingsText)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        LogFileSettingsText IJsonModel<LogFileSettingsText>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogFileSettingsText>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogFileSettingsText)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogFileSettingsText(document.RootElement, options);
+        }
+
+        internal static LogFileSettingsText DeserializeLogFileSettingsText(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordStartTimestampFormat"))
+                if (property.NameEquals("recordStartTimestampFormat"u8))
                 {
                     recordStartTimestampFormat = new LogFileTextSettingsRecordStartTimestampFormat(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogFileSettingsText(recordStartTimestampFormat);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogFileSettingsText(recordStartTimestampFormat, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogFileSettingsText>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogFileSettingsText>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogFileSettingsText)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogFileSettingsText IPersistableModel<LogFileSettingsText>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogFileSettingsText>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogFileSettingsText(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogFileSettingsText)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogFileSettingsText>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

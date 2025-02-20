@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,51 +13,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutputAsset DeserializeMediaJobOutputAsset(JsonElement element)
         {
-            Optional<string> assetName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string assetName = default;
             string odataType = default;
-            Optional<MediaJobError> error = default;
-            Optional<string> label = default;
+            MediaJobError error = default;
+            string label = default;
             long progress = default;
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetName"))
+                if (property.NameEquals("assetName"u8))
                 {
                     assetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = MediaJobError.DeserializeMediaJobError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     progress = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
             }
-            return new MediaJobOutputAsset(odataType, error.Value, label.Value, progress, state, assetName.Value);
+            return new MediaJobOutputAsset(
+                odataType,
+                error,
+                label,
+                progress,
+                state,
+                assetName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MediaJobOutputAsset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobOutputAsset(document.RootElement);
         }
     }
 }

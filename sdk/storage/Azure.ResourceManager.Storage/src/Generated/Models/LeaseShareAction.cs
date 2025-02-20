@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(LeaseShareAction left, LeaseShareAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LeaseShareAction"/> values are not the same. </summary>
         public static bool operator !=(LeaseShareAction left, LeaseShareAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LeaseShareAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LeaseShareAction"/>. </summary>
         public static implicit operator LeaseShareAction(string value) => new LeaseShareAction(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

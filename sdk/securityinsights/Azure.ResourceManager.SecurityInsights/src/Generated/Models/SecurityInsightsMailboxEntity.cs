@@ -15,26 +15,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a mailbox entity. </summary>
     public partial class SecurityInsightsMailboxEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         public SecurityInsightsMailboxEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Mailbox;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="mailboxPrimaryAddress"> The mailbox&apos;s primary address. </param>
-        /// <param name="displayName"> The mailbox&apos;s display name. </param>
-        /// <param name="upn"> The mailbox&apos;s UPN. </param>
+        /// <param name="mailboxPrimaryAddress"> The mailbox's primary address. </param>
+        /// <param name="displayName"> The mailbox's display name. </param>
+        /// <param name="upn"> The mailbox's UPN. </param>
         /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
-        internal SecurityInsightsMailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsMailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -75,16 +76,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
-        /// <summary> The mailbox&apos;s primary address. </summary>
+        /// <summary> The mailbox's primary address. </summary>
+        [WirePath("properties.mailboxPrimaryAddress")]
         public string MailboxPrimaryAddress { get; }
-        /// <summary> The mailbox&apos;s display name. </summary>
+        /// <summary> The mailbox's display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary> The mailbox&apos;s UPN. </summary>
+        /// <summary> The mailbox's UPN. </summary>
+        [WirePath("properties.upn")]
         public string Upn { get; }
         /// <summary> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </summary>
+        [WirePath("properties.externalDirectoryObjectId")]
         public Guid? ExternalDirectoryObjectId { get; }
     }
 }

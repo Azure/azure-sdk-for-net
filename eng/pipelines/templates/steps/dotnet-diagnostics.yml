@@ -5,7 +5,7 @@ parameters:
 
 steps:
 - pwsh: |
-    if ('${{ eq(variables['System.Debug'], 'true') }}' -eq 'true') {
+    if ('$(System.Debug)' -eq 'true') {
       Write-Host "##vso[task.setvariable variable=DiagnosticArguments;]/binaryLogger:LogFile=${{ parameters.LogFilePath }}"
     } else {
       Write-Host "##vso[task.setvariable variable=DiagnosticArguments;]"

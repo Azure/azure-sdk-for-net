@@ -1,17 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Identity.Tests.Mock;
-using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Identity.Client;
+using Azure.Core;
+using Azure.Identity.Tests.Mock;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class UsernamePasswordCredentialTests : CredentialTestBase
+    public class UsernamePasswordCredentialTests : CredentialTestBase<UsernamePasswordCredentialOptions>
     {
         public UsernamePasswordCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -25,12 +23,42 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, pwOptions, null, mockPublicMsalClient));
         }
 
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new UsernamePasswordCredentialOptions
+            {
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
+            };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
+            }
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
+        }
+
         [Test]
         public async Task VerifyMsalClientExceptionAsync()
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _, _, _, _, _) => { throw new MockClientException(expInnerExMessage); } };
 
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
@@ -51,33 +79,12 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var username = Guid.NewGuid().ToString();
-            var password = Guid.NewGuid().ToString();
-            var clientId = Guid.NewGuid().ToString();
-            var tenantId = Guid.NewGuid().ToString();
-
-            var credential = new UsernamePasswordCredential(
-                username,
-                password,
-                clientId,
-                tenantId,
-                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
-                default,
-                null);
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
-        }
-
-        [Test]
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new UsernamePasswordCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint }};
+            var options = new UsernamePasswordCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockPublicMsalClient));
 
@@ -85,30 +92,6 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expiresOn, token.ExpiresOn);
-        }
-
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
-            {
-                Assert.Ignore("Null TenantId test does not apply to this credential");
-            }
-
-            var options = new UsernamePasswordCredentialOptions();
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(new UsernamePasswordCredential("username", "password",parameters.TenantId, ClientId, options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
     }
 }

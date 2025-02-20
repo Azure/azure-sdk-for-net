@@ -5,54 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RuleBasedBackupPolicy : IUtf8JsonSerializable
+    public partial class RuleBasedBackupPolicy : IUtf8JsonSerializable, IJsonModel<RuleBasedBackupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleBasedBackupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RuleBasedBackupPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyRules");
-            writer.WriteStartArray();
-            foreach (var item in PolicyRules)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("datasourceTypes");
-            writer.WriteStartArray();
-            foreach (var item in DataSourceTypes)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("objectType");
-            writer.WriteStringValue(ObjectType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static RuleBasedBackupPolicy DeserializeRuleBasedBackupPolicy(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleBasedBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RuleBasedBackupPolicy)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("policyRules"u8);
+            writer.WriteStartArray();
+            foreach (var item in PolicyRules)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+        }
+
+        RuleBasedBackupPolicy IJsonModel<RuleBasedBackupPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleBasedBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RuleBasedBackupPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleBasedBackupPolicy(document.RootElement, options);
+        }
+
+        internal static RuleBasedBackupPolicy DeserializeRuleBasedBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<DataProtectionBasePolicyRule> policyRules = default;
             IList<string> datasourceTypes = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyRules"))
+                if (property.NameEquals("policyRules"u8))
                 {
                     List<DataProtectionBasePolicyRule> array = new List<DataProtectionBasePolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBasePolicyRule.DeserializeDataProtectionBasePolicyRule(item));
+                        array.Add(DataProtectionBasePolicyRule.DeserializeDataProtectionBasePolicyRule(item, options));
                     }
                     policyRules = array;
                     continue;
                 }
-                if (property.NameEquals("datasourceTypes"))
+                if (property.NameEquals("datasourceTypes"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -62,13 +91,49 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     datasourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RuleBasedBackupPolicy(datasourceTypes, objectType, policyRules);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RuleBasedBackupPolicy(datasourceTypes, objectType, serializedAdditionalRawData, policyRules);
         }
+
+        BinaryData IPersistableModel<RuleBasedBackupPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleBasedBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RuleBasedBackupPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RuleBasedBackupPolicy IPersistableModel<RuleBasedBackupPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleBasedBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRuleBasedBackupPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuleBasedBackupPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RuleBasedBackupPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

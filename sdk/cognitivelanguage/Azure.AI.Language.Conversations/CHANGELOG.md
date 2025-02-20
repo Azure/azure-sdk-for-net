@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,59 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2025-02-03)
+
+### Features Added
+
+- Added three differenct type of Redaction Policy `CharacterMaskPolicyType`, `EntityMaskTypePolicyType` and `NoMaskPolicyType` for the function `AnalyzeConversations`  
+- Added support for analyze-conversation API Versions
+  - 2024-11-01
+  - 2024-11-15-preview
+
+### Other Changes
+
+- Changed property `CreditCardNumberValue` to `CreditCardValue` and `PhoneNumberValue` to `PhoneValue` for class `ConversationPiiCategoryExclusions`
+- Added a new `Instruction` property to class `ConversationSummarizationActionContent`
+
+## 2.0.0-beta.1 (2024-08-01)
+
+- Added support for service version 2024-05-01.
+- Added support for service version 2024-05-15-preview.
+
+### Features Added
+- Added classes to represent all the models in the service definition.
+
+### Breaking Changes
+- Deprecated `ConversationAuthoringClient`.
+
+## 1.1.0 (2023-06-13)
+
+### Features Added
+
+- Added support for service version 2023-04-01.
+
+### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 1.0.0 when those types and members did not exist.
+
+- Removed support for service version 2022-05-15-preview.
+- Removed support for service version 2022-10-01-preview.
+- Removed support for "ConversationalPIITask" analysis.
+- Removed support for "ConversationalSentimentTask" analysis.
+- Removed `ConversationsAudience`.
+- Removed `ConversationsClientOptions.Audience`.
+- Removed `ConversationAuthoringClient.AssignDeploymentResources` and `AssignDeploymentResourcesAsync`.
+- Removed `ConversationAuthoringClient.DeleteDeploymentFromResources` and `DeleteDeploymentFromResourcesAsync`.
+- Removed `ConversationAuthoringClient.GetAssignDeploymentResourcesStatus` and `GetAssignDeploymentResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.GetAssignedResourceDeployments` and `GetAssignedResourceDeploymentsAsync`.
+- Removed `ConversationAuthoringClient.GetDeploymentDeleteFromResourcesStatus` and `GetDeploymentDeleteFromResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.GetDeploymentResources` and `GetDeploymentResourcesAsync`.
+- Removed `ConversationAuthoringClient.GetUnassignDeploymentResourcesStatus` and `GetUnassignDeploymentResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`.
+- Renamed `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` that took a `WaitUntil` parameter to `AnalyzeConversations` and `AnalyzeConversationsAsync`.
+- Renamed `ConversationAnalysisClient.CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync` to `CancelAnalyzeConversations` and `CancelAnalyzeConversationsAsync`.
+- Renamed `ConversationAuthoringClient.GetLoadSnapshotStatus` and `GetLoadSnapshotStatusAsync` to `GetLoadSnapshotJobStatus` and `GetLoadSnapshotJobStatusAsync`.
 
 ## 1.1.0-beta.2 (2022-11-10)
 

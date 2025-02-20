@@ -7,98 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Storage;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_ImmutabilityPolicyResource
     {
-        // CreateOrUpdateImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateImmutabilityPolicy()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobContainersPutImmutabilityPolicy.json
-            // this example is just showing the usage of "BlobContainers_CreateOrUpdateImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ImmutabilityPolicyResource created on azure
-            // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res1782";
-            string accountName = "sto7069";
-            string containerName = "container6397";
-            ResourceIdentifier immutabilityPolicyResourceId = ImmutabilityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, containerName);
-            ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
-
-            // invoke the operation
-            ImmutabilityPolicyData data = new ImmutabilityPolicyData()
-            {
-                ImmutabilityPeriodSinceCreationInDays = 3,
-                AllowProtectedAppendWrites = true,
-            };
-            ArmOperation<ImmutabilityPolicyResource> lro = await immutabilityPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            ImmutabilityPolicyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ImmutabilityPolicyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreateOrUpdateImmutabilityPolicyWithAllowProtectedAppendWritesAll
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateImmutabilityPolicyWithAllowProtectedAppendWritesAll()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobContainersPutImmutabilityPolicyAllowProtectedAppendWritesAll.json
-            // this example is just showing the usage of "BlobContainers_CreateOrUpdateImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ImmutabilityPolicyResource created on azure
-            // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res1782";
-            string accountName = "sto7069";
-            string containerName = "container6397";
-            ResourceIdentifier immutabilityPolicyResourceId = ImmutabilityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, containerName);
-            ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
-
-            // invoke the operation
-            ImmutabilityPolicyData data = new ImmutabilityPolicyData()
-            {
-                ImmutabilityPeriodSinceCreationInDays = 3,
-                AllowProtectedAppendWritesAll = true,
-            };
-            ArmOperation<ImmutabilityPolicyResource> lro = await immutabilityPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            ImmutabilityPolicyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ImmutabilityPolicyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetImmutabilityPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobContainersGetImmutabilityPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobContainersGetImmutabilityPolicy.json
             // this example is just showing the usage of "BlobContainers_GetImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,12 +46,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteImmutabilityPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobContainersDeleteImmutabilityPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobContainersDeleteImmutabilityPolicy.json
             // this example is just showing the usage of "BlobContainers_DeleteImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Samples
             ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("\"8d59f81a7fa7be0\"");
+            ETag ifMatch = new ETag("8d59f81a7fa7be0");
             ArmOperation<ImmutabilityPolicyResource> lro = await immutabilityPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
             ImmutabilityPolicyResource result = lro.Value;
 
@@ -159,12 +79,85 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LockImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateImmutabilityPolicy()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobContainersPutImmutabilityPolicy.json
+            // this example is just showing the usage of "BlobContainers_CreateOrUpdateImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ImmutabilityPolicyResource created on azure
+            // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res1782";
+            string accountName = "sto7069";
+            string containerName = "container6397";
+            ResourceIdentifier immutabilityPolicyResourceId = ImmutabilityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, containerName);
+            ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
+
+            // invoke the operation
+            ImmutabilityPolicyData data = new ImmutabilityPolicyData
+            {
+                ImmutabilityPeriodSinceCreationInDays = 3,
+                AllowProtectedAppendWrites = true,
+            };
+            ArmOperation<ImmutabilityPolicyResource> lro = await immutabilityPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ImmutabilityPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ImmutabilityPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateImmutabilityPolicyWithAllowProtectedAppendWritesAll()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobContainersPutImmutabilityPolicyAllowProtectedAppendWritesAll.json
+            // this example is just showing the usage of "BlobContainers_CreateOrUpdateImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ImmutabilityPolicyResource created on azure
+            // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res1782";
+            string accountName = "sto7069";
+            string containerName = "container6397";
+            ResourceIdentifier immutabilityPolicyResourceId = ImmutabilityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, containerName);
+            ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
+
+            // invoke the operation
+            ImmutabilityPolicyData data = new ImmutabilityPolicyData
+            {
+                ImmutabilityPeriodSinceCreationInDays = 3,
+                AllowProtectedAppendWritesAll = true,
+            };
+            ArmOperation<ImmutabilityPolicyResource> lro = await immutabilityPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ImmutabilityPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ImmutabilityPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task LockImmutabilityPolicy_LockImmutabilityPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobContainersLockImmutabilityPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobContainersLockImmutabilityPolicy.json
             // this example is just showing the usage of "BlobContainers_LockImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +175,7 @@ namespace Azure.ResourceManager.Storage.Samples
             ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("\"8d59f825b721dd3\"");
+            ETag ifMatch = new ETag("8d59f825b721dd3");
             ImmutabilityPolicyResource result = await immutabilityPolicy.LockImmutabilityPolicyAsync(ifMatch);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -192,12 +185,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExtendImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExtendImmutabilityPolicy_ExtendImmutabilityPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/BlobContainersExtendImmutabilityPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/BlobContainersExtendImmutabilityPolicy.json
             // this example is just showing the usage of "BlobContainers_ExtendImmutabilityPolicy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,8 +207,8 @@ namespace Azure.ResourceManager.Storage.Samples
             ImmutabilityPolicyResource immutabilityPolicy = client.GetImmutabilityPolicyResource(immutabilityPolicyResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("\"8d59f830d0c3bf9\"");
-            ImmutabilityPolicyData data = new ImmutabilityPolicyData()
+            ETag ifMatch = new ETag("8d59f830d0c3bf9");
+            ImmutabilityPolicyData data = new ImmutabilityPolicyData
             {
                 ImmutabilityPeriodSinceCreationInDays = 100,
             };

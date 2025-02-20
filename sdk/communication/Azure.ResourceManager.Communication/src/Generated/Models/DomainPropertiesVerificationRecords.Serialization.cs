@@ -5,74 +5,288 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class DomainPropertiesVerificationRecords
+    public partial class DomainPropertiesVerificationRecords : IUtf8JsonSerializable, IJsonModel<DomainPropertiesVerificationRecords>
     {
-        internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPropertiesVerificationRecords>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DomainPropertiesVerificationRecords>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<VerificationDnsRecord> domain = default;
-            Optional<VerificationDnsRecord> spf = default;
-            Optional<VerificationDnsRecord> dkim = default;
-            Optional<VerificationDnsRecord> dkiM2 = default;
-            Optional<VerificationDnsRecord> dmarc = default;
-            foreach (var property in element.EnumerateObject())
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("Domain"))
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("Domain"u8);
+                writer.WriteObjectValue(Domain, options);
+            }
+            if (Optional.IsDefined(Spf))
+            {
+                writer.WritePropertyName("SPF"u8);
+                writer.WriteObjectValue(Spf, options);
+            }
+            if (Optional.IsDefined(Dkim))
+            {
+                writer.WritePropertyName("DKIM"u8);
+                writer.WriteObjectValue(Dkim, options);
+            }
+            if (Optional.IsDefined(Dkim2))
+            {
+                writer.WritePropertyName("DKIM2"u8);
+                writer.WriteObjectValue(Dkim2, options);
+            }
+            if (Optional.IsDefined(Dmarc))
+            {
+                writer.WritePropertyName("DMARC"u8);
+                writer.WriteObjectValue(Dmarc, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    domain = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("SPF"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    spf = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("DKIM"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dkim = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("DKIM2"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dkiM2 = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("DMARC"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value);
         }
+
+        DomainPropertiesVerificationRecords IJsonModel<DomainPropertiesVerificationRecords>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainPropertiesVerificationRecords(document.RootElement, options);
+        }
+
+        internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            VerificationDnsRecord domain = default;
+            VerificationDnsRecord spf = default;
+            VerificationDnsRecord dkim = default;
+            VerificationDnsRecord dkiM2 = default;
+            VerificationDnsRecord dmarc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("Domain"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    domain = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("SPF"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    spf = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("DKIM"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dkim = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("DKIM2"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dkiM2 = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("DMARC"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DomainPropertiesVerificationRecords(
+                domain,
+                spf,
+                dkim,
+                dkiM2,
+                dmarc,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Domain), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Domain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Domain))
+                {
+                    builder.Append("  Domain: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Domain, options, 2, false, "  Domain: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Spf), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  SPF: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Spf))
+                {
+                    builder.Append("  SPF: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Spf, options, 2, false, "  SPF: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dkim), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DKIM: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dkim))
+                {
+                    builder.Append("  DKIM: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dkim, options, 2, false, "  DKIM: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dkim2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DKIM2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dkim2))
+                {
+                    builder.Append("  DKIM2: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dkim2, options, 2, false, "  DKIM2: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dmarc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DMARC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dmarc))
+                {
+                    builder.Append("  DMARC: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dmarc, options, 2, false, "  DMARC: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<DomainPropertiesVerificationRecords>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DomainPropertiesVerificationRecords IPersistableModel<DomainPropertiesVerificationRecords>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDomainPropertiesVerificationRecords(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DomainPropertiesVerificationRecords>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

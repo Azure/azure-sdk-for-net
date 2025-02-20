@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string HybridAzureADJoinValue = "HybridAzureADJoin";
-        private const string AzureADJoinValue = "AzureADJoin";
+        private const string HybridAadJoinValue = "HybridAzureADJoin";
+        private const string AadJoinValue = "AzureADJoin";
 
         /// <summary> HybridAzureADJoin. </summary>
-        public static DomainJoinType HybridAzureADJoin { get; } = new DomainJoinType(HybridAzureADJoinValue);
+        public static DomainJoinType HybridAadJoin { get; } = new DomainJoinType(HybridAadJoinValue);
         /// <summary> AzureADJoin. </summary>
-        public static DomainJoinType AzureADJoin { get; } = new DomainJoinType(AzureADJoinValue);
+        public static DomainJoinType AadJoin { get; } = new DomainJoinType(AadJoinValue);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are the same. </summary>
         public static bool operator ==(DomainJoinType left, DomainJoinType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are not the same. </summary>
         public static bool operator !=(DomainJoinType left, DomainJoinType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DomainJoinType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainJoinType"/>. </summary>
         public static implicit operator DomainJoinType(string value) => new DomainJoinType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

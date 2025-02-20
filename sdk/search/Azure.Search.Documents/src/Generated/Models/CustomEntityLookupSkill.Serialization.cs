@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultLanguageCode != null)
                 {
-                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WritePropertyName("defaultLanguageCode"u8);
                     writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (EntitiesDefinitionUri != null)
                 {
-                    writer.WritePropertyName("entitiesDefinitionUri");
+                    writer.WritePropertyName("entitiesDefinitionUri"u8);
                     writer.WriteStringValue(EntitiesDefinitionUri.AbsoluteUri);
                 }
                 else
@@ -45,11 +45,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (InlineEntitiesDefinition != null)
                 {
-                    writer.WritePropertyName("inlineEntitiesDefinition");
+                    writer.WritePropertyName("inlineEntitiesDefinition"u8);
                     writer.WriteStartArray();
                     foreach (var item in InlineEntitiesDefinition)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntity>(item);
                     }
                     writer.WriteEndArray();
                 }
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (GlobalDefaultCaseSensitive != null)
                 {
-                    writer.WritePropertyName("globalDefaultCaseSensitive");
+                    writer.WritePropertyName("globalDefaultCaseSensitive"u8);
                     writer.WriteBooleanValue(GlobalDefaultCaseSensitive.Value);
                 }
                 else
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (GlobalDefaultAccentSensitive != null)
                 {
-                    writer.WritePropertyName("globalDefaultAccentSensitive");
+                    writer.WritePropertyName("globalDefaultAccentSensitive"u8);
                     writer.WriteBooleanValue(GlobalDefaultAccentSensitive.Value);
                 }
                 else
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (GlobalDefaultFuzzyEditDistance != null)
                 {
-                    writer.WritePropertyName("globalDefaultFuzzyEditDistance");
+                    writer.WritePropertyName("globalDefaultFuzzyEditDistance"u8);
                     writer.WriteNumberValue(GlobalDefaultFuzzyEditDistance.Value);
                 }
                 else
@@ -94,35 +94,35 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("globalDefaultFuzzyEditDistance");
                 }
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
+            writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -130,21 +130,25 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element)
         {
-            Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
-            Optional<Uri> entitiesDefinitionUri = default;
-            Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
-            Optional<bool?> globalDefaultCaseSensitive = default;
-            Optional<bool?> globalDefaultAccentSensitive = default;
-            Optional<int?> globalDefaultFuzzyEditDistance = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CustomEntityLookupSkillLanguage? defaultLanguageCode = default;
+            Uri entitiesDefinitionUri = default;
+            IList<CustomEntity> inlineEntitiesDefinition = default;
+            bool? globalDefaultCaseSensitive = default;
+            bool? globalDefaultAccentSensitive = default;
+            int? globalDefaultFuzzyEditDistance = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultLanguageCode"))
+                if (property.NameEquals("defaultLanguageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +158,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultLanguageCode = new CustomEntityLookupSkillLanguage(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("entitiesDefinitionUri"))
+                if (property.NameEquals("entitiesDefinitionUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +168,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     entitiesDefinitionUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("inlineEntitiesDefinition"))
+                if (property.NameEquals("inlineEntitiesDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     inlineEntitiesDefinition = array;
                     continue;
                 }
-                if (property.NameEquals("globalDefaultCaseSensitive"))
+                if (property.NameEquals("globalDefaultCaseSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +193,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     globalDefaultCaseSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("globalDefaultAccentSensitive"))
+                if (property.NameEquals("globalDefaultAccentSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     globalDefaultAccentSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("globalDefaultFuzzyEditDistance"))
+                if (property.NameEquals("globalDefaultFuzzyEditDistance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,27 +213,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     globalDefaultFuzzyEditDistance = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     context = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -239,7 +243,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -250,7 +254,35 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance));
+            return new CustomEntityLookupSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultLanguageCode,
+                entitiesDefinitionUri,
+                inlineEntitiesDefinition ?? new ChangeTrackingList<CustomEntity>(),
+                globalDefaultCaseSensitive,
+                globalDefaultAccentSensitive,
+                globalDefaultFuzzyEditDistance);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomEntityLookupSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomEntityLookupSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

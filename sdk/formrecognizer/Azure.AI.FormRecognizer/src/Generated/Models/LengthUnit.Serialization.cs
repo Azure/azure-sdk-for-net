@@ -20,8 +20,8 @@ namespace Azure.AI.FormRecognizer.Models
 
         public static LengthUnit ToLengthUnit(this string value)
         {
-            if (string.Equals(value, "pixel", StringComparison.InvariantCultureIgnoreCase)) return LengthUnit.Pixel;
-            if (string.Equals(value, "inch", StringComparison.InvariantCultureIgnoreCase)) return LengthUnit.Inch;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pixel")) return LengthUnit.Pixel;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "inch")) return LengthUnit.Inch;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LengthUnit value.");
         }
     }

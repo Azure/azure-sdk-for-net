@@ -8,12 +8,16 @@ azure-arm: true
 csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
-require: https://github.com/Azure/azure-rest-api-specs/blob/2224eaaa3dcebd1220d36f193d4bc0bb8fcdcac6/specification/azure-kusto/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/edc6e6a8b4de49a78397162e7eb55b9c696c2d71/specification/azure-kusto/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 override-operation-name:
   AttachedDatabaseConfigurations_CheckNameAvailability: CheckKustoAttachedDatabaseConfigurationNameAvailability
@@ -24,7 +28,7 @@ override-operation-name:
   DatabasePrincipalAssignments_CheckNameAvailability: CheckKustoDatabasePrincipalAssignmentNameAvailability
   DataConnections_CheckNameAvailability: CheckKustoDataConnectionNameAvailability
   Scripts_CheckNameAvailability: CheckKustoScriptNameAvailability
-  DataConnections_dataConnectionValidation: ValidateDataConnection
+  DataConnections_DataConnectionValidation: ValidateDataConnection
   Clusters_CheckNameAvailability: CheckKustoClusterNameAvailability
   Clusters_ListSkus: GetKustoEligibleSkus
 
@@ -56,12 +60,14 @@ rename-mapping:
   PublicNetworkAccess: KustoClusterPublicNetworkAccess
   ClusterNetworkAccessFlag: KustoClusterNetworkAccessFlag
   State: KustoClusterState
+  VnetState: KustoClusterVnetState
   VirtualNetworkConfiguration: KustoClusterVirtualNetworkConfiguration
   ClusterPrincipalAssignment: KustoClusterPrincipalAssignment
   ClusterPrincipalAssignment.properties.aadObjectId: -|uuid
   ClusterPrincipalAssignment.properties.principalId: ClusterPrincipalId
   PrincipalType: KustoPrincipalAssignmentType
   ClusterPrincipalRole: KustoClusterPrincipalRole
+  Language: SandboxCustomImageLanguage
   LanguageExtension: KustoLanguageExtension
   LanguageExtensionsList: KustoLanguageExtensionList
   LanguageExtensionName: KustoLanguageExtensionName
@@ -133,8 +139,10 @@ rename-mapping:
   AzureSkuName.Standard_E16s_v5+4TB_PS: StandardE16sV54TBPS
   AzureSkuName.Standard_L8s_v3: StandardL8sV3
   AzureSkuName.Standard_L16s_v3: StandardL16sV3
+  AzureSkuName.Standard_L32s_v3: StandardL32sV3
   AzureSkuName.Standard_L8as_v3: StandardL8asV3
   AzureSkuName.Standard_L16as_v3: StandardL16asV3
+  AzureSkuName.Standard_L32as_v3: StandardL32asV3
   AzureSkuName.Standard_EC8as_v5+1TB_PS: StandardEC8asV51TBPS
   AzureSkuName.Standard_EC8as_v5+2TB_PS: StandardEC8asV52TBPS
   AzureSkuName.Standard_EC16as_v5+3TB_PS: StandardEC16asV53TBPS
@@ -222,6 +230,16 @@ rename-mapping:
   ResourceSkuCapabilities: KustoResourceSkuCapabilities
   ResourceSkuZoneDetails: KustoResourceSkuZoneDetails
   SkuDescriptionList: kustoSkuDescriptionList
+  OutboundAccess: KustoCalloutPolicyOutboundAccess
+  ZoneStatus: KustoClusterZoneStatus
+  ScriptLevel: KustoScriptLevel
+  FollowerDatabaseDefinitionGet: KustoFollowerDatabase
+  FollowerDatabaseDefinitionGet.properties.clusterResourceId: -|arm-id
+  CalloutPolicy: KustoCalloutPolicy
+  CalloutType: KustoCalloutPolicyCalloutType
+
+
+
 
 
 format-by-name-rules:
@@ -231,7 +249,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -254,6 +272,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Db: DB
+
+suppress-abstract-base-class:
+- KustoDatabaseData
+- KustoDataConnectionData
 
 directive:
   - from: kusto.json

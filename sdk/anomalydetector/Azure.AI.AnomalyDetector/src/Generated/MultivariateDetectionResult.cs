@@ -8,21 +8,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Detection results for the given resultId. </summary>
+    /// <summary> Detection results for the resultId value. </summary>
     public partial class MultivariateDetectionResult
     {
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
-        /// <param name="resultId"></param>
-        /// <param name="summary"></param>
-        /// <param name="results"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultId"/>, <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
-        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/>. </summary>
+        /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
+        /// <param name="summary"> Multivariate anomaly detection status. </param>
+        /// <param name="results"> Detection result for each time stamp. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
-            Argument.AssertNotNull(resultId, nameof(resultId));
             Argument.AssertNotNull(summary, nameof(summary));
             Argument.AssertNotNull(results, nameof(results));
 
@@ -31,22 +61,29 @@ namespace Azure.AI.AnomalyDetector
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
-        /// <param name="resultId"></param>
-        /// <param name="summary"></param>
-        /// <param name="results"></param>
-        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/>. </summary>
+        /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
+        /// <param name="summary"> Multivariate anomaly detection status. </param>
+        /// <param name="results"> Detection result for each time stamp. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResultId = resultId;
             Summary = summary;
-            Results = results.ToList();
+            Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the result id. </summary>
-        public string ResultId { get; }
-        /// <summary> Gets the summary. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/> for deserialization. </summary>
+        internal MultivariateDetectionResult()
+        {
+        }
+
+        /// <summary> Result identifier that's used to fetch the results of an inference call. </summary>
+        public Guid ResultId { get; }
+        /// <summary> Multivariate anomaly detection status. </summary>
         public MultivariateBatchDetectionResultSummary Summary { get; }
-        /// <summary> Gets the results. </summary>
+        /// <summary> Detection result for each time stamp. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }
     }
 }

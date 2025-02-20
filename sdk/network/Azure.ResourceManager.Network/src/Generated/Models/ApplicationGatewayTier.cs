@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string WAFValue = "WAF";
         private const string StandardV2Value = "Standard_v2";
         private const string WAFV2Value = "WAF_v2";
+        private const string BasicValue = "Basic";
 
         /// <summary> Standard. </summary>
         public static ApplicationGatewayTier Standard { get; } = new ApplicationGatewayTier(StandardValue);
@@ -35,11 +36,13 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayTier StandardV2 { get; } = new ApplicationGatewayTier(StandardV2Value);
         /// <summary> WAF_v2. </summary>
         public static ApplicationGatewayTier WAFV2 { get; } = new ApplicationGatewayTier(WAFV2Value);
+        /// <summary> Basic. </summary>
+        public static ApplicationGatewayTier Basic { get; } = new ApplicationGatewayTier(BasicValue);
         /// <summary> Determines if two <see cref="ApplicationGatewayTier"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayTier left, ApplicationGatewayTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayTier"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayTier left, ApplicationGatewayTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayTier"/>. </summary>
         public static implicit operator ApplicationGatewayTier(string value) => new ApplicationGatewayTier(value);
 
         /// <inheritdoc />
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

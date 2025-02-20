@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The high availability Type. AvailabilitySet guarantees 99.95% availability. Availability Zone guarantees 99.99% availability. </summary>
+    /// <summary> The high availability type (AvailabilitySet or AvailabilityZone). </summary>
     public readonly partial struct SapHighAvailabilityType : IEquatable<SapHighAvailabilityType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapHighAvailabilityType left, SapHighAvailabilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHighAvailabilityType"/> values are not the same. </summary>
         public static bool operator !=(SapHighAvailabilityType left, SapHighAvailabilityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapHighAvailabilityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapHighAvailabilityType"/>. </summary>
         public static implicit operator SapHighAvailabilityType(string value) => new SapHighAvailabilityType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

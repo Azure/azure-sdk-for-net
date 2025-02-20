@@ -16,8 +16,8 @@ namespace Azure.Storage.Queues.Test
     {
         private const string Permissions = "raup";
 
-        public QueueSasBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueSasBuilderTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -30,8 +30,10 @@ namespace Azure.Storage.Queues.Test
             QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName);
             var signature = BuildSignature(constants, queueName);
 
+            string stringToSign = null;
+
             // Act
-            var sasQueryParameters = queueSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            var sasQueryParameters = queueSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out stringToSign);
 
             // Assert
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
@@ -45,6 +47,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(string.Empty, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

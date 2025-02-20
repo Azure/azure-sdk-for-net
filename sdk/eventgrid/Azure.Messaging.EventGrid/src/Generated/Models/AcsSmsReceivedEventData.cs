@@ -12,26 +12,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSReceived event. </summary>
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>
-        internal AcsSmsReceivedEventData()
+        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
+        /// <param name="segmentCount"> Number of segments in the message. </param>
+        internal AcsSmsReceivedEventData(int segmentCount)
         {
+            SegmentCount = segmentCount;
         }
 
-        /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
-        internal AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to)
+        /// <param name="segmentCount"> Number of segments in the message. </param>
+        internal AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp, int segmentCount) : base(messageId, @from, to)
         {
             Message = message;
             ReceivedTimestamp = receivedTimestamp;
+            SegmentCount = segmentCount;
         }
 
         /// <summary> The SMS content. </summary>
         public string Message { get; }
         /// <summary> The time at which the SMS was received. </summary>
         public DateTimeOffset? ReceivedTimestamp { get; }
+        /// <summary> Number of segments in the message. </summary>
+        public int SegmentCount { get; }
     }
 }

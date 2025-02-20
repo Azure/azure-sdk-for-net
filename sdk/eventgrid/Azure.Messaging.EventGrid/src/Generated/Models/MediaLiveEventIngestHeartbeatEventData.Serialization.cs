@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,146 +16,166 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element)
         {
-            Optional<string> trackType = default;
-            Optional<string> trackName = default;
-            Optional<string> transcriptionLanguage = default;
-            Optional<string> transcriptionState = default;
-            Optional<long> bitrate = default;
-            Optional<long> incomingBitrate = default;
-            Optional<string> ingestDriftValue = default;
-            Optional<DateTimeOffset> lastFragmentArrivalTime = default;
-            Optional<string> lastTimestamp = default;
-            Optional<string> timescale = default;
-            Optional<long> overlapCount = default;
-            Optional<long> discontinuityCount = default;
-            Optional<long> nonincreasingCount = default;
-            Optional<bool> unexpectedBitrate = default;
-            Optional<string> state = default;
-            Optional<bool> healthy = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string trackType = default;
+            string trackName = default;
+            string transcriptionLanguage = default;
+            string transcriptionState = default;
+            long? bitrate = default;
+            long? incomingBitrate = default;
+            string ingestDriftValue = default;
+            DateTimeOffset? lastFragmentArrivalTime = default;
+            string lastTimestamp = default;
+            string timescale = default;
+            long? overlapCount = default;
+            long? discontinuityCount = default;
+            long? nonincreasingCount = default;
+            bool? unexpectedBitrate = default;
+            string state = default;
+            bool? healthy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackType"))
+                if (property.NameEquals("trackType"u8))
                 {
                     trackType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transcriptionLanguage"))
+                if (property.NameEquals("transcriptionLanguage"u8))
                 {
                     transcriptionLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transcriptionState"))
+                if (property.NameEquals("transcriptionState"u8))
                 {
                     transcriptionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("incomingBitrate"))
+                if (property.NameEquals("incomingBitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     incomingBitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("ingestDriftValue"))
+                if (property.NameEquals("ingestDriftValue"u8))
                 {
                     ingestDriftValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastFragmentArrivalTime"))
+                if (property.NameEquals("lastFragmentArrivalTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastFragmentArrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTimestamp"))
+                if (property.NameEquals("lastTimestamp"u8))
                 {
                     lastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overlapCount"))
+                if (property.NameEquals("overlapCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     overlapCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("discontinuityCount"))
+                if (property.NameEquals("discontinuityCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     discontinuityCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nonincreasingCount"))
+                if (property.NameEquals("nonincreasingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nonincreasingCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unexpectedBitrate"))
+                if (property.NameEquals("unexpectedBitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unexpectedBitrate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthy"))
+                if (property.NameEquals("healthy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthy = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+            return new MediaLiveEventIngestHeartbeatEventData(
+                trackType,
+                trackName,
+                transcriptionLanguage,
+                transcriptionState,
+                bitrate,
+                incomingBitrate,
+                ingestDriftValue,
+                lastFragmentArrivalTime,
+                lastTimestamp,
+                timescale,
+                overlapCount,
+                discontinuityCount,
+                nonincreasingCount,
+                unexpectedBitrate,
+                state,
+                healthy);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIngestHeartbeatEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIngestHeartbeatEventData(document.RootElement);
         }
 
         internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>
@@ -165,6 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventIngestHeartbeatEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

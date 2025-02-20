@@ -5,6 +5,8 @@ using System;
 using System.IO;
 using Azure.Core;
 
+// suppress the generated type for the property `Format`
+[assembly: CodeGenSuppressType("SynonymMapFormat")]
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenSuppress(nameof(SynonymMap), typeof(string), typeof(string))]

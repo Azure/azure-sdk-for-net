@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (BatchSize != null)
                 {
-                    writer.WritePropertyName("batchSize");
+                    writer.WritePropertyName("batchSize"u8);
                     writer.WriteNumberValue(BatchSize.Value);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (MaxFailedItems != null)
                 {
-                    writer.WritePropertyName("maxFailedItems");
+                    writer.WritePropertyName("maxFailedItems"u8);
                     writer.WriteNumberValue(MaxFailedItems.Value);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (MaxFailedItemsPerBatch != null)
                 {
-                    writer.WritePropertyName("maxFailedItemsPerBatch");
+                    writer.WritePropertyName("maxFailedItemsPerBatch"u8);
                     writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
                 }
                 else
@@ -53,21 +53,25 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(IndexingParametersConfiguration))
             {
-                writer.WritePropertyName("configuration");
-                writer.WriteObjectValue(IndexingParametersConfiguration);
+                writer.WritePropertyName("configuration"u8);
+                writer.WriteObjectValue<IndexingParametersConfiguration>(IndexingParametersConfiguration);
             }
             writer.WriteEndObject();
         }
 
         internal static IndexingParameters DeserializeIndexingParameters(JsonElement element)
         {
-            Optional<int?> batchSize = default;
-            Optional<int?> maxFailedItems = default;
-            Optional<int?> maxFailedItemsPerBatch = default;
-            Optional<IndexingParametersConfiguration> configuration = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? batchSize = default;
+            int? maxFailedItems = default;
+            int? maxFailedItemsPerBatch = default;
+            IndexingParametersConfiguration configuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("batchSize"))
+                if (property.NameEquals("batchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     batchSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxFailedItems"))
+                if (property.NameEquals("maxFailedItems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxFailedItems = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxFailedItemsPerBatch"))
+                if (property.NameEquals("maxFailedItemsPerBatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,18 +101,33 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxFailedItemsPerBatch = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("configuration"))
+                if (property.NameEquals("configuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configuration = Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(property.Value);
                     continue;
                 }
             }
-            return new IndexingParameters(Optional.ToNullable(batchSize), Optional.ToNullable(maxFailedItems), Optional.ToNullable(maxFailedItemsPerBatch), configuration.Value);
+            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

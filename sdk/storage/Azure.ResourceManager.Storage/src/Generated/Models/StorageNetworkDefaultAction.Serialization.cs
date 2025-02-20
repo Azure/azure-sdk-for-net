@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageNetworkDefaultAction ToStorageNetworkDefaultAction(this string value)
         {
-            if (string.Equals(value, "Allow", StringComparison.InvariantCultureIgnoreCase)) return StorageNetworkDefaultAction.Allow;
-            if (string.Equals(value, "Deny", StringComparison.InvariantCultureIgnoreCase)) return StorageNetworkDefaultAction.Deny;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return StorageNetworkDefaultAction.Allow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny")) return StorageNetworkDefaultAction.Deny;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageNetworkDefaultAction value.");
         }
     }

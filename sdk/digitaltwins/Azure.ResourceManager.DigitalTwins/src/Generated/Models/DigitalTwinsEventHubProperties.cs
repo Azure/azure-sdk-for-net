@@ -6,31 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> Properties related to EventHub. </summary>
     public partial class DigitalTwinsEventHubProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventHubProperties"/>. </summary>
         public DigitalTwinsEventHubProperties()
         {
             EndpointType = EndpointType.EventHub;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventHubProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
-        /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
+        /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
         /// <param name="identity"> Managed identity properties for the endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionStringPrimaryKey"> PrimaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="connectionStringSecondaryKey"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
-        /// <param name="endpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
+        /// <param name="endpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol 'sb://'. </param>
         /// <param name="entityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
-        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData)
         {
             ConnectionStringPrimaryKey = connectionStringPrimaryKey;
             ConnectionStringSecondaryKey = connectionStringSecondaryKey;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string ConnectionStringPrimaryKey { get; set; }
         /// <summary> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </summary>
         public string ConnectionStringSecondaryKey { get; set; }
-        /// <summary> The URL of the EventHub namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </summary>
+        /// <summary> The URL of the EventHub namespace for identity-based authentication. It must include the protocol 'sb://'. </summary>
         public Uri EndpointUri { get; set; }
         /// <summary> The EventHub name in the EventHub namespace for identity-based authentication. </summary>
         public string EntityPath { get; set; }

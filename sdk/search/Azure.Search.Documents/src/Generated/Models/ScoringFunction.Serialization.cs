@@ -16,15 +16,15 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("fieldName");
+            writer.WritePropertyName("fieldName"u8);
             writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("boost");
+            writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
             if (Optional.IsDefined(Interpolation))
             {
-                writer.WritePropertyName("interpolation");
+                writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -32,6 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ScoringFunction DeserializeScoringFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -43,6 +47,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return UnknownScoringFunction.DeserializeUnknownScoringFunction(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScoringFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScoringFunction(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

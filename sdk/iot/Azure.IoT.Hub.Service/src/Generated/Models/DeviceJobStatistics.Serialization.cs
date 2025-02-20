@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -14,65 +13,72 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element)
         {
-            Optional<int> deviceCount = default;
-            Optional<int> failedCount = default;
-            Optional<int> succeededCount = default;
-            Optional<int> runningCount = default;
-            Optional<int> pendingCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? deviceCount = default;
+            int? failedCount = default;
+            int? succeededCount = default;
+            int? runningCount = default;
+            int? pendingCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceCount"))
+                if (property.NameEquals("deviceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deviceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedCount"))
+                if (property.NameEquals("failedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("succeededCount"))
+                if (property.NameEquals("succeededCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     succeededCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runningCount"))
+                if (property.NameEquals("runningCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runningCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pendingCount"))
+                if (property.NameEquals("pendingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pendingCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount));
+            return new DeviceJobStatistics(deviceCount, failedCount, succeededCount, runningCount, pendingCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceJobStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceJobStatistics(document.RootElement);
         }
     }
 }

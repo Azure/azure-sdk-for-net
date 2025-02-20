@@ -5,13 +5,14 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using Xunit;
+using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
-using payloads = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
     /// <summary>Class for housing all tests pertaining to Response Type Casting</summary>
+    [TestFixture]
     public class ResponseTypesTests
     {
         /// <summary>Available Types to test</summary>
@@ -31,18 +32,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
         /// <summary>Test the response value setting based on the response type expected.</summary>
         /// <param name="responseType">The response type to test as a function return value.</param>
-        [Theory]
-        [InlineData(ResponseTypes.String)]
-        [InlineData(ResponseTypes.HttpResponse)]
-        [InlineData(ResponseTypes.HttpResponseMessage)]
-        [InlineData(ResponseTypes.Unknown)]
-        [InlineData(ResponseTypes.AuthEventResponse)]
-        [Obsolete]
-        public async void Tests(ResponseTypes responseType)
+        [Test]
+        [TestCase(ResponseTypes.String)]
+        [TestCase(ResponseTypes.HttpResponse)]
+        [TestCase(ResponseTypes.HttpResponseMessage)]
+        [TestCase(ResponseTypes.Unknown)]
+        [TestCase(ResponseTypes.AuthEventResponse)]
+        public async Task Tests(ResponseTypes responseType)
         {
             var (code, payload) = GetExpected(responseType);
 
-            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 MemoryStream memoryStream = null;
                 StreamWriter streamWriter = null;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     memoryStream = new MemoryStream();
                     streamWriter = new StreamWriter(memoryStream);
-                    eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
                 }
                 finally
                 {
@@ -67,18 +67,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.Equal(httpResponseMessage.StatusCode, code);
-            Assert.True(DoesPayloadMatch(payload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.AreEqual(httpResponseMessage.StatusCode, code);
+            Assert.True(DoesPayloadMatch(payload, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
         private object GetResponseTypeObject(ResponseTypes responseType, StreamWriter streamWriter)
         {
             switch (responseType)
             {
-                case ResponseTypes.String: return payloads.TokenIssuanceStart.ActionResponse;
+                case ResponseTypes.String: return Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse;
                 case ResponseTypes.HttpResponse: return CreateHttpResponse(streamWriter);
                 case ResponseTypes.HttpResponseMessage: return CreateHttpResponseMessage();
-                case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, payloads.TokenIssuanceStart.ActionResponse);
+                case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown: return new object();
                 default: return null;
             }
@@ -94,11 +94,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ResponseTypes.String:
                 case ResponseTypes.HttpResponse:
                 case ResponseTypes.HttpResponseMessage:
-                    return (code: HttpStatusCode.OK, payloads.TokenIssuanceStart.ExpectedPayload);
+                    return (code: HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload);
                 case ResponseTypes.AuthEventResponse:
-                    return (code: HttpStatusCode.OK, payloads.TokenIssuanceStart.ActionResponse);
+                    return (code: HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
-                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
+                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return']}");
                 default:
                     return (code: HttpStatusCode.BadRequest, string.Empty);
             };
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var response = new DefaultHttpContext().Response;
 
-            sw.Write(payloads.TokenIssuanceStart.ActionResponse);
+            sw.Write(Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
             sw.Flush();
 
             response.Body = sw.BaseStream;
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(payloads.TokenIssuanceStart.ActionResponse)
+                Content = new StringContent(Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse)
             };
         }
 

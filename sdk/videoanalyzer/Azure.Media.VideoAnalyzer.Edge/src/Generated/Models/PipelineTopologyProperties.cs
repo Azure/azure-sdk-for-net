@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Pipeline topology properties. </summary>
     public partial class PipelineTopologyProperties
     {
-        /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyProperties"/>. </summary>
         public PipelineTopologyProperties()
         {
             Parameters = new ChangeTrackingList<ParameterDeclaration>();
@@ -22,9 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Sinks = new ChangeTrackingList<SinkNodeBase>();
         }
 
-        /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyProperties"/>. </summary>
         /// <param name="description"> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </param>
-        /// <param name="parameters"> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of &quot;${PARAMETER_NAME}&quot; string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </param>
+        /// <param name="parameters"> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of "${PARAMETER_NAME}" string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </param>
         /// <param name="sources">
         /// List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline.
         /// Please note <see cref="SourceNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -51,7 +50,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </summary>
         public string Description { get; set; }
-        /// <summary> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of &quot;${PARAMETER_NAME}&quot; string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </summary>
+        /// <summary> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of "${PARAMETER_NAME}" string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </summary>
         public IList<ParameterDeclaration> Parameters { get; }
         /// <summary>
         /// List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline.

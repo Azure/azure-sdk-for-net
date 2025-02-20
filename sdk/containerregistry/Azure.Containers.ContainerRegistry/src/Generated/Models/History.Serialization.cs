@@ -6,35 +6,35 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class History : IUtf8JsonSerializable
+    internal partial class History
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(V1Compatibility))
-            {
-                writer.WritePropertyName("v1Compatibility");
-                writer.WriteStringValue(V1Compatibility);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static History DeserializeHistory(JsonElement element)
         {
-            Optional<string> v1Compatibility = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string v1Compatibility = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("v1Compatibility"))
+                if (property.NameEquals("v1Compatibility"u8))
                 {
                     v1Compatibility = property.Value.GetString();
                     continue;
                 }
             }
-            return new History(v1Compatibility.Value);
+            return new History(v1Compatibility);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static History FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHistory(document.RootElement);
         }
     }
 }

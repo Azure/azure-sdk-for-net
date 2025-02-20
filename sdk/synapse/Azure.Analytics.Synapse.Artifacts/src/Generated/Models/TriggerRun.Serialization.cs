@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,63 +17,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerRun DeserializeTriggerRun(JsonElement element)
         {
-            Optional<string> triggerRunId = default;
-            Optional<string> triggerName = default;
-            Optional<string> triggerType = default;
-            Optional<DateTimeOffset> triggerRunTimestamp = default;
-            Optional<TriggerRunStatus> status = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string triggerRunId = default;
+            string triggerName = default;
+            string triggerType = default;
+            DateTimeOffset? triggerRunTimestamp = default;
+            TriggerRunStatus? status = default;
+            string message = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IReadOnlyDictionary<string, string> triggeredPipelines = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("triggerRunId"))
+                if (property.NameEquals("triggerRunId"u8))
                 {
                     triggerRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerName"))
+                if (property.NameEquals("triggerName"u8))
                 {
                     triggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerType"))
+                if (property.NameEquals("triggerType"u8))
                 {
                     triggerType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerRunTimestamp"))
+                if (property.NameEquals("triggerRunTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     triggerRunTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new TriggerRunStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -85,11 +85,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("triggeredPipelines"))
+                if (property.NameEquals("triggeredPipelines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -103,7 +102,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), additionalProperties);
+            return new TriggerRun(
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TriggerRun FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTriggerRun(document.RootElement);
         }
 
         internal partial class TriggerRunConverter : JsonConverter<TriggerRun>
@@ -112,6 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override TriggerRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

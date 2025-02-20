@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AzureFileFilterDetails : IUtf8JsonSerializable
+    public partial class AzureFileFilterDetails : IUtf8JsonSerializable, IJsonModel<AzureFileFilterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFileFilterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureFileFilterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(FilePrefixList))
             {
-                writer.WritePropertyName("filePrefixList");
+                writer.WritePropertyName("filePrefixList"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilePrefixList)
                 {
@@ -28,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(FilePathList))
             {
-                writer.WritePropertyName("filePathList");
+                writer.WritePropertyName("filePathList"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilePathList)
                 {
@@ -38,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(FileShareList))
             {
-                writer.WritePropertyName("fileShareList");
+                writer.WritePropertyName("fileShareList"u8);
                 writer.WriteStartArray();
                 foreach (var item in FileShareList)
                 {
@@ -46,21 +64,54 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AzureFileFilterDetails DeserializeAzureFileFilterDetails(JsonElement element)
+        AzureFileFilterDetails IJsonModel<AzureFileFilterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<string>> filePrefixList = default;
-            Optional<IList<string>> filePathList = default;
-            Optional<IList<string>> fileShareList = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFileFilterDetails(document.RootElement, options);
+        }
+
+        internal static AzureFileFilterDetails DeserializeAzureFileFilterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> filePrefixList = default;
+            IList<string> filePathList = default;
+            IList<string> fileShareList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePrefixList"))
+                if (property.NameEquals("filePrefixList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -71,11 +122,10 @@ namespace Azure.ResourceManager.DataBox.Models
                     filePrefixList = array;
                     continue;
                 }
-                if (property.NameEquals("filePathList"))
+                if (property.NameEquals("filePathList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -86,11 +136,10 @@ namespace Azure.ResourceManager.DataBox.Models
                     filePathList = array;
                     continue;
                 }
-                if (property.NameEquals("fileShareList"))
+                if (property.NameEquals("fileShareList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -101,8 +150,44 @@ namespace Azure.ResourceManager.DataBox.Models
                     fileShareList = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureFileFilterDetails(Optional.ToList(filePrefixList), Optional.ToList(filePathList), Optional.ToList(fileShareList));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureFileFilterDetails(filePrefixList ?? new ChangeTrackingList<string>(), filePathList ?? new ChangeTrackingList<string>(), fileShareList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureFileFilterDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureFileFilterDetails IPersistableModel<AzureFileFilterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureFileFilterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureFileFilterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

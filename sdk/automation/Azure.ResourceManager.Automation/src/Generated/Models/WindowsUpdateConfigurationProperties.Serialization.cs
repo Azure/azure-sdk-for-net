@@ -5,25 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class WindowsUpdateConfigurationProperties : IUtf8JsonSerializable
+    public partial class WindowsUpdateConfigurationProperties : IUtf8JsonSerializable, IJsonModel<WindowsUpdateConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsUpdateConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WindowsUpdateConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IncludedUpdateClassifications))
             {
-                writer.WritePropertyName("includedUpdateClassifications");
+                writer.WritePropertyName("includedUpdateClassifications"u8);
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {
-                writer.WritePropertyName("excludedKbNumbers");
+                writer.WritePropertyName("excludedKbNumbers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedKBNumbers)
                 {
@@ -33,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(IncludedKBNumbers))
             {
-                writer.WritePropertyName("includedKbNumbers");
+                writer.WritePropertyName("includedKbNumbers"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedKBNumbers)
                 {
@@ -43,35 +61,67 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(RebootSetting))
             {
-                writer.WritePropertyName("rebootSetting");
+                writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static WindowsUpdateConfigurationProperties DeserializeWindowsUpdateConfigurationProperties(JsonElement element)
+        WindowsUpdateConfigurationProperties IJsonModel<WindowsUpdateConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
-            Optional<IList<string>> excludedKbNumbers = default;
-            Optional<IList<string>> includedKbNumbers = default;
-            Optional<string> rebootSetting = default;
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsUpdateConfigurationProperties(document.RootElement, options);
+        }
+
+        internal static WindowsUpdateConfigurationProperties DeserializeWindowsUpdateConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            WindowsUpdateClassification? includedUpdateClassifications = default;
+            IList<string> excludedKbNumbers = default;
+            IList<string> includedKbNumbers = default;
+            string rebootSetting = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("includedUpdateClassifications"))
+                if (property.NameEquals("includedUpdateClassifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     includedUpdateClassifications = new WindowsUpdateClassification(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excludedKbNumbers"))
+                if (property.NameEquals("excludedKbNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -82,11 +132,10 @@ namespace Azure.ResourceManager.Automation.Models
                     excludedKbNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("includedKbNumbers"))
+                if (property.NameEquals("includedKbNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -97,13 +146,49 @@ namespace Azure.ResourceManager.Automation.Models
                     includedKbNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("rebootSetting"))
+                if (property.NameEquals("rebootSetting"u8))
                 {
                     rebootSetting = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WindowsUpdateConfigurationProperties(includedUpdateClassifications, excludedKbNumbers ?? new ChangeTrackingList<string>(), includedKbNumbers ?? new ChangeTrackingList<string>(), rebootSetting, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WindowsUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WindowsUpdateConfigurationProperties IPersistableModel<WindowsUpdateConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWindowsUpdateConfigurationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WindowsUpdateConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

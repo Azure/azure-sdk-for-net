@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,96 +14,94 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricDefinition DeserializeMetricDefinition(JsonElement element)
         {
-            Optional<bool> isDimensionRequired = default;
-            Optional<string> resourceId = default;
-            Optional<string> @namespace = default;
-            Optional<LocalizableString> name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> category = default;
-            Optional<MetricClass> metricClass = default;
-            Optional<MetricUnit> unit = default;
-            Optional<MetricAggregationType> primaryAggregationType = default;
-            Optional<IReadOnlyList<MetricAggregationType>> supportedAggregationTypes = default;
-            Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<LocalizableString>> dimensions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? isDimensionRequired = default;
+            string resourceId = default;
+            string @namespace = default;
+            LocalizableString name = default;
+            string displayDescription = default;
+            string category = default;
+            MetricClass? metricClass = default;
+            MetricUnit? unit = default;
+            MetricAggregationType? primaryAggregationType = default;
+            IReadOnlyList<MetricAggregationType> supportedAggregationTypes = default;
+            IReadOnlyList<MetricAvailability> metricAvailabilities = default;
+            string id = default;
+            IReadOnlyList<LocalizableString> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isDimensionRequired"))
+                if (property.NameEquals("isDimensionRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDimensionRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("displayDescription"))
+                if (property.NameEquals("displayDescription"u8))
                 {
                     displayDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricClass"))
+                if (property.NameEquals("metricClass"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metricClass = new MetricClass(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new MetricUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryAggregationType"))
+                if (property.NameEquals("primaryAggregationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryAggregationType = property.Value.GetString().ToMetricAggregationType();
                     continue;
                 }
-                if (property.NameEquals("supportedAggregationTypes"))
+                if (property.NameEquals("supportedAggregationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricAggregationType> array = new List<MetricAggregationType>();
@@ -115,11 +112,10 @@ namespace Azure.Monitor.Query.Models
                     supportedAggregationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("metricAvailabilities"))
+                if (property.NameEquals("metricAvailabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricAvailability> array = new List<MetricAvailability>();
@@ -130,16 +126,15 @@ namespace Azure.Monitor.Query.Models
                     metricAvailabilities = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LocalizableString> array = new List<LocalizableString>();
@@ -151,7 +146,28 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
+            return new MetricDefinition(
+                isDimensionRequired,
+                resourceId,
+                @namespace,
+                name,
+                displayDescription,
+                category,
+                metricClass,
+                unit,
+                primaryAggregationType,
+                supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                id,
+                dimensions ?? new ChangeTrackingList<LocalizableString>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricDefinition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricDefinition(document.RootElement);
         }
     }
 }

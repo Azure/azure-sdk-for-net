@@ -6,68 +6,238 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class SourceCodeRepoProperties : IUtf8JsonSerializable
+    public partial class SourceCodeRepoProperties : IUtf8JsonSerializable, IJsonModel<SourceCodeRepoProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceCodeRepoProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SourceCodeRepoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceControlType");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceCodeRepoProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("sourceControlType"u8);
             writer.WriteStringValue(SourceControlType.ToString());
-            writer.WritePropertyName("repositoryUrl");
+            writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(SourceControlAuthProperties))
             {
-                writer.WritePropertyName("sourceControlAuthProperties");
-                writer.WriteObjectValue(SourceControlAuthProperties);
+                writer.WritePropertyName("sourceControlAuthProperties"u8);
+                writer.WriteObjectValue(SourceControlAuthProperties, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SourceCodeRepoProperties DeserializeSourceCodeRepoProperties(JsonElement element)
+        SourceCodeRepoProperties IJsonModel<SourceCodeRepoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceCodeRepoProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceCodeRepoProperties(document.RootElement, options);
+        }
+
+        internal static SourceCodeRepoProperties DeserializeSourceCodeRepoProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceControlType sourceControlType = default;
             Uri repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<SourceCodeRepoAuthInfo> sourceControlAuthProperties = default;
+            string branch = default;
+            SourceCodeRepoAuthInfo sourceControlAuthProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceControlType"))
+                if (property.NameEquals("sourceControlType"u8))
                 {
                     sourceControlType = new SourceControlType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("repositoryUrl"))
+                if (property.NameEquals("repositoryUrl"u8))
                 {
                     repositoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("branch"))
+                if (property.NameEquals("branch"u8))
                 {
                     branch = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceControlAuthProperties"))
+                if (property.NameEquals("sourceControlAuthProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value);
+                    sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SourceCodeRepoProperties(sourceControlType, repositoryUrl, branch.Value, sourceControlAuthProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SourceCodeRepoProperties(sourceControlType, repositoryUrl, branch, sourceControlAuthProperties, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceControlType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceControlType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  sourceControlType: ");
+                builder.AppendLine($"'{SourceControlType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  repositoryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryUri))
+                {
+                    builder.Append("  repositoryUrl: ");
+                    builder.AppendLine($"'{RepositoryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Branch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  branch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Branch))
+                {
+                    builder.Append("  branch: ");
+                    if (Branch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Branch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Branch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceControlAuthProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceControlAuthProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceControlAuthProperties))
+                {
+                    builder.Append("  sourceControlAuthProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SourceControlAuthProperties, options, 2, false, "  sourceControlAuthProperties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SourceCodeRepoProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SourceCodeRepoProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SourceCodeRepoProperties IPersistableModel<SourceCodeRepoProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSourceCodeRepoProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SourceCodeRepoProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SourceCodeRepoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

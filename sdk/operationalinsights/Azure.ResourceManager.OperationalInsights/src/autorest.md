@@ -7,12 +7,19 @@ azure-arm: true
 csharp: true
 library-name: OperationalInsights
 namespace: Azure.ResourceManager.OperationalInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/operationalinsights/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d402f685809d6d08be9c0b45065cadd7d78ab870/specification/operationalinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -22,13 +29,12 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'clusterId': 'uuid'
   'dataExportId': 'uuid'
-  'lastSkuUpdatedOn': 'datetime'
   '*ResourceId': 'arm-id'
   'queryPackId': 'uuid'
   'customerId': 'uuid'
   'azureAsyncOperationId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -99,9 +105,9 @@ rename-mapping:
   WorkspacePatch.properties.modifiedDate: -|date-time
   DataExport.properties.enable: IsEnabled
   AvailableServiceTier.enabled: IsEnabled
-  AvailableServiceTier.lastSkuUpdate: LastSkuUpdatedOn
-  CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn
-  WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn
+  AvailableServiceTier.lastSkuUpdate: LastSkuUpdatedOn|date-time
+  CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn|date-time
+  WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn|date-time
   IntelligencePack.enabled: IsEnabled
   WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled
@@ -137,12 +143,12 @@ rename-mapping:
   ResultStatistics: OperationalInsightsTableResultStatistics
   ResultStatistics.scannedGb: ScannedGB
   WorkspaceCapping.dailyQuotaGb: DailyQuotaInGB
-  RetentionInDaysAsDefault: RetentionInDaysAsDefaultState
-  TotalRetentionInDaysAsDefault: TotalRetentionInDaysAsDefaultState
+  Table.properties.retentionInDaysAsDefault: IsRetentionInDaysAsDefault
+  Table.properties.totalRetentionInDaysAsDefault: IsTotalRetentionInDaysAsDefault
   ManagementGroup.properties.created: CreatedOn
   ManagementGroup.properties.dataReceived: DataReceivedOn
   StorageAccount.id: -|arm-id
-  WorkspacePurgeResponse.operationId: -|uuid
+  WorkspacePurgeResponse.operationId: OperationStringId
   WorkspacePurgeBody: OperationalInsightsWorkspacePurgeContent
   WorkspacePurgeBodyFilters: OperationalInsightsWorkspacePurgeFilter
   Capacity: OperationalInsightsClusterCapacity
@@ -157,6 +163,9 @@ override-operation-name:
   WorkspacePurge_Purge: Purge
   DeletedWorkspaces_List: GetDeletedWorkspaces
   DeletedWorkspaces_ListByResourceGroup: GetDeletedWorkspaces
+
+operations-to-skip-lro-api-version-override:
+- Clusters_CreateOrUpdate
 
 directive:
   - remove-operation: OperationStatuses_Get

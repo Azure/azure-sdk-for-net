@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
@@ -16,58 +15,61 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     {
         internal static SparkJob DeserializeSparkJob(JsonElement element)
         {
-            Optional<string> state = default;
-            Optional<string> name = default;
-            Optional<string> submitter = default;
-            Optional<string> compute = default;
-            Optional<string> sparkApplicationId = default;
-            Optional<string> livyId = default;
-            Optional<IReadOnlyList<string>> timing = default;
-            Optional<string> sparkJobDefinition = default;
-            Optional<IReadOnlyList<SparkJob>> pipeline = default;
-            Optional<string> jobType = default;
-            Optional<DateTimeOffset?> submitTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> queuedDuration = default;
-            Optional<string> runningDuration = default;
-            Optional<string> totalDuration = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string state = default;
+            string name = default;
+            string submitter = default;
+            string compute = default;
+            string sparkApplicationId = default;
+            string livyId = default;
+            IReadOnlyList<string> timing = default;
+            string sparkJobDefinition = default;
+            IReadOnlyList<SparkJob> pipeline = default;
+            string jobType = default;
+            DateTimeOffset? submitTime = default;
+            DateTimeOffset? endTime = default;
+            string queuedDuration = default;
+            string runningDuration = default;
+            string totalDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("submitter"))
+                if (property.NameEquals("submitter"u8))
                 {
                     submitter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compute"))
+                if (property.NameEquals("compute"u8))
                 {
                     compute = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sparkApplicationId"))
+                if (property.NameEquals("sparkApplicationId"u8))
                 {
                     sparkApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("livyId"))
+                if (property.NameEquals("livyId"u8))
                 {
                     livyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timing"))
+                if (property.NameEquals("timing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -78,7 +80,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     timing = array;
                     continue;
                 }
-                if (property.NameEquals("sparkJobDefinition"))
+                if (property.NameEquals("sparkJobDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,11 +90,10 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     sparkJobDefinition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pipeline"))
+                if (property.NameEquals("pipeline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        pipeline = null;
                         continue;
                     }
                     List<SparkJob> array = new List<SparkJob>();
@@ -103,12 +104,12 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     pipeline = array;
                     continue;
                 }
-                if (property.NameEquals("jobType"))
+                if (property.NameEquals("jobType"u8))
                 {
                     jobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("submitTime"))
+                if (property.NameEquals("submitTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +119,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     submitTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,23 +129,46 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("queuedDuration"))
+                if (property.NameEquals("queuedDuration"u8))
                 {
                     queuedDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runningDuration"))
+                if (property.NameEquals("runningDuration"u8))
                 {
                     runningDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalDuration"))
+                if (property.NameEquals("totalDuration"u8))
                 {
                     totalDuration = property.Value.GetString();
                     continue;
                 }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            return new SparkJob(
+                state,
+                name,
+                submitter,
+                compute,
+                sparkApplicationId,
+                livyId,
+                timing ?? new ChangeTrackingList<string>(),
+                sparkJobDefinition,
+                pipeline ?? new ChangeTrackingList<SparkJob>(),
+                jobType,
+                submitTime,
+                endTime,
+                queuedDuration,
+                runningDuration,
+                totalDuration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJob FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJob(document.RootElement);
         }
     }
 }

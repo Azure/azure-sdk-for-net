@@ -34,6 +34,12 @@ namespace Azure.ResourceManager.Hci.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string MovingValue = "Moving";
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        private const string InProgressValue = "InProgress";
+        private const string AcceptedValue = "Accepted";
+        private const string ProvisioningValue = "Provisioning";
+        private const string DisableInProgressValue = "DisableInProgress";
 
         /// <summary> NotSpecified. </summary>
         public static NodeArcState NotSpecified { get; } = new NodeArcState(NotSpecifiedValue);
@@ -59,11 +65,23 @@ namespace Azure.ResourceManager.Hci.Models
         public static NodeArcState Deleting { get; } = new NodeArcState(DeletingValue);
         /// <summary> Moving. </summary>
         public static NodeArcState Moving { get; } = new NodeArcState(MovingValue);
+        /// <summary> PartiallySucceeded. </summary>
+        public static NodeArcState PartiallySucceeded { get; } = new NodeArcState(PartiallySucceededValue);
+        /// <summary> PartiallyConnected. </summary>
+        public static NodeArcState PartiallyConnected { get; } = new NodeArcState(PartiallyConnectedValue);
+        /// <summary> InProgress. </summary>
+        public static NodeArcState InProgress { get; } = new NodeArcState(InProgressValue);
+        /// <summary> Accepted. </summary>
+        public static NodeArcState Accepted { get; } = new NodeArcState(AcceptedValue);
+        /// <summary> Provisioning. </summary>
+        public static NodeArcState Provisioning { get; } = new NodeArcState(ProvisioningValue);
+        /// <summary> DisableInProgress. </summary>
+        public static NodeArcState DisableInProgress { get; } = new NodeArcState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="NodeArcState"/> values are the same. </summary>
         public static bool operator ==(NodeArcState left, NodeArcState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeArcState"/> values are not the same. </summary>
         public static bool operator !=(NodeArcState left, NodeArcState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeArcState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeArcState"/>. </summary>
         public static implicit operator NodeArcState(string value) => new NodeArcState(value);
 
         /// <inheritdoc />
@@ -74,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

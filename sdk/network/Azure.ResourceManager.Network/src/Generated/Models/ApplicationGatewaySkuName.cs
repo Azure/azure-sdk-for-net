@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string WAFLargeValue = "WAF_Large";
         private const string StandardV2Value = "Standard_v2";
         private const string WAFV2Value = "WAF_v2";
+        private const string BasicValue = "Basic";
 
         /// <summary> Standard_Small. </summary>
         public static ApplicationGatewaySkuName StandardSmall { get; } = new ApplicationGatewaySkuName(StandardSmallValue);
@@ -44,11 +45,13 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewaySkuName StandardV2 { get; } = new ApplicationGatewaySkuName(StandardV2Value);
         /// <summary> WAF_v2. </summary>
         public static ApplicationGatewaySkuName WAFV2 { get; } = new ApplicationGatewaySkuName(WAFV2Value);
+        /// <summary> Basic. </summary>
+        public static ApplicationGatewaySkuName Basic { get; } = new ApplicationGatewaySkuName(BasicValue);
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySkuName left, ApplicationGatewaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewaySkuName left, ApplicationGatewaySkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewaySkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySkuName"/>. </summary>
         public static implicit operator ApplicationGatewaySkuName(string value) => new ApplicationGatewaySkuName(value);
 
         /// <inheritdoc />
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

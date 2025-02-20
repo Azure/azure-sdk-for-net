@@ -7,11 +7,10 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class SubscriptionTests : ServiceBusTestBase
+    public class SubscriptionTests : ServiceBusManagementTestBase
     {
         public SubscriptionTests(bool isAsync) : base(isAsync)
         {

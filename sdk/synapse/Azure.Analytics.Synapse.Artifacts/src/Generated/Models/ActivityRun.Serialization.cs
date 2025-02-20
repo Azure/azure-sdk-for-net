@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,113 +17,111 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static ActivityRun DeserializeActivityRun(JsonElement element)
         {
-            Optional<string> pipelineName = default;
-            Optional<string> pipelineRunId = default;
-            Optional<string> activityName = default;
-            Optional<string> activityType = default;
-            Optional<string> activityRunId = default;
-            Optional<string> linkedServiceName = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> activityRunStart = default;
-            Optional<DateTimeOffset> activityRunEnd = default;
-            Optional<int> durationInMs = default;
-            Optional<object> input = default;
-            Optional<object> output = default;
-            Optional<object> error = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string pipelineName = default;
+            string pipelineRunId = default;
+            string activityName = default;
+            string activityType = default;
+            string activityRunId = default;
+            string linkedServiceName = default;
+            string status = default;
+            DateTimeOffset? activityRunStart = default;
+            DateTimeOffset? activityRunEnd = default;
+            int? durationInMs = default;
+            object input = default;
+            object output = default;
+            object error = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipelineName"))
+                if (property.NameEquals("pipelineName"u8))
                 {
                     pipelineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pipelineRunId"))
+                if (property.NameEquals("pipelineRunId"u8))
                 {
                     pipelineRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityName"))
+                if (property.NameEquals("activityName"u8))
                 {
                     activityName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityType"))
+                if (property.NameEquals("activityType"u8))
                 {
                     activityType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityRunId"))
+                if (property.NameEquals("activityRunId"u8))
                 {
                     activityRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activityRunStart"))
+                if (property.NameEquals("activityRunStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activityRunStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("activityRunEnd"))
+                if (property.NameEquals("activityRunEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activityRunEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("durationInMs"))
+                if (property.NameEquals("durationInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     input = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     output = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = property.Value.GetObject();
@@ -133,7 +130,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new ActivityRun(
+                pipelineName,
+                pipelineRunId,
+                activityName,
+                activityType,
+                activityRunId,
+                linkedServiceName,
+                status,
+                activityRunStart,
+                activityRunEnd,
+                durationInMs,
+                input,
+                output,
+                error,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ActivityRun FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeActivityRun(document.RootElement);
         }
 
         internal partial class ActivityRunConverter : JsonConverter<ActivityRun>
@@ -142,6 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override ActivityRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

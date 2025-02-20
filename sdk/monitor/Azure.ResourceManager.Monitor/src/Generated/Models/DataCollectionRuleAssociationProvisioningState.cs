@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string SucceededValue = "Succeeded";
+        private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
         /// <summary> Creating. </summary>
@@ -36,13 +37,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionRuleAssociationProvisioningState Deleting { get; } = new DataCollectionRuleAssociationProvisioningState(DeletingValue);
         /// <summary> Succeeded. </summary>
         public static DataCollectionRuleAssociationProvisioningState Succeeded { get; } = new DataCollectionRuleAssociationProvisioningState(SucceededValue);
+        /// <summary> Canceled. </summary>
+        public static DataCollectionRuleAssociationProvisioningState Canceled { get; } = new DataCollectionRuleAssociationProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static DataCollectionRuleAssociationProvisioningState Failed { get; } = new DataCollectionRuleAssociationProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionRuleAssociationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleAssociationProvisioningState left, DataCollectionRuleAssociationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionRuleAssociationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DataCollectionRuleAssociationProvisioningState left, DataCollectionRuleAssociationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataCollectionRuleAssociationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionRuleAssociationProvisioningState"/>. </summary>
         public static implicit operator DataCollectionRuleAssociationProvisioningState(string value) => new DataCollectionRuleAssociationProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

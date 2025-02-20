@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The type of item included in the filter. Currently only &apos;AgentAddress&apos; is supported. </summary>
+    /// <summary> The type of item included in the filter. Currently only 'AgentAddress' is supported. </summary>
     public readonly partial struct ConnectionMonitorEndpointFilterItemType : IEquatable<ConnectionMonitorEndpointFilterItemType>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ConnectionMonitorEndpointFilterItemType left, ConnectionMonitorEndpointFilterItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterItemType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionMonitorEndpointFilterItemType left, ConnectionMonitorEndpointFilterItemType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
         public static implicit operator ConnectionMonitorEndpointFilterItemType(string value) => new ConnectionMonitorEndpointFilterItemType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

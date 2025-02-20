@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -16,46 +15,49 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string digest = default;
-            Optional<long> imageSize = default;
+            long? imageSize = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<ArtifactArchitecture?> architecture = default;
-            Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
-            Optional<IReadOnlyList<string>> tags = default;
-            Optional<bool> deleteEnabled = default;
-            Optional<bool> writeEnabled = default;
-            Optional<bool> listEnabled = default;
-            Optional<bool> readEnabled = default;
+            ArtifactArchitecture? architecture = default;
+            ArtifactOperatingSystem? os = default;
+            IReadOnlyList<ArtifactManifestPlatform> references = default;
+            IReadOnlyList<string> tags = default;
+            bool? deleteEnabled = default;
+            bool? writeEnabled = default;
+            bool? listEnabled = default;
+            bool? readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSize"))
+                if (property.NameEquals("imageSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"))
+                if (property.NameEquals("lastUpdateTime"u8))
                 {
                     lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry
                     architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,11 +77,10 @@ namespace Azure.Containers.ContainerRegistry
                     os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("references"))
+                if (property.NameEquals("references"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ArtifactManifestPlatform> array = new List<ArtifactManifestPlatform>();
@@ -90,11 +91,10 @@ namespace Azure.Containers.ContainerRegistry
                     references = array;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -105,7 +105,7 @@ namespace Azure.Containers.ContainerRegistry
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("changeableAttributes"))
+                if (property.NameEquals("changeableAttributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,41 +114,37 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("deleteEnabled"))
+                        if (property0.NameEquals("deleteEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleteEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("writeEnabled"))
+                        if (property0.NameEquals("writeEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             writeEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("listEnabled"))
+                        if (property0.NameEquals("listEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             listEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("readEnabled"))
+                        if (property0.NameEquals("readEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readEnabled = property0.Value.GetBoolean();
@@ -158,7 +154,27 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ManifestAttributesBase(
+                digest,
+                imageSize,
+                createdTime,
+                lastUpdateTime,
+                architecture,
+                os,
+                references ?? new ChangeTrackingList<ArtifactManifestPlatform>(),
+                tags ?? new ChangeTrackingList<string>(),
+                deleteEnabled,
+                writeEnabled,
+                listEnabled,
+                readEnabled);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManifestAttributesBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManifestAttributesBase(document.RootElement);
         }
     }
 }

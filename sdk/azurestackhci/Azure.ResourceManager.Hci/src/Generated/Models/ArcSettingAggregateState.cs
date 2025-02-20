@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string PartiallySucceededValue = "PartiallySucceeded";
         private const string PartiallyConnectedValue = "PartiallyConnected";
         private const string InProgressValue = "InProgress";
+        private const string AcceptedValue = "Accepted";
+        private const string ProvisioningValue = "Provisioning";
+        private const string DisableInProgressValue = "DisableInProgress";
 
         /// <summary> NotSpecified. </summary>
         public static ArcSettingAggregateState NotSpecified { get; } = new ArcSettingAggregateState(NotSpecifiedValue);
@@ -68,11 +71,17 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcSettingAggregateState PartiallyConnected { get; } = new ArcSettingAggregateState(PartiallyConnectedValue);
         /// <summary> InProgress. </summary>
         public static ArcSettingAggregateState InProgress { get; } = new ArcSettingAggregateState(InProgressValue);
+        /// <summary> Accepted. </summary>
+        public static ArcSettingAggregateState Accepted { get; } = new ArcSettingAggregateState(AcceptedValue);
+        /// <summary> Provisioning. </summary>
+        public static ArcSettingAggregateState Provisioning { get; } = new ArcSettingAggregateState(ProvisioningValue);
+        /// <summary> DisableInProgress. </summary>
+        public static ArcSettingAggregateState DisableInProgress { get; } = new ArcSettingAggregateState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcSettingAggregateState left, ArcSettingAggregateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are not the same. </summary>
         public static bool operator !=(ArcSettingAggregateState left, ArcSettingAggregateState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArcSettingAggregateState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcSettingAggregateState"/>. </summary>
         public static implicit operator ArcSettingAggregateState(string value) => new ArcSettingAggregateState(value);
 
         /// <inheritdoc />
@@ -83,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,55 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CspmMonitorAwsOffering : IUtf8JsonSerializable
+    public partial class CspmMonitorAwsOffering : IUtf8JsonSerializable, IJsonModel<CspmMonitorAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspmMonitorAwsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CspmMonitorAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NativeCloudConnection))
-            {
-                writer.WritePropertyName("nativeCloudConnection");
-                writer.WriteObjectValue(NativeCloudConnection);
-            }
-            writer.WritePropertyName("offeringType");
-            writer.WriteStringValue(OfferingType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static CspmMonitorAwsOffering DeserializeCspmMonitorAwsOffering(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<CspmMonitorAwsOfferingNativeCloudConnection> nativeCloudConnection = default;
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(NativeCloudConnection))
+            {
+                writer.WritePropertyName("nativeCloudConnection"u8);
+                writer.WriteObjectValue(NativeCloudConnection, options);
+            }
+        }
+
+        CspmMonitorAwsOffering IJsonModel<CspmMonitorAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCspmMonitorAwsOffering(document.RootElement, options);
+        }
+
+        internal static CspmMonitorAwsOffering DeserializeCspmMonitorAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CspmMonitorAwsOfferingNativeCloudConnection nativeCloudConnection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nativeCloudConnection"))
+                if (property.NameEquals("nativeCloudConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nativeCloudConnection = CspmMonitorAwsOfferingNativeCloudConnection.DeserializeCspmMonitorAwsOfferingNativeCloudConnection(property.Value);
+                    nativeCloudConnection = CspmMonitorAwsOfferingNativeCloudConnection.DeserializeCspmMonitorAwsOfferingNativeCloudConnection(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CspmMonitorAwsOffering(offeringType, description.Value, nativeCloudConnection.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CspmMonitorAwsOffering(offeringType, description, serializedAdditionalRawData, nativeCloudConnection);
         }
+
+        BinaryData IPersistableModel<CspmMonitorAwsOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CspmMonitorAwsOffering IPersistableModel<CspmMonitorAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCspmMonitorAwsOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CspmMonitorAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

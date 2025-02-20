@@ -8,9 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Chaos.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
@@ -18,139 +17,150 @@ namespace Azure.ResourceManager.Chaos
     /// <summary> A class to add extension methods to Azure.ResourceManager.Chaos. </summary>
     public static partial class ChaosExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static MockableChaosArmClient GetMockableChaosArmClient(ArmClient client)
         {
-            return subscriptionResource.GetCachedClient((client) =>
-            {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+            return client.GetCachedClient(client0 => new MockableChaosArmClient(client0));
         }
 
-        /// <summary> Gets a collection of TargetTypeResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of TargetTypeResources and their operations over a TargetTypeResource. </returns>
-        public static TargetTypeCollection GetTargetTypes(this SubscriptionResource subscriptionResource, string locationName)
+        private static MockableChaosResourceGroupResource GetMockableChaosResourceGroupResource(ArmResource resource)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            return resource.GetCachedClient(client => new MockableChaosResourceGroupResource(client, resource.Id));
+        }
 
-            return GetExtensionClient(subscriptionResource).GetTargetTypes(locationName);
+        private static MockableChaosSubscriptionResource GetMockableChaosSubscriptionResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableChaosSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Get a Target Type resources for given location.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ChaosCapabilityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosCapabilityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TargetTypeResource>> GetTargetTypeAsync(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosCapabilityResource"/> object. </returns>
+        public static ChaosCapabilityResource GetChaosCapabilityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return await subscriptionResource.GetTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosCapabilityResource(id);
         }
 
         /// <summary>
-        /// Get a Target Type resources for given location.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ChaosCapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosCapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosCapabilityTypeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TargetTypeResource> GetTargetType(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosCapabilityTypeResource"/> object. </returns>
+        public static ChaosCapabilityTypeResource GetChaosCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return subscriptionResource.GetTargetTypes(locationName).Get(targetTypeName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosCapabilityTypeResource(id);
         }
 
         /// <summary>
-        /// Get a list of Experiment resources in a subscription.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ChaosExperimentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosExperimentResource.CreateResourceIdentifier" /> to create a <see cref="ChaosExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosExperimentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_ListAll</description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosExperimentResource"/> object. </returns>
+        public static ChaosExperimentResource GetChaosExperimentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosExperimentResource(id);
         }
 
         /// <summary>
-        /// Get a list of Experiment resources in a subscription.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ChaosExperimentExecutionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosExperimentExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ChaosExperimentExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosExperimentExecutionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_ListAll</description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosExperimentExecutionResource"/> object. </returns>
+        public static ChaosExperimentExecutionResource GetChaosExperimentExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosExperimentExecutionResource(id);
         }
 
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTargetTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosTargetTypeResource"/> object. </returns>
+        public static ChaosTargetTypeResource GetChaosTargetTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosTargetTypeResource(id);
         }
 
-        /// <summary> Gets a collection of ExperimentResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTargetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
+        public static ChaosTargetResource GetChaosTargetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosTargetResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ChaosExperimentResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosExperiments()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ExperimentResources and their operations over a ExperimentResource. </returns>
-        public static ExperimentCollection GetExperiments(this ResourceGroupResource resourceGroupResource)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ChaosExperimentResources and their operations over a ChaosExperimentResource. </returns>
+        public static ChaosExperimentCollection GetChaosExperiments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetExperiments();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperiments();
         }
 
         /// <summary>
@@ -164,17 +174,31 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosExperimentAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExperimentResource>> GetExperimentAsync(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ChaosExperimentResource>> GetChaosExperimentAsync(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperimentAsync(experimentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -188,34 +212,52 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosExperiment(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExperimentResource> GetExperiment(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
+        public static Response<ChaosExperimentResource> GetChaosExperiment(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetExperiments().Get(experimentName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperiment(experimentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TargetResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ChaosTargetResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosTargets(string,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
         /// <param name="parentResourceType"> String that represents a resource type. </param>
         /// <param name="parentResourceName"> String that represents a resource name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
-        /// <returns> An object representing collection of TargetResources and their operations over a TargetResource. </returns>
-        public static TargetCollection GetTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
+        /// <returns> An object representing collection of ChaosTargetResources and their operations over a ChaosTargetResource. </returns>
+        public static ChaosTargetCollection GetChaosTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
         {
-            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetExtensionClient(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName);
         }
 
         /// <summary>
@@ -229,7 +271,19 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosTargetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosTargetAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
@@ -237,12 +291,14 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="parentResourceName"> String that represents a resource name. </param>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TargetResource>> GetTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTargetAsync(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,7 +312,19 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosTargetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosTarget(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
@@ -264,145 +332,187 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="parentResourceName"> String that represents a resource name. </param>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TargetResource> GetTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        public static Response<ChaosTargetResource> GetChaosTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTarget(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken);
         }
 
-        #region CapabilityResource
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of ChaosTargetTypeResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosTargetTypes(string)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityResource" /> object. </returns>
-        public static CapabilityResource GetCapabilityResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> String that represents a Location resource name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of ChaosTargetTypeResources and their operations over a ChaosTargetTypeResource. </returns>
+        public static ChaosTargetTypeCollection GetChaosTargetTypes(this SubscriptionResource subscriptionResource, string locationName)
         {
-            return client.GetResourceClient(() =>
-            {
-                CapabilityResource.ValidateResourceId(id);
-                return new CapabilityResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-        #region CapabilityTypeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
-        public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CapabilityTypeResource.ValidateResourceId(id);
-                return new CapabilityTypeResource(client, id);
-            }
-            );
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetTypes(locationName);
         }
-        #endregion
 
-        #region ExperimentResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExperimentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get a Target Type resources for given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosTargetTypeAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentResource" /> object. </returns>
-        public static ExperimentResource GetExperimentResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> String that represents a Location resource name. </param>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExperimentResource.ValidateResourceId(id);
-                return new ExperimentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-        #region ExperimentStatusResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ExperimentStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentStatusResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentStatusResource" /> object. </returns>
-        public static ExperimentStatusResource GetExperimentStatusResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ExperimentStatusResource.ValidateResourceId(id);
-                return new ExperimentStatusResource(client, id);
-            }
-            );
+            return await GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetTypeAsync(locationName, targetTypeName, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
 
-        #region ExperimentExecutionDetailResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExperimentExecutionDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentExecutionDetailResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentExecutionDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get a Target Type resources for given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosTargetType(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentExecutionDetailResource" /> object. </returns>
-        public static ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> String that represents a Location resource name. </param>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ChaosTargetTypeResource> GetChaosTargetType(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExperimentExecutionDetailResource.ValidateResourceId(id);
-                return new ExperimentExecutionDetailResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-        #region TargetTypeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TargetTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="TargetTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetTypeResource" /> object. </returns>
-        public static TargetTypeResource GetTargetTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TargetTypeResource.ValidateResourceId(id);
-                return new TargetTypeResource(client, id);
-            }
-            );
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetType(locationName, targetTypeName, cancellationToken);
         }
-        #endregion
 
-        #region TargetResource
         /// <summary>
-        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get a list of Experiment resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosExperiments(bool?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
-        public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                TargetResource.ValidateResourceId(id);
-                return new TargetResource(client, id);
-            }
-            );
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperimentsAsync(running, continuationToken, cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Get a list of Experiment resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosExperiments(bool?,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ChaosExperimentResource> GetChaosExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperiments(running, continuationToken, cancellationToken);
+        }
     }
 }

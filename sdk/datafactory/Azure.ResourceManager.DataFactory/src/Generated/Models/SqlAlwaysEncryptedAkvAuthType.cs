@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
+    /// <summary> Sql always encrypted AKV authentication type. Type: string. </summary>
     public readonly partial struct SqlAlwaysEncryptedAkvAuthType : IEquatable<SqlAlwaysEncryptedAkvAuthType>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(SqlAlwaysEncryptedAkvAuthType left, SqlAlwaysEncryptedAkvAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedAkvAuthType"/> values are not the same. </summary>
         public static bool operator !=(SqlAlwaysEncryptedAkvAuthType left, SqlAlwaysEncryptedAkvAuthType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedAkvAuthType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAlwaysEncryptedAkvAuthType"/>. </summary>
         public static implicit operator SqlAlwaysEncryptedAkvAuthType(string value) => new SqlAlwaysEncryptedAkvAuthType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

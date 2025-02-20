@@ -23,17 +23,20 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string MatchRuleValue = "MatchRule";
+        private const string RateLimitRuleValue = "RateLimitRule";
         private const string InvalidValue = "Invalid";
 
         /// <summary> MatchRule. </summary>
         public static WebApplicationFirewallRuleType MatchRule { get; } = new WebApplicationFirewallRuleType(MatchRuleValue);
+        /// <summary> RateLimitRule. </summary>
+        public static WebApplicationFirewallRuleType RateLimitRule { get; } = new WebApplicationFirewallRuleType(RateLimitRuleValue);
         /// <summary> Invalid. </summary>
         public static WebApplicationFirewallRuleType Invalid { get; } = new WebApplicationFirewallRuleType(InvalidValue);
         /// <summary> Determines if two <see cref="WebApplicationFirewallRuleType"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallRuleType left, WebApplicationFirewallRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallRuleType"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationFirewallRuleType left, WebApplicationFirewallRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationFirewallRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallRuleType"/>. </summary>
         public static implicit operator WebApplicationFirewallRuleType(string value) => new WebApplicationFirewallRuleType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

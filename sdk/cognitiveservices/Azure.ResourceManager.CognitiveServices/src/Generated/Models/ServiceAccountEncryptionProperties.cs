@@ -6,41 +6,66 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties to configure Encryption. </summary>
     public partial class ServiceAccountEncryptionProperties
     {
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
         public ServiceAccountEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
+        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVersion"> Version of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="identityClientId"></param>
-        internal ServiceAccountEncryptionProperties(ServiceAccountEncryptionKeySource? keySource, string keyName, string keyVersion, Uri keyVaultUri, Guid? identityClientId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountEncryptionProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
-            KeyName = keyName;
-            KeyVersion = keyVersion;
-            KeyVaultUri = keyVaultUri;
-            IdentityClientId = identityClientId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Properties of KeyVault. </summary>
+        [WirePath("keyVaultProperties")]
+        public CognitiveServicesKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
+        [WirePath("keySource")]
         public ServiceAccountEncryptionKeySource? KeySource { get; set; }
-        /// <summary> Name of the Key from KeyVault. </summary>
-        public string KeyName { get; set; }
-        /// <summary> Version of the Key from KeyVault. </summary>
-        public string KeyVersion { get; set; }
-        /// <summary> Uri of KeyVault. </summary>
-        public Uri KeyVaultUri { get; set; }
-        /// <summary> Gets or sets the identity client id. </summary>
-        public Guid? IdentityClientId { get; set; }
     }
 }

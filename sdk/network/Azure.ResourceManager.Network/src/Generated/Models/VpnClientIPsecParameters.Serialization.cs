@@ -5,37 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientIPsecParameters : IUtf8JsonSerializable
+    public partial class VpnClientIPsecParameters : IUtf8JsonSerializable, IJsonModel<VpnClientIPsecParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnClientIPsecParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VpnClientIPsecParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("saLifeTimeSeconds");
-            writer.WriteNumberValue(SaLifeTimeSeconds);
-            writer.WritePropertyName("saDataSizeKilobytes");
-            writer.WriteNumberValue(SaDataSizeKilobytes);
-            writer.WritePropertyName("ipsecEncryption");
-            writer.WriteStringValue(IPsecEncryption.ToString());
-            writer.WritePropertyName("ipsecIntegrity");
-            writer.WriteStringValue(IPsecIntegrity.ToString());
-            writer.WritePropertyName("ikeEncryption");
-            writer.WriteStringValue(IkeEncryption.ToString());
-            writer.WritePropertyName("ikeIntegrity");
-            writer.WriteStringValue(IkeIntegrity.ToString());
-            writer.WritePropertyName("dhGroup");
-            writer.WriteStringValue(DhGroup.ToString());
-            writer.WritePropertyName("pfsGroup");
-            writer.WriteStringValue(PfsGroup.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("saLifeTimeSeconds"u8);
+            writer.WriteNumberValue(SaLifeTimeSeconds);
+            writer.WritePropertyName("saDataSizeKilobytes"u8);
+            writer.WriteNumberValue(SaDataSizeKilobytes);
+            writer.WritePropertyName("ipsecEncryption"u8);
+            writer.WriteStringValue(IPsecEncryption.ToString());
+            writer.WritePropertyName("ipsecIntegrity"u8);
+            writer.WriteStringValue(IPsecIntegrity.ToString());
+            writer.WritePropertyName("ikeEncryption"u8);
+            writer.WriteStringValue(IkeEncryption.ToString());
+            writer.WritePropertyName("ikeIntegrity"u8);
+            writer.WriteStringValue(IkeIntegrity.ToString());
+            writer.WritePropertyName("dhGroup"u8);
+            writer.WriteStringValue(DhGroup.ToString());
+            writer.WritePropertyName("pfsGroup"u8);
+            writer.WriteStringValue(PfsGroup.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        VpnClientIPsecParameters IJsonModel<VpnClientIPsecParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnClientIPsecParameters(document.RootElement, options);
+        }
+
+        internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
             IPsecEncryption ipsecEncryption = default;
@@ -44,50 +95,97 @@ namespace Azure.ResourceManager.Network.Models
             IkeIntegrity ikeIntegrity = default;
             DHGroup dhGroup = default;
             PfsGroup pfsGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("saLifeTimeSeconds"))
+                if (property.NameEquals("saLifeTimeSeconds"u8))
                 {
                     saLifeTimeSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("saDataSizeKilobytes"))
+                if (property.NameEquals("saDataSizeKilobytes"u8))
                 {
                     saDataSizeKilobytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipsecEncryption"))
+                if (property.NameEquals("ipsecEncryption"u8))
                 {
                     ipsecEncryption = new IPsecEncryption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipsecIntegrity"))
+                if (property.NameEquals("ipsecIntegrity"u8))
                 {
                     ipsecIntegrity = new IPsecIntegrity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ikeEncryption"))
+                if (property.NameEquals("ikeEncryption"u8))
                 {
                     ikeEncryption = new IkeEncryption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ikeIntegrity"))
+                if (property.NameEquals("ikeIntegrity"u8))
                 {
                     ikeIntegrity = new IkeIntegrity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dhGroup"))
+                if (property.NameEquals("dhGroup"u8))
                 {
                     dhGroup = new DHGroup(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("pfsGroup"))
+                if (property.NameEquals("pfsGroup"u8))
                 {
                     pfsGroup = new PfsGroup(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnClientIPsecParameters(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VpnClientIPsecParameters(
+                saLifeTimeSeconds,
+                saDataSizeKilobytes,
+                ipsecEncryption,
+                ipsecIntegrity,
+                ikeEncryption,
+                ikeIntegrity,
+                dhGroup,
+                pfsGroup,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VpnClientIPsecParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VpnClientIPsecParameters IPersistableModel<VpnClientIPsecParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVpnClientIPsecParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VpnClientIPsecParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

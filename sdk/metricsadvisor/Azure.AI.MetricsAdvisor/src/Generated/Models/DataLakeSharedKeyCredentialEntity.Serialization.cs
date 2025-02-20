@@ -16,15 +16,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
-            writer.WritePropertyName("dataSourceCredentialType");
+            writer.WritePropertyName("parameters"u8);
+            writer.WriteObjectValue<DataLakeGen2SharedKeyParam>(Parameters);
+            writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
-            writer.WritePropertyName("dataSourceCredentialName");
+            writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("dataSourceCredentialDescription");
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -32,40 +32,60 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         internal static DataLakeSharedKeyCredentialEntity DeserializeDataLakeSharedKeyCredentialEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataLakeGen2SharedKeyParam parameters = default;
             DataSourceCredentialKind dataSourceCredentialType = default;
-            Optional<string> dataSourceCredentialId = default;
+            string dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
-            Optional<string> dataSourceCredentialDescription = default;
+            string dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     parameters = DataLakeGen2SharedKeyParam.DeserializeDataLakeGen2SharedKeyParam(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialType"))
+                if (property.NameEquals("dataSourceCredentialType"u8))
                 {
                     dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialId"))
+                if (property.NameEquals("dataSourceCredentialId"u8))
                 {
                     dataSourceCredentialId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialName"))
+                if (property.NameEquals("dataSourceCredentialName"u8))
                 {
                     dataSourceCredentialName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialDescription"))
+                if (property.NameEquals("dataSourceCredentialDescription"u8))
                 {
                     dataSourceCredentialDescription = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataLakeSharedKeyCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataLakeSharedKeyCredentialEntity(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DataLakeSharedKeyCredentialEntity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataLakeSharedKeyCredentialEntity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

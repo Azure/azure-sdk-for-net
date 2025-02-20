@@ -5,89 +5,254 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisPersistenceSettings : IUtf8JsonSerializable
+    public partial class RedisPersistenceSettings : IUtf8JsonSerializable, IJsonModel<RedisPersistenceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPersistenceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RedisPersistenceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IsAofEnabled))
             {
-                writer.WritePropertyName("aofEnabled");
+                writer.WritePropertyName("aofEnabled"u8);
                 writer.WriteBooleanValue(IsAofEnabled.Value);
             }
             if (Optional.IsDefined(IsRdbEnabled))
             {
-                writer.WritePropertyName("rdbEnabled");
+                writer.WritePropertyName("rdbEnabled"u8);
                 writer.WriteBooleanValue(IsRdbEnabled.Value);
             }
             if (Optional.IsDefined(AofFrequency))
             {
-                writer.WritePropertyName("aofFrequency");
+                writer.WritePropertyName("aofFrequency"u8);
                 writer.WriteStringValue(AofFrequency.Value.ToString());
             }
             if (Optional.IsDefined(RdbFrequency))
             {
-                writer.WritePropertyName("rdbFrequency");
+                writer.WritePropertyName("rdbFrequency"u8);
                 writer.WriteStringValue(RdbFrequency.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RedisPersistenceSettings DeserializeRedisPersistenceSettings(JsonElement element)
+        RedisPersistenceSettings IJsonModel<RedisPersistenceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<bool> aofEnabled = default;
-            Optional<bool> rdbEnabled = default;
-            Optional<PersistenceSettingAofFrequency> aofFrequency = default;
-            Optional<PersistenceSettingRdbFrequency> rdbFrequency = default;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisPersistenceSettings(document.RootElement, options);
+        }
+
+        internal static RedisPersistenceSettings DeserializeRedisPersistenceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? aofEnabled = default;
+            bool? rdbEnabled = default;
+            PersistenceSettingAofFrequency? aofFrequency = default;
+            PersistenceSettingRdbFrequency? rdbFrequency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aofEnabled"))
+                if (property.NameEquals("aofEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aofEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rdbEnabled"))
+                if (property.NameEquals("rdbEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rdbEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("aofFrequency"))
+                if (property.NameEquals("aofFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aofFrequency = new PersistenceSettingAofFrequency(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rdbFrequency"))
+                if (property.NameEquals("rdbFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rdbFrequency = new PersistenceSettingRdbFrequency(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisPersistenceSettings(Optional.ToNullable(aofEnabled), Optional.ToNullable(rdbEnabled), Optional.ToNullable(aofFrequency), Optional.ToNullable(rdbFrequency));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RedisPersistenceSettings(aofEnabled, rdbEnabled, aofFrequency, rdbFrequency, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAofEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aofEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAofEnabled))
+                {
+                    builder.Append("  aofEnabled: ");
+                    var boolValue = IsAofEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRdbEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdbEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRdbEnabled))
+                {
+                    builder.Append("  rdbEnabled: ");
+                    var boolValue = IsRdbEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AofFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aofFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AofFrequency))
+                {
+                    builder.Append("  aofFrequency: ");
+                    builder.AppendLine($"'{AofFrequency.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdbFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbFrequency))
+                {
+                    builder.Append("  rdbFrequency: ");
+                    builder.AppendLine($"'{RdbFrequency.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RedisPersistenceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RedisPersistenceSettings IPersistableModel<RedisPersistenceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRedisPersistenceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RedisPersistenceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

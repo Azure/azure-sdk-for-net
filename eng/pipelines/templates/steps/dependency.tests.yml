@@ -27,6 +27,7 @@ steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
     parameters:
       EnableNuGetCache: false
+
   - pwsh: |
       dotnet build /t:ProjectDependsOn ./eng/service.proj `
         /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
@@ -52,7 +53,8 @@ steps:
       pwsh: true
     displayName: Split testing packages into different files
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: DependencyTestProjectReferences
+  - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+    parameters:
+      ArtifactPath: $(Build.ArtifactStagingDirectory)
+      ArtifactName: DependencyTestProjectReferences
+      SbomEnabled: false

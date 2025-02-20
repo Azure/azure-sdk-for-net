@@ -5,26 +5,31 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary> A class representing the TrafficManagerProfile data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficManagerProfile data model.
+    /// Class representing a Traffic Manager profile.
+    /// </summary>
     public partial class TrafficManagerProfileData : TrafficManagerTrackedResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileData"/>. </summary>
         public TrafficManagerProfileData()
         {
             Endpoints = new ChangeTrackingList<TrafficManagerEndpointData>();
             AllowedEndpointRecordTypes = new ChangeTrackingList<AllowedEndpointRecordType>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The Azure Region where the resource lives. </param>
         /// <param name="profileStatus"> The status of the Traffic Manager profile. </param>
@@ -32,10 +37,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="dnsConfig"> The DNS settings of the Traffic Manager profile. </param>
         /// <param name="monitorConfig"> The endpoint monitoring settings of the Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Traffic Manager profile. </param>
-        /// <param name="trafficViewEnrollmentStatus"> Indicates whether Traffic View is &apos;Enabled&apos; or &apos;Disabled&apos; for the Traffic Manager profile. Null, indicates &apos;Disabled&apos;. Enabling this feature will increase the cost of the Traffic Manage profile. </param>
+        /// <param name="trafficViewEnrollmentStatus"> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </param>
         /// <param name="allowedEndpointRecordTypes"> The list of allowed endpoint record types. </param>
         /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
-        internal TrafficManagerProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, AzureLocation? location, TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointData> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn) : base(id, name, resourceType, tags, location)
+        internal TrafficManagerProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, AzureLocation? location, TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointData> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn) : base(id, name, resourceType, serializedAdditionalRawData, tags, location)
         {
             ProfileStatus = profileStatus;
             TrafficRoutingMethod = trafficRoutingMethod;
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.TrafficManager
         public TrafficManagerMonitorConfig MonitorConfig { get; set; }
         /// <summary> The list of endpoints in the Traffic Manager profile. </summary>
         public IList<TrafficManagerEndpointData> Endpoints { get; }
-        /// <summary> Indicates whether Traffic View is &apos;Enabled&apos; or &apos;Disabled&apos; for the Traffic Manager profile. Null, indicates &apos;Disabled&apos;. Enabling this feature will increase the cost of the Traffic Manage profile. </summary>
+        /// <summary> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </summary>
         public TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get; set; }
         /// <summary> The list of allowed endpoint record types. </summary>
         public IList<AllowedEndpointRecordType> AllowedEndpointRecordTypes { get; }

@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
-                writer.WriteObjectValue(Count);
+                writer.WritePropertyName("count"u8);
+                writer.WriteObjectValue<object>(Count);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -33,32 +33,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
         {
-            Optional<object> count = default;
-            Optional<int> intervalInSeconds = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object count = default;
+            int? intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("intervalInSeconds"))
+                if (property.NameEquals("intervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds));
+            return new RetryPolicy(count, intervalInSeconds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RetryPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRetryPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class RetryPolicyConverter : JsonConverter<RetryPolicy>
@@ -67,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RetryPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -16,6 +16,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 . (Join-Path $EngCommonScriptsDir "Helpers" git-helpers.ps1)
 . (Join-Path $EngCommonScriptsDir "Helpers" Package-Helpers.ps1)
+. (Join-Path $EngCommonScriptsDir "Helpers" CommandInvocation-Helpers.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -40,6 +41,7 @@ if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore")
 }
 
 # Transformed Functions
+# Expected to be set in eng/scripts/Language-Settings.ps1
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
@@ -57,3 +59,15 @@ $GetDocsMsTocChildrenForManagementPackagesFn = "Get-${Language}-DocsMsTocChildre
 $UpdateDocsMsTocFn = "Get-${Language}-UpdatedDocsMsToc"
 $GetPackageLevelReadmeFn = "Get-${Language}-PackageLevelReadme"
 $GetRepositoryLinkFn = "Get-${Language}-RepositoryLink"
+$GetEmitterAdditionalOptionsFn = "Get-${Language}-EmitterAdditionalOptions"
+$GetEmitterNameFn = "Get-${Language}-EmitterName"
+$GetDirectoriesForGenerationFn = "Get-${Language}-DirectoriesForGeneration"
+$UpdateGeneratedSdksFn = "Update-${Language}-GeneratedSdks"
+$IsApiviewStatusCheckRequiredFn = "Get-${Language}-ApiviewStatusCheckRequirement"
+$AdditionalValidationPackagesFromPackageSetFn = "Get-${Language}-AdditionalValidationPackagesFromPackageSet"
+
+# Expected to be set in eng/scripts/docs/Docs-Onboarding.ps1
+$SetDocsPackageOnboarding = "Set-${Language}-DocsPackageOnboarding"
+$GetDocsPackagesAlreadyOnboarded = "Get-${Language}-DocsPackagesAlreadyOnboarded"
+$GetPackageIdentity = "Get-${Language}-PackageIdentity"
+$GetPackageIdentityFromCsvMetadata = "Get-${Language}-PackageIdentityFromCsvMetadata"

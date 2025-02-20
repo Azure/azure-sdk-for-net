@@ -17,34 +17,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
             if (Optional.IsDefined(OuterId))
             {
-                writer.WritePropertyName("outerId");
+                writer.WritePropertyName("outerId"u8);
                 writer.WriteNumberValue(OuterId.Value);
             }
             if (Optional.IsDefined(TypeName))
             {
-                writer.WritePropertyName("typeName");
+                writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            writer.WritePropertyName("message");
+            writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             if (Optional.IsDefined(HasFullStack))
             {
-                writer.WritePropertyName("hasFullStack");
+                writer.WritePropertyName("hasFullStack"u8);
                 writer.WriteBooleanValue(HasFullStack.Value);
             }
             if (Optional.IsDefined(Stack))
             {
-                writer.WritePropertyName("stack");
+                writer.WritePropertyName("stack"u8);
                 writer.WriteStringValue(Stack);
             }
             if (Optional.IsCollectionDefined(ParsedStack))
             {
-                writer.WritePropertyName("parsedStack");
+                writer.WritePropertyName("parsedStack"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParsedStack)
                 {
@@ -53,6 +53,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

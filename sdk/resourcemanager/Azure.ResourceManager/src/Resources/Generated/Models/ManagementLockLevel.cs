@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can&apos;t modify or delete it. </summary>
+    /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </summary>
     public readonly partial struct ManagementLockLevel : IEquatable<ManagementLockLevel>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ManagementLockLevel left, ManagementLockLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementLockLevel"/> values are not the same. </summary>
         public static bool operator !=(ManagementLockLevel left, ManagementLockLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagementLockLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagementLockLevel"/>. </summary>
         public static implicit operator ManagementLockLevel(string value) => new ManagementLockLevel(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventHub.CaptureFileCreated event. </summary>
     public partial class EventHubCaptureFileCreatedEventData
     {
-        /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
         internal EventHubCaptureFileCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
         /// <param name="partitionId"> The shard ID. </param>

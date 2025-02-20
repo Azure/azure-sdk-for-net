@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -15,21 +14,32 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static BackupStorageResult DeserializeBackupStorageResult(JsonElement element)
         {
-            Optional<byte[]> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            byte[] value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetBytesFromBase64("U");
                     continue;
                 }
             }
-            return new BackupStorageResult(value.Value);
+            return new BackupStorageResult(value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BackupStorageResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBackupStorageResult(document.RootElement);
         }
     }
 }

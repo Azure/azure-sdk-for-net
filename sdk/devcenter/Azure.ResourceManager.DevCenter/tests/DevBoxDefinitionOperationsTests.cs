@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             var devBoxDefinitionData = new DevBoxDefinitionData(TestEnvironment.Location)
             {
-                ImageReference = new ImageReference()
+                ImageReference = new DevCenterImageReference()
                 {
-                    Id = $"{devCenterId}/galleries/default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+                    Id = new ResourceIdentifier($"{devCenterId}/galleries/default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365"),
                 },
                 Sku = new DevCenterSku(name: "general_a_8c32gb_v1"),
                 OSStorageType = "ssd_512gb",

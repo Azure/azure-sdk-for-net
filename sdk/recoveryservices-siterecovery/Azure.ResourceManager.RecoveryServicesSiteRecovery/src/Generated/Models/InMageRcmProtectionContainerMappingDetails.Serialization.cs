@@ -5,31 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmProtectionContainerMappingDetails
+    public partial class InMageRcmProtectionContainerMappingDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmProtectionContainerMappingDetails>
     {
-        internal static InMageRcmProtectionContainerMappingDetails DeserializeInMageRcmProtectionContainerMappingDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmProtectionContainerMappingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InMageRcmProtectionContainerMappingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> enableAgentAutoUpgrade = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmProtectionContainerMappingDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(EnableAgentAutoUpgrade))
+            {
+                writer.WritePropertyName("enableAgentAutoUpgrade"u8);
+                writer.WriteStringValue(EnableAgentAutoUpgrade);
+            }
+        }
+
+        InMageRcmProtectionContainerMappingDetails IJsonModel<InMageRcmProtectionContainerMappingDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmProtectionContainerMappingDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmProtectionContainerMappingDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmProtectionContainerMappingDetails DeserializeInMageRcmProtectionContainerMappingDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string enableAgentAutoUpgrade = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableAgentAutoUpgrade"))
+                if (property.NameEquals("enableAgentAutoUpgrade"u8))
                 {
                     enableAgentAutoUpgrade = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmProtectionContainerMappingDetails(instanceType, enableAgentAutoUpgrade.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageRcmProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, enableAgentAutoUpgrade);
         }
+
+        BinaryData IPersistableModel<InMageRcmProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmProtectionContainerMappingDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmProtectionContainerMappingDetails IPersistableModel<InMageRcmProtectionContainerMappingDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmProtectionContainerMappingDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmProtectionContainerMappingDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmProtectionContainerMappingDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,20 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServices.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // Availability status of Resource Name when no resource with same name, type and subscription exists, nor has been deleted within last 24 hours
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityRecoveryService_AvailabilityStatusOfResourceNameWhenNoResourceWithSameNameTypeAndSubscriptionExistsNorHasBeenDeletedWithinLast24Hours()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckRecoveryServicesNameAvailability_AvailabilityStatusOfResourceNameWhenNoResourceWithSameNameTypeAndSubscriptionExistsNorHasBeenDeletedWithinLast24Hours()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/CheckNameAvailability_Available.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/CheckNameAvailability_Available.json
             // this example is just showing the usage of "RecoveryServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,22 +38,21 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            RecoveryServicesNameAvailabilityContent content = new RecoveryServicesNameAvailabilityContent
             {
-                ResourceType = "Microsoft.RecoveryServices/Vaults",
+                ResourceType = new ResourceType("Microsoft.RecoveryServices/Vaults"),
                 Name = "swaggerExample",
             };
-            CheckNameAvailabilityResult result = await resourceGroupResource.CheckNameAvailabilityRecoveryServiceAsync(location, content);
+            RecoveryServicesNameAvailabilityResult result = await resourceGroupResource.CheckRecoveryServicesNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Availability status of Resource Name when resource with same name, type and subscription exists
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityRecoveryService_AvailabilityStatusOfResourceNameWhenResourceWithSameNameTypeAndSubscriptionExists()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckRecoveryServicesNameAvailability_AvailabilityStatusOfResourceNameWhenResourceWithSameNameTypeAndSubscriptionExists()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/CheckNameAvailability_NotAvailable.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/CheckNameAvailability_NotAvailable.json
             // this example is just showing the usage of "RecoveryServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,12 +69,12 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            RecoveryServicesNameAvailabilityContent content = new RecoveryServicesNameAvailabilityContent
             {
-                ResourceType = "Microsoft.RecoveryServices/Vaults",
+                ResourceType = new ResourceType("Microsoft.RecoveryServices/Vaults"),
                 Name = "swaggerExample2",
             };
-            CheckNameAvailabilityResult result = await resourceGroupResource.CheckNameAvailabilityRecoveryServiceAsync(location, content);
+            RecoveryServicesNameAvailabilityResult result = await resourceGroupResource.CheckRecoveryServicesNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

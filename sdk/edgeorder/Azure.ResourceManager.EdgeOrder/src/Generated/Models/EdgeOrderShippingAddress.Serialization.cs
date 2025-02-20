@@ -5,134 +5,233 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderShippingAddress : IUtf8JsonSerializable
+    public partial class EdgeOrderShippingAddress : IUtf8JsonSerializable, IJsonModel<EdgeOrderShippingAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderShippingAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EdgeOrderShippingAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("streetAddress1");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
             if (Optional.IsDefined(StreetAddress2))
             {
-                writer.WritePropertyName("streetAddress2");
+                writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
             if (Optional.IsDefined(StreetAddress3))
             {
-                writer.WritePropertyName("streetAddress3");
+                writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city");
+                writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
             if (Optional.IsDefined(StateOrProvince))
             {
-                writer.WritePropertyName("stateOrProvince");
+                writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
             }
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
             if (Optional.IsDefined(PostalCode))
             {
-                writer.WritePropertyName("postalCode");
+                writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
             if (Optional.IsDefined(ZipExtendedCode))
             {
-                writer.WritePropertyName("zipExtendedCode");
+                writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
             if (Optional.IsDefined(CompanyName))
             {
-                writer.WritePropertyName("companyName");
+                writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
             if (Optional.IsDefined(AddressType))
             {
-                writer.WritePropertyName("addressType");
+                writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static EdgeOrderShippingAddress DeserializeEdgeOrderShippingAddress(JsonElement element)
+        EdgeOrderShippingAddress IJsonModel<EdgeOrderShippingAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeOrderShippingAddress(document.RootElement, options);
+        }
+
+        internal static EdgeOrderShippingAddress DeserializeEdgeOrderShippingAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string streetAddress1 = default;
-            Optional<string> streetAddress2 = default;
-            Optional<string> streetAddress3 = default;
-            Optional<string> city = default;
-            Optional<string> stateOrProvince = default;
+            string streetAddress2 = default;
+            string streetAddress3 = default;
+            string city = default;
+            string stateOrProvince = default;
             string country = default;
-            Optional<string> postalCode = default;
-            Optional<string> zipExtendedCode = default;
-            Optional<string> companyName = default;
-            Optional<EdgeOrderAddressType> addressType = default;
+            string postalCode = default;
+            string zipExtendedCode = default;
+            string companyName = default;
+            EdgeOrderAddressType? addressType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streetAddress1"))
+                if (property.NameEquals("streetAddress1"u8))
                 {
                     streetAddress1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress2"))
+                if (property.NameEquals("streetAddress2"u8))
                 {
                     streetAddress2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress3"))
+                if (property.NameEquals("streetAddress3"u8))
                 {
                     streetAddress3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateOrProvince"))
+                if (property.NameEquals("stateOrProvince"u8))
                 {
                     stateOrProvince = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("zipExtendedCode"))
+                if (property.NameEquals("zipExtendedCode"u8))
                 {
                     zipExtendedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"))
+                if (property.NameEquals("companyName"u8))
                 {
                     companyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressType"))
+                if (property.NameEquals("addressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     addressType = new EdgeOrderAddressType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeOrderShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode.Value, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeOrderShippingAddress(
+                streetAddress1,
+                streetAddress2,
+                streetAddress3,
+                city,
+                stateOrProvince,
+                country,
+                postalCode,
+                zipExtendedCode,
+                companyName,
+                addressType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeOrderShippingAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeOrderShippingAddress IPersistableModel<EdgeOrderShippingAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeOrderShippingAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeOrderShippingAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

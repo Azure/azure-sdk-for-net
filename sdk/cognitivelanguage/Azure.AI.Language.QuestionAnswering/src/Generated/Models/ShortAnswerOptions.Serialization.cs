@@ -15,19 +15,27 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enable");
+            writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(Enable);
             if (Optional.IsDefined(ConfidenceThreshold))
             {
-                writer.WritePropertyName("confidenceScoreThreshold");
+                writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("topAnswersWithSpan");
+                writer.WritePropertyName("topAnswersWithSpan"u8);
                 writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

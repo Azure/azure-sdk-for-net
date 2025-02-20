@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "authorization/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2020-08-01-preview

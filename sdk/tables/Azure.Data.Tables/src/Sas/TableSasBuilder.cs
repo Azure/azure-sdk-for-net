@@ -39,12 +39,21 @@ namespace Azure.Data.Tables.Sas
         public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(rawPermissions));
 
             TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions.ToLowerInvariant();
         }
+
+        /// <summary>
+        /// Initializes an instance of a <see cref="TableSasBuilder"/> with no details set. At minimum, additional properties must be set to create a valid SaS.
+        /// These include setting the <see cref="TableName"/>, permissions, and an expiry. Permissions and expiry can also be specified in a shared access policy, which can be
+        /// selected by specifying the name of the policy on the <see cref="Identifier"/> property.
+        ///
+        /// </summary>
+        public TableSasBuilder()
+        { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared access signature.
@@ -117,6 +126,8 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// An optional unique value up to 64 characters in length that
         /// correlates to an access policy specified for the container.
+        /// Note: Either the stored access policy specified by the <see cref="Identifier"/> or the created shared access signature must define an expiry.
+        /// If neither define an expiry or both do, authentication will fail.
         /// </summary>
         public string Identifier { get; set; }
 
@@ -142,7 +153,7 @@ namespace Azure.Data.Tables.Sas
         public string PartitionKeyEnd { get; set; }
 
         /// <summary>
-        /// The optional end of the partition key values range being made available.
+        /// The optional end of the row key values range being made available.
         /// <see cref="RowKeyStart"/> must be specified if this value is set.
         /// </summary>
         public string RowKeyEnd { get; set; }
@@ -185,6 +196,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// An instance of <see cref="TableSasQueryParameters"/>.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public TableSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -239,6 +251,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public string Sign(TableSharedKeyCredential sharedKeyCredential) =>
             ToSasQueryParameters(sharedKeyCredential).ToString();
 

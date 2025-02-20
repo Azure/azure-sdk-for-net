@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Reservations;
 using Azure.ResourceManager.Reservations.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Reservations.Samples
 {
     public partial class Sample_ReservationQuotaResource
     {
-        // Quotas_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotasRequestForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getComputeOneSkuUsages.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Quotas_Request_PatchForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_QuotasRequestPatchForCompute()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/patchComputeQuotaRequest.json
@@ -73,13 +69,13 @@ namespace Azure.ResourceManager.Reservations.Samples
             ReservationQuotaResource reservationQuota = client.GetReservationQuotaResource(reservationQuotaResourceId);
 
             // invoke the operation
-            ReservationQuotaData data = new ReservationQuotaData()
+            ReservationQuotaData data = new ReservationQuotaData
             {
-                Properties = new QuotaProperties()
+                Properties = new QuotaProperties
                 {
                     Limit = 200,
                     Unit = "Count",
-                    ResourceName = new ReservationResourceName()
+                    ResourceName = new ReservationResourceName
                     {
                         Value = "standardFSv2Family",
                     },

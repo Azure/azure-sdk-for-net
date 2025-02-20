@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            var allAssessmentMeatadatas = await _subAssessmentMetadataCollection.GetAllAsync().ToEnumerableAsync();
-            var list = allAssessmentMeatadatas.Where(item => item.Data.Description == "JustForTest");
+            var allAssessmentMetadata = await _subAssessmentMetadataCollection.GetAllAsync().ToEnumerableAsync();
+            var list = allAssessmentMetadata.Where(item => item.Data.Description == "JustForTest");
             foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);

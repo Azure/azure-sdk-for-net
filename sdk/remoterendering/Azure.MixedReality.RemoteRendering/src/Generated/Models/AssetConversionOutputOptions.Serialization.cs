@@ -16,21 +16,21 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageContainerUri");
+            writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             if (Optional.IsDefined(StorageContainerWriteSas))
             {
-                writer.WritePropertyName("storageContainerWriteSas");
+                writer.WritePropertyName("storageContainerWriteSas"u8);
                 writer.WriteStringValue(StorageContainerWriteSas);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
-                writer.WritePropertyName("blobPrefix");
+                writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
             if (Optional.IsDefined(OutputAssetFilename))
             {
-                writer.WritePropertyName("outputAssetFilename");
+                writer.WritePropertyName("outputAssetFilename"u8);
                 writer.WriteStringValue(OutputAssetFilename);
             }
             writer.WriteEndObject();
@@ -38,34 +38,54 @@ namespace Azure.MixedReality.RemoteRendering
 
         internal static AssetConversionOutputOptions DeserializeAssetConversionOutputOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri storageContainerUri = default;
-            Optional<string> storageContainerWriteSas = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> outputAssetFilename = default;
+            string storageContainerWriteSas = default;
+            string blobPrefix = default;
+            string outputAssetFilename = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageContainerUri"))
+                if (property.NameEquals("storageContainerUri"u8))
                 {
                     storageContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageContainerWriteSas"))
+                if (property.NameEquals("storageContainerWriteSas"u8))
                 {
                     storageContainerWriteSas = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobPrefix"))
+                if (property.NameEquals("blobPrefix"u8))
                 {
                     blobPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputAssetFilename"))
+                if (property.NameEquals("outputAssetFilename"u8))
                 {
                     outputAssetFilename = property.Value.GetString();
                     continue;
                 }
             }
-            return new AssetConversionOutputOptions(storageContainerUri, storageContainerWriteSas.Value, blobPrefix.Value, outputAssetFilename.Value);
+            return new AssetConversionOutputOptions(storageContainerUri, storageContainerWriteSas, blobPrefix, outputAssetFilename);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionOutputOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetConversionOutputOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

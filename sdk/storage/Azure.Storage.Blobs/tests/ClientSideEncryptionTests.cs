@@ -37,6 +37,8 @@ namespace Azure.Storage.Blobs.Test
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            // TODO: enable after new KeyValue is released (after Dec 2023)
+            TestDiagnostics = false;
         }
 
         private static IEnumerable<ClientSideEncryptionVersion> GetEncryptionVersions()
@@ -71,7 +73,9 @@ namespace Azure.Storage.Blobs.Test
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
             long nonceCounter = 1;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#if NET8_0_OR_GREATER
+            using var gcm = new AesGcm(key, V2.TagSize);
+#elif NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             using var gcm = new AesGcm(key);
 #else
             using var gcm = new Azure.Storage.Shared.AesGcm.AesGcmWindows(key);
@@ -161,10 +165,10 @@ namespace Azure.Storage.Blobs.Test
             switch (encryptionMetadata.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
-                case ClientSideEncryptionVersion.V1_0:
+                case ClientSideEncryptionVersionInternal.V1_0:
                     return await ReplicateEncryptionV1_0(plaintext, encryptionMetadata, keyEncryptionKey);
 #pragma warning restore CS0618 // obsolete
-                case ClientSideEncryptionVersion.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_0:
                     return await ReplicateEncryptionV2_0(plaintext, encryptionMetadata, keyEncryptionKey);
                 default:
                     throw new ArgumentException("Bad version in EncryptionData");
@@ -177,7 +181,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task<byte[]> ReplicateEncryptionV1_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-            Assert.AreEqual(ClientSideEncryptionVersion.V1_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+            Assert.AreEqual(ClientSideEncryptionVersionInternal.V1_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
 
             var explicitlyUnwrappedKey = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -193,7 +197,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task<byte[]> ReplicateEncryptionV2_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-            Assert.AreEqual(ClientSideEncryptionVersion.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+            Assert.AreEqual(ClientSideEncryptionVersionInternal.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
 
             var explicitlyUnwrappedContent = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -243,7 +247,7 @@ namespace Azure.Storage.Blobs.Test
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = "foo",
-                    EncryptionVersion = ClientSideEncryptionVersion.V2_0
+                    EncryptionVersion = ClientSideEncryptionVersionInternal.V2_0
                 },
                 EncryptionMode = "bar",
                 KeyWrappingMetadata = new Dictionary<string, string> { { "fizz", "buzz" } }
@@ -681,7 +685,22 @@ namespace Azure.Storage.Blobs.Test
                     Assert.AreEqual(metadata[kvp.Key], downloadedMetadata[kvp.Key]);
                 }
                 Assert.IsTrue(downloadedMetadata.ContainsKey(EncryptionDataKey));
-                Assert.AreEqual(version, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
+
+                ClientSideEncryptionVersionInternal versionInternal = ClientSideEncryptionVersionInternal.V2_0;
+                switch (version)
+                {
+#pragma warning disable CS0618 // obsolete
+                    case ClientSideEncryptionVersion.V1_0:
+                        versionInternal = ClientSideEncryptionVersionInternal.V1_0;
+                        break;
+#pragma warning restore CS0618 // obsolete
+                    case ClientSideEncryptionVersion.V2_0:
+                        versionInternal = ClientSideEncryptionVersionInternal.V2_0;
+                        break;
+                    default:
+                        throw new ArgumentException("Bad version in EncryptionData");
+                }
+                Assert.AreEqual(versionInternal, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
             }
         }
 
@@ -1376,6 +1395,32 @@ namespace Azure.Storage.Blobs.Test
             await CallCorrectKeyUpdateAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver, version);
 
             // Assert
+            if (IsAsync)
+            {
+                mockKey1.Verify(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey2.Verify(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+
+                var mockKey1_firstInvocation = mockKey1.Invocations.First();
+                var mockKey1_lastInvocation = mockKey1.Invocations.Last();
+                var mockKey2_firstInvocation = mockKey2.Invocations.First();
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKeyAsync), mockKey1_firstInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.UnwrapKeyAsync), mockKey1_lastInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKeyAsync), mockKey2_firstInvocation.Method.Name);
+            }
+            else
+            {
+                mockKey1.Verify(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey2.Verify(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+
+                var mockKey1_firstInvocation = mockKey1.Invocations.First();
+                var mockKey1_lastInvocation = mockKey1.Invocations.Last();
+                var mockKey2_firstInvocation = mockKey2.Invocations.First();
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKey), mockKey1_firstInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.UnwrapKey), mockKey1_lastInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKey), mockKey2_firstInvocation.Method.Name);
+            }
             await AssertKeyAsync(blob, mockKey2.Object, cek);
         }
 
@@ -1532,6 +1577,41 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
+        }
+
+        [Test]
+        [Combinatorial]
+        [LiveOnly]
+        public async Task EncryptionDataCaseInsensitivity(
+            [Values("ENCRYPTIONDATA", "EncryptionData", "eNcRyPtIoNdAtA")] string newKey,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
+        {
+            // Arrange
+            ReadOnlyMemory<byte> data = GetRandomBuffer(Constants.KB);
+            Mock<IKeyEncryptionKey> mockKey1 = this.GetIKeyEncryptionKey(s_cancellationToken);
+            var encryptionOptions = new ClientSideEncryptionOptions(version)
+            {
+                KeyEncryptionKey = mockKey1.Object,
+                KeyWrapAlgorithm = s_algorithmName
+            };
+
+            await using var disposable = await GetTestContainerAsync();
+
+            BlobClient standardBlobClient = disposable.Container.GetBlobClient(GetNewBlobName());
+            BlobClient encryptedBlobClient = InstrumentClient(standardBlobClient.WithClientSideEncryptionOptions(encryptionOptions));
+
+            await encryptedBlobClient.UploadAsync(BinaryData.FromBytes(data), cancellationToken: s_cancellationToken);
+
+            // change casing of encryptiondata key
+            string rawEncryptiondata = (await standardBlobClient.GetPropertiesAsync()).Value.Metadata[EncryptionDataKey];
+            Assert.IsNotEmpty(rawEncryptiondata); // quick check we're testing the right thing
+            await standardBlobClient.SetMetadataAsync(new Dictionary<string, string> { { newKey, rawEncryptiondata } });
+
+            // Act
+            ReadOnlyMemory<byte> downloadedContent = (await encryptedBlobClient.DownloadContentAsync(s_cancellationToken)).Value.Content.ToMemory();
+
+            // Assert
+            Assert.IsTrue(data.Span.SequenceEqual(downloadedContent.Span));
         }
 
         /// <summary>

@@ -20,45 +20,63 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
-                writer.WriteObjectValue(LogLevel);
+                writer.WritePropertyName("logLevel"u8);
+                writer.WriteObjectValue<object>(LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
-                writer.WriteObjectValue(EnableReliableLogging);
+                writer.WritePropertyName("enableReliableLogging"u8);
+                writer.WriteObjectValue<object>(EnableReliableLogging);
             }
             writer.WriteEndObject();
         }
 
         internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
         {
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            object logLevel = default;
+            object enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logLevel = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableReliableLogging = property.Value.GetObject();
                     continue;
                 }
             }
-            return new CopyActivityLogSettings(logLevel.Value, enableReliableLogging.Value);
+            return new CopyActivityLogSettings(logLevel, enableReliableLogging);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopyActivityLogSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyActivityLogSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class CopyActivityLogSettingsConverter : JsonConverter<CopyActivityLogSettings>
@@ -67,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CopyActivityLogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

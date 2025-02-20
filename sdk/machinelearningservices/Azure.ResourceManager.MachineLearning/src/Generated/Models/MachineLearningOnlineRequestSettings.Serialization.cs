@@ -6,73 +6,223 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineRequestSettings : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineRequestSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningOnlineRequestSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineRequestSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningOnlineRequestSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineRequestSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("maxConcurrentRequestsPerInstance");
-                writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
+                throw new FormatException($"The model {nameof(MachineLearningOnlineRequestSettings)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MaxQueueWait))
             {
-                writer.WritePropertyName("maxQueueWait");
+                writer.WritePropertyName("maxQueueWait"u8);
                 writer.WriteStringValue(MaxQueueWait.Value, "P");
             }
             if (Optional.IsDefined(RequestTimeout))
             {
-                writer.WritePropertyName("requestTimeout");
+                writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteStringValue(RequestTimeout.Value, "P");
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+            {
+                writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
+                writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningOnlineRequestSettings DeserializeMachineLearningOnlineRequestSettings(JsonElement element)
+        MachineLearningOnlineRequestSettings IJsonModel<MachineLearningOnlineRequestSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<int> maxConcurrentRequestsPerInstance = default;
-            Optional<TimeSpan> maxQueueWait = default;
-            Optional<TimeSpan> requestTimeout = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineRequestSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOnlineRequestSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOnlineRequestSettings(document.RootElement, options);
+        }
+
+        internal static MachineLearningOnlineRequestSettings DeserializeMachineLearningOnlineRequestSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TimeSpan? maxQueueWait = default;
+            TimeSpan? requestTimeout = default;
+            int? maxConcurrentRequestsPerInstance = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxConcurrentRequestsPerInstance"))
+                if (property.NameEquals("maxQueueWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxConcurrentRequestsPerInstance = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("maxQueueWait"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxQueueWait = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("requestTimeout"))
+                if (property.NameEquals("requestTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("maxConcurrentRequestsPerInstance"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentRequestsPerInstance = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningOnlineRequestSettings(Optional.ToNullable(maxConcurrentRequestsPerInstance), Optional.ToNullable(maxQueueWait), Optional.ToNullable(requestTimeout));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningOnlineRequestSettings(maxQueueWait, requestTimeout, maxConcurrentRequestsPerInstance, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxQueueWait), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxQueueWait: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxQueueWait))
+                {
+                    builder.Append("  maxQueueWait: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(MaxQueueWait.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestTimeout))
+                {
+                    builder.Append("  requestTimeout: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(RequestTimeout.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentRequestsPerInstance), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxConcurrentRequestsPerInstance: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+                {
+                    builder.Append("  maxConcurrentRequestsPerInstance: ");
+                    builder.AppendLine($"{MaxConcurrentRequestsPerInstance.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningOnlineRequestSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineRequestSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineRequestSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningOnlineRequestSettings IPersistableModel<MachineLearningOnlineRequestSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineRequestSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningOnlineRequestSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineRequestSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningOnlineRequestSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

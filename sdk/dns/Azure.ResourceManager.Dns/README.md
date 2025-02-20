@@ -39,7 +39,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
@@ -74,7 +74,7 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 // Now we get the DnsZone collection from the resource group
 DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
 // With ListAsync(), we can get a list of the DnsZones
-AsyncPageable<DnsZoneResource>  response = dnsZoneCollection.GetAllAsync();
+AsyncPageable<DnsZoneResource> response = dnsZoneCollection.GetAllAsync();
 await foreach (DnsZoneResource dnsZone in response)
 {
     Console.WriteLine(dnsZone.Data.Name);
@@ -92,7 +92,7 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 // Now we get the DnsZone collection from the resource group
 DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
 string dnsZoneName = "sample.com";
-DnsZoneResource dnsZone =await dnsZoneCollection.GetAsync(dnsZoneName);
+DnsZoneResource dnsZone = await dnsZoneCollection.GetAsync(dnsZoneName);
 await dnsZone.DeleteAsync(WaitUntil.Completed);
 ```
 
@@ -100,7 +100,7 @@ await dnsZone.DeleteAsync(WaitUntil.Completed);
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
 -   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
--   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
+-   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
 
 ## Next steps
 

@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(RecordingContent left, RecordingContent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingContent"/> values are not the same. </summary>
         public static bool operator !=(RecordingContent left, RecordingContent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecordingContent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecordingContent"/>. </summary>
         public static implicit operator RecordingContent(string value) => new RecordingContent(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

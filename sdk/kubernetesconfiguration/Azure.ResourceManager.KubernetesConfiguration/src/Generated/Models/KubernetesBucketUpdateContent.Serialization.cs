@@ -5,21 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesBucketUpdateContent : IUtf8JsonSerializable
+    public partial class KubernetesBucketUpdateContent : IUtf8JsonSerializable, IJsonModel<KubernetesBucketUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesBucketUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KubernetesBucketUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesBucketUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesBucketUpdateContent)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
-                    writer.WritePropertyName("url");
+                    writer.WritePropertyName("url"u8);
                     writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
@@ -31,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (BucketName != null)
                 {
-                    writer.WritePropertyName("bucketName");
+                    writer.WritePropertyName("bucketName"u8);
                     writer.WriteStringValue(BucketName);
                 }
                 else
@@ -43,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (UseInsecureCommunication != null)
                 {
-                    writer.WritePropertyName("insecure");
+                    writer.WritePropertyName("insecure"u8);
                     writer.WriteBooleanValue(UseInsecureCommunication.Value);
                 }
                 else
@@ -55,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -67,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -79,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (AccessKey != null)
                 {
-                    writer.WritePropertyName("accessKey");
+                    writer.WritePropertyName("accessKey"u8);
                     writer.WriteStringValue(AccessKey);
                 }
                 else
@@ -91,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (LocalAuthRef != null)
                 {
-                    writer.WritePropertyName("localAuthRef");
+                    writer.WritePropertyName("localAuthRef"u8);
                     writer.WriteStringValue(LocalAuthRef);
                 }
                 else
@@ -99,7 +118,170 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        KubernetesBucketUpdateContent IJsonModel<KubernetesBucketUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesBucketUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesBucketUpdateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesBucketUpdateContent(document.RootElement, options);
+        }
+
+        internal static KubernetesBucketUpdateContent DeserializeKubernetesBucketUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri url = default;
+            string bucketName = default;
+            bool? insecure = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            string accessKey = default;
+            string localAuthRef = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("url"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bucketName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        bucketName = null;
+                        continue;
+                    }
+                    bucketName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("insecure"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        insecure = null;
+                        continue;
+                    }
+                    insecure = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("timeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeoutInSeconds = null;
+                        continue;
+                    }
+                    timeoutInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("syncIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        syncIntervalInSeconds = null;
+                        continue;
+                    }
+                    syncIntervalInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("accessKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        accessKey = null;
+                        continue;
+                    }
+                    accessKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("localAuthRef"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        localAuthRef = null;
+                        continue;
+                    }
+                    localAuthRef = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesBucketUpdateContent(
+                url,
+                bucketName,
+                insecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<KubernetesBucketUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesBucketUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesBucketUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesBucketUpdateContent IPersistableModel<KubernetesBucketUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesBucketUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesBucketUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesBucketUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesBucketUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

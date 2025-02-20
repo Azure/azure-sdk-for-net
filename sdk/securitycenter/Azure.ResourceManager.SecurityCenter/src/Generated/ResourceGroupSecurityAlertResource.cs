@@ -9,23 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a ResourceGroupSecurityAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupSecurityAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupSecurityAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupSecurityAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupSecurityAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGroupSecurityAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceGroupSecurityAlert method.
     /// </summary>
     public partial class ResourceGroupSecurityAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupSecurityAlertResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="alertName"> The alertName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AlertsRestOperations _resourceGroupSecurityAlertAlertsRestClient;
         private readonly SecurityAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityAlertResource"/> class for mocking. </summary>
         protected ResourceGroupSecurityAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupSecurityAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGroupSecurityAlertResource(ArmClient client, SecurityAlertData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToResolve</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -191,6 +217,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToResolve</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,6 +255,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToDismiss</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -251,6 +293,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToDismiss</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,7 +322,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -281,6 +331,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToActivate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +360,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -311,6 +369,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToActivate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +398,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -341,6 +407,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToInProgress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,7 +436,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -371,6 +445,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_UpdateResourceGroupLevelStateToInProgress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SkipSamplesWithoutAnnotation))
             {
-                writer.WritePropertyName("skipSamplesWithoutAnnotation");
+                writer.WritePropertyName("skipSamplesWithoutAnnotation"u8);
                 writer.WriteStringValue(SkipSamplesWithoutAnnotation);
             }
             if (Optional.IsDefined(MaximumSamplesPerSecond))
             {
-                writer.WritePropertyName("maximumSamplesPerSecond");
+                writer.WritePropertyName("maximumSamplesPerSecond"u8);
                 writer.WriteStringValue(MaximumSamplesPerSecond);
             }
             writer.WriteEndObject();
@@ -30,22 +30,42 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SamplingOptions DeserializeSamplingOptions(JsonElement element)
         {
-            Optional<string> skipSamplesWithoutAnnotation = default;
-            Optional<string> maximumSamplesPerSecond = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string skipSamplesWithoutAnnotation = default;
+            string maximumSamplesPerSecond = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skipSamplesWithoutAnnotation"))
+                if (property.NameEquals("skipSamplesWithoutAnnotation"u8))
                 {
                     skipSamplesWithoutAnnotation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maximumSamplesPerSecond"))
+                if (property.NameEquals("maximumSamplesPerSecond"u8))
                 {
                     maximumSamplesPerSecond = property.Value.GetString();
                     continue;
                 }
             }
-            return new SamplingOptions(skipSamplesWithoutAnnotation.Value, maximumSamplesPerSecond.Value);
+            return new SamplingOptions(skipSamplesWithoutAnnotation, maximumSamplesPerSecond);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SamplingOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSamplingOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

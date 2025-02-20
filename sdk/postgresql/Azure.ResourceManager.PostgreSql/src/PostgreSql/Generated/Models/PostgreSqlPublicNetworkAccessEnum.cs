@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct PostgreSqlPublicNetworkAccessEnum : IEquatable<PostgreSqlPublicNetworkAccessEnum>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlPublicNetworkAccessEnum left, PostgreSqlPublicNetworkAccessEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPublicNetworkAccessEnum"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlPublicNetworkAccessEnum left, PostgreSqlPublicNetworkAccessEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlPublicNetworkAccessEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlPublicNetworkAccessEnum"/>. </summary>
         public static implicit operator PostgreSqlPublicNetworkAccessEnum(string value) => new PostgreSqlPublicNetworkAccessEnum(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

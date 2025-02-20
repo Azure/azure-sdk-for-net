@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,22 +13,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinInfoX509Thumbprint DeserializeDeviceTwinInfoX509Thumbprint(JsonElement element)
         {
-            Optional<string> primaryThumbprint = default;
-            Optional<string> secondaryThumbprint = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string primaryThumbprint = default;
+            string secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryThumbprint"))
+                if (property.NameEquals("primaryThumbprint"u8))
                 {
                     primaryThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryThumbprint"))
+                if (property.NameEquals("secondaryThumbprint"u8))
                 {
                     secondaryThumbprint = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
+            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint, secondaryThumbprint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceTwinInfoX509Thumbprint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceTwinInfoX509Thumbprint(document.RootElement);
         }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.14.0-beta.1 (Unreleased)
+## 4.31.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,158 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.30.0 (2025-02-14)
+
+### Features Added
+
+- Added `MessageId`, `MessageType`, and `Reaction` properties to the `AcsMessageReceivedEventData` event.
+- Added the `Animated` property to `AcsMessageMediaContent` event.
+
+## 4.29.0 (2025-01-21)
+
+### Features Added
+
+- Added `RecipientMailServerHostName` property to `AcsEmailDeliveryReportStatusDetails`.
+- Added `InternetMessageId` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `SegmentCount` property to `AcsSmsReceivedEventData` event.
+
+## 4.28.0 (2024-11-18)
+
+### Features Added
+
+- Added `ResourceNotificationsContainerServiceEventResourcesScheduledEventData` event.
+- Added `PolicyRunSummary` property to `StorageLifecyclePolicyCompletedEventData` event.
+
+## 4.27.0 (2024-10-14)
+
+### Features Added
+
+- Added `OnBehalfOfCallee` property to `AcsIncomingCallEventData` event.
+
+## 4.26.0 (2024-09-18)
+
+### Features Added
+
+- Added `TierToColdSummary` property to `StorageLifecyclePolicyCompletedEventData`.
+
+## 4.25.0 (2024-08-21)
+
+### Features Added
+
+- Added `AccessTier` and `PreviousTier` properties to `StorageBlobTierChangedEventData` system event.
+- Added `AccessTier` to `StorageBlobCreatedEventData` system event.
+
+## 4.24.1 (2024-07-16)
+
+### Bugs Fixed
+
+- Fixed deserialization bugs in `AcsEmailEngagementTrackingReportReceivedEventData` and `AcsEmailDeliveryReportReceivedEventData` system events that caused the `DeliveryAttemptTimestamp` and `UserActionTimeStamp` properties to be null.
+
+## 4.24.0 (2024-04-09)
+
+### Features Added
+
+- Added new Communication events.
+
+## 4.23.0 (2024-03-11)
+
+### Features Added
+
+- Added API Center events.
+
+## 4.22.0 (2024-02-12)
+
+### Features Added
+
+- Added new Storage Task Assignment system events.
+- Added new AVS system events.
+- Added `Metadata` property to `AcsChatThreadCreatedEventData` system event.
+
+## 4.21.0 (2023-11-07)
+
+### Features Added
+
+- Added new system events for Resource Notifications
+- Added the `Metadata` property to various Azure Communication Services events.
+
+## 4.20.0 (2023-10-18)
+
+### Bugs Fixed
+
+- Added several communication models into the correct namespace and hid the old ones.
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
+
+## 4.18.0 (2023-09-12)
+
+### Features Added
+
+- Added new system events for Event Grid and App Configuration.
+- Added `Recipient` property to `AcsEmailEngagementTrackingReportReceivedEventData` event.
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.18.0-beta.1 (2023-07-16)
+
+### Other Changes
+
+- Shipping the `EventGridClient` on top of the latest system events.
+
+## 4.17.0 (2023-06-08)
+
+### Features Added
+
+- Added new system events for Container Service.
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.17.0-beta.2 (2023-06-06)
+
+### Other Changes
+
+- Docs updated to remove example that was causing the doc build to fail.
+
+## 4.17.0-beta.1 (2023-05-22)
+
+### Features Added
+
+- Added `EventGridClient` for interacting with topic and subscription namespaces.
+
+## 4.16.0 (2023-05-09)
+
+### Features Added
+
+- Added `AcsIncomingCallEventData` event.
+- Added `DeliveryStatusDetails` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `HealthCareDicomImageUpdatedEventData` event.
+- Added `PartionName` property to Dicom events.
+
+## 4.15.0 (2023-04-13)
+
+### Features Added
+
+- Added new Storage events, `StorageTaskCompletedEventData` and `StorageTaskQueuedEventData`.
+
+## 4.14.1 (2023-03-13)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
+
+## 4.14.0 (2023-03-06)
+
+### Features Added
+
+- Added new Communication events, `AcsEmailDeliveryReportReceivedEventData` and `AcsEmailEngagementTrackingReportReceivedEventData`.
 
 ## 4.13.0 (2023-01-19)
 
@@ -108,7 +260,7 @@
 ### New Features
 * Added the following new system events:
   - StorageBlobInventoryPolicyCompletedEventData
-    
+
 * Updated existing system events:
  - AcsRecordingChunkInfoProperties - Added `ContentLocation` and `MetadataLocation` properties.
 
@@ -118,7 +270,7 @@
 ## 4.2.0 (2021-05-10)
 
 ### New Features
-* Added the following new system events: 
+* Added the following new system events:
   - PolicyInsightsPolicyStateChangedEventData
   - PolicyInsightsPolicyStateCreatedEventData
   - PolicyInsightsPolicyStateDeletedEventData

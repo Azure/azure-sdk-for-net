@@ -6,26 +6,41 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCustomModelJobOutput : IUtf8JsonSerializable
+    public partial class MachineLearningCustomModelJobOutput : IUtf8JsonSerializable, IJsonModel<MachineLearningCustomModelJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCustomModelJobOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningCustomModelJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("mode");
-                writer.WriteStringValue(Mode.Value.ToString());
+                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support writing '{format}' format.");
             }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
-                    writer.WritePropertyName("uri");
+                    writer.WritePropertyName("uri"u8);
                     writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
@@ -33,42 +48,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Mode))
             {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description");
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            writer.WritePropertyName("jobOutputType");
-            writer.WriteStringValue(JobOutputType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static MachineLearningCustomModelJobOutput DeserializeMachineLearningCustomModelJobOutput(JsonElement element)
+        MachineLearningCustomModelJobOutput IJsonModel<MachineLearningCustomModelJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<MachineLearningOutputDeliveryMode> mode = default;
-            Optional<Uri> uri = default;
-            Optional<string> description = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningCustomModelJobOutput(document.RootElement, options);
+        }
+
+        internal static MachineLearningCustomModelJobOutput DeserializeMachineLearningCustomModelJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri uri = default;
+            MachineLearningOutputDeliveryMode? mode = default;
             JobOutputType jobOutputType = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    mode = new MachineLearningOutputDeliveryMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +93,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("mode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new MachineLearningOutputDeliveryMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("jobOutputType"u8))
+                {
+                    jobOutputType = new JobOutputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,13 +117,126 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobOutputType"))
+                if (options.Format != "W")
                 {
-                    jobOutputType = new JobOutputType(property.Value.GetString());
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, Optional.ToNullable(mode), uri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningCustomModelJobOutput(jobOutputType, description, serializedAdditionalRawData, uri, mode);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  uri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  uri: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
+                {
+                    builder.Append("  mode: ");
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobOutputType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobOutputType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  jobOutputType: ");
+                builder.AppendLine($"'{JobOutputType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningCustomModelJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningCustomModelJobOutput IPersistableModel<MachineLearningCustomModelJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningCustomModelJobOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningCustomModelJobOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

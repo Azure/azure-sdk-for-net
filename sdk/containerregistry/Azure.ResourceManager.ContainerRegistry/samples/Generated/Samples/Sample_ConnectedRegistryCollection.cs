@@ -8,24 +8,21 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ConnectedRegistryCollection
     {
-        // ConnectedRegistryList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ConnectedRegistryList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ConnectedRegistryCreate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryList.json
-            // this example is just showing the usage of "ConnectedRegistries_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryCreate.json
+            // this example is just showing the usage of "ConnectedRegistries_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,25 +40,39 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // get the collection of this ConnectedRegistryResource
             ConnectedRegistryCollection collection = containerRegistry.GetConnectedRegistries();
 
-            // invoke the operation and iterate over the result
-            await foreach (ConnectedRegistryResource item in collection.GetAllAsync())
+            // invoke the operation
+            string connectedRegistryName = "myConnectedRegistry";
+            ConnectedRegistryData data = new ConnectedRegistryData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ConnectedRegistryData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Mode = ConnectedRegistryMode.ReadWrite,
+                Parent = new ConnectedRegistryParent(new ConnectedRegistrySyncProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/syncToken"), XmlConvert.ToTimeSpan("P2D"))
+                {
+                    Schedule = "0 9 * * *",
+                    SyncWindow = XmlConvert.ToTimeSpan("PT3H"),
+                }),
+                ClientTokenIds = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/client1Token") },
+                NotificationsList = { "hello-world:*:*", "sample/repo/*:1.0:*" },
+                GarbageCollection = new GarbageCollectionProperties
+                {
+                    Enabled = true,
+                    Schedule = "0 5 * * *",
+                },
+            };
+            ArmOperation<ConnectedRegistryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectedRegistryName, data);
+            ConnectedRegistryResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ConnectedRegistryData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConnectedRegistryGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConnectedRegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryGet.json
             // this example is just showing the usage of "ConnectedRegistries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,12 +102,47 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConnectedRegistryGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ConnectedRegistryList()
+        {
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryList.json
+            // this example is just showing the usage of "ConnectedRegistries_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerRegistryResource created on azure
+            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string registryName = "myRegistry";
+            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
+            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
+
+            // get the collection of this ConnectedRegistryResource
+            ConnectedRegistryCollection collection = containerRegistry.GetConnectedRegistries();
+
+            // invoke the operation and iterate over the result
+            await foreach (ConnectedRegistryResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ConnectedRegistryData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConnectedRegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryGet.json
             // this example is just showing the usage of "ConnectedRegistries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,13 +168,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConnectedRegistryCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ConnectedRegistryCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ConnectedRegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2022-02-01-preview/examples/ConnectedRegistryCreate.json
-            // this example is just showing the usage of "ConnectedRegistries_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ConnectedRegistryGet.json
+            // this example is just showing the usage of "ConnectedRegistries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -148,31 +193,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
 
             // invoke the operation
             string connectedRegistryName = "myConnectedRegistry";
-            ConnectedRegistryData data = new ConnectedRegistryData()
-            {
-                Mode = ConnectedRegistryMode.ReadWrite,
-                Parent = new ConnectedRegistryParent(new ConnectedRegistrySyncProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/syncToken"), XmlConvert.ToTimeSpan("P2D"))
-                {
-                    Schedule = "0 9 * * *",
-                    SyncWindow = XmlConvert.ToTimeSpan("PT3H"),
-                }),
-                ClientTokenIds =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/client1Token")
-},
-                NotificationsList =
-{
-"hello-world:*:*","sample/repo/*:1.0:*"
-},
-            };
-            ArmOperation<ConnectedRegistryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectedRegistryName, data);
-            ConnectedRegistryResource result = lro.Value;
+            NullableResponse<ConnectedRegistryResource> response = await collection.GetIfExistsAsync(connectedRegistryName);
+            ConnectedRegistryResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConnectedRegistryData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ConnectedRegistryData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

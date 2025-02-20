@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             // simulating some other activity already being started before doing operations with the client
             var activity = new Activity("ParentEvent");
-            activity.SetW3CFormat();
+            activity.SetIdFormat(ActivityIdFormat.W3C);
             activity.Start();
             activity.TraceStateString = "tracestatevalue";
             List<CloudEvent> eventsList = new List<CloudEvent>();
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             // simulating some other activity already being started before doing operations with the client
             var activity = new Activity("ParentEvent");
-            activity.SetW3CFormat();
+            activity.SetIdFormat(ActivityIdFormat.W3C);
             activity.Start();
 
             CloudEvent cloudEvent = new CloudEvent(
@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             // simulating some other activity already being started before doing operations with the client
             var activity = new Activity("ParentEvent");
-            activity.SetW3CFormat();
+            activity.SetIdFormat(ActivityIdFormat.W3C);
             activity.Start();
             activity.TraceStateString = "tracestatevalue";
             List<CloudEvent> eventsList = new List<CloudEvent>();

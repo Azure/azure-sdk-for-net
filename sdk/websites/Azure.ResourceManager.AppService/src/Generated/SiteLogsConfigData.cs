@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SiteLogsConfig data model. </summary>
+    /// <summary>
+    /// A class representing the SiteLogsConfig data model.
+    /// Configuration of App Service site logs.
+    /// </summary>
     public partial class SiteLogsConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         public SiteLogsConfigData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,22 +66,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
             IsFailedRequestsTracing = isFailedRequestsTracing;
             IsDetailedErrorMessages = isDetailedErrorMessages;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application logs configuration. </summary>
+        [WirePath("properties.applicationLogs")]
         public ApplicationLogsConfig ApplicationLogs { get; set; }
         /// <summary> HTTP logs configuration. </summary>
+        [WirePath("properties.httpLogs")]
         public AppServiceHttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
         internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.failedRequestsTracing.enabled")]
         public bool? IsFailedRequestsTracingEnabled
         {
             get => IsFailedRequestsTracing is null ? default : IsFailedRequestsTracing.Enabled;
@@ -59,6 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Detailed error messages configuration. </summary>
         internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.detailedErrorMessages.enabled")]
         public bool? IsDetailedErrorMessagesEnabled
         {
             get => IsDetailedErrorMessages is null ? default : IsDetailedErrorMessages.Enabled;
@@ -71,6 +114,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

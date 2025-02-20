@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PurviewResourceId))
             {
-                writer.WritePropertyName("purviewResourceId");
+                writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);
             }
             writer.WriteEndObject();
@@ -28,16 +28,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PurviewConfiguration DeserializePurviewConfiguration(JsonElement element)
         {
-            Optional<string> purviewResourceId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("purviewResourceId"))
+                if (property.NameEquals("purviewResourceId"u8))
                 {
                     purviewResourceId = property.Value.GetString();
                     continue;
                 }
             }
-            return new PurviewConfiguration(purviewResourceId.Value);
+            return new PurviewConfiguration(purviewResourceId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PurviewConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePurviewConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class PurviewConfigurationConverter : JsonConverter<PurviewConfiguration>
@@ -46,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override PurviewConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

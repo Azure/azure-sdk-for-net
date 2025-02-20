@@ -5,32 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class WebApplicationRuleMatchCondition : IUtf8JsonSerializable
+    public partial class WebApplicationRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<WebApplicationRuleMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationRuleMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WebApplicationRuleMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("matchVariable");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
             if (Optional.IsDefined(Selector))
             {
-                writer.WritePropertyName("selector");
+                writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(IsNegateCondition))
             {
-                writer.WritePropertyName("negateCondition");
+                writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
             }
-            writer.WritePropertyName("matchValue");
+            writer.WritePropertyName("matchValue"u8);
             writer.WriteStartArray();
             foreach (var item in MatchValue)
             {
@@ -39,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Transforms))
             {
-                writer.WritePropertyName("transforms");
+                writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
@@ -47,45 +65,78 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static WebApplicationRuleMatchCondition DeserializeWebApplicationRuleMatchCondition(JsonElement element)
+        WebApplicationRuleMatchCondition IJsonModel<WebApplicationRuleMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebApplicationRuleMatchCondition(document.RootElement, options);
+        }
+
+        internal static WebApplicationRuleMatchCondition DeserializeWebApplicationRuleMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebApplicationRuleMatchVariable matchVariable = default;
-            Optional<string> selector = default;
+            string selector = default;
             WebApplicationRuleMatchOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<WebApplicationRuleMatchTransformType>> transforms = default;
+            IList<WebApplicationRuleMatchTransformType> transforms = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("matchVariable"))
+                if (property.NameEquals("matchVariable"u8))
                 {
                     matchVariable = new WebApplicationRuleMatchVariable(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("selector"))
+                if (property.NameEquals("selector"u8))
                 {
                     selector = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new WebApplicationRuleMatchOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negateCondition"))
+                if (property.NameEquals("negateCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("matchValue"))
+                if (property.NameEquals("matchValue"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -95,11 +146,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     matchValue = array;
                     continue;
                 }
-                if (property.NameEquals("transforms"))
+                if (property.NameEquals("transforms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebApplicationRuleMatchTransformType> array = new List<WebApplicationRuleMatchTransformType>();
@@ -110,8 +160,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     transforms = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WebApplicationRuleMatchCondition(
+                matchVariable,
+                selector,
+                @operator,
+                negateCondition,
+                matchValue,
+                transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebApplicationRuleMatchCondition IPersistableModel<WebApplicationRuleMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebApplicationRuleMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApplicationRuleMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

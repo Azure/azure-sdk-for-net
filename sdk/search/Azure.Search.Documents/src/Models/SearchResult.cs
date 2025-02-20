@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -41,17 +42,14 @@ namespace Azure.Search.Documents.Models
         public IDictionary<string, IList<string>> Highlights { get; internal set; }
 
         /// <summary>
-        /// The relevance score computed by the semantic ranker for the top search results.
-        /// <para>Search results are sorted by the <see cref="RerankerScore"/> first and then by the <see cref="Score"/>.
-        /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// Gets the semantic search result.
         /// </summary>
-        public double? RerankerScore { get; internal set; }
+        public SemanticSearchResult SemanticSearch { get; internal set; }
 
         /// <summary>
-        /// Captions are the most representative passages from the document relatively to the search query.
-        /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// Contains debugging information that can be used to further explore your search results.
         /// </summary>
-        public IList<CaptionResult> Captions { get; internal set; }
+        public DocumentDebugInfo DocumentDebugInfo { get; internal set; }
 
         /// <summary>
         /// The document found by the search query.
@@ -89,6 +87,7 @@ namespace Azure.Search.Documents.Models
         {
             Debug.Assert(options != null);
             SearchResult<T> result = new SearchResult<T>();
+            result.SemanticSearch = new SemanticSearchResult();
             foreach (JsonProperty prop in element.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
@@ -113,17 +112,22 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchRerankerScoreKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.RerankerScore = prop.Value.GetDouble();
+                    result.SemanticSearch.RerankerScore = prop.Value.GetDouble();
                 }
                 else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.Captions = new List<CaptionResult>();
-
+                    List<QueryCaptionResult> captionResults = new List<QueryCaptionResult>();
                     foreach (JsonElement captionValue in prop.Value.EnumerateArray())
                     {
-                        result.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
+                        captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue));
                     }
+                    result.SemanticSearch.Captions = captionResults;
+                }
+                else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    result.DocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value);
                 }
             }
 
@@ -155,6 +159,25 @@ namespace Azure.Search.Documents.Models
         }
     }
 
+    /// <summary>
+    /// Semantic search result.
+    /// </summary>
+    public class SemanticSearchResult
+    {
+        /// <summary>
+        /// The relevance score computed by the semantic ranker for the top search results.
+        /// <para>Search results are sorted by the <see cref="RerankerScore"/> first and then by the <see cref="SearchResult{T}.Score"/>.
+        /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// </summary>
+        public double? RerankerScore { get; internal set; }
+
+        /// <summary>
+        /// Captions are the most representative passages from the document relatively to the search query.
+        /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// </summary>
+        public IReadOnlyList<QueryCaptionResult> Captions { get; internal set; }
+    }
+
     public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of SearchResult. </summary>
@@ -173,6 +196,7 @@ namespace Azure.Search.Documents.Models
         /// was not enabled for the query.
         /// </param>
         /// <returns>A new SearchResult instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchResult<T> SearchResult<T>(
             T document,
             double? score,
@@ -181,6 +205,85 @@ namespace Azure.Search.Documents.Models
             {
                 Score = score,
                 Highlights = highlights,
-                Document = document };
+                Document = document
+            };
+
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="document">The document found by the search query.</param>
+        /// <param name="score">
+        /// The relevance score of the document compared to other documents
+        /// returned by the query.
+        /// </param>
+        /// <param name="highlights">
+        /// Text fragments from the document that indicate the matching search
+        /// terms, organized by each applicable field; null if hit highlighting
+        /// was not enabled for the query.
+        /// </param>
+        /// <param name="semanticSearch">The semantic search result.</param>
+        /// <returns>A new SearchResult instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchResult<T> SearchResult<T>(
+            T document,
+            double? score,
+            IDictionary<string, IList<string>> highlights,
+            SemanticSearchResult semanticSearch) =>
+            new SearchResult<T>()
+            {
+                Score = score,
+                Highlights = highlights,
+                Document = document,
+                SemanticSearch = semanticSearch
+            };
+
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="document">The document found by the search query.</param>
+        /// <param name="score">
+        /// The relevance score of the document compared to other documents
+        /// returned by the query.
+        /// </param>
+        /// <param name="highlights">
+        /// Text fragments from the document that indicate the matching search
+        /// terms, organized by each applicable field; null if hit highlighting
+        /// was not enabled for the query.
+        /// </param>
+        /// <param name="semanticSearch">The semantic search result.</param>
+        /// <param name="documentDebugInfo"> Contains debugging information that
+        /// can be used to further explore your search results. </param>
+        /// <returns>A new SearchResult instance for mocking.</returns>
+        public static SearchResult<T> SearchResult<T>(
+            T document,
+            double? score,
+            IDictionary<string, IList<string>> highlights,
+            SemanticSearchResult semanticSearch,
+            DocumentDebugInfo documentDebugInfo) =>
+            new SearchResult<T>()
+            {
+                Score = score,
+                Highlights = highlights,
+                Document = document,
+                SemanticSearch = semanticSearch,
+                DocumentDebugInfo = documentDebugInfo
+            };
+
+        /// <summary> Initializes a new instance of <see cref="SemanticSearchResult"/>. </summary>
+        /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. </param>
+        /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. </param>
+        /// <returns> A new <see cref="Models.SemanticSearchResult"/> instance for mocking. </returns>
+        public static SemanticSearchResult SemanticSearchResult(
+            double? rerankerScore,
+            IReadOnlyList<QueryCaptionResult> captions) =>
+          new SemanticSearchResult()
+          {
+              RerankerScore = rerankerScore,
+              Captions = captions
+          };
     }
 }

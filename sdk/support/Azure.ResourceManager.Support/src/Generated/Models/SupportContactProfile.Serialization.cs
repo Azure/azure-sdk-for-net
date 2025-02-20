@@ -5,28 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportContactProfile : IUtf8JsonSerializable
+    public partial class SupportContactProfile : IUtf8JsonSerializable, IJsonModel<SupportContactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportContactProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SupportContactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("firstName");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SupportContactProfile)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("firstName"u8);
             writer.WriteStringValue(FirstName);
-            writer.WritePropertyName("lastName");
+            writer.WritePropertyName("lastName"u8);
             writer.WriteStringValue(LastName);
-            writer.WritePropertyName("preferredContactMethod");
+            writer.WritePropertyName("preferredContactMethod"u8);
             writer.WriteStringValue(PreferredContactMethod.ToString());
-            writer.WritePropertyName("primaryEmailAddress");
+            writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
             if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
-                writer.WritePropertyName("additionalEmailAddresses");
+                writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEmailAddresses)
                 {
@@ -36,56 +54,89 @@ namespace Azure.ResourceManager.Support.Models
             }
             if (Optional.IsDefined(PhoneNumber))
             {
-                writer.WritePropertyName("phoneNumber");
+                writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            writer.WritePropertyName("preferredTimeZone");
+            writer.WritePropertyName("preferredTimeZone"u8);
             writer.WriteStringValue(PreferredTimeZone);
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("preferredSupportLanguage");
+            writer.WritePropertyName("preferredSupportLanguage"u8);
             writer.WriteStringValue(PreferredSupportLanguage);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SupportContactProfile DeserializeSupportContactProfile(JsonElement element)
+        SupportContactProfile IJsonModel<SupportContactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SupportContactProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSupportContactProfile(document.RootElement, options);
+        }
+
+        internal static SupportContactProfile DeserializeSupportContactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string firstName = default;
             string lastName = default;
             PreferredContactMethod preferredContactMethod = default;
             string primaryEmailAddress = default;
-            Optional<IList<string>> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
+            IList<string> additionalEmailAddresses = default;
+            string phoneNumber = default;
             string preferredTimeZone = default;
             string country = default;
             string preferredSupportLanguage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstName"))
+                if (property.NameEquals("firstName"u8))
                 {
                     firstName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"))
+                if (property.NameEquals("lastName"u8))
                 {
                     lastName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preferredContactMethod"))
+                if (property.NameEquals("preferredContactMethod"u8))
                 {
                     preferredContactMethod = new PreferredContactMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryEmailAddress"))
+                if (property.NameEquals("primaryEmailAddress"u8))
                 {
                     primaryEmailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalEmailAddresses"))
+                if (property.NameEquals("additionalEmailAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -96,28 +147,74 @@ namespace Azure.ResourceManager.Support.Models
                     additionalEmailAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preferredTimeZone"))
+                if (property.NameEquals("preferredTimeZone"u8))
                 {
                     preferredTimeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preferredSupportLanguage"))
+                if (property.NameEquals("preferredSupportLanguage"u8))
                 {
                     preferredSupportLanguage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SupportContactProfile(
+                firstName,
+                lastName,
+                preferredContactMethod,
+                primaryEmailAddress,
+                additionalEmailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumber,
+                preferredTimeZone,
+                country,
+                preferredSupportLanguage,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SupportContactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SupportContactProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SupportContactProfile IPersistableModel<SupportContactProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSupportContactProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SupportContactProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SupportContactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

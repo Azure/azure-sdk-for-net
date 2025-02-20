@@ -17,50 +17,42 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         private DnsForwardingRulesetCollection _dnsForwardingRulesetCollection;
         private DnsForwardingRulesetResource _dnsForwardingRuleset;
         private ResourceIdentifier _outboundEndpointId;
-        private string _vnetId;
-        private string _subnetId;
         private string _dnsForwardingRulesetName;
 
-        public VirtualNetworkLinkTests(bool async) : base(async)
+        public VirtualNetworkLinkTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
         public async Task CreateDnsResolverCollection()
         {
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
+            var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
+            _dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
+            var resourceGroup = await CreateResourceGroupAsync();
 
-            _vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
-            _subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
+                await CreateVirtualNetworkAsync();
+
+            //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(_vnetId)
+                Id = new ResourceIdentifier(DefaultVnetID)
             });
 
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateVirtualNetworkAsync(vnetName);
-            }
-
-            var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
-            var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
-
-            _dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
-            _dnsForwardingRulesetCollection = resourceGroup.Value.GetDnsForwardingRulesets();
+            _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
+            _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();
 
             var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(_subnetId),
+                Id = new ResourceIdentifier(DefaultSubnetID),
             });
 
-            var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
             var outboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             _outboundEndpointId = outboundEndpoint.Value.Id;
 
-            _dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
             _dnsForwardingRuleset = await CreateDnsForwardingRuleset(_dnsForwardingRulesetName);
         }
 
@@ -82,12 +74,12 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateVirtualNetworkLink()
         {
             // ARRANGE
+            var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
+            await CreateDnsResolverCollection();
             var virtualNetworkLinkData = new DnsForwardingRulesetVirtualNetworkLinkData(new WritableSubResource
             {
-                Id = new ResourceIdentifier(_vnetId),
+                Id = new ResourceIdentifier(DefaultVnetID),
             });
-
-            var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
 
             // ACT
             var createdVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkLinkName, virtualNetworkLinkData);
@@ -101,12 +93,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task GetVirtualNetworkLink()
         {
             // ARRANGE
+            var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
+            await CreateDnsResolverCollection();
             var virtualNetworkLinkData = new DnsForwardingRulesetVirtualNetworkLinkData(new WritableSubResource
             {
-                Id = new ResourceIdentifier(_vnetId),
+                Id = new ResourceIdentifier(DefaultVnetID),
             });
 
-            var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
             await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkLinkName, virtualNetworkLinkData);
 
             // ACT
@@ -121,16 +114,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task UpdateVirtualNetworkLink()
         {
             // ARRANGE
-            var virtualNetworkLinkData = new DnsForwardingRulesetVirtualNetworkLinkData(new WritableSubResource
-            {
-                Id = new ResourceIdentifier(_vnetId),
-            });
-
             var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
-            var createdVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkLinkName, virtualNetworkLinkData);
-
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
+            await CreateDnsResolverCollection();
+            var virtualNetworkLinkData = new DnsForwardingRulesetVirtualNetworkLinkData(new WritableSubResource
+            {
+                Id = new ResourceIdentifier(DefaultVnetID),
+            });
+
+            var createdVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkLinkName, virtualNetworkLinkData);
 
             var patchableVirtualNetworkLinkData = new DnsForwardingRulesetVirtualNetworkLinkPatch();
             patchableVirtualNetworkLinkData.Metadata.Add(newTagKey, newTagValue);
@@ -147,12 +140,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task RemoveVirtualNetworkLink()
         {
             // ARRANGE
+            var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
+            await CreateDnsResolverCollection();
             var virtualNetworkLinkData = new DnsForwardingRulesetVirtualNetworkLinkData(new WritableSubResource
             {
-                Id = new ResourceIdentifier(_vnetId),
+                Id = new ResourceIdentifier(DefaultVnetID),
             });
 
-            var virtualNetworkLinkName = Recording.GenerateAssetName("virtualNetworkLink-");
             var createdVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkLinkName, virtualNetworkLinkData);
 
             // ACT

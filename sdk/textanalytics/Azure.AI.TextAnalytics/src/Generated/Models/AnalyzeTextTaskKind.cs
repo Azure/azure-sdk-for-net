@@ -28,7 +28,6 @@ namespace Azure.AI.TextAnalytics.Models
         private const string KeyPhraseExtractionValue = "KeyPhraseExtraction";
         private const string LanguageDetectionValue = "LanguageDetection";
         private const string EntityLinkingValue = "EntityLinking";
-        private const string DynamicClassificationValue = "DynamicClassification";
 
         /// <summary> SentimentAnalysis. </summary>
         public static AnalyzeTextTaskKind SentimentAnalysis { get; } = new AnalyzeTextTaskKind(SentimentAnalysisValue);
@@ -42,13 +41,11 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextTaskKind LanguageDetection { get; } = new AnalyzeTextTaskKind(LanguageDetectionValue);
         /// <summary> EntityLinking. </summary>
         public static AnalyzeTextTaskKind EntityLinking { get; } = new AnalyzeTextTaskKind(EntityLinkingValue);
-        /// <summary> DynamicClassification. </summary>
-        public static AnalyzeTextTaskKind DynamicClassification { get; } = new AnalyzeTextTaskKind(DynamicClassificationValue);
         /// <summary> Determines if two <see cref="AnalyzeTextTaskKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextTaskKind left, AnalyzeTextTaskKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextTaskKind"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeTextTaskKind left, AnalyzeTextTaskKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeTextTaskKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeTextTaskKind"/>. </summary>
         public static implicit operator AnalyzeTextTaskKind(string value) => new AnalyzeTextTaskKind(value);
 
         /// <inheritdoc />
@@ -59,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

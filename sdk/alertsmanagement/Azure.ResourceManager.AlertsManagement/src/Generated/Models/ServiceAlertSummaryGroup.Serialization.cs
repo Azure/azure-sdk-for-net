@@ -5,95 +5,180 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertSummaryGroup : IUtf8JsonSerializable
+    public partial class ServiceAlertSummaryGroup : IUtf8JsonSerializable, IJsonModel<ServiceAlertSummaryGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertSummaryGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceAlertSummaryGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummaryGroup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Total))
             {
-                writer.WritePropertyName("total");
+                writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
             if (Optional.IsDefined(SmartGroupsCount))
             {
-                writer.WritePropertyName("smartGroupsCount");
+                writer.WritePropertyName("smartGroupsCount"u8);
                 writer.WriteNumberValue(SmartGroupsCount.Value);
             }
             if (Optional.IsDefined(GroupedBy))
             {
-                writer.WritePropertyName("groupedby");
+                writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ServiceAlertSummaryGroup DeserializeServiceAlertSummaryGroup(JsonElement element)
+        ServiceAlertSummaryGroup IJsonModel<ServiceAlertSummaryGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<long> total = default;
-            Optional<long> smartGroupsCount = default;
-            Optional<string> groupedby = default;
-            Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummaryGroup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAlertSummaryGroup(document.RootElement, options);
+        }
+
+        internal static ServiceAlertSummaryGroup DeserializeServiceAlertSummaryGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            long? total = default;
+            long? smartGroupsCount = default;
+            string groupedby = default;
+            IList<ServiceAlertSummaryGroupItemInfo> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     total = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("smartGroupsCount"))
+                if (property.NameEquals("smartGroupsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smartGroupsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("groupedby"))
+                if (property.NameEquals("groupedby"u8))
                 {
                     groupedby = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAlertSummaryGroupItemInfo> array = new List<ServiceAlertSummaryGroupItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertSummaryGroupItemInfo.DeserializeServiceAlertSummaryGroupItemInfo(item));
+                        array.Add(ServiceAlertSummaryGroupItemInfo.DeserializeServiceAlertSummaryGroupItemInfo(item, options));
                     }
                     values = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAlertSummaryGroup(Optional.ToNullable(total), Optional.ToNullable(smartGroupsCount), groupedby.Value, Optional.ToList(values));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedby, values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceAlertSummaryGroup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummaryGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceAlertSummaryGroup IPersistableModel<ServiceAlertSummaryGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummaryGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAlertSummaryGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAlertSummaryGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,30 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleCondition : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleCondition : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AlertProcessingRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Field))
             {
-                writer.WritePropertyName("field");
+                writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field.Value.ToString());
             }
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -36,41 +54,72 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AlertProcessingRuleCondition DeserializeAlertProcessingRuleCondition(JsonElement element)
+        AlertProcessingRuleCondition IJsonModel<AlertProcessingRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<AlertProcessingRuleField> field = default;
-            Optional<AlertProcessingRuleOperator> @operator = default;
-            Optional<IList<string>> values = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleCondition(document.RootElement, options);
+        }
+
+        internal static AlertProcessingRuleCondition DeserializeAlertProcessingRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AlertProcessingRuleField? field = default;
+            AlertProcessingRuleOperator? @operator = default;
+            IList<string> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("field"))
+                if (property.NameEquals("field"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     field = new AlertProcessingRuleField(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = new AlertProcessingRuleOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -81,8 +130,44 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     values = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AlertProcessingRuleCondition(Optional.ToNullable(field), Optional.ToNullable(@operator), Optional.ToList(values));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AlertProcessingRuleCondition(field, @operator, values ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AlertProcessingRuleCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AlertProcessingRuleCondition IPersistableModel<AlertProcessingRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAlertProcessingRuleCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AlertProcessingRuleCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

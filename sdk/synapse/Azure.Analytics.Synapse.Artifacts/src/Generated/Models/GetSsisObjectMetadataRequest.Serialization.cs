@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MetadataPath))
             {
-                writer.WritePropertyName("metadataPath");
+                writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);
             }
             writer.WriteEndObject();
@@ -28,16 +28,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static GetSsisObjectMetadataRequest DeserializeGetSsisObjectMetadataRequest(JsonElement element)
         {
-            Optional<string> metadataPath = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string metadataPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadataPath"))
+                if (property.NameEquals("metadataPath"u8))
                 {
                     metadataPath = property.Value.GetString();
                     continue;
                 }
             }
-            return new GetSsisObjectMetadataRequest(metadataPath.Value);
+            return new GetSsisObjectMetadataRequest(metadataPath);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GetSsisObjectMetadataRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetSsisObjectMetadataRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class GetSsisObjectMetadataRequestConverter : JsonConverter<GetSsisObjectMetadataRequest>
@@ -46,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override GetSsisObjectMetadataRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(ServiceNowAuthenticationType left, ServiceNowAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceNowAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(ServiceNowAuthenticationType left, ServiceNowAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceNowAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceNowAuthenticationType"/>. </summary>
         public static implicit operator ServiceNowAuthenticationType(string value) => new ServiceNowAuthenticationType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

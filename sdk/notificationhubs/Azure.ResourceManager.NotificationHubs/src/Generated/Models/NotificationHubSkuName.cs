@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Name of the notification hub sku. </summary>
+    /// <summary> Namespace SKU name. </summary>
     public readonly partial struct NotificationHubSkuName : IEquatable<NotificationHubSkuName>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(NotificationHubSkuName left, NotificationHubSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHubSkuName"/> values are not the same. </summary>
         public static bool operator !=(NotificationHubSkuName left, NotificationHubSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationHubSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubSkuName"/>. </summary>
         public static implicit operator NotificationHubSkuName(string value) => new NotificationHubSkuName(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

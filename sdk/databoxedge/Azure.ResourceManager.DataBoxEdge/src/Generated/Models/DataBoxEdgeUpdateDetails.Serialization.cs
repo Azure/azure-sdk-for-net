@@ -5,103 +5,247 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeUpdateDetails
+    public partial class DataBoxEdgeUpdateDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeUpdateDetails>
     {
-        internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeUpdateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxEdgeUpdateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> updateTitle = default;
-            Optional<double> updateSize = default;
-            Optional<DataBoxEdgeUpdateType> updateType = default;
-            Optional<string> targetVersion = default;
-            Optional<string> friendlyVersionNumber = default;
-            Optional<int> estimatedInstallTimeInMins = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<InstallationImpact> installationImpact = default;
-            Optional<DataBoxEdgeUpdateStatus> status = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(UpdateTitle))
+            {
+                writer.WritePropertyName("updateTitle"u8);
+                writer.WriteStringValue(UpdateTitle);
+            }
+            if (Optional.IsDefined(UpdateSizeInBytes))
+            {
+                writer.WritePropertyName("updateSize"u8);
+                writer.WriteNumberValue(UpdateSizeInBytes.Value);
+            }
+            if (Optional.IsDefined(UpdateType))
+            {
+                writer.WritePropertyName("updateType"u8);
+                writer.WriteStringValue(UpdateType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetVersion))
+            {
+                writer.WritePropertyName("targetVersion"u8);
+                writer.WriteStringValue(TargetVersion);
+            }
+            if (Optional.IsDefined(FriendlyVersionNumber))
+            {
+                writer.WritePropertyName("friendlyVersionNumber"u8);
+                writer.WriteStringValue(FriendlyVersionNumber);
+            }
+            if (Optional.IsDefined(EstimatedInstallTimeInMins))
+            {
+                writer.WritePropertyName("estimatedInstallTimeInMins"u8);
+                writer.WriteNumberValue(EstimatedInstallTimeInMins.Value);
+            }
+            if (Optional.IsDefined(RebootBehavior))
+            {
+                writer.WritePropertyName("rebootBehavior"u8);
+                writer.WriteStringValue(RebootBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(InstallationImpact))
+            {
+                writer.WritePropertyName("installationImpact"u8);
+                writer.WriteStringValue(InstallationImpact.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DataBoxEdgeUpdateDetails IJsonModel<DataBoxEdgeUpdateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeUpdateDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string updateTitle = default;
+            double? updateSize = default;
+            DataBoxEdgeUpdateType? updateType = default;
+            string targetVersion = default;
+            string friendlyVersionNumber = default;
+            int? estimatedInstallTimeInMins = default;
+            InstallRebootBehavior? rebootBehavior = default;
+            InstallationImpact? installationImpact = default;
+            DataBoxEdgeUpdateStatus? status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updateTitle"))
+                if (property.NameEquals("updateTitle"u8))
                 {
                     updateTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updateSize"))
+                if (property.NameEquals("updateSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateSize = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("updateType"))
+                if (property.NameEquals("updateType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateType = new DataBoxEdgeUpdateType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVersion"))
+                if (property.NameEquals("targetVersion"u8))
                 {
                     targetVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyVersionNumber"))
+                if (property.NameEquals("friendlyVersionNumber"u8))
                 {
                     friendlyVersionNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("estimatedInstallTimeInMins"))
+                if (property.NameEquals("estimatedInstallTimeInMins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedInstallTimeInMins = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rebootBehavior"))
+                if (property.NameEquals("rebootBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rebootBehavior = new InstallRebootBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("installationImpact"))
+                if (property.NameEquals("installationImpact"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     installationImpact = new InstallationImpact(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new DataBoxEdgeUpdateStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle,
+                updateSize,
+                updateType,
+                targetVersion,
+                friendlyVersionNumber,
+                estimatedInstallTimeInMins,
+                rebootBehavior,
+                installationImpact,
+                status,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeUpdateDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeUpdateDetails IPersistableModel<DataBoxEdgeUpdateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeUpdateDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeUpdateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

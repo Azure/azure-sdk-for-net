@@ -11,6 +11,7 @@ trigger:
     include:
     - sdk/monitor/ci.yml
     - sdk/monitor/service.projects
+    - sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore
     - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter
     - sdk/monitor/Azure.Monitor.Query
     - sdk/monitor/Azure.Monitor.Ingestion
@@ -26,6 +27,7 @@ pr:
     include:
     - sdk/monitor/ci.yml
     - sdk/monitor/service.projects
+    - sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore
     - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter
     - sdk/monitor/Azure.Monitor.Query
     - sdk/monitor/Azure.Monitor.Ingestion
@@ -37,9 +39,15 @@ extends:
     ServiceDirectory: monitor
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Monitor.OpenTelemetry.AspNetCore
+      safeName: AzureMonitorOpenTelemetryAspNetCore
     - name: Azure.Monitor.OpenTelemetry.Exporter
-      safeName: MicrosoftOpenTelemetryExporterAzureMonitor
+      safeName: AzureMonitorOpenTelemetryExporter
     - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
     - name: Azure.Monitor.Ingestion
       safeName: AzureMonitorIngestion
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Monitor.OpenTelemetry.Exporter
+      ExpectedWarningsFilepath: None

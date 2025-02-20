@@ -15,13 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("text");
+            writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             if (Optional.IsDefined(CaseSensitive))
             {
                 if (CaseSensitive != null)
                 {
-                    writer.WritePropertyName("caseSensitive");
+                    writer.WritePropertyName("caseSensitive"u8);
                     writer.WriteBooleanValue(CaseSensitive.Value);
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (AccentSensitive != null)
                 {
-                    writer.WritePropertyName("accentSensitive");
+                    writer.WritePropertyName("accentSensitive"u8);
                     writer.WriteBooleanValue(AccentSensitive.Value);
                 }
                 else
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (FuzzyEditDistance != null)
                 {
-                    writer.WritePropertyName("fuzzyEditDistance");
+                    writer.WritePropertyName("fuzzyEditDistance"u8);
                     writer.WriteNumberValue(FuzzyEditDistance.Value);
                 }
                 else
@@ -58,18 +58,22 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomEntityAlias DeserializeCustomEntityAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
-            Optional<bool?> caseSensitive = default;
-            Optional<bool?> accentSensitive = default;
-            Optional<int?> fuzzyEditDistance = default;
+            bool? caseSensitive = default;
+            bool? accentSensitive = default;
+            int? fuzzyEditDistance = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("caseSensitive"))
+                if (property.NameEquals("caseSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     caseSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("accentSensitive"))
+                if (property.NameEquals("accentSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     accentSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fuzzyEditDistance"))
+                if (property.NameEquals("fuzzyEditDistance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +104,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityAlias(text, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance));
+            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomEntityAlias FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomEntityAlias(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

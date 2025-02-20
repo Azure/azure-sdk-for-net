@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Hci.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string MovingValue = "Moving";
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        private const string InProgressValue = "InProgress";
+        private const string AcceptedValue = "Accepted";
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> NotSpecified. </summary>
         public static NodeExtensionState NotSpecified { get; } = new NodeExtensionState(NotSpecifiedValue);
@@ -59,11 +64,21 @@ namespace Azure.ResourceManager.Hci.Models
         public static NodeExtensionState Deleting { get; } = new NodeExtensionState(DeletingValue);
         /// <summary> Moving. </summary>
         public static NodeExtensionState Moving { get; } = new NodeExtensionState(MovingValue);
+        /// <summary> PartiallySucceeded. </summary>
+        public static NodeExtensionState PartiallySucceeded { get; } = new NodeExtensionState(PartiallySucceededValue);
+        /// <summary> PartiallyConnected. </summary>
+        public static NodeExtensionState PartiallyConnected { get; } = new NodeExtensionState(PartiallyConnectedValue);
+        /// <summary> InProgress. </summary>
+        public static NodeExtensionState InProgress { get; } = new NodeExtensionState(InProgressValue);
+        /// <summary> Accepted. </summary>
+        public static NodeExtensionState Accepted { get; } = new NodeExtensionState(AcceptedValue);
+        /// <summary> Provisioning. </summary>
+        public static NodeExtensionState Provisioning { get; } = new NodeExtensionState(ProvisioningValue);
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are the same. </summary>
         public static bool operator ==(NodeExtensionState left, NodeExtensionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are not the same. </summary>
         public static bool operator !=(NodeExtensionState left, NodeExtensionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeExtensionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeExtensionState"/>. </summary>
         public static implicit operator NodeExtensionState(string value) => new NodeExtensionState(value);
 
         /// <inheritdoc />
@@ -74,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

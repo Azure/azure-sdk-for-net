@@ -39,12 +39,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// on Compute Nodes in the Batch Pool.</param>
         /// <param name="publicIPAddressConfiguration">The Public IPAddress
         /// configuration for Compute Nodes in the Batch Pool.</param>
-        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration))
+        /// <param name="enableAcceleratedNetworking">Whether this pool should
+        /// enable accelerated networking.</param>
+        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration), bool? enableAcceleratedNetworking = default(bool?))
         {
             SubnetId = subnetId;
             DynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
             EndpointConfiguration = endpointConfiguration;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
+            EnableAcceleratedNetworking = enableAcceleratedNetworking;
             CustomInit();
         }
 
@@ -73,19 +76,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// specified VNet has any associated Network Security Groups (NSG). If
         /// communication to the Nodes in the specified subnet is denied by an
         /// NSG, then the Batch service will set the state of the Compute Nodes
-        /// to unusable. For Pools created with virtualMachineConfiguration
-        /// only ARM virtual networks ('Microsoft.Network/virtualNetworks') are
-        /// supported, but for Pools created with cloudServiceConfiguration
-        /// both ARM and classic virtual networks are supported. If the
+        /// to unusable. Only ARM virtual networks
+        /// ('Microsoft.Network/virtualNetworks') are supported. If the
         /// specified VNet has any associated Network Security Groups (NSG),
         /// then a few reserved system ports must be enabled for inbound
-        /// communication. For Pools created with a virtual machine
-        /// configuration, enable ports 29876 and 29877, as well as port 22 for
-        /// Linux and port 3389 for Windows. For Pools created with a cloud
-        /// service configuration, enable ports 10100, 20100, and 30100. Also
-        /// enable outbound connections to Azure Storage on port 443. For more
-        /// details see:
-        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
+        /// communication. Enable ports 29876 and 29877, as well as port 22 for
+        /// Linux and port 3389 for Windows. Also enable outbound connections
+        /// to Azure Storage on port 443. For more details see:
+        /// https://docs.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
         /// </remarks>
         [JsonProperty(PropertyName = "subnetId")]
         public string SubnetId { get; set; }
@@ -103,10 +101,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the configuration for endpoints on Compute Nodes in
         /// the Batch Pool.
         /// </summary>
-        /// <remarks>
-        /// Pool endpoint configuration is only supported on Pools with the
-        /// virtualMachineConfiguration property.
-        /// </remarks>
         [JsonProperty(PropertyName = "endpointConfiguration")]
         public PoolEndpointConfiguration EndpointConfiguration { get; set; }
 
@@ -114,12 +108,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the Public IPAddress configuration for Compute Nodes
         /// in the Batch Pool.
         /// </summary>
-        /// <remarks>
-        /// Public IP configuration property is only supported on Pools with
-        /// the virtualMachineConfiguration property.
-        /// </remarks>
         [JsonProperty(PropertyName = "publicIPAddressConfiguration")]
         public PublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this pool should enable accelerated
+        /// networking.
+        /// </summary>
+        /// <remarks>
+        /// Accelerated networking enables single root I/O virtualization
+        /// (SR-IOV) to a VM, which may lead to improved networking
+        /// performance. For more details, see:
+        /// https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview.
+        /// </remarks>
+        [JsonProperty(PropertyName = "enableAcceleratedNetworking")]
+        public bool? EnableAcceleratedNetworking { get; set; }
 
     }
 }

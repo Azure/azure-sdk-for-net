@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,15 +17,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static KqlScriptsResourceCollectionResponse DeserializeKqlScriptsResourceCollectionResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<KqlScriptResource>> value = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<KqlScriptResource> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KqlScriptResource> array = new List<KqlScriptResource>();
@@ -37,13 +39,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new KqlScriptsResourceCollectionResponse(Optional.ToList(value), nextLink.Value);
+            return new KqlScriptsResourceCollectionResponse(value ?? new ChangeTrackingList<KqlScriptResource>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KqlScriptsResourceCollectionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKqlScriptsResourceCollectionResponse(document.RootElement);
         }
 
         internal partial class KqlScriptsResourceCollectionResponseConverter : JsonConverter<KqlScriptsResourceCollectionResponse>
@@ -52,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override KqlScriptsResourceCollectionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

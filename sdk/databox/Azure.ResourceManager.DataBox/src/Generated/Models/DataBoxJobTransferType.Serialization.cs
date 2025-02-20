@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxJobTransferType ToDataBoxJobTransferType(this string value)
         {
-            if (string.Equals(value, "ImportToAzure", StringComparison.InvariantCultureIgnoreCase)) return DataBoxJobTransferType.ImportToAzure;
-            if (string.Equals(value, "ExportFromAzure", StringComparison.InvariantCultureIgnoreCase)) return DataBoxJobTransferType.ExportFromAzure;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ImportToAzure")) return DataBoxJobTransferType.ImportToAzure;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExportFromAzure")) return DataBoxJobTransferType.ExportFromAzure;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxJobTransferType value.");
         }
     }

@@ -87,6 +87,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void FailsWhenConnectionStringUsedAsName()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", ConnectionString));
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options);
+
+            var errorMessage = Assert.Throws<InvalidOperationException>(() => factory.GetEventHubProducerClient("k1", ConnectionString)).Message;
+            StringAssert.DoesNotContain(ConnectionString, errorMessage);
+            StringAssert.Contains("REDACTED", errorMessage);
+        }
+
+        [Test]
         public void ConsumersAndProducersAreCached()
         {
             EventHubOptions options = new EventHubOptions();
@@ -188,9 +201,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual("devstoreaccount1", client.AccountName);
         }
 
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void RespectsConnectionOptionsForProducer(string expectedPathName, string connectionString)
+        [TestCase("k1", "k1", ConnectionString)]
+        [TestCase("path2", "k1", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForProducer(string expectedPathName, string eventHubName, string connectionString)
         {
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
@@ -202,10 +215,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             };
 
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString), new KeyValuePair<string, string>("eventHubName", eventHubName));
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
-            var producer = factory.GetEventHubProducerClient(expectedPathName, "connection");
+            var producer = factory.GetEventHubProducerClient(eventHubName, "connection");
             EventHubConnection connection = (EventHubConnection)typeof(EventHubProducerClient).GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(producer);
             EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
@@ -218,9 +231,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(expectedPathName, producer.EventHubName);
         }
 
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void RespectsConnectionOptionsForConsumer(string expectedPathName, string connectionString)
+        [TestCase("k1", "k1", ConnectionString)]
+        [TestCase("path2", "k1", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForConsumer(string expectedPathName, string eventHubName, string connectionString)
         {
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
@@ -232,10 +245,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             };
 
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString), new KeyValuePair<string, string>("eventHubName", eventHubName));
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
-            var consumer = factory.GetEventHubConsumerClient(expectedPathName, "connection", "consumer");
+            var consumer = factory.GetEventHubConsumerClient(eventHubName, "connection", "consumer");
             var consumerClient = (EventHubConsumerClient)typeof(EventHubConsumerClientImpl)
                 .GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(consumer);
@@ -260,9 +273,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(expectedPathName, consumer.EventHubName);
         }
 
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void RespectsConnectionOptionsForProcessor(string expectedPathName, string connectionString)
+        [TestCase("k1", "k1", ConnectionString)]
+        [TestCase("path2", "k1", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForProcessor(string expectedPathName, string eventHubName, string connectionString)
         {
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
@@ -277,10 +290,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 MaxEventBatchSize = 20
             };
 
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString), new KeyValuePair<string, string>("eventHubName", eventHubName));
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
-            var processor = factory.GetEventProcessorHost(expectedPathName, "connection", "consumer", false);
+            var processor = factory.GetEventProcessorHost(eventHubName, "connection", "consumer", false);
             EventProcessorOptions processorOptions = (EventProcessorOptions)typeof(EventProcessor<EventProcessorHostPartition>)
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);

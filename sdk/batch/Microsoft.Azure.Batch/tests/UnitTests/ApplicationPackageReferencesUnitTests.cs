@@ -17,7 +17,7 @@
     using Xunit;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
     using Protocol = Microsoft.Azure.Batch.Protocol;
-    
+
     public class ApplicationPackageReferencesUnitTests
     {
         [Fact]
@@ -48,7 +48,7 @@
                                             }
                                 },
                                 CurrentDedicatedNodes = 4,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", osVersion: "3"),
+                                VirtualMachineConfiguration = new Models.VirtualMachineConfiguration(imageReference: new Models.ImageReference(), nodeAgentSKUId: "df"),
                                 Id = "pool-id"
                             },
                         };
@@ -59,8 +59,8 @@
 
             Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-            Assert.Equal(cloudPool.ApplicationPackageReferences.First().Version, version);
-            Assert.Equal(cloudPool.ApplicationPackageReferences.First().ApplicationId, applicationId);
+            Assert.Equal(version, cloudPool.ApplicationPackageReferences.First().Version);
+            Assert.Equal(applicationId, cloudPool.ApplicationPackageReferences.First().ApplicationId);
         }
 
         [Fact]
@@ -70,7 +70,6 @@
             const string applicationId = "blender";
             const string version = "beta";
             const string poolId = "mock-pool";
-            const string osFamily = "3";
 
             using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
             Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
@@ -85,7 +84,7 @@
                             Body = new Protocol.Models.CloudPool
                             {
                                 CurrentDedicatedNodes = 4,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
+                                VirtualMachineConfiguration = new Models.VirtualMachineConfiguration(imageReference: new Models.ImageReference(), nodeAgentSKUId: "df"),
                                 Id = poolId
                             }
                         };
@@ -155,8 +154,8 @@
 
             Microsoft.Azure.Batch.CloudJob cloudJob = client.JobOperations.CreateJob(jobId, autoPoolSpecification);
 
-            Assert.Equal(cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
-            Assert.Equal(cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version, version);
+            Assert.Equal(applicationId, cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId);
+            Assert.Equal(version, cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version);
         }
 
         [Fact]
@@ -209,8 +208,8 @@
 
             Microsoft.Azure.Batch.CloudJobSchedule cloudJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-            Assert.Equal(cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
-            Assert.Equal(cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version, version);
+            Assert.Equal(applicationId, cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId);
+            Assert.Equal(version, cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version);
         }
 
         [Fact]
@@ -304,8 +303,8 @@
 
             Microsoft.Azure.Batch.ApplicationPackageReference apr = jobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
 
-            Assert.Equal(apr.ApplicationId, applicationId);
-            Assert.Equal(apr.Version, version);
+            Assert.Equal(applicationId, apr.ApplicationId);
+            Assert.Equal(version, apr.Version);
         }
 
         [Fact]
@@ -414,8 +413,8 @@
             Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
             Assert.Throws<InvalidOperationException>(() => cloudPool.ApplicationPackageReferences.First().ApplicationId = applicationId);
             Assert.Throws<InvalidOperationException>(() => cloudPool.ApplicationPackageReferences.First().Version = version);
-            Assert.Equal(cloudPool.ApplicationPackageReferences.First().Version, version);
-            Assert.Equal(cloudPool.ApplicationPackageReferences.First().ApplicationId, applicationId);
+            Assert.Equal(version, cloudPool.ApplicationPackageReferences.First().Version);
+            Assert.Equal(applicationId, cloudPool.ApplicationPackageReferences.First().ApplicationId);
         }
     }
 }

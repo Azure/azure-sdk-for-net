@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -15,15 +14,18 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static Repositories DeserializeRepositories(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> repositories = default;
-            Optional<string> link = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> repositories = default;
+            string link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("repositories"))
+                if (property.NameEquals("repositories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -34,13 +36,21 @@ namespace Azure.Containers.ContainerRegistry
                     repositories = array;
                     continue;
                 }
-                if (property.NameEquals("link"))
+                if (property.NameEquals("link"u8))
                 {
                     link = property.Value.GetString();
                     continue;
                 }
             }
-            return new Repositories(Optional.ToList(repositories), link.Value);
+            return new Repositories(repositories ?? new ChangeTrackingList<string>(), link);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Repositories FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRepositories(document.RootElement);
         }
     }
 }

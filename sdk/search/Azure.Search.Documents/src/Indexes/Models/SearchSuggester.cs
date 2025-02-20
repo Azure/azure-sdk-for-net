@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
+// suppress the generated type for the property `SearchMode`
+[assembly: CodeGenSuppressType("SuggesterMode")]
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("Suggester")]

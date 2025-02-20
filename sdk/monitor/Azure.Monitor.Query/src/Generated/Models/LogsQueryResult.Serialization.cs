@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,13 +14,17 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<LogsTable> tables = default;
-            Optional<JsonElement> statistics = default;
-            Optional<JsonElement> render = default;
-            Optional<JsonElement> error = default;
+            JsonElement statistics = default;
+            JsonElement render = default;
+            JsonElement error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     List<LogsTable> array = new List<LogsTable>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -31,23 +34,31 @@ namespace Azure.Monitor.Query.Models
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     statistics = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("render"))
+                if (property.NameEquals("render"u8))
                 {
                     render = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.Clone();
                     continue;
                 }
             }
             return new LogsQueryResult(tables, statistics, render, error);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogsQueryResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogsQueryResult(document.RootElement);
         }
     }
 }

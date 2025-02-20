@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,39 +16,50 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static IotHubDeviceConnectedEventData DeserializeIotHubDeviceConnectedEventData(JsonElement element)
         {
-            Optional<string> deviceId = default;
-            Optional<string> moduleId = default;
-            Optional<string> hubName = default;
-            Optional<DeviceConnectionStateEventInfo> deviceConnectionStateEventInfo = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string deviceId = default;
+            string moduleId = default;
+            string hubName = default;
+            DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("moduleId"))
+                if (property.NameEquals("moduleId"u8))
                 {
                     moduleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hubName"))
+                if (property.NameEquals("hubName"u8))
                 {
                     hubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceConnectionStateEventInfo"))
+                if (property.NameEquals("deviceConnectionStateEventInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deviceConnectionStateEventInfo = DeviceConnectionStateEventInfo.DeserializeDeviceConnectionStateEventInfo(property.Value);
                     continue;
                 }
             }
-            return new IotHubDeviceConnectedEventData(deviceId.Value, moduleId.Value, hubName.Value, deviceConnectionStateEventInfo.Value);
+            return new IotHubDeviceConnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubDeviceConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceConnectedEventData(document.RootElement);
         }
 
         internal partial class IotHubDeviceConnectedEventDataConverter : JsonConverter<IotHubDeviceConnectedEventData>
@@ -58,6 +68,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override IotHubDeviceConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

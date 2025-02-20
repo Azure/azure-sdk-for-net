@@ -28,16 +28,23 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(
+                CosmosDBTestUtilities.GenerateDatabaseAccountName(SessionRecording),
+                CosmosDBAccountKind.GlobalDocumentDB,
+                null)).Id;
+
             await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            if (_databaseAccountIdentifier != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                if (_databaseAccountIdentifier != null)
+                {
+                    await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -50,12 +57,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await CosmosDBServiceCollection.ExistsAsync(_serviceName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = CosmosDBServiceCollection.Id;
-                id = CosmosDBServiceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _serviceName);
-                CosmosDBServiceResource service = ArmClient.GetCosmosDBServiceResource(id);
-                await service.DeleteAsync(WaitUntil.Completed);
+                if (await CosmosDBServiceCollection.ExistsAsync(_serviceName))
+                {
+                    var id = CosmosDBServiceCollection.Id;
+                    id = CosmosDBServiceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _serviceName);
+                    CosmosDBServiceResource service = ArmClient.GetCosmosDBServiceResource(id);
+                    await service.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -91,12 +101,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<CosmosDBServiceResource> CreateCosmosDBService()
         {
             _serviceName = CosmosDBServiceType.SqlDedicatedGateway.ToString();
-            var content = new CosmosDBServiceCreateOrUpdateContent()
+            var properties = new SqlDedicatedGatewayServiceResourceCreateUpdateProperties()
             {
                 InstanceSize = CosmosDBServiceSize.CosmosD4S,
                 InstanceCount = 1,
-                ServiceType = CosmosDBServiceType.SqlDedicatedGateway
+                DedicatedGatewayType = DedicatedGatewayType.IntegratedCache
             };
+
+            var content = new CosmosDBServiceCreateOrUpdateContent()
+            {
+                Properties = properties
+            };
+
             return (await CosmosDBServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _serviceName, content)).Value;
         }
 

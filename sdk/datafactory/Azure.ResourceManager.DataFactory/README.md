@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Data Factory management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.DataFactory --prerelease
+dotnet add package Azure.ResourceManager.DataFactory
 ```
 
 ### Prerequisites
@@ -39,13 +39,84 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+
+### Examples using `DataFactoryElement`
+#### Assign `DataFactoryElement` with different literal types
+- int
+ ```C# Snippet:Readme_DataFactoryElementInt
+var policy = new PipelineActivityPolicy
+{
+    Retry = DataFactoryElement<int>.FromLiteral(1),
+};
+```
+
+- bool
+```C# Snippet:Readme_DataFactoryElementBoolean
+var service = new AmazonS3CompatibleLinkedService
+{
+    ForcePathStyle = DataFactoryElement<bool>.FromLiteral(true),
+};
+```
+
+- list
+```C# Snippet:Readme_DataFactoryElementList
+var source = new Office365Source()
+{
+    AllowedGroups = DataFactoryElement<IList<string>>.FromLiteral(new List<string> { "a", "b" }),
+};
+```
+
+- Dictionary
+```C# Snippet:Readme_DataFactoryElementDictionary
+Dictionary<string, string> DictionaryValue = new()
+{
+    { "key1", "value1" },
+    { "key2", "value2" }
+};
+var activity = new AzureMLExecutePipelineActivity("name")
+{
+    MLPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
+};
+```
+
+- BinaryData
+```C# Snippet:Readme_DataFactoryElementBinaryData
+var varActivity = new SetVariableActivity("name")
+{
+    Value = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("a")),
+};
+```
+
+#### Assign `DataFactoryElement` from expression
+```C# Snippet:Readme_DataFactoryElementFromExpression
+var service = new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}"));
+```
+
+#### Assign `DataFactoryElement` from masked string
+```C# Snippet:Readme_DataFactoryElementFromMaskedString
+var service = new AmazonS3CompatibleLinkedService()
+{
+    ServiceUri = DataFactoryElement<string>.FromSecretString("some/secret/path"),
+};
+```
+
+#### Assign `DataFactoryElement` from KeyVault secret reference
+```C# Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
+    "referenceName");
+var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
+var service = new AmazonS3CompatibleLinkedService()
+{
+    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference),
+};
+```
 
 ## Troubleshooting
 

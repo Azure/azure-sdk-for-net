@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -37,6 +36,19 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string assessmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendPath("/governanceAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string assessmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -56,9 +68,9 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Get security governanceAssignments on all your resources inside a scope. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -83,9 +95,9 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Get security governanceAssignments on all your resources inside a scope. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -110,6 +122,20 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string assessmentName, string assignmentKey)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendPath("/governanceAssignments/", false);
+            uri.AppendPath(assignmentKey, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string scope, string assessmentName, string assignmentKey)
         {
             var message = _pipeline.CreateMessage();
@@ -131,9 +157,9 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -162,9 +188,9 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -192,6 +218,20 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendPath("/governanceAssignments/", false);
+            uri.AppendPath(assignmentKey, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -210,17 +250,17 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates or update a security GovernanceAssignment on the given subscription. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="data"> GovernanceAssignment over a subscription scope. </param>
+        /// <summary> Creates or updates a governance assignment on the given subscription. </summary>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="data"> Governance assignment over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/>, <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -248,11 +288,11 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Creates or update a security GovernanceAssignment on the given subscription. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="data"> GovernanceAssignment over a subscription scope. </param>
+        /// <summary> Creates or updates a governance assignment on the given subscription. </summary>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="data"> Governance assignment over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/>, <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -280,6 +320,20 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string assessmentName, string assignmentKey)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendPath("/governanceAssignments/", false);
+            uri.AppendPath(assignmentKey, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string scope, string assessmentName, string assignmentKey)
         {
             var message = _pipeline.CreateMessage();
@@ -300,9 +354,9 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Delete a GovernanceAssignment over a given scope. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -325,9 +379,9 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Delete a GovernanceAssignment over a given scope. </summary>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -349,6 +403,14 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string assessmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string assessmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -363,10 +425,10 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Get security governanceAssignments on all your resources inside a scope. </summary>
+        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -392,10 +454,10 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Get security governanceAssignments on all your resources inside a scope. </summary>
+        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName). </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
+        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -21,33 +21,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("targetBigDataPool");
+            writer.WritePropertyName("targetBigDataPool"u8);
             writer.WriteObjectValue(TargetBigDataPool);
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
-                writer.WritePropertyName("targetSparkConfiguration");
+                writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
             if (Optional.IsDefined(RequiredSparkVersion))
             {
-                writer.WritePropertyName("requiredSparkVersion");
+                writer.WritePropertyName("requiredSparkVersion"u8);
                 writer.WriteStringValue(RequiredSparkVersion);
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            writer.WritePropertyName("jobProperties");
+            writer.WritePropertyName("jobProperties"u8);
             writer.WriteObjectValue(JobProperties);
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
-                    writer.WritePropertyName("folder");
+                    writer.WritePropertyName("folder"u8);
                     writer.WriteObjectValue(Folder);
                 }
                 else
@@ -58,60 +58,63 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static SparkJobDefinition DeserializeSparkJobDefinition(JsonElement element)
         {
-            Optional<string> description = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string description = default;
             BigDataPoolReference targetBigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<string> requiredSparkVersion = default;
-            Optional<string> language = default;
+            SparkConfigurationReference targetSparkConfiguration = default;
+            string requiredSparkVersion = default;
+            string language = default;
             SparkJobProperties jobProperties = default;
-            Optional<SparkJobDefinitionFolder> folder = default;
+            SparkJobDefinitionFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetBigDataPool"))
+                if (property.NameEquals("targetBigDataPool"u8))
                 {
                     targetBigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetSparkConfiguration"))
+                if (property.NameEquals("targetSparkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("requiredSparkVersion"))
+                if (property.NameEquals("requiredSparkVersion"u8))
                 {
                     requiredSparkVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobProperties"))
+                if (property.NameEquals("jobProperties"u8))
                 {
                     jobProperties = SparkJobProperties.DeserializeSparkJobProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +127,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobDefinition(description.Value, targetBigDataPool, targetSparkConfiguration.Value, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
+            return new SparkJobDefinition(
+                description,
+                targetBigDataPool,
+                targetSparkConfiguration,
+                requiredSparkVersion,
+                language,
+                jobProperties,
+                folder,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobDefinition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJobDefinition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>
@@ -133,6 +160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SparkJobDefinition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -27,10 +27,14 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
+            SequenceNumber = internalEvent.SequenceNumber;
         }
 
         /// <summary> List of current participants in the call. </summary>
         public IReadOnlyList<CallParticipant> Participants { get; }
+
+        /// <summary> Sequence number to indicate order of ParticipantsUpdated events. </summary>
+        public int? SequenceNumber { get; }
 
         /// <summary>
         /// Deserialize <see cref="ParticipantsUpdated"/> event.

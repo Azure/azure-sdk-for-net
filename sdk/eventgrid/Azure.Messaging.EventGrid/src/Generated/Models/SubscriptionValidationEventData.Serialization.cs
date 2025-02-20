@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,22 +16,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static SubscriptionValidationEventData DeserializeSubscriptionValidationEventData(JsonElement element)
         {
-            Optional<string> validationCode = default;
-            Optional<string> validationUrl = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string validationCode = default;
+            string validationUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationCode"))
+                if (property.NameEquals("validationCode"u8))
                 {
                     validationCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationUrl"))
+                if (property.NameEquals("validationUrl"u8))
                 {
                     validationUrl = property.Value.GetString();
                     continue;
                 }
             }
-            return new SubscriptionValidationEventData(validationCode.Value, validationUrl.Value);
+            return new SubscriptionValidationEventData(validationCode, validationUrl);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SubscriptionValidationEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSubscriptionValidationEventData(document.RootElement);
         }
 
         internal partial class SubscriptionValidationEventDataConverter : JsonConverter<SubscriptionValidationEventData>
@@ -41,6 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override SubscriptionValidationEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

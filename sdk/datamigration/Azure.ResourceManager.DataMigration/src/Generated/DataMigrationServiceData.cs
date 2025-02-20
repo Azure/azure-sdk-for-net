@@ -5,24 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the DataMigrationService data model. </summary>
+    /// <summary>
+    /// A class representing the DataMigrationService data model.
+    /// A Database Migration Service resource
+    /// </summary>
     public partial class DataMigrationServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataMigrationServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,15 +65,16 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> HTTP strong entity tag value. Ignored if submitted. </param>
-        /// <param name="kind"> The resource kind. Only &apos;vm&apos; (the default) is supported. </param>
+        /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
-        /// <param name="provisioningState"> The resource&apos;s provisioning state. </param>
+        /// <param name="provisioningState"> The resource's provisioning state. </param>
         /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
         /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
         /// <param name="deleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
-        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, ServiceSku sku, ServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, ServiceSku sku, ServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Kind = kind;
@@ -49,15 +85,21 @@ namespace Azure.ResourceManager.DataMigration
             VirtualNicId = virtualNicId;
             AutoStopDelay = autoStopDelay;
             DeleteResourcesOnStop = deleteResourcesOnStop;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/> for deserialization. </summary>
+        internal DataMigrationServiceData()
+        {
         }
 
         /// <summary> HTTP strong entity tag value. Ignored if submitted. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The resource kind. Only &apos;vm&apos; (the default) is supported. </summary>
+        /// <summary> The resource kind. Only 'vm' (the default) is supported. </summary>
         public string Kind { get; set; }
         /// <summary> Service SKU. </summary>
         public ServiceSku Sku { get; set; }
-        /// <summary> The resource&apos;s provisioning state. </summary>
+        /// <summary> The resource's provisioning state. </summary>
         public ServiceProvisioningState? ProvisioningState { get; }
         /// <summary> The public key of the service, used to encrypt secrets sent to the service. </summary>
         public string PublicKey { get; set; }

@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FromDhcp))
             {
-                writer.WritePropertyName("fromDhcp");
+                writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             writer.WriteEndObject();
@@ -30,27 +30,46 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifHostName DeserializeOnvifHostName(JsonElement element)
         {
-            Optional<bool> fromDhcp = default;
-            Optional<string> hostname = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? fromDhcp = default;
+            string hostname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fromDhcp"))
+                if (property.NameEquals("fromDhcp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fromDhcp = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
             }
-            return new OnvifHostName(Optional.ToNullable(fromDhcp), hostname.Value);
+            return new OnvifHostName(fromDhcp, hostname);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OnvifHostName FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifHostName(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

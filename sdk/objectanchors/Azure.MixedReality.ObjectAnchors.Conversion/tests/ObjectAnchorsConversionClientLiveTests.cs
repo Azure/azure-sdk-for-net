@@ -35,7 +35,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         public ObjectAnchorsConversionClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-#if NET461
+#if NET462
             CompareBodies = true;
 #else
             CompareBodies = false;
@@ -44,6 +44,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43387")]
         public async Task RunAssetConversion()
         {
             (
@@ -76,6 +77,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43387")]
         public async Task ObserveExistingAssetConversion()
         {
             (
@@ -110,6 +112,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43387")]
         public async Task RunFailedAssetConversion()
         {
             (

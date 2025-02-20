@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
+    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
     public readonly partial struct ServiceBusMinimumTlsVersion : IEquatable<ServiceBusMinimumTlsVersion>
     {
         private readonly string _value;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
         public static implicit operator ServiceBusMinimumTlsVersion(string value) => new ServiceBusMinimumTlsVersion(value);
 
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

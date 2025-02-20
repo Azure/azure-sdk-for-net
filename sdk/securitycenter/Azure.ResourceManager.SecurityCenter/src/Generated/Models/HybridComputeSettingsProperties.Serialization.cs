@@ -5,98 +5,196 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class HybridComputeSettingsProperties : IUtf8JsonSerializable
+    public partial class HybridComputeSettingsProperties : IUtf8JsonSerializable, IJsonModel<HybridComputeSettingsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeSettingsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridComputeSettingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("autoProvision");
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(HybridComputeProvisioningState))
+            {
+                writer.WritePropertyName("hybridComputeProvisioningState"u8);
+                writer.WriteStringValue(HybridComputeProvisioningState.Value.ToString());
+            }
+            writer.WritePropertyName("autoProvision"u8);
             writer.WriteStringValue(AutoProvision.ToString());
             if (Optional.IsDefined(ResourceGroupName))
             {
-                writer.WritePropertyName("resourceGroupName");
+                writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
             if (Optional.IsDefined(ProxyServer))
             {
-                writer.WritePropertyName("proxyServer");
-                writer.WriteObjectValue(ProxyServer);
+                writer.WritePropertyName("proxyServer"u8);
+                writer.WriteObjectValue(ProxyServer, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
-                writer.WritePropertyName("servicePrincipal");
-                writer.WriteObjectValue(ServicePrincipal);
+                writer.WritePropertyName("servicePrincipal"u8);
+                writer.WriteObjectValue(ServicePrincipal, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element)
+        HybridComputeSettingsProperties IJsonModel<HybridComputeSettingsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeSettingsProperties(document.RootElement, options);
+        }
+
+        internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            HybridComputeProvisioningState? hybridComputeProvisioningState = default;
             AutoProvisionState autoProvision = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> region = default;
-            Optional<ProxyServerProperties> proxyServer = default;
-            Optional<ServicePrincipalProperties> servicePrincipal = default;
+            string resourceGroupName = default;
+            string region = default;
+            ProxyServerProperties proxyServer = default;
+            ServicePrincipalProperties servicePrincipal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hybridComputeProvisioningState"))
+                if (property.NameEquals("hybridComputeProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hybridComputeProvisioningState = new HybridComputeProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("autoProvision"))
+                if (property.NameEquals("autoProvision"u8))
                 {
                     autoProvision = new AutoProvisionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"))
+                if (property.NameEquals("resourceGroupName"u8))
                 {
                     resourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("proxyServer"))
+                if (property.NameEquals("proxyServer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value);
+                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("servicePrincipal"))
+                if (property.NameEquals("servicePrincipal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
+                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridComputeSettingsProperties(
+                hybridComputeProvisioningState,
+                autoProvision,
+                resourceGroupName,
+                region,
+                proxyServer,
+                servicePrincipal,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridComputeSettingsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridComputeSettingsProperties IPersistableModel<HybridComputeSettingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridComputeSettingsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridComputeSettingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

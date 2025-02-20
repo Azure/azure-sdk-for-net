@@ -5,71 +5,142 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderForDatabasesGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderForDatabasesGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDatabasesGcpOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DefenderForDatabasesGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArcAutoProvisioning))
-            {
-                writer.WritePropertyName("arcAutoProvisioning");
-                writer.WriteObjectValue(ArcAutoProvisioning);
-            }
-            if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
-            {
-                writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning");
-                writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning);
-            }
-            writer.WritePropertyName("offeringType");
-            writer.WriteStringValue(OfferingType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesGcpOffering DeserializeDefenderForDatabasesGcpOffering(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<DefenderForDatabasesGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<GcpDefenderForDatabasesArcAutoProvisioning> defenderForDatabasesArcAutoProvisioning = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ArcAutoProvisioning))
+            {
+                writer.WritePropertyName("arcAutoProvisioning"u8);
+                writer.WriteObjectValue(ArcAutoProvisioning, options);
+            }
+            if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
+            {
+                writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
+                writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning, options);
+            }
+        }
+
+        DefenderForDatabasesGcpOffering IJsonModel<DefenderForDatabasesGcpOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForDatabasesGcpOffering(document.RootElement, options);
+        }
+
+        internal static DefenderForDatabasesGcpOffering DeserializeDefenderForDatabasesGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("arcAutoProvisioning"))
+                if (property.NameEquals("arcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"))
+                if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value);
+                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForDatabasesGcpOffering(offeringType, description.Value, arcAutoProvisioning.Value, defenderForDatabasesArcAutoProvisioning.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderForDatabasesGcpOffering(offeringType, description, serializedAdditionalRawData, arcAutoProvisioning, defenderForDatabasesArcAutoProvisioning);
         }
+
+        BinaryData IPersistableModel<DefenderForDatabasesGcpOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefenderForDatabasesGcpOffering IPersistableModel<DefenderForDatabasesGcpOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderForDatabasesGcpOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderForDatabasesGcpOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

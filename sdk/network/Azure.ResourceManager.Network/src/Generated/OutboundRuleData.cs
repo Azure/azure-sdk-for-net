@@ -5,27 +5,31 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the OutboundRule data model. </summary>
+    /// <summary>
+    /// A class representing the OutboundRule data model.
+    /// Outbound rule of the load balancer.
+    /// </summary>
     public partial class OutboundRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of OutboundRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundRuleData"/>. </summary>
         public OutboundRuleData()
         {
             FrontendIPConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of OutboundRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="allocatedOutboundPorts"> The number of outbound ports to be used for NAT. </param>
         /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
-        internal OutboundRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id, name, resourceType)
+        internal OutboundRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AllocatedOutboundPorts = allocatedOutboundPorts;

@@ -5,95 +5,297 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class VirtualIPMapping : IUtf8JsonSerializable
+    public partial class VirtualIPMapping : IUtf8JsonSerializable, IJsonModel<VirtualIPMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualIPMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualIPMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(VirtualIP))
             {
-                writer.WritePropertyName("virtualIP");
+                writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
             if (Optional.IsDefined(InternalHttpPort))
             {
-                writer.WritePropertyName("internalHttpPort");
+                writer.WritePropertyName("internalHttpPort"u8);
                 writer.WriteNumberValue(InternalHttpPort.Value);
             }
             if (Optional.IsDefined(InternalHttpsPort))
             {
-                writer.WritePropertyName("internalHttpsPort");
+                writer.WritePropertyName("internalHttpsPort"u8);
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
             if (Optional.IsDefined(IsInUse))
             {
-                writer.WritePropertyName("inUse");
+                writer.WritePropertyName("inUse"u8);
                 writer.WriteBooleanValue(IsInUse.Value);
             }
             if (Optional.IsDefined(ServiceName))
             {
-                writer.WritePropertyName("serviceName");
+                writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static VirtualIPMapping DeserializeVirtualIPMapping(JsonElement element)
+        VirtualIPMapping IJsonModel<VirtualIPMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> virtualIP = default;
-            Optional<int> internalHttpPort = default;
-            Optional<int> internalHttpsPort = default;
-            Optional<bool> inUse = default;
-            Optional<string> serviceName = default;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualIPMapping(document.RootElement, options);
+        }
+
+        internal static VirtualIPMapping DeserializeVirtualIPMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string virtualIP = default;
+            int? internalHttpPort = default;
+            int? internalHttpsPort = default;
+            bool? inUse = default;
+            string serviceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualIP"))
+                if (property.NameEquals("virtualIP"u8))
                 {
                     virtualIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("internalHttpPort"))
+                if (property.NameEquals("internalHttpPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     internalHttpPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("internalHttpsPort"))
+                if (property.NameEquals("internalHttpsPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     internalHttpsPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inUse"))
+                if (property.NameEquals("inUse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inUse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     serviceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualIPMapping(virtualIP.Value, Optional.ToNullable(internalHttpPort), Optional.ToNullable(internalHttpsPort), Optional.ToNullable(inUse), serviceName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualIPMapping(
+                virtualIP,
+                internalHttpPort,
+                internalHttpsPort,
+                inUse,
+                serviceName,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  virtualIP: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualIP))
+                {
+                    builder.Append("  virtualIP: ");
+                    if (VirtualIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VirtualIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VirtualIP}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalHttpPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  internalHttpPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InternalHttpPort))
+                {
+                    builder.Append("  internalHttpPort: ");
+                    builder.AppendLine($"{InternalHttpPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalHttpsPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  internalHttpsPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InternalHttpsPort))
+                {
+                    builder.Append("  internalHttpsPort: ");
+                    builder.AppendLine($"{InternalHttpsPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInUse), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inUse: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsInUse))
+                {
+                    builder.Append("  inUse: ");
+                    var boolValue = IsInUse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceName))
+                {
+                    builder.Append("  serviceName: ");
+                    if (ServiceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<VirtualIPMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualIPMapping IPersistableModel<VirtualIPMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualIPMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualIPMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

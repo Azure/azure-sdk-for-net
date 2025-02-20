@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         public static RedisEnterpriseAccessKeyType ToRedisEnterpriseAccessKeyType(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return RedisEnterpriseAccessKeyType.Primary;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return RedisEnterpriseAccessKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return RedisEnterpriseAccessKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return RedisEnterpriseAccessKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisEnterpriseAccessKeyType value.");
         }
     }

@@ -21,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
 
         public static BlobType ToBlobType(this string value)
         {
-            if (string.Equals(value, "BlockBlob", StringComparison.InvariantCultureIgnoreCase)) return BlobType.Block;
-            if (string.Equals(value, "PageBlob", StringComparison.InvariantCultureIgnoreCase)) return BlobType.Page;
-            if (string.Equals(value, "AppendBlob", StringComparison.InvariantCultureIgnoreCase)) return BlobType.Append;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob")) return BlobType.Block;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob")) return BlobType.Page;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppendBlob")) return BlobType.Append;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.");
         }
     }

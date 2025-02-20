@@ -7,58 +7,30 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Tar compression read settings. </summary>
     public partial class TarReadSettings : CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of TarReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TarReadSettings"/>. </summary>
         public TarReadSettings()
         {
             CompressionReadSettingsType = "TarReadSettings";
         }
 
-        /// <summary> Initializes a new instance of TarReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TarReadSettings"/>. </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal TarReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
+        internal TarReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
             CompressionReadSettingsType = compressionReadSettingsType ?? "TarReadSettings";
         }
 
-        /// <summary>
-        /// Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData PreserveCompressionFileNameAsFolder { get; set; }
+        /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> PreserveCompressionFileNameAsFolder { get; set; }
     }
 }

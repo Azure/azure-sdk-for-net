@@ -15,39 +15,59 @@ namespace Azure.AI.FormRecognizer.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("modelId");
+            writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            writer.WritePropertyName("accessToken");
+            writer.WritePropertyName("accessToken"u8);
             writer.WriteStringValue(AccessToken);
-            writer.WritePropertyName("expirationDateTimeTicks");
+            writer.WritePropertyName("expirationDateTimeTicks"u8);
             writer.WriteNumberValue(ExpirationDateTimeTicks);
             writer.WriteEndObject();
         }
 
         internal static CopyAuthorizationResult DeserializeCopyAuthorizationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string modelId = default;
             string accessToken = default;
             long expirationDateTimeTicks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDateTimeTicks"))
+                if (property.NameEquals("expirationDateTimeTicks"u8))
                 {
                     expirationDateTimeTicks = property.Value.GetInt64();
                     continue;
                 }
             }
             return new CopyAuthorizationResult(modelId, accessToken, expirationDateTimeTicks);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopyAuthorizationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyAuthorizationResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

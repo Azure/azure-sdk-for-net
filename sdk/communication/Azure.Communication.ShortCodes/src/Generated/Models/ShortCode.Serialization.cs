@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -16,38 +15,40 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static ShortCode DeserializeShortCode(JsonElement element)
         {
-            Optional<string> number = default;
-            Optional<NumberType> numberType = default;
-            Optional<string> countryCode = default;
-            Optional<IReadOnlyList<string>> programBriefIds = default;
-            Optional<DateTimeOffset> purchaseDate = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string number = default;
+            NumberType? numberType = default;
+            string countryCode = default;
+            IReadOnlyList<string> programBriefIds = default;
+            DateTimeOffset? purchaseDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("number"))
+                if (property.NameEquals("number"u8))
                 {
                     number = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberType"))
+                if (property.NameEquals("numberType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberType = new NumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("programBriefIds"))
+                if (property.NameEquals("programBriefIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -58,18 +59,25 @@ namespace Azure.Communication.ShortCodes.Models
                     programBriefIds = array;
                     continue;
                 }
-                if (property.NameEquals("purchaseDate"))
+                if (property.NameEquals("purchaseDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     purchaseDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, Optional.ToList(programBriefIds), Optional.ToNullable(purchaseDate));
+            return new ShortCode(number, numberType, countryCode, programBriefIds ?? new ChangeTrackingList<string>(), purchaseDate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ShortCode FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShortCode(document.RootElement);
         }
     }
 }

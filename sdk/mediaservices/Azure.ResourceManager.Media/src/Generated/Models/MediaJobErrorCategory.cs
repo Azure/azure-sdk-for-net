@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Media.Models
         private const string UploadValue = "Upload";
         private const string ConfigurationValue = "Configuration";
         private const string ContentValue = "Content";
+        private const string AccountValue = "Account";
 
         /// <summary> The error is service related. </summary>
         public static MediaJobErrorCategory Service { get; } = new MediaJobErrorCategory(ServiceValue);
@@ -38,11 +39,13 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobErrorCategory Configuration { get; } = new MediaJobErrorCategory(ConfigurationValue);
         /// <summary> The error is related to data in the input files. </summary>
         public static MediaJobErrorCategory Content { get; } = new MediaJobErrorCategory(ContentValue);
+        /// <summary> The error is related to account information. </summary>
+        public static MediaJobErrorCategory Account { get; } = new MediaJobErrorCategory(AccountValue);
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are the same. </summary>
         public static bool operator ==(MediaJobErrorCategory left, MediaJobErrorCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are not the same. </summary>
         public static bool operator !=(MediaJobErrorCategory left, MediaJobErrorCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaJobErrorCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaJobErrorCategory"/>. </summary>
         public static implicit operator MediaJobErrorCategory(string value) => new MediaJobErrorCategory(value);
 
         /// <inheritdoc />
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

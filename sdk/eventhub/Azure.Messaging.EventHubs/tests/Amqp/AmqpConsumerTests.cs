@@ -162,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
@@ -187,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var trackLastEnqueued = false;
             var invalidateOnSteal = true;
             var ownerLevel = 123L;
@@ -279,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var trackLastEnqueued = false;
             var invalidateOnSteal = true;
             var ownerLevel = 123L;
@@ -344,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var trackLastEnqueued = false;
             var invalidateOnSteal = true;
             var ownerLevel = 123L;
@@ -407,7 +407,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var trackLastEnqueued = false;
             var invalidateOnSteal = true;
             var ownerLevel = 123L;
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var trackLastEnqueued = false;
             var invalidateOnSteal = true;
             var ownerLevel = 123L;
@@ -533,7 +533,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var options = new EventHubConsumerClientOptions();
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
@@ -562,7 +562,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var identifier = "cusTOM-1D";
-            var eventPosition = EventPosition.FromOffset(123);
+            var eventPosition = EventPosition.FromOffset("123");
             var options = new EventHubConsumerClientOptions();
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());

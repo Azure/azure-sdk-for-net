@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,14 +14,30 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
-    public partial class Scope : IUtf8JsonSerializable
+    public partial class Scope : IUtf8JsonSerializable, IJsonModel<Scope>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Scope>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<Scope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Scope)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
-                writer.WritePropertyName("managementGroups");
+                writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagementGroups)
                 {
@@ -29,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(Subscriptions))
             {
-                writer.WritePropertyName("subscriptions");
+                writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
@@ -39,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(VirtualNetworks))
             {
-                writer.WritePropertyName("virtualNetworks");
+                writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworks)
                 {
@@ -49,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
+                writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
@@ -57,22 +75,55 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static Scope DeserializeScope(JsonElement element)
+        Scope IJsonModel<Scope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<WritableSubResource>> managementGroups = default;
-            Optional<IList<WritableSubResource>> subscriptions = default;
-            Optional<IList<WritableSubResource>> virtualNetworks = default;
-            Optional<IList<WritableSubResource>> subnets = default;
+            var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Scope)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScope(document.RootElement, options);
+        }
+
+        internal static Scope DeserializeScope(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<WritableSubResource> managementGroups = default;
+            IList<WritableSubResource> subscriptions = default;
+            IList<WritableSubResource> virtualNetworks = default;
+            IList<WritableSubResource> subnets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managementGroups"))
+                if (property.NameEquals("managementGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -83,11 +134,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     managementGroups = array;
                     continue;
                 }
-                if (property.NameEquals("subscriptions"))
+                if (property.NameEquals("subscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -98,11 +148,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("virtualNetworks"))
+                if (property.NameEquals("virtualNetworks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -113,11 +162,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     virtualNetworks = array;
                     continue;
                 }
-                if (property.NameEquals("subnets"))
+                if (property.NameEquals("subnets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -128,8 +176,44 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     subnets = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Scope(Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Scope(managementGroups ?? new ChangeTrackingList<WritableSubResource>(), subscriptions ?? new ChangeTrackingList<WritableSubResource>(), virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), subnets ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Scope>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Scope)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Scope IPersistableModel<Scope>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScope(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Scope)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Scope>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

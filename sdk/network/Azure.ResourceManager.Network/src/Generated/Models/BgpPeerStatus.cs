@@ -6,19 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> BGP peer status details. </summary>
     public partial class BgpPeerStatus
     {
-        /// <summary> Initializes a new instance of BgpPeerStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BgpPeerStatus"/>. </summary>
         internal BgpPeerStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of BgpPeerStatus. </summary>
-        /// <param name="localAddress"> The virtual network gateway&apos;s local address. </param>
+        /// <summary> Initializes a new instance of <see cref="BgpPeerStatus"/>. </summary>
+        /// <param name="localAddress"> The virtual network gateway's local address. </param>
         /// <param name="neighbor"> The remote BGP peer. </param>
         /// <param name="asn"> The autonomous system number of the remote BGP peer. </param>
         /// <param name="state"> The BGP peer state. </param>
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routesReceived"> The number of routes learned from this peer. </param>
         /// <param name="messagesSent"> The number of BGP messages sent. </param>
         /// <param name="messagesReceived"> The number of BGP messages received. </param>
-        internal BgpPeerStatus(string localAddress, string neighbor, long? asn, BgpPeerState? state, TimeSpan? connectedDuration, long? routesReceived, long? messagesSent, long? messagesReceived)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BgpPeerStatus(string localAddress, string neighbor, long? asn, BgpPeerState? state, TimeSpan? connectedDuration, long? routesReceived, long? messagesSent, long? messagesReceived, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocalAddress = localAddress;
             Neighbor = neighbor;
@@ -36,9 +70,10 @@ namespace Azure.ResourceManager.Network.Models
             RoutesReceived = routesReceived;
             MessagesSent = messagesSent;
             MessagesReceived = messagesReceived;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The virtual network gateway&apos;s local address. </summary>
+        /// <summary> The virtual network gateway's local address. </summary>
         public string LocalAddress { get; }
         /// <summary> The remote BGP peer. </summary>
         public string Neighbor { get; }

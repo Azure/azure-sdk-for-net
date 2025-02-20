@@ -7,24 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The data stored in Parquet format. </summary>
     public partial class DatasetParquetFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of DatasetParquetFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetParquetFormat"/>. </summary>
         public DatasetParquetFormat()
         {
             DatasetStorageFormatType = "ParquetFormat";
         }
 
-        /// <summary> Initializes a new instance of DatasetParquetFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetParquetFormat"/>. </summary>
         /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetParquetFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
+        internal DatasetParquetFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             DatasetStorageFormatType = datasetStorageFormatType ?? "ParquetFormat";
         }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineImageOSType ToLabVirtualMachineImageOSType(this string value)
         {
-            if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineImageOSType.Windows;
-            if (string.Equals(value, "Linux", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineImageOSType.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return LabVirtualMachineImageOSType.Windows;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return LabVirtualMachineImageOSType.Linux;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineImageOSType value.");
         }
     }

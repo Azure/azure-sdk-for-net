@@ -6,7 +6,7 @@ using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Azure.Messaging.EventGrid;
 using Microsoft.Extensions.Logging;
 
-namespace Azure.Extensions.WebJobs.Sample
+namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Samples
 {
     #region Snippet:EventGridEventTriggerFunction
     public static class EventGridEventTriggerFunction

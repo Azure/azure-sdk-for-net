@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseTransparentDataEncryptionStatus ToSynapseTransparentDataEncryptionStatus(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseTransparentDataEncryptionStatus.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseTransparentDataEncryptionStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SynapseTransparentDataEncryptionStatus.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SynapseTransparentDataEncryptionStatus.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseTransparentDataEncryptionStatus value.");
         }
     }

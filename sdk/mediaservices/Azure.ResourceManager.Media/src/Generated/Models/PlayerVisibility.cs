@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </summary>
+    /// <summary> When PlayerVisibility is set to "Visible", the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to "Hidden", the text will not be available to the client. The default value is "Visible". </summary>
     public readonly partial struct PlayerVisibility : IEquatable<PlayerVisibility>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(PlayerVisibility left, PlayerVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlayerVisibility"/> values are not the same. </summary>
         public static bool operator !=(PlayerVisibility left, PlayerVisibility right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlayerVisibility"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlayerVisibility"/>. </summary>
         public static implicit operator PlayerVisibility(string value) => new PlayerVisibility(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

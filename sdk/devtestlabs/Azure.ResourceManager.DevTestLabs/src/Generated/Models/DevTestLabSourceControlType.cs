@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The artifact source&apos;s type. </summary>
+    /// <summary> The artifact source's type. </summary>
     public readonly partial struct DevTestLabSourceControlType : IEquatable<DevTestLabSourceControlType>
     {
         private readonly string _value;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabSourceControlType left, DevTestLabSourceControlType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabSourceControlType"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabSourceControlType left, DevTestLabSourceControlType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabSourceControlType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabSourceControlType"/>. </summary>
         public static implicit operator DevTestLabSourceControlType(string value) => new DevTestLabSourceControlType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

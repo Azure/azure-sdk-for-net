@@ -16,7 +16,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: communication
-    BuildSnippets: true
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Communication

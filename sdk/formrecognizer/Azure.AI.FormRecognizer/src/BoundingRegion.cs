@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("BoundingRegion")]
     [CodeGenSuppress(nameof(BoundingRegion), typeof(int), typeof(IEnumerable<float>))]
     [CodeGenSuppress("Polygon")]
     public readonly partial struct BoundingRegion : IEquatable<BoundingRegion>
@@ -21,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon)
         {
             PageNumber = pageNumber;
-            BoundingPolygon = ClientCommon.CovertToListOfPointF(polygon);
+            BoundingPolygon = ClientCommon.ConvertToListOfPointF(polygon);
         }
 
         /// <summary>

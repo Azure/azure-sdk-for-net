@@ -5,73 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointTierInformationV2 : IUtf8JsonSerializable
+    public partial class RecoveryPointTierInformationV2 : IUtf8JsonSerializable, IJsonModel<RecoveryPointTierInformationV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPointTierInformationV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RecoveryPointTierInformationV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TierType))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(TierType.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToSerialString());
-            }
-            if (Optional.IsCollectionDefined(ExtendedInfo))
-            {
-                writer.WritePropertyName("extendedInfo");
-                writer.WriteStartObject();
-                foreach (var item in ExtendedInfo)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static RecoveryPointTierInformationV2 DeserializeRecoveryPointTierInformationV2(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<RecoveryPointTierType> type = default;
-            Optional<RecoveryPointTierStatus> status = default;
-            Optional<IDictionary<string, string>> extendedInfo = default;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointTierInformationV2>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformationV2)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        RecoveryPointTierInformationV2 IJsonModel<RecoveryPointTierInformationV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointTierInformationV2>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformationV2)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPointTierInformationV2(document.RootElement, options);
+        }
+
+        internal static RecoveryPointTierInformationV2 DeserializeRecoveryPointTierInformationV2(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RecoveryPointTierType? type = default;
+            RecoveryPointTierStatus? status = default;
+            IDictionary<string, string> extendedInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToRecoveryPointTierStatus();
                     continue;
                 }
-                if (property.NameEquals("extendedInfo"))
+                if (property.NameEquals("extendedInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -82,8 +96,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedInfo = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryPointTierInformationV2(Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToDictionary(extendedInfo));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecoveryPointTierInformationV2(type, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecoveryPointTierInformationV2>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointTierInformationV2>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPointTierInformationV2)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryPointTierInformationV2 IPersistableModel<RecoveryPointTierInformationV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointTierInformationV2>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryPointTierInformationV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPointTierInformationV2)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryPointTierInformationV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

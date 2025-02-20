@@ -6,52 +6,158 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudTieringVolumeFreeSpacePolicyStatus
+    public partial class CloudTieringVolumeFreeSpacePolicyStatus : IUtf8JsonSerializable, IJsonModel<CloudTieringVolumeFreeSpacePolicyStatus>
     {
-        internal static CloudTieringVolumeFreeSpacePolicyStatus DeserializeCloudTieringVolumeFreeSpacePolicyStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudTieringVolumeFreeSpacePolicyStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CloudTieringVolumeFreeSpacePolicyStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<int> effectiveVolumeFreeSpacePolicy = default;
-            Optional<int> currentVolumeFreeSpacePercent = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudTieringVolumeFreeSpacePolicyStatus)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EffectiveVolumeFreeSpacePolicy))
+            {
+                writer.WritePropertyName("effectiveVolumeFreeSpacePolicy"u8);
+                writer.WriteNumberValue(EffectiveVolumeFreeSpacePolicy.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentVolumeFreeSpacePercent))
+            {
+                writer.WritePropertyName("currentVolumeFreeSpacePercent"u8);
+                writer.WriteNumberValue(CurrentVolumeFreeSpacePercent.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        CloudTieringVolumeFreeSpacePolicyStatus IJsonModel<CloudTieringVolumeFreeSpacePolicyStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudTieringVolumeFreeSpacePolicyStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudTieringVolumeFreeSpacePolicyStatus(document.RootElement, options);
+        }
+
+        internal static CloudTieringVolumeFreeSpacePolicyStatus DeserializeCloudTieringVolumeFreeSpacePolicyStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            int? effectiveVolumeFreeSpacePolicy = default;
+            int? currentVolumeFreeSpacePercent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("effectiveVolumeFreeSpacePolicy"))
+                if (property.NameEquals("effectiveVolumeFreeSpacePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveVolumeFreeSpacePolicy = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("currentVolumeFreeSpacePercent"))
+                if (property.NameEquals("currentVolumeFreeSpacePercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentVolumeFreeSpacePercent = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudTieringVolumeFreeSpacePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(effectiveVolumeFreeSpacePolicy), Optional.ToNullable(currentVolumeFreeSpacePercent));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudTieringVolumeFreeSpacePolicyStatus(lastUpdatedTimestamp, effectiveVolumeFreeSpacePolicy, currentVolumeFreeSpacePercent, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudTieringVolumeFreeSpacePolicyStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudTieringVolumeFreeSpacePolicyStatus IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudTieringVolumeFreeSpacePolicyStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudTieringVolumeFreeSpacePolicyStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

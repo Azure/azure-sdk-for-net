@@ -5,41 +5,130 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class KpiExtract : IUtf8JsonSerializable
+    public partial class KpiExtract : IUtf8JsonSerializable, IJsonModel<KpiExtract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiExtract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KpiExtract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("extractName");
-            writer.WriteStringValue(ExtractName);
-            writer.WritePropertyName("expression");
-            writer.WriteStringValue(Expression);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static KpiExtract DeserializeKpiExtract(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiExtract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KpiExtract)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("extractName"u8);
+            writer.WriteStringValue(ExtractName);
+            writer.WritePropertyName("expression"u8);
+            writer.WriteStringValue(Expression);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        KpiExtract IJsonModel<KpiExtract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiExtract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KpiExtract)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKpiExtract(document.RootElement, options);
+        }
+
+        internal static KpiExtract DeserializeKpiExtract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string extractName = default;
             string expression = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extractName"))
+                if (property.NameEquals("extractName"u8))
                 {
                     extractName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KpiExtract(extractName, expression);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KpiExtract(extractName, expression, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KpiExtract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiExtract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KpiExtract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KpiExtract IPersistableModel<KpiExtract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiExtract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKpiExtract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KpiExtract)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KpiExtract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

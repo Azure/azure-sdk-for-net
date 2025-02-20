@@ -9,13 +9,16 @@ csharp: true
 library-name: Advisor
 namespace: Azure.ResourceManager.Advisor
 require: https://github.com/Azure/azure-rest-api-specs/blob/db6d33733cd1eb939b863a6cdbcb9de12ac002e1/specification/advisor/resource-manager/readme.md
+tag: package-2020-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-tag: package-2020-01
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,7 +27,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

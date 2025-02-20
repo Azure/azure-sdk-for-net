@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
@@ -16,23 +15,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hookType");
+            writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
-            writer.WritePropertyName("hookName");
+            writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(InternalExternalLink))
             {
-                writer.WritePropertyName("externalLink");
+                writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
             if (Optional.IsCollectionDefined(Administrators))
             {
-                writer.WritePropertyName("admins");
+                writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Administrators)
                 {
@@ -41,6 +40,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotificationHook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotificationHook(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

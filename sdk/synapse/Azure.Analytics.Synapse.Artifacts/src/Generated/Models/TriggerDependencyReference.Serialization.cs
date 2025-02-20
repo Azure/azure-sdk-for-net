@@ -18,15 +18,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("referenceTrigger");
+            writer.WritePropertyName("referenceTrigger"u8);
             writer.WriteObjectValue(ReferenceTrigger);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
         internal static TriggerDependencyReference DeserializeTriggerDependencyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -38,12 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = "TriggerDependencyReference";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referenceTrigger"))
+                if (property.NameEquals("referenceTrigger"u8))
                 {
                     referenceTrigger = TriggerReference.DeserializeTriggerReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
@@ -52,12 +56,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TriggerDependencyReference(type, referenceTrigger);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TriggerDependencyReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTriggerDependencyReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class TriggerDependencyReferenceConverter : JsonConverter<TriggerDependencyReference>
         {
             public override void Write(Utf8JsonWriter writer, TriggerDependencyReference model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override TriggerDependencyReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

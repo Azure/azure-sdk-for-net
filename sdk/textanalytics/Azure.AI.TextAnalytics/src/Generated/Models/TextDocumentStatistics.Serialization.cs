@@ -15,9 +15,9 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("charactersCount");
+            writer.WritePropertyName("charactersCount"u8);
             writer.WriteNumberValue(CharacterCount);
-            writer.WritePropertyName("transactionsCount");
+            writer.WritePropertyName("transactionsCount"u8);
             writer.WriteNumberValue(TransactionCount);
             writer.WriteEndObject();
         }
@@ -28,18 +28,34 @@ namespace Azure.AI.TextAnalytics
             int transactionsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("charactersCount"))
+                if (property.NameEquals("charactersCount"u8))
                 {
                     charactersCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionsCount"))
+                if (property.NameEquals("transactionsCount"u8))
                 {
                     transactionsCount = property.Value.GetInt32();
                     continue;
                 }
             }
             return new TextDocumentStatistics(charactersCount, transactionsCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextDocumentStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextDocumentStatistics(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -34,11 +34,30 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void EventHubsOptions_SetsUpMinBatchSizeCorrectly()
+        {
+            var options = new EventHubOptions()
+            {
+                MaxEventBatchSize = 200,
+                MinEventBatchSize = 100
+            };
+        }
+
+        [Test]
+        public void ConfigureOptions_CheckpointingEnabledByDefault()
+        {
+            EventHubOptions options = CreateOptionsFromConfigWithoutCheckpointEnabled();
+            Assert.True(options.EnableCheckpointing);
+        }
+
+        [Test]
         public void ConfigureOptions_AppliesValuesCorrectly()
         {
             EventHubOptions options = CreateOptionsFromConfig();
 
             Assert.AreEqual(123, options.MaxEventBatchSize);
+            Assert.AreEqual(100, options.MinEventBatchSize);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), options.MaxWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
@@ -54,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) options.WebProxy).Address.AbsoluteUri);
             Assert.AreEqual("http://www.customendpoint.com/", options.CustomEndpointAddress.ToString());
+            Assert.False(options.EnableCheckpointing);
         }
 
         [Test]
@@ -70,6 +90,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.MaxEventBatchSize);
+            Assert.AreEqual(100, options.MinEventBatchSize);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), options.MaxWaitTime);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, result.PrefetchCount);
@@ -85,6 +107,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) result.WebProxy).Address.AbsoluteUri);
             Assert.AreEqual("http://www.customendpoint.com/", result.CustomEndpointAddress.AbsoluteUri);
+            Assert.False(result.EnableCheckpointing);
         }
 
         [Test]
@@ -92,6 +115,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
+            Assert.AreEqual(300, options.TargetUnprocessedEventThreshold);
             Assert.AreEqual(123, options.MaxEventBatchSize);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
@@ -100,6 +124,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
             Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type.ToString());
             Assert.AreEqual("2020-09-13 12:00:00Z", options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
+            Assert.IsTrue(options.EnableCheckpointing);
         }
 
         [Test]
@@ -116,6 +141,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 b => { b.AddEventHubs(); },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
+            Assert.AreEqual(300, result.TargetUnprocessedEventThreshold);
             Assert.AreEqual(123, result.MaxEventBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
@@ -124,6 +150,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
             Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type.ToString());
             Assert.AreEqual("2020-09-13 12:00:00Z", result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
+            Assert.IsTrue(options.EnableCheckpointing);
         }
 
         [Test]
@@ -214,12 +241,32 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Throws.InvalidOperationException);
         }
 
+        [Test]
+        public void SetMinBatchLargerThanMax_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b =>
+                {
+                    b.AddEventHubs();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:MaxEventBatchSize", "100" },
+                    { $"{extensionPath}:MinEventBatchSize", "170" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
         private EventHubOptions CreateOptionsFromConfig()
         {
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";
             var values = new Dictionary<string, string>
             {
                 { $"{extensionPath}:MaxEventBatchSize", "123" },
+                { $"{extensionPath}:MinEventBatchSize", "100" },
+                { $"{extensionPath}:MaxWaitTime", "00:01:00" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
@@ -236,6 +283,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:TransportType", "amqpWebSockets" },
                 { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
                 { $"{extensionPath}:CustomEndpointAddress", "http://www.customendpoint.com/" },
+                { $"{extensionPath}:{nameof(EventHubOptions.EnableCheckpointing)}", "false" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
@@ -249,6 +297,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";
             var values = new Dictionary<string, string>
             {
+                { $"{extensionPath}:TargetUnprocessedEventThreshold", "300" },
                 { $"{extensionPath}:EventProcessorOptions:MaxBatchSize", "123" },
                 { $"{extensionPath}:EventProcessorOptions:ReceiveTimeout", "00:00:33" },
                 { $"{extensionPath}:EventProcessorOptions:EnableReceiverRuntimeMetric", "true" },
@@ -259,6 +308,38 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:PartitionManagerOptions:RenewInterval", "00:00:21" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
                 { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13 12:00:00Z" },
+            };
+
+            return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
+            {
+                b.AddEventHubs();
+            }, values);
+        }
+
+        private EventHubOptions CreateOptionsFromConfigWithoutCheckpointEnabled()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            var values = new Dictionary<string, string>
+            {
+                { $"{extensionPath}:MaxEventBatchSize", "123" },
+                { $"{extensionPath}:MinEventBatchSize", "100" },
+                { $"{extensionPath}:MaxWaitTime", "00:01:00" },
+                { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
+                { $"{extensionPath}:PrefetchCount", "123" },
+                { $"{extensionPath}:BatchCheckpointFrequency", "5" },
+                { $"{extensionPath}:PartitionOwnershipExpirationInterval", "00:00:31" },
+                { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },
+                { $"{extensionPath}:LoadBalancingStrategy", "greedy" },
+                { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
+                { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13 12:00:00Z" },
+                { $"{extensionPath}:ClientRetryOptions:MaximumRetries", "5" },
+                { $"{extensionPath}:ClientRetryOptions:Delay", "00:00:01" },
+                { $"{extensionPath}:ClientRetryOptions:MaxDelay", "00:01:00" },
+                { $"{extensionPath}:ClientRetryOptions:TryTimeout", "00:01:30" },
+                { $"{extensionPath}:ClientRetryOptions:Mode", "0" },
+                { $"{extensionPath}:TransportType", "amqpWebSockets" },
+                { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
+                { $"{extensionPath}:CustomEndpointAddress", "http://www.customendpoint.com/" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>

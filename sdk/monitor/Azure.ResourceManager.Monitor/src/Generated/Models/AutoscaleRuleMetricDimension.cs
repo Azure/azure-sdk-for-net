@@ -8,17 +8,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies an auto scale rule metric dimension. </summary>
     public partial class AutoscaleRuleMetricDimension
     {
-        /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRuleMetricDimension"/>. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
-        /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
+        /// <param name="operator"> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </param>
+        /// <param name="values"> list of dimension values. For example: ["App1","App2"]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> or <paramref name="values"/> is null. </exception>
         public AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IEnumerable<string> values)
         {
@@ -30,22 +61,29 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRuleMetricDimension"/>. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
-        /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
-        internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values)
+        /// <param name="operator"> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </param>
+        /// <param name="values"> list of dimension values. For example: ["App1","App2"]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DimensionName = dimensionName;
             Operator = @operator;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRuleMetricDimension"/> for deserialization. </summary>
+        internal AutoscaleRuleMetricDimension()
+        {
         }
 
         /// <summary> Name of the dimension. </summary>
         public string DimensionName { get; set; }
-        /// <summary> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </summary>
+        /// <summary> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </summary>
         public ScaleRuleMetricDimensionOperationType Operator { get; set; }
-        /// <summary> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </summary>
+        /// <summary> list of dimension values. For example: ["App1","App2"]. </summary>
         public IList<string> Values { get; }
     }
 }

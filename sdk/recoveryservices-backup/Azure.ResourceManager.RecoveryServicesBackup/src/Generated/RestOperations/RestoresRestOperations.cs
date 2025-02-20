@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
@@ -32,11 +31,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateTriggerRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, RestoreRequestResource restoreRequestResource)
+        internal RequestUriBuilder CreateTriggerRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/backupFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/protectionContainers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            uri.AppendPath("/recoveryPoints/", false);
+            uri.AppendPath(recoveryPointId, true);
+            uri.AppendPath("/restore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateTriggerRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,9 +84,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequestResource);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -80,11 +102,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="containerName"> Container name associated with the backed up items. </param>
         /// <param name="protectedItemName"> Backed up item to be restored. </param>
         /// <param name="recoveryPointId"> Recovery point ID which represents the backed up data to be restored. </param>
-        /// <param name="restoreRequestResource"> resource restore request. </param>
+        /// <param name="content"> resource restore request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="restoreRequestResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, RestoreRequestResource restoreRequestResource, CancellationToken cancellationToken = default)
+        public async Task<Response> TriggerAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -93,9 +115,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
-            Argument.AssertNotNull(restoreRequestResource, nameof(restoreRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateTriggerRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId, restoreRequestResource);
+            using var message = CreateTriggerRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -117,11 +139,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="containerName"> Container name associated with the backed up items. </param>
         /// <param name="protectedItemName"> Backed up item to be restored. </param>
         /// <param name="recoveryPointId"> Recovery point ID which represents the backed up data to be restored. </param>
-        /// <param name="restoreRequestResource"> resource restore request. </param>
+        /// <param name="content"> resource restore request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="restoreRequestResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Trigger(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, RestoreRequestResource restoreRequestResource, CancellationToken cancellationToken = default)
+        public Response Trigger(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +152,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
-            Argument.AssertNotNull(restoreRequestResource, nameof(restoreRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateTriggerRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId, restoreRequestResource);
+            using var message = CreateTriggerRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

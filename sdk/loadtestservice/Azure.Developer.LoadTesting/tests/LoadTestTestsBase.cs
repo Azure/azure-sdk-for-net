@@ -29,7 +29,7 @@ namespace Azure.Developer.LoadTesting.Tests
         internal const string UPLOAD_TEST_FILE = "UploadTestFile";
         internal const string SKIP_TEST_RUN = "SkipTestRun";
         internal const string SKIP_DELETE_TEST_RUN = "SkipDeleteTestRun";
-        internal TestRunOperation _testRunOperation;
+        internal TestRunResultOperation _testRunOperation;
 
         internal bool CheckForSkipSetUp()
         {
@@ -68,10 +68,9 @@ namespace Azure.Developer.LoadTesting.Tests
             _testRunId = "test-run-id-from-csharp-sdk";
             _testHelper = new TestHelper();
 
-            BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue)
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..url")
             {
                 GroupForReplace = "group",
-                JsonPath = "$..url",
                 Regex = @"sig=(?<group>.*?)(?=$|&)"
             });
         }

@@ -5,217 +5,724 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAutoScalerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAutoScalerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedClusterAutoScalerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(BalanceSimilarNodeGroups))
             {
-                writer.WritePropertyName("balance-similar-node-groups");
+                writer.WritePropertyName("balance-similar-node-groups"u8);
                 writer.WriteStringValue(BalanceSimilarNodeGroups);
             }
             if (Optional.IsDefined(Expander))
             {
-                writer.WritePropertyName("expander");
+                writer.WritePropertyName("expander"u8);
                 writer.WriteStringValue(Expander.Value.ToString());
             }
             if (Optional.IsDefined(MaxEmptyBulkDelete))
             {
-                writer.WritePropertyName("max-empty-bulk-delete");
+                writer.WritePropertyName("max-empty-bulk-delete"u8);
                 writer.WriteStringValue(MaxEmptyBulkDelete);
             }
             if (Optional.IsDefined(MaxGracefulTerminationSec))
             {
-                writer.WritePropertyName("max-graceful-termination-sec");
+                writer.WritePropertyName("max-graceful-termination-sec"u8);
                 writer.WriteStringValue(MaxGracefulTerminationSec);
             }
             if (Optional.IsDefined(MaxNodeProvisionTime))
             {
-                writer.WritePropertyName("max-node-provision-time");
+                writer.WritePropertyName("max-node-provision-time"u8);
                 writer.WriteStringValue(MaxNodeProvisionTime);
             }
             if (Optional.IsDefined(MaxTotalUnreadyPercentage))
             {
-                writer.WritePropertyName("max-total-unready-percentage");
+                writer.WritePropertyName("max-total-unready-percentage"u8);
                 writer.WriteStringValue(MaxTotalUnreadyPercentage);
             }
             if (Optional.IsDefined(NewPodScaleUpDelay))
             {
-                writer.WritePropertyName("new-pod-scale-up-delay");
+                writer.WritePropertyName("new-pod-scale-up-delay"u8);
                 writer.WriteStringValue(NewPodScaleUpDelay);
             }
             if (Optional.IsDefined(OkTotalUnreadyCount))
             {
-                writer.WritePropertyName("ok-total-unready-count");
+                writer.WritePropertyName("ok-total-unready-count"u8);
                 writer.WriteStringValue(OkTotalUnreadyCount);
             }
             if (Optional.IsDefined(ScanIntervalInSeconds))
             {
-                writer.WritePropertyName("scan-interval");
+                writer.WritePropertyName("scan-interval"u8);
                 writer.WriteStringValue(ScanIntervalInSeconds);
             }
             if (Optional.IsDefined(ScaleDownDelayAfterAdd))
             {
-                writer.WritePropertyName("scale-down-delay-after-add");
+                writer.WritePropertyName("scale-down-delay-after-add"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterAdd);
             }
             if (Optional.IsDefined(ScaleDownDelayAfterDelete))
             {
-                writer.WritePropertyName("scale-down-delay-after-delete");
+                writer.WritePropertyName("scale-down-delay-after-delete"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterDelete);
             }
             if (Optional.IsDefined(ScaleDownDelayAfterFailure))
             {
-                writer.WritePropertyName("scale-down-delay-after-failure");
+                writer.WritePropertyName("scale-down-delay-after-failure"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterFailure);
             }
             if (Optional.IsDefined(ScaleDownUnneededTime))
             {
-                writer.WritePropertyName("scale-down-unneeded-time");
+                writer.WritePropertyName("scale-down-unneeded-time"u8);
                 writer.WriteStringValue(ScaleDownUnneededTime);
             }
             if (Optional.IsDefined(ScaleDownUnreadyTime))
             {
-                writer.WritePropertyName("scale-down-unready-time");
+                writer.WritePropertyName("scale-down-unready-time"u8);
                 writer.WriteStringValue(ScaleDownUnreadyTime);
             }
             if (Optional.IsDefined(ScaleDownUtilizationThreshold))
             {
-                writer.WritePropertyName("scale-down-utilization-threshold");
+                writer.WritePropertyName("scale-down-utilization-threshold"u8);
                 writer.WriteStringValue(ScaleDownUtilizationThreshold);
             }
             if (Optional.IsDefined(SkipNodesWithLocalStorage))
             {
-                writer.WritePropertyName("skip-nodes-with-local-storage");
+                writer.WritePropertyName("skip-nodes-with-local-storage"u8);
                 writer.WriteStringValue(SkipNodesWithLocalStorage);
             }
             if (Optional.IsDefined(SkipNodesWithSystemPods))
             {
-                writer.WritePropertyName("skip-nodes-with-system-pods");
+                writer.WritePropertyName("skip-nodes-with-system-pods"u8);
                 writer.WriteStringValue(SkipNodesWithSystemPods);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element)
+        ManagedClusterAutoScalerProfile IJsonModel<ManagedClusterAutoScalerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> balanceSimilarNodeGroups = default;
-            Optional<AutoScaleExpander> expander = default;
-            Optional<string> maxEmptyBulkDelete = default;
-            Optional<string> maxGracefulTerminationSec = default;
-            Optional<string> maxNodeProvisionTime = default;
-            Optional<string> maxTotalUnreadyPercentage = default;
-            Optional<string> newPodScaleUpDelay = default;
-            Optional<string> okTotalUnreadyCount = default;
-            Optional<string> scanInterval = default;
-            Optional<string> scaleDownDelayAfterAdd = default;
-            Optional<string> scaleDownDelayAfterDelete = default;
-            Optional<string> scaleDownDelayAfterFailure = default;
-            Optional<string> scaleDownUnneededTime = default;
-            Optional<string> scaleDownUnreadyTime = default;
-            Optional<string> scaleDownUtilizationThreshold = default;
-            Optional<string> skipNodesWithLocalStorage = default;
-            Optional<string> skipNodesWithSystemPods = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string balanceSimilarNodeGroups = default;
+            AutoScaleExpander? expander = default;
+            string maxEmptyBulkDelete = default;
+            string maxGracefulTerminationSec = default;
+            string maxNodeProvisionTime = default;
+            string maxTotalUnreadyPercentage = default;
+            string newPodScaleUpDelay = default;
+            string okTotalUnreadyCount = default;
+            string scanInterval = default;
+            string scaleDownDelayAfterAdd = default;
+            string scaleDownDelayAfterDelete = default;
+            string scaleDownDelayAfterFailure = default;
+            string scaleDownUnneededTime = default;
+            string scaleDownUnreadyTime = default;
+            string scaleDownUtilizationThreshold = default;
+            string skipNodesWithLocalStorage = default;
+            string skipNodesWithSystemPods = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("balance-similar-node-groups"))
+                if (property.NameEquals("balance-similar-node-groups"u8))
                 {
                     balanceSimilarNodeGroups = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expander"))
+                if (property.NameEquals("expander"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expander = new AutoScaleExpander(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("max-empty-bulk-delete"))
+                if (property.NameEquals("max-empty-bulk-delete"u8))
                 {
                     maxEmptyBulkDelete = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("max-graceful-termination-sec"))
+                if (property.NameEquals("max-graceful-termination-sec"u8))
                 {
                     maxGracefulTerminationSec = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("max-node-provision-time"))
+                if (property.NameEquals("max-node-provision-time"u8))
                 {
                     maxNodeProvisionTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("max-total-unready-percentage"))
+                if (property.NameEquals("max-total-unready-percentage"u8))
                 {
                     maxTotalUnreadyPercentage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("new-pod-scale-up-delay"))
+                if (property.NameEquals("new-pod-scale-up-delay"u8))
                 {
                     newPodScaleUpDelay = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ok-total-unready-count"))
+                if (property.NameEquals("ok-total-unready-count"u8))
                 {
                     okTotalUnreadyCount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scan-interval"))
+                if (property.NameEquals("scan-interval"u8))
                 {
                     scanInterval = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-delay-after-add"))
+                if (property.NameEquals("scale-down-delay-after-add"u8))
                 {
                     scaleDownDelayAfterAdd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-delay-after-delete"))
+                if (property.NameEquals("scale-down-delay-after-delete"u8))
                 {
                     scaleDownDelayAfterDelete = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-delay-after-failure"))
+                if (property.NameEquals("scale-down-delay-after-failure"u8))
                 {
                     scaleDownDelayAfterFailure = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-unneeded-time"))
+                if (property.NameEquals("scale-down-unneeded-time"u8))
                 {
                     scaleDownUnneededTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-unready-time"))
+                if (property.NameEquals("scale-down-unready-time"u8))
                 {
                     scaleDownUnreadyTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-utilization-threshold"))
+                if (property.NameEquals("scale-down-utilization-threshold"u8))
                 {
                     scaleDownUtilizationThreshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skip-nodes-with-local-storage"))
+                if (property.NameEquals("skip-nodes-with-local-storage"u8))
                 {
                     skipNodesWithLocalStorage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skip-nodes-with-system-pods"))
+                if (property.NameEquals("skip-nodes-with-system-pods"u8))
                 {
                     skipNodesWithSystemPods = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterAutoScalerProfile(
+                balanceSimilarNodeGroups,
+                expander,
+                maxEmptyBulkDelete,
+                maxGracefulTerminationSec,
+                maxNodeProvisionTime,
+                maxTotalUnreadyPercentage,
+                newPodScaleUpDelay,
+                okTotalUnreadyCount,
+                scanInterval,
+                scaleDownDelayAfterAdd,
+                scaleDownDelayAfterDelete,
+                scaleDownDelayAfterFailure,
+                scaleDownUnneededTime,
+                scaleDownUnreadyTime,
+                scaleDownUtilizationThreshold,
+                skipNodesWithLocalStorage,
+                skipNodesWithSystemPods,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BalanceSimilarNodeGroups), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  balance-similar-node-groups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BalanceSimilarNodeGroups))
+                {
+                    builder.Append("  balance-similar-node-groups: ");
+                    if (BalanceSimilarNodeGroups.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BalanceSimilarNodeGroups}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BalanceSimilarNodeGroups}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expander), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expander: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Expander))
+                {
+                    builder.Append("  expander: ");
+                    builder.AppendLine($"'{Expander.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxEmptyBulkDelete), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  max-empty-bulk-delete: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxEmptyBulkDelete))
+                {
+                    builder.Append("  max-empty-bulk-delete: ");
+                    if (MaxEmptyBulkDelete.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxEmptyBulkDelete}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxEmptyBulkDelete}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxGracefulTerminationSec), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  max-graceful-termination-sec: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxGracefulTerminationSec))
+                {
+                    builder.Append("  max-graceful-termination-sec: ");
+                    if (MaxGracefulTerminationSec.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxGracefulTerminationSec}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxGracefulTerminationSec}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxNodeProvisionTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  max-node-provision-time: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxNodeProvisionTime))
+                {
+                    builder.Append("  max-node-provision-time: ");
+                    if (MaxNodeProvisionTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxNodeProvisionTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxNodeProvisionTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxTotalUnreadyPercentage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  max-total-unready-percentage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxTotalUnreadyPercentage))
+                {
+                    builder.Append("  max-total-unready-percentage: ");
+                    if (MaxTotalUnreadyPercentage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxTotalUnreadyPercentage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxTotalUnreadyPercentage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NewPodScaleUpDelay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  new-pod-scale-up-delay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NewPodScaleUpDelay))
+                {
+                    builder.Append("  new-pod-scale-up-delay: ");
+                    if (NewPodScaleUpDelay.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NewPodScaleUpDelay}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NewPodScaleUpDelay}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OkTotalUnreadyCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ok-total-unready-count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OkTotalUnreadyCount))
+                {
+                    builder.Append("  ok-total-unready-count: ");
+                    if (OkTotalUnreadyCount.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OkTotalUnreadyCount}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OkTotalUnreadyCount}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScanIntervalInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scan-interval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScanIntervalInSeconds))
+                {
+                    builder.Append("  scan-interval: ");
+                    if (ScanIntervalInSeconds.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScanIntervalInSeconds}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScanIntervalInSeconds}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownDelayAfterAdd), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale-down-delay-after-add: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleDownDelayAfterAdd))
+                {
+                    builder.Append("  scale-down-delay-after-add: ");
+                    if (ScaleDownDelayAfterAdd.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScaleDownDelayAfterAdd}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScaleDownDelayAfterAdd}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownDelayAfterDelete), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale-down-delay-after-delete: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleDownDelayAfterDelete))
+                {
+                    builder.Append("  scale-down-delay-after-delete: ");
+                    if (ScaleDownDelayAfterDelete.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScaleDownDelayAfterDelete}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScaleDownDelayAfterDelete}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownDelayAfterFailure), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale-down-delay-after-failure: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleDownDelayAfterFailure))
+                {
+                    builder.Append("  scale-down-delay-after-failure: ");
+                    if (ScaleDownDelayAfterFailure.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScaleDownDelayAfterFailure}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScaleDownDelayAfterFailure}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownUnneededTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale-down-unneeded-time: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleDownUnneededTime))
+                {
+                    builder.Append("  scale-down-unneeded-time: ");
+                    if (ScaleDownUnneededTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScaleDownUnneededTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScaleDownUnneededTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownUnreadyTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale-down-unready-time: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleDownUnreadyTime))
+                {
+                    builder.Append("  scale-down-unready-time: ");
+                    if (ScaleDownUnreadyTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScaleDownUnreadyTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScaleDownUnreadyTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownUtilizationThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale-down-utilization-threshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleDownUtilizationThreshold))
+                {
+                    builder.Append("  scale-down-utilization-threshold: ");
+                    if (ScaleDownUtilizationThreshold.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScaleDownUtilizationThreshold}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScaleDownUtilizationThreshold}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipNodesWithLocalStorage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skip-nodes-with-local-storage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkipNodesWithLocalStorage))
+                {
+                    builder.Append("  skip-nodes-with-local-storage: ");
+                    if (SkipNodesWithLocalStorage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkipNodesWithLocalStorage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkipNodesWithLocalStorage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipNodesWithSystemPods), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skip-nodes-with-system-pods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkipNodesWithSystemPods))
+                {
+                    builder.Append("  skip-nodes-with-system-pods: ");
+                    if (SkipNodesWithSystemPods.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkipNodesWithSystemPods}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkipNodesWithSystemPods}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterAutoScalerProfile IPersistableModel<ManagedClusterAutoScalerProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterAutoScalerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

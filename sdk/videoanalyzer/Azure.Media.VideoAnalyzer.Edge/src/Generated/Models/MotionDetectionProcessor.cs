@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Motion detection processor allows for motion detection on the video stream. It generates motion events whenever motion is present on the video. </summary>
     public partial class MotionDetectionProcessor : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of MotionDetectionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="MotionDetectionProcessor"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
@@ -26,13 +25,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.MotionDetectionProcessor";
         }
 
-        /// <summary> Initializes a new instance of MotionDetectionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="MotionDetectionProcessor"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="sensitivity"> Motion detection sensitivity: low, medium, high. </param>
         /// <param name="outputMotionRegion"> Indicates whether the processor should detect and output the regions within the video frame where motion was detected. Default is true. </param>
-        /// <param name="eventAggregationWindow"> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. &quot;PT2S&quot; equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </param>
+        /// <param name="eventAggregationWindow"> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. "PT2S" equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </param>
         internal MotionDetectionProcessor(string type, string name, IList<NodeInput> inputs, MotionDetectionSensitivity? sensitivity, bool? outputMotionRegion, string eventAggregationWindow) : base(type, name, inputs)
         {
             Sensitivity = sensitivity;
@@ -45,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public MotionDetectionSensitivity? Sensitivity { get; set; }
         /// <summary> Indicates whether the processor should detect and output the regions within the video frame where motion was detected. Default is true. </summary>
         public bool? OutputMotionRegion { get; set; }
-        /// <summary> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. &quot;PT2S&quot; equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </summary>
+        /// <summary> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. "PT2S" equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </summary>
         public string EventAggregationWindow { get; set; }
     }
 }

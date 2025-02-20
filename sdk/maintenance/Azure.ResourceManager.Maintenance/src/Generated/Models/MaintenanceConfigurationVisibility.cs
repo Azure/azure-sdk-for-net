@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Gets or sets the visibility of the configuration. The default value is &apos;Custom&apos;. </summary>
+    /// <summary> Gets or sets the visibility of the configuration. The default value is 'Custom'. </summary>
     public readonly partial struct MaintenanceConfigurationVisibility : IEquatable<MaintenanceConfigurationVisibility>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator ==(MaintenanceConfigurationVisibility left, MaintenanceConfigurationVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceConfigurationVisibility"/> values are not the same. </summary>
         public static bool operator !=(MaintenanceConfigurationVisibility left, MaintenanceConfigurationVisibility right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenanceConfigurationVisibility"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceConfigurationVisibility"/>. </summary>
         public static implicit operator MaintenanceConfigurationVisibility(string value) => new MaintenanceConfigurationVisibility(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

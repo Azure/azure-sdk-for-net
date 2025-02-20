@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         public static RecoveryPointTierType ToRecoveryPointTierType(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return RecoveryPointTierType.Invalid;
-            if (string.Equals(value, "InstantRP", StringComparison.InvariantCultureIgnoreCase)) return RecoveryPointTierType.InstantRP;
-            if (string.Equals(value, "HardenedRP", StringComparison.InvariantCultureIgnoreCase)) return RecoveryPointTierType.HardenedRP;
-            if (string.Equals(value, "ArchivedRP", StringComparison.InvariantCultureIgnoreCase)) return RecoveryPointTierType.ArchivedRP;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return RecoveryPointTierType.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InstantRP")) return RecoveryPointTierType.InstantRP;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HardenedRP")) return RecoveryPointTierType.HardenedRP;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ArchivedRP")) return RecoveryPointTierType.ArchivedRP;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecoveryPointTierType value.");
         }
     }

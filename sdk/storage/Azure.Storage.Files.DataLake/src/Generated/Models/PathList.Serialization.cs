@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -15,14 +15,17 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static PathList DeserializePathList(JsonElement element)
         {
-            Optional<IReadOnlyList<Path>> paths = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<Path> paths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("paths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Path> array = new List<Path>();
@@ -34,7 +37,15 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new PathList(Optional.ToList(paths));
+            return new PathList(paths ?? new ChangeTrackingList<Path>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PathList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePathList(document.RootElement);
         }
     }
 }

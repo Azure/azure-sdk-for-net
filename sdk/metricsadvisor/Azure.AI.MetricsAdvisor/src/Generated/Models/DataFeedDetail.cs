@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,8 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     internal partial class DataFeedDetail
     {
-
-        /// <summary> Initializes a new instance of DataFeedDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedDetail"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

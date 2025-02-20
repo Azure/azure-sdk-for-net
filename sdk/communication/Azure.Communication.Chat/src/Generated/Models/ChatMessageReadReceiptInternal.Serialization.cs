@@ -7,8 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -16,28 +14,40 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageReadReceiptInternal DeserializeChatMessageReadReceiptInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string chatMessageId = default;
             DateTimeOffset readOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("senderCommunicationIdentifier"))
+                if (property.NameEquals("senderCommunicationIdentifier"u8))
                 {
                     senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("chatMessageId"))
+                if (property.NameEquals("chatMessageId"u8))
                 {
                     chatMessageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOn"))
+                if (property.NameEquals("readOn"u8))
                 {
                     readOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
             return new ChatMessageReadReceiptInternal(senderCommunicationIdentifier, chatMessageId, readOn);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatMessageReadReceiptInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatMessageReadReceiptInternal(document.RootElement);
         }
     }
 }

@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -16,20 +14,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static MetricFeedbackList DeserializeMetricFeedbackList(JsonElement element)
         {
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MetricFeedback>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextLink = default;
+            IReadOnlyList<MetricFeedback> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricFeedback> array = new List<MetricFeedback>();
@@ -41,7 +42,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricFeedbackList(nextLink.Value, Optional.ToList(value));
+            return new MetricFeedbackList(nextLink, value ?? new ChangeTrackingList<MetricFeedback>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricFeedbackList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricFeedbackList(document.RootElement);
         }
     }
 }

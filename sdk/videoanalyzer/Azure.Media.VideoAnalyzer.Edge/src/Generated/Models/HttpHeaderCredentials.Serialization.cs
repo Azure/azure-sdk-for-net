@@ -15,39 +15,59 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("headerName");
+            writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            writer.WritePropertyName("headerValue");
+            writer.WritePropertyName("headerValue"u8);
             writer.WriteStringValue(HeaderValue);
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
         internal static HttpHeaderCredentials DeserializeHttpHeaderCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string headerName = default;
             string headerValue = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headerName"))
+                if (property.NameEquals("headerName"u8))
                 {
                     headerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headerValue"))
+                if (property.NameEquals("headerValue"u8))
                 {
                     headerValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
             }
             return new HttpHeaderCredentials(type, headerName, headerValue);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HttpHeaderCredentials FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHttpHeaderCredentials(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

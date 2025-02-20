@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,147 @@
 
 ### Bugs Fixed
 
+- fix the issue of data type mismatch in the AsyncPageable return values. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/47267
+
 ### Other Changes
+
+## 1.3.0 (2024-11-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-12' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0410d404c68289cb1737d06bba92133bb84b515c/specification/web/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.41.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
+
+## 1.3.0-beta.2 (2024-11-11)
+
+### Bugs Fixed
+
+- Added status code 202 and allow some properties to be empty. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/46854.
+
+## 1.3.0-beta.1 (2024-10-14)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.2.0 (2024-07-29)
+
+### Features Added
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md.
+
+### Bugs Fixed
+
+- Fixed https://github.com/Azure/azure-sdk-for-net/issues/39126.
+- Fixed 'GetAppServiceCertificateOrdersAsync's InvalidResourceType problem for AppServiceCertificateOrderData, Issue at https://github.com/Azure/azure-sdk-for-net/issues/45177
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.31.0 to 1.41.0
+- Upgraded Azure.ResourceManager from 1.5.0 to 1.12.0
+
+## 1.1.0-beta.5 (2024-04-19)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+
+- Added `200` to the response code of the `SyncFunctionTriggers`
+- SiteFunctionResource.GetFunctionKeysAsync /SiteSlotFunctionResource.GetFunctionKeysSlotAsync fixed: can not populated with function keys
+- Added more enum values for `TriggeredWebJobStatus`
+
+## 1.1.0-beta.4 (2023-11-30)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other ChangesGetHybridConnectionsAsync
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0-beta.3 (2023-09-14)
+
+### Bugs Fixed
+
+- Due to `HealthCheckUri` not being a valid URI, added a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
+
+## 1.1.0-beta.2 (2023-09-06)
+
+### Bugs Fixed
+
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `AppServiceTableStorageApplicationLogsConfig`.
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificateData.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkData.CertThumbprint` has been hidden but is still available.
+- Added `HostNameBindingData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameBindingData.Thumbprint` has been hidden but is still available.
+- Added `AppCertificatePatch.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificatePatch.Thumbprint` has been hidden but is still available.
+- Added `AppServiceAadRegistration.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceAadRegistration.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `AppServiceCertificateDetails.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceCertificateDetails.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkProperties.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkProperties.CertThumbprint` has been hidden but is still available.
+- Added `HostNameSslState.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameSslState.Thumbprint` has been hidden but is still available.
+- Added `SiteAuthSettings.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `PublicCertificateData.Thumbprint` has been hidden but is still available.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.2 (2023-04-27)
+
+### Bugs Fixed
+
+- Fixed issue #34745. Introduced new property `RelayArmId` in `HybridConnectionData` class to replace the property `RelayArmUri` with a wrong type `Uri`.
+- Fixed issue #35146. BadRequest when calling CreateOrUpdateFunctionSecretAsync
+
+### Other Changes in API
+
+Added property 'ResourceIdentifier RelayArmId' in type Azure.ResourceManager.AppService.HybridConnectionData
+Added property 'WebAppKeyInfoProperties Properties' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Added type 'Azure.ResourceManager.AppService.Models.WebAppKeyInfoProperties'
+Obsoleted property 'Uri RelayArmUri' in type Azure.ResourceManager.AppService.HybridConnectionData
+Obsoleted property 'String Name' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Obsoleted property 'String Value' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+
+### Azure SDK Dependency Changes
+
+Upgraded Azure.Core from 1.28.0 to 1.31.0
+
+## 1.0.1 (2023-02-20)
+
+### Bugs Fixed
+
+- Fixed serialization issue when service returns empty string for `KeyVaultId` in `AppCertificateData` and `AppCertificatePatch`.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-29)
 
@@ -34,8 +174,8 @@ Polishing since last public beta release:
 - Prepended `AppService` prefix to all single / simple model names.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
-- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
@@ -205,4 +345,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

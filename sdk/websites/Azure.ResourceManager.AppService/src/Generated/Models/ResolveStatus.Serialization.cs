@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ResolveStatus ToResolveStatus(this string value)
         {
-            if (string.Equals(value, "Initialized", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.Initialized;
-            if (string.Equals(value, "Resolved", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.Resolved;
-            if (string.Equals(value, "InvalidSyntax", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.InvalidSyntax;
-            if (string.Equals(value, "MSINotEnabled", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.MSINotEnabled;
-            if (string.Equals(value, "VaultNotFound", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.VaultNotFound;
-            if (string.Equals(value, "SecretNotFound", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.SecretNotFound;
-            if (string.Equals(value, "SecretVersionNotFound", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.SecretVersionNotFound;
-            if (string.Equals(value, "AccessToKeyVaultDenied", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.AccessToKeyVaultDenied;
-            if (string.Equals(value, "OtherReasons", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.OtherReasons;
-            if (string.Equals(value, "FetchTimedOut", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.FetchTimedOut;
-            if (string.Equals(value, "UnauthorizedClient", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.UnauthorizedClient;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initialized")) return ResolveStatus.Initialized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resolved")) return ResolveStatus.Resolved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidSyntax")) return ResolveStatus.InvalidSyntax;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MSINotEnabled")) return ResolveStatus.MSINotEnabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VaultNotFound")) return ResolveStatus.VaultNotFound;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecretNotFound")) return ResolveStatus.SecretNotFound;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecretVersionNotFound")) return ResolveStatus.SecretVersionNotFound;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccessToKeyVaultDenied")) return ResolveStatus.AccessToKeyVaultDenied;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OtherReasons")) return ResolveStatus.OtherReasons;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FetchTimedOut")) return ResolveStatus.FetchTimedOut;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnauthorizedClient")) return ResolveStatus.UnauthorizedClient;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResolveStatus value.");
         }
     }

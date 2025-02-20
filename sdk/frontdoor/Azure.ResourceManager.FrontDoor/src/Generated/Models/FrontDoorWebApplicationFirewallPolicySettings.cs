@@ -6,25 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines top-level WebApplicationFirewallPolicy configuration settings. </summary>
     public partial class FrontDoorWebApplicationFirewallPolicySettings
     {
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicySettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicySettings"/>. </summary>
         public FrontDoorWebApplicationFirewallPolicySettings()
         {
+            ScrubbingRules = new ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicySettings"/>. </summary>
         /// <param name="enabledState"> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </param>
         /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
         /// <param name="redirectUri"> If action type is redirect, this field represents redirect URL for the client. </param>
         /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="requestBodyCheck"> Describes if policy managed rules will inspect the request body content. </param>
-        internal FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState, FrontDoorWebApplicationFirewallPolicyMode? mode, Uri redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck)
+        /// <param name="javascriptChallengeExpirationInMinutes"> Defines the JavaScript challenge cookie validity lifetime in minutes. Value must be an integer between 5 and 1440 with the default value being 30. </param>
+        /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
+        /// <param name="scrubbingRules"> List of log scrubbing rules applied to the Web Application Firewall logs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState, FrontDoorWebApplicationFirewallPolicyMode? mode, Uri redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck, int? javascriptChallengeExpirationInMinutes, WebApplicationFirewallScrubbingState? state, IList<WebApplicationFirewallScrubbingRules> scrubbingRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnabledState = enabledState;
             Mode = mode;
@@ -32,6 +70,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             CustomBlockResponseStatusCode = customBlockResponseStatusCode;
             CustomBlockResponseBody = customBlockResponseBody;
             RequestBodyCheck = requestBodyCheck;
+            JavascriptChallengeExpirationInMinutes = javascriptChallengeExpirationInMinutes;
+            State = state;
+            ScrubbingRules = scrubbingRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
@@ -46,5 +88,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string CustomBlockResponseBody { get; set; }
         /// <summary> Describes if policy managed rules will inspect the request body content. </summary>
         public PolicyRequestBodyCheck? RequestBodyCheck { get; set; }
+        /// <summary> Defines the JavaScript challenge cookie validity lifetime in minutes. Value must be an integer between 5 and 1440 with the default value being 30. </summary>
+        public int? JavascriptChallengeExpirationInMinutes { get; set; }
+        /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
+        public WebApplicationFirewallScrubbingState? State { get; set; }
+        /// <summary> List of log scrubbing rules applied to the Web Application Firewall logs. </summary>
+        public IList<WebApplicationFirewallScrubbingRules> ScrubbingRules { get; }
     }
 }

@@ -1,20 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
-using static System.Collections.Specialized.BitVector32;
+using System.Text.Json;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -22,10 +18,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         internal static Dictionary<string, Type> _actionMapping = new Dictionary<string, Type>()
         {
-            {"microsoft.graph.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
+            {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(WebJobsProvideClaimsForToken) }
         };
 
-        internal static EventDefinition GetEventDefintionFromPayload(string payload)
+        internal static WebJobsAuthenticationEventDefinition GetEventDefintionFromPayload(string payload)
         {
             try
             {
@@ -36,32 +32,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     comparable = jPayload.GetPropertyValue("type");
                 }
 
-                foreach (EventDefinition eventDefinition in Enum.GetValues(typeof(EventDefinition)))
+                foreach (WebJobsAuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(WebJobsAuthenticationEventDefinition)))
                 {
-                    AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
+                    WebJobsAuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>();
                     if (eventMetadata.EventIdentifier.Equals(comparable, StringComparison.OrdinalIgnoreCase))
                     {
                         return eventDefinition;
                     }
                 }
 
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
+                throw new InvalidOperationException(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Comparable_Not_Found,
+                        arg0: comparable));
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Event_Missing, ex.Message));
+                throw new AuthenticationEventTriggerRequestValidationException(ex.Message, ex.InnerException);
             }
         }
 
         internal static HttpResponseMessage HttpErrorResponse(Exception ex)
         {
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+            var response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
             {
-                Content = new StringContent(GetFailedRequestPayload(ex))
+                Content = new StringContent(GetFailedResponsePayload(ex))
             };
+
+            // Set the metrics on header
+            WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(response);
+
+            return response;
         }
 
-        internal static string GetFailedRequestPayload(Exception ex)
+        /// <summary>
+        /// Joins the exception messages into a json payload.
+        /// </summary>
+        /// <param name="ex">The exception thrown. If the exception message is null, then a generic 'Failed' message is passed.</param>
+        /// <returns>A json string containing the error messages</returns>
+        internal static string GetFailedResponsePayload(Exception ex)
         {
             List<string> errors = new List<string>();
             if (ex != null)
@@ -105,25 +115,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Determines whether the specified input is json.</summary>
         /// <param name="input">The input.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified input is json; otherwise, <c>false</c>.</returns>
-        internal static bool IsJson(string input)
+        internal static void ValidateJson(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
-                return false;
+                throw new JsonException(AuthenticationEventResource.Ex_Empty_Json);
             }
 
-            input = input.Trim();
-            return (input.StartsWith("{", StringComparison.OrdinalIgnoreCase) && input.EndsWith("}", StringComparison.OrdinalIgnoreCase))
-                || (input.StartsWith("[", StringComparison.OrdinalIgnoreCase) && input.EndsWith("]", StringComparison.OrdinalIgnoreCase));
+            // try parsing input to json object
+            using var _ = JsonDocument.Parse(input);
         }
 
-        internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
+        internal static WebJobsAuthenticationEventsAction GetEventActionForActionType(string actionType)
         {
             return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
-                 ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
-                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
+                 ? (WebJobsAuthenticationEventsAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
+                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Action, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 
         internal static void ValidateGraph(object obj)

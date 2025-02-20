@@ -44,7 +44,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                TestRunOperation operation = await loadTestRunClient.BeginTestRunAsync(
+                TestRunResultOperation operation = await loadTestRunClient.BeginTestRunAsync(
                         WaitUntil.Started, testRunId, RequestContent.Create(data)
                    );
 

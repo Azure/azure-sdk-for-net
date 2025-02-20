@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,82 +16,95 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsRecordingFileStatusUpdatedEventData DeserializeAcsRecordingFileStatusUpdatedEventData(JsonElement element)
         {
-            Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
-            Optional<DateTimeOffset> recordingStartTime = default;
-            Optional<long> recordingDurationMs = default;
-            Optional<AcsRecordingContentType> recordingContentType = default;
-            Optional<AcsRecordingChannelType> recordingChannelType = default;
-            Optional<AcsRecordingFormatType> recordingFormatType = default;
-            Optional<string> sessionEndReason = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AcsRecordingStorageInfoProperties recordingStorageInfo = default;
+            DateTimeOffset? recordingStartTime = default;
+            long? recordingDurationMs = default;
+            AcsRecordingContentType? recordingContentType = default;
+            AcsRecordingChannelType? recordingChannelType = default;
+            AcsRecordingFormatType? recordingFormatType = default;
+            string sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordingStorageInfo"))
+                if (property.NameEquals("recordingStorageInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recordingStartTime"))
+                if (property.NameEquals("recordingStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recordingDurationMs"))
+                if (property.NameEquals("recordingDurationMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingDurationMs = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recordingContentType"))
+                if (property.NameEquals("recordingContentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingContentType = new AcsRecordingContentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recordingChannelType"))
+                if (property.NameEquals("recordingChannelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingChannelType = new AcsRecordingChannelType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recordingFormatType"))
+                if (property.NameEquals("recordingFormatType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingFormatType = new AcsRecordingFormatType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionEndReason"))
+                if (property.NameEquals("sessionEndReason"u8))
                 {
                     sessionEndReason = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
+            return new AcsRecordingFileStatusUpdatedEventData(
+                recordingStorageInfo,
+                recordingStartTime,
+                recordingDurationMs,
+                recordingContentType,
+                recordingChannelType,
+                recordingFormatType,
+                sessionEndReason);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRecordingFileStatusUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement);
         }
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>
@@ -101,6 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRecordingFileStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

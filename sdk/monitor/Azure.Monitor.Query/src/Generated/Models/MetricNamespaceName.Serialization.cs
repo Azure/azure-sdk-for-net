@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -14,16 +13,28 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricNamespaceName DeserializeMetricNamespaceName(JsonElement element)
         {
-            Optional<string> metricNamespaceName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string metricNamespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricNamespaceName"))
+                if (property.NameEquals("metricNamespaceName"u8))
                 {
                     metricNamespaceName = property.Value.GetString();
                     continue;
                 }
             }
-            return new MetricNamespaceName(metricNamespaceName.Value);
+            return new MetricNamespaceName(metricNamespaceName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricNamespaceName FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricNamespaceName(document.RootElement);
         }
     }
 }

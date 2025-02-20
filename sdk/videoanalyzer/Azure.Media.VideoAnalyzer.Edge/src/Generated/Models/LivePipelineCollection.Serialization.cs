@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("@continuationToken");
+                writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
             writer.WriteEndObject();
@@ -36,15 +36,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LivePipelineCollection DeserializeLivePipelineCollection(JsonElement element)
         {
-            Optional<IList<LivePipeline>> value = default;
-            Optional<string> continuationToken = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<LivePipeline> value = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LivePipeline> array = new List<LivePipeline>();
@@ -55,13 +58,29 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("@continuationToken"))
+                if (property.NameEquals("@continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new LivePipelineCollection(Optional.ToList(value), continuationToken.Value);
+            return new LivePipelineCollection(value ?? new ChangeTrackingList<LivePipeline>(), continuationToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LivePipelineCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLivePipelineCollection(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

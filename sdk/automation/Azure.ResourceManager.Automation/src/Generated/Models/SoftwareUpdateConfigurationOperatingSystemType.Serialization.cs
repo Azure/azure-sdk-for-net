@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automation.Models
 
         public static SoftwareUpdateConfigurationOperatingSystemType ToSoftwareUpdateConfigurationOperatingSystemType(this string value)
         {
-            if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return SoftwareUpdateConfigurationOperatingSystemType.Windows;
-            if (string.Equals(value, "Linux", StringComparison.InvariantCultureIgnoreCase)) return SoftwareUpdateConfigurationOperatingSystemType.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return SoftwareUpdateConfigurationOperatingSystemType.Windows;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return SoftwareUpdateConfigurationOperatingSystemType.Linux;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SoftwareUpdateConfigurationOperatingSystemType value.");
         }
     }

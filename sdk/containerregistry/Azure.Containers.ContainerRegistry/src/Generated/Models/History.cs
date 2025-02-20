@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> A list of unstructured historical data for v1 compatibility. </summary>
     internal partial class History
     {
-        /// <summary> Initializes a new instance of History. </summary>
-        public History()
+        /// <summary> Initializes a new instance of <see cref="History"/>. </summary>
+        internal History()
         {
         }
 
-        /// <summary> Initializes a new instance of History. </summary>
+        /// <summary> Initializes a new instance of <see cref="History"/>. </summary>
         /// <param name="v1Compatibility"> The raw v1 compatibility information. </param>
         internal History(string v1Compatibility)
         {
@@ -23,6 +23,6 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> The raw v1 compatibility information. </summary>
-        public string V1Compatibility { get; set; }
+        public string V1Compatibility { get; }
     }
 }

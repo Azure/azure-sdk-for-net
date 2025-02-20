@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service for SAP Cloud for Customer. </summary>
     public partial class SapCloudForCustomerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SapCloudForCustomerLinkedService. </summary>
-        /// <param name="url"> The URL of SAP Cloud for Customer OData API. For example, &apos;[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]&apos;. Type: string (or Expression with resultType string). </param>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedService"/>. </summary>
+        /// <param name="url"> The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public SapCloudForCustomerLinkedService(object url)
         {
@@ -25,14 +24,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SapCloudForCustomer";
         }
 
-        /// <summary> Initializes a new instance of SapCloudForCustomerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="url"> The URL of SAP Cloud for Customer OData API. For example, &apos;[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]&apos;. Type: string (or Expression with resultType string). </param>
+        /// <param name="url"> The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression with resultType string). </param>
         /// <param name="username"> The username for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// The password for Basic authentication.
@@ -49,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapCloudForCustomer";
         }
 
-        /// <summary> The URL of SAP Cloud for Customer OData API. For example, &apos;[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]&apos;. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression with resultType string). </summary>
         public object Url { get; set; }
         /// <summary> The username for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public object Username { get; set; }

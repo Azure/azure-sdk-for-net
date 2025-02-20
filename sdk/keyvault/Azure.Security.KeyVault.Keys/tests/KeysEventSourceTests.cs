@@ -171,8 +171,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetEcOperations), new object[] { false, true })]
         public async Task PrivateKeyRequiredEc(string operation, string value, Func<CryptographyClient, string, Task<object>> thunk)
         {
-#if NET461
-            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
 #endif
 
             KeyOperation[] keyOps = new[]

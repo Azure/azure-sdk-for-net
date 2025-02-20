@@ -4,6 +4,7 @@
 namespace BatchClientIntegrationTests.Fixtures
 {
     using System.Collections.Generic;
+    using System;
     using System.Linq;
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch;
@@ -21,9 +22,23 @@ namespace BatchClientIntegrationTests.Fixtures
             List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
 
             static bool ubuntuImageScanner(ImageInformation imageInfo) =>
-                imageInfo.ImageReference.Publisher == "canonical" &&
-                imageInfo.ImageReference.Offer == "ubuntuserver" &&
-                imageInfo.ImageReference.Sku.Contains("18.04");
+                imageInfo.ImageReference.Publisher == "microsoftwindowsserver" &&
+              imageInfo.ImageReference.Offer.Contains("windowsserver") &&
+            imageInfo.ImageReference.Sku.Contains("2022-datacenter");
+
+            ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
+
+            return ubuntuImage;
+        }
+
+        public static ImageInformation GetUbuntuServerImageDetails(BatchClient client)
+        {
+            List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
+
+            static bool ubuntuImageScanner(ImageInformation imageInfo) =>
+                imageInfo.ImageReference.Publisher.ToLower().Contains("canonical") &&
+               imageInfo.ImageReference.Offer.Contains("ubuntu") &&
+               imageInfo.ImageReference.Sku.Contains("22_04-lts");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 

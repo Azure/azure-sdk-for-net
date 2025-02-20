@@ -4,7 +4,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Moq;
@@ -116,20 +118,21 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedHub = "fakeHub";
             var expectedConsumerGroup = "fakeGroup";
             var expectedPartition = "fakePart";
-            var expectedOffset = 123;
-            var expectedSequence = 999;
+            var expectedProcessorId = "Id";
+            var expectedOffset = "999";
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
 
-            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedOffset, expectedSequence, cancellationSource.Token);
+            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedProcessorId, new CheckpointPosition(expectedOffset), cancellationSource.Token);
 
             mockCheckpointStore.Verify(store => store.UpdateCheckpointAsync(
                 expectedNamespace,
                 expectedHub,
                 expectedConsumerGroup,
                 expectedPartition,
-                expectedOffset,
-                expectedSequence,
+                expectedProcessorId,
+                It.Is<CheckpointPosition>(csp =>
+                    csp.OffsetString == expectedOffset),
                 cancellationSource.Token),
             Times.Once);
         }

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema for all properties of  Recording Chunk Information. </summary>
     public partial class AcsRecordingChunkInfoProperties
     {
-        /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
         internal AcsRecordingChunkInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>
         /// <param name="endReason"> The reason for ending the recording chunk. </param>

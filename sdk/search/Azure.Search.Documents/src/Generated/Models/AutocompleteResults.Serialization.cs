@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,21 +14,24 @@ namespace Azure.Search.Documents.Models
     {
         internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
         {
-            Optional<double> searchCoverage = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            double? searchCoverage = default;
             IReadOnlyList<AutocompleteItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.coverage"))
+                if (property.NameEquals("@search.coverage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchCoverage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<AutocompleteItem> array = new List<AutocompleteItem>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -40,7 +42,15 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new AutocompleteResults(Optional.ToNullable(searchCoverage), value);
+            return new AutocompleteResults(searchCoverage, value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AutocompleteResults FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAutocompleteResults(document.RootElement);
         }
     }
 }

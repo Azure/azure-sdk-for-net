@@ -5,57 +5,184 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleRunPlaybookAction : IUtf8JsonSerializable
+    public partial class AutomationRuleRunPlaybookAction : IUtf8JsonSerializable, IJsonModel<AutomationRuleRunPlaybookAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRuleRunPlaybookAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AutomationRuleRunPlaybookAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionConfiguration))
-            {
-                writer.WritePropertyName("actionConfiguration");
-                writer.WriteObjectValue(ActionConfiguration);
-            }
-            writer.WritePropertyName("order");
-            writer.WriteNumberValue(Order);
-            writer.WritePropertyName("actionType");
-            writer.WriteStringValue(ActionType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ActionConfiguration))
+            {
+                writer.WritePropertyName("actionConfiguration"u8);
+                writer.WriteObjectValue(ActionConfiguration, options);
+            }
+        }
+
+        AutomationRuleRunPlaybookAction IJsonModel<AutomationRuleRunPlaybookAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRuleRunPlaybookAction(document.RootElement, options);
+        }
+
+        internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AutomationRuleRunPlaybookActionProperties actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionConfiguration"))
+                if (property.NameEquals("actionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value);
+                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationRuleRunPlaybookAction(order, actionType, actionConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationRuleRunPlaybookAction(order, actionType, serializedAdditionalRawData, actionConfiguration);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionConfiguration))
+                {
+                    builder.Append("  actionConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ActionConfiguration, options, 2, false, "  actionConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  order: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  order: ");
+                builder.AppendLine($"{Order}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine($"'{ActionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AutomationRuleRunPlaybookAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationRuleRunPlaybookAction IPersistableModel<AutomationRuleRunPlaybookAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationRuleRunPlaybookAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationRuleRunPlaybookAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

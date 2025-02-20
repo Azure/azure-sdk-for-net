@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -15,31 +14,33 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static ProviderStatus DeserializeProviderStatus(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<ProviderAvailability> currentAvailability = default;
-            Optional<IReadOnlyList<TargetStatus>> targets = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            ProviderAvailability? currentAvailability = default;
+            IReadOnlyList<TargetStatus> targets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentAvailability"))
+                if (property.NameEquals("currentAvailability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentAvailability = new ProviderAvailability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TargetStatus> array = new List<TargetStatus>();
@@ -51,7 +52,15 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new ProviderStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToList(targets));
+            return new ProviderStatus(id, currentAvailability, targets ?? new ChangeTrackingList<TargetStatus>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ProviderStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeProviderStatus(document.RootElement);
         }
     }
 }

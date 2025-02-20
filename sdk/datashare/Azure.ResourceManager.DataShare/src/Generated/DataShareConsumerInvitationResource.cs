@@ -9,23 +9,23 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShareConsumerInvitation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareConsumerInvitationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareConsumerInvitationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetDataShareConsumerInvitation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareConsumerInvitationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareConsumerInvitationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetDataShareConsumerInvitation method.
     /// </summary>
     public partial class DataShareConsumerInvitationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareConsumerInvitationResource"/> instance. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="invitationId"> The invitationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(AzureLocation location, Guid invitationId)
         {
             var resourceId = $"/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}";
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly ConsumerInvitationsRestOperations _dataShareConsumerInvitationConsumerInvitationsRestClient;
         private readonly DataShareConsumerInvitationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/locations/consumerInvitations";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareConsumerInvitationResource"/> class for mocking. </summary>
         protected DataShareConsumerInvitationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareConsumerInvitationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareConsumerInvitationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareConsumerInvitationResource(ArmClient client, DataShareConsumerInvitationData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/locations/consumerInvitations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

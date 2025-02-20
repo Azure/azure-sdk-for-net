@@ -6,121 +6,210 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable
+    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ApplicationUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationUpgradePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
-                writer.WritePropertyName("upgradeReplicaSetCheckTimeout");
+                writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
             if (Optional.IsDefined(ForceRestart))
             {
-                writer.WritePropertyName("forceRestart");
+                writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
-                writer.WritePropertyName("rollingUpgradeMonitoringPolicy");
-                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
+                writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
+                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy, options);
             }
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
-                writer.WritePropertyName("applicationHealthPolicy");
-                writer.WriteObjectValue(ApplicationHealthPolicy);
+                writer.WritePropertyName("applicationHealthPolicy"u8);
+                writer.WriteObjectValue(ApplicationHealthPolicy, options);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
-                writer.WritePropertyName("upgradeMode");
+                writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(RecreateApplication))
             {
-                writer.WritePropertyName("recreateApplication");
+                writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
+        ApplicationUpgradePolicy IJsonModel<ApplicationUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> forceRestart = default;
-            Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
-            Optional<bool> recreateApplication = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationUpgradePolicy(document.RootElement, options);
+        }
+
+        internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TimeSpan? upgradeReplicaSetCheckTimeout = default;
+            bool? forceRestart = default;
+            ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
+            ArmApplicationHealthPolicy applicationHealthPolicy = default;
+            ApplicationRollingUpgradeMode? upgradeMode = default;
+            bool? recreateApplication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("upgradeReplicaSetCheckTimeout"))
+                if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upgradeReplicaSetCheckTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("forceRestart"))
+                if (property.NameEquals("forceRestart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forceRestart = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rollingUpgradeMonitoringPolicy"))
+                if (property.NameEquals("rollingUpgradeMonitoringPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value);
+                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("applicationHealthPolicy"))
+                if (property.NameEquals("applicationHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value);
+                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("upgradeMode"))
+                if (property.NameEquals("upgradeMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upgradeMode = new ApplicationRollingUpgradeMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recreateApplication"))
+                if (property.NameEquals("recreateApplication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recreateApplication = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationUpgradePolicy(Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, applicationHealthPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(recreateApplication));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationUpgradePolicy(
+                upgradeReplicaSetCheckTimeout,
+                forceRestart,
+                rollingUpgradeMonitoringPolicy,
+                applicationHealthPolicy,
+                upgradeMode,
+                recreateApplication,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationUpgradePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationUpgradePolicy IPersistableModel<ApplicationUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationUpgradePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

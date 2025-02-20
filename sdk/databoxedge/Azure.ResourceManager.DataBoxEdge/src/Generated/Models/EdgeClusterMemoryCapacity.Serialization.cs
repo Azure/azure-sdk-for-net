@@ -5,169 +5,259 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeClusterMemoryCapacity : IUtf8JsonSerializable
+    public partial class EdgeClusterMemoryCapacity : IUtf8JsonSerializable, IJsonModel<EdgeClusterMemoryCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterMemoryCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EdgeClusterMemoryCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ClusterFreeMemoryInMB))
             {
-                writer.WritePropertyName("clusterFreeMemoryMb");
+                writer.WritePropertyName("clusterFreeMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFreeMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterUsedMemoryInMB))
             {
-                writer.WritePropertyName("clusterUsedMemoryMb");
+                writer.WritePropertyName("clusterUsedMemoryMb"u8);
                 writer.WriteNumberValue(ClusterUsedMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterFailoverMemoryInMB))
             {
-                writer.WritePropertyName("clusterFailoverMemoryMb");
+                writer.WritePropertyName("clusterFailoverMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFailoverMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterFragmentationMemoryInMB))
             {
-                writer.WritePropertyName("clusterFragmentationMemoryMb");
+                writer.WritePropertyName("clusterFragmentationMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFragmentationMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterHyperVReserveMemoryMb))
             {
-                writer.WritePropertyName("clusterHypervReserveMemoryMb");
+                writer.WritePropertyName("clusterHypervReserveMemoryMb"u8);
                 writer.WriteNumberValue(ClusterHyperVReserveMemoryMb.Value);
             }
             if (Optional.IsDefined(ClusterInfraVmMemoryInMB))
             {
-                writer.WritePropertyName("clusterInfraVmMemoryMb");
+                writer.WritePropertyName("clusterInfraVmMemoryMb"u8);
                 writer.WriteNumberValue(ClusterInfraVmMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterTotalMemoryInMB))
             {
-                writer.WritePropertyName("clusterTotalMemoryMb");
+                writer.WritePropertyName("clusterTotalMemoryMb"u8);
                 writer.WriteNumberValue(ClusterTotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterNonFailoverVmInMB))
             {
-                writer.WritePropertyName("clusterNonFailoverVmMb");
+                writer.WritePropertyName("clusterNonFailoverVmMb"u8);
                 writer.WriteNumberValue(ClusterNonFailoverVmInMB.Value);
             }
             if (Optional.IsDefined(ClusterMemoryUsedByVmsInMB))
             {
-                writer.WritePropertyName("clusterMemoryUsedByVmsMb");
+                writer.WritePropertyName("clusterMemoryUsedByVmsMb"u8);
                 writer.WriteNumberValue(ClusterMemoryUsedByVmsInMB.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static EdgeClusterMemoryCapacity DeserializeEdgeClusterMemoryCapacity(JsonElement element)
+        EdgeClusterMemoryCapacity IJsonModel<EdgeClusterMemoryCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<double> clusterFreeMemoryMb = default;
-            Optional<double> clusterUsedMemoryMb = default;
-            Optional<double> clusterFailoverMemoryMb = default;
-            Optional<double> clusterFragmentationMemoryMb = default;
-            Optional<double> clusterHyperVReserveMemoryMb = default;
-            Optional<double> clusterInfraVmMemoryMb = default;
-            Optional<double> clusterTotalMemoryMb = default;
-            Optional<double> clusterNonFailoverVmMb = default;
-            Optional<double> clusterMemoryUsedByVmsMb = default;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeClusterMemoryCapacity(document.RootElement, options);
+        }
+
+        internal static EdgeClusterMemoryCapacity DeserializeEdgeClusterMemoryCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            double? clusterFreeMemoryMb = default;
+            double? clusterUsedMemoryMb = default;
+            double? clusterFailoverMemoryMb = default;
+            double? clusterFragmentationMemoryMb = default;
+            double? clusterHyperVReserveMemoryMb = default;
+            double? clusterInfraVmMemoryMb = default;
+            double? clusterTotalMemoryMb = default;
+            double? clusterNonFailoverVmMb = default;
+            double? clusterMemoryUsedByVmsMb = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterFreeMemoryMb"))
+                if (property.NameEquals("clusterFreeMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterFreeMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterUsedMemoryMb"))
+                if (property.NameEquals("clusterUsedMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterUsedMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterFailoverMemoryMb"))
+                if (property.NameEquals("clusterFailoverMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterFailoverMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterFragmentationMemoryMb"))
+                if (property.NameEquals("clusterFragmentationMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterFragmentationMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterHypervReserveMemoryMb"))
+                if (property.NameEquals("clusterHypervReserveMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterHyperVReserveMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterInfraVmMemoryMb"))
+                if (property.NameEquals("clusterInfraVmMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterInfraVmMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterTotalMemoryMb"))
+                if (property.NameEquals("clusterTotalMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterTotalMemoryMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterNonFailoverVmMb"))
+                if (property.NameEquals("clusterNonFailoverVmMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterNonFailoverVmMb = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("clusterMemoryUsedByVmsMb"))
+                if (property.NameEquals("clusterMemoryUsedByVmsMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterMemoryUsedByVmsMb = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHyperVReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeClusterMemoryCapacity(
+                clusterFreeMemoryMb,
+                clusterUsedMemoryMb,
+                clusterFailoverMemoryMb,
+                clusterFragmentationMemoryMb,
+                clusterHyperVReserveMemoryMb,
+                clusterInfraVmMemoryMb,
+                clusterTotalMemoryMb,
+                clusterNonFailoverVmMb,
+                clusterMemoryUsedByVmsMb,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeClusterMemoryCapacity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeClusterMemoryCapacity IPersistableModel<EdgeClusterMemoryCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeClusterMemoryCapacity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeClusterMemoryCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

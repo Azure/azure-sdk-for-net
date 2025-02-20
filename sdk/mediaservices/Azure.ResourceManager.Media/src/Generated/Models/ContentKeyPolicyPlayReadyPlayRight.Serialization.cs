@@ -6,201 +6,294 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyPlayRight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyPlayRight>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContentKeyPolicyPlayReadyPlayRight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(FirstPlayExpiration))
             {
-                writer.WritePropertyName("firstPlayExpiration");
+                writer.WritePropertyName("firstPlayExpiration"u8);
                 writer.WriteStringValue(FirstPlayExpiration.Value, "P");
             }
             if (Optional.IsDefined(ScmsRestriction))
             {
-                writer.WritePropertyName("scmsRestriction");
+                writer.WritePropertyName("scmsRestriction"u8);
                 writer.WriteNumberValue(ScmsRestriction.Value);
             }
             if (Optional.IsDefined(AgcAndColorStripeRestriction))
             {
-                writer.WritePropertyName("agcAndColorStripeRestriction");
+                writer.WritePropertyName("agcAndColorStripeRestriction"u8);
                 writer.WriteNumberValue(AgcAndColorStripeRestriction.Value);
             }
             if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
-                writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction");
-                writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
+                writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
+                writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction, options);
             }
-            writer.WritePropertyName("digitalVideoOnlyContentRestriction");
+            writer.WritePropertyName("digitalVideoOnlyContentRestriction"u8);
             writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);
-            writer.WritePropertyName("imageConstraintForAnalogComponentVideoRestriction");
+            writer.WritePropertyName("imageConstraintForAnalogComponentVideoRestriction"u8);
             writer.WriteBooleanValue(HasImageConstraintForAnalogComponentVideoRestriction);
-            writer.WritePropertyName("imageConstraintForAnalogComputerMonitorRestriction");
+            writer.WritePropertyName("imageConstraintForAnalogComputerMonitorRestriction"u8);
             writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
-            writer.WritePropertyName("allowPassingVideoContentToUnknownOutput");
+            writer.WritePropertyName("allowPassingVideoContentToUnknownOutput"u8);
             writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
             if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
             {
-                writer.WritePropertyName("uncompressedDigitalVideoOpl");
+                writer.WritePropertyName("uncompressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalVideoOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
             {
-                writer.WritePropertyName("compressedDigitalVideoOpl");
+                writer.WritePropertyName("compressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalVideoOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
             {
-                writer.WritePropertyName("analogVideoOpl");
+                writer.WritePropertyName("analogVideoOpl"u8);
                 writer.WriteNumberValue(AnalogVideoOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
             {
-                writer.WritePropertyName("compressedDigitalAudioOpl");
+                writer.WritePropertyName("compressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalAudioOutputProtectionLevel.Value);
             }
             if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
             {
-                writer.WritePropertyName("uncompressedDigitalAudioOpl");
+                writer.WritePropertyName("uncompressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ContentKeyPolicyPlayReadyPlayRight DeserializeContentKeyPolicyPlayReadyPlayRight(JsonElement element)
+        ContentKeyPolicyPlayReadyPlayRight IJsonModel<ContentKeyPolicyPlayReadyPlayRight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<TimeSpan> firstPlayExpiration = default;
-            Optional<int> scmsRestriction = default;
-            Optional<int> agcAndColorStripeRestriction = default;
-            Optional<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction> explicitAnalogTelevisionOutputRestriction = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyPlayReadyPlayRight(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyPlayReadyPlayRight DeserializeContentKeyPolicyPlayReadyPlayRight(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TimeSpan? firstPlayExpiration = default;
+            int? scmsRestriction = default;
+            int? agcAndColorStripeRestriction = default;
+            ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction = default;
             bool digitalVideoOnlyContentRestriction = default;
             bool imageConstraintForAnalogComponentVideoRestriction = default;
             bool imageConstraintForAnalogComputerMonitorRestriction = default;
             ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput = default;
-            Optional<int> uncompressedDigitalVideoOpl = default;
-            Optional<int> compressedDigitalVideoOpl = default;
-            Optional<int> analogVideoOpl = default;
-            Optional<int> compressedDigitalAudioOpl = default;
-            Optional<int> uncompressedDigitalAudioOpl = default;
+            int? uncompressedDigitalVideoOpl = default;
+            int? compressedDigitalVideoOpl = default;
+            int? analogVideoOpl = default;
+            int? compressedDigitalAudioOpl = default;
+            int? uncompressedDigitalAudioOpl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstPlayExpiration"))
+                if (property.NameEquals("firstPlayExpiration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstPlayExpiration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("scmsRestriction"))
+                if (property.NameEquals("scmsRestriction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scmsRestriction = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("agcAndColorStripeRestriction"))
+                if (property.NameEquals("agcAndColorStripeRestriction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agcAndColorStripeRestriction = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("explicitAnalogTelevisionOutputRestriction"))
+                if (property.NameEquals("explicitAnalogTelevisionOutputRestriction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value);
+                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("digitalVideoOnlyContentRestriction"))
+                if (property.NameEquals("digitalVideoOnlyContentRestriction"u8))
                 {
                     digitalVideoOnlyContentRestriction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("imageConstraintForAnalogComponentVideoRestriction"))
+                if (property.NameEquals("imageConstraintForAnalogComponentVideoRestriction"u8))
                 {
                     imageConstraintForAnalogComponentVideoRestriction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("imageConstraintForAnalogComputerMonitorRestriction"))
+                if (property.NameEquals("imageConstraintForAnalogComputerMonitorRestriction"u8))
                 {
                     imageConstraintForAnalogComputerMonitorRestriction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowPassingVideoContentToUnknownOutput"))
+                if (property.NameEquals("allowPassingVideoContentToUnknownOutput"u8))
                 {
                     allowPassingVideoContentToUnknownOutput = new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("uncompressedDigitalVideoOpl"))
+                if (property.NameEquals("uncompressedDigitalVideoOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uncompressedDigitalVideoOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("compressedDigitalVideoOpl"))
+                if (property.NameEquals("compressedDigitalVideoOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressedDigitalVideoOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("analogVideoOpl"))
+                if (property.NameEquals("analogVideoOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     analogVideoOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("compressedDigitalAudioOpl"))
+                if (property.NameEquals("compressedDigitalAudioOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressedDigitalAudioOpl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("uncompressedDigitalAudioOpl"))
+                if (property.NameEquals("uncompressedDigitalAudioOpl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uncompressedDigitalAudioOpl = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentKeyPolicyPlayReadyPlayRight(
+                firstPlayExpiration,
+                scmsRestriction,
+                agcAndColorStripeRestriction,
+                explicitAnalogTelevisionOutputRestriction,
+                digitalVideoOnlyContentRestriction,
+                imageConstraintForAnalogComponentVideoRestriction,
+                imageConstraintForAnalogComputerMonitorRestriction,
+                allowPassingVideoContentToUnknownOutput,
+                uncompressedDigitalVideoOpl,
+                compressedDigitalVideoOpl,
+                analogVideoOpl,
+                compressedDigitalAudioOpl,
+                uncompressedDigitalAudioOpl,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyPlayReadyPlayRight IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyPlayReadyPlayRight(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

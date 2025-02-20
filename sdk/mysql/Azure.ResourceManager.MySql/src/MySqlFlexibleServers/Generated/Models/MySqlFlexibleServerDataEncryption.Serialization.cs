@@ -6,105 +6,194 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerDataEncryption : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerDataEncryption : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerDataEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerDataEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MySqlFlexibleServerDataEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
             if (Optional.IsDefined(PrimaryKeyUri))
             {
-                writer.WritePropertyName("primaryKeyUri");
+                writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
             {
-                writer.WritePropertyName("geoBackupUserAssignedIdentityId");
+                writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
             if (Optional.IsDefined(GeoBackupKeyUri))
             {
-                writer.WritePropertyName("geoBackupKeyUri");
+                writer.WritePropertyName("geoBackupKeyURI"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EncryptionType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToSerialString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element)
+        MySqlFlexibleServerDataEncryption IJsonModel<MySqlFlexibleServerDataEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Uri> primaryKeyUri = default;
-            Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
-            Optional<Uri> geoBackupKeyUri = default;
-            Optional<MySqlFlexibleServerDataEncryptionType> type = default;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerDataEncryption(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Uri primaryKeyUri = default;
+            ResourceIdentifier geoBackupUserAssignedIdentityId = default;
+            Uri geoBackupKeyUri = default;
+            MySqlFlexibleServerDataEncryptionType? type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryUserAssignedIdentityId"))
+                if (property.NameEquals("primaryUserAssignedIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryKeyUri"))
+                if (property.NameEquals("primaryKeyURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        primaryKeyUri = null;
                         continue;
                     }
                     primaryKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geoBackupUserAssignedIdentityId"))
+                if (property.NameEquals("geoBackupUserAssignedIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     geoBackupUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geoBackupKeyUri"))
+                if (property.NameEquals("geoBackupKeyURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        geoBackupKeyUri = null;
                         continue;
                     }
                     geoBackupKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToMySqlFlexibleServerDataEncryptionType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Optional.ToNullable(type));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlFlexibleServerDataEncryption(
+                primaryUserAssignedIdentityId,
+                primaryKeyUri,
+                geoBackupUserAssignedIdentityId,
+                geoBackupKeyUri,
+                type,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlFlexibleServerDataEncryption IPersistableModel<MySqlFlexibleServerDataEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlFlexibleServerDataEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlFlexibleServerDataEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

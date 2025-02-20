@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lines");
+            writer.WritePropertyName("lines"u8);
             writer.WriteStartArray();
             foreach (var item in Lines)
             {
@@ -25,58 +25,62 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))
             {
-                writer.WritePropertyName("debug");
+                writer.WritePropertyName("debug"u8);
                 writer.WriteStringValue(Debug);
             }
             if (Optional.IsDefined(CalibrationConfiguration))
             {
-                writer.WritePropertyName("calibrationConfiguration");
+                writer.WritePropertyName("calibrationConfiguration"u8);
                 writer.WriteStringValue(CalibrationConfiguration);
             }
             if (Optional.IsDefined(CameraConfiguration))
             {
-                writer.WritePropertyName("cameraConfiguration");
+                writer.WritePropertyName("cameraConfiguration"u8);
                 writer.WriteStringValue(CameraConfiguration);
             }
             if (Optional.IsDefined(CameraCalibratorNodeConfiguration))
             {
-                writer.WritePropertyName("cameraCalibratorNodeConfiguration");
+                writer.WritePropertyName("cameraCalibratorNodeConfiguration"u8);
                 writer.WriteStringValue(CameraCalibratorNodeConfiguration);
             }
             if (Optional.IsDefined(DetectorNodeConfiguration))
             {
-                writer.WritePropertyName("detectorNodeConfiguration");
+                writer.WritePropertyName("detectorNodeConfiguration"u8);
                 writer.WriteStringValue(DetectorNodeConfiguration);
             }
             if (Optional.IsDefined(TrackerNodeConfiguration))
             {
-                writer.WritePropertyName("trackerNodeConfiguration");
+                writer.WritePropertyName("trackerNodeConfiguration"u8);
                 writer.WriteStringValue(TrackerNodeConfiguration);
             }
             if (Optional.IsDefined(EnableFaceMaskClassifier))
             {
-                writer.WritePropertyName("enableFaceMaskClassifier");
+                writer.WritePropertyName("enableFaceMaskClassifier"u8);
                 writer.WriteStringValue(EnableFaceMaskClassifier);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
         internal static SpatialAnalysisPersonLineCrossingOperation DeserializeSpatialAnalysisPersonLineCrossingOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<SpatialAnalysisPersonLineCrossingLineEvents> lines = default;
-            Optional<string> debug = default;
-            Optional<string> calibrationConfiguration = default;
-            Optional<string> cameraConfiguration = default;
-            Optional<string> cameraCalibratorNodeConfiguration = default;
-            Optional<string> detectorNodeConfiguration = default;
-            Optional<string> trackerNodeConfiguration = default;
-            Optional<string> enableFaceMaskClassifier = default;
+            string debug = default;
+            string calibrationConfiguration = default;
+            string cameraConfiguration = default;
+            string cameraCalibratorNodeConfiguration = default;
+            string detectorNodeConfiguration = default;
+            string trackerNodeConfiguration = default;
+            string enableFaceMaskClassifier = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lines"))
+                if (property.NameEquals("lines"u8))
                 {
                     List<SpatialAnalysisPersonLineCrossingLineEvents> array = new List<SpatialAnalysisPersonLineCrossingLineEvents>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -86,48 +90,73 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     lines = array;
                     continue;
                 }
-                if (property.NameEquals("debug"))
+                if (property.NameEquals("debug"u8))
                 {
                     debug = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("calibrationConfiguration"))
+                if (property.NameEquals("calibrationConfiguration"u8))
                 {
                     calibrationConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cameraConfiguration"))
+                if (property.NameEquals("cameraConfiguration"u8))
                 {
                     cameraConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cameraCalibratorNodeConfiguration"))
+                if (property.NameEquals("cameraCalibratorNodeConfiguration"u8))
                 {
                     cameraCalibratorNodeConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectorNodeConfiguration"))
+                if (property.NameEquals("detectorNodeConfiguration"u8))
                 {
                     detectorNodeConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackerNodeConfiguration"))
+                if (property.NameEquals("trackerNodeConfiguration"u8))
                 {
                     trackerNodeConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableFaceMaskClassifier"))
+                if (property.NameEquals("enableFaceMaskClassifier"u8))
                 {
                     enableFaceMaskClassifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonLineCrossingOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, lines);
+            return new SpatialAnalysisPersonLineCrossingOperation(
+                type,
+                debug,
+                calibrationConfiguration,
+                cameraConfiguration,
+                cameraCalibratorNodeConfiguration,
+                detectorNodeConfiguration,
+                trackerNodeConfiguration,
+                enableFaceMaskClassifier,
+                lines);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonLineCrossingOperation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonLineCrossingOperation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryPipelineRun data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryPipelineRun data model.
+    /// An object that represents a pipeline run for a container registry.
+    /// </summary>
     public partial class ContainerRegistryPipelineRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPipelineRunData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunData"/>. </summary>
         public ContainerRegistryPipelineRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPipelineRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,21 +65,27 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="request"> The request parameters for a pipeline run. </param>
         /// <param name="response"> The response of a pipeline run. </param>
         /// <param name="forceUpdateTag"> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </param>
-        internal ContainerRegistryPipelineRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, PipelineRunContent request, PipelineRunResult response, string forceUpdateTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPipelineRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryPipelineRunContent request, PipelineRunResult response, string forceUpdateTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Request = request;
             Response = response;
             ForceUpdateTag = forceUpdateTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of a pipeline run. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The request parameters for a pipeline run. </summary>
-        public PipelineRunContent Request { get; set; }
+        [WirePath("properties.request")]
+        public ConnectedRegistryPipelineRunContent Request { get; set; }
         /// <summary> The response of a pipeline run. </summary>
+        [WirePath("properties.response")]
         public PipelineRunResult Response { get; }
         /// <summary> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </summary>
+        [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
     }
 }

@@ -6,40 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
     public partial class RouteMatrix
     {
-        internal static RouteMatrix DeserializeRouteMatrix(JsonElement element)
-        {
-            Optional<int> statusCode = default;
-            Optional<RouteMatrixResultResponse> response = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("statusCode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    statusCode = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("response"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    response = RouteMatrixResultResponse.DeserializeRouteMatrixResultResponse(property.Value);
-                    continue;
-                }
-            }
-            return new RouteMatrix(Optional.ToNullable(statusCode), response.Value);
-        }
     }
 }

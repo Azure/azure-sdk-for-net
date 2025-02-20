@@ -22,10 +22,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static ScoringFunctionInterpolation ToScoringFunctionInterpolation(this string value)
         {
-            if (string.Equals(value, "linear", StringComparison.InvariantCultureIgnoreCase)) return ScoringFunctionInterpolation.Linear;
-            if (string.Equals(value, "constant", StringComparison.InvariantCultureIgnoreCase)) return ScoringFunctionInterpolation.Constant;
-            if (string.Equals(value, "quadratic", StringComparison.InvariantCultureIgnoreCase)) return ScoringFunctionInterpolation.Quadratic;
-            if (string.Equals(value, "logarithmic", StringComparison.InvariantCultureIgnoreCase)) return ScoringFunctionInterpolation.Logarithmic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "linear")) return ScoringFunctionInterpolation.Linear;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "constant")) return ScoringFunctionInterpolation.Constant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "quadratic")) return ScoringFunctionInterpolation.Quadratic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "logarithmic")) return ScoringFunctionInterpolation.Logarithmic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionInterpolation value.");
         }
     }

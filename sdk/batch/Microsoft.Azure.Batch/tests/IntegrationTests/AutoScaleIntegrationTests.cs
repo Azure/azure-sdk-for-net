@@ -40,11 +40,17 @@ namespace BatchClientIntegrationTests
 
                     try
                     {
+
                         // create an empty pool with autoscale and an eval interval
-                        CloudServiceConfiguration cloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                         CloudPool ubPool = batchCli.PoolOperations.CreatePool(
                             poolId0,
-                            cloudServiceConfiguration: cloudServiceConfiguration,
+                            virtualMachineConfiguration: virtualMachineConfiguration,
                             virtualMachineSize: PoolFixture.VMSize);
                         ubPool.AutoScaleEnabled = true;
                         ubPool.AutoScaleEvaluationInterval = evalInterval;

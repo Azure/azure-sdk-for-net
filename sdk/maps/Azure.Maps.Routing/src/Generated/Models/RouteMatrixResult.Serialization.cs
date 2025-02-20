@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,48 +15,65 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrixResult DeserializeRouteMatrixResult(JsonElement element)
         {
-            Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<IList<RouteMatrix>>> matrix = default;
-            Optional<RouteMatrixSummary> summary = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string formatVersion = default;
+            IReadOnlyList<IList<RouteMatrix>> matrix = default;
+            RouteMatrixSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("matrix"))
+                if (property.NameEquals("matrix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IList<RouteMatrix>> array = new List<IList<RouteMatrix>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<RouteMatrix> array0 = new List<RouteMatrix>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(RouteMatrix.DeserializeRouteMatrix(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<RouteMatrix> array0 = new List<RouteMatrix>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(RouteMatrix.DeserializeRouteMatrix(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     matrix = array;
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = RouteMatrixSummary.DeserializeRouteMatrixSummary(property.Value);
                     continue;
                 }
             }
-            return new RouteMatrixResult(formatVersion.Value, Optional.ToList(matrix), summary.Value);
+            return new RouteMatrixResult(formatVersion, matrix ?? new ChangeTrackingList<IList<RouteMatrix>>(), summary);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteMatrixResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteMatrixResult(document.RootElement);
         }
     }
 }

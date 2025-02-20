@@ -5,64 +5,168 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmPolicyDetails
+    public partial class InMageRcmPolicyDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmPolicyDetails>
     {
-        internal static InMageRcmPolicyDetails DeserializeInMageRcmPolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmPolicyDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InMageRcmPolicyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<int> recoveryPointHistoryInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<string> enableMultiVmSync = default;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmPolicyDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(RecoveryPointHistoryInMinutes))
+            {
+                writer.WritePropertyName("recoveryPointHistoryInMinutes"u8);
+                writer.WriteNumberValue(RecoveryPointHistoryInMinutes.Value);
+            }
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
+            }
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
+            }
+            if (Optional.IsDefined(EnableMultiVmSync))
+            {
+                writer.WritePropertyName("enableMultiVmSync"u8);
+                writer.WriteStringValue(EnableMultiVmSync);
+            }
+        }
+
+        InMageRcmPolicyDetails IJsonModel<InMageRcmPolicyDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmPolicyDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmPolicyDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmPolicyDetails DeserializeInMageRcmPolicyDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? recoveryPointHistoryInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            string enableMultiVmSync = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointHistoryInMinutes"))
+                if (property.NameEquals("recoveryPointHistoryInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointHistoryInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appConsistentFrequencyInMinutes"))
+                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("crashConsistentFrequencyInMinutes"))
+                if (property.NameEquals("crashConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crashConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableMultiVmSync"))
+                if (property.NameEquals("enableMultiVmSync"u8))
                 {
                     enableMultiVmSync = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmPolicyDetails(instanceType, Optional.ToNullable(recoveryPointHistoryInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes), enableMultiVmSync.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageRcmPolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointHistoryInMinutes,
+                appConsistentFrequencyInMinutes,
+                crashConsistentFrequencyInMinutes,
+                enableMultiVmSync);
         }
+
+        BinaryData IPersistableModel<InMageRcmPolicyDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmPolicyDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmPolicyDetails IPersistableModel<InMageRcmPolicyDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmPolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmPolicyDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmPolicyDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmPolicyDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

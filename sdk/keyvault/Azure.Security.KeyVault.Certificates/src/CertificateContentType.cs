@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Content type of the certificate when downloaded from getSecret.
+    /// Content type of the certificate when the managed secret is downloaded using a <c>SecretClient</c>.
     /// </summary>
     public readonly struct CertificateContentType : IEquatable<CertificateContentType>
     {

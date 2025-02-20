@@ -6,38 +6,57 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeProperties : IUtf8JsonSerializable
+    public partial class AmlComputeProperties : IUtf8JsonSerializable, IJsonModel<AmlComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AmlComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize");
+                writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
             if (Optional.IsDefined(VmPriority))
             {
-                writer.WritePropertyName("vmPriority");
+                writer.WritePropertyName("vmPriority"u8);
                 writer.WriteStringValue(VmPriority.Value.ToString());
             }
             if (Optional.IsDefined(VirtualMachineImage))
             {
                 if (VirtualMachineImage != null)
                 {
-                    writer.WritePropertyName("virtualMachineImage");
-                    writer.WriteObjectValue(VirtualMachineImage);
+                    writer.WritePropertyName("virtualMachineImage"u8);
+                    writer.WriteObjectValue(VirtualMachineImage, options);
                 }
                 else
                 {
@@ -46,20 +65,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(IsolatedNetwork))
             {
-                writer.WritePropertyName("isolatedNetwork");
+                writer.WritePropertyName("isolatedNetwork"u8);
                 writer.WriteBooleanValue(IsolatedNetwork.Value);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
-                writer.WritePropertyName("scaleSettings");
-                writer.WriteObjectValue(ScaleSettings);
+                writer.WritePropertyName("scaleSettings"u8);
+                writer.WriteObjectValue(ScaleSettings, options);
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
-                    writer.WritePropertyName("userAccountCredentials");
-                    writer.WriteObjectValue(UserAccountCredentials);
+                    writer.WritePropertyName("userAccountCredentials"u8);
+                    writer.WriteObjectValue(UserAccountCredentials, options);
                 }
                 else
                 {
@@ -70,8 +89,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Subnet != null)
                 {
-                    writer.WritePropertyName("subnet");
-                    writer.WriteObjectValue(Subnet);
+                    writer.WritePropertyName("subnet"u8);
+                    writer.WriteObjectValue(Subnet, options);
                 }
                 else
                 {
@@ -80,14 +99,77 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(RemoteLoginPortPublicAccess))
             {
-                writer.WritePropertyName("remoteLoginPortPublicAccess");
+                writer.WritePropertyName("remoteLoginPortPublicAccess"u8);
                 writer.WriteStringValue(RemoteLoginPortPublicAccess.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AllocationState))
+            {
+                writer.WritePropertyName("allocationState"u8);
+                writer.WriteStringValue(AllocationState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AllocationStateTransitionOn))
+            {
+                writer.WritePropertyName("allocationStateTransitionTime"u8);
+                writer.WriteStringValue(AllocationStateTransitionOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors != null)
+                {
+                    writer.WritePropertyName("errors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Errors)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("errors");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCount))
+            {
+                if (CurrentNodeCount != null)
+                {
+                    writer.WritePropertyName("currentNodeCount"u8);
+                    writer.WriteNumberValue(CurrentNodeCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("currentNodeCount");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetNodeCount))
+            {
+                if (TargetNodeCount != null)
+                {
+                    writer.WritePropertyName("targetNodeCount"u8);
+                    writer.WriteNumberValue(TargetNodeCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("targetNodeCount");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeStateCounts))
+            {
+                if (NodeStateCounts != null)
+                {
+                    writer.WritePropertyName("nodeStateCounts"u8);
+                    writer.WriteObjectValue(NodeStateCounts, options);
+                }
+                else
+                {
+                    writer.WriteNull("nodeStateCounts");
+                }
             }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
                 if (EnableNodePublicIP != null)
                 {
-                    writer.WritePropertyName("enableNodePublicIp");
+                    writer.WritePropertyName("enableNodePublicIp"u8);
                     writer.WriteBooleanValue(EnableNodePublicIP.Value);
                 }
                 else
@@ -99,11 +181,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (PropertyBag != null)
                 {
-                    writer.WritePropertyName("propertyBag");
+                    writer.WritePropertyName("propertyBag"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PropertyBag);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(PropertyBag.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(PropertyBag))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
@@ -111,136 +196,163 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("propertyBag");
                 }
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element)
+        AmlComputeProperties IJsonModel<AmlComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<MachineLearningOSType> osType = default;
-            Optional<string> vmSize = default;
-            Optional<MachineLearningVmPriority> vmPriority = default;
-            Optional<VirtualMachineImage> virtualMachineImage = default;
-            Optional<bool> isolatedNetwork = default;
-            Optional<AmlComputeScaleSettings> scaleSettings = default;
-            Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
-            Optional<MachineLearningAllocationState> allocationState = default;
-            Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
-            Optional<int?> currentNodeCount = default;
-            Optional<int?> targetNodeCount = default;
-            Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
-            Optional<bool?> enableNodePublicIP = default;
-            Optional<BinaryData> propertyBag = default;
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlComputeProperties(document.RootElement, options);
+        }
+
+        internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MachineLearningOSType? osType = default;
+            string vmSize = default;
+            MachineLearningVmPriority? vmPriority = default;
+            VirtualMachineImage virtualMachineImage = default;
+            bool? isolatedNetwork = default;
+            AmlComputeScaleSettings scaleSettings = default;
+            MachineLearningUserAccountCredentials userAccountCredentials = default;
+            ResourceId subnet = default;
+            MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess = default;
+            MachineLearningAllocationState? allocationState = default;
+            DateTimeOffset? allocationStateTransitionTime = default;
+            IReadOnlyList<MachineLearningError> errors = default;
+            int? currentNodeCount = default;
+            int? targetNodeCount = default;
+            MachineLearningNodeStateCounts nodeStateCounts = default;
+            bool? enableNodePublicIP = default;
+            BinaryData propertyBag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osType = new MachineLearningOSType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmSize"))
+                if (property.NameEquals("vmSize"u8))
                 {
                     vmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmPriority"))
+                if (property.NameEquals("vmPriority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmPriority = new MachineLearningVmPriority(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineImage"))
+                if (property.NameEquals("virtualMachineImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         virtualMachineImage = null;
                         continue;
                     }
-                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value);
+                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("isolatedNetwork"))
+                if (property.NameEquals("isolatedNetwork"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isolatedNetwork = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("scaleSettings"))
+                if (property.NameEquals("scaleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value);
+                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userAccountCredentials"))
+                if (property.NameEquals("userAccountCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         userAccountCredentials = null;
                         continue;
                     }
-                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value);
+                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         subnet = null;
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value);
+                    subnet = ResourceId.DeserializeResourceId(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("remoteLoginPortPublicAccess"))
+                if (property.NameEquals("remoteLoginPortPublicAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     remoteLoginPortPublicAccess = new MachineLearningRemoteLoginPortPublicAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allocationState"))
+                if (property.NameEquals("allocationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationState = new MachineLearningAllocationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allocationStateTransitionTime"))
+                if (property.NameEquals("allocationStateTransitionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationStateTransitionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -250,12 +362,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("currentNodeCount"))
+                if (property.NameEquals("currentNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -265,7 +377,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     currentNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetNodeCount"))
+                if (property.NameEquals("targetNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -275,17 +387,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeStateCounts"))
+                if (property.NameEquals("nodeStateCounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         nodeStateCounts = null;
                         continue;
                     }
-                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value);
+                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enableNodePublicIp"))
+                if (property.NameEquals("enableNodePublicIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -295,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableNodePublicIP = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -305,8 +417,359 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     propertyBag = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AmlComputeProperties(
+                osType,
+                vmSize,
+                vmPriority,
+                virtualMachineImage,
+                isolatedNetwork,
+                scaleSettings,
+                userAccountCredentials,
+                subnet,
+                remoteLoginPortPublicAccess,
+                allocationState,
+                allocationStateTransitionTime,
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                currentNodeCount,
+                targetNodeCount,
+                nodeStateCounts,
+                enableNodePublicIP,
+                propertyBag,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    builder.Append("  osType: ");
+                    builder.AppendLine($"'{OSType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmSize))
+                {
+                    builder.Append("  vmSize: ");
+                    if (VmSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VmSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VmSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmPriority), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmPriority: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmPriority))
+                {
+                    builder.Append("  vmPriority: ");
+                    builder.AppendLine($"'{VmPriority.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VirtualMachineImageId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  virtualMachineImage: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualMachineImage))
+                {
+                    builder.Append("  virtualMachineImage: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, VirtualMachineImage, options, 2, false, "  virtualMachineImage: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsolatedNetwork), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isolatedNetwork: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsolatedNetwork))
+                {
+                    builder.Append("  isolatedNetwork: ");
+                    var boolValue = IsolatedNetwork.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scaleSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleSettings))
+                {
+                    builder.Append("  scaleSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ScaleSettings, options, 2, false, "  scaleSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAccountCredentials), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userAccountCredentials: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserAccountCredentials))
+                {
+                    builder.Append("  userAccountCredentials: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, UserAccountCredentials, options, 2, false, "  userAccountCredentials: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SubnetId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subnet: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Subnet))
+                {
+                    builder.Append("  subnet: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Subnet, options, 2, false, "  subnet: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteLoginPortPublicAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remoteLoginPortPublicAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteLoginPortPublicAccess))
+                {
+                    builder.Append("  remoteLoginPortPublicAccess: ");
+                    builder.AppendLine($"'{RemoteLoginPortPublicAccess.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocationState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllocationState))
+                {
+                    builder.Append("  allocationState: ");
+                    builder.AppendLine($"'{AllocationState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationStateTransitionOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocationStateTransitionTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllocationStateTransitionOn))
+                {
+                    builder.Append("  allocationStateTransitionTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(AllocationStateTransitionOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Errors))
+                {
+                    if (Errors.Any())
+                    {
+                        builder.Append("  errors: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Errors)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  errors: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentNodeCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentNodeCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentNodeCount))
+                {
+                    builder.Append("  currentNodeCount: ");
+                    builder.AppendLine($"{CurrentNodeCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetNodeCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetNodeCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetNodeCount))
+                {
+                    builder.Append("  targetNodeCount: ");
+                    builder.AppendLine($"{TargetNodeCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeStateCounts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeStateCounts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeStateCounts))
+                {
+                    builder.Append("  nodeStateCounts: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NodeStateCounts, options, 2, false, "  nodeStateCounts: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableNodePublicIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableNodePublicIp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableNodePublicIP))
+                {
+                    builder.Append("  enableNodePublicIp: ");
+                    var boolValue = EnableNodePublicIP.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyBag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  propertyBag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PropertyBag))
+                {
+                    builder.Append("  propertyBag: ");
+                    builder.AppendLine($"'{PropertyBag.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AmlComputeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AmlComputeProperties IPersistableModel<AmlComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmlComputeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmlComputeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

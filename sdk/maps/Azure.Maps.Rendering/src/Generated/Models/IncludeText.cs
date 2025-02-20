@@ -27,13 +27,13 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Include all textual data in response. </summary>
         public static IncludeText Yes { get; } = new IncludeText(YesValue);
-        /// <summary> Exclude textual data from response. Only images and country names will be in response. </summary>
+        /// <summary> Exclude textual data from response. Only images and country/region names will be in response. </summary>
         public static IncludeText No { get; } = new IncludeText(NoValue);
         /// <summary> Determines if two <see cref="IncludeText"/> values are the same. </summary>
         public static bool operator ==(IncludeText left, IncludeText right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IncludeText"/> values are not the same. </summary>
         public static bool operator !=(IncludeText left, IncludeText right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IncludeText"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IncludeText"/>. </summary>
         public static implicit operator IncludeText(string value) => new IncludeText(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Maps.Rendering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

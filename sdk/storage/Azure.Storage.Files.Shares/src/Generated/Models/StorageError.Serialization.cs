@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -16,25 +15,48 @@ namespace Azure.Storage.Files.Shares.Models
         internal static StorageError DeserializeStorageError(XElement element)
         {
             string message = default;
+            string authenticationErrorDetail = default;
             if (element.Element("Message") is XElement messageElement)
             {
                 message = (string)messageElement;
             }
-            return new StorageError(message);
+            if (element.Element("AuthenticationErrorDetail") is XElement authenticationErrorDetailElement)
+            {
+                authenticationErrorDetail = (string)authenticationErrorDetailElement;
+            }
+            return new StorageError(message, authenticationErrorDetail);
         }
 
         internal static StorageError DeserializeStorageError(JsonElement element)
         {
-            Optional<string> message = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string message = default;
+            string authenticationErrorDetail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Message"))
+                if (property.NameEquals("Message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("AuthenticationErrorDetail"u8))
+                {
+                    authenticationErrorDetail = property.Value.GetString();
+                    continue;
+                }
             }
-            return new StorageError(message.Value);
+            return new StorageError(message, authenticationErrorDetail);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageError(document.RootElement);
         }
     }
 }

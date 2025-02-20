@@ -7,8 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -16,45 +14,56 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadPropertiesInternal DeserializeChatThreadPropertiesInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string topic = default;
             DateTimeOffset createdOn = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> deletedOn = default;
+            DateTimeOffset? deletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topic"))
+                if (property.NameEquals("topic"u8))
                 {
                     topic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
+                if (property.NameEquals("createdOn"u8))
                 {
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdByCommunicationIdentifier"))
+                if (property.NameEquals("createdByCommunicationIdentifier"u8))
                 {
                     createdByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deletedOn"))
+                if (property.NameEquals("deletedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn));
+            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, deletedOn);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatThreadPropertiesInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatThreadPropertiesInternal(document.RootElement);
         }
     }
 }

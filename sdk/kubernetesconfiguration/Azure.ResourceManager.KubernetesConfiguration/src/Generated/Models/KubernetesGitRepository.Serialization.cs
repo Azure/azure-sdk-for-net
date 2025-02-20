@@ -6,21 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepository : IUtf8JsonSerializable
+    public partial class KubernetesGitRepository : IUtf8JsonSerializable, IJsonModel<KubernetesGitRepository>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesGitRepository>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KubernetesGitRepository>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
-                    writer.WritePropertyName("url");
+                    writer.WritePropertyName("url"u8);
                     writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
@@ -32,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -44,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -56,8 +75,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (RepositoryRef != null)
                 {
-                    writer.WritePropertyName("repositoryRef");
-                    writer.WriteObjectValue(RepositoryRef);
+                    writer.WritePropertyName("repositoryRef"u8);
+                    writer.WriteObjectValue(RepositoryRef, options);
                 }
                 else
                 {
@@ -68,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SshKnownHosts != null)
                 {
-                    writer.WritePropertyName("sshKnownHosts");
+                    writer.WritePropertyName("sshKnownHosts"u8);
                     writer.WriteStringValue(SshKnownHosts);
                 }
                 else
@@ -80,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (HttpsUser != null)
                 {
-                    writer.WritePropertyName("httpsUser");
+                    writer.WritePropertyName("httpsUser"u8);
                     writer.WriteStringValue(HttpsUser);
                 }
                 else
@@ -92,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (HttpsCACert != null)
                 {
-                    writer.WritePropertyName("httpsCACert");
+                    writer.WritePropertyName("httpsCACert"u8);
                     writer.WriteStringValue(HttpsCACert);
                 }
                 else
@@ -104,7 +123,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (LocalAuthRef != null)
                 {
-                    writer.WritePropertyName("localAuthRef");
+                    writer.WritePropertyName("localAuthRef"u8);
                     writer.WriteStringValue(LocalAuthRef);
                 }
                 else
@@ -112,22 +131,56 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element)
+        KubernetesGitRepository IJsonModel<KubernetesGitRepository>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<Uri> url = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesGitRepositoryRef> repositoryRef = default;
-            Optional<string> sshKnownHosts = default;
-            Optional<string> httpsUser = default;
-            Optional<string> httpsCACert = default;
-            Optional<string> localAuthRef = default;
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesGitRepository(document.RootElement, options);
+        }
+
+        internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri url = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            KubernetesGitRepositoryRef repositoryRef = default;
+            string sshKnownHosts = default;
+            string httpsUser = default;
+            string httpsCACert = default;
+            string localAuthRef = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +190,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeoutInSeconds"))
+                if (property.NameEquals("timeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +200,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     timeoutInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("syncIntervalInSeconds"))
+                if (property.NameEquals("syncIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,17 +210,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     syncIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("repositoryRef"))
+                if (property.NameEquals("repositoryRef"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         repositoryRef = null;
                         continue;
                     }
-                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value);
+                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sshKnownHosts"))
+                if (property.NameEquals("sshKnownHosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +230,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     sshKnownHosts = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsUser"))
+                if (property.NameEquals("httpsUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,7 +240,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     httpsUser = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsCACert"))
+                if (property.NameEquals("httpsCACert"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,7 +250,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     httpsCACert = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localAuthRef"))
+                if (property.NameEquals("localAuthRef"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,8 +260,222 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     localAuthRef = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesGitRepository(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesGitRepository(
+                url,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  url: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeoutInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutInSeconds))
+                {
+                    builder.Append("  timeoutInSeconds: ");
+                    builder.AppendLine($"'{TimeoutInSeconds.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncIntervalInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  syncIntervalInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SyncIntervalInSeconds))
+                {
+                    builder.Append("  syncIntervalInSeconds: ");
+                    builder.AppendLine($"'{SyncIntervalInSeconds.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryRef), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  repositoryRef: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryRef))
+                {
+                    builder.Append("  repositoryRef: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RepositoryRef, options, 2, false, "  repositoryRef: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshKnownHosts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sshKnownHosts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SshKnownHosts))
+                {
+                    builder.Append("  sshKnownHosts: ");
+                    if (SshKnownHosts.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SshKnownHosts}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SshKnownHosts}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsUser), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpsUser: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpsUser))
+                {
+                    builder.Append("  httpsUser: ");
+                    if (HttpsUser.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HttpsUser}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HttpsUser}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsCACert), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpsCACert: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpsCACert))
+                {
+                    builder.Append("  httpsCACert: ");
+                    if (HttpsCACert.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HttpsCACert}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HttpsCACert}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalAuthRef), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  localAuthRef: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalAuthRef))
+                {
+                    builder.Append("  localAuthRef: ");
+                    if (LocalAuthRef.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocalAuthRef}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocalAuthRef}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<KubernetesGitRepository>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesGitRepository IPersistableModel<KubernetesGitRepository>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesGitRepository(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesGitRepository>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
