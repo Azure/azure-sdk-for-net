@@ -163,17 +163,17 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.TestFileInfo"/>. </summary>
         /// <param name="fileName"> Name of the file. </param>
-        /// <param name="url"> File URL. </param>
+        /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
         /// <param name="expireDateTime"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <returns> A new <see cref="Models.TestFileInfo"/> instance for mocking. </returns>
-        public static TestFileInfo TestFileInfo(string fileName = null, Uri url = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
+        public static TestFileInfo TestFileInfo(string fileName = null, Uri uri = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
         {
             return new TestFileInfo(
                 fileName,
-                url,
+                uri,
                 fileType,
                 expireDateTime,
                 validationStatus,
@@ -494,17 +494,17 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.TestRunFileInfo"/>. </summary>
         /// <param name="fileName"> Name of the file. </param>
-        /// <param name="url"> File URL. </param>
+        /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
         /// <param name="expireDateTime"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <returns> A new <see cref="Models.TestRunFileInfo"/> instance for mocking. </returns>
-        public static TestRunFileInfo TestRunFileInfo(string fileName = null, Uri url = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
+        public static TestRunFileInfo TestRunFileInfo(string fileName = null, Uri uri = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
         {
             return new TestRunFileInfo(
                 fileName,
-                url,
+                uri,
                 fileType,
                 expireDateTime,
                 validationStatus,
@@ -524,12 +524,12 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArtifactsContainerInfo"/>. </summary>
-        /// <param name="url"> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </param>
+        /// <param name="uri"> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </param>
         /// <param name="expireDateTime"> Expiry time of the container (RFC 3339 literal format). </param>
         /// <returns> A new <see cref="Models.ArtifactsContainerInfo"/> instance for mocking. </returns>
-        public static ArtifactsContainerInfo ArtifactsContainerInfo(Uri url = null, DateTimeOffset? expireDateTime = null)
+        public static ArtifactsContainerInfo ArtifactsContainerInfo(Uri uri = null, DateTimeOffset? expireDateTime = null)
         {
-            return new ArtifactsContainerInfo(url, expireDateTime, serializedAdditionalRawData: null);
+            return new ArtifactsContainerInfo(uri, expireDateTime, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TestRunAppComponents"/>. </summary>

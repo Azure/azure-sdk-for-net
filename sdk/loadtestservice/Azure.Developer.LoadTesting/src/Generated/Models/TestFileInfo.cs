@@ -57,16 +57,16 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="TestFileInfo"/>. </summary>
         /// <param name="fileName"> Name of the file. </param>
-        /// <param name="url"> File URL. </param>
+        /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
         /// <param name="expireDateTime"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestFileInfo(string fileName, Uri url, FileType? fileType, DateTimeOffset? expireDateTime, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestFileInfo(string fileName, Uri uri, FileType? fileType, DateTimeOffset? expireDateTime, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
-            Url = url;
+            Uri = uri;
             FileType = fileType;
             ExpireDateTime = expireDateTime;
             ValidationStatus = validationStatus;
@@ -82,7 +82,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Name of the file. </summary>
         public string FileName { get; }
         /// <summary> File URL. </summary>
-        public Uri Url { get; }
+        public Uri Uri { get; }
         /// <summary> File type. </summary>
         public FileType? FileType { get; }
         /// <summary> Expiry time of the file (RFC 3339 literal format). </summary>

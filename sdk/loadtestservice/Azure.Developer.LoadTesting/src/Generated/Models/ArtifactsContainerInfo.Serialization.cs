@@ -34,10 +34,10 @@ namespace Azure.Developer.LoadTesting.Models
                 throw new FormatException($"The model {nameof(ArtifactsContainerInfo)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExpireDateTime))
             {

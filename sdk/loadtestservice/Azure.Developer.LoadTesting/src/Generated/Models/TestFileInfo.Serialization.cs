@@ -36,10 +36,10 @@ namespace Azure.Developer.LoadTesting.Models
 
             writer.WritePropertyName("fileName"u8);
             writer.WriteStringValue(FileName);
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(FileType))
             {
