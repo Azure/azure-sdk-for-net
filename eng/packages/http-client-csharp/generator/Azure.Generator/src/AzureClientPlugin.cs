@@ -4,7 +4,7 @@
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ScmCodeModelPlugin;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;

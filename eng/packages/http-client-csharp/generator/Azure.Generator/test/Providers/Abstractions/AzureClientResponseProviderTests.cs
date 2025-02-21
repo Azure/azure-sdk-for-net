@@ -6,7 +6,7 @@ using Azure.Generator.Tests.TestHelpers;
 using System.Linq;
 using NUnit.Framework;
 using Azure.Generator.Providers;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ScmCodeModelPlugin.Providers;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {

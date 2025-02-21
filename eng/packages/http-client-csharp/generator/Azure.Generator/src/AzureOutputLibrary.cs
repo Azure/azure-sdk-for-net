@@ -4,7 +4,7 @@
 using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
-using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ScmCodeModelPlugin;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 
