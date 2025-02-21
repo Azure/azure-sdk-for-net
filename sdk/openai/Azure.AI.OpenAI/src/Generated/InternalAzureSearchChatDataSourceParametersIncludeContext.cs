@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI.Chat
         public static bool operator ==(InternalAzureSearchChatDataSourceParametersIncludeContext left, InternalAzureSearchChatDataSourceParametersIncludeContext right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/> values are not the same. </summary>
         public static bool operator !=(InternalAzureSearchChatDataSourceParametersIncludeContext left, InternalAzureSearchChatDataSourceParametersIncludeContext right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/>. </summary>
         public static implicit operator InternalAzureSearchChatDataSourceParametersIncludeContext(string value) => new InternalAzureSearchChatDataSourceParametersIncludeContext(value);
 
         /// <inheritdoc />

@@ -1,8 +1,11 @@
 # Release History
 
-## 12.0.0-beta.4 (Unreleased)
+## 12.0.1 (Unreleased)
 
-### Features Added
+### Bugs Fixed
+- Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
+
+## 12.0.0 (2025-02-11)
 
 ### Breaking Changes
 - Changed `ShareFileStorangeResourceOptions.FilePermissions` from `DataTransferProperty` to `bool?`
@@ -31,8 +34,7 @@
   - Changed `FromClient` methods to `static` methods.
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed File Attributes with ReadOnly does not transfer / copy correctly bug #2167
 
 ## 12.0.0-beta.3 (2024-10-14)
 

@@ -25,6 +25,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long MaxSupportedChunkSize => long.MaxValue;
 
+        protected internal override int MaxSupportedChunkCount => int.MaxValue;
+
         protected internal override long? Length => Buffer.Length;
 
         public MemoryStorageResourceItem(Uri uri = default)

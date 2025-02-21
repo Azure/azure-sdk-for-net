@@ -1,10 +1,8 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -12,11 +10,18 @@
 
 ### Other Changes
 
+## 1.4.0-beta.2 (2025-02-14)
+
+### Features Added
+
+- Added Azure Monitor Action Group APIs (version `2024-10-01-preview`).
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ## 1.4.0-beta.1 (2024-09-03)
 
 ### Features Added
 
-- Added azure monitor pipeline group APIs (version `2023-10-01-preview`)
+- Added Azure Monitor pipeline group APIs (version `2023-10-01-preview`).
 
 ## 1.3.1 (2024-04-29)
 

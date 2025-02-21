@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The AssociationType. </summary>
+    /// <summary> Association Type Enum. </summary>
     public readonly partial struct AssociationType : IEquatable<AssociationType>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         private const string SubnetsValue = "subnets";
 
-        /// <summary> subnets. </summary>
+        /// <summary> Association of Type Subnet. </summary>
         public static AssociationType Subnets { get; } = new AssociationType(SubnetsValue);
         /// <summary> Determines if two <see cref="AssociationType"/> values are the same. </summary>
         public static bool operator ==(AssociationType left, AssociationType right) => left.Equals(right);

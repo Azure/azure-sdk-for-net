@@ -9,6 +9,31 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 
+$DependencyCalculationPackages = @(
+  "Azure.Core",
+  "Azure.ResourceManager"
+)
+
+function processTestProject($projPath) {
+  $cleanPath = $projPath -replace "^\$\(RepoRoot\)", ""
+
+  # Split the path into segments
+  $pathSegments = $cleanPath -split "[\\/]"
+
+  # Find the index of the 'tests' directory
+  $testsIndex = $pathSegments.IndexOf("tests")
+
+  if ($testsIndex -gt 0) {
+      # Reconstruct the path up to the directory just above 'tests'
+      $parentDirectory = ($pathSegments[0..($testsIndex - 1)] -join [System.IO.Path]::DirectorySeparatorChar)
+      return $parentDirectory
+  } else {
+      Write-Error "Unable to retrieve a package directory for this this test project: $projPath"
+      # If 'tests' is not found, return the original path (optional behavior)
+      $_
+  }
+}
+
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -18,6 +43,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
+
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
@@ -42,11 +68,178 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
+    $pkgProp.IncludedForValidation = $false
+    $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
+
+    if ($pkgProp.Name -in $DependencyCalculationPackages -and $env:DISCOVER_DEPENDENT_PACKAGES) {
+      Write-Host "Calculating dependencies for $($pkgProp.Name)"
+      $outputFilePath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylist.txt"
+      $buildOutputPath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylistoutput.txt"
+
+      if (!(Test-Path $outputFilePath)) {
+        try {
+          $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$($pkgProp.Name)`" /p:IncludeSrc=false " +
+          "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+          " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+
+          Invoke-LoggedCommand $command | Out-Null
+        }
+        catch {
+            Write-Host "Failed calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
+            Write-Host "Dumping erroring build output."
+            Write-Host (Get-Content -Raw $buildOutputPath)
+            continue
+        }
+      }
+
+      $pkgRelPath = $pkgProp.DirectoryPath.Replace($RepoRoot, "").TrimStart("\/")
+
+      if (Test-Path $outputFilePath) {
+        $dependentProjects = Get-Content $outputFilePath
+        $testPackages = @{}
+
+        foreach ($projectLine in $dependentProjects) {
+          $testPackage = processTestProject($projectLine)
+          if ($testPackage -and $testPackage -ne $pkgRelPath) {
+            if ($testPackages[$testPackage]) {
+              $testPackages[$testPackage] += 1
+            }
+            else {
+              $testPackages[$testPackage] = 1
+            }
+          }
+        }
+
+        $pkgProp.AdditionalValidationPackages = $testPackages.Keys
+
+        Write-Host "Cleaning up $outputFilePath."
+      }
+    }
 
     $allPackageProps += $pkgProp
   }
 
   return $allPackageProps
+}
+
+<#
+.DESCRIPTION
+This function governs the logic for determining which packages should be included for validation in net - pullrequest
+when the PR contains changes to files outside of package directories.
+
+.PARAMETER LocatedPackages
+The set of packages that have been directly changed in the PR.
+
+.PARAMETER diffObj
+The diff object that contains the set of changed and deleted files in the PR.
+
+.PARAMETER AllPkgProps
+The entire set of package properties for the repository.
+
+#>
+function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
+  param(
+    [Parameter(Mandatory=$true)]
+    $LocatedPackages,
+    [Parameter(Mandatory=$true)]
+    $diffObj,
+    [Parameter(Mandatory=$true)]
+    $AllPkgProps
+  )
+  $additionalValidationPackages = @()
+  $uniqueResultSet = @()
+  function isOther($fileName) {
+    $startsWithPrefixes = @(".config", ".devcontainer", ".github", ".vscode", "common", "doc", "eng", "samples")
+
+    $startsWith = $false
+    foreach ($prefix in $startsWithPrefixes) {
+      if ($fileName.StartsWith($prefix)) {
+        $startsWith = $true
+      }
+    }
+
+    return $startsWith
+  }
+
+  # ensure we observe deleted files too
+  $targetedFiles = @($diffObj.ChangedFiles + $diffObj.DeletedFiles)
+
+  # The targetedFiles needs to filter out anything in the ExcludePaths
+  # otherwise it'll end up processing things below that it shouldn't be.
+  foreach ($excludePath in $diffObj.ExcludePaths) {
+    $targetedFiles = $targetedFiles | Where-Object { -not $_.StartsWith($excludePath.TrimEnd("/") + "/") }
+  }
+
+  # this section will identify
+  #  - any service-level changes
+  #  - any shared package changes that should be treated as a service-level change. EG changes to Azure.Storage.Shared.
+  # and add all packages within that service to the validation set. these will be treated as "directly" changed packages.
+  $changedServices = @()
+  if ($targetedFiles) {
+    foreach($file in $targetedFiles) {
+      $pathComponents = $file -split "/"
+      # handle changes only in sdk/<service>/<file>.<extension>
+      if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
+        $changedServices += $pathComponents[1]
+      }
+
+      # handle any changes under sdk/<file>.<extension> or any files
+      # in the repository root
+      if (($pathComponents.Length -eq 2 -and $pathComponents[0] -eq "sdk") -or
+          ($pathComponents.Length -eq 1)) {
+        $changedServices += "template"
+      }
+
+      # changes to a Azure.*.Shared within a service directory should include all packages within that service directory
+      if ($file.Replace('\', '/') -match ".*sdk/.*/.*\.Shared/.*") {
+        $changedServices += $pathComponents[1]
+      }
+    }
+    # dedupe the changedServices list before processing
+    $changedServices = $changedServices | Get-Unique
+    foreach ($changedService in $changedServices) {
+      $additionalPackages = $AllPkgProps | Where-Object { $_.ServiceDirectory -eq $changedService }
+
+      foreach ($pkg in $additionalPackages) {
+        if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
+          # notice the lack of setting IncludedForValidation to true. This is because these "changed services"
+          # are specifically where a file within the service, but not an individual package within that service has changed.
+          # we want this package to be fully validated
+          $uniqueResultSet += $pkg
+        }
+      }
+    }
+  }
+
+  # handle any changes to files that are not within a package directory
+  $othersChanged = @()
+  if ($targetedFiles) {
+    $othersChanged = $targetedFiles | Where-Object { isOther($_) }
+  }
+
+  if ($othersChanged) {
+    $additionalPackages = @(
+      "Azure.Template"
+    ) | ForEach-Object { $me=$_; $AllPkgProps | Where-Object { $_.Name -eq $me } | Select-Object -First 1 }
+
+    $additionalValidationPackages += $additionalPackages
+  }
+
+  # walk the packages added purely for validation, if they haven't been added yet, add them
+  # these packages aren't considered "directly" changed, so we will set IncludedForValidation to true for them
+  foreach ($pkg in $additionalValidationPackages) {
+    if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
+      $pkg.IncludedForValidation = $true
+      $uniqueResultSet += $pkg
+    }
+  }
+
+  Write-Host "Returning additional packages for validation: $($uniqueResultSet.Count)"
+  foreach ($pkg in $uniqueResultSet) {
+    Write-Host "  - $($pkg.Name)"
+  }
+
+  return $uniqueResultSet
 }
 
 # Returns the nuget publish status of a package id and version.
