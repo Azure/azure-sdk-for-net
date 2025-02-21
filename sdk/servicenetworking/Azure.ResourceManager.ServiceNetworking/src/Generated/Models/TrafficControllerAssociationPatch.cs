@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The response of a Association list operation. </summary>
-    internal partial class AssociationListResult
+    /// <summary> The type used for update operations of the Association. </summary>
+    public partial class TrafficControllerAssociationPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +47,35 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssociationListResult"/>. </summary>
-        /// <param name="value"> The Association items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AssociationListResult(IEnumerable<TrafficControllerAssociationData> value)
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationPatch"/>. </summary>
+        public TrafficControllerAssociationPatch()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssociationListResult"/>. </summary>
-        /// <param name="value"> The Association items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="associationType"> Association Type. </param>
+        /// <param name="subnet"> Association Subnet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssociationListResult(IReadOnlyList<TrafficControllerAssociationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrafficControllerAssociationPatch(IDictionary<string, string> tags, TrafficControllerAssociationType? associationType, SubResource subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Tags = tags;
+            AssociationType = associationType;
+            Subnet = subnet;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssociationListResult"/> for deserialization. </summary>
-        internal AssociationListResult()
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> Association Type. </summary>
+        public TrafficControllerAssociationType? AssociationType { get; set; }
+        /// <summary> Association Subnet. </summary>
+        internal SubResource Subnet { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier SubnetId
         {
+            get => Subnet is null ? default : Subnet.Id;
         }
-
-        /// <summary> The Association items on this page. </summary>
-        public IReadOnlyList<TrafficControllerAssociationData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
     }
 }

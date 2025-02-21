@@ -9,19 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ServiceNetworking.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
-    public partial class Sample_SecurityPolicyCollection
+    public partial class Sample_TrafficControllerAssociationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_PutSecurityPolicy()
+        public async Task CreateOrUpdate_PutAssociation()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyPut.json
-            // this example is just showing the usage of "SecurityPolicy_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationPut.json
+            // this example is just showing the usage of "Association_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,34 +35,28 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this SecurityPolicyResource
-            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
+            // get the collection of this TrafficControllerAssociationResource
+            TrafficControllerAssociationCollection collection = trafficController.GetTrafficControllerAssociations();
 
             // invoke the operation
-            string securityPolicyName = "sp1";
-            SecurityPolicyData data = new SecurityPolicyData(new AzureLocation("NorthCentralUS"))
-            {
-                Properties = new SecurityPolicyProperties
-                {
-                    WafPolicyId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Networking/applicationGatewayWebApplicationFirewallPolicies/wp-0"),
-                },
-            };
-            ArmOperation<SecurityPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, data);
-            SecurityPolicyResource result = lro.Value;
+            string associationName = "as1";
+            TrafficControllerAssociationData data = new TrafficControllerAssociationData(new AzureLocation("NorthCentralUS"));
+            ArmOperation<TrafficControllerAssociationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, associationName, data);
+            TrafficControllerAssociationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SecurityPolicyData resourceData = result.Data;
+            TrafficControllerAssociationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetSecurityPolicy()
+        public async Task Get_GetAssociation()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyGet.json
-            // this example is just showing the usage of "SecurityPolicy_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,26 +71,26 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this SecurityPolicyResource
-            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
+            // get the collection of this TrafficControllerAssociationResource
+            TrafficControllerAssociationCollection collection = trafficController.GetTrafficControllerAssociations();
 
             // invoke the operation
-            string securityPolicyName = "sp1";
-            SecurityPolicyResource result = await collection.GetAsync(securityPolicyName);
+            string associationName = "as1";
+            TrafficControllerAssociationResource result = await collection.GetAsync(associationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SecurityPolicyData resourceData = result.Data;
+            TrafficControllerAssociationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GetSecurityPolicies()
+        public async Task GetAll_GetAssociations()
         {
-            // Generated from example definition: 2025-01-01/SecurityPoliciesGetList.json
-            // this example is just showing the usage of "SecurityPolicy_ListByTrafficController" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationsGet.json
+            // this example is just showing the usage of "Association_ListByTrafficController" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -112,15 +105,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this SecurityPolicyResource
-            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
+            // get the collection of this TrafficControllerAssociationResource
+            TrafficControllerAssociationCollection collection = trafficController.GetTrafficControllerAssociations();
 
             // invoke the operation and iterate over the result
-            await foreach (SecurityPolicyResource item in collection.GetAllAsync())
+            await foreach (TrafficControllerAssociationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SecurityPolicyData resourceData = item.Data;
+                TrafficControllerAssociationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -130,10 +123,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetSecurityPolicy()
+        public async Task Exists_GetAssociation()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyGet.json
-            // this example is just showing the usage of "SecurityPolicy_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -148,22 +141,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this SecurityPolicyResource
-            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
+            // get the collection of this TrafficControllerAssociationResource
+            TrafficControllerAssociationCollection collection = trafficController.GetTrafficControllerAssociations();
 
             // invoke the operation
-            string securityPolicyName = "sp1";
-            bool result = await collection.ExistsAsync(securityPolicyName);
+            string associationName = "as1";
+            bool result = await collection.ExistsAsync(associationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetSecurityPolicy()
+        public async Task GetIfExists_GetAssociation()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyGet.json
-            // this example is just showing the usage of "SecurityPolicy_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -178,13 +171,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this SecurityPolicyResource
-            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
+            // get the collection of this TrafficControllerAssociationResource
+            TrafficControllerAssociationCollection collection = trafficController.GetTrafficControllerAssociations();
 
             // invoke the operation
-            string securityPolicyName = "sp1";
-            NullableResponse<SecurityPolicyResource> response = await collection.GetIfExistsAsync(securityPolicyName);
-            SecurityPolicyResource result = response.HasValue ? response.Value : null;
+            string associationName = "as1";
+            NullableResponse<TrafficControllerAssociationResource> response = await collection.GetIfExistsAsync(associationName);
+            TrafficControllerAssociationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -194,7 +187,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SecurityPolicyData resourceData = result.Data;
+                TrafficControllerAssociationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

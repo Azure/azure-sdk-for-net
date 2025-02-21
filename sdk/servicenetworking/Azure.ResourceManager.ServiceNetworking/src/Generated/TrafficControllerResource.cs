@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.ServiceNetworking
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AssociationResources in the TrafficController. </summary>
-        /// <returns> An object representing collection of AssociationResources and their operations over a AssociationResource. </returns>
-        public virtual AssociationCollection GetAssociations()
+        /// <summary> Gets a collection of TrafficControllerAssociationResources in the TrafficController. </summary>
+        /// <returns> An object representing collection of TrafficControllerAssociationResources and their operations over a TrafficControllerAssociationResource. </returns>
+        public virtual TrafficControllerAssociationCollection GetTrafficControllerAssociations()
         {
-            return GetCachedClient(client => new AssociationCollection(client, Id));
+            return GetCachedClient(client => new TrafficControllerAssociationCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssociationResource"/></description>
+        /// <description><see cref="TrafficControllerAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AssociationResource>> GetAssociationAsync(string associationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficControllerAssociationResource>> GetTrafficControllerAssociationAsync(string associationName, CancellationToken cancellationToken = default)
         {
-            return await GetAssociations().GetAsync(associationName, cancellationToken).ConfigureAwait(false);
+            return await GetTrafficControllerAssociations().GetAsync(associationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssociationResource"/></description>
+        /// <description><see cref="TrafficControllerAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssociationResource> GetAssociation(string associationName, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficControllerAssociationResource> GetTrafficControllerAssociation(string associationName, CancellationToken cancellationToken = default)
         {
-            return GetAssociations().Get(associationName, cancellationToken);
+            return GetTrafficControllerAssociations().Get(associationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FrontendResources in the TrafficController. </summary>

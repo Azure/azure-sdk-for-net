@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.TrafficControllerAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="associationType"> Association Type. </param>
         /// <param name="subnetId"> Association Subnet. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
-        /// <returns> A new <see cref="ServiceNetworking.AssociationData"/> instance for mocking. </returns>
-        public static AssociationData AssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AssociationType? associationType = null, ResourceIdentifier subnetId = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ServiceNetworking.TrafficControllerAssociationData"/> instance for mocking. </returns>
+        public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, TrafficControllerAssociationType? associationType = null, ResourceIdentifier subnetId = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AssociationData(
+            return new TrafficControllerAssociationData(
                 id,
                 name,
                 resourceType,

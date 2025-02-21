@@ -15,10 +15,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing the Association data model.
+    /// A class representing the TrafficControllerAssociation data model.
     /// Association Subresource of Traffic Controller
     /// </summary>
-    public partial class AssociationData : TrackedResourceData
+    public partial class TrafficControllerAssociationData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssociationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public AssociationData(AzureLocation location) : base(location)
+        public TrafficControllerAssociationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssociationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="subnet"> Association Subnet. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssociationType? associationType, WritableSubResource subnet, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType, WritableSubResource subnet, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AssociationType = associationType;
             Subnet = subnet;
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssociationData"/> for deserialization. </summary>
-        internal AssociationData()
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationData"/> for deserialization. </summary>
+        internal TrafficControllerAssociationData()
         {
         }
 
         /// <summary> Association Type. </summary>
-        public AssociationType? AssociationType { get; set; }
+        public TrafficControllerAssociationType? AssociationType { get; set; }
         /// <summary> Association Subnet. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>

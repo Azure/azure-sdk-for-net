@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
-    public partial class Sample_AssociationResource
+    public partial class Sample_TrafficControllerAssociationResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssociationResource created on azure
-            // for more information of creating AssociationResource, please refer to the document of AssociationResource
+            // this example assumes you already have this TrafficControllerAssociationResource created on azure
+            // for more information of creating TrafficControllerAssociationResource, please refer to the document of TrafficControllerAssociationResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string associationName = "as1";
-            ResourceIdentifier associationResourceId = AssociationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, associationName);
-            AssociationResource association = client.GetAssociationResource(associationResourceId);
+            ResourceIdentifier trafficControllerAssociationResourceId = TrafficControllerAssociationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, associationName);
+            TrafficControllerAssociationResource trafficControllerAssociation = client.GetTrafficControllerAssociationResource(trafficControllerAssociationResourceId);
 
             // invoke the operation
-            AssociationResource result = await association.GetAsync();
+            TrafficControllerAssociationResource result = await trafficControllerAssociation.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssociationData resourceData = result.Data;
+            TrafficControllerAssociationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssociationResource created on azure
-            // for more information of creating AssociationResource, please refer to the document of AssociationResource
+            // this example assumes you already have this TrafficControllerAssociationResource created on azure
+            // for more information of creating TrafficControllerAssociationResource, please refer to the document of TrafficControllerAssociationResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string associationName = "as1";
-            ResourceIdentifier associationResourceId = AssociationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, associationName);
-            AssociationResource association = client.GetAssociationResource(associationResourceId);
+            ResourceIdentifier trafficControllerAssociationResourceId = TrafficControllerAssociationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, associationName);
+            TrafficControllerAssociationResource trafficControllerAssociation = client.GetTrafficControllerAssociationResource(trafficControllerAssociationResourceId);
 
             // invoke the operation
-            await association.DeleteAsync(WaitUntil.Completed);
+            await trafficControllerAssociation.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssociationResource created on azure
-            // for more information of creating AssociationResource, please refer to the document of AssociationResource
+            // this example assumes you already have this TrafficControllerAssociationResource created on azure
+            // for more information of creating TrafficControllerAssociationResource, please refer to the document of TrafficControllerAssociationResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string associationName = "as1";
-            ResourceIdentifier associationResourceId = AssociationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, associationName);
-            AssociationResource association = client.GetAssociationResource(associationResourceId);
+            ResourceIdentifier trafficControllerAssociationResourceId = TrafficControllerAssociationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, associationName);
+            TrafficControllerAssociationResource trafficControllerAssociation = client.GetTrafficControllerAssociationResource(trafficControllerAssociationResourceId);
 
             // invoke the operation
-            AssociationPatch patch = new AssociationPatch();
-            AssociationResource result = await association.UpdateAsync(patch);
+            TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
+            TrafficControllerAssociationResource result = await trafficControllerAssociation.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssociationData resourceData = result.Data;
+            TrafficControllerAssociationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
