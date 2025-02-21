@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -194,29 +193,26 @@ namespace Azure.Storage.DataMovement
                 }
                 await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
 
-                long? fileLength = default;
-                StorageResourceItemProperties sourceProperties = default;
-                fileLength = _sourceResource.Length;
-                sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                await _destinationResource.SetPermissionsAsync(
-                    _sourceResource,
-                    sourceProperties,
-                    _cancellationToken).ConfigureAwait(false);
-
-                fileLength = sourceProperties.ResourceLength;
-                if (!fileLength.HasValue)
+                StorageResourceItemProperties sourceProperties =
+                    await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                if (!sourceProperties.ResourceLength.HasValue)
                 {
                     await InvokeFailedArgAsync(Errors.UnableToGetLength()).ConfigureAwait(false);
                     return;
                 }
-                long length = fileLength.Value;
+                long length = sourceProperties.ResourceLength.Value;
+
+                await _destinationResource.SetPermissionsAsync(
+                    _sourceResource,
+                    sourceProperties,
+                    _cancellationToken).ConfigureAwait(false);
 
                 // Perform a single copy operation
                 if (_initialTransferSize >= length)
                 {
                     await QueueChunkToChannelAsync(
                         async () =>
-                        await StartSingleCallCopy(length).ConfigureAwait(false))
+                        await StartSingleCallCopy(length, sourceProperties: sourceProperties).ConfigureAwait(false))
                         .ConfigureAwait(false);
                     return;
                 }
@@ -231,10 +227,10 @@ namespace Azure.Storage.DataMovement
                     sourceProperties,
                     _cancellationToken);
 
-                // If we cannot upload in one shot, initiate the parallel block uploader
+                // If we cannot copy in one shot, queue the rest of the chunks
                 if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                 {
-                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
+                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize, _destinationResource.MaxSupportedChunkCount);
                     if (_destinationResource.TransferType == TransferOrder.Unordered)
                     {
                         await QueueStageBlockRequests(ranges, length, sourceProperties).ConfigureAwait(false);
@@ -261,7 +257,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task StartSingleCallCopy(long completeLength)
+        private async Task StartSingleCallCopy(long completeLength, StorageResourceItemProperties sourceProperties)
         {
             try
             {
@@ -276,6 +272,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
+                await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
                 await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
@@ -297,11 +294,10 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Creates the destination if necessary, and overwrites if necessary.
-        /// Will return false if no further upload of the blob is necessary
+        /// Creates the destination resource and performs the first copy call.
+        /// Returns false if the copy is complete or this operation failed/skipped.
         /// </summary>
-        /// <returns></returns>
-        internal async Task<bool> CreateDestinationResource(long length, long blockSize)
+        private async Task<bool> CreateDestinationResource(long totalLength, long blockSize)
         {
             try
             {
@@ -311,18 +307,12 @@ namespace Azure.Storage.DataMovement
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     range: new HttpRange(0, blockSize),
-                    completeLength: length,
+                    completeLength: totalLength,
                     options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Report first chunk written to progress tracker
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
-
-                if (blockSize == length)
-                {
-                    await CompleteTransferAsync(options.SourceProperties).ConfigureAwait(false);
-                    return false;
-                }
                 return true;
             }
             catch (RequestFailedException exception)
@@ -335,6 +325,8 @@ namespace Azure.Storage.DataMovement
             {
                 await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
+
+            // Do not continue if we need to skip or there was an error.
             return false;
         }
 

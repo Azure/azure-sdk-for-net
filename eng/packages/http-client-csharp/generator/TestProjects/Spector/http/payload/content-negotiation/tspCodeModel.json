@@ -8,6 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "PngImageAsJson",
+   "clientNamespace": "Payload.ContentNegotiation.DifferentBody",
    "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson",
    "usage": "Output,Json",
    "decorators": [],
@@ -30,28 +31,36 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson.content"
+     "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson.content",
+     "serializationOptions": {
+      "$id": "5",
+      "json": {
+       "$id": "6",
+       "name": "content"
+      }
+     }
     }
    ]
   }
  ],
  "Clients": [
   {
-   "$id": "5",
+   "$id": "7",
    "Name": "ContentNegotiationClient",
+   "ClientNamespace": "Payload.ContentNegotiation",
    "Doc": "Test describing optionality of the request body.",
    "Operations": [],
    "Protocol": {
-    "$id": "6"
+    "$id": "8"
    },
    "Parameters": [
     {
-     "$id": "7",
+     "$id": "9",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "8",
+      "$id": "10",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -66,9 +75,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "9",
+      "$id": "11",
       "Type": {
-       "$id": "10",
+       "$id": "12",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -80,24 +89,25 @@
    "Decorators": []
   },
   {
-   "$id": "11",
+   "$id": "13",
    "Name": "SameBody",
+   "ClientNamespace": "Payload.ContentNegotiation.SameBody",
    "Operations": [
     {
-     "$id": "12",
+     "$id": "14",
      "Name": "getAvatarAsPng",
      "ResourceName": "SameBody",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "13",
+       "$id": "15",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "14",
+        "$id": "16",
         "kind": "constant",
         "valueType": {
-         "$id": "15",
+         "$id": "17",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -119,12 +129,12 @@
      ],
      "Responses": [
       {
-       "$id": "16",
+       "$id": "18",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "17",
+        "$id": "19",
         "kind": "bytes",
         "name": "bytes",
         "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -133,14 +143,14 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "18",
+         "$id": "20",
          "Name": "contentType",
          "NameInResponse": "content-type",
          "Type": {
-          "$id": "19",
+          "$id": "21",
           "kind": "constant",
           "valueType": {
-           "$id": "20",
+           "$id": "22",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -168,20 +178,20 @@
      "Decorators": []
     },
     {
-     "$id": "21",
+     "$id": "23",
      "Name": "getAvatarAsJpeg",
      "ResourceName": "SameBody",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "22",
+       "$id": "24",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "23",
+        "$id": "25",
         "kind": "constant",
         "valueType": {
-         "$id": "24",
+         "$id": "26",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -203,12 +213,12 @@
      ],
      "Responses": [
       {
-       "$id": "25",
+       "$id": "27",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "26",
+        "$id": "28",
         "kind": "bytes",
         "name": "bytes",
         "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -217,14 +227,14 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "27",
+         "$id": "29",
          "Name": "contentType",
          "NameInResponse": "content-type",
          "Type": {
-          "$id": "28",
+          "$id": "30",
           "kind": "constant",
           "valueType": {
-           "$id": "29",
+           "$id": "31",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -253,17 +263,17 @@
     }
    ],
    "Protocol": {
-    "$id": "30"
+    "$id": "32"
    },
    "Parent": "ContentNegotiationClient",
    "Parameters": [
     {
-     "$id": "31",
+     "$id": "33",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "32",
+      "$id": "34",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -278,9 +288,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "33",
+      "$id": "35",
       "Type": {
-       "$id": "34",
+       "$id": "36",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -292,24 +302,25 @@
    "Decorators": []
   },
   {
-   "$id": "35",
+   "$id": "37",
    "Name": "DifferentBody",
+   "ClientNamespace": "Payload.ContentNegotiation.DifferentBody",
    "Operations": [
     {
-     "$id": "36",
+     "$id": "38",
      "Name": "getAvatarAsPng",
      "ResourceName": "DifferentBody",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "37",
+       "$id": "39",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "38",
+        "$id": "40",
         "kind": "constant",
         "valueType": {
-         "$id": "39",
+         "$id": "41",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -331,12 +342,12 @@
      ],
      "Responses": [
       {
-       "$id": "40",
+       "$id": "42",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "41",
+        "$id": "43",
         "kind": "bytes",
         "name": "bytes",
         "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -345,14 +356,14 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "42",
+         "$id": "44",
          "Name": "contentType",
          "NameInResponse": "content-type",
          "Type": {
-          "$id": "43",
+          "$id": "45",
           "kind": "constant",
           "valueType": {
-           "$id": "44",
+           "$id": "46",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -380,20 +391,20 @@
      "Decorators": []
     },
     {
-     "$id": "45",
+     "$id": "47",
      "Name": "getAvatarAsJson",
      "ResourceName": "DifferentBody",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "46",
+       "$id": "48",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "47",
+        "$id": "49",
         "kind": "constant",
         "valueType": {
-         "$id": "48",
+         "$id": "50",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -415,7 +426,7 @@
      ],
      "Responses": [
       {
-       "$id": "49",
+       "$id": "51",
        "StatusCodes": [
         200
        ],
@@ -425,14 +436,14 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "50",
+         "$id": "52",
          "Name": "contentType",
          "NameInResponse": "content-type",
          "Type": {
-          "$id": "51",
+          "$id": "53",
           "kind": "constant",
           "valueType": {
-           "$id": "52",
+           "$id": "54",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -461,17 +472,17 @@
     }
    ],
    "Protocol": {
-    "$id": "53"
+    "$id": "55"
    },
    "Parent": "ContentNegotiationClient",
    "Parameters": [
     {
-     "$id": "54",
+     "$id": "56",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "55",
+      "$id": "57",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -486,9 +497,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "56",
+      "$id": "58",
       "Type": {
-       "$id": "57",
+       "$id": "59",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"

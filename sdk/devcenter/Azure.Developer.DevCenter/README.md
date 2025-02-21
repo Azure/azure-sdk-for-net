@@ -22,7 +22,7 @@ dotnet add package Azure.Developer.DevCenter --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
-You must have [configured](https://learn.microsoft.com/azure/dev-box/quickstart-configure-dev-box-service) a DevCenter, Project, Network Connection, Dev Box Definition, and Pool before you can create Dev Boxes 
+You must have [configured](https://learn.microsoft.com/azure/dev-box/quickstart-configure-dev-box-service) a DevCenter, Project, Network Connection, Dev Box Definition, and Pool before you can create Dev Boxes
 
 You must have configured a DevCenter, Project, Catalog, and Environment Type before you can create Environments
 
@@ -52,7 +52,7 @@ var devBoxesClient = new DevBoxesClient(endpoint, credential);
 var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 ```
 
-Alternatively  use `DevCenterClient` to create `DevBoxesClient` and `DeploymentEnvironmentsClient` sharing same endpoint and credential across clients. 
+Alternatively  use `DevCenterClient` to create `DevBoxesClient` and `DeploymentEnvironmentsClient` sharing same endpoint and credential across clients.
 
 ```C# Snippet:Azure_DevCenter_CreateClientsFromDevCenterClient_Scenario
 devBoxesClient = devCenterClient.GetDevBoxesClient();
@@ -138,7 +138,7 @@ Console.WriteLine($"Connect using web URL {remoteConnection.WebUri}.");
 
 ### Delete the Dev Box
 
-Deleting a DevBox is easy. It's much faster operation than creating a new DevBox. 
+Deleting a DevBox is easy. It's much faster operation than creating a new DevBox.
 
 ```C# Snippet:Azure_DevCenter_DeleteDevBox_Scenario
 Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
@@ -263,8 +263,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/devcenter/Azure.Developer.DevCenter/README.png)
 
 ## Next steps
 

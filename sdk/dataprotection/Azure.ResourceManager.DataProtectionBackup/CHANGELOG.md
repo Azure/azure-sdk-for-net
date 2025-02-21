@@ -1,18 +1,30 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-Convert properties of type Uri to type string in DataProtectionIdentityDetails. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47031
+### Other Changes
+
+## 1.6.0 (2025-02-12)
 
 ### Other Changes
+
+- Stable version release of 1.6.0-beta.1.
+
+## 1.6.0-beta.1 (2025-02-07)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+- Added a new property `UserAssignedIdentityId` in `DataProtectionIdentityDetails` to replace the old property `UserAssignedIdentityArmUri` with wrong type (https://github.com/Azure/azure-sdk-for-net/issues/47031).
 
 ## 1.5.0 (2024-06-17)
 
