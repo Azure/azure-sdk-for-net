@@ -95,7 +95,9 @@ extends:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
             arguments: -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
-
+        - task: UseNode@1
+          inputs:
+            version: '22.13' # npm version for npm run build
         - task: PowerShell@2
           displayName: 'Run build script'
           name: ci_build
