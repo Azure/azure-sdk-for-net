@@ -1,16 +1,12 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.9.0 (2024-02-21)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2024-07' to 'package-2024-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/81330ee21a8300ad377eacbaaf16efabb91d56c0/specification/netapp/resource-manager/readme.md.
 - Added `CoolAccessTiering` to `NetAppVolumePatch`, `NetAppVolumeData`, `NetAppVolumeGroupVolume`
 - Added `TransitionToCmk` `ChangeKeyVault` and `GetKeyVaultStatus` to `NetAppAccountResource`
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.8.0 (2024-10-30)
 

@@ -255,7 +255,7 @@ rename-mapping:
   BackupsMigrationRequest.backupVaultId: -|string
   ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
   QuotaReport: NetAppVolumeQuotaReport
-  GetKeyVaultStatusResponse: GetKeyVaultStatusResult
+  GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class GetKeyVaultStatusResult : IUtf8JsonSerializable, IJsonModel<GetKeyVaultStatusResult>
+    public partial class NetAppKeyVaultStatusResult : IUtf8JsonSerializable, IJsonModel<NetAppKeyVaultStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetKeyVaultStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppKeyVaultStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetKeyVaultStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppKeyVaultStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetKeyVaultStatusResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppKeyVaultStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        GetKeyVaultStatusResult IJsonModel<GetKeyVaultStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppKeyVaultStatusResult IJsonModel<NetAppKeyVaultStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetKeyVaultStatusResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppKeyVaultStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetKeyVaultStatusResult(document.RootElement, options);
+            return DeserializeNetAppKeyVaultStatusResult(document.RootElement, options);
         }
 
-        internal static GetKeyVaultStatusResult DeserializeGetKeyVaultStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppKeyVaultStatusResult DeserializeNetAppKeyVaultStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -162,38 +162,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetKeyVaultStatusResult(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints ?? new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>(), serializedAdditionalRawData);
+            return new NetAppKeyVaultStatusResult(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints ?? new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetKeyVaultStatusResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppKeyVaultStatusResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetKeyVaultStatusResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppKeyVaultStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetKeyVaultStatusResult IPersistableModel<GetKeyVaultStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppKeyVaultStatusResult IPersistableModel<NetAppKeyVaultStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGetKeyVaultStatusResult(document.RootElement, options);
+                        return DeserializeNetAppKeyVaultStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetKeyVaultStatusResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppKeyVaultStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetKeyVaultStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppKeyVaultStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

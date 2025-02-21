@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Result of getKeyVaultStatus with information about how volumes under NetApp account are encrypted. </summary>
-    public partial class GetKeyVaultStatusResult
+    public partial class NetAppKeyVaultStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetKeyVaultStatusResult"/>. </summary>
-        internal GetKeyVaultStatusResult()
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultStatusResult"/>. </summary>
+        internal NetAppKeyVaultStatusResult()
         {
             KeyVaultPrivateEndpoints = new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetKeyVaultStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultStatusResult"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
         /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetKeyVaultStatusResult(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IReadOnlyList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppKeyVaultStatusResult(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IReadOnlyList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;

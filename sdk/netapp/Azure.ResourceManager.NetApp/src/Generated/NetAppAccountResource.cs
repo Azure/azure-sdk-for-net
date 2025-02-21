@@ -894,14 +894,14 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GetKeyVaultStatusResult>> GetChangeKeyVaultInformationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppKeyVaultStatusResult>> GetChangeKeyVaultInformationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.GetChangeKeyVaultInformation");
             scope.Start();
             try
             {
                 var response = await _netAppAccountAccountsRestClient.GetChangeKeyVaultInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<GetKeyVaultStatusResult>(new GetKeyVaultStatusResultOperationSource(), _netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateGetChangeKeyVaultInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetAppArmOperation<NetAppKeyVaultStatusResult>(new NetAppKeyVaultStatusResultOperationSource(), _netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateGetChangeKeyVaultInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -936,14 +936,14 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GetKeyVaultStatusResult> GetChangeKeyVaultInformation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppKeyVaultStatusResult> GetChangeKeyVaultInformation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.GetChangeKeyVaultInformation");
             scope.Start();
             try
             {
                 var response = _netAppAccountAccountsRestClient.GetChangeKeyVaultInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation<GetKeyVaultStatusResult>(new GetKeyVaultStatusResultOperationSource(), _netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateGetChangeKeyVaultInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetAppArmOperation<NetAppKeyVaultStatusResult>(new NetAppKeyVaultStatusResultOperationSource(), _netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateGetChangeKeyVaultInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
