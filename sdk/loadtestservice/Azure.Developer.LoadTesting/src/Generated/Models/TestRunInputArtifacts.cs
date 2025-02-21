@@ -53,9 +53,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="TestRunInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> File info. </param>
-        /// <param name="testScriptFileInfo"> File info. </param>
-        /// <param name="userPropFileInfo"> File info. </param>
-        /// <param name="inputArtifactsZipFileInfo"> File info. </param>
+        /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
+        /// <param name="userPropFileInfo"> The user properties file. </param>
+        /// <param name="inputArtifactsZipFileInfo"> The zip file for all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -72,11 +72,11 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> File info. </summary>
         public TestRunFileInfo ConfigFileInfo { get; }
-        /// <summary> File info. </summary>
+        /// <summary> The test script file for the test run. </summary>
         public TestRunFileInfo TestScriptFileInfo { get; }
-        /// <summary> File info. </summary>
+        /// <summary> The user properties file. </summary>
         public TestRunFileInfo UserPropFileInfo { get; }
-        /// <summary> File info. </summary>
+        /// <summary> The zip file for all input artifacts. </summary>
         public TestRunFileInfo InputArtifactsZipFileInfo { get; }
         /// <summary> The config json file for url based test. </summary>
         public TestRunFileInfo UrlTestConfigFileInfo { get; }

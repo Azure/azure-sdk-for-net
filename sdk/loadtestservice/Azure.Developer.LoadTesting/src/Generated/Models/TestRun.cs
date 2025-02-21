@@ -175,7 +175,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         public IReadOnlyDictionary<string, TestRunStatistics> RegionalStatistics { get; }
         /// <summary> The load test configuration. </summary>
-        public LoadTestConfiguration LoadTestConfiguration { get; set; }
+        public LoadTestConfiguration LoadTestConfiguration { get; }
         /// <summary> Collection of test run artifacts. </summary>
         public TestRunArtifacts TestArtifacts { get; }
         /// <summary> Test result for pass/Fail criteria used during the test run. </summary>

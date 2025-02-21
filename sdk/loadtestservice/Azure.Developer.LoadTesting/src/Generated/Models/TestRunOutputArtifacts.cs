@@ -51,8 +51,8 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TestRunOutputArtifacts"/>. </summary>
-        /// <param name="resultFileInfo"> File info. </param>
-        /// <param name="logsFileInfo"> File info. </param>
+        /// <param name="resultFileInfo"> The test run results file. </param>
+        /// <param name="logsFileInfo"> The test run report with metrics. </param>
         /// <param name="artifactsContainerInfo"> The container for test run artifacts. </param>
         /// <param name="reportFileInfo"> The report file for the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -65,9 +65,9 @@ namespace Azure.Developer.LoadTesting.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> File info. </summary>
+        /// <summary> The test run results file. </summary>
         public TestRunFileInfo ResultFileInfo { get; }
-        /// <summary> File info. </summary>
+        /// <summary> The test run report with metrics. </summary>
         public TestRunFileInfo LogsFileInfo { get; }
         /// <summary> The container for test run artifacts. </summary>
         public ArtifactsContainerInfo ArtifactsContainerInfo { get; }

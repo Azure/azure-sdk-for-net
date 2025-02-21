@@ -108,7 +108,7 @@ namespace Azure.Developer.LoadTesting.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LoadTestConfiguration))
+            if (options.Format != "W" && Optional.IsDefined(LoadTestConfiguration))
             {
                 writer.WritePropertyName("loadTestConfiguration"u8);
                 writer.WriteObjectValue(LoadTestConfiguration, options);

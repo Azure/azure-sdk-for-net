@@ -22,55 +22,55 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ACCEPTEDValue = "ACCEPTED";
-        private const string NOTSTARTEDValue = "NOTSTARTED";
-        private const string PROVISIONINGValue = "PROVISIONING";
-        private const string PROVISIONEDValue = "PROVISIONED";
-        private const string CONFIGURINGValue = "CONFIGURING";
-        private const string CONFIGUREDValue = "CONFIGURED";
-        private const string EXECUTINGValue = "EXECUTING";
-        private const string EXECUTEDValue = "EXECUTED";
-        private const string DEPROVISIONINGValue = "DEPROVISIONING";
-        private const string DEPROVISIONEDValue = "DEPROVISIONED";
-        private const string DONEValue = "DONE";
-        private const string CANCELLINGValue = "CANCELLING";
-        private const string CANCELLEDValue = "CANCELLED";
-        private const string FAILEDValue = "FAILED";
-        private const string VALIDATIONSUCCESSValue = "VALIDATION_SUCCESS";
-        private const string VALIDATIONFAILUREValue = "VALIDATION_FAILURE";
+        private const string AcceptedValue = "ACCEPTED";
+        private const string NotStartedValue = "NOTSTARTED";
+        private const string ProvisioningValue = "PROVISIONING";
+        private const string ProvisionedValue = "PROVISIONED";
+        private const string ConfiguringValue = "CONFIGURING";
+        private const string ConfiguredValue = "CONFIGURED";
+        private const string ExecutingValue = "EXECUTING";
+        private const string ExecutedValue = "EXECUTED";
+        private const string DeprovisioningValue = "DEPROVISIONING";
+        private const string DeprovisionedValue = "DEPROVISIONED";
+        private const string DoneValue = "DONE";
+        private const string CancellingValue = "CANCELLING";
+        private const string CancelledValue = "CANCELLED";
+        private const string FailedValue = "FAILED";
+        private const string ValidationSuccessValue = "VALIDATION_SUCCESS";
+        private const string ValidationFailureValue = "VALIDATION_FAILURE";
 
         /// <summary> Test run request is accepted. </summary>
-        public static TestRunStatus ACCEPTED { get; } = new TestRunStatus(ACCEPTEDValue);
+        public static TestRunStatus Accepted { get; } = new TestRunStatus(AcceptedValue);
         /// <summary> Test run is not yet started. </summary>
-        public static TestRunStatus NOTSTARTED { get; } = new TestRunStatus(NOTSTARTEDValue);
+        public static TestRunStatus NotStarted { get; } = new TestRunStatus(NotStartedValue);
         /// <summary> Test run is provisioning. </summary>
-        public static TestRunStatus PROVISIONING { get; } = new TestRunStatus(PROVISIONINGValue);
+        public static TestRunStatus Provisioning { get; } = new TestRunStatus(ProvisioningValue);
         /// <summary> Test run is provisioned. </summary>
-        public static TestRunStatus PROVISIONED { get; } = new TestRunStatus(PROVISIONEDValue);
+        public static TestRunStatus Provisioned { get; } = new TestRunStatus(ProvisionedValue);
         /// <summary> Test run is getting configured. </summary>
-        public static TestRunStatus CONFIGURING { get; } = new TestRunStatus(CONFIGURINGValue);
+        public static TestRunStatus Configuring { get; } = new TestRunStatus(ConfiguringValue);
         /// <summary> Test run configuration is done. </summary>
-        public static TestRunStatus CONFIGURED { get; } = new TestRunStatus(CONFIGUREDValue);
+        public static TestRunStatus Configured { get; } = new TestRunStatus(ConfiguredValue);
         /// <summary> Test run has started executing. </summary>
-        public static TestRunStatus EXECUTING { get; } = new TestRunStatus(EXECUTINGValue);
+        public static TestRunStatus Executing { get; } = new TestRunStatus(ExecutingValue);
         /// <summary> Test run execution is completed. </summary>
-        public static TestRunStatus EXECUTED { get; } = new TestRunStatus(EXECUTEDValue);
+        public static TestRunStatus Executed { get; } = new TestRunStatus(ExecutedValue);
         /// <summary> Test run is getting deprovisioned. </summary>
-        public static TestRunStatus DEPROVISIONING { get; } = new TestRunStatus(DEPROVISIONINGValue);
+        public static TestRunStatus Deprovisioning { get; } = new TestRunStatus(DeprovisioningValue);
         /// <summary> Test run is deprovisioned. </summary>
-        public static TestRunStatus DEPROVISIONED { get; } = new TestRunStatus(DEPROVISIONEDValue);
+        public static TestRunStatus Deprovisioned { get; } = new TestRunStatus(DeprovisionedValue);
         /// <summary> Test run is completed. </summary>
-        public static TestRunStatus DONE { get; } = new TestRunStatus(DONEValue);
+        public static TestRunStatus Done { get; } = new TestRunStatus(DoneValue);
         /// <summary> Test run is being cancelled. </summary>
-        public static TestRunStatus CANCELLING { get; } = new TestRunStatus(CANCELLINGValue);
+        public static TestRunStatus Cancelling { get; } = new TestRunStatus(CancellingValue);
         /// <summary> Test run request is cancelled. </summary>
-        public static TestRunStatus CANCELLED { get; } = new TestRunStatus(CANCELLEDValue);
+        public static TestRunStatus Cancelled { get; } = new TestRunStatus(CancelledValue);
         /// <summary> Test run request is failed. </summary>
-        public static TestRunStatus FAILED { get; } = new TestRunStatus(FAILEDValue);
+        public static TestRunStatus Failed { get; } = new TestRunStatus(FailedValue);
         /// <summary> Test run JMX file is validated. </summary>
-        public static TestRunStatus VALIDATIONSUCCESS { get; } = new TestRunStatus(VALIDATIONSUCCESSValue);
+        public static TestRunStatus ValidationSuccess { get; } = new TestRunStatus(ValidationSuccessValue);
         /// <summary> Test run JMX file validation is failed. </summary>
-        public static TestRunStatus VALIDATIONFAILURE { get; } = new TestRunStatus(VALIDATIONFAILUREValue);
+        public static TestRunStatus ValidationFailure { get; } = new TestRunStatus(ValidationFailureValue);
         /// <summary> Determines if two <see cref="TestRunStatus"/> values are the same. </summary>
         public static bool operator ==(TestRunStatus left, TestRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestRunStatus"/> values are not the same. </summary>

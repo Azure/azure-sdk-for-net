@@ -22,22 +22,22 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NOTVALIDATEDValue = "NOT_VALIDATED";
-        private const string VALIDATIONSUCCESSValue = "VALIDATION_SUCCESS";
-        private const string VALIDATIONFAILUREValue = "VALIDATION_FAILURE";
-        private const string VALIDATIONINITIATEDValue = "VALIDATION_INITIATED";
-        private const string VALIDATIONNOTREQUIREDValue = "VALIDATION_NOT_REQUIRED";
+        private const string NotValidatedValue = "NOT_VALIDATED";
+        private const string ValidationSuccessValue = "VALIDATION_SUCCESS";
+        private const string ValidationFailureValue = "VALIDATION_FAILURE";
+        private const string ValidationInitiatedValue = "VALIDATION_INITIATED";
+        private const string ValidationNotRequiredValue = "VALIDATION_NOT_REQUIRED";
 
         /// <summary> File is not validated. </summary>
-        public static FileValidationStatus NOTVALIDATED { get; } = new FileValidationStatus(NOTVALIDATEDValue);
+        public static FileValidationStatus NotValidated { get; } = new FileValidationStatus(NotValidatedValue);
         /// <summary> File is validated. </summary>
-        public static FileValidationStatus VALIDATIONSUCCESS { get; } = new FileValidationStatus(VALIDATIONSUCCESSValue);
+        public static FileValidationStatus ValidationSuccess { get; } = new FileValidationStatus(ValidationSuccessValue);
         /// <summary> File validation is failed. </summary>
-        public static FileValidationStatus VALIDATIONFAILURE { get; } = new FileValidationStatus(VALIDATIONFAILUREValue);
+        public static FileValidationStatus ValidationFailure { get; } = new FileValidationStatus(ValidationFailureValue);
         /// <summary> File validation is in progress. </summary>
-        public static FileValidationStatus VALIDATIONINITIATED { get; } = new FileValidationStatus(VALIDATIONINITIATEDValue);
+        public static FileValidationStatus ValidationInitiated { get; } = new FileValidationStatus(ValidationInitiatedValue);
         /// <summary> Validation is not required. </summary>
-        public static FileValidationStatus VALIDATIONNOTREQUIRED { get; } = new FileValidationStatus(VALIDATIONNOTREQUIREDValue);
+        public static FileValidationStatus ValidationNotRequired { get; } = new FileValidationStatus(ValidationNotRequiredValue);
         /// <summary> Determines if two <see cref="FileValidationStatus"/> values are the same. </summary>
         public static bool operator ==(FileValidationStatus left, FileValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileValidationStatus"/> values are not the same. </summary>

@@ -141,9 +141,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.TestInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> File info. </param>
-        /// <param name="testScriptFileInfo"> File info. </param>
-        /// <param name="userPropFileInfo"> File info. </param>
-        /// <param name="inputArtifactsZipFileInfo"> File info. </param>
+        /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
+        /// <param name="userPropFileInfo"> The user properties file. </param>
+        /// <param name="inputArtifactsZipFileInfo"> The zip file with all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <returns> A new <see cref="Models.TestInputArtifacts"/> instance for mocking. </returns>
@@ -472,9 +472,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.TestRunInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> File info. </param>
-        /// <param name="testScriptFileInfo"> File info. </param>
-        /// <param name="userPropFileInfo"> File info. </param>
-        /// <param name="inputArtifactsZipFileInfo"> File info. </param>
+        /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
+        /// <param name="userPropFileInfo"> The user properties file. </param>
+        /// <param name="inputArtifactsZipFileInfo"> The zip file for all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <returns> A new <see cref="Models.TestRunInputArtifacts"/> instance for mocking. </returns>
@@ -513,8 +513,8 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TestRunOutputArtifacts"/>. </summary>
-        /// <param name="resultFileInfo"> File info. </param>
-        /// <param name="logsFileInfo"> File info. </param>
+        /// <param name="resultFileInfo"> The test run results file. </param>
+        /// <param name="logsFileInfo"> The test run report with metrics. </param>
         /// <param name="artifactsContainerInfo"> The container for test run artifacts. </param>
         /// <param name="reportFileInfo"> The report file for the test run. </param>
         /// <returns> A new <see cref="Models.TestRunOutputArtifacts"/> instance for mocking. </returns>

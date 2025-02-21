@@ -31,11 +31,6 @@ namespace Azure.Developer.LoadTesting.Samples
                 displayName = "Performance_LoadTest_Run1",
                 testId = "12345678-1234-1234-1234-123456789012",
                 description = "sample description",
-                loadTestConfiguration = new
-                {
-                    engineInstances = 6,
-                    splitAllCSVs = true,
-                },
                 passFailCriteria = new
                 {
                     passFailMetrics = new Dictionary<string, object>
@@ -103,11 +98,6 @@ namespace Azure.Developer.LoadTesting.Samples
                 displayName = "Performance_LoadTest_Run1",
                 testId = "12345678-1234-1234-1234-123456789012",
                 description = "sample description",
-                loadTestConfiguration = new
-                {
-                    engineInstances = 6,
-                    splitAllCSVs = true,
-                },
                 passFailCriteria = new
                 {
                     passFailMetrics = new Dictionary<string, object>
