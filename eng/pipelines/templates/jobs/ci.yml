@@ -328,6 +328,7 @@ jobs:
                 /p:PublicSign=false `
                 /p:Configuration=$(BuildConfiguration) `
                 /p:EnableSourceLink=false `
+                /p:ProjectListOverrideFile="" `
                 /p:BuildSnippets=true `
                 $(DiagnosticArguments)
             }
