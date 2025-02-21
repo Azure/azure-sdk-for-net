@@ -360,7 +360,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
         }
 
-        [RecordedTest]
+        [LiveOnly] // test run too long even in playback
         public async Task BulkAddTasks_100000_Parallel_100()
         {
             var client = CreateBatchClient();
