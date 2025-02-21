@@ -195,63 +195,60 @@ namespace Azure.Storage.DataMovement
                     return;
                 }
                 await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
-                long? fileLength = default;
-                StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                fileLength = properties.ResourceLength;
 
-                if (fileLength.HasValue)
+                StorageResourceItemProperties sourceProperties =
+                    await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                if (!sourceProperties.ResourceLength.HasValue)
                 {
-                    long length = fileLength.Value;
-                    if (_initialTransferSize >= length)
-                    {
-                        // If we can create the destination in one call
-                        await QueueChunkToChannelAsync(
-                            async () =>
-                            await CreateDestinationResource(
-                                blockSize: length,
-                                length: length,
-                                singleCall: true,
-                                sourceProperties: properties).ConfigureAwait(false)).ConfigureAwait(false);
-                        return;
-                    }
-                    long blockSize = _transferChunkSize;
-                    _commitBlockHandler = new CommitChunkHandler(
-                        expectedLength: length,
-                        blockSize: blockSize,
-                        GetBlockListCommitHandlerBehaviors(this),
-                        _destinationResource.TransferType,
-                        properties,
-                        _cancellationToken);
-
-                    bool destinationCreated = await CreateDestinationResource(
-                        blockSize,
-                        length,
-                        false,
-                        properties).ConfigureAwait(false);
-                    if (destinationCreated)
-                    {
-                        // If we cannot upload in one shot, initiate the parallel block uploader
-                        IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
-                        if (_destinationResource.TransferType == TransferOrder.Unordered)
-                        {
-                            await QueueStageBlockRequests(ranges, length, properties).ConfigureAwait(false);
-                        }
-                        else // Sequential
-                        {
-                            // Queue the first partitioned block task
-                            (long Offset, long Length) first = ranges.First();
-                            await QueueStageBlockRequest(
-                                first.Offset,
-                                first.Length,
-                                length,
-                                properties).ConfigureAwait(false);
-                        }
-                    }
-                }
-                else
-                {
-                    // TODO: logging when given the event handler
                     await InvokeFailedArgAsync(Errors.UnableToGetLength()).ConfigureAwait(false);
+                    return;
+                }
+                long length = sourceProperties.ResourceLength.Value;
+
+                if (_initialTransferSize >= length)
+                {
+                    // If we can create the destination in one call
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await CreateDestinationResource(
+                            blockSize: length,
+                            length: length,
+                            singleCall: true,
+                            sourceProperties: sourceProperties).ConfigureAwait(false)).ConfigureAwait(false);
+                    return;
+                }
+                long blockSize = _transferChunkSize;
+                _commitBlockHandler = new CommitChunkHandler(
+                    expectedLength: length,
+                    blockSize: blockSize,
+                    GetBlockListCommitHandlerBehaviors(this),
+                    _destinationResource.TransferType,
+                    sourceProperties,
+                    _cancellationToken);
+
+                bool destinationCreated = await CreateDestinationResource(
+                    blockSize,
+                    length,
+                    false,
+                    sourceProperties).ConfigureAwait(false);
+                if (destinationCreated)
+                {
+                    // If we cannot upload in one shot, initiate the parallel block uploader
+                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize, _destinationResource.MaxSupportedChunkCount);
+                    if (_destinationResource.TransferType == TransferOrder.Unordered)
+                    {
+                        await QueueStageBlockRequests(ranges, length, sourceProperties).ConfigureAwait(false);
+                    }
+                    else // Sequential
+                    {
+                        // Queue the first partitioned block task
+                        (long Offset, long Length) first = ranges.First();
+                        await QueueStageBlockRequest(
+                            first.Offset,
+                            first.Length,
+                            length,
+                            sourceProperties).ConfigureAwait(false);
+                    }
                 }
             }
             catch (Exception ex)
@@ -261,7 +258,8 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Return whether we need to do more after creating the destination resource
+        /// Creates the destination resource and performs the first copy call.
+        /// Returns false if the copy is complete or this operation failed.
         /// </summary>
         private async Task<bool> CreateDestinationResource(
             long blockSize,
@@ -329,8 +327,7 @@ namespace Azure.Storage.DataMovement
 
                 // Report bytes written before completion
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
-
-                // Set completion status to completed
+                await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
                 await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             else

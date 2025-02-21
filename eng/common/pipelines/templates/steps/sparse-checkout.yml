@@ -11,10 +11,20 @@ parameters:
   - name: SkipCheckoutNone
     type: boolean
     default: false
+  - name: TokenToUseForAuth
+    type: string
+    default: ''
 
 steps:
   - ${{ if not(parameters.SkipCheckoutNone) }}:
       - checkout: none
+
+  - ${{ if ne(parameters.TokenToUseForAuth, '') }}:
+    - pwsh: |
+        $base64Token = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nobody:${{ parameters.TokenToUseForAuth }}"))
+        Write-Host "##vso[task.setvariable variable=_base64AuthToken;issecret=true;]$base64Token"
+        git config set --global "http.extraheader" "AUTHORIZATION: basic $base64Token"
+      displayName: Setup git config auth header
 
   - task: PowerShell@2
     ${{ if eq(length(parameters.Repositories), 1) }}:
@@ -86,7 +96,10 @@ steps:
 
               # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
               # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
-              git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
+              # '/*' '!/*/' -> only checkout files in top level directory
+              # '/eng' -> checkout required eng/ scripts/configs
+              # '.config' -> required for files like .config/1espt/PipelineAutobaseliningConfig.yml and .config/guardian/.gdnbaselines used by 1es PT scripts
+              git sparse-checkout set --no-cone '/*' '!/*/' '/eng' '/.config'
             }
 
             # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
@@ -123,3 +136,9 @@ steps:
         }
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
+
+  - ${{ if ne(parameters.TokenToUseForAuth, '') }}:
+    - pwsh: |
+        git config unset --global "http.extraheader"
+      displayName: Removing git config auth header
+      condition: always()

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,10 +17,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDeviceRegistrySubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics;
-        private AssetEndpointProfilesRestOperations _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient;
         private ClientDiagnostics _deviceRegistryAssetAssetsClientDiagnostics;
         private AssetsRestOperations _deviceRegistryAssetAssetsRestClient;
+        private ClientDiagnostics _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics;
+        private AssetEndpointProfilesRestOperations _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDeviceRegistrySubscriptionResource"/> class for mocking. </summary>
         protected MockableDeviceRegistrySubscriptionResource()
@@ -32,10 +34,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         {
         }
 
-        private ClientDiagnostics DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
-        private AssetEndpointProfilesRestOperations DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient ??= new AssetEndpointProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryAssetEndpointProfileResource.ResourceType));
         private ClientDiagnostics DeviceRegistryAssetAssetsClientDiagnostics => _deviceRegistryAssetAssetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetResource.ResourceType.Namespace, Diagnostics);
         private AssetsRestOperations DeviceRegistryAssetAssetsRestClient => _deviceRegistryAssetAssetsRestClient ??= new AssetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryAssetResource.ResourceType));
+        private ClientDiagnostics DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
+        private AssetEndpointProfilesRestOperations DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient ??= new AssetEndpointProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryAssetEndpointProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,64 +45,73 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return apiVersion;
         }
 
-        /// <summary>
-        /// List AssetEndpointProfile resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfiles_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfilesAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of DeviceRegistryBillingContainerResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of DeviceRegistryBillingContainerResources and their operations over a DeviceRegistryBillingContainerResource. </returns>
+        public virtual DeviceRegistryBillingContainerCollection GetDeviceRegistryBillingContainers()
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetEndpointProfileResource(Client, DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(e)), DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles", "value", "nextLink", cancellationToken);
+            return GetCachedClient(client => new DeviceRegistryBillingContainerCollection(client, Id));
         }
 
         /// <summary>
-        /// List AssetEndpointProfile resources by subscription ID
+        /// Get a BillingContainer
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfiles_ListBySubscription</description>
+        /// <description>BillingContainer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryBillingContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfiles(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeviceRegistryBillingContainerResource>> GetDeviceRegistryBillingContainerAsync(string billingContainerName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetEndpointProfileResource(Client, DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(e)), DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles", "value", "nextLink", cancellationToken);
+            return await GetDeviceRegistryBillingContainers().GetAsync(billingContainerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BillingContainer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingContainer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryBillingContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingContainerName"> Name of the billing container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeviceRegistryBillingContainerResource> GetDeviceRegistryBillingContainer(string billingContainerName, CancellationToken cancellationToken = default)
+        {
+            return GetDeviceRegistryBillingContainers().Get(billingContainerName, cancellationToken);
         }
 
         /// <summary>
@@ -112,11 +123,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_ListBySubscription</description>
+        /// <description>Asset_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,11 +153,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_ListBySubscription</description>
+        /// <description>Asset_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,6 +172,66 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryAssetAssetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryAssetAssetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetResource(Client, DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(e)), DeviceRegistryAssetAssetsClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List AssetEndpointProfile resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetEndpointProfile_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfilesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetEndpointProfileResource(Client, DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(e)), DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List AssetEndpointProfile resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetEndpointProfile_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfiles(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetEndpointProfileResource(Client, DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(e)), DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

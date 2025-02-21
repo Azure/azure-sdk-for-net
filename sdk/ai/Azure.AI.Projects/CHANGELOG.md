@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Fixed deserialization failure for AzureBlobStorage connection [issue](https://github.com/Azure/azure-sdk-for-net/issues/47874)
+* Fixed a bug on deserialization of RunStepDeltaFileSearchToolCall [issue](https://github.com/Azure/azure-sdk-for-net/issues/48333)
+
 ### Other Changes
 
 ## 1.0.0-beta.3 (2025-01-22)

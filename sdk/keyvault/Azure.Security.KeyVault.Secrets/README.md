@@ -350,5 +350,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/MigrationGuide.md
 [access_policy]: https://learn.microsoft.com/azure/key-vault/general/assign-access-policy
 [rbac_guide]: https://learn.microsoft.com/azure/key-vault/general/rbac-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FREADME.png)

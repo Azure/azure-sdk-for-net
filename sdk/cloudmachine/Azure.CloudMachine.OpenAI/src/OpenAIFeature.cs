@@ -1,29 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine.Core;
+using System.Collections.Generic;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
-internal class OpenAIFeature : CloudMachineFeature
+internal class OpenAIFeature : AzureProjectFeature
 {
     public OpenAIFeature()
     { }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
-        cloudMachine.AddResource(cognitiveServices);
+        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(infrastructure);
+        infrastructure.AddResource(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
 
         return cognitiveServices;
     }
 
-    protected override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
         ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com");
 
@@ -32,10 +33,10 @@ internal class OpenAIFeature : CloudMachineFeature
             connections.Add(connection);
         }
     }
-    internal void EmitConnectionsInternal(ConnectionCollection connections, string cmId)
+    internal void EmitConnectionsInternal(ICollection<ClientConnection> connections, string cmId)
         => EmitConnections(connections, cmId);
 
-    internal static CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
+    internal static CognitiveServicesAccount CreateOpenAIAccount(ProjectInfrastructure cm)
     {
         return new("openai")
         {
