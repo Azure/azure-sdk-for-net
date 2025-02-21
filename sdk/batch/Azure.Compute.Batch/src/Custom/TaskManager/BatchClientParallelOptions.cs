@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch
             get { return this._maxTimeBetweenCallsInSeconds; }
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     this._maxTimeBetweenCallsInSeconds = value;
                 }
