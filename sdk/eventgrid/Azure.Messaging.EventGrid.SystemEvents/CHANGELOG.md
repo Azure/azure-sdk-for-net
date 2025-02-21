@@ -11,6 +11,7 @@
 
 - MQTT event naming was fixed to use correct casing.
 - Media services events were removed as the service has been deprecated.
+- Various properties were changed to be nullable.
 
 ## 1.0.0-beta.1 (2024-06-19)
 
