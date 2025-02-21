@@ -8,6 +8,7 @@ import {
   createEmitterTestHost,
   typeSpecCompile,
 } from "./test-util.js";
+
 describe("Test GetInputType for scalar", () => {
   let runner: TestHost;
 
@@ -21,7 +22,7 @@ describe("Test GetInputType for scalar", () => {
         op test(@query location: azureLocation): void;
       `,
       runner,
-      { IsNamespaceNeeded: true, IsAzureCoreNeeded: true },
+      { IsAzureCoreNeeded: true },
     );
     const context = await createCSharpSdkContext(createEmitterContext(program));
     var model = createModel(context);
