@@ -262,7 +262,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250220.4" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ScmCodeModelPlugin" Version="1.0.0-alpha.20250220.4" />
   </ItemGroup>
 
   <!--
