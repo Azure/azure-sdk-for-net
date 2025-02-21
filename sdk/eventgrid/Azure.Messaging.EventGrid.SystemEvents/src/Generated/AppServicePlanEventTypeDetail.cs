@@ -46,14 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/>. </summary>
-        /// <param name="stampKind"> Kind of environment where app service plan is. </param>
-        /// <param name="action"> Type of action on the app service plan. </param>
-        /// <param name="status"> Asynchronous operation status of the operation on the app service plan. </param>
-        internal AppServicePlanEventTypeDetail(StampKind stampKind, AppServicePlanAction action, AsyncStatus status)
+        internal AppServicePlanEventTypeDetail()
         {
-            StampKind = stampKind;
-            Action = action;
-            Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/>. </summary>
@@ -61,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="action"> Type of action on the app service plan. </param>
         /// <param name="status"> Asynchronous operation status of the operation on the app service plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanEventTypeDetail(StampKind stampKind, AppServicePlanAction action, AsyncStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServicePlanEventTypeDetail(StampKind? stampKind, AppServicePlanAction? action, AsyncStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StampKind = stampKind;
             Action = action;
@@ -69,16 +63,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/> for deserialization. </summary>
-        internal AppServicePlanEventTypeDetail()
-        {
-        }
-
         /// <summary> Kind of environment where app service plan is. </summary>
-        public StampKind StampKind { get; }
+        public StampKind? StampKind { get; }
         /// <summary> Type of action on the app service plan. </summary>
-        public AppServicePlanAction Action { get; }
+        public AppServicePlanAction? Action { get; }
         /// <summary> Asynchronous operation status of the operation on the app service plan. </summary>
-        public AsyncStatus Status { get; }
+        public AsyncStatus? Status { get; }
     }
 }
