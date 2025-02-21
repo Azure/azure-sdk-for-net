@@ -192,7 +192,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     # had files sdk/foo/file1 and sdk/foobar/file2 with the exclude of anything in
     # sdk/foo, it should only exclude things under sdk/foo. The TrimEnd is just in
     # case one of the paths ends with a slash, it doesn't add a second one.
-    $excludePaths = $diff.ExcludePaths | ForEach-Object { $_.TrimEnd("/") + "/" }
+    $excludePaths = $diff.ExcludePaths | ForEach-Object { $_ }
 
     $additionalValidationPackages = @()
     $lookup = @{}
