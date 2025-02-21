@@ -147,7 +147,6 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
     $AllPkgProps
   )
   $additionalValidationPackages = @()
-  $uniqueResultSet = @()
 
   # ensure we observe deleted files too
   $targetedFiles = @($diffObj.ChangedFiles + $diffObj.DeletedFiles)
@@ -168,48 +167,57 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
       $pathComponents = $file -split "/"
       # handle changes only in sdk/<service>/<file>.<extension>
       if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
-        $changedServices += $pathComponents[1]
-      }
-
-      # handle any changes under sdk/<file>.<extension> or any files
-      # in the repository root
-      if (($pathComponents.Length -eq 2 -and $pathComponents[0] -eq "sdk") -or
-          ($pathComponents.Length -eq 1)) {
-        $changedServices += "template"
+        # we cannot simply add the entire service directory here, as this change may be too aggressive
+        # if there are multiple ci.yml files, we only want to add the packages that exist within that ci.yml file
+        # if there is a single ci.yml file, we can add the entire service directory
+        if ($file -like "*ci*.yml") {
+          $ciFilePath = Join-Path -Path $RepoRoot -ChildPath $file
+          if (Test-Path $ciFilePath) {
+            $ciFileContents = Get-Content -Raw -Path $ciFilePath | CompatibleConvertFrom-Yaml
+            $artifactsFromCi = GetValueSafelyFrom-Yaml $ciFileContents @("extends", "parameters", "Artifacts")
+            if ($artifactsFromCi) {
+              foreach($artifactItem in $artifactsFromCi)
+              {
+                $AllPkgProps | Where-Object { $_.ArtifactName -eq $artifactItem["name"] } | ForEach-Object {
+                  if ($additionalValidationPackages -notcontains $_ -and $LocatedPackages -notcontains $_) {
+                    $_.IncludedForValidation = $true
+                    $additionalValidationPackages += $_
+                  }
+                }
+              }
+            }
+          }
+        }
+        else {
+          # if it's a file in the service director that's not a specific ci.yml file, we're just adding
+          # the entire service directory. otherwise what we need to do is parse all the ci.yml files in the directory
+          # and look for the one with trigger:include:paths that matches the file path.
+          $changedServices += $pathComponents[1]
+        }
       }
     }
 
-    # dedupe the changedServices list before processing
     $changedServices = $changedServices | Get-Unique
     foreach ($changedService in $changedServices) {
       $additionalPackages = $AllPkgProps | Where-Object { $_.ServiceDirectory -eq $changedService }
 
       foreach ($pkg in $additionalPackages) {
-        if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
+        if ($additionalValidationPackages -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
           # notice the lack of setting IncludedForValidation to true. This is because these "changed services"
           # are specifically where a file within the service, but not an individual package within that service has changed.
           # we want this package to be fully validated
-          $uniqueResultSet += $pkg
+          $additionalValidationPackages += $pkg
         }
       }
     }
   }
 
-  # walk the packages added purely for validation, if they haven't been added yet, add them
-  # these packages aren't considered "directly" changed, so we will set IncludedForValidation to true for them
+  Write-Host "Returning additional packages for validation: $($additionalValidationPackages.Count)"
   foreach ($pkg in $additionalValidationPackages) {
-    if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
-      $pkg.IncludedForValidation = $true
-      $uniqueResultSet += $pkg
-    }
-  }
-
-  Write-Host "Returning additional packages for validation: $($uniqueResultSet.Count)"
-  foreach ($pkg in $uniqueResultSet) {
     Write-Host "  - $($pkg.Name)"
   }
 
-  return $uniqueResultSet
+  return $additionalValidationPackages
 }
 
 # Returns the nuget publish status of a package id and version.
