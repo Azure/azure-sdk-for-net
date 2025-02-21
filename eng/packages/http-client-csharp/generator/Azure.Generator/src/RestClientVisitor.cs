@@ -17,8 +17,7 @@ namespace Azure.Generator
         {
             if (type is not null && type is ClientProvider)
             {
-                type.DeclarationModifiers = TransfromPublicModifiersToInternal(type);
-                type.RelativeFilePath = TransformRelativeFilePathForClient(type);
+                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
             // TODO: uncomment this once resources are generated
             //if (type is RestClientProvider)
