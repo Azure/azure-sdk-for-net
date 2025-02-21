@@ -15,7 +15,7 @@ namespace System.ClientModel.Primitives;
 public class ClientCache
 {
     private readonly Dictionary<(Type, string), ClientEntry> _clients = new();
-    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.NoRecursion);
+    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
     private const int MaxCacheSize = 100;
 
