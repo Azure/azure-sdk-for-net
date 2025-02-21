@@ -92,14 +92,13 @@ export async function typeSpecCompile(
   return host.program;
 }
 
-export function createEmitterContext(program: Program): EmitContext<NetEmitterOptions> {
+export function createEmitterContext(program: Program): EmitContext<CSharpEmitterOptions> {
   return {
     program: program,
     emitterOutputDir: "./",
     options: {
       outputFile: "tspCodeModel.json",
       logFile: "log.json",
-      skipSDKGeneration: false,
       "new-project": false,
       "clear-output-folder": false,
       "save-inputs": false,
@@ -107,7 +106,7 @@ export function createEmitterContext(program: Program): EmitContext<NetEmitterOp
       "generate-convenience-methods": true,
       "package-name": undefined,
     },
-  } as EmitContext<NetEmitterOptions>;
+  } as EmitContext<CSharpEmitterOptions>;
 }
 
 /* We always need to pass in the emitter name now that it is required so making a helper to do this. */
