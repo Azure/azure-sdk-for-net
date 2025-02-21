@@ -26,7 +26,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var requestFailedException = new RequestFailedException(mockResponse.Object);
 
             // Act
-            var result = BatchError.ExtractBatchErrorFromExeception(requestFailedException);
+            var result = BatchError.ExtractBatchErrorFromException(requestFailedException);
 
             // Assert
             Assert.NotNull(result);
@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var requestFailedException = new RequestFailedException(mockResponse.Object);
 
             // Act
-            var result = BatchError.ExtractBatchErrorFromExeception(requestFailedException);
+            var result = BatchError.ExtractBatchErrorFromException(requestFailedException);
 
             // Assert
             Assert.NotNull(result);
@@ -72,7 +72,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var requestFailedException = new RequestFailedException(mockResponse.Object);
 
             // Act
-            var result = BatchError.ExtractBatchErrorFromExeception(requestFailedException);
+            var result = BatchError.ExtractBatchErrorFromException(requestFailedException);
 
             // Assert
             Assert.NotNull(result);

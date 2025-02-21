@@ -278,7 +278,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
                 catch (Azure.RequestFailedException e)
                 {
-                    BatchError err = BatchError.ExtractBatchErrorFromExeception(e);
+                    BatchError err = BatchError.ExtractBatchErrorFromException(e);
                     Assert.AreEqual("PoolNotFound", err.Code);
                 }
 

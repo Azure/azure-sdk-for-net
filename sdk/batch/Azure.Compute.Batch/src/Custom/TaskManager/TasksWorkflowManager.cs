@@ -210,7 +210,7 @@ namespace Azure.Compute.Batch
             }
             catch (RequestFailedException e)
             {
-                BatchError error = BatchError.ExtractBatchErrorFromExeception(e);
+                BatchError error = BatchError.ExtractBatchErrorFromException(e);
                 if (error != null)
                 {
                     int currLength = tasksToAdd.Count;

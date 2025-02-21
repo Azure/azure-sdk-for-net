@@ -72,8 +72,6 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
       - [File Properties](#get-node-file-properties)
       - [GetRemoteLoginSettings](#getremoteloginsettings)
       - [UploadComputeNodeBatchServiceLogs](#uploadcomputenodebatchservicelogs)
-      - []()
-      - []()
   - [Application Operations](#application-operations)
       - [GetApplicationSummary](#getapplicationsummary)
       - [ListApplicationSummaries](#listapplicationsummaries)

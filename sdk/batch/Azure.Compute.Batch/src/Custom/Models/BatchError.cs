@@ -16,7 +16,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public static BatchError ExtractBatchErrorFromExeception(RequestFailedException e)
+        public static BatchError ExtractBatchErrorFromException(RequestFailedException e)
         {
             return BatchError.FromResponse(e.GetRawResponse());
         }
