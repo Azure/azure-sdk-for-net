@@ -22,25 +22,25 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string JMXFILEValue = "JMX_FILE";
-        private const string USERPROPERTIESValue = "USER_PROPERTIES";
-        private const string ADDITIONALARTIFACTSValue = "ADDITIONAL_ARTIFACTS";
-        private const string ZIPPEDARTIFACTSValue = "ZIPPED_ARTIFACTS";
-        private const string URLTESTCONFIGValue = "URL_TEST_CONFIG";
-        private const string TESTSCRIPTValue = "TEST_SCRIPT";
+        private const string JmxFileValue = "JMX_FILE";
+        private const string UserPropertiesValue = "USER_PROPERTIES";
+        private const string AdditionalArtifactsValue = "ADDITIONAL_ARTIFACTS";
+        private const string ZippedArtifactsValue = "ZIPPED_ARTIFACTS";
+        private const string UrlTestConfigValue = "URL_TEST_CONFIG";
+        private const string TestScriptValue = "TEST_SCRIPT";
 
         /// <summary> If the file is a JMX script. </summary>
-        public static FileType JMXFILE { get; } = new FileType(JMXFILEValue);
+        public static FileType JmxFile { get; } = new FileType(JmxFileValue);
         /// <summary> If the file is a user properties file. </summary>
-        public static FileType USERPROPERTIES { get; } = new FileType(USERPROPERTIESValue);
+        public static FileType UserProperties { get; } = new FileType(UserPropertiesValue);
         /// <summary> If the file is not among any of the other supported file types. </summary>
-        public static FileType ADDITIONALARTIFACTS { get; } = new FileType(ADDITIONALARTIFACTSValue);
+        public static FileType AdditionalArtifacts { get; } = new FileType(AdditionalArtifactsValue);
         /// <summary> If the file is a compressed archive containing a collection of various artifacts or resources. </summary>
-        public static FileType ZIPPEDARTIFACTS { get; } = new FileType(ZIPPEDARTIFACTSValue);
+        public static FileType ZippedArtifacts { get; } = new FileType(ZippedArtifactsValue);
         /// <summary> If the file is a JSON config file to define the requests for a URL test. </summary>
-        public static FileType URLTESTCONFIG { get; } = new FileType(URLTESTCONFIGValue);
+        public static FileType UrlTestConfig { get; } = new FileType(UrlTestConfigValue);
         /// <summary> If the file is a test script. </summary>
-        public static FileType TESTSCRIPT { get; } = new FileType(TESTSCRIPTValue);
+        public static FileType TestScript { get; } = new FileType(TestScriptValue);
         /// <summary> Determines if two <see cref="FileType"/> values are the same. </summary>
         public static bool operator ==(FileType left, FileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileType"/> values are not the same. </summary>
