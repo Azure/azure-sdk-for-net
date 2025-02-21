@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2025-2-28)
+## 1.0.0-beta.2 (2025-02-28)
 
 ### Features Added
 
@@ -30,10 +30,6 @@
 - Removed `getNodeRemoteDesktop` method from `BatchClient`. Use `getNodeRemoteLoginSettings` instead to remotely login to a compute node.
 - Removed `CloudServiceConfiguration` from pool models and operations. Use `VirtualMachineConfiguration` when creating pools.
 - Removed `ApplicationLicenses` from pool models and operations.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2024-06-01)
 
