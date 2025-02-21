@@ -8,6 +8,7 @@ csharp: true
 library-name: ServiceNetworking
 namespace: Azure.ResourceManager.ServiceNetworking
 require: https://github.com/Azure/azure-rest-api-specs/blob/b3d637043bcd1484f0f4c63ca6051407b6a329d1/specification/servicenetworking/resource-manager/readme.md
+#tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +21,8 @@ use-model-reader-writer: true
 rename-mapping:
   SecurityPolicy: ApplicationGatewayForContainersSecurityPolicy
 
-
+mgmt-debug: 
+  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

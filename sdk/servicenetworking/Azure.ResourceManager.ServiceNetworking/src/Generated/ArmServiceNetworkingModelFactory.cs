@@ -56,32 +56,38 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="associationType"> Association Type. </param>
-        /// <param name="subnetId"> Association Subnet. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
-        /// <returns> A new <see cref="ServiceNetworking.AssociationData"/> instance for mocking. </returns>
-        public static AssociationData AssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AssociationType? associationType = null, ResourceIdentifier subnetId = null, ProvisioningState? provisioningState = null)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/> instance for mocking. </returns>
+        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SecurityPolicyProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AssociationData(
+            return new ApplicationGatewayForContainersSecurityPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
-                associationType,
-                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityPolicyProperties"/>. </summary>
+        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
+        /// <param name="wafPolicyId"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
+        /// <returns> A new <see cref="Models.SecurityPolicyProperties"/> instance for mocking. </returns>
+        public static SecurityPolicyProperties SecurityPolicyProperties(PolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, ProvisioningState? provisioningState = null)
+        {
+            return new SecurityPolicyProperties(policyType, wafPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(wafPolicyId) : null, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworking.FrontendData"/>. </summary>
@@ -110,30 +116,30 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
-        /// <param name="wafPolicyId"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
-        /// <returns> A new <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/> instance for mocking. </returns>
-        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, ProvisioningState? provisioningState = null)
+        /// <param name="associationType"> Association Type. </param>
+        /// <param name="subnetId"> Association Subnet. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
+        /// <returns> A new <see cref="ServiceNetworking.AssociationData"/> instance for mocking. </returns>
+        public static AssociationData AssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AssociationType? associationType = null, ResourceIdentifier subnetId = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ApplicationGatewayForContainersSecurityPolicyData(
+            return new AssociationData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
-                policyType,
-                wafPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(wafPolicyId) : null,
+                associationType,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }

@@ -12,8 +12,8 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> SecurityPolicyConfigurations Subresource of Traffic Controller. </summary>
-    internal partial class SecurityPolicyConfigurationsUpdate
+    /// <summary> SecurityPolicy Properties. </summary>
+    public partial class SecurityPolicyProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,32 +47,41 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyConfigurationsUpdate"/>. </summary>
-        public SecurityPolicyConfigurationsUpdate()
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
+        public SecurityPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyConfigurationsUpdate"/>. </summary>
-        /// <param name="wafSecurityPolicy"> Contains reference to a WAF-type security policy that is applied at the Traffic Controller level. </param>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
+        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
+        /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyConfigurationsUpdate(WritableSubResource wafSecurityPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityPolicyProperties(PolicyType? policyType, WritableSubResource wafPolicy, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            WafSecurityPolicy = wafSecurityPolicy;
+            PolicyType = policyType;
+            WafPolicy = wafPolicy;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Contains reference to a WAF-type security policy that is applied at the Traffic Controller level. </summary>
-        internal WritableSubResource WafSecurityPolicy { get; set; }
+        /// <summary> Type of the Traffic Controller Security Policy. </summary>
+        public PolicyType? PolicyType { get; }
+        /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
+        internal WritableSubResource WafPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
+        public ResourceIdentifier WafPolicyId
         {
-            get => WafSecurityPolicy is null ? default : WafSecurityPolicy.Id;
+            get => WafPolicy is null ? default : WafPolicy.Id;
             set
             {
-                if (WafSecurityPolicy is null)
-                    WafSecurityPolicy = new WritableSubResource();
-                WafSecurityPolicy.Id = value;
+                if (WafPolicy is null)
+                    WafPolicy = new WritableSubResource();
+                WafPolicy.Id = value;
             }
         }
+
+        /// <summary> Provisioning State of Traffic Controller SecurityPolicy Resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

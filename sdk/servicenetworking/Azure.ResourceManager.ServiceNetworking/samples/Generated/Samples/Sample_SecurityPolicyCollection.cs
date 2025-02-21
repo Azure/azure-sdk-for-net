@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
-    public partial class Sample_ApplicationGatewayForContainersSecurityPolicyCollection
+    public partial class Sample_SecurityPolicyCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this ApplicationGatewayForContainersSecurityPolicyResource
-            ApplicationGatewayForContainersSecurityPolicyCollection collection = trafficController.GetApplicationGatewayForContainersSecurityPolicies();
+            // get the collection of this SecurityPolicyResource
+            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
 
             // invoke the operation
             string securityPolicyName = "sp1";
-            ApplicationGatewayForContainersSecurityPolicyData data = new ApplicationGatewayForContainersSecurityPolicyData(new AzureLocation("NorthCentralUS"))
+            SecurityPolicyData data = new SecurityPolicyData(new AzureLocation("NorthCentralUS"))
             {
                 Properties = new SecurityPolicyProperties
                 {
                     WafPolicyId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Networking/applicationGatewayWebApplicationFirewallPolicies/wp-0"),
                 },
             };
-            ArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, data);
-            ApplicationGatewayForContainersSecurityPolicyResource result = lro.Value;
+            ArmOperation<SecurityPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, data);
+            SecurityPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplicationGatewayForContainersSecurityPolicyData resourceData = result.Data;
+            SecurityPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this ApplicationGatewayForContainersSecurityPolicyResource
-            ApplicationGatewayForContainersSecurityPolicyCollection collection = trafficController.GetApplicationGatewayForContainersSecurityPolicies();
+            // get the collection of this SecurityPolicyResource
+            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
 
             // invoke the operation
             string securityPolicyName = "sp1";
-            ApplicationGatewayForContainersSecurityPolicyResource result = await collection.GetAsync(securityPolicyName);
+            SecurityPolicyResource result = await collection.GetAsync(securityPolicyName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplicationGatewayForContainersSecurityPolicyData resourceData = result.Data;
+            SecurityPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this ApplicationGatewayForContainersSecurityPolicyResource
-            ApplicationGatewayForContainersSecurityPolicyCollection collection = trafficController.GetApplicationGatewayForContainersSecurityPolicies();
+            // get the collection of this SecurityPolicyResource
+            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
 
             // invoke the operation and iterate over the result
-            await foreach (ApplicationGatewayForContainersSecurityPolicyResource item in collection.GetAllAsync())
+            await foreach (SecurityPolicyResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApplicationGatewayForContainersSecurityPolicyData resourceData = item.Data;
+                SecurityPolicyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this ApplicationGatewayForContainersSecurityPolicyResource
-            ApplicationGatewayForContainersSecurityPolicyCollection collection = trafficController.GetApplicationGatewayForContainersSecurityPolicies();
+            // get the collection of this SecurityPolicyResource
+            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
 
             // invoke the operation
             string securityPolicyName = "sp1";
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this ApplicationGatewayForContainersSecurityPolicyResource
-            ApplicationGatewayForContainersSecurityPolicyCollection collection = trafficController.GetApplicationGatewayForContainersSecurityPolicies();
+            // get the collection of this SecurityPolicyResource
+            SecurityPolicyCollection collection = trafficController.GetSecurityPolicies();
 
             // invoke the operation
             string securityPolicyName = "sp1";
-            NullableResponse<ApplicationGatewayForContainersSecurityPolicyResource> response = await collection.GetIfExistsAsync(securityPolicyName);
-            ApplicationGatewayForContainersSecurityPolicyResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SecurityPolicyResource> response = await collection.GetIfExistsAsync(securityPolicyName);
+            SecurityPolicyResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApplicationGatewayForContainersSecurityPolicyData resourceData = result.Data;
+                SecurityPolicyData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

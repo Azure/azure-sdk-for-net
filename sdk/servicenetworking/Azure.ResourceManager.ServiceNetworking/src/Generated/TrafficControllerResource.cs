@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssociationsInterface_Get</description>
+        /// <description>Association_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssociationsInterface_Get</description>
+        /// <description>Association_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontendsInterface_Get</description>
+        /// <description>Frontend_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontendsInterface_Get</description>
+        /// <description>Frontend_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Delete</description>
+        /// <description>TrafficController_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Delete</description>
+        /// <description>TrafficController_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Update</description>
+        /// <description>TrafficController_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Update</description>
+        /// <description>TrafficController_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

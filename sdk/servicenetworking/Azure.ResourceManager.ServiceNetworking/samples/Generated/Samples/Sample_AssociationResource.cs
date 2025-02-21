@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationGet.json
-            // this example is just showing the usage of "AssociationsInterface_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationDelete.json
-            // this example is just showing the usage of "AssociationsInterface_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationDelete.json
+            // this example is just showing the usage of "Association_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationPatch.json
-            // this example is just showing the usage of "AssociationsInterface_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationPatch.json
+            // this example is just showing the usage of "Association_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,11 +96,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             AssociationResource association = client.GetAssociationResource(associationResourceId);
 
             // invoke the operation
-            AssociationPatch patch = new AssociationPatch
-            {
-                AssociationType = AssociationType.Subnets,
-                SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-tc/subnets/tc-subnet"),
-            };
+            AssociationPatch patch = new AssociationPatch();
             AssociationResource result = await association.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well

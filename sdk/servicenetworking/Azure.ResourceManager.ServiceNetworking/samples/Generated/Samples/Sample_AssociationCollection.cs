@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ServiceNetworking.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationPut.json
-            // this example is just showing the usage of "AssociationsInterface_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationPut.json
+            // this example is just showing the usage of "Association_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,11 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             // invoke the operation
             string associationName = "as1";
-            AssociationData data = new AssociationData(new AzureLocation("NorthCentralUS"))
-            {
-                AssociationType = AssociationType.Subnets,
-                SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-tc/subnets/tc-subnet"),
-            };
+            AssociationData data = new AssociationData(new AzureLocation("NorthCentralUS"));
             ArmOperation<AssociationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, associationName, data);
             AssociationResource result = lro.Value;
 
@@ -60,8 +55,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationGet.json
-            // this example is just showing the usage of "AssociationsInterface_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -94,8 +89,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAssociations()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationsGet.json
-            // this example is just showing the usage of "AssociationsInterface_ListByTrafficController" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationsGet.json
+            // this example is just showing the usage of "Association_ListByTrafficController" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,8 +125,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationGet.json
-            // this example is just showing the usage of "AssociationsInterface_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -160,8 +155,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAssociation()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/AssociationGet.json
-            // this example is just showing the usage of "AssociationsInterface_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
