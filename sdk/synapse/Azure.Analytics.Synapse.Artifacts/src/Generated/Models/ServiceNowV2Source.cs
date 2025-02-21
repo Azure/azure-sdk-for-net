@@ -27,13 +27,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="expression"> Expression to filter data from source. </param>
-        internal ServiceNowV2Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, ExpressionV2 expression) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        /// <param name="pageSize"> Page size of the result. Type: integer (or Expression with resultType integer). </param>
+        internal ServiceNowV2Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, ExpressionV2 expression, object pageSize) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             Expression = expression;
+            PageSize = pageSize;
             Type = type ?? "ServiceNowV2Source";
         }
 
         /// <summary> Expression to filter data from source. </summary>
         public ExpressionV2 Expression { get; set; }
+        /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
+        public object PageSize { get; set; }
     }
 }
