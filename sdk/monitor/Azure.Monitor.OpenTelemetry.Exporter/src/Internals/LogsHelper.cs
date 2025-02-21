@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var properties = new ChangeTrackingDictionary<string, string>();
                     ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName);
 
-                    if (message is not null && logRecord.Exception is not null)
+                    if (logRecord.Exception is not null)
                     {
                         telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey)
                         {

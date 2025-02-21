@@ -4,10 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -16,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal const int MaxExceptionCountToSave = 10;
 
-        public TelemetryExceptionData(int version, LogRecord logRecord, string message, ChangeTrackingDictionary<string, string> properties) : base(version)
+        public TelemetryExceptionData(int version, LogRecord logRecord, string? message, ChangeTrackingDictionary<string, string> properties) : base(version)
         {
             if (logRecord.Exception == null)
             {
