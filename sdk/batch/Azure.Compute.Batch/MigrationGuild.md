@@ -133,7 +133,7 @@ await pool.CommitAsync().ConfigureAwait(false);
 
 where as with `Azure.Compute.Batch` when you call CreatePool the pool is created in Azure immediately.
 
-``` C# Snippet:Batch_Readme_PoolCreation
+```C# Snippet:Batch_Readme_PoolCreation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -171,7 +171,7 @@ We strongly recommend using Microsoft Entra ID for Batch account authentication.
 `Azure.Compute.Batch` provides integration with Microsoft Entra ID for identity-based authentication of requests. With Azure AD, you can use role-based access control (RBAC) to grant access to your Azure Batch resources to users, groups, or applications. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) provides easy Microsoft Entra ID support for authentication.
 
 
-``` C# Snippet:Batch_Readme_EntraIDCredential
+```C# Snippet:Batch_Readme_EntraIDCredential
 var credential = new DefaultAzureCredential();
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), credential);
@@ -216,7 +216,7 @@ In `Azure.Compute.Batch` you can use AzureNamedKeyCredential with your Batch acc
 az batch account keys list --name <your-batch-account> --resource-group <your-resource-group-name>
 ```
 
-``` C# Snippet:Batch_Readme_AzureNameKeyCredential
+```C# Snippet:Batch_Readme_AzureNameKeyCredential
 var credential = new AzureNamedKeyCredential("<your account>", "BatchAccountKey");
 BatchClient batchClient = new BatchClient(
     new Uri("https://<your account>.eastus.batch.azure.com"),
@@ -353,7 +353,7 @@ BatchAccountPoolResource pool = armOperation.Value;
 ```
 
 As metioned you can create a pool using `Azure.Compute.Batch` [pool create](https://learn.microsoft.com/dotnet/api/azure.compute.batch.batchclient.createpool) just without support for managed identies.  First you create a batch client with your credentials then you issue a `CreatePool` call directly from the batch client.
-``` C# Snippet:Batch_Readme_PoolCreation
+```C# Snippet:Batch_Readme_PoolCreation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
