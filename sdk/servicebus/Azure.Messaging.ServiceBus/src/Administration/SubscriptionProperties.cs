@@ -107,6 +107,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// The <see cref="TimeSpan"/> idle interval after which the subscription is automatically deleted.
         /// </summary>
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-expiration#idleness">Service Bus: Idleness</seealso>
         public TimeSpan AutoDeleteOnIdle
         {
             get => _autoDeleteOnIdle;

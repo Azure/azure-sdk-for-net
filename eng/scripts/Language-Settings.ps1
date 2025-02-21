@@ -180,25 +180,23 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
       $pathComponents = $file -split "/"
       # handle changes only in sdk/<service>/<file>.<extension>
       if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
-        if (-not $changedServices.Contains($pathComponents[1])) {
-          $changedServices += $pathComponents[1]
-        }
+        $changedServices += $pathComponents[1]
       }
 
-      # handle any changes under sdk/<file>.<extension>
-      if ($pathComponents.Length -eq 2 -and $pathComponents[0] -eq "sdk") {
-        if (-not $changedServices.Contains("template")) {
-          $changedServices += "template"
-        }
+      # handle any changes under sdk/<file>.<extension> or any files
+      # in the repository root
+      if (($pathComponents.Length -eq 2 -and $pathComponents[0] -eq "sdk") -or
+          ($pathComponents.Length -eq 1)) {
+        $changedServices += "template"
       }
 
       # changes to a Azure.*.Shared within a service directory should include all packages within that service directory
       if ($file.Replace('\', '/') -match ".*sdk/.*/.*\.Shared/.*") {
-        if (-not $changedServices.Contains($pathComponents[1])) {
-          $changedServices += $pathComponents[1]
-        }
+        $changedServices += $pathComponents[1]
       }
     }
+    # dedupe the changedServices list before processing
+    $changedServices = $changedServices | Get-Unique
     foreach ($changedService in $changedServices) {
       $additionalPackages = $AllPkgProps | Where-Object { $_.ServiceDirectory -eq $changedService }
 

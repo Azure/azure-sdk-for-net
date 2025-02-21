@@ -83,6 +83,18 @@ namespace Azure.ResourceManager.Storage.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FileServiceUsageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileServiceUsageResource.CreateResourceIdentifier" /> to create a <see cref="FileServiceUsageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
+        public virtual FileServiceUsageResource GetFileServiceUsageResource(ResourceIdentifier id)
+        {
+            FileServiceUsageResource.ValidateResourceId(id);
+            return new FileServiceUsageResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="FileShareResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FileShareResource.CreateResourceIdentifier" /> to create a <see cref="FileShareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
