@@ -91,7 +91,7 @@ function ProcessLink([System.Uri]$linkUri) {
   }
   elseif ($linkUri -match '^https?://crates\.io(/(?<path>(crates|users|teams)/.+))?') {
     # See comment in function below for details.
-    return ProcessCratesIoLink $linkUri $matches.path
+    return ProcessCratesIoLink $linkUri $matches['path']
   }
   else {
     return ProcessStandardLink $linkUri
