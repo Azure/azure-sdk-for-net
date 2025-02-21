@@ -1,18 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace System.ClientModel;
 
 /// <summary>
 /// Represents a provider that can provide a token.
 /// </summary>
-public interface IClaimsToken : IScopedToken
+public interface IPasswordFlowToken : IScopedToken
 {
     /// <summary>
-    /// Additional claims to be included in the token.
+    /// Gets the token endpoint URI.
     /// </summary>
-    string Claims { get; }
+    Uri TokenUri { get; }
+
+    /// <summary>
+    /// Gets the refresh token endpoint URI.
+    /// </summary>
+    Uri RefreshUri { get; }
 }
