@@ -19,11 +19,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> or <paramref name="operationalDetails"/> is null. </exception>
-        internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails) : base(resourceDetails, operationalDetails)
+        /// <param name="apiVersion"> api version of the resource properties bag. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/>, <paramref name="operationalDetails"/> or <paramref name="apiVersion"/> is null. </exception>
+        internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion) : base(resourceDetails, operationalDetails, apiVersion)
         {
             Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
             Argument.AssertNotNull(operationalDetails, nameof(operationalDetails));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/>. </summary>

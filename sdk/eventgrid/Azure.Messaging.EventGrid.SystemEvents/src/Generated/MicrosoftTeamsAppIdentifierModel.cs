@@ -47,21 +47,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
-        /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
-        internal MicrosoftTeamsAppIdentifierModel(string appId, CommunicationCloudEnvironmentModel cloud)
+        internal MicrosoftTeamsAppIdentifierModel(string appId)
         {
             Argument.AssertNotNull(appId, nameof(appId));
 
             AppId = appId;
-            Cloud = cloud;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftTeamsAppIdentifierModel(string appId, CommunicationCloudEnvironmentModel cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MicrosoftTeamsAppIdentifierModel(string appId, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppId = appId;
             Cloud = cloud;
@@ -76,6 +74,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Id of the Microsoft Teams application. </summary>
         public string AppId { get; }
         /// <summary> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </summary>
-        public CommunicationCloudEnvironmentModel Cloud { get; }
+        public CommunicationCloudEnvironmentModel? Cloud { get; }
     }
 }
