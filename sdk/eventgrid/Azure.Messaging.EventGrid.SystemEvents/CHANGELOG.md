@@ -7,6 +7,11 @@
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 - Added various new system events and properties for existing events.
 
+### Breaking Changes
+
+- MQTT event naming was fixed to use correct casing.
+- Media services events were removed as the service has been deprecated.
+
 ## 1.0.0-beta.1 (2024-06-19)
 
 ### Features Added
