@@ -148,18 +148,6 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
   )
   $additionalValidationPackages = @()
   $uniqueResultSet = @()
-  function isOther($fileName) {
-    $startsWithPrefixes = @(".config", ".devcontainer", ".github", ".vscode", "common", "doc", "eng", "samples")
-
-    $startsWith = $false
-    foreach ($prefix in $startsWithPrefixes) {
-      if ($fileName.StartsWith($prefix)) {
-        $startsWith = $true
-      }
-    }
-
-    return $startsWith
-  }
 
   # ensure we observe deleted files too
   $targetedFiles = @($diffObj.ChangedFiles + $diffObj.DeletedFiles)
@@ -189,12 +177,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
           ($pathComponents.Length -eq 1)) {
         $changedServices += "template"
       }
-
-      # changes to a Azure.*.Shared within a service directory should include all packages within that service directory
-      if ($file.Replace('\', '/') -match ".*sdk/.*/.*\.Shared/.*") {
-        $changedServices += $pathComponents[1]
-      }
     }
+
     # dedupe the changedServices list before processing
     $changedServices = $changedServices | Get-Unique
     foreach ($changedService in $changedServices) {
@@ -209,20 +193,6 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
         }
       }
     }
-  }
-
-  # handle any changes to files that are not within a package directory
-  $othersChanged = @()
-  if ($targetedFiles) {
-    $othersChanged = $targetedFiles | Where-Object { isOther($_) }
-  }
-
-  if ($othersChanged) {
-    $additionalPackages = @(
-      "Azure.Template"
-    ) | ForEach-Object { $me=$_; $AllPkgProps | Where-Object { $_.Name -eq $me } | Select-Object -First 1 }
-
-    $additionalValidationPackages += $additionalPackages
   }
 
   # walk the packages added purely for validation, if they haven't been added yet, add them
