@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+Response<TextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
 ]]></code>
 This sample shows how to call GetDeploymentAsync with all parameters.
 <code><![CDATA[
@@ -17,7 +17,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+Response<TextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
 ]]></code></example>
     </member>
     <member name="GetDeployment(string,string,CancellationToken)">
@@ -28,7 +28,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
+Response<TextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
 ]]></code>
 This sample shows how to call GetDeployment with all parameters.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
+Response<TextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentAsync(string,string,RequestContext)">
@@ -125,7 +125,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentDeleteFromResourcesState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -133,7 +133,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentDeleteFromResourcesState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentDeleteFromResourcesStatus(string,string,string,CancellationToken)">
@@ -144,7 +144,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentDeleteFromResourcesState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with all parameters.
 <code><![CDATA[
@@ -152,7 +152,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentDeleteFromResourcesState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,RequestContext)">
@@ -259,7 +259,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters.
 <code><![CDATA[
@@ -267,7 +267,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentStatus(string,string,string,CancellationToken)">
@@ -278,7 +278,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters.
 <code><![CDATA[
@@ -286,7 +286,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringDeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<TextAuthoringDeploymentState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentStatusAsync(string,string,string,RequestContext)">
@@ -393,7 +393,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringSwapDeploymentsState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatusAsync with all parameters.
 <code><![CDATA[
@@ -401,7 +401,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringSwapDeploymentsState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetSwapDeploymentsStatus(string,string,CancellationToken)">
@@ -412,7 +412,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+Response<TextAuthoringSwapDeploymentsState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatus with all parameters.
 <code><![CDATA[
@@ -420,7 +420,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+Response<TextAuthoringSwapDeploymentsState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetSwapDeploymentsStatusAsync(string,string,RequestContext)">
@@ -527,7 +527,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringAssignDeploymentResourcesState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -535,7 +535,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringAssignDeploymentResourcesState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetAssignDeploymentResourcesStatus(string,string,CancellationToken)">
@@ -546,7 +546,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<TextAuthoringAssignDeploymentResourcesState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatus with all parameters.
 <code><![CDATA[
@@ -554,7 +554,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<TextAuthoringAssignDeploymentResourcesState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)">
@@ -661,7 +661,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringUnassignDeploymentResourcesState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -669,7 +669,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringUnassignDeploymentResourcesState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetUnassignDeploymentResourcesStatus(string,string,CancellationToken)">
@@ -680,7 +680,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<TextAuthoringUnassignDeploymentResourcesState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatus with all parameters.
 <code><![CDATA[
@@ -688,7 +688,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<TextAuthoringUnassignDeploymentResourcesState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)">
@@ -825,7 +825,7 @@ TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, cred
 Operation operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 ]]></code></example>
     </member>
-    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,AnalyzeTextAuthoringDeleteDeploymentDetails,CancellationToken)">
+    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,TextAuthoringDeleteDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeleteDeploymentFromResourcesAsync.
 <code><![CDATA[
@@ -833,7 +833,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails();
+TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails();
 Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters.
@@ -842,14 +842,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails
+TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
 Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code></example>
     </member>
-    <member name="DeleteDeploymentFromResources(WaitUntil,string,string,AnalyzeTextAuthoringDeleteDeploymentDetails,CancellationToken)">
+    <member name="DeleteDeploymentFromResources(WaitUntil,string,string,TextAuthoringDeleteDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeleteDeploymentFromResources.
 <code><![CDATA[
@@ -857,7 +857,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails();
+TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails();
 Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters.
@@ -866,7 +866,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails
+TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
@@ -927,7 +927,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
 ]]></code></example>
     </member>
-    <member name="SwapDeploymentsAsync(WaitUntil,string,AnalyzeTextAuthoringSwapDeploymentsDetails,CancellationToken)">
+    <member name="SwapDeploymentsAsync(WaitUntil,string,TextAuthoringSwapDeploymentsDetails,CancellationToken)">
       <example>
 This sample shows how to call SwapDeploymentsAsync.
 <code><![CDATA[
@@ -935,7 +935,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call SwapDeploymentsAsync with all parameters.
@@ -944,11 +944,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="SwapDeployments(WaitUntil,string,AnalyzeTextAuthoringSwapDeploymentsDetails,CancellationToken)">
+    <member name="SwapDeployments(WaitUntil,string,TextAuthoringSwapDeploymentsDetails,CancellationToken)">
       <example>
 This sample shows how to call SwapDeployments.
 <code><![CDATA[
@@ -956,7 +956,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call SwapDeployments with all parameters.
@@ -965,7 +965,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
@@ -1027,7 +1027,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", content);
 ]]></code></example>
     </member>
-    <member name="AssignDeploymentResourcesAsync(WaitUntil,string,AnalyzeTextAuthoringAssignDeploymentResourcesDetails,CancellationToken)">
+    <member name="AssignDeploymentResourcesAsync(WaitUntil,string,TextAuthoringAssignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call AssignDeploymentResourcesAsync.
 <code><![CDATA[
@@ -1035,9 +1035,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
 {
-    new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+    new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
 Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
@@ -1047,14 +1047,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
 {
-    new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+    new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
 Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="AssignDeploymentResources(WaitUntil,string,AnalyzeTextAuthoringAssignDeploymentResourcesDetails,CancellationToken)">
+    <member name="AssignDeploymentResources(WaitUntil,string,TextAuthoringAssignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call AssignDeploymentResources.
 <code><![CDATA[
@@ -1062,9 +1062,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
 {
-    new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+    new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
 Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
@@ -1074,9 +1074,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
 {
-    new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+    new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
 Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
@@ -1167,7 +1167,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", content);
 ]]></code></example>
     </member>
-    <member name="UnassignDeploymentResourcesAsync(WaitUntil,string,AnalyzeTextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)">
+    <member name="UnassignDeploymentResourcesAsync(WaitUntil,string,TextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call UnassignDeploymentResourcesAsync.
 <code><![CDATA[
@@ -1175,7 +1175,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call UnassignDeploymentResourcesAsync with all parameters.
@@ -1184,11 +1184,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="UnassignDeploymentResources(WaitUntil,string,AnalyzeTextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)">
+    <member name="UnassignDeploymentResources(WaitUntil,string,TextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call UnassignDeploymentResources.
 <code><![CDATA[
@@ -1196,7 +1196,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call UnassignDeploymentResources with all parameters.
@@ -1205,7 +1205,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
@@ -1275,7 +1275,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", content);
 ]]></code></example>
     </member>
-    <member name="DeployProjectAsync(WaitUntil,string,string,AnalyzeTextAuthoringCreateDeploymentDetails,CancellationToken)">
+    <member name="DeployProjectAsync(WaitUntil,string,string,TextAuthoringCreateDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeployProjectAsync.
 <code><![CDATA[
@@ -1283,7 +1283,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
+TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
 Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeployProjectAsync with all parameters.
@@ -1292,14 +1292,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
+TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
 Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code></example>
     </member>
-    <member name="DeployProject(WaitUntil,string,string,AnalyzeTextAuthoringCreateDeploymentDetails,CancellationToken)">
+    <member name="DeployProject(WaitUntil,string,string,TextAuthoringCreateDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeployProject.
 <code><![CDATA[
@@ -1307,7 +1307,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
+TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
 Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeployProject with all parameters.
@@ -1316,7 +1316,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
+TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };

@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
+            Response<TextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
+            Response<TextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification);
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            Response<TextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            Response<TextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
@@ -207,7 +207,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringTrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringTrainingState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringTrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringTrainingState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -319,7 +319,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringTrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringTrainingState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringTrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringTrainingState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -375,7 +375,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
+            Response<TextAuthoringProjectDeletionState> response = client.GetProjectDeletionStatus("<jobId>");
         }
 
         [Test]
@@ -386,7 +386,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+            Response<TextAuthoringProjectDeletionState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
         }
 
         [Test]
@@ -465,7 +465,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
+            Response<TextAuthoringProjectDeletionState> response = client.GetProjectDeletionStatus("<jobId>");
         }
 
         [Test]
@@ -476,7 +476,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+            Response<TextAuthoringProjectDeletionState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
         }
 
         [Test]
@@ -527,8 +527,8 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-                AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+            TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+                TextAuthoringProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -545,8 +545,8 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-                AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+            TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+                TextAuthoringProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -603,8 +603,8 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-                AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+            TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+                TextAuthoringProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -621,8 +621,8 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-                AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+            TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+                TextAuthoringProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -773,7 +773,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+            TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
             Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -785,7 +785,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+            TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
             Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -891,9 +891,9 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+            TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
             {
-                Settings = new AnalyzeTextAuthoringProjectSettings
+                Settings = new TextAuthoringProjectSettings
                 {
                     ConfidenceThreshold = 123.45F,
                     AmlProjectPath = "<amlProjectPath>",
@@ -905,9 +905,9 @@ dataset = "<dataset>",
                 Description = "<description>",
             })
             {
-                Assets = new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationProjectAsset
+                Assets = new ExportedCustomAbstractiveSummarizationProjectAsset
                 {
-                    Documents = {new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
+                    Documents = {new ExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
 {
 Location = "<location>",
 Language = "<language>",
@@ -926,9 +926,9 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+            TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
             {
-                Settings = new AnalyzeTextAuthoringProjectSettings
+                Settings = new TextAuthoringProjectSettings
                 {
                     ConfidenceThreshold = 123.45F,
                     AmlProjectPath = "<amlProjectPath>",
@@ -940,9 +940,9 @@ Dataset = "<dataset>",
                 Description = "<description>",
             })
             {
-                Assets = new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationProjectAsset
+                Assets = new ExportedCustomAbstractiveSummarizationProjectAsset
                 {
-                    Documents = {new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
+                    Documents = {new ExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
 {
 Location = "<location>",
 Language = "<language>",
@@ -1007,9 +1007,9 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
+            Operation<TextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1020,9 +1020,9 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
+            Operation<TextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1125,18 +1125,18 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
+            TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
             {
-                EvaluationOptions = new AnalyzeTextAuthoringEvaluationDetails
+                EvaluationOptions = new TextAuthoringEvaluationDetails
                 {
-                    Kind = AnalyzeTextAuthoringEvaluationKind.Percentage,
+                    Kind = TextAuthoringEvaluationKind.Percentage,
                     TrainingSplitPercentage = 1234,
                     TestingSplitPercentage = 1234,
                 },
-                DataGenerationSettings = new AnalyzeTextAuthoringDataGenerationSetting(true, new AnalyzeTextAuthoringDataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
+                DataGenerationSettings = new DataGenerationSetting(true, new DataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
             };
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            Operation<TextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1147,18 +1147,18 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
+            TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
             {
-                EvaluationOptions = new AnalyzeTextAuthoringEvaluationDetails
+                EvaluationOptions = new TextAuthoringEvaluationDetails
                 {
-                    Kind = AnalyzeTextAuthoringEvaluationKind.Percentage,
+                    Kind = TextAuthoringEvaluationKind.Percentage,
                     TrainingSplitPercentage = 1234,
                     TestingSplitPercentage = 1234,
                 },
-                DataGenerationSettings = new AnalyzeTextAuthoringDataGenerationSetting(true, new AnalyzeTextAuthoringDataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
+                DataGenerationSettings = new DataGenerationSetting(true, new DataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
             };
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            Operation<TextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1205,8 +1205,8 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            Operation<TextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1217,8 +1217,8 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            Operation<TextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1279,8 +1279,8 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            Operation<TextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1291,8 +1291,8 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
-            AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+            Operation<TextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+            TextAuthoringTrainingJobResult responseData = operation.Value;
         }
     }
 }

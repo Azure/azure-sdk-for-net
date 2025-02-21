@@ -62,13 +62,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringProjectDeletionOperationState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectDeletionStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringProjectDeletionOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectDeletionState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a project deletion job. </summary>
@@ -77,13 +77,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringProjectDeletionOperationState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProjectDeletionStatus(jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringProjectDeletionOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectDeletionState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -447,10 +447,10 @@ namespace Azure.AI.Language.Text.Authoring
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private AnalyzeTextAuthoringTrainingJobResult FetchAnalyzeTextAuthoringTrainingJobResultFromAnalyzeTextAuthoringTrainingOperationState(Response response)
+        private TextAuthoringTrainingJobResult FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
-            return AnalyzeTextAuthoringTrainingJobResult.DeserializeAnalyzeTextAuthoringTrainingJobResult(resultJsonElement);
+            return TextAuthoringTrainingJobResult.DeserializeTextAuthoringTrainingJobResult(resultJsonElement);
         }
     }
 }

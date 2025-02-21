@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
+            Response<TextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+            Response<TextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
+            Response<TextAuthoringProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+            Response<TextAuthoringProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentDeleteFromResourcesState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentDeleteFromResourcesState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -277,7 +277,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentDeleteFromResourcesState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -288,7 +288,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentDeleteFromResourcesState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -333,7 +333,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -344,7 +344,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -423,7 +423,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -434,7 +434,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringDeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<TextAuthoringDeploymentState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -479,7 +479,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringSwapDeploymentsState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -490,7 +490,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringSwapDeploymentsState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -569,7 +569,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringSwapDeploymentsState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -580,7 +580,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringSwapDeploymentsState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -625,7 +625,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringAssignDeploymentResourcesState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -636,7 +636,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringAssignDeploymentResourcesState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -715,7 +715,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringAssignDeploymentResourcesState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -726,7 +726,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringAssignDeploymentResourcesState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -771,7 +771,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringUnassignDeploymentResourcesState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -782,7 +782,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringUnassignDeploymentResourcesState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -861,7 +861,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<TextAuthoringUnassignDeploymentResourcesState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -872,7 +872,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<TextAuthoringUnassignDeploymentResourcesState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -951,7 +951,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails();
+            TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails();
             Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -963,7 +963,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails();
+            TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails();
             Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -1011,7 +1011,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails
+            TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -1026,7 +1026,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringDeleteDeploymentDetails body = new AnalyzeTextAuthoringDeleteDeploymentDetails
+            TextAuthoringDeleteDeploymentDetails body = new TextAuthoringDeleteDeploymentDetails
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -1073,7 +1073,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1085,7 +1085,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1129,7 +1129,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1141,7 +1141,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringSwapDeploymentsDetails body = new AnalyzeTextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            TextAuthoringSwapDeploymentsDetails body = new TextAuthoringSwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1199,9 +1199,9 @@ region = "<region>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+            TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
             {
-new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
             Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
         }
@@ -1214,9 +1214,9 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+            TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
             {
-new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
             Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
         }
@@ -1275,9 +1275,9 @@ region = "<region>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+            TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
             {
-new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
             Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
         }
@@ -1290,9 +1290,9 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringAssignDeploymentResourcesDetails body = new AnalyzeTextAuthoringAssignDeploymentResourcesDetails(new AnalyzeTextAuthoringResourceMetadata[]
+            TextAuthoringAssignDeploymentResourcesDetails body = new TextAuthoringAssignDeploymentResourcesDetails(new TextAuthoringResourceMetadata[]
             {
-new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
+new TextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
             Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
         }
@@ -1341,7 +1341,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1353,7 +1353,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1401,7 +1401,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1413,7 +1413,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringUnassignDeploymentResourcesDetails body = new AnalyzeTextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            TextAuthoringUnassignDeploymentResourcesDetails body = new TextAuthoringUnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -1455,7 +1455,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
+            TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
             Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -1467,7 +1467,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
+            TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>");
             Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -1517,7 +1517,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
+            TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -1532,7 +1532,7 @@ new AnalyzeTextAuthoringResourceMetadata("<azureResourceId>", "<customDomain>", 
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            AnalyzeTextAuthoringCreateDeploymentDetails body = new AnalyzeTextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
+            TextAuthoringCreateDeploymentDetails body = new TextAuthoringCreateDeploymentDetails("<trainedModelLabel>")
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };

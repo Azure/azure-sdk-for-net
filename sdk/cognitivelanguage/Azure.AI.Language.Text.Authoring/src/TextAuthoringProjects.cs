@@ -25,10 +25,10 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetImportStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetImportStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetImportStatus", typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(AnalyzeTextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(AnalyzeTextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(AnalyzeTextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
-    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(AnalyzeTextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(TextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(TextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(TextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(TextAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("GetCopyProjectStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCopyProjectStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCopyProjectStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
@@ -37,25 +37,25 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("DeleteProject", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("ExportAsync", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringExportedProject), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringExportedProject), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringCopyProjectDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringCopyProjectDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringCopyProjectDetails), typeof(RequestContext))]
-    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringCopyProjectDetails), typeof(RequestContext))]
+    [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringExportedProject), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(TextAuthoringExportedProject), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringCopyProjectDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(TextAuthoringCopyProjectDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringCopyProjectDetails), typeof(RequestContext))]
+    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(TextAuthoringCopyProjectDetails), typeof(RequestContext))]
     [CodeGenSuppress("GetTrainingStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetTrainingStatus", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("TrainAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringTrainingJobDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringTrainingJobDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("TrainAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringTrainingJobDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(TextAuthoringTrainingJobDetails), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJobAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJob", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetTrainingConfigVersionsAsync", typeof(AnalyzeTextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetTrainingConfigVersions", typeof(AnalyzeTextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTrainingConfigVersionsAsync", typeof(TextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTrainingConfigVersions", typeof(TextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
 
     //[CodeGenSuppress("GetProjectsAsync", typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetProjects", typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetSupportedLanguagesAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetSupportedLanguages", typeof(AnalyzeTextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    //[CodeGenSuppress("GetSupportedLanguages", typeof(TextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetTrainingJobsAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetTrainingJobs", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     public partial class TextAuthoringProjects
@@ -86,21 +86,21 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProjectAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringProjectMetadata>> GetProjectAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringProjectMetadata>> GetProjectAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectAsync(_projectName, context).ConfigureAwait(false); // Using the member variable
-            return Response.FromValue(AnalyzeTextAuthoringProjectMetadata.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectMetadata.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProject(CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringProjectMetadata> GetProject(CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringProjectMetadata> GetProject(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProject(_projectName, context); // Using the member variable
-            return Response.FromValue(AnalyzeTextAuthoringProjectMetadata.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectMetadata.FromResponse(response), response);
         }
 
         /// <summary>
@@ -161,13 +161,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatusAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringExportProjectOperationState>> GetExportStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringExportProjectState>> GetExportStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringExportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringExportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
@@ -176,13 +176,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatus(CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringExportProjectOperationState> GetExportStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringExportProjectState> GetExportStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringExportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringExportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an import. </summary>
@@ -191,13 +191,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatusAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringImportProjectOperationState>> GetImportStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringImportProjectState>> GetImportStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetImportStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringImportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringImportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an import. </summary>
@@ -206,13 +206,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatus(CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringImportProjectOperationState> GetImportStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringImportProjectState> GetImportStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetImportStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringImportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringImportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
@@ -221,12 +221,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AuthorizeProjectCopyAsync(_projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringCopyProjectDetails.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringCopyProjectDetails.FromResponse(response), response);
         }
 
         /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
@@ -235,12 +235,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopy(CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringCopyProjectDetails> AuthorizeProjectCopy(AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringCopyProjectDetails> AuthorizeProjectCopy(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AuthorizeProjectCopy(_projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
-            return Response.FromValue(AnalyzeTextAuthoringCopyProjectDetails.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringCopyProjectDetails.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -249,13 +249,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringCopyProjectOperationState>> GetCopyProjectStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringCopyProjectState>> GetCopyProjectStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCopyProjectStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringCopyProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringCopyProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -264,13 +264,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatus(CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringCopyProjectOperationState> GetCopyProjectStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringCopyProjectState> GetCopyProjectStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCopyProjectStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringCopyProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringCopyProjectState.FromResponse(response), response);
         }
 
         /// <summary> [Protocol Method] Deletes a project. </summary>
@@ -458,8 +458,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="body"> The project data to import. </param>
         /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,AnalyzeTextAuthoringExportedProject,string,CancellationToken)']/*" />
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, AnalyzeTextAuthoringExportedProject body, string format = null, CancellationToken cancellationToken = default)
+        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)']/*" />
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, TextAuthoringExportedProject body, string format = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -474,8 +474,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="body"> The project data to import. </param>
         /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Import(WaitUntil,string,AnalyzeTextAuthoringExportedProject,string,CancellationToken)']/*" />
-        public virtual Operation Import(WaitUntil waitUntil, AnalyzeTextAuthoringExportedProject body, string format = null, CancellationToken cancellationToken = default)
+        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Import(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)']/*" />
+        public virtual Operation Import(WaitUntil waitUntil, TextAuthoringExportedProject body, string format = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -495,7 +495,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportAsync(WaitUntil,AnalyzeTextAuthoringExportedProject,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,TextAuthoringExportedProject,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -539,7 +539,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Import(WaitUntil,AnalyzeTextAuthoringExportedProject,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Import(WaitUntil,TextAuthoringExportedProject,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -577,7 +577,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="details"> The copy project info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, AnalyzeTextAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, TextAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -590,7 +590,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="details"> The copy project info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation CopyProject(WaitUntil waitUntil, AnalyzeTextAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
+        public virtual Operation CopyProject(WaitUntil waitUntil, TextAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -602,7 +602,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Gets the status for a training job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringTrainingOperationState>> GetTrainingStatusAsync(
+        public virtual async Task<Response<TextAuthoringTrainingState>> GetTrainingStatusAsync(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -611,13 +611,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTrainingStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringTrainingOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringTrainingState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a training job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringTrainingOperationState> GetTrainingStatus(
+        public virtual Response<TextAuthoringTrainingState> GetTrainingStatus(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -626,16 +626,16 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTrainingStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringTrainingOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringTrainingState.FromResponse(response), response);
         }
 
         /// <summary> Triggers a training job for a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation<AnalyzeTextAuthoringTrainingJobResult>> TrainAsync(
+        public virtual async Task<Operation<TextAuthoringTrainingJobResult>> TrainAsync(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringTrainingJobDetails details,
+            TextAuthoringTrainingJobDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -644,16 +644,16 @@ namespace Azure.AI.Language.Text.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await TrainAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeTextAuthoringTrainingJobResultFromAnalyzeTextAuthoringTrainingOperationState, ClientDiagnostics, "TextAuthoringTraining.Train");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.Train");
         }
 
         /// <summary> Triggers a training job for a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<AnalyzeTextAuthoringTrainingJobResult> Train(
+        public virtual Operation<TextAuthoringTrainingJobResult> Train(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringTrainingJobDetails details,
+            TextAuthoringTrainingJobDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -662,14 +662,14 @@ namespace Azure.AI.Language.Text.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = Train(waitUntil, _projectName, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeTextAuthoringTrainingJobResultFromAnalyzeTextAuthoringTrainingOperationState, ClientDiagnostics, "TextAuthoringTraining.Train");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.Train");
         }
 
         /// <summary> Triggers a cancellation for a running training job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation<AnalyzeTextAuthoringTrainingJobResult>> CancelTrainingJobAsync(
+        public virtual async Task<Operation<TextAuthoringTrainingJobResult>> CancelTrainingJobAsync(
             WaitUntil waitUntil,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -679,14 +679,14 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await CancelTrainingJobAsync(waitUntil, _projectName, jobId, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeTextAuthoringTrainingJobResultFromAnalyzeTextAuthoringTrainingOperationState, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob");
         }
 
         /// <summary> Triggers a cancellation for a running training job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<AnalyzeTextAuthoringTrainingJobResult> CancelTrainingJob(
+        public virtual Operation<TextAuthoringTrainingJobResult> CancelTrainingJob(
             WaitUntil waitUntil,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -696,7 +696,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = CancelTrainingJob(waitUntil, _projectName, jobId, context);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeTextAuthoringTrainingJobResultFromAnalyzeTextAuthoringTrainingOperationState, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob");
         }
 
         /// <summary>
@@ -792,7 +792,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TrainAsync(WaitUntil,AnalyzeTextAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TrainAsync(WaitUntil,TextAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -835,7 +835,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Train(WaitUntil,AnalyzeTextAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Train(WaitUntil,TextAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1212,7 +1212,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AuthorizeProjectCopyAsync(AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AuthorizeProjectCopyAsync(TextAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1254,7 +1254,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AuthorizeProjectCopy(AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AuthorizeProjectCopy(TextAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1380,7 +1380,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,AnalyzeTextAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,TextAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1423,7 +1423,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProject(WaitUntil,AnalyzeTextAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyProject(WaitUntil,TextAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

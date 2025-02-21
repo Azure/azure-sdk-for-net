@@ -15,20 +15,20 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetTrainedModel", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetEvaluationStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetEvaluationStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetModelAnalyzeTextAuthoringEvaluationSummaryAsync", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetModelAnalyzeTextAuthoringEvaluationSummary", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetModelTextAuthoringEvalSummaryAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetModelTextAuthoringEvalSummary", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetLoadSnapshotStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetLoadSnapshotStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetModelEvaluationResultsAsync", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetModelEvaluationResults", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringEvaluationDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringEvaluationDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringEvaluationDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringEvaluationDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModel", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelJobStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelJobStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateOrUpdateExportedModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringExportedModelDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateOrUpdateExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringExportedModelDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateOrUpdateExportedModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringExportedModelDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateOrUpdateExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringExportedModelDetails), typeof(CancellationToken))]
 
     //[CodeGenSuppress("GetExportedModelsAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetExportedModels", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Gets the details of a trained model. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringProjectTrainedModel>> GetTrainedModelAsync(
+        public virtual async Task<Response<TextAuthoringProjectTrainedModel>> GetTrainedModelAsync(
             string trainedModelLabel,
             CancellationToken cancellationToken = default)
         {
@@ -69,13 +69,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTrainedModelAsync(_projectName, trainedModelLabel, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringProjectTrainedModel.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a trained model. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringProjectTrainedModel> GetTrainedModel(
+        public virtual Response<TextAuthoringProjectTrainedModel> GetTrainedModel(
             string trainedModelLabel,
             CancellationToken cancellationToken = default)
         {
@@ -84,14 +84,14 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTrainedModel(_projectName, trainedModelLabel, context);
-            return Response.FromValue(AnalyzeTextAuthoringProjectTrainedModel.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an evaluation job. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringEvaluationOperationState>> GetEvaluationStatusAsync(
+        public virtual async Task<Response<TextAuthoringEvaluationState>> GetEvaluationStatusAsync(
             string trainedModelLabel,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -102,14 +102,14 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEvaluationStatusAsync(_projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringEvaluationOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringEvaluationState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an evaluation job. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringEvaluationOperationState> GetEvaluationStatus(
+        public virtual Response<TextAuthoringEvaluationState> GetEvaluationStatus(
             string trainedModelLabel,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -120,13 +120,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEvaluationStatus(_projectName, trainedModelLabel, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringEvaluationOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringEvaluationState.FromResponse(response), response);
         }
 
         /// <summary> Gets the evaluation summary of a trained model. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringEvaluationSummary>> GetModelEvaluationSummaryAsync(
+        public virtual async Task<Response<TextAuthoringEvalSummary>> GetModelEvalSummaryAsync(
             string trainedModelLabel,
             CancellationToken cancellationToken = default)
         {
@@ -134,14 +134,14 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetModelEvaluationSummaryAsync(_projectName, trainedModelLabel, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringEvaluationSummary.FromResponse(response), response);
+            Response response = await GetModelEvalSummaryAsync(_projectName, trainedModelLabel, context).ConfigureAwait(false);
+            return Response.FromValue(TextAuthoringEvalSummary.FromResponse(response), response);
         }
 
         /// <summary> Gets the evaluation summary of a trained model. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringEvaluationSummary> GetModelAnalyzeTextAuthoringEvaluationSummary(
+        public virtual Response<TextAuthoringEvalSummary> GetModelTextAuthoringEvalSummary(
             string trainedModelLabel,
             CancellationToken cancellationToken = default)
         {
@@ -149,15 +149,15 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetModelEvaluationSummary(_projectName, trainedModelLabel, context);
-            return Response.FromValue(AnalyzeTextAuthoringEvaluationSummary.FromResponse(response), response);
+            Response response = GetModelEvalSummary(_projectName, trainedModelLabel, context);
+            return Response.FromValue(TextAuthoringEvalSummary.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for loading a snapshot. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringLoadSnapshotOperationState>> GetLoadSnapshotStatusAsync(
+        public virtual async Task<Response<TextAuthoringLoadSnapshotState>> GetLoadSnapshotStatusAsync(
             string trainedModelLabel,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -168,14 +168,14 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLoadSnapshotStatusAsync(_projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringLoadSnapshotOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringLoadSnapshotState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for loading a snapshot. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringLoadSnapshotOperationState> GetLoadSnapshotStatus(
+        public virtual Response<TextAuthoringLoadSnapshotState> GetLoadSnapshotStatus(
             string trainedModelLabel,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -186,7 +186,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLoadSnapshotStatus(_projectName, trainedModelLabel, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringLoadSnapshotOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringLoadSnapshotState.FromResponse(response), response);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. </summary>
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AnalyzeTextAuthoringDocumentEvaluationResult> GetModelEvaluationResultsAsync(
+        public virtual AsyncPageable<TextAuthoringDocumentEvalResult> GetModelEvaluationResultsAsync(
             string trainedModelLabel,
             StringIndexType stringIndexType,
             int? maxCount = null,
@@ -210,7 +210,7 @@ namespace Azure.AI.Language.Text.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringDocumentEvaluationResult.DeserializeAnalyzeTextAuthoringDocumentEvaluationResult(e), ClientDiagnostics, _pipeline, "TextAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(e), ClientDiagnostics, _pipeline, "TextAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. </summary>
@@ -220,7 +220,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AnalyzeTextAuthoringDocumentEvaluationResult> GetModelEvaluationResults(
+        public virtual Pageable<TextAuthoringDocumentEvalResult> GetModelEvaluationResults(
             string trainedModelLabel,
             StringIndexType stringIndexType,
             int? maxCount = null,
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.Text.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringDocumentEvaluationResult.DeserializeAnalyzeTextAuthoringDocumentEvaluationResult(e), ClientDiagnostics, _pipeline, "TextAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(e), ClientDiagnostics, _pipeline, "TextAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -242,10 +242,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation<AnalyzeTextAuthoringEvaluationJobResult>> EvaluateModelAsync(
+        public virtual async Task<Operation<TextAuthoringEvaluationJobResult>> EvaluateModelAsync(
             WaitUntil waitUntil,
             string trainedModelLabel,
-            AnalyzeTextAuthoringEvaluationDetails details,
+            TextAuthoringEvaluationDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -255,7 +255,7 @@ namespace Azure.AI.Language.Text.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, _projectName, trainedModelLabel, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeTextAuthoringEvaluationJobResultFromAnalyzeTextAuthoringEvaluationOperationState, ClientDiagnostics, "TextAuthoringModels.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState, ClientDiagnostics, "TextAuthoringModels.EvaluateModel");
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -263,10 +263,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<AnalyzeTextAuthoringEvaluationJobResult> EvaluateModel(
+        public virtual Operation<TextAuthoringEvaluationJobResult> EvaluateModel(
             WaitUntil waitUntil,
             string trainedModelLabel,
-            AnalyzeTextAuthoringEvaluationDetails details,
+            TextAuthoringEvaluationDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -276,7 +276,7 @@ namespace Azure.AI.Language.Text.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = EvaluateModel(waitUntil, _projectName, trainedModelLabel, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeTextAuthoringEvaluationJobResultFromAnalyzeTextAuthoringEvaluationOperationState, ClientDiagnostics, "TextAuthoringModels.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState, ClientDiagnostics, "TextAuthoringModels.EvaluateModel");
         }
 
         /// <summary> Deletes a trained model. </summary>
@@ -523,7 +523,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetModelEvaluationSummaryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetModelEvalSummaryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -535,13 +535,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelAnalyzeTextAuthoringEvaluationSummaryAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
+        /// <include file="Generated/Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelTextAuthoringEvalSummaryAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetModelEvalSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelAnalyzeTextAuthoringEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelTextAuthoringEvalSummary");
             scope.Start();
             try
             {
@@ -565,7 +565,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetModelAnalyzeTextAuthoringEvaluationSummary(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetModelTextAuthoringEvalSummary(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -577,13 +577,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelAnalyzeTextAuthoringEvaluationSummary(string,string,RequestContext)']/*" />
-        public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context)
+        /// <include file="Generated/Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelTextAuthoringEvalSummary(string,string,RequestContext)']/*" />
+        public virtual Response GetModelEvalSummary(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelAnalyzeTextAuthoringEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelTextAuthoringEvalSummary");
             scope.Start();
             try
             {
@@ -771,7 +771,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,string,AnalyzeTextAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,string,TextAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -816,7 +816,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,string,AnalyzeTextAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,string,TextAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -854,7 +854,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Gets the details of an exported model. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringExportedTrainedModel>> GetExportedModelAsync(
+        public virtual async Task<Response<TextAuthoringExportedTrainedModel>> GetExportedModelAsync(
             string exportedModelName,
             CancellationToken cancellationToken = default)
         {
@@ -863,13 +863,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelAsync(_projectName, exportedModelName, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringExportedTrainedModel.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringExportedTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of an exported model. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringExportedTrainedModel> GetExportedModel(
+        public virtual Response<TextAuthoringExportedTrainedModel> GetExportedModel(
             string exportedModelName,
             CancellationToken cancellationToken = default)
         {
@@ -878,14 +878,14 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModel(_projectName, exportedModelName, context);
-            return Response.FromValue(AnalyzeTextAuthoringExportedTrainedModel.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringExportedTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringExportedModelOperationState>> GetExportedModelJobStatusAsync(
+        public virtual async Task<Response<TextAuthoringExportedModelState>> GetExportedModelJobStatusAsync(
             string exportedModelName,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -896,14 +896,14 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelJobStatusAsync(_projectName, exportedModelName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringExportedModelOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringExportedModelState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringExportedModelOperationState> GetExportedModelJobStatus(
+        public virtual Response<TextAuthoringExportedModelState> GetExportedModelJobStatus(
             string exportedModelName,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -914,7 +914,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModelJobStatus(_projectName, exportedModelName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringExportedModelOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringExportedModelState.FromResponse(response), response);
         }
 
         /// <summary> Creates a new exported model or replaces an existing one. </summary>
@@ -927,7 +927,7 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(
             WaitUntil waitUntil,
             string exportedModelName,
-            AnalyzeTextAuthoringExportedModelDetails details,
+            TextAuthoringExportedModelDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -949,7 +949,7 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual Operation CreateOrUpdateExportedModel(
             WaitUntil waitUntil,
             string exportedModelName,
-            AnalyzeTextAuthoringExportedModelDetails details,
+            TextAuthoringExportedModelDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1179,7 +1179,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,string,AnalyzeTextAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,string,TextAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1224,7 +1224,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,string,AnalyzeTextAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,string,TextAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

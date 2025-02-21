@@ -63,14 +63,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetExportedModelManifestAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringExportedModelManifest>> GetExportedModelManifestAsync(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExportedModelManifest>> GetExportedModelManifestAsync(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelManifestAsync(projectName, exportedModelName, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringExportedModelManifest.FromResponse(response), response);
+            return Response.FromValue(ExportedModelManifest.FromResponse(response), response);
         }
 
         /// <summary> Gets the details and URL needed to download the exported model. </summary>
@@ -80,14 +80,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetExportedModelManifest(string,string,CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringExportedModelManifest> GetExportedModelManifest(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
+        public virtual Response<ExportedModelManifest> GetExportedModelManifest(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModelManifest(projectName, exportedModelName, context);
-            return Response.FromValue(AnalyzeTextAuthoringExportedModelManifest.FromResponse(response), response);
+            return Response.FromValue(ExportedModelManifest.FromResponse(response), response);
         }
 
         /// <summary>
@@ -257,14 +257,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringEvaluationSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringEvalSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetModelEvaluationSummaryAsync(projectName, trainedModelLabel, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringEvaluationSummary.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringEvalSummary.FromResponse(response), response);
         }
 
         /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
@@ -274,14 +274,98 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringEvaluationSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringEvalSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetModelEvaluationSummary(projectName, trainedModelLabel, context);
-            return Response.FromValue(AnalyzeTextAuthoringEvaluationSummary.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringEvalSummary.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationSummaryAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelEvaluationSummary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationSummary(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,RequestContext)']/*" />
+        public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelEvaluationSummary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
@@ -734,10 +818,10 @@ namespace Azure.AI.Language.Text.Authoring
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        private AnalyzeTextAuthoringEvaluationJobResult FetchAnalyzeTextAuthoringEvaluationJobResultFromAnalyzeTextAuthoringEvaluationOperationState(Response response)
+        private TextAuthoringEvaluationJobResult FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
-            return AnalyzeTextAuthoringEvaluationJobResult.DeserializeAnalyzeTextAuthoringEvaluationJobResult(resultJsonElement);
+            return TextAuthoringEvaluationJobResult.DeserializeTextAuthoringEvaluationJobResult(resultJsonElement);
         }
     }
 }

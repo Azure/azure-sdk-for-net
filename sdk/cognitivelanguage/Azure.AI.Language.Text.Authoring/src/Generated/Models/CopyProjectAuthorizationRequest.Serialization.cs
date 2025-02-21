@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            AnalyzeTextAuthoringProjectKind projectKind = default;
+            TextAuthoringProjectKind projectKind = default;
             string storageInputContainerName = default;
             bool? allowOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new AnalyzeTextAuthoringProjectKind(property.Value.GetString());
+                    projectKind = new TextAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageInputContainerName"u8))

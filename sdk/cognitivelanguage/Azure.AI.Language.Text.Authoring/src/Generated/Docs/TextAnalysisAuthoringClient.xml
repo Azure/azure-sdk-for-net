@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjectsAsync())
+await foreach (TextAuthoringProjectMetadata item in client.GetProjectsAsync())
 {
 }
 ]]></code>
@@ -19,7 +19,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -32,7 +32,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjects())
+foreach (TextAuthoringProjectMetadata item in client.GetProjects())
 {
 }
 ]]></code>
@@ -42,7 +42,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -147,7 +147,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeploymentsAsync("<projectName>"))
+await foreach (TextAuthoringProjectDeployment item in client.GetDeploymentsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -157,7 +157,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeploymentsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringProjectDeployment item in client.GetDeploymentsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -170,7 +170,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeployments("<projectName>"))
+foreach (TextAuthoringProjectDeployment item in client.GetDeployments("<projectName>"))
 {
 }
 ]]></code>
@@ -180,7 +180,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeployments("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringProjectDeployment item in client.GetDeployments("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -275,7 +275,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
+await foreach (TextAuthoringExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -285,7 +285,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -298,7 +298,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModels("<projectName>"))
+foreach (TextAuthoringExportedTrainedModel item in client.GetExportedModels("<projectName>"))
 {
 }
 ]]></code>
@@ -308,7 +308,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -395,7 +395,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
+await foreach (TextAuthoringProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -405,7 +405,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -418,7 +418,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
+foreach (TextAuthoringProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
 {
 }
 ]]></code>
@@ -428,7 +428,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -519,7 +519,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
+await foreach (TextAuthoringAssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -529,7 +529,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringAssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -542,7 +542,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
+foreach (TextAuthoringAssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
 {
 }
 ]]></code>
@@ -552,7 +552,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringAssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -623,7 +623,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobsAsync("<projectName>"))
+await foreach (TextAuthoringTrainingState item in client.GetTrainingJobsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -633,7 +633,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringTrainingState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -646,7 +646,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobs("<projectName>"))
+foreach (TextAuthoringTrainingState item in client.GetTrainingJobs("<projectName>"))
 {
 }
 ]]></code>
@@ -656,7 +656,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringTrainingState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -799,7 +799,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync())
+await foreach (TextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync())
 {
 }
 ]]></code>
@@ -809,7 +809,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -822,7 +822,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments())
+foreach (TextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments())
 {
 }
 ]]></code>
@@ -832,7 +832,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments(maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -903,7 +903,7 @@ foreach (BinaryData item in client.GetAssignedResourceDeployments(1234, 1234, 12
 }
 ]]></code></example>
     </member>
-    <member name="GetSupportedLanguagesAsync(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
+    <member name="GetSupportedLanguagesAsync(TextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetSupportedLanguagesAsync.
 <code><![CDATA[
@@ -911,7 +911,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguagesAsync())
+await foreach (TextAuthoringSupportedLanguage item in client.GetSupportedLanguagesAsync())
 {
 }
 ]]></code>
@@ -921,12 +921,12 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguagesAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringSupportedLanguage item in client.GetSupportedLanguagesAsync(projectKind: TextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetSupportedLanguages(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
+    <member name="GetSupportedLanguages(TextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetSupportedLanguages.
 <code><![CDATA[
@@ -934,7 +934,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguages())
+foreach (TextAuthoringSupportedLanguage item in client.GetSupportedLanguages())
 {
 }
 ]]></code>
@@ -944,7 +944,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguages(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringSupportedLanguage item in client.GetSupportedLanguages(projectKind: TextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -1015,7 +1015,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
+await foreach (TextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
 {
 }
 ]]></code>
@@ -1025,7 +1025,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
+await foreach (TextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
 {
 }
 ]]></code></example>
@@ -1038,7 +1038,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntities())
+foreach (TextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntities())
 {
 }
 ]]></code>
@@ -1048,7 +1048,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntities())
+foreach (TextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntities())
 {
 }
 ]]></code></example>
@@ -1115,7 +1115,7 @@ foreach (BinaryData item in client.GetSupportedPrebuiltEntities(null))
 }
 ]]></code></example>
     </member>
-    <member name="GetTrainingConfigVersionsAsync(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
+    <member name="GetTrainingConfigVersionsAsync(TextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetTrainingConfigVersionsAsync.
 <code><![CDATA[
@@ -1123,7 +1123,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersionsAsync())
+await foreach (TextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersionsAsync())
 {
 }
 ]]></code>
@@ -1133,12 +1133,12 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-await foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (TextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(projectKind: TextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetTrainingConfigVersions(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
+    <member name="GetTrainingConfigVersions(TextAuthoringProjectKind?,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetTrainingConfigVersions.
 <code><![CDATA[
@@ -1146,7 +1146,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersions())
+foreach (TextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersions())
 {
 }
 ]]></code>
@@ -1156,7 +1156,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersions(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (TextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersions(projectKind: TextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>

@@ -17,20 +17,20 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetDeploymentStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetSwapDeploymentsStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetSwapDeploymentsStatus", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("SwapDeploymentsAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringSwapDeploymentsDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("SwapDeployments", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringSwapDeploymentsDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeployProjectAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringCreateDeploymentDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeployProject", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringCreateDeploymentDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteDeploymentFromResourcesAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteDeploymentFromResources", typeof(WaitUntil), typeof(string), typeof(string), typeof(AnalyzeTextAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("SwapDeploymentsAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringSwapDeploymentsDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("SwapDeployments", typeof(WaitUntil), typeof(string), typeof(TextAuthoringSwapDeploymentsDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeployProjectAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringCreateDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeployProject", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringCreateDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteDeploymentFromResourcesAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteDeploymentFromResources", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetAssignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetAssignDeploymentResourcesStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetUnassignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetUnassignDeploymentResourcesStatus", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("AssignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringAssignDeploymentResourcesDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("AssignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringAssignDeploymentResourcesDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("UnassignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringUnassignDeploymentResourcesDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("UnassignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(AnalyzeTextAuthoringUnassignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("AssignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringAssignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("AssignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(TextAuthoringAssignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("UnassignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringUnassignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("UnassignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(TextAuthoringUnassignDeploymentResourcesDetails), typeof(CancellationToken))]
 
     //[CodeGenSuppress("GetDeploymentsAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetDeployments", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
@@ -69,32 +69,32 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Gets the details of a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringProjectDeployment>> GetDeploymentAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringProjectDeployment>> GetDeploymentAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentAsync(_projectName, _deploymentName, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringProjectDeployment.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectDeployment.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringProjectDeployment> GetDeployment(CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringProjectDeployment> GetDeployment(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeployment(_projectName, _deploymentName, context);
-            return Response.FromValue(AnalyzeTextAuthoringProjectDeployment.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectDeployment.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState>> GetDeploymentDeleteFromResourcesStatusAsync(
+        public virtual async Task<Response<TextAuthoringDeploymentDeleteFromResourcesState>> GetDeploymentDeleteFromResourcesStatusAsync(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -103,13 +103,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentDeleteFromResourcesStatusAsync(_projectName, _deploymentName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState> GetDeploymentDeleteFromResourcesStatus(
+        public virtual Response<TextAuthoringDeploymentDeleteFromResourcesState> GetDeploymentDeleteFromResourcesStatus(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -118,13 +118,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeploymentDeleteFromResourcesStatus(_projectName, _deploymentName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringDeploymentOperationState>> GetDeploymentStatusAsync(
+        public virtual async Task<Response<TextAuthoringDeploymentState>> GetDeploymentStatusAsync(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -133,13 +133,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentStatusAsync(_projectName, _deploymentName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringDeploymentOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringDeploymentOperationState> GetDeploymentStatus(
+        public virtual Response<TextAuthoringDeploymentState> GetDeploymentStatus(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -148,33 +148,33 @@ namespace Azure.AI.Language.Text.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeploymentStatus(_projectName, _deploymentName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringDeploymentOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing swap deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeTextAuthoringSwapDeploymentsOperationState>> GetSwapDeploymentsStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringSwapDeploymentsState>> GetSwapDeploymentsStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetSwapDeploymentsStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringSwapDeploymentsOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringSwapDeploymentsState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing swap deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeTextAuthoringSwapDeploymentsOperationState> GetSwapDeploymentsStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringSwapDeploymentsState> GetSwapDeploymentsStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSwapDeploymentsStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringSwapDeploymentsOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringSwapDeploymentsState.FromResponse(response), response);
         }
 
         /// <summary> Swaps two existing deployments with each other. </summary>
@@ -183,7 +183,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> SwapDeploymentsAsync(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringSwapDeploymentsDetails details,
+            TextAuthoringSwapDeploymentsDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -200,7 +200,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation SwapDeployments(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringSwapDeploymentsDetails details,
+            TextAuthoringSwapDeploymentsDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -217,7 +217,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> DeployProjectAsync(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringCreateDeploymentDetails details,
+            TextAuthoringCreateDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -235,7 +235,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation DeployProject(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringCreateDeploymentDetails details,
+            TextAuthoringCreateDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -253,7 +253,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringDeleteDeploymentDetails details,
+            TextAuthoringDeleteDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -271,7 +271,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation DeleteDeploymentFromResources(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringDeleteDeploymentDetails details,
+            TextAuthoringDeleteDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -665,7 +665,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,AnalyzeTextAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,TextAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -708,7 +708,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,AnalyzeTextAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,TextAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -751,7 +751,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,AnalyzeTextAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,TextAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -796,7 +796,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeployProject(WaitUntil,AnalyzeTextAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeployProject(WaitUntil,TextAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -841,7 +841,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil, AnalyzeTextAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil, TextAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -886,7 +886,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,AnalyzeTextAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,TextAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -927,14 +927,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Generated/Docs/TextAuthoringDeployments.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringAssignDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssignDeploymentResourcesStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringAssignDeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringAssignDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing assign deployment resources job. </summary>
@@ -942,14 +942,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AnalyzeTextAuthoringAssignDeploymentResourcesOperationState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringAssignDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssignDeploymentResourcesStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringAssignDeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringAssignDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -957,14 +957,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringUnassignDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUnassignDeploymentResourcesStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringUnassignDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -972,14 +972,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringUnassignDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUnassignDeploymentResourcesStatus(_projectName, jobId, context);
-            return Response.FromValue(AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringUnassignDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
@@ -988,7 +988,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> AssignDeploymentResourcesAsync(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringAssignDeploymentResourcesDetails details,
+            TextAuthoringAssignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1005,7 +1005,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation AssignDeploymentResources(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringAssignDeploymentResourcesDetails details,
+            TextAuthoringAssignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1022,7 +1022,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> UnassignDeploymentResourcesAsync(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringUnassignDeploymentResourcesDetails details,
+            TextAuthoringUnassignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1039,7 +1039,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation UnassignDeploymentResources(
             WaitUntil waitUntil,
-            AnalyzeTextAuthoringUnassignDeploymentResourcesDetails details,
+            TextAuthoringUnassignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1228,7 +1228,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignDeploymentResourcesAsync(WaitUntil,AnalyzeTextAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignDeploymentResourcesAsync(WaitUntil,TextAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1271,7 +1271,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignDeploymentResources(WaitUntil,AnalyzeTextAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignDeploymentResources(WaitUntil,TextAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1314,7 +1314,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignDeploymentResourcesAsync(WaitUntil,AnalyzeTextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignDeploymentResourcesAsync(WaitUntil,TextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1357,7 +1357,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignDeploymentResources(WaitUntil,AnalyzeTextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignDeploymentResources(WaitUntil,TextAuthoringUnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

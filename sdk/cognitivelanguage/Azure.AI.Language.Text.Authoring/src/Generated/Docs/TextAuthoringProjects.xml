@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="AuthorizeProjectCopyAsync(string,AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)">
+    <member name="AuthorizeProjectCopyAsync(string,TextAuthoringProjectKind,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeProjectCopyAsync.
 <code><![CDATA[
@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
+Response<TextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification);
 ]]></code>
 This sample shows how to call AuthorizeProjectCopyAsync with all parameters.
 <code><![CDATA[
@@ -17,10 +17,10 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+Response<TextAuthoringCopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
-    <member name="AuthorizeProjectCopy(string,AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)">
+    <member name="AuthorizeProjectCopy(string,TextAuthoringProjectKind,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeProjectCopy.
 <code><![CDATA[
@@ -28,7 +28,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
+Response<TextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification);
 ]]></code>
 This sample shows how to call AuthorizeProjectCopy with all parameters.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+Response<TextAuthoringCopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", TextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
     <member name="AuthorizeProjectCopyAsync(string,RequestContent,RequestContext)">
@@ -137,7 +137,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringTrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringTrainingState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetTrainingStatusAsync with all parameters.
 <code><![CDATA[
@@ -145,7 +145,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringTrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+Response<TextAuthoringTrainingState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetTrainingStatus(string,string,CancellationToken)">
@@ -156,7 +156,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringTrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+Response<TextAuthoringTrainingState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetTrainingStatus with all parameters.
 <code><![CDATA[
@@ -164,7 +164,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringTrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+Response<TextAuthoringTrainingState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetTrainingStatusAsync(string,string,RequestContext)">
@@ -301,7 +301,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+Response<TextAuthoringProjectDeletionState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code>
 This sample shows how to call GetProjectDeletionStatusAsync with all parameters.
 <code><![CDATA[
@@ -309,7 +309,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+Response<TextAuthoringProjectDeletionState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code></example>
     </member>
     <member name="GetProjectDeletionStatus(string,CancellationToken)">
@@ -320,7 +320,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
+Response<TextAuthoringProjectDeletionState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code>
 This sample shows how to call GetProjectDeletionStatus with all parameters.
 <code><![CDATA[
@@ -328,7 +328,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<AnalyzeTextAuthoringProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
+Response<TextAuthoringProjectDeletionState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code></example>
     </member>
     <member name="GetProjectDeletionStatusAsync(string,RequestContext)">
@@ -427,7 +427,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetP
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="CopyProjectAsync(WaitUntil,string,AnalyzeTextAuthoringCopyProjectDetails,CancellationToken)">
+    <member name="CopyProjectAsync(WaitUntil,string,TextAuthoringCopyProjectDetails,CancellationToken)">
       <example>
 This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
@@ -435,8 +435,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+TextAuthoringProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -450,8 +450,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+TextAuthoringProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -460,7 +460,7 @@ DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="CopyProject(WaitUntil,string,AnalyzeTextAuthoringCopyProjectDetails,CancellationToken)">
+    <member name="CopyProject(WaitUntil,string,TextAuthoringCopyProjectDetails,CancellationToken)">
       <example>
 This sample shows how to call CopyProject.
 <code><![CDATA[
@@ -468,8 +468,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+TextAuthoringProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -483,8 +483,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringCopyProjectDetails body = new AnalyzeTextAuthoringCopyProjectDetails(
-AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
+TextAuthoringCopyProjectDetails body = new TextAuthoringCopyProjectDetails(
+TextAuthoringProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
@@ -643,7 +643,7 @@ TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credent
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
     </member>
-    <member name="ImportAsync(WaitUntil,string,AnalyzeTextAuthoringExportedProject,string,CancellationToken)">
+    <member name="ImportAsync(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)">
       <example>
 This sample shows how to call ImportAsync.
 <code><![CDATA[
@@ -651,7 +651,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
 Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call ImportAsync with all parameters.
@@ -660,9 +660,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
 {
-    Settings = new AnalyzeTextAuthoringProjectSettings
+    Settings = new TextAuthoringProjectSettings
     {
         ConfidenceThreshold = 123.45F,
         AmlProjectPath = "<amlProjectPath>",
@@ -674,9 +674,9 @@ AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProje
     Description = "<description>",
 })
 {
-    Assets = new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationProjectAsset
+    Assets = new ExportedCustomAbstractiveSummarizationProjectAsset
     {
-        Documents = {new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
+        Documents = {new ExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
         {
             Location = "<location>",
             Language = "<language>",
@@ -687,7 +687,7 @@ AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProje
 Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body, format: "<format>");
 ]]></code></example>
     </member>
-    <member name="Import(WaitUntil,string,AnalyzeTextAuthoringExportedProject,string,CancellationToken)">
+    <member name="Import(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)">
       <example>
 This sample shows how to call Import.
 <code><![CDATA[
@@ -695,7 +695,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
 Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call Import with all parameters.
@@ -704,9 +704,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+TextAuthoringExportedProject body = new TextAuthoringExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new TextAuthoringCreateProjectDetails(TextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
 {
-    Settings = new AnalyzeTextAuthoringProjectSettings
+    Settings = new TextAuthoringProjectSettings
     {
         ConfidenceThreshold = 123.45F,
         AmlProjectPath = "<amlProjectPath>",
@@ -718,9 +718,9 @@ AnalyzeTextAuthoringExportedProject body = new AnalyzeTextAuthoringExportedProje
     Description = "<description>",
 })
 {
-    Assets = new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationProjectAsset
+    Assets = new ExportedCustomAbstractiveSummarizationProjectAsset
     {
-        Documents = {new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
+        Documents = {new ExportedCustomAbstractiveSummarizationDocument("<summaryLocation>")
         {
             Location = "<location>",
             Language = "<language>",
@@ -865,7 +865,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.Import(WaitUntil.Completed, "<projectName>", content, format: "<format>");
 ]]></code></example>
     </member>
-    <member name="TrainAsync(WaitUntil,string,AnalyzeTextAuthoringTrainingJobDetails,CancellationToken)">
+    <member name="TrainAsync(WaitUntil,string,TextAuthoringTrainingJobDetails,CancellationToken)">
       <example>
 This sample shows how to call TrainAsync.
 <code><![CDATA[
@@ -873,9 +873,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
+Operation<TextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call TrainAsync with all parameters.
 <code><![CDATA[
@@ -883,21 +883,21 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
+TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
 {
-    EvaluationOptions = new AnalyzeTextAuthoringEvaluationDetails
+    EvaluationOptions = new TextAuthoringEvaluationDetails
     {
-        Kind = AnalyzeTextAuthoringEvaluationKind.Percentage,
+        Kind = TextAuthoringEvaluationKind.Percentage,
         TrainingSplitPercentage = 1234,
         TestingSplitPercentage = 1234,
     },
-    DataGenerationSettings = new AnalyzeTextAuthoringDataGenerationSetting(true, new AnalyzeTextAuthoringDataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
+    DataGenerationSettings = new DataGenerationSetting(true, new DataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
 };
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+Operation<TextAuthoringTrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="Train(WaitUntil,string,AnalyzeTextAuthoringTrainingJobDetails,CancellationToken)">
+    <member name="Train(WaitUntil,string,TextAuthoringTrainingJobDetails,CancellationToken)">
       <example>
 This sample shows how to call Train.
 <code><![CDATA[
@@ -905,9 +905,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
+Operation<TextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call Train with all parameters.
 <code><![CDATA[
@@ -915,18 +915,18 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-AnalyzeTextAuthoringTrainingJobDetails body = new AnalyzeTextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
+TextAuthoringTrainingJobDetails body = new TextAuthoringTrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
 {
-    EvaluationOptions = new AnalyzeTextAuthoringEvaluationDetails
+    EvaluationOptions = new TextAuthoringEvaluationDetails
     {
-        Kind = AnalyzeTextAuthoringEvaluationKind.Percentage,
+        Kind = TextAuthoringEvaluationKind.Percentage,
         TrainingSplitPercentage = 1234,
         TestingSplitPercentage = 1234,
     },
-    DataGenerationSettings = new AnalyzeTextAuthoringDataGenerationSetting(true, new AnalyzeTextAuthoringDataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
+    DataGenerationSettings = new DataGenerationSetting(true, new DataGenerationConnectionInfo("<resourceId>", "<deploymentName>")),
 };
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+Operation<TextAuthoringTrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
     <member name="TrainAsync(WaitUntil,string,RequestContent,RequestContext)">
@@ -1069,8 +1069,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+Operation<TextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call CancelTrainingJobAsync with all parameters.
 <code><![CDATA[
@@ -1078,8 +1078,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+Operation<TextAuthoringTrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
     <member name="CancelTrainingJob(WaitUntil,string,string,CancellationToken)">
@@ -1090,8 +1090,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+Operation<TextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call CancelTrainingJob with all parameters.
 <code><![CDATA[
@@ -1099,8 +1099,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<AnalyzeTextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
-AnalyzeTextAuthoringTrainingJobResult responseData = operation.Value;
+Operation<TextAuthoringTrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+TextAuthoringTrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
     <member name="CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)">

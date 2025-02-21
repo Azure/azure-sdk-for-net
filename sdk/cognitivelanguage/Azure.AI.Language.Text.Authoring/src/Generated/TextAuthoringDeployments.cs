@@ -61,14 +61,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringDeployments.xml" path="doc/members/member[@name='GetDeploymentAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextAuthoringProjectDeployment>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringProjectDeployment>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentAsync(projectName, deploymentName, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextAuthoringProjectDeployment.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectDeployment.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a deployment. </summary>
@@ -78,14 +78,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAuthoringDeployments.xml" path="doc/members/member[@name='GetDeployment(string,string,CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextAuthoringProjectDeployment> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringProjectDeployment> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeployment(projectName, deploymentName, context);
-            return Response.FromValue(AnalyzeTextAuthoringProjectDeployment.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringProjectDeployment.FromResponse(response), response);
         }
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method

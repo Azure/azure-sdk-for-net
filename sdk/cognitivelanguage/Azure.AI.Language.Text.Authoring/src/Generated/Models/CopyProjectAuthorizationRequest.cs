@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationRequest"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
-        internal CopyProjectAuthorizationRequest(AnalyzeTextAuthoringProjectKind projectKind)
+        internal CopyProjectAuthorizationRequest(TextAuthoringProjectKind projectKind)
         {
             ProjectKind = projectKind;
         }
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopyProjectAuthorizationRequest(AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName, bool? allowOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CopyProjectAuthorizationRequest(TextAuthoringProjectKind projectKind, string storageInputContainerName, bool? allowOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;
@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Represents the project kind. </summary>
-        public AnalyzeTextAuthoringProjectKind ProjectKind { get; }
+        public TextAuthoringProjectKind ProjectKind { get; }
         /// <summary> The name of the storage container. </summary>
         public string StorageInputContainerName { get; }
         /// <summary> Whether to allow an existing project to be overwritten using the resulting copy authorization. </summary>
