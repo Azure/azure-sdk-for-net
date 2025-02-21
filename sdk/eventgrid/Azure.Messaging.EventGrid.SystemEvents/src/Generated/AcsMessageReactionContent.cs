@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Encoder disconnected event data. Schema of the Data property of an EventGridEvent for a Microsoft.Media.LiveEventEncoderDisconnected event. </summary>
-    public partial class MediaLiveEventEncoderDisconnectedEventData
+    /// <summary> Message Reaction Content. </summary>
+    public partial class AcsMessageReactionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderDisconnectedEventData"/>. </summary>
-        internal MediaLiveEventEncoderDisconnectedEventData()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/>. </summary>
+        /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
+        internal AcsMessageReactionContent(string messageId)
         {
+            Argument.AssertNotNull(messageId, nameof(messageId));
+
+            MessageId = messageId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderDisconnectedEventData"/>. </summary>
-        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
-        /// <param name="streamId"> Gets the stream Id. </param>
-        /// <param name="encoderIp"> Gets the remote IP. </param>
-        /// <param name="encoderPort"> Gets the remote port. </param>
-        /// <param name="resultCode"> Gets the result code. </param>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/>. </summary>
+        /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
+        /// <param name="emoji"> Optional. Unicode escape sequence of the emoji. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MediaLiveEventEncoderDisconnectedEventData(string ingestUrl, string streamId, string encoderIp, string encoderPort, string resultCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsMessageReactionContent(string messageId, string emoji, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IngestUrl = ingestUrl;
-            StreamId = streamId;
-            EncoderIp = encoderIp;
-            EncoderPort = encoderPort;
-            ResultCode = resultCode;
+            MessageId = messageId;
+            Emoji = emoji;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the ingest URL provided by the live event. </summary>
-        public string IngestUrl { get; }
-        /// <summary> Gets the stream Id. </summary>
-        public string StreamId { get; }
-        /// <summary> Gets the remote IP. </summary>
-        public string EncoderIp { get; }
-        /// <summary> Gets the remote port. </summary>
-        public string EncoderPort { get; }
-        /// <summary> Gets the result code. </summary>
-        public string ResultCode { get; }
+        /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/> for deserialization. </summary>
+        internal AcsMessageReactionContent()
+        {
+        }
+
+        /// <summary> Required. WhatsApp message ID of the message that the emoji is applied to. </summary>
+        public string MessageId { get; }
+        /// <summary> Optional. Unicode escape sequence of the emoji. </summary>
+        public string Emoji { get; }
     }
 }

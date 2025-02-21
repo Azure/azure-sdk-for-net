@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class MediaJobErrorDetail : IUtf8JsonSerializable, IJsonModel<MediaJobErrorDetail>
+    public partial class AcsMessageReactionContent : IUtf8JsonSerializable, IJsonModel<AcsMessageReactionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobErrorDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMessageReactionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MediaJobErrorDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AcsMessageReactionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaJobErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReactionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobErrorDetail)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsMessageReactionContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Code))
+            writer.WritePropertyName("messageId"u8);
+            writer.WriteStringValue(MessageId);
+            if (Optional.IsDefined(Emoji))
             {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                writer.WritePropertyName("emoji"u8);
+                writer.WriteStringValue(Emoji);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +58,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        MediaJobErrorDetail IJsonModel<MediaJobErrorDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AcsMessageReactionContent IJsonModel<AcsMessageReactionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaJobErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReactionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobErrorDetail)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsMessageReactionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMediaJobErrorDetail(document.RootElement, options);
+            return DeserializeAcsMessageReactionContent(document.RootElement, options);
         }
 
-        internal static MediaJobErrorDetail DeserializeMediaJobErrorDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AcsMessageReactionContent DeserializeAcsMessageReactionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,20 +78,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            string code = default;
-            string message = default;
+            string messageId = default;
+            string emoji = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"u8))
+                if (property.NameEquals("messageId"u8))
                 {
-                    code = property.Value.GetString();
+                    messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (property.NameEquals("emoji"u8))
                 {
-                    message = property.Value.GetString();
+                    emoji = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -103,46 +100,46 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaJobErrorDetail(code, message, serializedAdditionalRawData);
+            return new AcsMessageReactionContent(messageId, emoji, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MediaJobErrorDetail>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AcsMessageReactionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaJobErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReactionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobErrorDetail)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsMessageReactionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MediaJobErrorDetail IPersistableModel<MediaJobErrorDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AcsMessageReactionContent IPersistableModel<AcsMessageReactionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaJobErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReactionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMediaJobErrorDetail(document.RootElement, options);
+                        return DeserializeAcsMessageReactionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobErrorDetail)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsMessageReactionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MediaJobErrorDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AcsMessageReactionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MediaJobErrorDetail FromResponse(Response response)
+        internal static AcsMessageReactionContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMediaJobErrorDetail(document.RootElement);
+            return DeserializeAcsMessageReactionContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

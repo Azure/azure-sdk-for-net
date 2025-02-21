@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ImportRDBCompleted event. </summary>
-    public partial class RedisImportRDBCompletedEventData
+    public partial class RedisImportRdbCompletedEventData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisImportRDBCompletedEventData"/>. </summary>
-        /// <param name="timestamp"> The time at which the event occurred. </param>
-        internal RedisImportRDBCompletedEventData(DateTimeOffset timestamp)
+        /// <summary> Initializes a new instance of <see cref="RedisImportRdbCompletedEventData"/>. </summary>
+        internal RedisImportRdbCompletedEventData()
         {
-            Timestamp = timestamp;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisImportRDBCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisImportRdbCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisImportRDBCompletedEventData(DateTimeOffset timestamp, string name, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisImportRdbCompletedEventData(DateTimeOffset? timestamp, string name, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             Name = name;
@@ -65,13 +63,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisImportRDBCompletedEventData"/> for deserialization. </summary>
-        internal RedisImportRDBCompletedEventData()
-        {
-        }
-
         /// <summary> The time at which the event occurred. </summary>
-        public DateTimeOffset Timestamp { get; }
+        public DateTimeOffset? Timestamp { get; }
         /// <summary> The name of this event. </summary>
         public string Name { get; }
         /// <summary> The status of this event. Failed or  succeeded. </summary>

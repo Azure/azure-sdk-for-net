@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Details of JobOutput errors. </summary>
-    public partial class MediaJobErrorDetail
+    /// <summary> Policy run status of an account in a Blob Management cycle. </summary>
+    public partial class StorageLifecyclePolicyRunSummary
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MediaJobErrorDetail"/>. </summary>
-        internal MediaJobErrorDetail()
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyRunSummary"/>. </summary>
+        /// <param name="completionStatus"> Policy status can be Completed/CompletedWithError/Incomplete. </param>
+        internal StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus)
         {
+            CompletionStatus = completionStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaJobErrorDetail"/>. </summary>
-        /// <param name="code"> Code describing the error detail. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyRunSummary"/>. </summary>
+        /// <param name="completionStatus"> Policy status can be Completed/CompletedWithError/Incomplete. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MediaJobErrorDetail(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Code = code;
-            Message = message;
+            CompletionStatus = completionStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Code describing the error detail. </summary>
-        public string Code { get; }
-        /// <summary> A human-readable representation of the error. </summary>
-        public string Message { get; }
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyRunSummary"/> for deserialization. </summary>
+        internal StorageLifecyclePolicyRunSummary()
+        {
+        }
+
+        /// <summary> Policy status can be Completed/CompletedWithError/Incomplete. </summary>
+        public StorageLifecycleCompletionStatus CompletionStatus { get; }
     }
 }
