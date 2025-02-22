@@ -91,6 +91,7 @@ class PackageProps {
                 $result = [PSCustomObject]@{
                     ArtifactConfig = [HashTable]$artifactForCurrentPackage
                     ParsedYml = $content
+                    Location = $ymlPath
                 }
 
                 return $result
@@ -126,6 +127,14 @@ class PackageProps {
 
             if ($ciArtifactResult) {
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+
+                if (-not $this.ArtifactDetails["triggeringPaths"]) {
+                    $this.ArtifactDetails["triggeringPaths"] = @()
+                }
+                $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+                $relativePath = (Resolve-Path -Path $ciArtifactResult.Location -Relative -RelativeBasePath $RepoRoot).TrimStart(".").Replace("`\", "/")
+                $this.ArtifactDetails["triggeringPaths"] += $relativePath
+
                 $this.CIParameters["CIMatrixConfigs"] = @()
 
                 # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
@@ -219,12 +228,15 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             }
             $filePath = (Join-Path $RepoRoot $file)
 
+            # handle direct changes to packages
             $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
 
-            # this implementation guesses the working directory of the ci.yml
+            # handle changes to files that are RELATED to each package
             foreach($triggerPath in $triggeringPaths) {
+                # each relative path will be resolved relative to the repo root
                 $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
-                # utilize the various trigger paths against the targeted file here
+
+                # or if the path doesn't start with a slash, it will be resolved relative to directory containing our ci.yml
                 if (!$triggerPath.StartsWith("/")){
                     $resolvedRelativePath = (Join-Path $RepoRoot "sdk" "$($pkg.ServiceDirectory)" $triggerPath)
                 }
@@ -239,6 +251,12 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     }
                 }
             }
+
+            # handle changes to files under the service directory, but not a ci.yml file
+               # so what we are dealing with here is the singular instance where a service-level file has changed,
+               # but we CAN'T tell which ci.yml is associated with it.
+               # if there is an instance where there is a single ci.yml file, but we SHOULD NOT include all the packages within
+               # the service directory, we can't handle it currently.
 
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
@@ -280,6 +298,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     # packages. We should never return NO validation.
     if ($packagesWithChanges.Count -eq 0) {
         $packagesWithChanges += ($allPackageProperties | Where-Object { $_.ServiceDirectory -eq "template" })
+        $packagesWithChanges[0].IncludedForValidation = $true
     }
 
     return $packagesWithChanges
