@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                byte[] data = GetRandomBuffer(objectLength.Value);
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await blobClient.UploadAsync(
@@ -164,7 +164,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                byte[] data = GetRandomBuffer(objectLength.Value);
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await UploadAppendBlocksAsync(
@@ -223,7 +223,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                byte[] data = GetRandomBuffer(objectLength.Value);
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await UploadPagesAsync(
