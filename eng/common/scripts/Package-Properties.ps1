@@ -233,10 +233,8 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
             # handle changes to files that are RELATED to each package
             foreach($triggerPath in $triggeringPaths) {
-                # each relative path will be resolved relative to the repo root
                 $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
 
-                # or if the path doesn't start with a slash, it will be resolved relative to directory containing our ci.yml
                 if (!$triggerPath.StartsWith("/")){
                     $resolvedRelativePath = (Join-Path $RepoRoot "sdk" "$($pkg.ServiceDirectory)" $triggerPath)
                 }
@@ -253,10 +251,11 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             }
 
             # handle changes to files under the service directory, but not a ci.yml file
+               # changes to ci.yml files that are owned by artifacts will be handled by the default inclusion of the owning ci.yml to each packages' triggeringPaths
                # so what we are dealing with here is the singular instance where a service-level file has changed,
                # but we CAN'T tell which ci.yml is associated with it.
-               # if there is an instance where there is a single ci.yml file, but we SHOULD NOT include all the packages within
-               # the service directory, we can't handle it currently.
+               # need to run down whether there are any instances of service directories that contain a single ci.yml file but CANNOT include
+               # all packages that exist therein.
 
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
