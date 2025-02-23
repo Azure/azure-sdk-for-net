@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DurableTask.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DurableTask.Samples
 {
     public partial class Sample_TaskHubResource
     {
-        // TaskHubs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TaskHubsGet()
         {
             // Generated from example definition: 2024-10-01-preview/TaskHubs_Get.json
@@ -47,46 +47,8 @@ namespace Azure.ResourceManager.DurableTask.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TaskHubs_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_TaskHubsCreateOrUpdate()
-        {
-            // Generated from example definition: 2024-10-01-preview/TaskHubs_CreateOrUpdate.json
-            // this example is just showing the usage of "TaskHub_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TaskHubResource created on azure
-            // for more information of creating TaskHubResource, please refer to the document of TaskHubResource
-            string subscriptionId = "EE9BD735-67CE-4A90-89C4-439D3F6A4C93";
-            string resourceGroupName = "rgopenapi";
-            string schedulerName = "testscheduler";
-            string taskHubName = "testtaskhub";
-            ResourceIdentifier taskHubResourceId = TaskHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName, taskHubName);
-            TaskHubResource taskHub = client.GetTaskHubResource(taskHubResourceId);
-
-            // invoke the operation
-            TaskHubData data = new TaskHubData()
-            {
-                Properties = new TaskHubProperties(),
-            };
-            ArmOperation<TaskHubResource> lro = await taskHub.UpdateAsync(WaitUntil.Completed, data);
-            TaskHubResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TaskHubData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // TaskHubs_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TaskHubsDelete()
         {
             // Generated from example definition: 2024-10-01-preview/TaskHubs_Delete.json
@@ -109,7 +71,43 @@ namespace Azure.ResourceManager.DurableTask.Samples
             // invoke the operation
             await taskHub.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_TaskHubsCreateOrUpdate()
+        {
+            // Generated from example definition: 2024-10-01-preview/TaskHubs_CreateOrUpdate.json
+            // this example is just showing the usage of "TaskHub_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TaskHubResource created on azure
+            // for more information of creating TaskHubResource, please refer to the document of TaskHubResource
+            string subscriptionId = "EE9BD735-67CE-4A90-89C4-439D3F6A4C93";
+            string resourceGroupName = "rgopenapi";
+            string schedulerName = "testscheduler";
+            string taskHubName = "testtaskhub";
+            ResourceIdentifier taskHubResourceId = TaskHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName, taskHubName);
+            TaskHubResource taskHub = client.GetTaskHubResource(taskHubResourceId);
+
+            // invoke the operation
+            TaskHubData data = new TaskHubData
+            {
+                Properties = new TaskHubProperties(),
+            };
+            ArmOperation<TaskHubResource> lro = await taskHub.UpdateAsync(WaitUntil.Completed, data);
+            TaskHubResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TaskHubData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
