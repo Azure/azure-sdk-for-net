@@ -316,7 +316,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            if (exceptionMessage == null || exceptionType == null)
+            if (string.IsNullOrEmpty(exceptionMessage) || exceptionType == null)
             {
                 return null;
             }
