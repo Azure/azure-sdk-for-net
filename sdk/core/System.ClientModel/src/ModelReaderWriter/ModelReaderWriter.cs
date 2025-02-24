@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
@@ -12,6 +13,28 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public static class ModelReaderWriter
 {
+    /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static void Write<T>(T model, Stream stream, ModelReaderWriterOptions? options = default)
+        where T : IPersistableStreamModel<T>
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        model.Write(stream, options);
+        return;
+    }
+
     /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
     /// </summary>
