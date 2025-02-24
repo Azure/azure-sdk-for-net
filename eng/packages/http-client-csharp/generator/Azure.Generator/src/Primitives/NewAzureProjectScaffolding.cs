@@ -23,10 +23,10 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.RootNamespace} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.RootNamespace}",
+                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.PackageName} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.PackageName}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.TypeFactory.RootNamespace,
+                PackageTags = AzureClientPlugin.Instance.TypeFactory.PackageName,
                 GenerateDocumentationFile = true,
             };
 
@@ -36,7 +36,7 @@ namespace Azure.Generator.Primitives
             }
 
             int pathSegmentCount = GetPathSegmentCount();
-            if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth.ApiKey is not null)
+            if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
             }
@@ -162,7 +162,7 @@ Global
     EndGlobalSection
 EndGlobal
 ";
-            return string.Format(slnContent, AzureClientPlugin.Instance.TypeFactory.RootNamespace);
+            return string.Format(slnContent, AzureClientPlugin.Instance.TypeFactory.PackageName);
         }
     }
 }

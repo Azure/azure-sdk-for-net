@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ScmCodeModelPlugin;
-using Microsoft.TypeSpec.Generator.ScmCodeModelPlugin.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -60,7 +60,7 @@ namespace Azure.Generator.Tests.TestHelpers
 
             // initialize the mock singleton instance of the plugin
             var codeModelInstance = typeof(CodeModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var clientModelInstance = typeof(ClientModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var clientModelInstance = typeof(ScmCodeModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             var azureInstance = typeof(AzureClientPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);

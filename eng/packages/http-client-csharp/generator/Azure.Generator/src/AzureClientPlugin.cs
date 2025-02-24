@@ -4,11 +4,12 @@
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ScmCodeModelPlugin;
+using static Microsoft.TypeSpec.Generator.ClientModel.ScmCodeModelPlugin;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Microsoft.TypeSpec.Generator.ClientModel;
 
 namespace Azure.Generator;
 
@@ -17,7 +18,7 @@ namespace Azure.Generator;
 /// </summary>
 [Export(typeof(CodeModelPlugin))]
 [ExportMetadata("PluginName", nameof(AzureClientPlugin))]
-public class AzureClientPlugin : ClientModelPlugin
+public class AzureClientPlugin : ScmCodeModelPlugin
 {
     private static AzureClientPlugin? _instance;
     internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("AzureClientPlugin is not loaded.");
