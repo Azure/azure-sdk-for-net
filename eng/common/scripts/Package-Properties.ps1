@@ -216,6 +216,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
 
         foreach ($file in $targetedFiles) {
+            $pathComponents = $file -split "/"
             $shouldExclude = $false
             foreach ($exclude in $excludePaths) {
                 if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
@@ -234,7 +235,6 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             # handle changes to files that are RELATED to each package
             foreach($triggerPath in $triggeringPaths) {
                 $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
-
                 if (!$triggerPath.StartsWith("/")){
                     $resolvedRelativePath = (Join-Path $RepoRoot "sdk" "$($pkg.ServiceDirectory)" $triggerPath)
                 }
@@ -247,15 +247,37 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     if ($includedForValidation) {
                         $pkg.IncludedForValidation = $true
                     }
+                    break
                 }
             }
 
-            # handle changes to files under the service directory, but not a ci.yml file
-               # changes to ci.yml files that are owned by artifacts will be handled by the default inclusion of the owning ci.yml to each packages' triggeringPaths
-               # so what we are dealing with here is the singular instance where a service-level file has changed,
-               # but we CAN'T tell which ci.yml is associated with it.
-               # need to run down whether there are any instances of service directories that contain a single ci.yml file but CANNOT include
-               # all packages that exist therein.
+            # handle service-level changes to the ci.yml files
+            # we are using the ci.yml file being added automatically to each artifactdetails as the input
+            # for this task. This is because we can resolve a service directory from the ci.yml, and if
+            # there is a single ci.yml in that directory, we can assume that any file change in that directory
+            # will apply to all packages that exist in that directory.
+            if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
+                $triggeringCIYmls = $triggeringPaths | Where-Object { $_ -like "*ci*.yml" }
+
+                foreach($yml in $triggeringCIYmls) {
+                    # given that this path is coming from the populated triggering paths in the artifact,
+                    # we can assume that the path to the ci.yml will successfully resolve.
+                    $ciYml = Join-Path $RepoRoot $yml
+                    $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/") + "/"
+                    $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+
+                    if ($soleCIYml -and $filePath.StartsWith($directory)) {
+                        $shouldInclude = $true
+                        $pkg.IncludedForValidation = $true
+                        break
+                    }
+                    else {
+                        # if the ci.yml is not the only file in the directory, we cannot assume that any file changed within the directory that isn't the ci.yml
+                        # should trigger this package
+                        Write-Host "Skipping adding package for file `"$file`" because the ci yml `"$yml`" is not the only file in the service directory `"$directory`""
+                    }
+                }
+            }
 
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
