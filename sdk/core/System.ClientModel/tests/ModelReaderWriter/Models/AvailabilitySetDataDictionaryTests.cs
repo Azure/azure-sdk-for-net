@@ -14,9 +14,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public class AvailabilitySetDataDictionaryTests
     {
+        private static readonly LocalContext s_readerWriterContext = new();
         private static readonly string s_payload = File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataDictionary.json")).TrimEnd();
         private static readonly BinaryData s_data = new BinaryData(Encoding.UTF8.GetBytes(s_payload));
-        private static readonly IDictionary<string, AvailabilitySetData> s_availabilitySets = ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data)!;
+        private static readonly IDictionary<string, AvailabilitySetData> s_availabilitySets = ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data, s_readerWriterContext)!;
         private static readonly string s_collapsedPayload = GetCollapsedPayload();
 
         private static string GetCollapsedPayload()
@@ -25,10 +26,24 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             return JsonSerializer.Serialize(jsonObject);
         }
 
+        private class LocalContext : ModelReaderWriterContext
+        {
+            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+
+            public override Func<object>? GetActivator(Type type)
+            {
+                return type switch
+                {
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => () => new Dictionary<string, AvailabilitySetData>(),
+                    _ => _LibraryContext.Value.GetActivator(type)
+                };
+            }
+        }
+
         [Test]
         public void ReadDictionaryGeneric()
         {
-            var asetDictionary = ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data);
+            var asetDictionary = ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data, s_readerWriterContext);
             Assert.IsNotNull(asetDictionary);
 
             Assert.AreEqual(2, asetDictionary!.Count);
@@ -41,7 +56,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadDictionary()
         {
-            var asetDictionary = ModelReaderWriter.Read(s_data, typeof(Dictionary<string, AvailabilitySetData>));
+            var asetDictionary = ModelReaderWriter.Read(s_data, typeof(Dictionary<string, AvailabilitySetData>), s_readerWriterContext);
             Assert.IsNotNull(asetDictionary);
 
             Dictionary<string, AvailabilitySetData>? asetDictionary2 = asetDictionary! as Dictionary<string, AvailabilitySetData>;
@@ -65,7 +80,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadListWhenDictionary()
         {
-            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data));
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data, s_readerWriterContext));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex!.Message.Equals("Expected start of array."));
         }

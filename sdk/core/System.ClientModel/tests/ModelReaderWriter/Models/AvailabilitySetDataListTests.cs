@@ -17,15 +17,30 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public class AvailabilitySetDataListTests
     {
+        private static readonly LocalContext s_readerWriterContext = new();
         private static readonly string s_payload = File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd();
         private static readonly BinaryData s_data = new BinaryData(Encoding.UTF8.GetBytes(s_payload));
-        private static readonly IList<AvailabilitySetData> s_availabilitySets = ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data)!;
+        private static readonly IList<AvailabilitySetData> s_availabilitySets = ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data, s_readerWriterContext)!;
         private static readonly string s_collapsedPayload = GetCollapsedPayload();
 
         private static string GetCollapsedPayload()
         {
             var jsonObject = JsonSerializer.Deserialize<object>(s_payload);
             return JsonSerializer.Serialize(jsonObject);
+        }
+
+        private class LocalContext : ModelReaderWriterContext
+        {
+            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+
+            public override Func<object>? GetActivator(Type type)
+            {
+                return type switch
+                {
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => () => new Dictionary<string, AvailabilitySetData>(),
+                    _ => _LibraryContext.Value.GetActivator(type)
+                };
+            }
         }
 
         private class AvailabilitySetDataComparer : IComparer<AvailabilitySetData>
@@ -68,7 +83,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadListGeneric()
         {
-            var asetList = ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data);
+            var asetList = ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data, s_readerWriterContext);
             Assert.IsNotNull(asetList);
 
             Assert.AreEqual(2, asetList!.Count);
@@ -79,7 +94,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadList()
         {
-            var asetList = ModelReaderWriter.Read(s_data, typeof(List<AvailabilitySetData>));
+            var asetList = ModelReaderWriter.Read(s_data, typeof(List<AvailabilitySetData>), new TestModelReaderWriterContext());
             Assert.IsNotNull(asetList);
 
             List<AvailabilitySetData>? asetList2 = asetList! as List<AvailabilitySetData>;
@@ -101,7 +116,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadUnsupportedCollectionGeneric()
         {
-            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(s_data));
+            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(s_data, s_readerWriterContext));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex!.Message.Contains("Collection Type "));
             Assert.AreEqual("T", ex.ParamName);
@@ -110,9 +125,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadDictionaryWhenList()
         {
-            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data));
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data, s_readerWriterContext));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex!.Message.Equals("Expected start of dictionary."));
+        }
+
+        [Test]
+        public void WriteNonJFormat()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(s_availabilitySets, ModelReaderWriterOptions.Xml));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be written as collections", ex!.Message);
         }
     }
 }

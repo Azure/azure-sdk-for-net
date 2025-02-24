@@ -14,9 +14,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public class AvailabilitySetDataListOfDictionariesTests
     {
+        private static readonly LocalContext s_readerWriterContext = new();
         private static readonly string s_payload = File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataListOfDictionaries.json")).TrimEnd();
         private static readonly BinaryData s_data = new BinaryData(Encoding.UTF8.GetBytes(s_payload));
-        private static readonly IList<Dictionary<string, AvailabilitySetData>> s_availabilitySets = ModelReaderWriter.Read<List<Dictionary<string, AvailabilitySetData>>>(s_data)!;
+        private static readonly IList<Dictionary<string, AvailabilitySetData>> s_availabilitySets = ModelReaderWriter.Read<List<Dictionary<string, AvailabilitySetData>>>(s_data, s_readerWriterContext)!;
         private static readonly string s_collapsedPayload = GetCollapsedPayload();
 
         private static string GetCollapsedPayload()
@@ -25,10 +26,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             return JsonSerializer.Serialize(jsonObject);
         }
 
+        private class LocalContext : ModelReaderWriterContext
+        {
+            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+
+            public override Func<object>? GetActivator(Type type)
+            {
+                return type switch
+                {
+                    Type t when t == typeof(List<Dictionary<string, AvailabilitySetData>>) => () => new List<Dictionary<string, AvailabilitySetData>>(),
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => () => new Dictionary<string, AvailabilitySetData>(),
+                    _ => _LibraryContext.Value.GetActivator(type)
+                };
+            }
+        }
+
         [Test]
         public void ReadDictionaryGeneric()
         {
-            var asetList = ModelReaderWriter.Read<List<Dictionary<string, AvailabilitySetData>>>(s_data);
+            var asetList = ModelReaderWriter.Read<List<Dictionary<string, AvailabilitySetData>>>(s_data, s_readerWriterContext);
             Assert.IsNotNull(asetList);
 
             Assert.AreEqual(2, asetList!.Count);
@@ -49,7 +65,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadDictionary()
         {
-            var asetList = ModelReaderWriter.Read(s_data, typeof(List<Dictionary<string, AvailabilitySetData>>));
+            var asetList = ModelReaderWriter.Read(s_data, typeof(List<Dictionary<string, AvailabilitySetData>>), s_readerWriterContext);
             Assert.IsNotNull(asetList);
 
             List<Dictionary<string, AvailabilitySetData>>? asetList2 = asetList! as List<Dictionary<string, AvailabilitySetData>>;

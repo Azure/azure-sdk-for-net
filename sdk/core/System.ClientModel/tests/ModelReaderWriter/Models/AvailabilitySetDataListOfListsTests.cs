@@ -15,6 +15,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public class AvailabilitySetDataListOfListsTests
     {
+        private static readonly LocalContext s_readerWriterContext = new();
         private static readonly string s_payload = File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataListOfLists.json")).TrimEnd();
         private static readonly BinaryData s_data = new BinaryData(Encoding.UTF8.GetBytes(s_payload));
         private static readonly string s_collapsedPayload = GetCollapsedPayload();
@@ -25,12 +26,29 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             typeof(Dictionary<,>)
         ];
 
+        private class LocalContext : ModelReaderWriterContext
+        {
+            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+
+            public override Func<object>? GetActivator(Type type)
+            {
+                return type switch
+                {
+                    Type t when t == typeof(List<List<AvailabilitySetData>>) => () => new List<List<AvailabilitySetData>>(),
+                    Type t when t == typeof(List<AvailabilitySetData>) => () => new List<AvailabilitySetData>(),
+                    Type t when t == typeof(List<AvailabilitySetData[]>) => () => new List<AvailabilitySetData[]>(),
+                    Type t when t == typeof(List<Collection<AvailabilitySetData>>) => () => new List<Collection<AvailabilitySetData>>(),
+                    _ => _LibraryContext.Value.GetActivator(type)
+                };
+            }
+        }
+
         private List<List<AvailabilitySetData>>? _availabilitySets;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _availabilitySets = ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(s_data);
+            _availabilitySets = ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(s_data, s_readerWriterContext);
         }
 
         private static string GetCollapsedPayload()
@@ -65,7 +83,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadListGeneric()
         {
-            var asetList = ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(s_data);
+            var asetList = ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(s_data, s_readerWriterContext);
             Assert.IsNotNull(asetList);
 
             Assert.AreEqual(2, asetList!.Count);
@@ -86,7 +104,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadList()
         {
-            var asetList = ModelReaderWriter.Read(s_data, typeof(List<List<AvailabilitySetData>>));
+            var asetList = ModelReaderWriter.Read(s_data, typeof(List<List<AvailabilitySetData>>), s_readerWriterContext);
             Assert.IsNotNull(asetList);
 
             List<List<AvailabilitySetData>>? asetList2 = asetList! as List<List<AvailabilitySetData>>;
@@ -110,7 +128,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadArray()
         {
-            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read(s_data, typeof(AvailabilitySetData[][])));
+            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read(s_data, typeof(AvailabilitySetData[][]), s_readerWriterContext));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex!.Message.StartsWith("Arrays are not supported. Use List<> instead."));
         }
@@ -118,7 +136,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadArrayGeneric()
         {
-            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read<AvailabilitySetData[][]>(s_data));
+            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read<AvailabilitySetData[][]>(s_data, s_readerWriterContext));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex!.Message.StartsWith("Arrays are not supported. Use List<> instead."));
         }
@@ -236,13 +254,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var type = collection.GetType();
             var genericType = type.IsGenericType ? type.GetGenericTypeDefinition() : null;
+            TestDelegate invokeMrw = () => ModelReaderWriter.Read(s_data, type, s_readerWriterContext);
             if (genericType is not null && s_supportedCollectionTypes.Contains(genericType))
             {
                 var elementType = type.GetGenericArguments()[0];
                 Assert.IsNotNull(elementType);
                 if (elementType.IsArray)
                 {
-                    var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read(s_data, type));
+                    var ex = Assert.Throws<ArgumentException>(invokeMrw);
                     Assert.IsNotNull(ex);
                     Assert.IsTrue(ex!.Message.StartsWith("Arrays are not supported. Use List<> instead."));
                 }
@@ -251,11 +270,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     var elementGenericType = elementType.IsGenericType ? elementType.GetGenericTypeDefinition() : null;
                     if (elementGenericType is not null && s_supportedCollectionTypes.Contains(elementGenericType))
                     {
-                        Assert.DoesNotThrow(() => ModelReaderWriter.Read(s_data, type));
+                        Assert.DoesNotThrow(invokeMrw);
                     }
                     else
                     {
-                        var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read(s_data, type));
+                        var ex = Assert.Throws<ArgumentException>(invokeMrw);
                         Assert.IsNotNull(ex);
                         Assert.IsTrue(ex!.Message.StartsWith("Collection Type "));
                     }
@@ -263,13 +282,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             }
             else if (type.IsArray)
             {
-                var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read(s_data, type));
+                var ex = Assert.Throws<ArgumentException>(invokeMrw);
                 Assert.IsNotNull(ex);
                 Assert.IsTrue(ex!.Message.StartsWith("Arrays are not supported. Use List<> instead."));
             }
             else if (genericType is not null && !s_supportedCollectionTypes.Contains(genericType))
             {
-                var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read(s_data, type));
+                var ex = Assert.Throws<ArgumentException>(invokeMrw);
                 Assert.IsNotNull(ex);
                 Assert.IsTrue(ex!.Message.Contains("Collection Type "));
             }
@@ -421,6 +440,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(s_data, typeof(FileStream)));
             Assert.IsNotNull(ex);
 #endif
+        }
+
+        [Test]
+        public void WriteNonJFormat()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(_availabilitySets!, ModelReaderWriterOptions.Xml));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be written as collections", ex!.Message);
         }
     }
 }
