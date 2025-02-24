@@ -263,10 +263,11 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     # given that this path is coming from the populated triggering paths in the artifact,
                     # we can assume that the path to the ci.yml will successfully resolve.
                     $ciYml = Join-Path $RepoRoot $yml
+                    # ensure we terminate the service directory with a /
                     $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/") + "/"
                     $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
 
-                    if ($soleCIYml -and $filePath.StartsWith($directory)) {
+                    if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
                         $shouldInclude = $true
                         $pkg.IncludedForValidation = $true
                         break
