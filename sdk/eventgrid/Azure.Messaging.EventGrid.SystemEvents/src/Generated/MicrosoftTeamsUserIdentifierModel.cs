@@ -47,14 +47,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
-        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        internal MicrosoftTeamsUserIdentifierModel(string userId, CommunicationCloudEnvironmentModel cloud)
+        internal MicrosoftTeamsUserIdentifierModel(string userId)
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
             UserId = userId;
-            Cloud = cloud;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
@@ -62,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserId = userId;
             IsAnonymous = isAnonymous;
@@ -80,6 +78,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; }
         /// <summary> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </summary>
-        public CommunicationCloudEnvironmentModel Cloud { get; }
+        public CommunicationCloudEnvironmentModel? Cloud { get; }
     }
 }

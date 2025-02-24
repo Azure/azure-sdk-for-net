@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Type.Enum.Fixed",
-  "library-name": "Type.Enum.Fixed"
+  "package-name": "Type.Enum.Fixed"
 }

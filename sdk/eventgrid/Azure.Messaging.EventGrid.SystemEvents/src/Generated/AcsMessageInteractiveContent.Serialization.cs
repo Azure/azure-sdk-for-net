@@ -34,12 +34,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AcsMessageInteractiveContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ReplyKind.ToString());
-            writer.WritePropertyName("buttonReply"u8);
-            writer.WriteObjectValue(ButtonReply, options);
-            writer.WritePropertyName("listReply"u8);
-            writer.WriteObjectValue(ListReply, options);
+            if (Optional.IsDefined(ReplyKind))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ReplyKind.Value.ToString());
+            }
+            if (Optional.IsDefined(ButtonReply))
+            {
+                writer.WritePropertyName("buttonReply"u8);
+                writer.WriteObjectValue(ButtonReply, options);
+            }
+            if (Optional.IsDefined(ListReply))
+            {
+                writer.WritePropertyName("listReply"u8);
+                writer.WriteObjectValue(ListReply, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            AcsInteractiveReplyKind type = default;
+            AcsInteractiveReplyKind? type = default;
             AcsMessageInteractiveButtonReplyContent buttonReply = default;
             AcsMessageInteractiveListReplyContent listReply = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,16 +95,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     type = new AcsInteractiveReplyKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("buttonReply"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     buttonReply = AcsMessageInteractiveButtonReplyContent.DeserializeAcsMessageInteractiveButtonReplyContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("listReply"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     listReply = AcsMessageInteractiveListReplyContent.DeserializeAcsMessageInteractiveListReplyContent(property.Value, options);
                     continue;
                 }
