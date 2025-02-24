@@ -118,13 +118,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     TerminationReason = "<terminateReason>",
                 };
-                response = await client.TerminateJobAsync(jobID, parameters);
+                response = await client.TerminateJobAsync(jobID, parameters, force: true);
                 Assert.IsFalse(response.IsError);
             }
             finally
             {
                 await client.DeletePoolAsync(poolID);
-                await client.DeleteJobAsync(jobID);
+                await client.DeleteJobAsync(jobID, force: true);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchJobUpdateContent batchUpdateContent = new BatchJobUpdateContent();
                 batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
 
-                // todo need to investigate why this is not working
+                // todo need to setup specific account for this to be set
                 //batchUpdateContent.NetworkConfiguration = new BatchJobNetworkConfiguration(subnetID, false);
 
                 response = await client.UpdateJobAsync(jobID, batchUpdateContent);

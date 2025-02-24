@@ -342,7 +342,22 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchPool orginalPool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
 
                 // update pool
+
                 BatchPoolUpdateContent updateContent = new BatchPoolUpdateContent();
+
+                updateContent.VmSize = "STANDARD_D2S_V3";
+                updateContent.TaskSlotsPerNode = 1;
+                updateContent.EnableInterNodeCommunication = true;
+                updateContent.NetworkConfiguration = new NetworkConfiguration()
+                {
+                    EndpointConfiguration = new BatchPoolEndpointConfiguration(
+                        new List<InboundNatPool>()
+                        {
+                            new InboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100)
+                        }
+                    )
+                    // verify pool got updated
+                };
 
                 updateContent.Metadata.Add(new MetadataItem("name", "value"));
                 updateContent.ApplicationPackageReferences.Add(new BatchApplicationPackageReference("dotnotsdkbatchapplication1")
@@ -377,6 +392,14 @@ namespace Azure.Compute.Batch.Tests.Integration
                         RollbackFailedInstancesOnPolicyBreach = false
                     }
                 };
+                updateContent.MountConfiguration.Add(new MountConfiguration()
+                {
+                    AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("accountName", "blobContainerName", "bfusepath")
+                    {
+                        AccountKey = "accountKey",
+                    },
+                }
+                );
 
                 updateContent.ResourceTags.Add("tag1", "value1");
                 updateContent.ResourceTags.Add("tag2", "value2");
@@ -401,6 +424,14 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(20, patchPool.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent);
                 Assert.AreEqual(BatchNodeFillType.Pack, patchPool.TaskSchedulingPolicy.NodeFillType);
                 Assert.AreEqual(4, patchPool.UserAccounts.Count);
+                Assert.AreEqual("standard_d2s_v3", patchPool.VmSize);
+                Assert.AreEqual(1, patchPool.TaskSlotsPerNode);
+                Assert.IsTrue(patchPool.EnableInterNodeCommunication);
+                Assert.AreEqual("ruleName", patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().Name);
+                Assert.AreEqual(InboundEndpointProtocol.Tcp, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().Protocol);
+                Assert.AreEqual(3389, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().BackendPort);
+                Assert.AreEqual(15000, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().FrontendPortRangeStart);
+                Assert.AreEqual(15100, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().FrontendPortRangeEnd);
             }
             finally
             {

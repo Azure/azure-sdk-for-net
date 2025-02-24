@@ -56,7 +56,19 @@ namespace Azure.Compute.Batch.Tests.Integration
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine);
+                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine)
+                {
+                    ContainerSettings = new BatchTaskContainerSettings("ubuntu")
+                    {
+                        ContainerHostBatchBindMounts = {
+                            new ContainerHostBatchBindMountEntry{
+                                Source = ContainerHostDataPath.Task,
+                                IsReadOnly = true,
+                            }
+                        },
+                    }
+                };
+
                 response = await client.CreateTaskAsync(jobID, taskCreateContent);
 
                 BatchTask task = await client.GetTaskAsync(jobID, taskID);
@@ -144,7 +156,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotNull(job);
 
                 List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
-                for (int i=0; i < taskCount; i++)
+                for (int i = 0; i < taskCount; i++)
                 {
                     tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
                 }
@@ -519,7 +531,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine)
                 {
-                    RequiredSlots =1,
+                    RequiredSlots = 1,
                     MultiInstanceSettings = new MultiInstanceSettings(commandLine)
                     {
                         NumberOfInstances = 1,
