@@ -95,6 +95,7 @@ extends:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
             arguments: -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+
         - task: PowerShell@2
           displayName: 'Run build script'
           name: ci_build
