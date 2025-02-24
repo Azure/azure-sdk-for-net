@@ -6,12 +6,6 @@
 
 - Updated azure monitor pipeline group APIs to version `2024-10-01-preview`
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.4.0-beta.2 (2025-02-14)
 
 ### Features Added
