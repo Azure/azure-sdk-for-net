@@ -123,7 +123,7 @@ namespace Azure.Core.Tests
                 Assert.That(contentType, Is.EqualTo("application/json;odata=fullmetadata;streaming=true;charset=utf-8"));
 
                 var bytes = new byte[response.ContentStream.Length];
-                await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
+                int numBytesRead = await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
                 var content = GetString(bytes, bytes.Length);
 
                 Assert.That(content, Is.EqualTo(string.Empty));
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
             Assert.That(version, Is.EqualTo("2018-11-09"));
             Assert.That(response.TryGetHeader("x-ms-request-id", out _));
             var bytes = new byte[response.ContentStream.Length];
-            await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
+            int numBytesRead = await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
             var content = GetString(bytes, bytes.Length);
             Assert.That(content.Contains("<Error><Code>BlobNotFound</Code><Message>The specified blob does not exist."));
         }

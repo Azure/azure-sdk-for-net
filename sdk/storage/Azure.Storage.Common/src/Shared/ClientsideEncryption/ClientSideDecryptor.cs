@@ -243,7 +243,7 @@ namespace Azure.Storage.Cryptography
                     }
                     else
                     {
-                        ciphertext.Read(IV, 0, IV.Length);
+                        int numBytesRead = ciphertext.Read(IV, 0, IV.Length);
                     }
                     //read = IV.Length;
                 }

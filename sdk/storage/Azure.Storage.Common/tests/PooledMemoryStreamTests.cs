@@ -29,7 +29,7 @@ namespace Azure.Storage.Tests
 
             var buffer = new byte[dataSize];
             var predictableStream = new PredictableStream();
-            predictableStream.Read(buffer, 0, dataSize);
+            int numBytesRead = predictableStream.Read(buffer, 0, dataSize);
             Assert.AreEqual(dataSize, predictableStream.Position);
 
             var expected = Enumerable.Range(0, dataSize).Select(val => (byte)(val % byte.MaxValue)).ToArray();
@@ -50,8 +50,8 @@ namespace Azure.Storage.Tests
 
             byte[] originalStreamData = new byte[dataSize];
             byte[] poolStreamData = new byte[dataSize];
-            originalStream.Read(originalStreamData, 0, dataSize);
-            arrayPoolStream.Read(poolStreamData, 0, dataSize);
+            int numBytesReadOriginal = originalStream.Read(originalStreamData, 0, dataSize);
+            int numBytesReadPool = arrayPoolStream.Read(poolStreamData, 0, dataSize);
 
             CollectionAssert.AreEqual(originalStreamData, poolStreamData);
         }
@@ -95,7 +95,7 @@ namespace Azure.Storage.Tests
             // Act
             await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
             pooledMemoryStream.Position = 0;
-            await pooledMemoryStream.ReadAsync(readData, 0, dataSize);
+            int numBytesRead = await pooledMemoryStream.ReadAsync(readData, 0, dataSize);
 
             // Also testing that clear works.
             pooledMemoryStream.Clear();
@@ -121,7 +121,7 @@ namespace Azure.Storage.Tests
             if (initialReadSize > 0)
             {
                 byte[] readData = new byte[initialReadSize];
-                await pooledMemoryStream.ReadAsync(readData, 0, initialReadSize);
+                int numBytesRead = await pooledMemoryStream.ReadAsync(readData, 0, initialReadSize);
             }
 
             // Act

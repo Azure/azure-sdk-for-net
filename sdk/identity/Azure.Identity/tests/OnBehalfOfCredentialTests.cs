@@ -147,7 +147,22 @@ namespace Azure.Identity.Tests
             var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
             var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+            var certType = X509Certificate2.GetCertContentType(certificatePath);
+            X509Certificate2 mockCert;
+            switch (certType)
+            {
+                case X509ContentType.Cert:
+                    mockCert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+                    break;
+                default:
+                    mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+                    break;
+            }
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             options = new OnBehalfOfCredentialOptions
             {
@@ -191,7 +206,22 @@ namespace Azure.Identity.Tests
             var _transport = new MockTransport(factory);
             var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+            var certType = X509Certificate2.GetCertContentType(certificatePath);
+            X509Certificate2 mockCert;
+            switch (certType)
+            {
+                case X509ContentType.Cert:
+                    mockCert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+                    break;
+                default:
+                    mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+                    break;
+            }
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             options = new OnBehalfOfCredentialOptions
             {
