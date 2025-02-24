@@ -11,9 +11,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/databasefleetmanager/ci.mgmt.yml
-    - sdk/databasefleetmanager/Azure.ResourceManager.DatabaseFleetManager/
-
+    - sdk/databasefleetmanager/ci.mgmt.yml
+    - sdk/databasefleetmanager/Azure.ResourceManager.DatabaseFleetManager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
