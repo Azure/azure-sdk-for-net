@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             ManagedHsmSkuName.StandardB1 => "Standard_B1",
             ManagedHsmSkuName.CustomB32 => "Custom_B32",
             ManagedHsmSkuName.CustomB6 => "Custom_B6",
+            ManagedHsmSkuName.CustomC42 => "Custom_C42",
+            ManagedHsmSkuName.CustomC10 => "Custom_C10",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmSkuName value.")
         };
 
@@ -24,6 +26,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_B1")) return ManagedHsmSkuName.StandardB1;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B32")) return ManagedHsmSkuName.CustomB32;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B6")) return ManagedHsmSkuName.CustomB6;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_C42")) return ManagedHsmSkuName.CustomC42;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_C10")) return ManagedHsmSkuName.CustomC10;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmSkuName value.");
         }
     }
