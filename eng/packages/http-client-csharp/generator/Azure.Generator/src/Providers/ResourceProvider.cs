@@ -338,11 +338,7 @@ namespace Azure.Generator.Providers
 
         // TODO: get clean name of operation Name
         private MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-        {
-            // TODO: use _clientProvider.CanonicalView instead when it implements BuildMethods
-            MethodProvider[] methods = [.. _clientProvider.Methods, .. _clientProvider.CustomCodeView?.Methods ?? []];
-            return methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
-        }
+            => _clientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
             => _clientProvider.RestClient.Methods.Single(m => m.Signature.Name.Equals($"Create{operation.Name}Request", StringComparison.OrdinalIgnoreCase));
