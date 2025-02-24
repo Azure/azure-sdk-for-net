@@ -43,7 +43,7 @@
 /.github/                                                          @jsquire @ronniegeraghty
 
 # PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @chunyu3 @lirenhe @jsquire
+/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
 # Smoke tests
 /common/SmokeTests/                                                @schaabs @tg-msft @jsquire
@@ -61,7 +61,7 @@
 /sdk/core/                                                         @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Azure.Core
-# AzureSdkOwners:                                                  @annelo-msft
+# AzureSdkOwners:                                                  @m-redding
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
@@ -980,10 +980,10 @@
 # ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
 
 # PRLael: %Container Orchestrator Runtime
-/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @HE-Xinyu @ddadaal
+/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ddadaal
 
 # ServiceLabel: %Container Orchestrator Runtime
-# ServiceOwners:                                                   @HE-Xinyu @ddadaal
+# ServiceOwners:                                                   @ddadaal
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
@@ -1110,7 +1110,7 @@
 # AzureSdkOwners:                                                  @JoshLove-msft
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
+/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
