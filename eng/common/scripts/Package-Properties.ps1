@@ -268,8 +268,10 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
 
                     if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
-                        $shouldInclude = $true
-                        $pkg.IncludedForValidation = $true
+                        if (-not $shouldInclude) {
+                            $pkg.IncludedForValidation = $true
+                            $shouldInclude = $true
+                        }
                         break
                     }
                     else {
