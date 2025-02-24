@@ -7,11 +7,7 @@ import { SdkTestLibrary } from "@azure-tools/typespec-client-generator-core/test
 import {
   CompilerOptions,
   EmitContext,
-  isGlobalNamespace,
-  Namespace,
-  navigateTypesInNamespace,
-  Program,
-  Type,
+  Program
 } from "@typespec/compiler";
 import { createTestHost, TestHost } from "@typespec/compiler/testing";
 import { CSharpEmitterContext, CSharpEmitterOptions, Logger, LoggerLevel } from "@typespec/http-client-csharp";
