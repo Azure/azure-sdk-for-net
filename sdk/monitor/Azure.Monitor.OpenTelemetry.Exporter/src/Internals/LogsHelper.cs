@@ -47,16 +47,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         };
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey) =>
+            OtelToAzureMonitorLogs(batchLogRecord, resource, instrumentationKey, postProcess: null);
+
+        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey, Action<ITelemetryItem>? postProcess)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
-            TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
                 try
                 {
-                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
+                    TelemetryItem telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
                     if (logRecord.Exception != null)
                     {
                         telemetryItem.Data = new MonitorBase
@@ -74,6 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         };
                     }
 
+                    PostProcessTelemetryHelper.InvokePostProcess(telemetryItem, postProcess);
                     telemetryItems.Add(telemetryItem);
                 }
                 catch (Exception ex)

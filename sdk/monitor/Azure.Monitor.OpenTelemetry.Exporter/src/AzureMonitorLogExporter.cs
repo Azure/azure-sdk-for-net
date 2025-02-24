@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
+        private Action<ITelemetryItem>? _beforeTelemetrySent; // This is used to modify the telemetry item before it is sent to the transmitter.
         private bool _disposed;
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="options">Configuration options for the exporter.</param>
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
+            _beforeTelemetrySent = options.BeforeTelemetrySent;
         }
 
         internal AzureMonitorLogExporter(ITransmitter transmitter)
@@ -47,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, _beforeTelemetrySent);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();

@@ -118,16 +118,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
         public string ETag => this.info.ETag;
 
-        private static void AddMetric<DocumentIngress>(
+        private static void AddMetric<TDocumentIngress>(
           DerivedMetricInfo metricInfo,
-          List<DerivedMetric<DocumentIngress>> metrics,
+          List<DerivedMetric<TDocumentIngress>> metrics,
           out CollectionConfigurationError[] errors)
         {
             errors = Array.Empty<CollectionConfigurationError>();
 
             try
             {
-                metrics.Add(new DerivedMetric<DocumentIngress>(metricInfo, out errors));
+                metrics.Add(new DerivedMetric<TDocumentIngress>(metricInfo, out errors));
             }
             catch (System.Exception e)
             {

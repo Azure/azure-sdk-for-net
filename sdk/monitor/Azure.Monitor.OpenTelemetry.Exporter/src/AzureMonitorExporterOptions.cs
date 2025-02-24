@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 using Azure.Core;
@@ -43,6 +44,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
         public ServiceVersion Version { get; set; } = LatestVersion;
+
+        /// <summary>
+        /// Callback to configure telemetry items before they are sent to Azure Monitor.
+        /// </summary>
+        public Action<ITelemetryItem> BeforeTelemetrySent { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.

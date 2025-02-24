@@ -443,5 +443,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
         public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);
+
+        [NonEvent]
+        public void ErrorInvokingBeforeTelemetrySent(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorInvokingBeforeTelemetrySent(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(44, Message = "An exception occurred invoking BeforeTelemetrySent callback: {0}", Level = EventLevel.Warning)]
+        public void ErrorInvokingBeforeTelemetrySent(string errorMessage) => WriteEvent(44, errorMessage);
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey) =>
+            OtelToAzureMonitorMetrics(batch, resource, instrumentationKey, postProcess: null);
+
+        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey, Action<ITelemetryItem>? postProcess)
         {
             List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)
@@ -24,14 +27,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
-                        {
-                            Data = new MonitorBase
+                        var telemetryItem =
+                            new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
                             {
-                                BaseType = "MetricData",
-                                BaseData = new MetricsData(Version, metric, metricPoint)
-                            }
-                        });
+                                Data = new MonitorBase
+                                {
+                                    BaseType = "MetricData",
+                                    BaseData = new MetricsData(Version, metric, metricPoint)
+                                }
+                            };
+                        PostProcessTelemetryHelper.InvokePostProcess(telemetryItem, postProcess);
+                        telemetryItems.Add(telemetryItem);
                     }
                     catch (Exception ex)
                     {

@@ -6,12 +6,11 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryItem
+    internal partial class TelemetryItem : ITelemetryItem
     {
         public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))

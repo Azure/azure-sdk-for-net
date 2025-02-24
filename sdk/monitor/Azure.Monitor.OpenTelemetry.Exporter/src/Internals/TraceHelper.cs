@@ -10,7 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -20,10 +19,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate) =>
+            OtelToAzureMonitorTrace(batchActivity, azureMonitorResource, instrumentationKey, sampleRate, null);
+
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate, Action<ITelemetryItem>? postProcess)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
-            TelemetryItem telemetryItem;
 
             if (batchActivity.Count > 0 && azureMonitorResource?.MonitorBaseData != null)
             {
@@ -36,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var activityTagsProcessor = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                    TelemetryItem telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -65,6 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
 
                     activityTagsProcessor.Return();
+                    PostProcessTelemetryHelper.InvokePostProcess(telemetryItem, postProcess);
                     telemetryItems.Add(telemetryItem);
                 }
                 catch (Exception ex)
