@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Type.Model.Inheritance.Recursive",
-  "library-name": "Type.Model.Inheritance.Recursive"
+  "package-name": "Type.Model.Inheritance.Recursive"
 }
