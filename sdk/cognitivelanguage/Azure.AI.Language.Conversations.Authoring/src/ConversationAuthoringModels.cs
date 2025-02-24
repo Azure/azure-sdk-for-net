@@ -35,7 +35,10 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("CreateOrUpdateExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(ExportedModelDetails), typeof(CancellationToken))]
     public partial class ConversationAuthoringModels
     {
-        private readonly string _projectName;
+        /// <summary>
+        /// Stores the project name associated with the client.
+        /// </summary>
+        public readonly string _projectName;
 
         /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>

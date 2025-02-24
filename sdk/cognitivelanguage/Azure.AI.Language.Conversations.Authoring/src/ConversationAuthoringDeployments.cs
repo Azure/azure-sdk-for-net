@@ -41,9 +41,15 @@ namespace Azure.AI.Language.Conversations.Authoring
     //[CodeGenSuppress("GetDeploymentResources", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     public partial class ConversationAuthoringDeployments
     {
-        private readonly string _projectName;
+        /// <summary>
+        /// Stores the project name associated with the client.
+        /// </summary>
+        public readonly string _projectName;
 
-        private readonly string _deploymentName;
+        /// <summary>
+        /// Stores the deployment name associated with the client.
+        /// </summary>
+        public readonly string _deploymentName;
 
         /// <summary> Initializes a new instance of ConversationAuthoringDeployments. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>

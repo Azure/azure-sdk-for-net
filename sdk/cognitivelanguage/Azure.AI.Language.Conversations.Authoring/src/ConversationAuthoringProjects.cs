@@ -59,7 +59,10 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetTrainingConfigVersions", typeof(AnalyzeConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     public partial class ConversationAuthoringProjects
     {
-        private readonly string _projectName;
+        /// <summary>
+        /// Stores the project name associated with the client.
+        /// </summary>
+        public readonly string _projectName;
 
         /// <summary> Initializes a new instance of ConversationAuthoringProjects. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
