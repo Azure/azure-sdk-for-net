@@ -10,7 +10,7 @@ namespace Azure.Generator
 {
     internal class ResourceVisitor : ScmLibraryVisitor
     {
-        protected override ModelProvider? Visit(InputModelType model, ModelProvider? type)
+        protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             if (type is not null)
             {
@@ -19,7 +19,7 @@ namespace Azure.Generator
             return type;
         }
 
-        protected override TypeProvider? Visit(TypeProvider type)
+        protected override TypeProvider? VisitType(TypeProvider type)
         {
             TransformResource(type);
             return type;
