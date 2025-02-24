@@ -20,12 +20,12 @@ namespace Azure.Generator.Providers
     {
         private string _resourceName;
         private ResourceProvider _resource;
-        private ResourceDataProvider _resourceData;
+        private ModelProvider _resourceData;
         private CSharpType _operationSourceInterface;
 
         private FieldProvider _clientField;
 
-        public OperationSourceProvider(string resourceName, ResourceProvider resource, ResourceDataProvider resourceData)
+        public OperationSourceProvider(string resourceName, ResourceProvider resource, ModelProvider resourceData)
         {
             _resourceName = resourceName;
             _resource = resource;
