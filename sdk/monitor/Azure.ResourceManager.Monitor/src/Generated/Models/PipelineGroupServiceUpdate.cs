@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A pipeline group definition. </summary>
-    public partial class PipelineGroupPatch : ResourceData
+    /// <summary> Service Info. </summary>
+    public partial class PipelineGroupServiceUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,30 +45,37 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PipelineGroupPatch"/>. </summary>
-        public PipelineGroupPatch()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServiceUpdate"/>. </summary>
+        public PipelineGroupServiceUpdate()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Pipelines = new ChangeTrackingList<PipelineGroupServicePipeline>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PipelineGroupPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServiceUpdate"/>. </summary>
+        /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
+        /// <param name="persistence"> Persistence options to all pipelines in the instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PipelineGroupPropertiesUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PipelineGroupServiceUpdate(IList<PipelineGroupServicePipeline> pipelines, PipelineGroupServicePersistenceConfigurationsUpdate persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
-            Tags = tags;
+            Pipelines = pipelines;
+            Persistence = persistence;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PipelineGroupPropertiesUpdate Properties { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Pipelines belonging to a given pipeline group. </summary>
+        public IList<PipelineGroupServicePipeline> Pipelines { get; }
+        /// <summary> Persistence options to all pipelines in the instance. </summary>
+        internal PipelineGroupServicePersistenceConfigurationsUpdate Persistence { get; set; }
+        /// <summary> The name of the mounted persistent volume. </summary>
+        public string PersistencePersistentVolumeName
+        {
+            get => Persistence is null ? default : Persistence.PersistentVolumeName;
+            set
+            {
+                if (Persistence is null)
+                    Persistence = new PipelineGroupServicePersistenceConfigurationsUpdate();
+                Persistence.PersistentVolumeName = value;
+            }
+        }
     }
 }

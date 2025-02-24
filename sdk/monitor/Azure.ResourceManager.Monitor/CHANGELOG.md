@@ -1,8 +1,10 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.3 (2025-03-14)
 
 ### Features Added
+
+- Updated azure monitor pipeline group APIs to version `2024-10-01-preview`
 
 ### Breaking Changes
 
