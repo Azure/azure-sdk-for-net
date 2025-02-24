@@ -36,7 +36,7 @@ namespace Samples
         async global::System.Threading.Tasks.ValueTask<global::Samples.ResponseTypeResource> global::Azure.Core.IOperationSource<global::Samples.ResponseTypeResource>.CreateResultAsync(global::Azure.Response response, global::System.Threading.CancellationToken cancellationToken)
         {
             using global::System.Text.Json.JsonDocument document = await global::System.Text.Json.JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            global::Samples.Models.ResponseTypeData data = global::Samples.Models.ResponseTypeData.DeserializeResponseTypeData(document.RootElement, new global::System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+            global::Samples.Models.ResponseTypeData data = global::Samples.Models.ResponseTypeData.DeserializeResponseTypeData(document.RootElement, global::Samples.ModelSerializationExtensions.WireOptions);
             return new global::Samples.ResponseTypeResource(_client, data);
         }
     }
