@@ -75,7 +75,6 @@ namespace Azure.Compute.Batch.Tests.Integration
                         Assert.AreEqual($"Hello World task-{index++}", line);
                     }
 
-                    // Currently broken
                     await foreach (BatchNodeFile item in client.GetTaskFilesAsync(jobId, t.Id))
                     {
                         string url = item.Url;
