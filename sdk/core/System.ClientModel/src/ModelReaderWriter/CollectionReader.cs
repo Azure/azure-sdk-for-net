@@ -34,41 +34,33 @@ internal abstract class CollectionReader
 
     private static IPersistableModel<object> GetPersistableModel(Type returnType, IActivatorFactory activatorFactory)
     {
-        var visited = new HashSet<Type>();
-        return CheckType(returnType, returnType, activatorFactory, visited);
+        var obj = activatorFactory.CreateObject(returnType);
+        if (obj is IPersistableModel<object> persistableModel)
+        {
+            return persistableModel;
+        }
+        else if (obj is IEnumerable enumerable)
+        {
+            return GetPersistableModelFromEnumerable(enumerable, activatorFactory);
+        }
+        throw new InvalidOperationException($"Unable to read type {returnType.FullName} can only read collections of IPersistableModel");
     }
 
-    private static IPersistableModel<object> CheckType(Type type, Type originalType, IActivatorFactory activatorFactory, HashSet<Type> visited)
+    private static IPersistableModel<object> GetPersistableModelFromEnumerable(IEnumerable enumerable, IActivatorFactory activatorFactory)
     {
-        if (type == null || !visited.Add(type))
+        var genericArguments = enumerable.GetType().GetGenericArguments();
+        var elementType = enumerable is IDictionary ? genericArguments[1] : genericArguments[0];
+        var element = activatorFactory.CreateObject(elementType);
+        if (element is IPersistableModel<object> persistableModel)
         {
-            throw new InvalidOperationException($"Unable to read type {originalType.FullName} can only read collections of IPersistableModel");
+            return persistableModel;
+        }
+        else if (element is IEnumerable enumerableElement)
+        {
+            return GetPersistableModelFromEnumerable(enumerableElement, activatorFactory);
         }
 
-        if (typeof(IPersistableModel<object>).IsAssignableFrom(type))
-        {
-            return (IPersistableModel<object>)activatorFactory.CreateObject(type);
-        }
-
-        var enumerableType = type.GetInterfaces()
-            .FirstOrDefault(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
-
-        if (enumerableType != null)
-        {
-            Type elementType = enumerableType.GetGenericArguments()[0];
-            return CheckType(elementType, originalType, activatorFactory, visited);
-        }
-
-        var dictionaryType = type.GetInterfaces()
-            .FirstOrDefault(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IDictionary<,>));
-
-        if (dictionaryType != null)
-        {
-            Type valueType = dictionaryType.GetGenericArguments()[1];
-            return CheckType(valueType, originalType, activatorFactory, visited);
-        }
-
-        throw new InvalidOperationException($"Unable to read type {originalType.FullName} can only read collections of IPersistableModel");
+        throw new InvalidOperationException($"Unable to read type {enumerable.GetType().FullName} can only read collections of IPersistableModel");
     }
 
     internal abstract object Read(Type returnType, BinaryData data, IActivatorFactory activatorFactory, ModelReaderWriterOptions options);
