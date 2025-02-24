@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Billing
         {
             if (property0.Value.ValueKind == JsonValueKind.Null)
             {
-                instanceFlexibility = null;
                 return;
             }
             int numericValue = property0.Value.GetInt32();
