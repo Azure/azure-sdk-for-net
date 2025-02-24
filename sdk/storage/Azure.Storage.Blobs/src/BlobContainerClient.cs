@@ -968,8 +968,6 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
