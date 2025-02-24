@@ -9,6 +9,7 @@
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
     <IncludePerf Condition="'$(IncludePerf)' == ''">true</IncludePerf>
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
+    <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
   </PropertyGroup>
@@ -82,7 +83,7 @@
     <ProjectReference Remove="@(StressProjects)" Condition="'$(IncludeStress)' == 'false'" />
     <ProjectReference Remove="@(SampleApplications)" Condition="'$(IncludeSamplesApplications)' == 'false'"/>
     <ProjectReference Remove="@(SrcProjects)" Condition="'$(IncludeSrc)' == 'false'" />
-    <ProjectReference Remove="@(IntegrationTestProjects)" Condition="'$(IncludeSrc)' == 'false'" />
+    <ProjectReference Remove="@(IntegrationTestProjects)" Condition="'$(IncludeIntegrationTests)' == 'false'" />
     <ProjectReference Remove="@(SharedProjects)" Condition="'$(IncludeSrc)' == 'false'" />
   </ItemGroup>
 
