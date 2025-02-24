@@ -46,8 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
-        internal ContainerRegistryEventTarget()
+        /// <param name="mediaType"> The MIME type of the referenced object. </param>
+        /// <param name="repository"> The repository name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mediaType"/> or <paramref name="repository"/> is null. </exception>
+        internal ContainerRegistryEventTarget(string mediaType, string repository)
         {
+            Argument.AssertNotNull(mediaType, nameof(mediaType));
+            Argument.AssertNotNull(repository, nameof(repository));
+
+            MediaType = mediaType;
+            Repository = repository;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
@@ -69,6 +77,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Url = url;
             Tag = tag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/> for deserialization. </summary>
+        internal ContainerRegistryEventTarget()
+        {
         }
 
         /// <summary> The MIME type of the referenced object. </summary>

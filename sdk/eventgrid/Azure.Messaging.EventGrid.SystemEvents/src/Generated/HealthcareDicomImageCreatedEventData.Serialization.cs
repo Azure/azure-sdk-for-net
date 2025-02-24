@@ -34,31 +34,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PartitionName))
-            {
-                writer.WritePropertyName("partitionName"u8);
-                writer.WriteStringValue(PartitionName);
-            }
-            if (Optional.IsDefined(ImageStudyInstanceUid))
-            {
-                writer.WritePropertyName("imageStudyInstanceUid"u8);
-                writer.WriteStringValue(ImageStudyInstanceUid);
-            }
-            if (Optional.IsDefined(ImageSeriesInstanceUid))
-            {
-                writer.WritePropertyName("imageSeriesInstanceUid"u8);
-                writer.WriteStringValue(ImageSeriesInstanceUid);
-            }
-            if (Optional.IsDefined(ImageSopInstanceUid))
-            {
-                writer.WritePropertyName("imageSopInstanceUid"u8);
-                writer.WriteStringValue(ImageSopInstanceUid);
-            }
-            if (Optional.IsDefined(ServiceHostName))
-            {
-                writer.WritePropertyName("serviceHostName"u8);
-                writer.WriteStringValue(ServiceHostName);
-            }
+            writer.WritePropertyName("partitionName"u8);
+            writer.WriteStringValue(PartitionName);
+            writer.WritePropertyName("imageStudyInstanceUid"u8);
+            writer.WriteStringValue(ImageStudyInstanceUid);
+            writer.WritePropertyName("imageSeriesInstanceUid"u8);
+            writer.WriteStringValue(ImageSeriesInstanceUid);
+            writer.WritePropertyName("imageSopInstanceUid"u8);
+            writer.WriteStringValue(ImageSopInstanceUid);
+            writer.WritePropertyName("serviceHostName"u8);
+            writer.WriteStringValue(ServiceHostName);
             if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);

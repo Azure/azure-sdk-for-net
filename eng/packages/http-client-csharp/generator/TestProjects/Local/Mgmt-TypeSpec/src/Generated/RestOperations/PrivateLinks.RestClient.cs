@@ -38,7 +38,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateStartRequest(Guid subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateStartRequest(Guid subscriptionId, string resourceGroupName, string privateLinkResourceName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -50,7 +50,7 @@ namespace MgmtTypeSpec
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/privateLinkResources/", false);
-            uri.AppendPath(privateLinkResourcenName, true);
+            uri.AppendPath(privateLinkResourceName, true);
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

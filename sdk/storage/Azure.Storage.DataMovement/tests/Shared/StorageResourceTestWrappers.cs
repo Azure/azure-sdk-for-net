@@ -49,6 +49,8 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
 
     protected internal override long MaxSupportedChunkSize => ThrowOr(_inner.MaxSupportedChunkSize);
 
+    protected internal override int MaxSupportedChunkCount => ThrowOr(_inner.MaxSupportedChunkCount);
+
     protected internal override long? Length => ThrowOr(_inner.Length);
 
     protected internal override Task CompleteTransferAsync(bool overwrite, StorageResourceCompleteTransferOptions completeTransferOptions = null, CancellationToken cancellationToken = default)

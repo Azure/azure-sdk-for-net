@@ -18,7 +18,7 @@ namespace Azure.Generator;
 /// </summary>
 [Export(typeof(CodeModelPlugin))]
 [ExportMetadata("PluginName", nameof(AzureClientPlugin))]
-public class AzureClientPlugin : ClientModelPlugin
+public class AzureClientPlugin : ScmCodeModelPlugin
 {
     private static AzureClientPlugin? _instance;
     internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("AzureClientPlugin is not loaded.");
@@ -62,6 +62,7 @@ public class AzureClientPlugin : ClientModelPlugin
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new RestClientVisitor());
+            AddVisitor(new ResourceVisitor());
         }
     }
 
