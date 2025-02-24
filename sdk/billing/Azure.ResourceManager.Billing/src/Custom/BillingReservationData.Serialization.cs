@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Billing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DeserializeInstanceFlexibilityValue(JsonProperty property0, ref InstanceFlexibility? instanceFlexibility)
         {
+            if (property0.Value.ValueKind == JsonValueKind.Null)
+            {
+                instanceFlexibility = null;
+                return;
+            }
             int numericValue = property0.Value.GetInt32();
             instanceFlexibility = numericValue switch
             {
