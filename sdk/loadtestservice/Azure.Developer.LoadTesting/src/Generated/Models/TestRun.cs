@@ -90,7 +90,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="startDateTime"> The test run start DateTime(RFC 3339 literal format). </param>
         /// <param name="endDateTime"> The test run end DateTime(RFC 3339 literal format). </param>
         /// <param name="executedDateTime"> Test run initiated time. </param>
-        /// <param name="portalUrl"> Portal url. </param>
+        /// <param name="portalUri"> Portal url. </param>
         /// <param name="duration"> Test run duration in milliseconds. </param>
         /// <param name="virtualUserHours"> Virtual user hours consumed by the test run. </param>
         /// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
@@ -104,7 +104,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, string portalUrl, long? duration, double? virtualUserHours, string subnetId, TestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, TestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -126,7 +126,7 @@ namespace Azure.Developer.LoadTesting.Models
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             ExecutedDateTime = executedDateTime;
-            PortalUrl = portalUrl;
+            PortalUri = portalUri;
             Duration = duration;
             VirtualUserHours = virtualUserHours;
             SubnetId = subnetId;
@@ -197,7 +197,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Test run initiated time. </summary>
         public DateTimeOffset? ExecutedDateTime { get; }
         /// <summary> Portal url. </summary>
-        public string PortalUrl { get; }
+        public Uri PortalUri { get; }
         /// <summary> Test run duration in milliseconds. </summary>
         public long? Duration { get; }
         /// <summary> Virtual user hours consumed by the test run. </summary>

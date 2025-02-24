@@ -163,10 +163,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("executedDateTime"u8);
                 writer.WriteStringValue(ExecutedDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PortalUrl))
+            if (options.Format != "W" && Optional.IsDefined(PortalUri))
             {
                 writer.WritePropertyName("portalUrl"u8);
-                writer.WriteStringValue(PortalUrl);
+                writer.WriteStringValue(PortalUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {
@@ -285,7 +285,7 @@ namespace Azure.Developer.LoadTesting.Models
             DateTimeOffset? startDateTime = default;
             DateTimeOffset? endDateTime = default;
             DateTimeOffset? executedDateTime = default;
-            string portalUrl = default;
+            Uri portalUrl = default;
             long? duration = default;
             double? virtualUserHours = default;
             string subnetId = default;
@@ -493,7 +493,11 @@ namespace Azure.Developer.LoadTesting.Models
                 }
                 if (property.NameEquals("portalUrl"u8))
                 {
-                    portalUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    portalUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("duration"u8))

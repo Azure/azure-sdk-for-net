@@ -22,14 +22,14 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ResponseTimeMsValue = "response_time_ms";
+        private const string ResponseTimeInMillisecondsValue = "response_time_ms";
         private const string LatencyValue = "latency";
         private const string ErrorValue = "error";
         private const string RequestsValue = "requests";
-        private const string RequestsPerSecValue = "requests_per_sec";
+        private const string RequestsPerSecondValue = "requests_per_sec";
 
         /// <summary> Pass fail criteria for response time metric in milliseconds. </summary>
-        public static PFMetrics ResponseTimeMs { get; } = new PFMetrics(ResponseTimeMsValue);
+        public static PFMetrics ResponseTimeInMilliseconds { get; } = new PFMetrics(ResponseTimeInMillisecondsValue);
         /// <summary> Pass fail criteria for latency metric in milliseconds. </summary>
         public static PFMetrics Latency { get; } = new PFMetrics(LatencyValue);
         /// <summary> Pass fail criteria for error metric. </summary>
@@ -37,7 +37,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Pass fail criteria for total requests. </summary>
         public static PFMetrics Requests { get; } = new PFMetrics(RequestsValue);
         /// <summary> Pass fail criteria for request per second. </summary>
-        public static PFMetrics RequestsPerSec { get; } = new PFMetrics(RequestsPerSecValue);
+        public static PFMetrics RequestsPerSecond { get; } = new PFMetrics(RequestsPerSecondValue);
         /// <summary> Determines if two <see cref="PFMetrics"/> values are the same. </summary>
         public static bool operator ==(PFMetrics left, PFMetrics right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PFMetrics"/> values are not the same. </summary>

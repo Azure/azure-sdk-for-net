@@ -346,7 +346,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="startDateTime"> The test run start DateTime(RFC 3339 literal format). </param>
         /// <param name="endDateTime"> The test run end DateTime(RFC 3339 literal format). </param>
         /// <param name="executedDateTime"> Test run initiated time. </param>
-        /// <param name="portalUrl"> Portal url. </param>
+        /// <param name="portalUri"> Portal url. </param>
         /// <param name="duration"> Test run duration in milliseconds. </param>
         /// <param name="virtualUserHours"> Virtual user hours consumed by the test run. </param>
         /// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
@@ -360,7 +360,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestRun"/> instance for mocking. </returns>
-        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, Uri portalUri = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, Secret>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -389,7 +389,7 @@ namespace Azure.Developer.LoadTesting.Models
                 startDateTime,
                 endDateTime,
                 executedDateTime,
-                portalUrl,
+                portalUri,
                 duration,
                 virtualUserHours,
                 subnetId,
