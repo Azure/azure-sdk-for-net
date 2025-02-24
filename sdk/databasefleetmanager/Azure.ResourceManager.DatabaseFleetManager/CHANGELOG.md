@@ -1,11 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2025-02-24)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- This is the initial release for Azure Database Fleet Manager SDK. This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product.
