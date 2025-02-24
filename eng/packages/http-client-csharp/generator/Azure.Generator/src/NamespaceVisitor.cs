@@ -11,7 +11,7 @@ namespace Azure.Generator
 {
     internal class NamespaceVisitor : ScmLibraryVisitor
     {
-        protected override ModelProvider? Visit(InputModelType model, ModelProvider? type)
+        protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             if (type is not null)
             {
@@ -20,7 +20,7 @@ namespace Azure.Generator
             return type;
         }
 
-        protected override TypeProvider? Visit(InputEnumType enumType, TypeProvider? type)
+        protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
         {
             if (enumType.Usage.HasFlag(InputModelTypeUsage.ApiVersionEnum))
             {
@@ -34,7 +34,7 @@ namespace Azure.Generator
             return type;
         }
 
-        protected override TypeProvider? Visit(TypeProvider type)
+        protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is EnumProvider && type.Name == "ServiceVersion")
             {
@@ -48,7 +48,7 @@ namespace Azure.Generator
             }
             else
             {
-                type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.PackageName;
+                type.Type.Update(@namespace: AzureClientPlugin.Instance.TypeFactory.PackageName);
             }
             return type;
         }
@@ -58,7 +58,7 @@ namespace Azure.Generator
             // TODO: need to take consideration of model-namespace configuration
             // if model-namespace is false, set namespace to $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}"
             // if model-namespace is true, set namespace to $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}.Models"
-            type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.GetCleanNameSpace($"{AzureClientPlugin.Instance.TypeFactory.PackageName}.Models");
+            type.Type.Update(@namespace: AzureClientPlugin.Instance.TypeFactory.GetCleanNameSpace($"{AzureClientPlugin.Instance.TypeFactory.PackageName}.Models"));
         }
     }
 }

@@ -57,6 +57,7 @@ public class AzureClientPlugin : ScmCodeModelPlugin
         if (IsAzureArm.Value)
         {
             AddVisitor(new RestClientVisitor());
+            AddVisitor(new ResourceVisitor());
         }
     }
 

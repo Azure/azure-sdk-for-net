@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventConnectedRegistry"/>. </summary>
-        internal ContainerRegistryEventConnectedRegistry()
+        /// <param name="name"> The name of the connected registry that generated this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        internal ContainerRegistryEventConnectedRegistry(string name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventConnectedRegistry"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventConnectedRegistry"/> for deserialization. </summary>
+        internal ContainerRegistryEventConnectedRegistry()
+        {
         }
 
         /// <summary> The name of the connected registry that generated this event. </summary>
