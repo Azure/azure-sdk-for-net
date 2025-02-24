@@ -116,7 +116,7 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-pg'
         $subscription = 'Azure SDK Test Resources - TME'
-        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
