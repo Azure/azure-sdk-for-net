@@ -36,7 +36,7 @@ namespace MgmtTypeSpec
         async ValueTask<FooResource> IOperationSource<FooResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FooData data = FooData.DeserializeFooData(document.RootElement, new ModelReaderWriterOptions("W"));
+            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new FooResource(_client, data);
         }
     }

@@ -5,6 +5,7 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
@@ -35,7 +36,7 @@ namespace Azure.Generator
         private MgmtLongRunningOperationProvider? _genericArmOperation;
         internal MgmtLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new MgmtLongRunningOperationProvider(true);
 
-        private IReadOnlyList<ResourceProvider> BuildResources()
+        private IReadOnlyList<ResourceProvider> BuildResources(ModelSerializationExtensionsDefinition modelSerializationExtensions)
         {
             var result = new List<ResourceProvider>();
             foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
@@ -46,7 +47,7 @@ namespace Azure.Generator
                 {
                     var requestPath = operationSet.RequestPath;
                     var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
-                    var resource = new ResourceProvider(operationSet, schemaName, resourceData, resourceType);
+                    var resource = new ResourceProvider(operationSet, schemaName, resourceData, resourceType, modelSerializationExtensions);
                     AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(resource);
                 }
@@ -107,9 +108,10 @@ namespace Azure.Generator
         protected override TypeProvider[] BuildTypeProviders()
         {
             var baseProviders = base.BuildTypeProviders();
+            ModelSerializationExtensionsDefinition modelSerializationExtensions = (ModelSerializationExtensionsDefinition)baseProviders.Single(p => p is ModelSerializationExtensionsDefinition);
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
-                var resources = BuildResources();
+                var resources = BuildResources(modelSerializationExtensions);
                 return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
             }
             return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];

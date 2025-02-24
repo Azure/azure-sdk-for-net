@@ -30,6 +30,7 @@ namespace Azure.Generator.Providers
         private OperationSet _operationSet;
         private ModelProvider _resourceData;
         private ClientProvider _clientProvider;
+        private ModelSerializationExtensionsDefinition _modelSerializationExtensions;
         private string _specCleanName;
         private readonly IReadOnlyList<string> _contextualParameters;
 
@@ -38,11 +39,12 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        public ResourceProvider(OperationSet operationSet, string specCleanName, ModelProvider resourceData, string resrouceType)
+        public ResourceProvider(OperationSet operationSet, string specCleanName, ModelProvider resourceData, string resrouceType, ModelSerializationExtensionsDefinition modelSerializationExtensions)
         {
             _operationSet = operationSet;
             _specCleanName = specCleanName;
             _resourceData = resourceData;
+            _modelSerializationExtensions = modelSerializationExtensions;
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(operationSet.InputClient)!;
             _contextualParameters = GetContextualParameters(operationSet.RequestPath);
 
@@ -69,7 +71,7 @@ namespace Azure.Generator.Providers
         protected override string BuildName() => $"{_specCleanName}Resource";
 
         private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(_specCleanName, this, _resourceData);
+        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(_specCleanName, this, _resourceData, _modelSerializationExtensions);
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
