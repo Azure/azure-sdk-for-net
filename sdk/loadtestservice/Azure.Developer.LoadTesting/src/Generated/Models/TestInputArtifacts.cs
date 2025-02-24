@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TestInputArtifacts"/>. </summary>
-        /// <param name="configFileInfo"> File info. </param>
+        /// <param name="configFileInfo"> The load test YAML file that contains the the test configuration. </param>
         /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
         /// <param name="userPropFileInfo"> The user properties file. </param>
         /// <param name="inputArtifactsZipFileInfo"> The zip file with all input artifacts. </param>
@@ -70,7 +70,7 @@ namespace Azure.Developer.LoadTesting.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> File info. </summary>
+        /// <summary> The load test YAML file that contains the the test configuration. </summary>
         public TestFileInfo ConfigFileInfo { get; }
         /// <summary> The test script file for the test run. </summary>
         public TestFileInfo TestScriptFileInfo { get; }
