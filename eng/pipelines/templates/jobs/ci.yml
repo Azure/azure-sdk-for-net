@@ -243,6 +243,8 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
       - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
       - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
@@ -268,8 +270,6 @@ jobs:
         inputs:
           versionSpec: 18.x
         displayName: 'Use Node 18.x'
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
       - task: DotNetCoreCLI@2
         displayName: 'Install Snippet Generator Tool'
