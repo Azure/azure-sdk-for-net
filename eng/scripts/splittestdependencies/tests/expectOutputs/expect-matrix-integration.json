@@ -5,25 +5,35 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NET8.0": {
+      "Ubuntu-20.04_NETCore3.1": {
         "OSVmImage": "MMSUbuntu20.04",
         "Pool": "azsdk-pool-mms-ubuntu-2004-general",
-        "TestTargetFramework": "net8.0"
+        "TestTargetFramework": "netcoreapp3.1"
       },
-      "windows2022_NET8.0": {
+      "Ubuntu-20.04_NET6.0": {
+        "OSVmImage": "MMSUbuntu20.04",
+        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+        "TestTargetFramework": "net6.0"
+      },
+      "windows2022_NET6.0": {
         "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
-        "TestTargetFramework": "net8.0"
+        "TestTargetFramework": "net6.0"
       },
       "windows2022_NET462": {
         "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
         "TestTargetFramework": "net462"
       },
-      "macos_NET8.0": {
+      "macos_NETCore3.1": {
         "OSVmImage": "macos-latest",
         "Pool": "Azure Pipelines",
-        "TestTargetFramework": "net8.0"
+        "TestTargetFramework": "netcoreapp3.1"
+      },
+      "macos_NET6.0": {
+        "OSVmImage": "macos-latest",
+        "Pool": "Azure Pipelines",
+        "TestTargetFramework": "net6.0"
       }
     },
     "AdditionalTestArguments": [
