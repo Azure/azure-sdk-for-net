@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Sample;
 using Samples.Models;
 
 namespace Samples
@@ -22,7 +21,7 @@ namespace Samples
     {
         private global::Samples.Models.ResponseTypeData _data;
         private global::Azure.Core.Pipeline.ClientDiagnostics _responsetypeClientDiagnostics;
-        private global::Sample.TestClient _responsetypeRestClient;
+        private global::Samples.TestClient _responsetypeRestClient;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly global::Azure.Core.ResourceType ResourceType = "a/test";
 
@@ -41,7 +40,7 @@ namespace Samples
         {
             _responsetypeClientDiagnostics = new global::Azure.Core.Pipeline.ClientDiagnostics("Samples", ResourceType.Namespace, this.Diagnostics);
             this.TryGetApiVersion(ResourceType, out string responsetypeApiVersion);
-            _responsetypeRestClient = new global::Sample.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
+            _responsetypeRestClient = new global::Samples.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
 #if DEBUG
             global::Samples.ResponseTypeResource.ValidateResourceId(id);
 #endif
