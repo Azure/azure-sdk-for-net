@@ -25,7 +25,7 @@ describe("Test GetInputType for scalar", () => {
       { IsAzureCoreNeeded: true },
     );
     const context = await createCSharpSdkContext(createEmitterContext(program));
-    var model = createModel(context);
+    const model = createModel(context);
 
     const inputParamArray = model.Clients[0].Operations[0].Parameters.filter(
       (p) => p.Name === "location",
