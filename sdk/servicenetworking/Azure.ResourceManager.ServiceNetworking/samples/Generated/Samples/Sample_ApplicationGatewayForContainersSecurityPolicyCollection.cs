@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ServiceNetworking.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
@@ -41,13 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             // invoke the operation
             string securityPolicyName = "sp1";
-            ApplicationGatewayForContainersSecurityPolicyData data = new ApplicationGatewayForContainersSecurityPolicyData(new AzureLocation("NorthCentralUS"))
-            {
-                Properties = new SecurityPolicyProperties
-                {
-                    WafPolicyId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Networking/applicationGatewayWebApplicationFirewallPolicies/wp-0"),
-                },
-            };
+            ApplicationGatewayForContainersSecurityPolicyData data = new ApplicationGatewayForContainersSecurityPolicyData(new AzureLocation("NorthCentralUS"));
             ArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, data);
             ApplicationGatewayForContainersSecurityPolicyResource result = lro.Value;
 

@@ -63,9 +63,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
+        /// <param name="wafPolicyId"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <returns> A new <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/> instance for mocking. </returns>
-        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SecurityPolicyProperties properties = null)
+        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -76,21 +78,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 systemData,
                 tags,
                 location,
-                properties,
+                policyType,
+                wafPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(wafPolicyId) : null,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityPolicyProperties"/>. </summary>
-        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
-        /// <param name="wafPolicyId"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
-        /// <returns> A new <see cref="Models.SecurityPolicyProperties"/> instance for mocking. </returns>
-        public static SecurityPolicyProperties SecurityPolicyProperties(PolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, ProvisioningState? provisioningState = null)
-        {
-            return new SecurityPolicyProperties(policyType, wafPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(wafPolicyId) : null, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.FrontendData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.TrafficControllerFrontendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -99,12 +93,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="location"> The location. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
-        /// <returns> A new <see cref="ServiceNetworking.FrontendData"/> instance for mocking. </returns>
-        public static FrontendData FrontendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string fqdn = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ServiceNetworking.TrafficControllerFrontendData"/> instance for mocking. </returns>
+        public static TrafficControllerFrontendData TrafficControllerFrontendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string fqdn = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FrontendData(
+            return new TrafficControllerFrontendData(
                 id,
                 name,
                 resourceType,

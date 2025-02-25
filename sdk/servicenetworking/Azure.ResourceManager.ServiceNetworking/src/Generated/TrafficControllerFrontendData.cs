@@ -14,10 +14,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing the Frontend data model.
+    /// A class representing the TrafficControllerFrontend data model.
     /// Frontend Sub Resource of Traffic Controller.
     /// </summary>
-    public partial class FrontendData : TrackedResourceData
+    public partial class TrafficControllerFrontendData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FrontendData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerFrontendData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public FrontendData(AzureLocation location) : base(location)
+        public TrafficControllerFrontendData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontendData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerFrontendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerFrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontendData"/> for deserialization. </summary>
-        internal FrontendData()
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerFrontendData"/> for deserialization. </summary>
+        internal TrafficControllerFrontendData()
         {
         }
 

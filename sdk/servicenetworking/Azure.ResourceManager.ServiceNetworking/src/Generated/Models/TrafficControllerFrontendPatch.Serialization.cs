@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    public partial class FrontendPatch : IUtf8JsonSerializable, IJsonModel<FrontendPatch>
+    public partial class TrafficControllerFrontendPatch : IUtf8JsonSerializable, IJsonModel<TrafficControllerFrontendPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficControllerFrontendPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FrontendPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrafficControllerFrontendPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerFrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficControllerFrontendPatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
         }
 
-        FrontendPatch IJsonModel<FrontendPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrafficControllerFrontendPatch IJsonModel<TrafficControllerFrontendPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerFrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficControllerFrontendPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontendPatch(document.RootElement, options);
+            return DeserializeTrafficControllerFrontendPatch(document.RootElement, options);
         }
 
-        internal static FrontendPatch DeserializeFrontendPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TrafficControllerFrontendPatch DeserializeTrafficControllerFrontendPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FrontendPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new TrafficControllerFrontendPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FrontendPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TrafficControllerFrontendPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerFrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontendPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficControllerFrontendPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FrontendPatch IPersistableModel<FrontendPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TrafficControllerFrontendPatch IPersistableModel<TrafficControllerFrontendPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerFrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFrontendPatch(document.RootElement, options);
+                        return DeserializeTrafficControllerFrontendPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontendPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficControllerFrontendPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FrontendPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrafficControllerFrontendPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

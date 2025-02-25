@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontendResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontendResource.CreateResourceIdentifier" /> to create a <see cref="FrontendResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="TrafficControllerFrontendResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficControllerFrontendResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerFrontendResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontendResource"/> object. </returns>
-        public virtual FrontendResource GetFrontendResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficControllerFrontendResource"/> object. </returns>
+        public virtual TrafficControllerFrontendResource GetTrafficControllerFrontendResource(ResourceIdentifier id)
         {
-            FrontendResource.ValidateResourceId(id);
-            return new FrontendResource(Client, id);
+            TrafficControllerFrontendResource.ValidateResourceId(id);
+            return new TrafficControllerFrontendResource(Client, id);
         }
 
         /// <summary>

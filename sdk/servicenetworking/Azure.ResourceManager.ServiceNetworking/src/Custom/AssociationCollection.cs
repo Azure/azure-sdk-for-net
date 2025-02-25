@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Azure.ResourceManager.ServiceNetworking
     /// Each <see cref="AssociationResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
     /// To get an <see cref="AssociationCollection"/> instance call the GetAssociations method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
+    [Obsolete("This class is now deprecated. Please use the new class `TrafficControllerAssociationCollection` moving forward.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AssociationCollection : ArmCollection, IEnumerable<AssociationResource>, IAsyncEnumerable<AssociationResource>
     {
         private readonly ClientDiagnostics _associationAssociationsInterfaceClientDiagnostics;
@@ -85,8 +88,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var response = await _associationAssociationsInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation<AssociationResource>(new AssociationOperationSource(Client), _associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _associationAssociationsInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData(), cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation<AssociationResource>(new AssociationOperationSource(Client),_associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData()).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var response = _associationAssociationsInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data, cancellationToken);
-                var operation = new ServiceNetworkingArmOperation<AssociationResource>(new AssociationOperationSource(Client), _associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _associationAssociationsInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData(), cancellationToken);
+                var operation = new ServiceNetworkingArmOperation<AssociationResource>(new AssociationOperationSource(Client), _associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData()).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,7 +186,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +231,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -419,7 +422,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<AssociationResource>(response.GetRawResponse());
-                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -464,7 +467,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<AssociationResource>(response.GetRawResponse());
-                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {

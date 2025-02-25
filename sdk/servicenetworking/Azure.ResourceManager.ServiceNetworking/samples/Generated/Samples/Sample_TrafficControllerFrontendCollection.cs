@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
-    public partial class Sample_FrontendCollection
+    public partial class Sample_TrafficControllerFrontendCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this FrontendResource
-            FrontendCollection collection = trafficController.GetFrontends();
+            // get the collection of this TrafficControllerFrontendResource
+            TrafficControllerFrontendCollection collection = trafficController.GetTrafficControllerFrontends();
 
             // invoke the operation
             string frontendName = "fe1";
-            FrontendData data = new FrontendData(new AzureLocation("NorthCentralUS"));
-            ArmOperation<FrontendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, frontendName, data);
-            FrontendResource result = lro.Value;
+            TrafficControllerFrontendData data = new TrafficControllerFrontendData(new AzureLocation("NorthCentralUS"));
+            ArmOperation<TrafficControllerFrontendResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, frontendName, data);
+            TrafficControllerFrontendResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FrontendData resourceData = result.Data;
+            TrafficControllerFrontendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this FrontendResource
-            FrontendCollection collection = trafficController.GetFrontends();
+            // get the collection of this TrafficControllerFrontendResource
+            TrafficControllerFrontendCollection collection = trafficController.GetTrafficControllerFrontends();
 
             // invoke the operation
             string frontendName = "fe1";
-            FrontendResource result = await collection.GetAsync(frontendName);
+            TrafficControllerFrontendResource result = await collection.GetAsync(frontendName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FrontendData resourceData = result.Data;
+            TrafficControllerFrontendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this FrontendResource
-            FrontendCollection collection = trafficController.GetFrontends();
+            // get the collection of this TrafficControllerFrontendResource
+            TrafficControllerFrontendCollection collection = trafficController.GetTrafficControllerFrontends();
 
             // invoke the operation and iterate over the result
-            await foreach (FrontendResource item in collection.GetAllAsync())
+            await foreach (TrafficControllerFrontendResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FrontendData resourceData = item.Data;
+                TrafficControllerFrontendData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this FrontendResource
-            FrontendCollection collection = trafficController.GetFrontends();
+            // get the collection of this TrafficControllerFrontendResource
+            TrafficControllerFrontendCollection collection = trafficController.GetTrafficControllerFrontends();
 
             // invoke the operation
             string frontendName = "fe1";
@@ -171,13 +171,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
-            // get the collection of this FrontendResource
-            FrontendCollection collection = trafficController.GetFrontends();
+            // get the collection of this TrafficControllerFrontendResource
+            TrafficControllerFrontendCollection collection = trafficController.GetTrafficControllerFrontends();
 
             // invoke the operation
             string frontendName = "fe1";
-            NullableResponse<FrontendResource> response = await collection.GetIfExistsAsync(frontendName);
-            FrontendResource result = response.HasValue ? response.Value : null;
+            NullableResponse<TrafficControllerFrontendResource> response = await collection.GetIfExistsAsync(frontendName);
+            TrafficControllerFrontendResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FrontendData resourceData = result.Data;
+                TrafficControllerFrontendData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

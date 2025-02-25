@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
-    public partial class Sample_FrontendResource
+    public partial class Sample_TrafficControllerFrontendResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this FrontendResource created on azure
-            // for more information of creating FrontendResource, please refer to the document of FrontendResource
+            // this example assumes you already have this TrafficControllerFrontendResource created on azure
+            // for more information of creating TrafficControllerFrontendResource, please refer to the document of TrafficControllerFrontendResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string frontendName = "fe1";
-            ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
-            FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
+            ResourceIdentifier trafficControllerFrontendResourceId = TrafficControllerFrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            TrafficControllerFrontendResource trafficControllerFrontend = client.GetTrafficControllerFrontendResource(trafficControllerFrontendResourceId);
 
             // invoke the operation
-            FrontendResource result = await frontend.GetAsync();
+            TrafficControllerFrontendResource result = await trafficControllerFrontend.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FrontendData resourceData = result.Data;
+            TrafficControllerFrontendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this FrontendResource created on azure
-            // for more information of creating FrontendResource, please refer to the document of FrontendResource
+            // this example assumes you already have this TrafficControllerFrontendResource created on azure
+            // for more information of creating TrafficControllerFrontendResource, please refer to the document of TrafficControllerFrontendResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string frontendName = "fe1";
-            ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
-            FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
+            ResourceIdentifier trafficControllerFrontendResourceId = TrafficControllerFrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            TrafficControllerFrontendResource trafficControllerFrontend = client.GetTrafficControllerFrontendResource(trafficControllerFrontendResourceId);
 
             // invoke the operation
-            await frontend.DeleteAsync(WaitUntil.Completed);
+            await trafficControllerFrontend.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this FrontendResource created on azure
-            // for more information of creating FrontendResource, please refer to the document of FrontendResource
+            // this example assumes you already have this TrafficControllerFrontendResource created on azure
+            // for more information of creating TrafficControllerFrontendResource, please refer to the document of TrafficControllerFrontendResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string frontendName = "fe1";
-            ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
-            FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
+            ResourceIdentifier trafficControllerFrontendResourceId = TrafficControllerFrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            TrafficControllerFrontendResource trafficControllerFrontend = client.GetTrafficControllerFrontendResource(trafficControllerFrontendResourceId);
 
             // invoke the operation
-            FrontendPatch patch = new FrontendPatch();
-            FrontendResource result = await frontend.UpdateAsync(patch);
+            TrafficControllerFrontendPatch patch = new TrafficControllerFrontendPatch();
+            TrafficControllerFrontendResource result = await trafficControllerFrontend.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FrontendData resourceData = result.Data;
+            TrafficControllerFrontendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

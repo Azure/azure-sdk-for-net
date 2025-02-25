@@ -5,12 +5,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The type used for update operations of the Association. </summary>
+    [Obsolete("This class is now deprecated. Please use the new class `TrafficControllerAssociationPatch` moving forward.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AssociationPatch
     {
         /// <summary>
@@ -62,6 +65,20 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             AssociationType = associationType;
             Subnet = subnet;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        internal AssociationPatch(TrafficControllerAssociationPatch patch)
+        {
+            Tags = patch.Tags;
+            AssociationType = patch.AssociationType.ToString();
+            Subnet = new WritableSubResource() { Id = patch.SubnetId };
+            _serializedAdditionalRawData = null;
+        }
+
+        internal TrafficControllerAssociationPatch ToTrafficControllerAssociationPatch()
+        {
+            // The subnet code is incorrect, issue https://github.com/Azure/autorest.csharp/issues/5243 opened to track this
+            return new TrafficControllerAssociationPatch(Tags, AssociationType.ToString(), new SubResource(), _serializedAdditionalRawData);
         }
 
         /// <summary> Resource tags. </summary>

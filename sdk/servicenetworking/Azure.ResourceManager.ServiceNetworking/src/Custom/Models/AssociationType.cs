@@ -9,6 +9,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The AssociationType. </summary>
+    [Obsolete("This class is now deprecated. Please use the new class `TrafficControllerAssociationType` moving forward.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct AssociationType : IEquatable<AssociationType>
     {
         private readonly string _value;
