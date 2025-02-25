@@ -14,6 +14,19 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
+        /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="vaultUri"/> is null. </exception>
+        public SearchResourceEncryptionKey(string keyName, string vaultUri)
+        {
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
+
+            KeyName = keyName;
+            _vaultUri = vaultUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
+        /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
         /// <param name="accessCredentialsInternal"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>

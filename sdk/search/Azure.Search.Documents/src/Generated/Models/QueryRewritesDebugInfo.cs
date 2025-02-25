@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information specific to query rewrites. </summary>
-    public partial class QueryRewritesDebugInfo
+    internal partial class QueryRewritesDebugInfo
     {
         /// <summary> Initializes a new instance of <see cref="QueryRewritesDebugInfo"/>. </summary>
         internal QueryRewritesDebugInfo()
