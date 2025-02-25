@@ -172,7 +172,7 @@ extends:
 
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
-            - task: EsrpRelease@7
+            - task: EsrpRelease@9
               inputs:
                 displayName: Publish to npmjs.org
                 ConnectedServiceName: Azure SDK PME Managed Identity
