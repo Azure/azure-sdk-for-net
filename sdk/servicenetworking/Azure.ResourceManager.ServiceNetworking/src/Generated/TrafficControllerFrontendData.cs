@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerFrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerFrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <summary> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </summary>
         public string Fqdn { get; }
         /// <summary> Provisioning State of Traffic Controller Frontend Resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ServiceNetworkingProvisioningState? ProvisioningState { get; }
     }
 }

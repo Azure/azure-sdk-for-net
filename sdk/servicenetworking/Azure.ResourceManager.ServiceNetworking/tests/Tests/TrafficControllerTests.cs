@@ -212,13 +212,13 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             TrafficControllerResource tcCreate = CreateTrafficControllerAsync(location, resourceGroupName, tcName).Result.Value;
             Assert.NotNull(tcCreate, "Traffic Controller is Null");
             Assert.AreEqual(tcCreate.Data.Name, tcName);
-            Assert.AreEqual(tcCreate.Data.ProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(tcCreate.Data.TrafficControllerProvisioningState.ToString(), "Succeeded");
 
             //Testing GET Operation
             TrafficControllerResource tcGet = GetTrafficControllerAsync(resourceGroupName, tcName).Result;
             Assert.NotNull(tcGet, "Traffic Controller is Null");
             Assert.AreEqual(tcGet.Data.Name, tcName);
-            Assert.AreEqual(tcGet.Data.ProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(tcGet.Data.TrafficControllerProvisioningState.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             var tcDelete = await tcGet.DeleteAsync(WaitUntil.Completed);

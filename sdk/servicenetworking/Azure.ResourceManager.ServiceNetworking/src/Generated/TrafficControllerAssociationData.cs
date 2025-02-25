@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="subnet"> Association Subnet. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType, WritableSubResource subnet, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType, WritableSubResource subnet, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AssociationType = associationType;
             Subnet = subnet;
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Provisioning State of Traffic Controller Association Resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ServiceNetworkingProvisioningState? ProvisioningState { get; }
     }
 }
