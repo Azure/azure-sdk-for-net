@@ -19,20 +19,20 @@ namespace Azure.Security.KeyVault.Administration
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_1;
+        internal const KeyVaultAdministrationClientOptions.ServiceVersion LatestVersion = KeyVaultAdministrationClientOptions.ServiceVersion.V7_6_Preview_1;
 
         /// <summary>
-        /// Gets the <see cref="ServiceVersion"/> of the service API used when
+        /// Gets the <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        public ServiceVersion Version { get; }
+        public KeyVaultAdministrationClientOptions.ServiceVersion Version { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultAdministrationClientOptions"/> class.
         /// </summary>
         /// <param name="version">
-        /// The <see cref="ServiceVersion"/> of the service API used when
+        /// The <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
         public KeyVaultAdministrationClientOptions(ServiceVersion version = LatestVersion)
@@ -40,6 +40,37 @@ namespace Azure.Security.KeyVault.Administration
             Version = version;
 
             this.ConfigureLogging();
+        }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            /// <summary>
+            /// The Key Vault API version 7.2.
+            /// </summary>
+            V7_2 = 1,
+
+            /// <summary>
+            /// The Key Vault API version 7.3.
+            /// </summary>
+            V7_3 = 2,
+
+            /// <summary>
+            /// The Key Vault API version 7.4.
+            /// </summary>
+            V7_4 = 3,
+
+            /// <summary>
+            /// The Key Vault API version 7.5.
+            /// </summary>
+            V7_5 = 4,
+
+            /// <summary>
+            /// Service version "7.6-preview.1".
+            /// </summary>
+            V7_6_Preview_1 = 5,
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
