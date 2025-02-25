@@ -188,7 +188,6 @@ extends:
                 Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                 ServiceEndpointUrl: https://api.esrp.microsoft.com
                 MainPublisher: ESRPRELPACMANTEST
-                DomainTenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
 
           - task: PowerShell@2
             displayName: Create emitter-package.json
