@@ -18,25 +18,21 @@ namespace Azure.Generator.Providers
 {
     internal class OperationSourceProvider : TypeProvider
     {
-        private string _resourceName;
-        private ResourceProvider _resource;
-        private ModelProvider _resourceData;
+        private ResourceClientProvider _resource;
         private CSharpType _operationSourceInterface;
         private ModelSerializationExtensionsDefinition _modelSerializationExtensions;
 
         private FieldProvider _clientField;
 
-        public OperationSourceProvider(string resourceName, ResourceProvider resource, ModelProvider resourceData, ModelSerializationExtensionsDefinition modelSerializationExtensions)
+        public OperationSourceProvider(ResourceClientProvider resource, ModelSerializationExtensionsDefinition modelSerializationExtensions)
         {
-            _resourceName = resourceName;
             _resource = resource;
-            _resourceData = resourceData;
             _modelSerializationExtensions = modelSerializationExtensions;
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ArmClient), "_client", this);
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resource.Type);
         }
 
-        protected override string BuildName() => $"{_resourceName}OperationSource";
+        protected override string BuildName() => $"{_resource.SpecName}OperationSource";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "LongRunningOperation", $"{Name}.cs");
 
@@ -60,7 +56,7 @@ namespace Azure.Generator.Providers
             var body = new MethodBodyStatement[]
             {
                 UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
-                Declare("data", _resourceData.Type, Static(_resourceData.Type).Invoke($"Deserialize{_resourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static(_modelSerializationExtensions.Type).Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
+                Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static(_modelSerializationExtensions.Type).Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
                 Return(New.Instance(_resource.Type, [_clientField, dataVariable])),
             };
             return new MethodProvider(signature, body, this);
@@ -79,7 +75,7 @@ namespace Azure.Generator.Providers
             var body = new MethodBodyStatement[]
             {
                 UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),
-                Declare("data", _resourceData.Type, Static(_resourceData.Type).Invoke($"Deserialize{_resourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), New.Instance<ModelReaderWriterOptions>(Literal("W"))), out var dataVariable),
+                Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), New.Instance<ModelReaderWriterOptions>(Literal("W"))), out var dataVariable),
                 Return(New.Instance(_resource.Type, [_clientField, dataVariable])),
             };
             return new MethodProvider(signature, body, this);

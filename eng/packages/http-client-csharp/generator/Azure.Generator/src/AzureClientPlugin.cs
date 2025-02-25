@@ -30,6 +30,7 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
+    // TODO: remove these once we can get resource hierarchy natively from TypeSpec input
     internal ResourceDetection ResourceDetection { get; } = new();
     internal ParentDetection ParentDetection { get; } = new();
     internal ScopeDetection ScopeDetection { get; } = new();

@@ -25,13 +25,11 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
-    internal class ResourceProvider : TypeProvider
+    internal class ResourceClientProvider : TypeProvider
     {
         private OperationSet _operationSet;
-        private ModelProvider _resourceData;
         private ClientProvider _clientProvider;
         private ModelSerializationExtensionsDefinition _modelSerializationExtensions;
-        private string _specCleanName;
         private readonly IReadOnlyList<string> _contextualParameters;
 
         private FieldProvider _dataField;
@@ -39,18 +37,18 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        public ResourceProvider(OperationSet operationSet, string specCleanName, ModelProvider resourceData, string resrouceType, ModelSerializationExtensionsDefinition modelSerializationExtensions)
+        public ResourceClientProvider(OperationSet operationSet, string specName, ModelProvider resourceData, string resrouceType, ModelSerializationExtensionsDefinition modelSerializationExtensions)
         {
             _operationSet = operationSet;
-            _specCleanName = specCleanName;
-            _resourceData = resourceData;
+            SpecName = specName;
+            ResourceData = resourceData;
             _modelSerializationExtensions = modelSerializationExtensions;
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(operationSet.InputClient)!;
             _contextualParameters = GetContextualParameters(operationSet.RequestPath);
 
             _dataField = new FieldProvider(FieldModifiers.Private, resourceData.Type, "_data", this);
-            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specCleanName.ToLower()}ClientDiagnostics", this);
-            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{specCleanName.ToLower()}RestClient", this);
+            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specName.ToLower()}ClientDiagnostics", this);
+            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{specName.ToLower()}RestClient", this);
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resrouceType));
         }
 
@@ -68,10 +66,13 @@ namespace Azure.Generator.Providers
             return contextualParameters;
         }
 
-        protected override string BuildName() => $"{_specCleanName}Resource";
+        protected override string BuildName() => $"{SpecName}Resource";
 
         private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(_specCleanName, this, _resourceData, _modelSerializationExtensions);
+        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this, _modelSerializationExtensions);
+
+        internal ModelProvider ResourceData { get; }
+        internal string SpecName { get; }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -90,7 +91,7 @@ namespace Azure.Generator.Providers
             var dataProperty = new PropertyProvider(
                 $"Gets the data representing this Feature.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                _resourceData.Type,
+                ResourceData.Type,
                 "Data",
                 new MethodPropertyBody(new MethodBodyStatement[]
                 {
@@ -111,7 +112,7 @@ namespace Azure.Generator.Providers
         private ConstructorProvider BuildPrimaryConstructor()
         {
             var clientParameter = new ParameterProvider("client", $"The client parameters to use in these operations.", typeof(ArmClient));
-            var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", _resourceData.Type);
+            var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", ResourceData.Type);
 
             var initializer = new ConstructorInitializer(false, [clientParameter, dataParameter.Property("Id")]);
             var signature = new ConstructorSignature(
@@ -189,7 +190,7 @@ namespace Azure.Generator.Providers
             {
                 var convenienceMethod = GetCorrespondingConvenienceMethod(operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
-                if (convenienceMethod.IsListMethod(out var itemType) && itemType.AreNamesEqual(_resourceData.Type))
+                if (convenienceMethod.IsListMethod(out var itemType) && itemType.AreNamesEqual(ResourceData.Type))
                 {
                     continue;
                 }
@@ -209,7 +210,7 @@ namespace Azure.Generator.Providers
             var isLongRunning = operation.LongRunning != null;
             var signature = new MethodSignature(
                 isUpdateOnly ? (isAsync ? "UpdateAsync" : "Update") : convenienceMethod.Signature.Name,
-                isUpdateOnly ? $"Update a {_specCleanName}" : convenienceMethod.Signature.Description,
+                isUpdateOnly ? $"Update a {SpecName}" : convenienceMethod.Signature.Description,
                 convenienceMethod.Signature.Modifiers,
                 GetOperationMethodReturnType(isAsync, isLongRunning, operation.Responses, out var isGeneric),
                 convenienceMethod.Signature.ReturnDescription,
@@ -322,7 +323,7 @@ namespace Azure.Generator.Providers
                 }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
-                    var resource = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(_resourceData.Type));
+                    var resource = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(ResourceData.Type));
                     arguments.Add(resource);
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))
@@ -347,7 +348,7 @@ namespace Azure.Generator.Providers
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
         {
-            var apiVersionDeclaration = new VariableExpression(typeof(string), $"{_specCleanName.ToLower()}ApiVersion");
+            var apiVersionDeclaration = new VariableExpression(typeof(string), $"{SpecName.ToLower()}ApiVersion");
             apiVersion = apiVersionDeclaration.As<string>();
             var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [_resourcetypeField, new DeclarationExpression(apiVersionDeclaration, true)]);
             return invocation.As<bool>();

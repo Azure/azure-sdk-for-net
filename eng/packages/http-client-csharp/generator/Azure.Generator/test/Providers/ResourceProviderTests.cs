@@ -18,7 +18,7 @@ namespace Azure.Generator.Tests.Providers
             var (client, models) = InputData.ClientWithResource();
             var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
 
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceProvider) as ResourceProvider;
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
             Assert.NotNull(resourceProvider);
             var codeFile = new TypeProviderWriter(resourceProvider!).Write();
             var result = codeFile.Content;

@@ -18,9 +18,9 @@ if (-not $LaunchOnly) {
         Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan
         $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
 
-        $unbrandedTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
+        $basicTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
 
-        Invoke (Get-TspCommand "$unbrandedTypespecTestProject/Basic-TypeSpec.tsp" $unbrandedTypespecTestProject -forceNewProject $ForceNewProject)
+        Invoke (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject -forceNewProject $ForceNewProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -195,13 +195,13 @@ if ($null -eq $filter) {
     Write-Host "Writing new launch settings" -ForegroundColor Cyan
     $mgcExe = "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.exe"
     $sampleExe = "`$(SolutionDir)/../generator/artifacts/bin/SamplePlugin/Debug/net8.0/Microsoft.Generator.CSharp.exe"
-    $unbrandedSpec = "TestProjects/Local/Basic-TypeSpec"
+    $basicSpec = "TestProjects/Local/Basic-TypeSpec"
     $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
 
     $launchSettings = @{}
     $launchSettings.Add("profiles", @{})
     $launchSettings["profiles"].Add("Basic-TypeSpec", @{})
-    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$unbrandedSpec -p AzureClientPlugin")
+    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -p AzureClientPlugin")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
     

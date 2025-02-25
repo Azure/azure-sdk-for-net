@@ -19,7 +19,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
-    internal class MgmtLongRunningOperationProvider : TypeProvider
+    internal class LongRunningOperationProvider : TypeProvider
     {
         private class Template<T> { }
         private readonly CSharpType _t = typeof(Template<>).GetGenericArguments()[0];
@@ -30,7 +30,7 @@ namespace Azure.Generator.Providers
         private FieldProvider _nextLinkOperationField;
         private FieldProvider _operationIdField;
 
-        public MgmtLongRunningOperationProvider(bool isGeneric)
+        public LongRunningOperationProvider(bool isGeneric)
         {
             _isGeneric = isGeneric;
             _operationField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, isGeneric ? new CSharpType(typeof(OperationInternal<>), _t) : typeof(OperationInternal), "_operation", this);

@@ -30,15 +30,15 @@ namespace Azure.Generator
             _inputTypeMap = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().ToDictionary(model => model.Name);
         }
 
-        private MgmtLongRunningOperationProvider? _armOperation;
-        internal MgmtLongRunningOperationProvider ArmOperation => _armOperation ??= new MgmtLongRunningOperationProvider(false);
+        private LongRunningOperationProvider? _armOperation;
+        internal LongRunningOperationProvider ArmOperation => _armOperation ??= new LongRunningOperationProvider(false);
 
-        private MgmtLongRunningOperationProvider? _genericArmOperation;
-        internal MgmtLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new MgmtLongRunningOperationProvider(true);
+        private LongRunningOperationProvider? _genericArmOperation;
+        internal LongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new LongRunningOperationProvider(true);
 
-        private IReadOnlyList<ResourceProvider> BuildResources(ModelSerializationExtensionsDefinition modelSerializationExtensions)
+        private IReadOnlyList<ResourceClientProvider> BuildResources(ModelSerializationExtensionsDefinition modelSerializationExtensions)
         {
-            var result = new List<ResourceProvider>();
+            var result = new List<ResourceClientProvider>();
             foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
             {
                 var model = _inputTypeMap[schemaName];
@@ -47,7 +47,7 @@ namespace Azure.Generator
                 {
                     var requestPath = operationSet.RequestPath;
                     var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
-                    var resource = new ResourceProvider(operationSet, schemaName, resourceData, resourceType, modelSerializationExtensions);
+                    var resource = new ResourceClientProvider(operationSet, schemaName, resourceData, resourceType, modelSerializationExtensions);
                     AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(resource);
                 }

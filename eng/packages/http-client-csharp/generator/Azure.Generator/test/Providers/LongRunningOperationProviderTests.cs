@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Providers
 {
-    internal class MgmtLongRunningOperationProviderTests
+    internal class LongRunningOperationProviderTests
     {
         [SetUp]
         public void SetUp()
@@ -18,9 +18,9 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_NonGeneric_MgmtLROProviderGeneration()
+        public void Verify_NonGeneric_LROProviderGeneration()
         {
-            var nonGenericLROProvider = new MgmtLongRunningOperationProvider(false);
+            var nonGenericLROProvider = new LongRunningOperationProvider(false);
             var codeFile = new TypeProviderWriter(nonGenericLROProvider).Write();
             var result = codeFile.Content;
 
@@ -30,9 +30,9 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_Generic_MgmtLROProviderGeneration()
+        public void Verify_Generic_LROProviderGeneration()
         {
-            var genericLROProvider = new MgmtLongRunningOperationProvider(true);
+            var genericLROProvider = new LongRunningOperationProvider(true);
             var codeFile = new TypeProviderWriter(genericLROProvider).Write();
             var result = codeFile.Content;
 
