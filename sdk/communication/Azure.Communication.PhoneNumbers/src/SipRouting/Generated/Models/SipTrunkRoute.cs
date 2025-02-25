@@ -7,29 +7,31 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> Represents a trunk route for routing calls. </summary>
     public partial class SipTrunkRoute
     {
-
-        /// <summary> Initializes a new instance of SipTrunkRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SipTrunkRoute"/>. </summary>
         /// <param name="description"> Gets or sets description of the route. </param>
         /// <param name="name"> Gets or sets name of the route. </param>
         /// <param name="numberPattern">
         /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
-        /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
-        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
+        /// The regex should match only digits with an optional '+' prefix without spaces.
+        /// I.e. "^\+[1-9][0-9]{3,23}$".
         /// </param>
         /// <param name="trunks"> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </param>
-        internal SipTrunkRoute(string description, string name, string numberPattern, IReadOnlyList<string> trunks)
+        /// <param name="callerIdOverride"> Gets or sets caller ID override. This value will override caller ID of outgoing call specified at runtime. </param>
+        internal SipTrunkRoute(string description, string name, string numberPattern, IReadOnlyList<string> trunks, string callerIdOverride)
         {
             Description = description;
             Name = name;
             NumberPattern = numberPattern;
             Trunks = trunks;
+            CallerIdOverride = callerIdOverride;
         }
+        /// <summary> Gets or sets caller ID override. This value will override caller ID of outgoing call specified at runtime. </summary>
+        public string CallerIdOverride { get; set; }
     }
 }

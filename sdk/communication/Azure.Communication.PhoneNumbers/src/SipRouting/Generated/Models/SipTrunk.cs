@@ -7,11 +7,37 @@
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    /// <summary> Represents a SIP trunk for routing calls. See RFC 4904. </summary>
+    /// <summary> Represents a SIP trunk for routing calls. See RFC 4904. Can be expanded with additional data. </summary>
     public partial class SipTrunk
     {
+        /// <summary> Initializes a new instance of <see cref="SipTrunk"/>. </summary>
+        /// <param name="sipSignalingPort"> Gets or sets SIP signaling port of the trunk. </param>
+        /// <param name="enabled"> Enabled flag. </param>
+        /// <param name="health"> Represents health state of a SIP trunk for routing calls. </param>
+        /// <param name="directTransfer"> When enabled, removes Azure Communication Services from the signaling path on call transfer and sets the SIP Refer-To header to the trunk's FQDN. By default false. </param>
+        /// <param name="privacyHeader"> SIP Privacy header. Default value is id. </param>
+        /// <param name="ipAddressVersion"> IP address version used by the trunk. Default value is ipv4. </param>
+        internal SipTrunk(int sipSignalingPort, bool? enabled, SipHealth health, bool? directTransfer, PrivacyHeader? privacyHeader, IpAddressVersion? ipAddressVersion)
+        {
+            SipSignalingPort = sipSignalingPort;
+            Enabled = enabled;
+            Health = health;
+            DirectTransfer = directTransfer;
+            PrivacyHeader = privacyHeader;
+            IpAddressVersion = ipAddressVersion;
+        }
 
         /// <summary> Gets or sets SIP signaling port of the trunk. </summary>
         public int SipSignalingPort { get; set; }
+        /// <summary> Enabled flag. </summary>
+        public bool? Enabled { get; set; }
+        /// <summary> Represents health state of a SIP trunk for routing calls. </summary>
+        public SipHealth Health { get; }
+        /// <summary> When enabled, removes Azure Communication Services from the signaling path on call transfer and sets the SIP Refer-To header to the trunk's FQDN. By default false. </summary>
+        public bool? DirectTransfer { get; set; }
+        /// <summary> SIP Privacy header. Default value is id. </summary>
+        public PrivacyHeader? PrivacyHeader { get; set; }
+        /// <summary> IP address version used by the trunk. Default value is ipv4. </summary>
+        public IpAddressVersion? IpAddressVersion { get; set; }
     }
 }

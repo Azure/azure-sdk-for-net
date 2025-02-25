@@ -5,8 +5,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    [CodeGenClient("CommunicationPhoneNumbersSipRoutingModelFactory")]
-    internal static partial class SipRoutingModelFactory
+    /// <summary> SIP Tls related properties. </summary>
+    [CodeGenClient("Tls")]
+    public partial class SipTls
     {
     }
 }

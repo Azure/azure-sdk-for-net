@@ -18,16 +18,16 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("numberPattern");
+            writer.WritePropertyName("numberPattern"u8);
             writer.WriteStringValue(NumberPattern);
             if (Optional.IsCollectionDefined(Trunks))
             {
-                writer.WritePropertyName("trunks");
+                writer.WritePropertyName("trunks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Trunks)
                 {
@@ -35,37 +35,46 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(CallerIdOverride))
+            {
+                writer.WritePropertyName("callerIdOverride"u8);
+                writer.WriteStringValue(CallerIdOverride);
+            }
             writer.WriteEndObject();
         }
 
         internal static SipTrunkRoute DeserializeSipTrunkRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string description = default;
             string name = default;
             string numberPattern = default;
             IReadOnlyList<string> trunks = default;
+            string callerIdOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberPattern"))
+                if (property.NameEquals("numberPattern"u8))
                 {
                     numberPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trunks"))
+                if (property.NameEquals("trunks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -76,8 +85,29 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     trunks = array;
                     continue;
                 }
+                if (property.NameEquals("callerIdOverride"u8))
+                {
+                    callerIdOverride = property.Value.GetString();
+                    continue;
+                }
             }
-            return new SipTrunkRoute(description, name, numberPattern, trunks ?? new ChangeTrackingList<string>());
+            return new SipTrunkRoute(description, name, numberPattern, trunks ?? new ChangeTrackingList<string>(), callerIdOverride);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SipTrunkRoute FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSipTrunkRoute(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
