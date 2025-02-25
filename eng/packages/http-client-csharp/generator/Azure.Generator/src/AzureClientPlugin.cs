@@ -4,12 +4,11 @@
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
-using static Microsoft.TypeSpec.Generator.ClientModel.ScmCodeModelPlugin;
+using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Microsoft.TypeSpec.Generator.ClientModel;
 
 namespace Azure.Generator;
 
