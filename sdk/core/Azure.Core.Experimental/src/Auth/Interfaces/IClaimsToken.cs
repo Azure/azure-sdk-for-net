@@ -6,7 +6,7 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a provider that can provide a token.
 /// </summary>
-public interface IClaimsToken : IScopedToken
+public interface IClaimsToken : IScopedFlowToken
 {
     /// <summary>
     /// Additional claims to be included in the token.

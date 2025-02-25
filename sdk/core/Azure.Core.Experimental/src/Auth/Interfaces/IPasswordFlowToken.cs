@@ -6,7 +6,7 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a provider that can provide a token.
 /// </summary>
-public interface IPasswordFlowToken : IScopedToken
+public interface IPasswordFlowToken : IScopedFlowToken
 {
     /// <summary>
     /// Gets the token endpoint URI.

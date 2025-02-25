@@ -9,10 +9,17 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a provider that can provide a token.
 /// </summary>
-public interface IScopedToken : ITokenContext
+public interface IScopedFlowToken : ITokenContext
 {
     /// <summary>
     /// Gets the scopes required to authenticate.
     /// </summary>
     string[] Scopes { get; }
+
+    /// <summary>
+    /// Clones the current context with additional scopes.
+    /// </summary>
+    /// <param name="additionalScopes"></param>
+    /// <returns></returns>
+    object CloneWithAdditionalScopes(string[] additionalScopes);
 }

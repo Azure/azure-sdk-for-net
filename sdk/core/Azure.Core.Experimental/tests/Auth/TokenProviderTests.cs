@@ -4,12 +4,10 @@
 using System.ClientModel.Auth;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Auth;
@@ -22,20 +20,27 @@ public class TokenProviderTests
         // usage for TokenProvider2 abstract type
         ITokenProvider provider = new ClientCredentialTokenProvider();
         var client = new FooClient(new Uri("http://localhost"), provider);
+        client.Get();
     }
 
     public class FooClient
     {
         // Generated from the TypeSpec spec.
-        private readonly IReadOnlyDictionary<string, object> context = new Dictionary<string, object> {
-            { "scopes", new string[] { "myScope_from_spec" } },
-            { "authorizationUrl" , "https://myAuthserver.com/token"} };
+        private readonly Dictionary<string, object>[] flows = [
+            new Dictionary<string, object> {
+                { "scopes", new string[] { "baselineScope" } },
+                { "tokenUrl" , new Uri("https://myAuthserver.com/token")},
+                { "refreshUrl" , new Uri("https://myAuthserver.com/refresh")}
+            }
+        ];
 
         private ClientPipeline _pipeline;
 
         public FooClient(Uri uri, ApiKeyCredential credential)
         {
-            ClientPipeline pipeline = ClientPipeline.Create(new(),
+            var options = new ClientPipelineOptions();
+            options.Transport = new MockPipelineTransport("foo", m => new MockPipelineResponse(200));
+            ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             perTryPolicies: [ApiKeyAuthenticationPolicy.CreateBasicAuthorizationPolicy(credential)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
@@ -44,9 +49,15 @@ public class TokenProviderTests
 
         public FooClient(Uri uri, ITokenProvider credential)
         {
-            ClientPipeline pipeline = ClientPipeline.Create(new(),
+            var options = new ClientPipelineOptions();
+            options.Transport = new MockPipelineTransport("foo",
+            m =>
+            {
+                return new MockPipelineResponse(200);
+            });
+            ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [new OAuth2BearerTokenAuthenticationPolicy(credential)],
+            perTryPolicies: [new OAuth2BearerTokenAuthenticationPolicy(credential, flows)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
             _pipeline = pipeline;
         }
@@ -55,12 +66,28 @@ public class TokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-            message.SetProperty(typeof())
+            message.SetProperty(typeof(IScopedFlowToken), new ScopedContext(["read"]));
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
             request.Uri = new Uri("http://localhost/foo");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response);
+        }
+    }
 
+    internal struct ScopedContext : IScopedFlowToken
+    {
+        public string[] Scopes { get; }
+
+        public ScopedContext(string[] scopes)
+        {
+            Scopes = scopes;
+        }
+
+        public object CloneWithAdditionalScopes(string[] additionalScopes)
+        {
+            return new ScopedContext([.. Scopes, .. additionalScopes]);
         }
     }
 
@@ -68,23 +95,23 @@ public class TokenProviderTests
     {
         public override Token GetAccessToken(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return new Token("token", "Bearer", DateTimeOffset.UtcNow.AddHours(1));
         }
 
         public override ValueTask<Token> GetAccessTokenAsync(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return new ValueTask<Token>(new Token("token", "Bearer", DateTimeOffset.UtcNow.AddHours(1)));
         }
 
         public override IClientCredentialsFlowToken CreateContext(IReadOnlyDictionary<string, object> properties)
         {
             if (properties.TryGetValue("scopes", out var scopes) && scopes is string[] scopeArray &&
-                properties.TryGetValue("tokenUri", out var tokenUri) && tokenUri is Uri tokenUriValue &&
-                properties.TryGetValue("refreshUri", out var refreshUri) && refreshUri is Uri refreshUriValue)
+                properties.TryGetValue("tokenUrl", out var tokenUri) && tokenUri is Uri tokenUriValue &&
+                properties.TryGetValue("refreshUrl", out var refreshUri) && refreshUri is Uri refreshUriValue)
             {
                 return new ClientCredentialsContext(tokenUriValue, refreshUriValue, scopeArray);
             }
-            throw new InvalidOperationException("All required properties were not present.");
+            return null;
         }
     }
 
@@ -95,6 +122,11 @@ public class TokenProviderTests
         public Uri TokenUri { get; } = tokenUri;
 
         public Uri RefreshUri { get; } = refreshUri;
+
+        public object CloneWithAdditionalScopes(string[] additionalScopes)
+        {
+            return new ClientCredentialsContext(TokenUri, RefreshUri, [.. Scopes, .. additionalScopes]);
+        }
     }
 
     public class ClientCredentialToken : RefreshableToken

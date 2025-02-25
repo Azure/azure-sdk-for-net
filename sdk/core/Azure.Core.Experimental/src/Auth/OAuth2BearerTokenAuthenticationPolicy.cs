@@ -13,34 +13,64 @@ namespace System.ClientModel.Auth;
 /// <remarks>
 /// Initializes a new instance of the <see cref="OAuth2BearerTokenAuthenticationPolicy"/> class.
 /// </remarks>
-/// <param name="tokenProvider"></param>
-public class OAuth2BearerTokenAuthenticationPolicy(ITokenProvider tokenProvider) : PipelinePolicy
+public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
 {
-    private readonly ITokenProvider _tokenProvider = tokenProvider;
+    private readonly ITokenProvider _tokenProvider;
+    private readonly IScopedFlowToken _flowContext;
+
+    /// <param name="tokenProvider"></param>
+    /// <param name="contexts"></param>
+    public OAuth2BearerTokenAuthenticationPolicy(ITokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
+    {
+        _tokenProvider = tokenProvider;
+        _flowContext = GetContext(contexts, tokenProvider);
+    }
 
     /// <inheritdoc />
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        if (message.TryGetProperty(typeof(ITokenContext), out var rawContext))
+        Token token;
+        if (message.TryGetProperty(typeof(IScopedFlowToken), out var rawContext) && rawContext is IScopedFlowToken scopesContext)
         {
-            ITokenContext context = rawContext switch
-            {
-                IAuthorizationCodeFlowToken authCode => authCode,
-                IClientCredentialsFlowToken clientSecret => clientSecret,
-                IPasswordFlowToken password => password,
-                IImplicitFlowToken implicitFlow => implicitFlow,
-                _ => throw new NotImplementedException()
-            };
-            var token = _tokenProvider.GetAccessToken(context, message.CancellationToken);
-            message.Request.Headers.Set("Authorization", $"Bearer {token.TokenValue}");
-            return;
+            var context = _flowContext.CloneWithAdditionalScopes(scopesContext.Scopes);
+            token = _tokenProvider.GetAccessToken(context, message.CancellationToken);
         }
-        throw new NotImplementedException();
+        else
+        {
+            token = _tokenProvider.GetAccessToken(_flowContext, message.CancellationToken);
+        }
+        message.Request.Headers.Set("Authorization", $"Bearer {token.TokenValue}");
+
+        ProcessNext(message, pipeline, currentIndex);
+        return;
     }
 
     /// <inheritdoc />
     public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        throw new NotImplementedException();
+        return ProcessNextAsync(message, pipeline, currentIndex);
+    }
+
+    internal static IScopedFlowToken GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, ITokenProvider tokenProvider)
+    {
+        var type = tokenProvider.GetType();
+        // This assumes that a credential provider will only implement one flow type.
+        var credentialFlowType = type switch
+        {
+            var t when typeof(TokenProvider<IClientCredentialsFlowToken>).IsAssignableFrom(t) => typeof(IClientCredentialsFlowToken),
+            var t when typeof(TokenProvider<IAuthorizationCodeFlowToken>).IsAssignableFrom(t) => typeof(IAuthorizationCodeFlowToken),
+            var t when typeof(TokenProvider<IPasswordFlowToken>).IsAssignableFrom(t) => typeof(IPasswordFlowToken),
+            var t when typeof(TokenProvider<IImplicitFlowToken>).IsAssignableFrom(t) => typeof(IImplicitFlowToken),
+            _ => throw new InvalidOperationException("Supplied credential does not implement any supported auth flow.")
+        };
+        foreach (var context in contexts)
+        {
+            var createdContext = tokenProvider.CreateContext(context);
+            if (createdContext != null && credentialFlowType.IsInstanceOfType(createdContext))
+            {
+                return (IScopedFlowToken)createdContext;
+            }
+        }
+        throw new InvalidOperationException($"The service does not support the flow implemented by the supplied token provider {type.FullName}.");
     }
 }
