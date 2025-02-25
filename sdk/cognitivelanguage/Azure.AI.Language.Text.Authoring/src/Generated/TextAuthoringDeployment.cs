@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
