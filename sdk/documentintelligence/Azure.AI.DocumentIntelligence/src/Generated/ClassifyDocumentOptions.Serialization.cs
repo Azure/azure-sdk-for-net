@@ -44,13 +44,28 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("base64Source"u8);
                 writer.WriteBase64StringValue(BytesSource.ToArray(), "D");
             }
+            if (Optional.IsDefined(ClassifierId))
+            {
+                writer.WritePropertyName("classifierId"u8);
+                writer.WriteStringValue(ClassifierId);
+            }
+            if (Optional.IsDefined(Split))
+            {
+                writer.WritePropertyName("split"u8);
+                writer.WriteStringValue(Split.ToString());
+            }
+            if (Optional.IsDefined(Pages))
+            {
+                writer.WritePropertyName("pages"u8);
+                writer.WriteStringValue(Pages);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -83,6 +98,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             Uri urlSource = default;
             BinaryData base64Source = default;
+            string classifierId = default;
+            SplitMode? split = default;
+            string pages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +123,32 @@ namespace Azure.AI.DocumentIntelligence
                     base64Source = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
+                if (property.NameEquals("classifierId"u8))
+                {
+                    classifierId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("split"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    split = new SplitMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("pages"u8))
+                {
+                    pages = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClassifyDocumentOptions(urlSource, base64Source, serializedAdditionalRawData);
+            return new ClassifyDocumentOptions(classifierId, urlSource, base64Source, split, pages, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassifyDocumentOptions>.Write(ModelReaderWriterOptions options)
