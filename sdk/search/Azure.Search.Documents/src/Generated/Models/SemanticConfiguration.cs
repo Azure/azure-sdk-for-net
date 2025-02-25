@@ -25,9 +25,22 @@ namespace Azure.Search.Documents.Indexes.Models
             PrioritizedFields = prioritizedFields;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
+        /// <param name="name"> The name of the semantic configuration. </param>
+        /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
+        /// <param name="flightingOptIn"> Determines how which semantic or query rewrite models to use during model flighting/upgrades. </param>
+        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, bool? flightingOptIn)
+        {
+            Name = name;
+            PrioritizedFields = prioritizedFields;
+            FlightingOptIn = flightingOptIn;
+        }
+
         /// <summary> The name of the semantic configuration. </summary>
         public string Name { get; set; }
         /// <summary> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </summary>
         public SemanticPrioritizedFields PrioritizedFields { get; set; }
+        /// <summary> Determines how which semantic or query rewrite models to use during model flighting/upgrades. </summary>
+        public bool? FlightingOptIn { get; set; }
     }
 }

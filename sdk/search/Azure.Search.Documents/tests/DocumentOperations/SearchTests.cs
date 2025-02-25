@@ -53,14 +53,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, null, new Dictionary<string, object>()
+            new FacetResult(count, null, null, new Dictionary<string, object>()
             {
                 ["from"] = from,
                 ["to"] = to
             });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult(count, null, new Dictionary<string, object>()
+            new FacetResult(count, null, null, new Dictionary<string, object>()
             {
                 ["value"] = value
             });

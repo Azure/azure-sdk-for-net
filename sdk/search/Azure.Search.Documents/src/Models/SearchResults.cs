@@ -59,9 +59,6 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public SemanticSearchResults SemanticSearch { get; internal set; }
 
-        /// <summary> Debug information that applies to the search results as a whole. </summary>
-        public DebugInfo DebugInfo { get; internal set; }
-
         /// <summary>
         /// Gets the first (server side) page of search result values.
         /// </summary>
@@ -212,6 +209,7 @@ namespace Azure.Search.Documents.Models
                             Dictionary<string, object> facetValues = new Dictionary<string, object>();
                             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
                             long? facetCount = null;
+                            double? facetSum = null;
                             foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
                                 if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
@@ -219,6 +217,13 @@ namespace Azure.Search.Documents.Models
                                     if (facetProperty.Value.ValueKind != JsonValueKind.Null)
                                     {
                                         facetCount = facetProperty.Value.GetInt64();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.SumKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetSum = facetProperty.Value.GetDouble();
                                     }
                                 }
                                 else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
@@ -253,7 +258,7 @@ namespace Azure.Search.Documents.Models
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, searchFacets, facetValues));
+                            facets.Add(new FacetResult(facetCount, facetSum, searchFacets, facetValues));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
@@ -292,12 +297,7 @@ namespace Azure.Search.Documents.Models
                 {
                     results.SemanticSearch.SemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
                 }
-                if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value);
-                }
-                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
+                if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
                     {
@@ -386,11 +386,6 @@ namespace Azure.Search.Documents.Models
         /// Semantic search results from an index.
         /// </summary>
         public SemanticSearchResults SemanticSearch => _results.SemanticSearch;
-
-        /// <summary>
-        /// Debug information that applies to the search results as a whole.
-        /// </summary>
-        public DebugInfo DebugInfo => _results.DebugInfo;
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>
@@ -520,7 +515,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
         /// <param name="semanticSearch">The semantic search result.</param>
         /// <returns>A new SearchResults instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchResults<T> SearchResults<T>(
             IEnumerable<SearchResult<T>> values,
             long? totalCount,
@@ -536,41 +530,6 @@ namespace Azure.Search.Documents.Models
                 Facets = facets,
                 RawResponse = rawResponse,
                 SemanticSearch = semanticSearch
-            };
-            results.Values.AddRange(values);
-            return results;
-        }
-
-        /// <summary> Initializes a new instance of SearchResults. </summary>
-        /// <typeparam name="T">
-        /// The .NET type that maps to the index schema. Instances of this type can
-        /// be retrieved as documents from the index.
-        /// </typeparam>
-        /// <param name="values">The search result values.</param>
-        /// <param name="totalCount">The total count of results found by the search operation.</param>
-        /// <param name="facets">The facet query results for the search operation.</param>
-        /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
-        /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
-        /// <param name="semanticSearch">The semantic search result.</param>
-        /// <param name="debugInfo"> Debug information that applies to the search results as a whole. </param>
-        /// <returns>A new SearchResults instance for mocking.</returns>
-        public static SearchResults<T> SearchResults<T>(
-            IEnumerable<SearchResult<T>> values,
-            long? totalCount,
-            IDictionary<string, IList<FacetResult>> facets,
-            double? coverage,
-            Response rawResponse,
-            SemanticSearchResults semanticSearch,
-            DebugInfo debugInfo)
-        {
-            var results = new SearchResults<T>()
-            {
-                TotalCount = totalCount,
-                Coverage = coverage,
-                Facets = facets,
-                RawResponse = rawResponse,
-                SemanticSearch = semanticSearch,
-                DebugInfo = debugInfo
             };
             results.Values.AddRange(values);
             return results;

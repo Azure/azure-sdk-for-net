@@ -8,7 +8,7 @@
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
-    public partial class DebugInfo
+    internal partial class DebugInfo
     {
         /// <summary> Initializes a new instance of <see cref="DebugInfo"/>. </summary>
         internal DebugInfo()

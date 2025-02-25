@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
+        /// <param name="id"> A guid for the SearchIndexerCache. </param>
         /// <param name="storageConnectionString"> The connection string to the storage account where the cache data will be persisted. </param>
         /// <param name="enableReprocessing"> Specifies whether incremental reprocessing is enabled. </param>
         /// <param name="identity">
@@ -23,12 +24,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal SearchIndexerCache(string storageConnectionString, bool? enableReprocessing, SearchIndexerDataIdentity identity)
+        internal SearchIndexerCache(string id, string storageConnectionString, bool? enableReprocessing, SearchIndexerDataIdentity identity)
         {
+            Id = id;
             StorageConnectionString = storageConnectionString;
             EnableReprocessing = enableReprocessing;
             Identity = identity;
         }
+
+        /// <summary> A guid for the SearchIndexerCache. </summary>
+        public string Id { get; set; }
         /// <summary> Specifies whether incremental reprocessing is enabled. </summary>
         public bool? EnableReprocessing { get; set; }
         /// <summary>

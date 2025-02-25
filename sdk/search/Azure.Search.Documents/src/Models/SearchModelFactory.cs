@@ -376,7 +376,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, null, additionalProperties);
+            return new FacetResult(count, null, null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
