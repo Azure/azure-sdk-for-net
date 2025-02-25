@@ -78,8 +78,6 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
         public void ConvertsCompositeObjectsConstructorParameters()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("composite:c", "http://localhost"));

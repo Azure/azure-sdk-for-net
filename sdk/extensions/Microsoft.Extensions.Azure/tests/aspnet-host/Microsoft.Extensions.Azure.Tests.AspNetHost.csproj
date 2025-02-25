@@ -6,6 +6,8 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <IsTestProject>false</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
