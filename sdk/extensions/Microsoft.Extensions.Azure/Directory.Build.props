@@ -4,4 +4,8 @@
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\, Directory.Build.props))\Directory.Build.props" />
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0'">
+    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)tests\Microsoft.Extensions.Azure.Tests.csproj" />
+  </ItemGroup>
 </Project>
