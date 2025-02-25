@@ -21,6 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string id = default;
             string fileName = default;
             string caption = default;
+            bool? animated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mimeType"u8))
@@ -43,8 +44,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     caption = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("animated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    animated = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new AcsMessageMediaContent(mimeType, id, fileName, caption);
+            return new AcsMessageMediaContent(mimeType, id, fileName, caption, animated);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

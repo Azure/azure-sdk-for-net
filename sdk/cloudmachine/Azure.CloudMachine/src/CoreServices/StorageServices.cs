@@ -14,7 +14,7 @@ using Azure.Messaging.ServiceBus;
 using ContentType = Azure.Core.ContentType;
 using System.ComponentModel;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// The storage services for the cloud machine.

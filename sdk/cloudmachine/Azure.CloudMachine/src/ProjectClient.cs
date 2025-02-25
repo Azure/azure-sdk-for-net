@@ -8,7 +8,7 @@ using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// The cloud machine client.
@@ -33,7 +33,7 @@ public partial class ProjectClient : ClientWorkspace
     protected ProjectClient() :
         this(credential: BuildCredential(default))
     {
-        Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
+        Id = AppConfigHelpers.ReadOrCreateProjectId();
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
@@ -48,13 +48,13 @@ public partial class ProjectClient : ClientWorkspace
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(BuildCredential(credential))
     {
-        Id = configuration["CloudMachine:ID"];
+        Id = configuration["AzureProject:ID"];
         if (Id == null)
         {
-            Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
+            Id = AppConfigHelpers.ReadOrCreateProjectId();
         }
 
-        IConfigurationSection connectionsSection = configuration.GetSection("CloudMachine:Connections");
+        IConfigurationSection connectionsSection = configuration.GetSection("AzureProject:Connections");
 
         foreach (IConfigurationSection connection in connectionsSection.GetChildren())
         {
@@ -85,7 +85,7 @@ public partial class ProjectClient : ClientWorkspace
             Connections.AddRange(connections);
         }
 
-        Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
+        Id = AppConfigHelpers.ReadOrCreateProjectId();
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
@@ -116,7 +116,7 @@ public partial class ProjectClient : ClientWorkspace
     {
         if (credential == default)
         {
-            // This environment variable is set by the CloudMachine App Service feature during provisioning.
+            // This environment variable is set by the Project App Service feature during provisioning.
             credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
             {
                 string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
@@ -132,7 +132,7 @@ public partial class ProjectClient : ClientWorkspace
     /// </summary>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string ReadOrCreateCloudMachineId() => AppConfigHelpers.ReadOrCreateCloudMachineId();
+    public static string ReadOrCreateProjectId() => AppConfigHelpers.ReadOrCreateProjectId();
 
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]

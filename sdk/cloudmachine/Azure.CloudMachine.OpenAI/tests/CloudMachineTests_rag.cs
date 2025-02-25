@@ -4,10 +4,7 @@
 #nullable enable
 
 using System;
-using System.Threading;
-using Azure.Security.KeyVault.Secrets;
-using Azure.CloudMachine.OpenAI;
-using Azure.CloudMachine.KeyVault;
+using Azure.Projects.OpenAI;
 using NUnit.Framework;
 using OpenAI.Chat;
 using Microsoft.Extensions.Configuration;
@@ -15,12 +12,10 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
 using System.Linq;
 using System.IO;
-using System.Text.Json;
-using Azure.Storage.Blobs;
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
-public partial class CloudMachineTests
+public partial class AzureProjectsTests
 {
     [Ignore("no recordings yet")]
     [Test]

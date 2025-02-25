@@ -304,8 +304,8 @@ WebHookProperties =
                 3,
                 true,
                 new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme" },
-                XmlConvert.ToTimeSpan("Pt1m"),
-                XmlConvert.ToTimeSpan("Pt15m"),
+                XmlConvert.ToTimeSpan("PT1M"),
+                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertSingleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("High_CPU_80", "\\Processor(_Total)\\% Processor Time", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.5)

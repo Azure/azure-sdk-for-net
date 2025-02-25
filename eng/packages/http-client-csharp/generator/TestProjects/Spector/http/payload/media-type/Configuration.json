@@ -1,6 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Payload.MediaType",
-  "library-name": "Payload.MediaType",
-  "use-model-reader-writer": true
+  "package-name": "Payload.MediaType"
 }

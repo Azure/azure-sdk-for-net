@@ -146,6 +146,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(IncidentReceivers))
+            {
+                writer.WritePropertyName("incidentReceivers"u8);
+                writer.WriteStartArray();
+                foreach (var item in IncidentReceivers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -195,6 +205,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
             IList<MonitorArmRoleReceiver> armRoleReceivers = default;
             IList<MonitorEventHubReceiver> eventHubReceivers = default;
+            IList<IncidentReceiver> incidentReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -358,6 +369,20 @@ namespace Azure.ResourceManager.Monitor.Models
                     eventHubReceivers = array;
                     continue;
                 }
+                if (property.NameEquals("incidentReceivers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IncidentReceiver> array = new List<IncidentReceiver>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IncidentReceiver.DeserializeIncidentReceiver(item, options));
+                    }
+                    incidentReceivers = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -377,6 +402,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
                 armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
                 eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
+                incidentReceivers ?? new ChangeTrackingList<IncidentReceiver>(),
                 serializedAdditionalRawData);
         }
 

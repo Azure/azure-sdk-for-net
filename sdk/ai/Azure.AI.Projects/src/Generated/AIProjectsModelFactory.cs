@@ -848,10 +848,8 @@ namespace Azure.AI.Projects
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
         /// <returns> A new <see cref="Projects.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
+        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, RunStepFileSearchToolCallResults fileSearch = null)
         {
-            fileSearch ??= new Dictionary<string, string>();
-
             return new RunStepDeltaFileSearchToolCall(index, id, "file_search", serializedAdditionalRawData: null, fileSearch);
         }
 

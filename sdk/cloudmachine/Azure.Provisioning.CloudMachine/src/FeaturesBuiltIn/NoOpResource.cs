@@ -3,7 +3,7 @@
 
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.AIFoundry;
+namespace Azure.Projects.AIFoundry;
 
 /// <summary>
 /// Simple no-op resource that satisfies the base class contract without actually deploying anything.

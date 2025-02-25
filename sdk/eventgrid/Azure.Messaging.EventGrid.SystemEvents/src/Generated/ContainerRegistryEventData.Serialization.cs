@@ -34,33 +34,39 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ContainerRegistryEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Id))
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
             }
-            writer.WritePropertyName("timestamp"u8);
-            writer.WriteStringValue(Timestamp, "O");
-            if (Optional.IsDefined(Action))
-            {
-                writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action);
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
+            writer.WritePropertyName("action"u8);
+            writer.WriteStringValue(Action);
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target, options);
-            writer.WritePropertyName("request"u8);
-            writer.WriteObjectValue(Request, options);
-            writer.WritePropertyName("actor"u8);
-            writer.WriteObjectValue(Actor, options);
-            writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
-            writer.WritePropertyName("connectedRegistry"u8);
-            writer.WriteObjectValue(ConnectedRegistry, options);
+            if (Optional.IsDefined(Request))
+            {
+                writer.WritePropertyName("request"u8);
+                writer.WriteObjectValue(Request, options);
+            }
+            if (Optional.IsDefined(Actor))
+            {
+                writer.WritePropertyName("actor"u8);
+                writer.WriteObjectValue(Actor, options);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source, options);
+            }
+            if (Optional.IsDefined(ConnectedRegistry))
+            {
+                writer.WritePropertyName("connectedRegistry"u8);
+                writer.WriteObjectValue(ConnectedRegistry, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,7 +105,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string id = default;
-            DateTimeOffset timestamp = default;
+            DateTimeOffset? timestamp = default;
             string action = default;
             string location = default;
             ContainerRegistryEventTarget target = default;
@@ -118,6 +124,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("timestamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -138,21 +148,37 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("request"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectedRegistry"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value, options);
                     continue;
                 }

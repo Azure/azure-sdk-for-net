@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-18-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>

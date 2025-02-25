@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2025-02-28)
+
+This release is the first stable release of the Device Registry Management client library.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Aligned resource types to Microsoft.DeviceRegistry API version `2024-11-01`.
 
 ## 1.0.0-beta.2 (2025-01-24)
 
