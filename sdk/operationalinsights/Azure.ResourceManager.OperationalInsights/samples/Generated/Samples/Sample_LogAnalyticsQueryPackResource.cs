@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
                 },
                 Tags =
 {
-["my-label"] = {"label1"}
+["my-label"] = new string[]{"label1"}
 },
             };
             long? top = 3L;
