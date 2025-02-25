@@ -24,50 +24,50 @@ namespace Azure.Developer.LoadTesting.Models
 
         private const string CountValue = "count";
         private const string PercentageValue = "percentage";
-        private const string AvgValue = "avg";
-        private const string P50Value = "p50";
-        private const string P75Value = "p75";
-        private const string P90Value = "p90";
-        private const string P95Value = "p95";
-        private const string P96Value = "p96";
-        private const string P97Value = "p97";
-        private const string P98Value = "p98";
-        private const string P99Value = "p99";
-        private const string P999Value = "p99.9";
-        private const string P9999Value = "p99.99";
-        private const string MinValue = "min";
-        private const string MaxValue = "max";
+        private const string AverageValue = "avg";
+        private const string Percentile50Value = "p50";
+        private const string Percentile75Value = "p75";
+        private const string Percentile90Value = "p90";
+        private const string Percentile95Value = "p95";
+        private const string Percentile96Value = "p96";
+        private const string Percentile97Value = "p97";
+        private const string Percentile98Value = "p98";
+        private const string Percentile99Value = "p99";
+        private const string Percentile999Value = "p99.9";
+        private const string Percentile9999Value = "p99.99";
+        private const string MinimumValue = "min";
+        private const string MaximumValue = "max";
 
         /// <summary> Criteria applies for count value. </summary>
         public static PassFailAggregationFunction Count { get; } = new PassFailAggregationFunction(CountValue);
         /// <summary> Criteria applies for given percentage value. </summary>
         public static PassFailAggregationFunction Percentage { get; } = new PassFailAggregationFunction(PercentageValue);
         /// <summary> Criteria applies for avg value. </summary>
-        public static PassFailAggregationFunction Avg { get; } = new PassFailAggregationFunction(AvgValue);
+        public static PassFailAggregationFunction Average { get; } = new PassFailAggregationFunction(AverageValue);
         /// <summary> Criteria applies for 50th percentile value. </summary>
-        public static PassFailAggregationFunction P50 { get; } = new PassFailAggregationFunction(P50Value);
+        public static PassFailAggregationFunction Percentile50 { get; } = new PassFailAggregationFunction(Percentile50Value);
         /// <summary> Criteria applies for 75th percentile value. </summary>
-        public static PassFailAggregationFunction P75 { get; } = new PassFailAggregationFunction(P75Value);
+        public static PassFailAggregationFunction Percentile75 { get; } = new PassFailAggregationFunction(Percentile75Value);
         /// <summary> Criteria applies for 90th percentile value. </summary>
-        public static PassFailAggregationFunction P90 { get; } = new PassFailAggregationFunction(P90Value);
+        public static PassFailAggregationFunction Percentile90 { get; } = new PassFailAggregationFunction(Percentile90Value);
         /// <summary> Criteria applies for 95th percentile value. </summary>
-        public static PassFailAggregationFunction P95 { get; } = new PassFailAggregationFunction(P95Value);
+        public static PassFailAggregationFunction Percentile95 { get; } = new PassFailAggregationFunction(Percentile95Value);
         /// <summary> Criteria applies for 96th percentile value. </summary>
-        public static PassFailAggregationFunction P96 { get; } = new PassFailAggregationFunction(P96Value);
+        public static PassFailAggregationFunction Percentile96 { get; } = new PassFailAggregationFunction(Percentile96Value);
         /// <summary> Criteria applies for 97th percentile value. </summary>
-        public static PassFailAggregationFunction P97 { get; } = new PassFailAggregationFunction(P97Value);
+        public static PassFailAggregationFunction Percentile97 { get; } = new PassFailAggregationFunction(Percentile97Value);
         /// <summary> Criteria applies for 98th percentile value. </summary>
-        public static PassFailAggregationFunction P98 { get; } = new PassFailAggregationFunction(P98Value);
+        public static PassFailAggregationFunction Percentile98 { get; } = new PassFailAggregationFunction(Percentile98Value);
         /// <summary> Criteria applies for 99th percentile value. </summary>
-        public static PassFailAggregationFunction P99 { get; } = new PassFailAggregationFunction(P99Value);
+        public static PassFailAggregationFunction Percentile99 { get; } = new PassFailAggregationFunction(Percentile99Value);
         /// <summary> Criteria applies for 99.9th percentile value. </summary>
-        public static PassFailAggregationFunction P999 { get; } = new PassFailAggregationFunction(P999Value);
+        public static PassFailAggregationFunction Percentile999 { get; } = new PassFailAggregationFunction(Percentile999Value);
         /// <summary> Criteria applies for 99.99th percentile value. </summary>
-        public static PassFailAggregationFunction P9999 { get; } = new PassFailAggregationFunction(P9999Value);
+        public static PassFailAggregationFunction Percentile9999 { get; } = new PassFailAggregationFunction(Percentile9999Value);
         /// <summary> Criteria applies for minimum value. </summary>
-        public static PassFailAggregationFunction Min { get; } = new PassFailAggregationFunction(MinValue);
+        public static PassFailAggregationFunction Minimum { get; } = new PassFailAggregationFunction(MinimumValue);
         /// <summary> Criteria applies for maximum value. </summary>
-        public static PassFailAggregationFunction Max { get; } = new PassFailAggregationFunction(MaxValue);
+        public static PassFailAggregationFunction Maximum { get; } = new PassFailAggregationFunction(MaximumValue);
         /// <summary> Determines if two <see cref="PassFailAggregationFunction"/> values are the same. </summary>
         public static bool operator ==(PassFailAggregationFunction left, PassFailAggregationFunction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PassFailAggregationFunction"/> values are not the same. </summary>

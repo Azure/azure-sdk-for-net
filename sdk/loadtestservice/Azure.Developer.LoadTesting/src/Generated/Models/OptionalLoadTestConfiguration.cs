@@ -51,16 +51,16 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OptionalLoadTestConfiguration"/>. </summary>
-        /// <param name="endpointUrl"> Test URL. Provide the complete HTTP URL. For example, https://contoso-app.azurewebsites.net/login. </param>
+        /// <param name="endpointUri"> Test URL. Provide the complete HTTP URL. For example, https://contoso-app.azurewebsites.net/login. </param>
         /// <param name="requestsPerSecond"> Target throughput (requests per second). This may not be necessarily achieved. The actual throughput will be lower if the application is not capable of handling it. </param>
         /// <param name="maxResponseTimeInMs"> Maximum response time in milliseconds of the API/endpoint. </param>
         /// <param name="virtualUsers"> No of concurrent virtual users. </param>
         /// <param name="rampUpTime"> Ramp up time in seconds. </param>
         /// <param name="duration"> Test run duration in seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OptionalLoadTestConfiguration(string endpointUrl, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OptionalLoadTestConfiguration(Uri endpointUri, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EndpointUrl = endpointUrl;
+            EndpointUri = endpointUri;
             RequestsPerSecond = requestsPerSecond;
             MaxResponseTimeInMs = maxResponseTimeInMs;
             VirtualUsers = virtualUsers;
@@ -70,7 +70,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Test URL. Provide the complete HTTP URL. For example, https://contoso-app.azurewebsites.net/login. </summary>
-        public string EndpointUrl { get; set; }
+        public Uri EndpointUri { get; set; }
         /// <summary> Target throughput (requests per second). This may not be necessarily achieved. The actual throughput will be lower if the application is not capable of handling it. </summary>
         public int? RequestsPerSecond { get; set; }
         /// <summary> Maximum response time in milliseconds of the API/endpoint. </summary>

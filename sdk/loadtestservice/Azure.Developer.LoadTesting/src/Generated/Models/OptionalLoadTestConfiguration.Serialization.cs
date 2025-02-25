@@ -34,10 +34,10 @@ namespace Azure.Developer.LoadTesting.Models
                 throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(EndpointUrl))
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUrl);
+                writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RequestsPerSecond))
             {
@@ -101,7 +101,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            string endpointUrl = default;
+            Uri endpointUrl = default;
             int? requestsPerSecond = default;
             int? maxResponseTimeInMs = default;
             int? virtualUsers = default;
@@ -113,7 +113,11 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 if (property.NameEquals("endpointUrl"u8))
                 {
-                    endpointUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requestsPerSecond"u8))
