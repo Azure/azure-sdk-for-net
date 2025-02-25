@@ -120,3 +120,77 @@ namespace Azure.Core
         public string ResourceName { get { throw null; } }
     }
 }
+namespace System.ClientModel
+{
+    public partial interface IAuthorizationCodeFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    {
+        System.Uri AuthorizationUri { get; }
+        System.Uri RefreshUri { get; }
+        System.Uri TokenUri { get; }
+    }
+    public partial interface IClaimsToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    {
+        string Claims { get; }
+    }
+    public partial interface IClientCredentialsFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    {
+        System.Uri RefreshUri { get; }
+        System.Uri TokenUri { get; }
+    }
+    public partial interface IImplicitFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    {
+        System.Uri AuthorizationUri { get; }
+        System.Uri RefreshUri { get; }
+    }
+    public partial interface IPasswordFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    {
+        System.Uri RefreshUri { get; }
+        System.Uri TokenUri { get; }
+    }
+    public partial interface IScopedFlowToken : System.ClientModel.ITokenContext
+    {
+        string[] Scopes { get; }
+        object CloneWithAdditionalScopes(string[] additionalScopes);
+    }
+    public partial interface ITokenContext
+    {
+    }
+    public partial interface ITokenProvider
+    {
+        object CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        System.ClientModel.Token GetAccessToken(object context, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(object context, System.Threading.CancellationToken cancellationToken);
+    }
+    public abstract partial class RefreshableToken : System.ClientModel.Token
+    {
+        public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
+        public abstract System.Threading.Tasks.Task RefreshAsync(System.Threading.CancellationToken cancellationToken);
+    }
+    public partial class Token
+    {
+        public Token(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
+        public string TokenType { get { throw null; } protected set { } }
+        public string TokenValue { get { throw null; } protected set { } }
+    }
+    public abstract partial class TokenProvider<TContext> : System.ClientModel.ITokenProvider where TContext : System.ClientModel.ITokenContext
+    {
+        protected TokenProvider() { }
+        public abstract TContext CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Token GetAccessToken(TContext context, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(TContext context, System.Threading.CancellationToken cancellationToken);
+        object System.ClientModel.ITokenProvider.CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
+        System.ClientModel.Token System.ClientModel.ITokenProvider.GetAccessToken(object context, System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Threading.Tasks.ValueTask<System.ClientModel.Token> System.ClientModel.ITokenProvider.GetAccessTokenAsync(object context, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+}
+namespace System.ClientModel.Auth
+{
+    public partial class OAuth2BearerTokenAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.ITokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
+}
