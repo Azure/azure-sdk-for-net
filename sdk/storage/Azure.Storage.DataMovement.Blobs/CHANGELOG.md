@@ -2,6 +2,9 @@
 
 ## 12.0.1 (Unreleased)
 
+### Features Added
+- Added support for anonymous access by adding a default constructor for `BlobsStorageResourceProvider`.
+
 ### Bugs Fixed
 - Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
 

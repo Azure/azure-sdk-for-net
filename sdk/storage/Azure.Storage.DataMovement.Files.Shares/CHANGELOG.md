@@ -2,6 +2,9 @@
 
 ## 12.0.1 (Unreleased)
 
+### Features added
+- Added support for anonymous access by adding a default constructor for `ShareFilesStorageResourceProvider`.
+
 ### Bugs Fixed
 - Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
 
