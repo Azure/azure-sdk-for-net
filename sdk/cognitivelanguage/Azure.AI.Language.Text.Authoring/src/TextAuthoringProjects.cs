@@ -15,8 +15,8 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetProject", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetProjectAsync", typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetProject", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateProjectAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateProject", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    //[CodeGenSuppress("CreateProjectAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    //[CodeGenSuppress("CreateProject", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("GetExportStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
@@ -111,23 +111,23 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateProjectAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
+        //public virtual async Task<Response> CreateProjectAsync(RequestContent content, RequestContext context = null)
+        //{
+        //    Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateProjectRequest(_projectName, content, context); // Using member variable
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        //    using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
+        //    scope.Start();
+        //    try
+        //    {
+        //        using HttpMessage message = CreateCreateProjectRequest(_projectName, content, context); // Using member variable
+        //        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
         /// <summary>
         /// [Protocol Method] Creates a new project or updates an existing one.
@@ -137,23 +137,23 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateProject(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
+        //public virtual Response CreateProject(RequestContent content, RequestContext context = null)
+        //{
+        //    Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateProjectRequest(_projectName, content, context); // Using member variable
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        //    using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
+        //    scope.Start();
+        //    try
+        //    {
+        //        using HttpMessage message = CreateCreateProjectRequest(_projectName, content, context); // Using member variable
+        //        return _pipeline.ProcessMessage(message, context);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
         /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
         /// <param name="jobId"> The job ID. </param>
