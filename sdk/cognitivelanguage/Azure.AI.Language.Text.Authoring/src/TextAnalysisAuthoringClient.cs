@@ -11,15 +11,15 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    [CodeGenSuppress("GetTextAuthoringDeploymentsClient", typeof(string))]
-    [CodeGenSuppress("GetTextAuthoringProjectsClient", typeof(string))]
-    [CodeGenSuppress("GetTextAuthoringModelsClient", typeof(string))]
-    [CodeGenSuppress("GetTextAuthoringDeploymentsClient")]
-    [CodeGenSuppress("GetTextAuthoringProjectsClient")]
-    [CodeGenSuppress("GetTextAuthoringModelsClient")]
-    [CodeGenSuppress("_cachedTextAuthoringDeployments")]
-    [CodeGenSuppress("_cachedTextAuthoringProjects")]
-    [CodeGenSuppress("_cachedTextAuthoringModels")]
+    [CodeGenSuppress("GetTextAuthoringDeploymentClient", typeof(string))]
+    [CodeGenSuppress("GetTextAuthoringProjectClient", typeof(string))]
+    [CodeGenSuppress("GetTextAuthoringModelClient", typeof(string))]
+    [CodeGenSuppress("GetTextAuthoringDeploymentClient")]
+    [CodeGenSuppress("GetTextAuthoringProjectClient")]
+    [CodeGenSuppress("GetTextAuthoringModelClient")]
+    [CodeGenSuppress("_cachedTextAuthoringDeployment")]
+    [CodeGenSuppress("_cachedTextAuthoringProject")]
+    [CodeGenSuppress("_cachedTextAuthoringModel")]
     public partial class TextAnalysisAuthoringClient
     {
         private readonly string _apiVersion;
@@ -42,34 +42,34 @@ namespace Azure.AI.Language.Text.Authoring
             _endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringDeployments. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringDeployment. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
-        public virtual TextAuthoringDeployments GetDeployments(string projectName, string deploymentName)
+        public virtual TextAuthoringDeployment GetDeployments(string projectName, string deploymentName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringDeployments(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, deploymentName);
+            return new TextAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, deploymentName);
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringProjects. </summary>
-        public virtual TextAuthoringProjects GetProjects(string projectName)
+        /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
+        public virtual TextAuthoringProject GetProjects(string projectName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringProjects(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new TextAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringModels. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringModel. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual TextAuthoringModels GetModels(string projectName)
+        public virtual TextAuthoringModel GetModels(string projectName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringModels(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new TextAuthoringModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
     }
 }

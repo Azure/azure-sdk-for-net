@@ -58,11 +58,11 @@ namespace Azure.AI.Language.Text.Authoring
     //[CodeGenSuppress("GetSupportedLanguages", typeof(TextAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetTrainingJobsAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetTrainingJobs", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    public partial class TextAuthoringProjects
+    public partial class TextAuthoringProject
     {
         private readonly string _projectName;
 
-        /// <summary> Initializes a new instance of TextAuthoringProjects. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="projectName"> The name of the project. </param>
-        internal TextAuthoringProjects(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName)
+        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -85,7 +85,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProjectAsync(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetProjectAsync(CancellationToken)']/*" />
         public virtual async Task<Response<TextAuthoringProjectMetadata>> GetProjectAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProject(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetProject(CancellationToken)']/*" />
         public virtual Response<TextAuthoringProjectMetadata> GetProject(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -115,7 +115,7 @@ namespace Azure.AI.Language.Text.Authoring
         //{
         //    Argument.AssertNotNull(content, nameof(content));
 
-        //    using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
+        //    using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CreateProject");
         //    scope.Start();
         //    try
         //    {
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Text.Authoring
         //{
         //    Argument.AssertNotNull(content, nameof(content));
 
-        //    using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
+        //    using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CreateProject");
         //    scope.Start();
         //    try
         //    {
@@ -160,7 +160,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatusAsync(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetExportStatusAsync(CancellationToken)']/*" />
         public virtual async Task<Response<TextAuthoringExportProjectState>> GetExportStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -175,7 +175,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatus(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetExportStatus(CancellationToken)']/*" />
         public virtual Response<TextAuthoringExportProjectState> GetExportStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatusAsync(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetImportStatusAsync(CancellationToken)']/*" />
         public virtual async Task<Response<TextAuthoringImportProjectState>> GetImportStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -205,7 +205,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatus(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetImportStatus(CancellationToken)']/*" />
         public virtual Response<TextAuthoringImportProjectState> GetImportStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -220,7 +220,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(CancellationToken)']/*" />
         public virtual async Task<Response<TextAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopy(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='AuthorizeProjectCopy(CancellationToken)']/*" />
         public virtual Response<TextAuthoringCopyProjectDetails> AuthorizeProjectCopy(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
@@ -248,7 +248,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(CancellationToken)']/*" />
         public virtual async Task<Response<TextAuthoringCopyProjectState>> GetCopyProjectStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -263,7 +263,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatus(CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetCopyProjectStatus(CancellationToken)']/*" />
         public virtual Response<TextAuthoringCopyProjectState> GetCopyProjectStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -278,10 +278,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.DeleteProject");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace Azure.AI.Language.Text.Authoring
                     _pipeline,
                     message,
                     ClientDiagnostics,
-                    "TextAuthoringProjects.DeleteProject",
+                    "TextAuthoringProject.DeleteProject",
                     OperationFinalStateVia.OperationLocation,
                     context,
                     waitUntil
@@ -308,10 +308,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,RequestContext)']/*" />
         public virtual Operation DeleteProject(WaitUntil waitUntil, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.DeleteProject");
             scope.Start();
             try
             {
@@ -320,7 +320,7 @@ namespace Azure.AI.Language.Text.Authoring
                     _pipeline,
                     message,
                     ClientDiagnostics,
-                    "TextAuthoringProjects.DeleteProject",
+                    "TextAuthoringProject.DeleteProject",
                     OperationFinalStateVia.OperationLocation,
                     context,
                     waitUntil
@@ -339,7 +339,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,StringIndexType,string,string,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,StringIndexType,string,string,CancellationToken)']/*" />
         public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, StringIndexType stringIndexType, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -373,18 +373,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,string,string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, string stringIndexType, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.Export");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, stringIndexType, assetKind, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProjects.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -418,18 +418,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Export(WaitUntil,string,string,string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='Export(WaitUntil,string,string,string,string,RequestContext)']/*" />
         public virtual Operation Export(WaitUntil waitUntil, string projectName, string stringIndexType, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.Export");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, stringIndexType, assetKind, trainedModelLabel, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProjects.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Export(WaitUntil,string,StringIndexType,string,string,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='Export(WaitUntil,string,StringIndexType,string,string,CancellationToken)']/*" />
         public virtual Operation Export(WaitUntil waitUntil, StringIndexType stringIndexType, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -458,7 +458,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="body"> The project data to import. </param>
         /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)']/*" />
         public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, TextAuthoringExportedProject body, string format = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -474,7 +474,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="body"> The project data to import. </param>
         /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Import(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='Import(WaitUntil,string,TextAuthoringExportedProject,string,CancellationToken)']/*" />
         public virtual Operation Import(WaitUntil waitUntil, TextAuthoringExportedProject body, string format = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -509,18 +509,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.Import");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProjects.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -553,18 +553,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Import(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='Import(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.Import");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProjects.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -721,7 +721,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainingStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -763,7 +763,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetTrainingStatus(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetTrainingStatus(string,string,RequestContext)']/*" />
         public virtual Response GetTrainingStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -805,7 +805,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -848,7 +848,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -891,7 +891,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -934,7 +934,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='CancelTrainingJob(WaitUntil,string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='CancelTrainingJob(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -975,12 +975,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProject");
             scope.Start();
             try
             {
@@ -1015,12 +1015,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProject");
             scope.Start();
             try
             {
@@ -1056,13 +1056,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetExportStatus");
             scope.Start();
             try
             {
@@ -1098,13 +1098,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatus(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetExportStatus(string,string,RequestContext)']/*" />
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetExportStatus");
             scope.Start();
             try
             {
@@ -1140,13 +1140,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetImportStatus");
             scope.Start();
             try
             {
@@ -1182,13 +1182,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatus(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetImportStatus(string,string,RequestContext)']/*" />
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetImportStatus");
             scope.Start();
             try
             {
@@ -1224,13 +1224,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AuthorizeProjectCopyAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.AuthorizeProjectCopy");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AuthorizeProjectCopy");
             scope.Start();
             try
             {
@@ -1266,13 +1266,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopy(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='AuthorizeProjectCopy(string,RequestContent,RequestContext)']/*" />
         public virtual Response AuthorizeProjectCopy(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.AuthorizeProjectCopy");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AuthorizeProjectCopy");
             scope.Start();
             try
             {
@@ -1308,13 +1308,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCopyProjectStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetCopyProjectStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetCopyProjectStatus");
             scope.Start();
             try
             {
@@ -1350,13 +1350,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatus(string,string,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='GetCopyProjectStatus(string,string,RequestContext)']/*" />
         public virtual Response GetCopyProjectStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetCopyProjectStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetCopyProjectStatus");
             scope.Start();
             try
             {
@@ -1393,18 +1393,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CopyProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CopyProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProjects.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1436,18 +1436,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/TextAuthoringProjects.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/TextAuthoringProject.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CopyProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CopyProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProjects.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

@@ -17,8 +17,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The TextAuthoringProjects sub-client. </summary>
-    public partial class TextAuthoringProjects
+    /// <summary> The TextAuthoringProject sub-client. </summary>
+    public partial class TextAuthoringProject
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TextAuthoringProjects for mocking. </summary>
-        protected TextAuthoringProjects()
+        /// <summary> Initializes a new instance of TextAuthoringProject for mocking. </summary>
+        protected TextAuthoringProject()
         {
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringProjects. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal TextAuthoringProjects(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CreateProject");
             scope.Start();
             try
             {
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CreateProject");
             scope.Start();
             try
             {
@@ -181,7 +181,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetProjectDeletionStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjects.GetProjectDeletionStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
             scope.Start();
             try
             {

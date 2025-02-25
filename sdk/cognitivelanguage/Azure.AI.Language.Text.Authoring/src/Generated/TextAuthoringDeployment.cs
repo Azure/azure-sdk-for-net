@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The TextAuthoringDeployments sub-client. </summary>
-    public partial class TextAuthoringDeployments
+    /// <summary> The TextAuthoringDeployment sub-client. </summary>
+    public partial class TextAuthoringDeployment
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,19 +32,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TextAuthoringDeployments for mocking. </summary>
-        protected TextAuthoringDeployments()
+        /// <summary> Initializes a new instance of TextAuthoringDeployment for mocking. </summary>
+        protected TextAuthoringDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringDeployments. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringDeployment. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal TextAuthoringDeployments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal TextAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -110,12 +110,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployments.DeleteDeployment");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployment.DeleteDeployment");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployments.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -148,12 +148,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployments.DeleteDeployment");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployment.DeleteDeployment");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployments.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

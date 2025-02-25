@@ -17,8 +17,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The TextAuthoringModels sub-client. </summary>
-    public partial class TextAuthoringModels
+    /// <summary> The TextAuthoringModel sub-client. </summary>
+    public partial class TextAuthoringModel
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TextAuthoringModels for mocking. </summary>
-        protected TextAuthoringModels()
+        /// <summary> Initializes a new instance of TextAuthoringModel for mocking. </summary>
+        protected TextAuthoringModel()
         {
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringModels. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringModel. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal TextAuthoringModels(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal TextAuthoringModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -115,7 +115,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetExportedModelManifest");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetExportedModelManifest");
             scope.Start();
             try
             {
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetExportedModelManifest");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetExportedModelManifest");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.DeleteTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.DeleteTrainedModel");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.DeleteTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.DeleteTrainedModel");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetModelEvaluationSummary");
             scope.Start();
             try
             {
@@ -344,7 +344,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.GetModelEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetModelEvaluationSummary");
             scope.Start();
             try
             {
@@ -382,12 +382,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.DeleteExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.DeleteExportedModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringModels.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -420,12 +420,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.DeleteExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.DeleteExportedModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringModels.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -458,12 +458,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.LoadSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.LoadSnapshot");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringModels.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -496,12 +496,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModels.LoadSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.LoadSnapshot");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringModels.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
