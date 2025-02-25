@@ -50,10 +50,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <para>
         /// This instance will NOT use any credential when constructing the underlying
         /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, ShareClientOptions)"/>.
-        /// This is for the purpose of either anonymous access when constructing the client. When
-        /// constructing from a pre-existing client (e.g.
-        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>)
-        /// the client's credentials will be used.
+        /// This is for the purpose of either anonymous access when constructing the client.
         /// </para>
         /// </summary>
         public ShareFilesStorageResourceProvider()

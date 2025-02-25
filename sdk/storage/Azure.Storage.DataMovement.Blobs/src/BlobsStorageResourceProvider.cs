@@ -51,10 +51,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <para>
         /// This instance will NOT use any credential when constructing the underlying
         /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, BlobClientOptions)"/>.
-        /// This is for the purpose of either anonymous access when constructing the client. When
-        /// constructing from a pre-existing client (e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>),
-        /// the client's credentials will be used.
+        /// This is for the purpose of either anonymous access when constructing the client.
         /// </para>
         /// </summary>
         public BlobsStorageResourceProvider()
