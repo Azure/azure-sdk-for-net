@@ -36,6 +36,36 @@ public static class ModelReaderWriter
     }
 
     /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static void Write(object model, Stream stream, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+        if (stream is null)
+        {
+            throw new ArgumentNullException(nameof(stream));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        var iModel = model as IPersistableStreamModel<object>;
+        if (iModel is null)
+        {
+            throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableStreamModel<object>)}");
+        }
+
+        iModel.Write(stream, options);
+    }
+
+    /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
     /// </summary>
     /// <typeparam name="T">The type of the value to write.</typeparam>
