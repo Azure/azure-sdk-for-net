@@ -420,7 +420,7 @@ namespace Azure.Identity
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Entra ID and migration guidance.")]
+    [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {
         protected UsernamePasswordCredential() { }

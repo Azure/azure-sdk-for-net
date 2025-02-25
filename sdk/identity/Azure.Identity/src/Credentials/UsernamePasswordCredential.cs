@@ -18,7 +18,7 @@ namespace Azure.Identity
     ///  trust and is not recommended outside of prototyping when more secure credentials can be used.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Entra ID and migration guidance.")]
+    [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
     public class UsernamePasswordCredential : TokenCredential
     {
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
