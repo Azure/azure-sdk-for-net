@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AgriculturePlatform.Models;
 using Azure.ResourceManager.Resources;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "SidduSDKTestRg", AzureLocation.EastUS);
-            string resourceName = Recording.GenerateAssetName("resource");
+            string resourceName = Recording.GenerateAssetName("SidduAgriTest");
             var createResourceOperation = await rg.GetAgriServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetAgriServiceResourceData());
             Assert.IsTrue(createResourceOperation.HasCompleted);
             Assert.IsTrue(createResourceOperation.HasValue);
@@ -49,10 +50,9 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
 
         private AgriServiceResourceData GetAgriServiceResourceData()
         {
-            return new AgriServiceResourceData()
-            {
-                Properties = GetAgriServiceResourceProperties(),
-            };
+            var data = new AgriServiceResourceData(AzureLocation.EastUS2);
+            data.Properties = GetAgriServiceResourceProperties();
+            return data;
         }
 
         private AgriServiceResourceProperties GetAgriServiceResourceProperties()
@@ -60,46 +60,18 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
             return new Models.AgriServiceResourceProperties()
             {
                 DataConnectorCredentials = GetDataConnectorCredentials(),
-                InstalledSolutions = GetInstalledSolutions(),
             };
         }
 
         private List<DataConnectorCredentialMap> GetDataConnectorCredentials()
         {
+            var value = new DataConnectorCredentials()
+            {
+                ClientId = "e1917a7e-114b-45f7-a8d0-badbdaa990cb",
+            };
             return new List<DataConnectorCredentialMap>()
             {
-                new DataConnectorCredentialMap()
-                {
-                    Key = "CredentialKey",
-                    Value = new DataConnectorCredentials()
-                    {
-                        ClientId = "ClientId",
-                        KeyName = "KeyName",
-                        Kind = AuthCredentialsKind.OAuthClientCredentials,
-                        KeyVaultUri = "KeyVaultUri",
-                        KeyVersion = "KeyVersion",
-                    }
-                }
-            };
-        }
-
-        private List<InstalledSolutionMap> GetInstalledSolutions()
-        {
-            return new List<InstalledSolutionMap>()
-            {
-                new InstalledSolutionMap()
-                {
-                    Key = "SolutionKey",
-                    Value = new Solution()
-                    {
-                        ApplicationName = "ApplicationName",
-                        PartnerId = "PartnerId",
-                        MarketPlacePublisherId = "MarketPlacePublisherId",
-                        SaasSubscriptionId = "SaasSubscriptionId",
-                        SaasSubscriptionName = "SaasSubscriptionName",
-                        PlanId = "PlanId",
-                    }
-                }
+                new DataConnectorCredentialMap("BackendAADApplicationCredentials", value)
             };
         }
     }
