@@ -64,6 +64,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     }
     public partial class ConversationAuthoringDeployments
     {
+        public readonly string _deploymentName;
+        public readonly string _projectName;
         protected ConversationAuthoringDeployments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation AssignDeploymentResources(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.Models.AssignDeploymentResourcesDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -119,6 +121,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     }
     public partial class ConversationAuthoringModels
     {
+        public readonly string _projectName;
         protected ConversationAuthoringModels() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation CreateOrUpdateExportedModel(Azure.WaitUntil waitUntil, string exportedModelName, Azure.AI.Language.Conversations.Authoring.Models.ExportedModelDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -172,6 +175,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     }
     public partial class ConversationAuthoringProjects
     {
+        public readonly string _projectName;
         protected ConversationAuthoringProjects() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Language.Conversations.Authoring.Models.CopyProjectDetails> AuthorizeProjectCopy(Azure.AI.Language.Conversations.Authoring.Models.AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
