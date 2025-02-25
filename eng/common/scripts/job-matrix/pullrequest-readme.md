@@ -4,10 +4,11 @@ The `pullrequest` pipeline is a single public definition that handles all `pull 
 
 | Pipeline Def |
 |---|
-| Java |
-| Python |
-| .NET |
-| JS |
+| [Java](https://dev.azure.com/azure-sdk/public/_build?definitionId=7413) |
+| [JS](https://dev.azure.com/azure-sdk/public/_build?definitionId=7140) |
+| [.NET](https://dev.azure.com/azure-sdk/public/_build?definitionId=7327) |
+| [Python](https://dev.azure.com/azure-sdk/public/_build?definitionId=7050) |
+| [Rust](https://dev.azure.com/azure-sdk/public/_build?definitionId=7126) |
 
 Only repos that appear in the above list are enabled with a single unified `pullrequest` pipeline. All other `azure-sdk` shipping repositories ship using a build definition per service directory.
 
@@ -16,14 +17,14 @@ Only repos that appear in the above list are enabled with a single unified `pull
 - Generate a PR diff
 - Save Package Properties using the `diff`
 - Run `build` and `analyze` steps only against artifacts that come out of the package-properties folder
-  - The primary change between service build and the pullrequest build is the scoping mechanism. For a service build, a specific service directory is examined for packages. For a pullrequest build,
+  - The primary change between service build and the pullrequest build is the scoping mechanism. For a service build, a specific service directory is examined for packages. For a pullrequest build, the entire repository is considered before being scoped down to only packages that were actually changed.
 - Tests are run against `indirect`ly and `direct`ly changed packages separately in batches.
 
 ## What is a `direct` vs `indirect` change?
 
 - A `direct`ly changed package is one whos actual package code has changed.
 - An `indirect` changed package is a package that has been added for verification of code that is not directly within the package itself.
-  - In `java`, when the `eng/` package is changed, we trigger `azure-core` indirectly.
+  - For example, in `java`, when the `eng/` package is changed, we trigger `azure-core` indirectly.
 
 ## Why do I see jobs with `bX` or `ibY` suffixes?
 
