@@ -52,7 +52,7 @@ Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Bas
 Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
 
-Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
+Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
 Pop-Location
