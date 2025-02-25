@@ -16,14 +16,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
-        /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deliveryAttempts"/> is null. </exception>
-        internal AcsSmsDeliveryReportReceivedEventData(IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset receivedTimestamp)
+        internal AcsSmsDeliveryReportReceivedEventData(IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts)
         {
             Argument.AssertNotNull(deliveryAttempts, nameof(deliveryAttempts));
 
             DeliveryAttempts = deliveryAttempts.ToList();
-            ReceivedTimestamp = receivedTimestamp;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
@@ -36,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
-        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset receivedTimestamp, string tag) : base(messageId, @from, to, serializedAdditionalRawData)
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag) : base(messageId, @from, to, serializedAdditionalRawData)
         {
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
@@ -57,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> List of details of delivery attempts made. </summary>
         public IReadOnlyList<AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get; }
         /// <summary> The time at which the SMS delivery report was received. </summary>
-        public DateTimeOffset ReceivedTimestamp { get; }
+        public DateTimeOffset? ReceivedTimestamp { get; }
         /// <summary> Customer Content. </summary>
         public string Tag { get; }
     }

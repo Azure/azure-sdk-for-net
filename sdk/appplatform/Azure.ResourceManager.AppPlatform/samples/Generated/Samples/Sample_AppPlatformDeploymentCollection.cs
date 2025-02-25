@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 },
                         AddonConfigs =
 {
-["ApplicationConfigurationService"] =
+["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>
 {
 ["patterns"] = BinaryData.FromObjectAsJson(new object[]
 {

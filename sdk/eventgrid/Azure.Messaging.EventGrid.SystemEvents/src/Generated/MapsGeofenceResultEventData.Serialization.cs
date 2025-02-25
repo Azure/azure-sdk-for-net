@@ -67,10 +67,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("expiredGeofenceGeometryId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -91,10 +87,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("invalidPeriodGeofenceGeometryId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -118,7 +110,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MapsGeofenceResultEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries, invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), isEventPublished, serializedAdditionalRawData);
+            return new MapsGeofenceResultEventData(expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsGeofenceResultEventData>.Write(ModelReaderWriterOptions options)

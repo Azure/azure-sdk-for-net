@@ -14,8 +14,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsClusterFailedEventData : AvsClusterEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterFailedEventData"/>. </summary>
-        internal AvsClusterFailedEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal AvsClusterFailedEventData(string operationId) : base(operationId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsClusterFailedEventData"/>. </summary>
@@ -28,6 +31,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AvsClusterFailedEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, BinaryData> serializedAdditionalRawData, string failureMessage) : base(operationId, addedHostNames, removedHostNames, inMaintenanceHostNames, serializedAdditionalRawData)
         {
             FailureMessage = failureMessage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsClusterFailedEventData"/> for deserialization. </summary>
+        internal AvsClusterFailedEventData()
+        {
         }
 
         /// <summary> Failure reason of an event. </summary>

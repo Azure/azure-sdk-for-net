@@ -1976,9 +1976,9 @@
                 {
                  "$id": "256",
                  "kind": "property",
-                 "name": "principalId",
-                 "serializedName": "principalId",
-                 "doc": "The principal ID of the assigned identity.",
+                 "name": "clientId",
+                 "serializedName": "clientId",
+                 "doc": "The client ID of the assigned identity.",
                  "type": {
                   "$id": "257",
                   "kind": "string",
@@ -1998,21 +1998,21 @@
                  "discriminator": false,
                  "flatten": false,
                  "decorators": [],
-                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.principalId",
+                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.clientId",
                  "serializationOptions": {
                   "$id": "259",
                   "json": {
                    "$id": "260",
-                   "name": "principalId"
+                   "name": "clientId"
                   }
                  }
                 },
                 {
                  "$id": "261",
                  "kind": "property",
-                 "name": "clientId",
-                 "serializedName": "clientId",
-                 "doc": "The client ID of the assigned identity.",
+                 "name": "principalId",
+                 "serializedName": "principalId",
+                 "doc": "The principal ID of the assigned identity.",
                  "type": {
                   "$id": "262",
                   "kind": "string",
@@ -2032,12 +2032,12 @@
                  "discriminator": false,
                  "flatten": false,
                  "decorators": [],
-                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.clientId",
+                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.principalId",
                  "serializationOptions": {
                   "$id": "264",
                   "json": {
                    "$id": "265",
-                   "name": "clientId"
+                   "name": "principalId"
                   }
                  }
                 }
@@ -3238,8 +3238,8 @@
       },
       {
        "$id": "416",
-       "Name": "privateLinkResourcenName",
-       "NameInRequest": "privateLinkResourcenName",
+       "Name": "privateLinkResourceName",
+       "NameInRequest": "privateLinkResourceName",
        "Doc": "The name of the private link associated with the Azure resource.",
        "Type": {
         "$id": "417",
@@ -3388,7 +3388,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/privateLinkResources/{privateLinkResourcenName}/start",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/privateLinkResources/{privateLinkResourceName}/start",
      "RequestMediaTypes": [
       "application/json"
      ],
