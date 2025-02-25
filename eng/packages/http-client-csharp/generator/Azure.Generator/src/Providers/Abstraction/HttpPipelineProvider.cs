@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -10,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Providers.Abstraction
 {

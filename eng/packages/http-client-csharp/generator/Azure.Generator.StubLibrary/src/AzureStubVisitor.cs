@@ -4,12 +4,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Linq;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using Microsoft.TypeSpec.Generator.ClientModel;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.StubLibrary
 {
