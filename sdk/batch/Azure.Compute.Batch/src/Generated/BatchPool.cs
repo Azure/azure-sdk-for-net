@@ -67,7 +67,7 @@ namespace Azure.Compute.Batch
         /// <param name="stateTransitionTime"> The time at which the Pool entered its current state. </param>
         /// <param name="allocationState"> Whether the Pool is resizing. </param>
         /// <param name="allocationStateTransitionTime"> The time at which the Pool entered its current allocation state. </param>
-        /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
+        /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
         /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. </param>
         /// <param name="resizeErrors"> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </param>
@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="userAccounts"> The list of user Accounts to be created on each Compute Node in the Pool. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. </param>
-        /// <param name="stats"> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the CloudPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
+        /// <param name="stats"> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the BatchPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="mountConfiguration"> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="identity"> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. If omitted, the default value is Default. </param>
@@ -157,7 +157,7 @@ namespace Azure.Compute.Batch
         public AllocationState? AllocationState { get; }
         /// <summary> The time at which the Pool entered its current allocation state. </summary>
         public DateTimeOffset? AllocationStateTransitionTime { get; }
-        /// <summary> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </summary>
+        /// <summary> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </summary>
         public string VmSize { get; }
         /// <summary> The virtual machine configuration for the Pool. This property must be specified. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; }
@@ -199,7 +199,7 @@ namespace Azure.Compute.Batch
         public IReadOnlyList<UserAccount> UserAccounts { get; }
         /// <summary> A list of name-value pairs associated with the Pool as metadata. </summary>
         public IReadOnlyList<MetadataItem> Metadata { get; }
-        /// <summary> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the CloudPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
+        /// <summary> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the BatchPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
         public BatchPoolStatistics Stats { get; }
         /// <summary> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
         public IReadOnlyList<MountConfiguration> MountConfiguration { get; }

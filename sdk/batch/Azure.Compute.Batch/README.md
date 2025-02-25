@@ -40,7 +40,7 @@ Azure Batch provides integration with Microsoft Entra ID for identity-based auth
 
 ```C# Snippet:Batch_Readme_EntraIDCredential
 var credential = new DefaultAzureCredential();
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), credential);
 ```
 
@@ -54,7 +54,7 @@ az batch account keys list --name <your-batch-account> --resource-group <your-re
 
 ```C# Snippet:Batch_Readme_AzureNameKeyCredential
 var credential = new AzureNamedKeyCredential("<your account>", "BatchAccountKey");
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
     new Uri("https://<your account>.eastus.batch.azure.com"),
     credential);
 ```
@@ -103,7 +103,7 @@ In an Azure Batch workflow, a compute node (or node) is a virtual machine that p
 Use the `CreatePool` method with a `BatchPoolCreateContent` instance to create a `BatchPool`. 
 
 ```C# Snippet:Batch_Readme_PoolCreation
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 string poolID = "HelloWorldPool";
@@ -126,7 +126,7 @@ poolID, "STANDARD_D1_v2")
 };
 
 // create pool
-_batchClient.CreatePool(batchPoolCreateOptions);
+batchClient.CreatePool(batchPoolCreateOptions);
 ```
 
 ### Retrieve a Pool
@@ -134,10 +134,10 @@ _batchClient.CreatePool(batchPoolCreateOptions);
 `GetPool` can be used to retrieve created pools
 
 ```C# Snippet:Batch_Readme_PoolRetreival
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchPool batchPool = _batchClient.GetPool("poolID");
+BatchPool batchPool = batchClient.GetPool("poolID");
 
 Console.WriteLine(batchPool.Id);
 Console.WriteLine(batchPool.Url);
@@ -149,10 +149,10 @@ Console.WriteLine(batchPool.AllocationState);
 `GetPools` can be used to list all pools under the Batch account
 
 ```C# Snippet:Batch_Readme_ListPools
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-foreach (BatchPool item in _batchClient.GetPools())
+foreach (BatchPool item in batchClient.GetPools())
 {
     Console.WriteLine(item.Id);
 }
@@ -165,10 +165,10 @@ A node is an Azure virtual machine (VM) that is dedicated to processing a portio
 `GetNode` can be used to retrieve an allocated `BatchNode` from a pool.
 
 ```C# Snippet:Batch_Readme_NodeRetreival
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchNode batchNode = _batchClient.GetNode("<poolId>", "<nodeId>");
+BatchNode batchNode = batchClient.GetNode("<poolId>", "<nodeId>");
 Console.WriteLine(batchNode.Id);
 Console.WriteLine(batchNode.Url);
 Console.WriteLine(batchNode.State);
@@ -179,10 +179,10 @@ Console.WriteLine(batchNode.State);
 `GetNodes` can be used to list all `BatchNode` allocated under a pool
 
 ```C# Snippet:Batch_Readme_ListNodes
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-foreach (BatchNode item in _batchClient.GetNodes("poolID"))
+foreach (BatchNode item in batchClient.GetNodes("poolID"))
 {
     Console.WriteLine(item.Id);
 }
@@ -196,10 +196,10 @@ A job specifies the pool in which the work is to be run. You can create a new po
 Use the `CreateJob` method with a `BatchJobCreateContent` instance to create a `BatchJob`. 
 
 ```C# Snippet:Batch_Readme_JobCreation
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-_batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
 
 ### Retrieve a job
@@ -207,10 +207,10 @@ _batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { 
 `GetJob` can be used to retrieve a created `BatchJob`
 
 ```C# Snippet:Batch_Readme_JobRetreival
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchJob batchJob = _batchClient.GetJob("jobID");
+BatchJob batchJob = batchClient.GetJob("jobID");
 Console.WriteLine(batchJob.Id);
 Console.WriteLine(batchJob.State);
 ```
@@ -220,10 +220,10 @@ Console.WriteLine(batchJob.State);
 `GetJobs` can be used to list all `BatchJob` allocated under a Batch Account
 
 ```C# Snippet:Batch_Readme_ListJobs
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-foreach (BatchJob item in _batchClient.GetJobs())
+foreach (BatchJob item in batchClient.GetJobs())
 {
     Console.WriteLine(item.Id);
 }
@@ -236,10 +236,10 @@ A task is a unit of computation that is associated with a job. It runs on a node
 Use the `CreateTask` method with a `BatchTaskCreateContent` instance to create a `BatchTask`. 
 
 ```C# Snippet:Batch_Readme_TaskCreation
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-_batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
 ```
 
 ### Retrieve a task
@@ -247,10 +247,10 @@ _batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hel
 `GetTask` can be used to retrieve a created `BatchTask`
 
 ```C# Snippet:Batch_Readme_TaskRetreival
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchTask batchTask = _batchClient.GetTask("<jobId>", "<taskId>");
+BatchTask batchTask = batchClient.GetTask("<jobId>", "<taskId>");
 Console.WriteLine(batchTask.Id);
 Console.WriteLine(batchTask.State);
 ```
@@ -267,10 +267,10 @@ Tasks can access the root directory by referencing the AZ_BATCH_NODE_ROOT_DIR en
 `GetTasks` can be used to list all `BatchTask` allocated under a `BatchJob`.  `GetTaskFile` can be used to retrive files from a `BatchTask`
 
 ```C# Snippet:Batch_Readme_ListTasks
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-var completedTasks = _batchClient.GetTasks("jobId", filter: "state eq 'completed'");
+var completedTasks = batchClient.GetTasks("jobId", filter: "state eq 'completed'");
 foreach (BatchTask t in completedTasks)
 {
     var outputFileName = t.ExecutionInfo.ExitCode == 0 ? "stdout.txt" : "stderr.txt";
@@ -278,7 +278,7 @@ foreach (BatchTask t in completedTasks)
     Console.WriteLine("Task {0} exited with code {1}. Output ({2}):",
         t.Id, t.ExecutionInfo.ExitCode, outputFileName);
 
-    BinaryData fileContents = _batchClient.GetTaskFile("jobId", t.Id, outputFileName);
+    BinaryData fileContents = batchClient.GetTaskFile("jobId", t.Id, outputFileName);
     using (var reader = new StreamReader(fileContents.ToStream()))
     {
         Console.WriteLine(reader.ReadLine());

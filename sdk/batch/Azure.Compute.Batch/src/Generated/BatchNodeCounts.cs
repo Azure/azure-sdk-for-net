@@ -59,9 +59,11 @@ namespace Azure.Compute.Batch
         /// <param name="unknown"> The number of Compute Nodes in the unknown state. </param>
         /// <param name="unusable"> The number of Compute Nodes in the unusable state. </param>
         /// <param name="waitingForStartTask"> The number of Compute Nodes in the waitingForStartTask state. </param>
+        /// <param name="deallocated"> The number of Compute Nodes in the deallocated state. </param>
+        /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
         /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total, int upgradingOs)
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOs)
         {
             Creating = creating;
             Idle = idle;
@@ -76,6 +78,8 @@ namespace Azure.Compute.Batch
             Unknown = unknown;
             Unusable = unusable;
             WaitingForStartTask = waitingForStartTask;
+            Deallocated = deallocated;
+            Deallocating = deallocating;
             Total = total;
             UpgradingOs = upgradingOs;
         }
@@ -94,10 +98,12 @@ namespace Azure.Compute.Batch
         /// <param name="unknown"> The number of Compute Nodes in the unknown state. </param>
         /// <param name="unusable"> The number of Compute Nodes in the unusable state. </param>
         /// <param name="waitingForStartTask"> The number of Compute Nodes in the waitingForStartTask state. </param>
+        /// <param name="deallocated"> The number of Compute Nodes in the deallocated state. </param>
+        /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
         /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total, int upgradingOs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Creating = creating;
             Idle = idle;
@@ -112,6 +118,8 @@ namespace Azure.Compute.Batch
             Unknown = unknown;
             Unusable = unusable;
             WaitingForStartTask = waitingForStartTask;
+            Deallocated = deallocated;
+            Deallocating = deallocating;
             Total = total;
             UpgradingOs = upgradingOs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -148,6 +156,10 @@ namespace Azure.Compute.Batch
         public int Unusable { get; }
         /// <summary> The number of Compute Nodes in the waitingForStartTask state. </summary>
         public int WaitingForStartTask { get; }
+        /// <summary> The number of Compute Nodes in the deallocated state. </summary>
+        public int Deallocated { get; }
+        /// <summary> The number of Compute Nodes in the deallocating state. </summary>
+        public int Deallocating { get; }
         /// <summary> The total number of Compute Nodes. </summary>
         public int Total { get; }
         /// <summary> The number of Compute Nodes in the upgradingOS state. </summary>

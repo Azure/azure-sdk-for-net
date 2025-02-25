@@ -1,16 +1,35 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2025-02-28)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
+- Force delete/terminate job or job schedule:
+  - Added `force` parameter of type Boolean to `DeleteJobAsync`, `DeleteJob`, `TerminateJobAsync`, `TerminateJob`, `DeleteJobScheduleAsync`, `DeleteJobSchedule`, `TerminateJobScheduleAsync`, and `TerminateJobSchedule`.
+
+- Support for compute node start/deallocate operations:
+  - Added `StartNode`, `StartNodeAsync`, `DeallocateNode`, and `DeallocateNodeAsync` methods to `BatchClient`
+
+- Container task data mount isolation:
+  - Added `containerHostBatchBindMounts` of type `List<ContainerHostBatchBindMountEntry>` to `BatchTaskContainerSettings`.
+
+- Patch improvements for pool and job:
+  - Added `displayName`, `vmSize`, `taskSlotsPerNode`, `taskSchedulingPolicy`, `enableInterNodeCommunication`, `virtualMachineConfiguration`, `networkConfiguration`, `userAccounts`, `mountConfiguration`, `upgradePolicy`, and `resourceTags` to `BatchPoolUpdateContent`.
+  - Added `networkConfiguration` to `BatchJobUpdateContent`.
+
+- Confidential VM support:
+  - Added `confidentialVM` to `SecurityTypes`.
+  - Added `securityProfile` of type `VMDiskSecurityProfile` to `ManagedDisk`.
+
+- Support for shared and community gallery images:
+  - Added `sharedGalleryImageId` and `communityGalleryImageId` to `ImageReference`.
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed `getNodeRemoteDesktop` method from `BatchClient`. Use `getNodeRemoteLoginSettings` instead to remotely login to a compute node.
+- Removed `CloudServiceConfiguration` from pool models and operations. Use `VirtualMachineConfiguration` when creating pools.
+- Removed `ApplicationLicenses` from pool models and operations.
 
 ## 1.0.0-beta.1 (2024-06-01)
 
