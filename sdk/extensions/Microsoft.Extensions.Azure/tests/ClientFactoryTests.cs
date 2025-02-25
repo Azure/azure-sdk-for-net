@@ -12,6 +12,12 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
+#if NET8_0_OR_GREATER
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+#endif
+
 namespace Azure.Core.Extensions.Tests
 {
     public class ClientFactoryTests
@@ -72,6 +78,8 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public void ConvertsCompositeObjectsConstructorParameters()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("composite:c", "http://localhost"));
@@ -625,6 +633,40 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreSame(clientOptions, client.Options);
             Assert.AreEqual("key", client.AzureSasCredential.Signature);
         }
+
+#if NET8_0_OR_GREATER
+        [Test]
+        public async Task AllowsAspNetCoreIntegrationTestHostConfiguration()
+        {
+            var expectedKeyVaultUriValue = "https://fake.vault.azure.net/";
+
+            // When configuration is set using the test host, the behavior of IConfigurationSection
+            // changes and the Value property is not null for a complex object.  Instead it returns an
+            // empty string, which we don't want to treat as a connection string.
+            //
+            // This is a bug in the configuration system, but there's no commitment for when it will
+            // be fixed.  See: https://github.com/dotnet/aspnetcore/issues/37680
+            //
+            var factory = new WebApplicationFactory<Program>()
+                .WithWebHostBuilder(builder =>
+                {
+                    var configuration = new ConfigurationBuilder()
+                         .AddInMemoryCollection(
+                         [
+                             new KeyValuePair<string, string>("KeyVault:VaultUri", expectedKeyVaultUriValue)
+                         ])
+                         .Build();
+
+                    builder.UseConfiguration(configuration);
+                });
+
+            var client = factory.CreateClient();
+            var response = await client.GetAsync("/keyvault");
+            var keyVaultUriValue = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(expectedKeyVaultUriValue, keyVaultUriValue);
+        }
+#endif
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {

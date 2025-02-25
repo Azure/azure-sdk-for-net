@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <ProjectReference Include="..\..\src\Microsoft.Extensions.Azure.csproj" />
+    <!--
+      Explicit references to pull in patched versions of ASP.NET Core packages
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="System.IO.Pipelines" />
+  </ItemGroup>
+</Project>
