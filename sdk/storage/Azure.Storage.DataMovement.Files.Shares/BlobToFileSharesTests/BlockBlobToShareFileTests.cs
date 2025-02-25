@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         StorageTestEnvironment>
     {
         private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
-        private const string _defaultContentType = "text/plain";
+        private const string _defaultContentType = "image/jpeg";
         private readonly string[] _defaultContentLanguageFile = { "en-US" };
         private const string _defaultContentLanguageBlob = "en-US";
         private const string _defaultContentDisposition = "inline";
@@ -136,10 +136,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 }
                 else
                 {
-                    var data = GetRandomBuffer(objectLength.Value);
-                    using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await blobClient.UploadAsync(
-                        content: originalStream,
+                    byte[] data = GetRandomBuffer(objectLength.Value);
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blobClient.UploadAsync(
+                        content: stream,
                         new BlobUploadOptions()
                         {
                             AccessTier = _defaultAccessTier,
@@ -153,6 +154,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                             }
                         },
                         cancellationToken: cancellationToken);
+                    }
                 }
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));

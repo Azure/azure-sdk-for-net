@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Parameters.Basic",
-  "library-name": "Parameters.Basic"
+  "package-name": "Parameters.Basic"
 }

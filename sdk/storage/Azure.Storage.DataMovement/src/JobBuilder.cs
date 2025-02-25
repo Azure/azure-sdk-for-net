@@ -8,6 +8,7 @@ using System.Buffers;
 using Azure.Core.Pipeline;
 using System;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement;
 
@@ -50,6 +51,8 @@ internal class JobBuilder
         bool resumeJob,
         CancellationToken cancellationToken)
     {
+        JobBuilder.ValidateTransferOptions(transferOptions);
+
         TransferOperation transferOperation = new(id: transferId);
         TransferJobInternal transferJobInternal;
 
@@ -216,5 +219,17 @@ internal class JobBuilder
             }
         }
         return job;
+    }
+
+    private static void ValidateTransferOptions(TransferOptions transferOptions)
+    {
+        if (transferOptions?.InitialTransferSize != default)
+        {
+            Argument.AssertInRange(transferOptions.InitialTransferSize.Value, 1, long.MaxValue, nameof(transferOptions.InitialTransferSize));
+        }
+        if (transferOptions?.MaximumTransferChunkSize != default)
+        {
+            Argument.AssertInRange(transferOptions.MaximumTransferChunkSize.Value, 1, long.MaxValue, nameof(transferOptions.MaximumTransferChunkSize));
+        }
     }
 }

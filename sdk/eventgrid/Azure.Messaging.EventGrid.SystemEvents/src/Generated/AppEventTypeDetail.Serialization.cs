@@ -34,8 +34,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AppEventTypeDetail)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,13 +76,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            AppAction action = default;
+            AppAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     action = new AppAction(property.Value.GetString());
                     continue;
                 }

@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
-            DateTimeOffset composeTime = default;
+            DateTimeOffset? composeTime = default;
             string type = default;
             long? version = default;
             string transactionId = default;
@@ -116,6 +116,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("composeTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

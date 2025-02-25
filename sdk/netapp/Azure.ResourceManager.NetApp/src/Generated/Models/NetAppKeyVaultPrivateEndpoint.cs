@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="virtualNetworkId"> Identifier for the virtual network id. </param>
         /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppKeyVaultPrivateEndpoint(string virtualNetworkId, string privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppKeyVaultPrivateEndpoint(ResourceIdentifier virtualNetworkId, ResourceIdentifier privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualNetworkId = virtualNetworkId;
             PrivateEndpointId = privateEndpointId;
@@ -62,8 +63,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Identifier for the virtual network id. </summary>
-        public string VirtualNetworkId { get; set; }
+        public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
-        public string PrivateEndpointId { get; set; }
+        public ResourceIdentifier PrivateEndpointId { get; set; }
     }
 }
