@@ -29,7 +29,6 @@ param (
 . (Join-Path $PSScriptRoot ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 . (Join-Path $PSScriptRoot automation GenerateAndBuildLib.ps1)
 
-$DotNetSupportChannelLink = "https://aka.ms/azsdk/donet-teams-channel"
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
 if($swaggerDir) {
