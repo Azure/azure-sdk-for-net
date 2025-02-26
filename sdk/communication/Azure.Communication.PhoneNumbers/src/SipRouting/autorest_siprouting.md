@@ -6,8 +6,8 @@ Run following command from the project root folder to generate code (note: AutoR
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-2023-03
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/66174681c09b101de03fd35399080cfbccc93e8f/specification/communication/data-plane/SipRouting/readme.md
+tag: package-2024-11-15-preview
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/8a218b1c6203d1ea118c3e0bcb4ae95bd44e1014/specification/communication/data-plane/SipRouting/readme.md
 output-folder: $(project-folder)\SipRouting\Generated
 namespace: Azure.Communication.PhoneNumbers.SipRouting
 enable-xml: true
