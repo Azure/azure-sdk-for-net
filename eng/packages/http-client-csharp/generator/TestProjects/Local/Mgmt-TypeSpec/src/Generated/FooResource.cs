@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -41,9 +42,7 @@ namespace MgmtTypeSpec
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fooApiVersion);
             _fooRestClient = new Foos(Pipeline, Endpoint, fooApiVersion);
-#if DEBUG
-            global::MgmtTypeSpec.FooResource.ValidateResourceId(id);
-#endif
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -62,6 +61,7 @@ namespace MgmtTypeSpec
             }
         }
 
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id != ResourceType)

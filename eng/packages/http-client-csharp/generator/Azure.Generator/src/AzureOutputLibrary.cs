@@ -36,7 +36,11 @@ namespace Azure.Generator
         private LongRunningOperationProvider? _genericArmOperation;
         internal LongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new LongRunningOperationProvider(true);
 
-        private IReadOnlyList<ResourceClientProvider> BuildResources(ModelSerializationExtensionsDefinition modelSerializationExtensions)
+        /// <summary>
+        /// Builds the resources for this library.
+        /// </summary>
+        /// <returns></returns>
+        protected internal override IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var result = new List<ResourceClientProvider>();
             foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
@@ -47,7 +51,7 @@ namespace Azure.Generator
                 {
                     var requestPath = operationSet.RequestPath;
                     var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
-                    var resource = new ResourceClientProvider(operationSet, schemaName, resourceData, resourceType, modelSerializationExtensions);
+                    var resource = new ResourceClientProvider(operationSet, schemaName, resourceData, resourceType);
                     AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(resource);
                 }
@@ -108,13 +112,12 @@ namespace Azure.Generator
         protected override TypeProvider[] BuildTypeProviders()
         {
             var baseProviders = base.BuildTypeProviders();
-            ModelSerializationExtensionsDefinition modelSerializationExtensions = (ModelSerializationExtensionsDefinition)baseProviders.Single(p => p is ModelSerializationExtensionsDefinition);
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
-                var resources = BuildResources(modelSerializationExtensions);
-                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
+                var resources = BuildResources();
+                return [.. baseProviders, new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
             }
-            return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+            return [.. baseProviders, new RequestContextExtensionsDefinition()];
         }
 
         internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);

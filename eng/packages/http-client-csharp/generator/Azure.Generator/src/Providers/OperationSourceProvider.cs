@@ -20,14 +20,12 @@ namespace Azure.Generator.Providers
     {
         private ResourceClientProvider _resource;
         private CSharpType _operationSourceInterface;
-        private ModelSerializationExtensionsDefinition _modelSerializationExtensions;
 
         private FieldProvider _clientField;
 
-        public OperationSourceProvider(ResourceClientProvider resource, ModelSerializationExtensionsDefinition modelSerializationExtensions)
+        public OperationSourceProvider(ResourceClientProvider resource)
         {
             _resource = resource;
-            _modelSerializationExtensions = modelSerializationExtensions;
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ArmClient), "_client", this);
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resource.Type);
         }
@@ -56,7 +54,7 @@ namespace Azure.Generator.Providers
             var body = new MethodBodyStatement[]
             {
                 UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
-                Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static(_modelSerializationExtensions.Type).Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
+                Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
                 Return(New.Instance(_resource.Type, [_clientField, dataVariable])),
             };
             return new MethodProvider(signature, body, this);

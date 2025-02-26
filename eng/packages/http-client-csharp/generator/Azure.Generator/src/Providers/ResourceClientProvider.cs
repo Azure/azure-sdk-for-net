@@ -16,6 +16,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -25,11 +26,13 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
+    /// <summary>
+    /// Provides a resource client type.
+    /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
         private OperationSet _operationSet;
         private ClientProvider _clientProvider;
-        private ModelSerializationExtensionsDefinition _modelSerializationExtensions;
         private readonly IReadOnlyList<string> _contextualParameters;
 
         private FieldProvider _dataField;
@@ -37,12 +40,11 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        public ResourceClientProvider(OperationSet operationSet, string specName, ModelProvider resourceData, string resrouceType, ModelSerializationExtensionsDefinition modelSerializationExtensions)
+        public ResourceClientProvider(OperationSet operationSet, string specName, ModelProvider resourceData, string resrouceType)
         {
             _operationSet = operationSet;
             SpecName = specName;
             ResourceData = resourceData;
-            _modelSerializationExtensions = modelSerializationExtensions;
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(operationSet.InputClient)!;
             _contextualParameters = GetContextualParameters(operationSet.RequestPath);
 
@@ -69,7 +71,7 @@ namespace Azure.Generator.Providers
         protected override string BuildName() => $"{SpecName}Resource";
 
         private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this, _modelSerializationExtensions);
+        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
@@ -155,7 +157,7 @@ namespace Azure.Generator.Providers
                 _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourcetypeField.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
                 _restClientField.Assign(New.Instance(_clientProvider.Type, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
-                new IfElsePreprocessorStatement("DEBUG", Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate(), null)
+                Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
             };
 
             return new ConstructorProvider(signature, bodyStatements, this);
@@ -173,7 +175,8 @@ namespace Azure.Generator.Providers
                 null,
                 [
                     idParameter
-                ]);
+                ],
+                [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
             var bodyStatements = new IfStatement(idParameter.NotEqual(_resourcetypeField))
             {
                 Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.ResourceType)), _resourcetypeField), false))
