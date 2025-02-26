@@ -94,7 +94,7 @@ namespace Azure.Core.TestFramework
             {
                 if (File.Exists(testEnvironmentFile))
                 {
-#pragma warning disable CA1416
+#pragma warning disable CA1416 // env files are only supported on windows
                     var json = JsonDocument.Parse(
                         ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
                     );
