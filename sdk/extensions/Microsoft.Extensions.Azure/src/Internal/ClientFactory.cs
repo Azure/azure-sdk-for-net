@@ -30,14 +30,14 @@ namespace Microsoft.Extensions.Azure
         {
             List<object> arguments = new List<object>();
             // Handle single values as connection strings
-            if (configuration is IConfigurationSection section && section.Value != null)
+            if (configuration is IConfigurationSection section && (!string.IsNullOrEmpty(section.Value)))
             {
                 var connectionString = section.Value;
                 configuration = new ConfigurationBuilder()
-                    .AddInMemoryCollection(new[]
-                    {
+                    .AddInMemoryCollection(
+                    [
                         new KeyValuePair<string, string>(ConnectionStringParameterName, connectionString)
-                    })
+                    ])
                     .Build();
             }
             foreach (var constructor in clientType.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
