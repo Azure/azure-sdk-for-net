@@ -7,6 +7,7 @@ using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
 using Azure.Provisioning.Primitives;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects.KeyVault;
 
@@ -20,7 +21,7 @@ public class KeyVaultFeature : AzureProjectFeature
         Sku = sku;
     }
 
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
+    protected internal override void EmitConnections(ICollection<System.ClientModel.Primitives.ClientConnection> connections, string cmId)
     {
         connections.Add(new ClientConnection("Azure.Security.KeyVault.Secrets.SecretClient", $"https://{cmId}.vault.azure.net/"));
     }

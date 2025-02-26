@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using Azure.Projects.Core;
 using Azure.Core;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects;
 
@@ -35,7 +36,7 @@ public static class ProjectClientExtensions
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static ProjectInfrastructure GetInfrastructure(this ProjectClient client)
     {
-        return client.Subclients.Get(() =>
+        return client.Subclients.GetClient(() =>
         {
             ProjectInfrastructure infra = new ProjectInfrastructure(client.Id);
             return infra;

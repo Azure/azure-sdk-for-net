@@ -8,18 +8,19 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.Provisioning.AIFoundry;
 using Azure.Provisioning.Primitives;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects.AIFoundry
 {
     /// <summary>
     /// A feature that configures an AI Foundry project and optionally prepares resources for provisioning in the future.
     /// </summary>
-    public class AIFoundryFeature : AzureProjectFeature
+    public class AIProjectFeature : AzureProjectFeature
     {
         private string? _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AIFoundryFeature"/> class.
+        /// Initializes a new instance of the <see cref="AIProjectFeature"/> class.
         /// </summary>
         /// <param name="connectionString">
         /// The Foundry connection string for the AI Project endpoint.
@@ -27,7 +28,7 @@ namespace Azure.Projects.AIFoundry
         /// <exception cref="ArgumentException">
         /// Thrown if <paramref name="connectionString"/> is null or empty.
         /// </exception>
-        public AIFoundryFeature(string connectionString)
+        public AIProjectFeature(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -40,7 +41,7 @@ namespace Azure.Projects.AIFoundry
         /// <summary>
         /// Creates a new feature for provisioning.
         /// </summary>
-        public AIFoundryFeature()
+        public AIProjectFeature()
         {
         }
 

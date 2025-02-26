@@ -8,6 +8,7 @@ using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects.OpenAI;
 

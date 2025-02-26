@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
 using Azure.AI.Inference;
 using Azure.AI.Projects;
 using Azure.Core;
@@ -20,12 +22,30 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static AgentsClient GetAgentsClient(this ClientWorkspace workspace)
+    public static AgentsClient GetOldAgentsClient(this ConnectionProvider workspace)
     {
-        AgentsClient agentsClient = workspace.Subclients.Get(() =>
+        AgentsClient agentsClient = workspace.Subclients.GetClient(() =>
         {
-            AIProjectClient aiClient = workspace.Subclients.Get(() => CreateAzureAIClient(workspace));
+            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
             return aiClient.GetAgentsClient();
+        });
+
+        return agentsClient;
+    }
+
+    /// <summary>
+    /// Gets the agent client.BlobContainerClientBlobContainerClient
+    /// </summary>
+    /// <param name="workspace"></param>
+    /// <returns></returns>
+    public static Azure.AI.Agents.AgentsClient GetAgentsClient(this ConnectionProvider workspace)
+    {
+        Azure.AI.Agents.AgentsClient agentsClient = workspace.Subclients.GetClient(() =>
+        {
+            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
+            ClientConnection connection = workspace.GetConnection(typeof(Azure.AI.Agents.AgentsClient).FullName);
+            var agentsClient = new Azure.AI.Agents.AgentsClient(connection.Locator, (TokenCredential)connection.Credential);
+            return agentsClient;
         });
 
         return agentsClient;
@@ -36,22 +56,22 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static EvaluationsClient GetEvaluationsClient(this ClientWorkspace workspace)
+    public static EvaluationsClient GetEvaluationsClient(this ConnectionProvider workspace)
     {
-        EvaluationsClient evaluationsClient = workspace.Subclients.Get(() =>
+        EvaluationsClient evaluationsClient = workspace.Subclients.GetClient(() =>
         {
-            AIProjectClient aiClient = workspace.Subclients.Get(() => CreateAzureAIClient(workspace));
+            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
             return aiClient.GetEvaluationsClient();
         });
 
         return evaluationsClient;
     }
 
-    private static AIProjectClient CreateAzureAIClient(this ClientWorkspace workspace)
+    private static AIProjectClient CreateAzureAIClient(this ConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(AIProjectClient).FullName);
+        ClientConnection connection = workspace.GetConnection(typeof(AIProjectClient).FullName);
         var connectionString = connection.Locator;
-        return new AIProjectClient(connectionString, workspace.Credential);
+        return new AIProjectClient(connectionString, (TokenCredential)connection.Credential);
     }
 #endregion AIProjects
 
@@ -61,16 +81,22 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static ChatCompletionsClient GetChatCompletionsClient(this ClientWorkspace workspace)
+    public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider workspace)
     {
-        ChatCompletionsClient chatClient = workspace.Subclients.Get(() => CreateChatCompletionsClient(workspace));
+        ChatCompletionsClient chatClient = workspace.Subclients.GetClient(() => CreateChatCompletionsClient(workspace));
         return chatClient;
     }
 
-    private static ChatCompletionsClient CreateChatCompletionsClient(this ClientWorkspace workspace)
+    private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(ChatCompletionsClient).FullName);
-        return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
+        ClientConnection connection = workspace.GetConnection(typeof(ChatCompletionsClient).FullName);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri))
+        {
+            throw new InvalidOperationException("The connection is not a valid URI.");
+        }
+
+        return new(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -78,16 +104,22 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static EmbeddingsClient GetEmbeddingsClient(this ClientWorkspace workspace)
+    public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider workspace)
     {
-        EmbeddingsClient embeddingsClient =  workspace.Subclients.Get(() => CreateEmbeddingsClient(workspace));
+        EmbeddingsClient embeddingsClient =  workspace.Subclients.GetClient(() => CreateEmbeddingsClient(workspace));
         return embeddingsClient;
     }
 
-    private static EmbeddingsClient CreateEmbeddingsClient(this ClientWorkspace workspace)
+    private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(ChatCompletionsClient).FullName);
-        return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
+        ClientConnection connection = workspace.GetConnection(typeof(ChatCompletionsClient).FullName);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri))
+        {
+            throw new InvalidOperationException("The connection is not a valid URI.");
+        }
+
+        return new(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 #endregion Inference
 
@@ -98,16 +130,22 @@ public static class AzureAIProjectsExensions
     /// <param name="workspace"></param>
     /// <param name="indexName"></param>
     /// <returns></returns>
-    public static SearchClient GetSearchClient(this ClientWorkspace workspace, string indexName)
+    public static SearchClient GetSearchClient(this ConnectionProvider workspace, string indexName)
     {
-        SearchClient searchClient = workspace.Subclients.Get(() => CreateSearchClient(workspace, indexName));
+        SearchClient searchClient = workspace.Subclients.GetClient(() => CreateSearchClient(workspace, indexName));
         return searchClient;
     }
 
-    private static SearchClient CreateSearchClient(this ClientWorkspace workspace, string indexName)
+    private static SearchClient CreateSearchClient(this ConnectionProvider workspace, string indexName)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchClient).FullName);
-        return new(connection.ToUri(), indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
+        ClientConnection connection = workspace.GetConnection(typeof(SearchClient).FullName);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri))
+        {
+            throw new InvalidOperationException("The connection is not a valid URI.");
+        }
+
+        return new(uri, indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -115,16 +153,22 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static SearchIndexClient GetSearchIndexClient(this ClientWorkspace workspace)
+    public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider workspace)
     {
-        SearchIndexClient searchIndexClient = workspace.Subclients.Get(() => CreateSearchIndexClient(workspace));
+        SearchIndexClient searchIndexClient = workspace.Subclients.GetClient(() => CreateSearchIndexClient(workspace));
         return searchIndexClient;
     }
 
-    private static SearchIndexClient CreateSearchIndexClient(this ClientWorkspace workspace)
+    private static SearchIndexClient CreateSearchIndexClient(this ConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchIndexClient).FullName);
-        return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
+        ClientConnection connection = workspace.GetConnection(typeof(SearchIndexClient).FullName);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri))
+        {
+            throw new InvalidOperationException("The connection is not a valid URI.");
+        }
+
+        return new(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -132,16 +176,22 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static SearchIndexerClient GetSearchIndexerClient(this ClientWorkspace workspace)
+    public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider workspace)
     {
-        SearchIndexerClient searchIndexerClient = workspace.Subclients.Get(() => CreateSearchIndexerClient(workspace));
+        SearchIndexerClient searchIndexerClient = workspace.Subclients.GetClient(() => CreateSearchIndexerClient(workspace));
         return searchIndexerClient;
     }
 
-    private static SearchIndexerClient CreateSearchIndexerClient(this ClientWorkspace workspace)
+    private static SearchIndexerClient CreateSearchIndexerClient(this ConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchIndexClient).FullName);
-        return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
+        ClientConnection connection = workspace.GetConnection(typeof(SearchIndexClient).FullName);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri))
+        {
+            throw new InvalidOperationException("The connection is not a valid URI.");
+        }
+
+        return new(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 #endregion Azure AI Search
 }

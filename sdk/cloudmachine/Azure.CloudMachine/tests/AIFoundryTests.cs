@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
-using Azure.AI.Projects;
+using Azure.AI.Agents;
 using Azure.Projects.AIFoundry;
 using Azure.Projects.OpenAI;
 using Azure.Core.TestFramework;
@@ -29,7 +29,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();
-        EvaluationsClient evaluations = client.GetEvaluationsClient();
+        AI.Projects.EvaluationsClient evaluations = client.GetEvaluationsClient();
 
         // Azure Inference Clients using connections API
         ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
@@ -145,13 +145,13 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         ProjectInfrastructure infra = new();
 
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        infra.AddFeature(new AIFoundryFeature(connectionString));
+        infra.AddFeature(new AIProjectFeature(connectionString));
 
         ProjectClient client = infra.GetClient();
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();
-        EvaluationsClient evaluations = client.GetEvaluationsClient();
+        AI.Projects.EvaluationsClient evaluations = client.GetEvaluationsClient();
 
         // Azure Inference Clients using connections API
         ChatCompletionsClient chatClient = client.GetChatCompletionsClient();

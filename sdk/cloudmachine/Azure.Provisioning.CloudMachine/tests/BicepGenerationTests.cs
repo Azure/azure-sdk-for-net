@@ -40,7 +40,7 @@ public class BicepGenerationTests
     public void AIFoundry()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new AIFoundry.AIFoundryFeature());
+        infra.AddFeature(new AIFoundry.AIProjectFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("Foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);

@@ -6,6 +6,7 @@ using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects.ServiceBus;
 

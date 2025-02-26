@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
@@ -67,21 +68,21 @@ public readonly struct MessagingServices
     private ServiceBusClient GetServiceBusClient()
     {
         MessagingServices messagingServices = this;
-        ServiceBusClient client = _cm.Subclients.Get(() => messagingServices.CreateClient());
+        ServiceBusClient client = _cm.Subclients.GetClient(() => messagingServices.CreateClient());
         return client;
     }
 
     private ServiceBusSender GetServiceBusSender()
     {
         MessagingServices messagingServices = this;
-        ServiceBusSender sender = _cm.Subclients.Get(() => messagingServices.CreateSender());
+        ServiceBusSender sender = _cm.Subclients.GetClient(() => messagingServices.CreateSender());
         return sender;
     }
 
     internal ServiceBusProcessor GetServiceBusProcessor(string subscriptionName)
     {
         MessagingServices messagingServices = this;
-        ServiceBusProcessor processor = _cm.Subclients.Get(() => messagingServices.CreateProcessor(subscriptionName), subscriptionName);
+        ServiceBusProcessor processor = _cm.Subclients.GetClient(() => messagingServices.CreateProcessor(subscriptionName), subscriptionName);
         return processor;
     }
 
@@ -89,21 +90,27 @@ public readonly struct MessagingServices
     {
         ServiceBusClient client = GetServiceBusClient();
 
-        ClientConnection connection = _cm.GetConnectionOptions(DEFAULT_SB_TOPIC);
+        ClientConnection connection = _cm.GetConnection(DEFAULT_SB_TOPIC);
         ServiceBusSender sender = client.CreateSender(connection.Locator);
         return sender;
     }
     private ServiceBusClient CreateClient()
     {
-        ClientConnection connection = _cm.GetConnectionOptions(typeof(ServiceBusClient).FullName);
-        ServiceBusClient client = new(connection.ToUri().AbsoluteUri, _cm.Credential);
+        ClientConnection connection = _cm.GetConnection(typeof(ServiceBusClient).FullName);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri))
+        {
+            throw new InvalidOperationException("The connection is not a valid URI.");
+        }
+
+        ServiceBusClient client = new(uri.AbsoluteUri, (TokenCredential)connection.Credential);
         return client;
     }
     private ServiceBusProcessor CreateProcessor(string subscriptionName)
     {
         ServiceBusClient client = GetServiceBusClient();
 
-        ClientConnection connection = _cm.GetConnectionOptions(subscriptionName);
+        ClientConnection connection = _cm.GetConnection(subscriptionName);
         string[] topicAndSubscription = connection.Locator.Split('/');
         ServiceBusProcessor processor = client.CreateProcessor(topicAndSubscription[0], topicAndSubscription[1], new() { MaxConcurrentCalls = 5 });
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);

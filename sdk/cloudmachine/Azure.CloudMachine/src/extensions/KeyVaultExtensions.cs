@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 
@@ -18,12 +19,16 @@ public static class KeyVaultExtensions
     /// <param name="workspace"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static SecretClient GetKeyVaultSecretsClient(this ClientWorkspace workspace)
+    public static SecretClient GetKeyVaultSecretsClient(this ConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(SecretClient).FullName);
-        if (connection.Authentication == ClientAuthenticationMethod.EntraId)
+        ClientConnection connection = workspace.GetConnection(typeof(SecretClient).FullName);
+        if (connection.Authentication == ClientAuthenticationMethod.Credential)
         {
-            return new(connection.ToUri(), workspace.Credential);
+            if (!connection.TryGetLocatorAsUri(out Uri uri))
+            {
+                throw new InvalidOperationException("The connection is not a valid URI.");
+            }
+            return new(uri, (TokenCredential)connection.Credential);
         }
         throw new Exception("API key not supported");
     }

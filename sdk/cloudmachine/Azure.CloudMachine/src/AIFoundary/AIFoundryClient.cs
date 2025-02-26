@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Azure.Projects
     /// <summary>
     /// The AI Foundry client.
     /// </summary>
-    public class AIFoundryClient : ClientWorkspace
+    public class AIFoundryClient : ConnectionProvider
     {
         /// <summary>
         /// Protects the <see cref="Connections"/> collection from concurrent access. Separated from <see cref="_connectionCacheLock"/> to reduce contention.
@@ -32,6 +33,8 @@ namespace Azure.Projects
         /// Protects the <see cref="_connectionCache"/> dictionary from concurrent access. Separated from <see cref="_connectionsLock"/> to improve concurrency in read-heavy scenarios.
         /// </summary>
         private readonly ReaderWriterLockSlim _connectionCacheLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+
+        private readonly TokenCredential Credential = BuildCredential(default);
 
         /// <summary>
         /// Subclient connections.
@@ -47,7 +50,6 @@ namespace Azure.Projects
         /// Initializes a new instance of the <see cref="AIFoundryClient"/> class for mocking purposes.
         /// </summary>
         protected AIFoundryClient()
-            : base(BuildCredential(default))
         {
         }
 
@@ -59,7 +61,6 @@ namespace Azure.Projects
         /// <param name="credential">The token credential (optional).</param>
         public AIFoundryClient(string connectionString, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-            : base(BuildCredential(credential))
         {
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -76,7 +77,9 @@ namespace Azure.Projects
         /// </summary>
         /// <param name="connectionId">The connection ID.</param>
         /// <returns>The connection options for the specified client type and instance ID.</returns>
-        public override ClientConnection GetConnectionOptions(string connectionId)
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ClientConnection GetConnection(string connectionId)
         {
             // First, try to read from the Connections collection with a read lock.
             _connectionsLock.EnterReadLock();
@@ -187,6 +190,25 @@ namespace Azure.Projects
             }
         }
 
+        /// <summary>
+        /// /// Rerurns all connections.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override IEnumerable<ClientConnection> GetAllConnections()
+        {
+            _connectionsLock.EnterReadLock();
+            try
+            {
+                return Connections;
+            }
+            finally
+            {
+                _connectionsLock.ExitReadLock();
+            }
+        }
+
         private ConnectionType GetConnectionTypeFromId(string connectionId)
         {
             switch (connectionId)
@@ -210,23 +232,6 @@ namespace Azure.Projects
 
                 default:
                     throw new ArgumentException($"Unknown connection type for ID: {connectionId}");
-            }
-        }
-
-        /// <summary>
-        /// Retrieves all connection options.
-        /// </summary>
-        /// <returns>All connection options.</returns>
-        public override IEnumerable<ClientConnection> GetAllConnectionOptions()
-        {
-            _connectionsLock.EnterReadLock();
-            try
-            {
-                return Connections;
-            }
-            finally
-            {
-                _connectionsLock.ExitReadLock();
             }
         }
 

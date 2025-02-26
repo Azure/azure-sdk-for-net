@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Projects;
 /// <summary>
 /// The cloud machine client.
 /// </summary>
-public partial class ProjectClient : ClientWorkspace
+public partial class ProjectClient : ConnectionProvider
 {
     /// <summary>
     /// The cloud machine ID.
@@ -26,6 +27,8 @@ public partial class ProjectClient : ClientWorkspace
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ConnectionCollection Connections { get; } = [];
+
+    private readonly TokenCredential Credential = BuildCredential(default);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ProjectClient"/> class for mocking purposes..
@@ -46,7 +49,6 @@ public partial class ProjectClient : ClientWorkspace
     /// <param name="credential">The token credential.</param>
     public ProjectClient(IConfiguration configuration, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(BuildCredential(credential))
     {
         Id = configuration["AzureProject:ID"];
         if (Id == null)
@@ -62,7 +64,7 @@ public partial class ProjectClient : ClientWorkspace
             if (id == null) continue;
             string locator = connection["Locator"];
 
-            Connections.Add(new ClientConnection(id, locator, ClientAuthenticationMethod.EntraId));
+            Connections.Add(new ClientConnection(id, locator, ClientAuthenticationMethod.Credential));
         }
 
         Messaging = new MessagingServices(this);
@@ -78,7 +80,6 @@ public partial class ProjectClient : ClientWorkspace
     // TODO: we need to combine the configuration and the connections into a single parameter.
     public ProjectClient(IEnumerable<ClientConnection> connections = default, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(BuildCredential(credential))
     {
         if (connections != default)
         {
@@ -107,10 +108,14 @@ public partial class ProjectClient : ClientWorkspace
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientConnection GetConnectionOptions(string connectionId)
-    {
-        return Connections[connectionId];
-    }
+    public override ClientConnection GetConnection(string connectionId) => Connections[connectionId];
+
+    /// <summary>
+    /// Rerurns all connections.
+    /// </summary>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override IEnumerable<ClientConnection> GetAllConnections() => Connections;
 
     private static TokenCredential BuildCredential(TokenCredential credential)
     {
@@ -145,11 +150,4 @@ public partial class ProjectClient : ClientWorkspace
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
-
-    /// <summary>
-    /// Retrieves all connection options.
-    /// </summary>
-    /// <returns></returns>
-    public override IEnumerable<ClientConnection> GetAllConnectionOptions()
-        => Connections;
 }

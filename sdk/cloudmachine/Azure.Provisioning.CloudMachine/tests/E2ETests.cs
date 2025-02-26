@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using Azure.AI.Agents;
 using Azure.Projects.AIFoundry;
 using Azure.Projects.OpenAI;
 using NUnit.Framework;
@@ -14,11 +15,25 @@ public class E2ETests
 {
     [TestCase("-bicep")]
     [TestCase("")]
-    public void Foundry(string arg)
+    public void OpenAI(string arg)
+    {
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+        if (infra.TryExecuteCommand([arg])) return;
+
+        ProjectClient project = new(infra.Connections);
+        ChatClient chat = project.GetOpenAIChatClient();
+
+        Assert.AreEqual(2, project.Connections.Count);
+    }
+
+    [TestCase("-bicep")]
+    [TestCase("")]
+    public void FoundryWithOpenAI(string arg)
     {
         ProjectInfrastructure infra = new("cm0a110d2f21084bb");
         var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
-        var foundry = infra.AddFeature(new AIFoundryFeature()
+        var foundry = infra.AddFeature(new AIProjectFeature()
         {
             Connections = [ openAI.CreateConnection(infra.ProjectId) ]
         });
@@ -27,6 +42,21 @@ public class E2ETests
 
         ProjectClient project = new(infra.Connections);
         ChatClient chat = project.GetOpenAIChatClient();
+
+        Assert.AreEqual(2, project.Connections.Count);
+    }
+
+    [TestCase("-bicep")]
+    [TestCase("")]
+    public void AIAgents(string arg)
+    {
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        infra.AddFeature(new AgentsFeature());
+
+        infra.TryExecuteCommand([arg]);
+
+        ProjectClient project = new(infra.Connections);
+        AgentsClient agent = project.GetAgentsClient();
 
         Assert.AreEqual(2, project.Connections.Count);
     }

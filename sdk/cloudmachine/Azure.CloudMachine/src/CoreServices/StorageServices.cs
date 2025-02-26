@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Messaging.ServiceBus;
 using ContentType = Azure.Core.ContentType;
 using System.ComponentModel;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects;
 
@@ -37,10 +38,16 @@ public readonly struct StorageServices
         if (containerName == default) containerName = "default";
         string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         ProjectClient cm = _cm;
-        BlobContainerClient container = cm.Subclients.Get(() =>
+        BlobContainerClient container = cm.Subclients.GetClient(() =>
         {
-            ClientConnection connection = cm.GetConnectionOptions(blobContainerClientId);
-            BlobContainerClient container = new(connection.ToUri(), cm.Credential);
+            ClientConnection connection = cm.GetConnection(blobContainerClientId);
+
+            if (!connection.TryGetLocatorAsUri(out Uri uri))
+            {
+                throw new InvalidOperationException("The connection is not a valid URI.");
+            }
+
+            BlobContainerClient container = new(uri, (TokenCredential)connection.Credential);
             return container;
         });
         return container;

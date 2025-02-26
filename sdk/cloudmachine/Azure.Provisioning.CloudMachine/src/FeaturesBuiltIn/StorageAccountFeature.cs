@@ -8,6 +8,7 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects.Storage;
 

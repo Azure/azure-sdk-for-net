@@ -12,6 +12,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;
+using System.ClientModel.Primitives;
 
 namespace Azure.Projects;
 

@@ -4,9 +4,11 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
@@ -77,7 +79,8 @@ public class ConnectionTests
         connections.Add(new ClientConnection(
             id: "Azure.AI.OpenAI.AzureOpenAIClient",
             locator: "https://cm2c54b6e4637f4b1.openai.azure.com",
-            auth: ClientAuthenticationMethod.EntraId));
+            credential: new DefaultAzureCredential())
+        );
 
         IConfiguration configuration = new ConfigurationBuilder()
             .AddAzureProjectConnections(connections)
