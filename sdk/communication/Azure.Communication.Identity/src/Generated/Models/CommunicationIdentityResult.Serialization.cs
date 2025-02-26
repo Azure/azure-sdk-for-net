@@ -5,42 +5,53 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class CommunicationIdentity
+    public partial class CommunicationIdentityResult
     {
-        internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element)
+        internal static CommunicationIdentityResult DeserializeCommunicationIdentityResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string externalId = default;
             string id = default;
+            string externalId = default;
+            DateTimeOffset? lastTokenIssuedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("externalId"u8))
-                {
-                    externalId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("externalId"u8))
+                {
+                    externalId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastTokenIssuedAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastTokenIssuedAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new CommunicationIdentity(externalId, id);
+            return new CommunicationIdentityResult(id, externalId, lastTokenIssuedAt);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CommunicationIdentity FromResponse(Response response)
+        internal static CommunicationIdentityResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCommunicationIdentity(document.RootElement);
+            return DeserializeCommunicationIdentityResult(document.RootElement);
         }
     }
 }

@@ -15,6 +15,11 @@ namespace Azure.Communication.Identity.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExternalId))
+            {
+                writer.WritePropertyName("externalId"u8);
+                writer.WriteStringValue(ExternalId);
+            }
             if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
                 writer.WritePropertyName("createTokenWithScopes"u8);

@@ -26,6 +26,7 @@ namespace Azure.Communication.Identity.Tests
             JsonPathSanitizers.Add("$..appId");
             JsonPathSanitizers.Add("$..userId");
             JsonPathSanitizers.Add("$..id");
+            JsonPathSanitizers.Add("$..externalId");
             SanitizedHeaders.Add("x-ms-content-sha256");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });

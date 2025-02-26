@@ -22,6 +22,17 @@ namespace Azure.Communication.Identity.Models
             Id = id;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
+        /// <param name="externalId"> The external Id if one has been associated with the identity. </param>
+        /// <param name="id"> Identifier of the identity. </param>
+        internal CommunicationIdentity(string externalId, string id)
+        {
+            ExternalId = externalId;
+            Id = id;
+        }
+
+        /// <summary> The external Id if one has been associated with the identity. </summary>
+        public string ExternalId { get; }
         /// <summary> Identifier of the identity. </summary>
         public string Id { get; }
     }
