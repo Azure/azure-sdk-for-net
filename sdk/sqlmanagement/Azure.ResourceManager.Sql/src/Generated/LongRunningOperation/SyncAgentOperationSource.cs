@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Sql
 
         SyncAgentResource IOperationSource<SyncAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SyncAgentData.DeserializeSyncAgentData(document.RootElement);
+            var data = ModelReaderWriter.Read<SyncAgentData>(new BinaryData(response.ContentStream));
             return new SyncAgentResource(_client, data);
         }
 
         async ValueTask<SyncAgentResource> IOperationSource<SyncAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SyncAgentData.DeserializeSyncAgentData(document.RootElement);
-            return new SyncAgentResource(_client, data);
+            var data = ModelReaderWriter.Read<SyncAgentData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SyncAgentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

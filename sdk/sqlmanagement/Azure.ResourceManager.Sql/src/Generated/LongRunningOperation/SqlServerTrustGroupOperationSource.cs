@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerTrustGroupResource IOperationSource<SqlServerTrustGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerTrustGroupData>(new BinaryData(response.ContentStream));
             return new SqlServerTrustGroupResource(_client, data);
         }
 
         async ValueTask<SqlServerTrustGroupResource> IOperationSource<SqlServerTrustGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(document.RootElement);
-            return new SqlServerTrustGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerTrustGroupData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SqlServerTrustGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

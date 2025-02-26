@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyVirtualMachineData(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.SecurityCenter
 
         DevOpsConfigurationResource IOperationSource<DevOpsConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DevOpsConfigurationData.DeserializeDevOpsConfigurationData(document.RootElement);
+            var data = ModelReaderWriter.Read<DevOpsConfigurationData>(new BinaryData(response.ContentStream));
             return new DevOpsConfigurationResource(_client, data);
         }
 
         async ValueTask<DevOpsConfigurationResource> IOperationSource<DevOpsConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DevOpsConfigurationData.DeserializeDevOpsConfigurationData(document.RootElement);
-            return new DevOpsConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<DevOpsConfigurationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DevOpsConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

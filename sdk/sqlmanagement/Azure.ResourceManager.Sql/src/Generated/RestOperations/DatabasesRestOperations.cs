@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlDatabaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlDatabaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1404,7 +1404,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1487,7 +1487,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1574,7 +1574,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1691,7 +1691,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

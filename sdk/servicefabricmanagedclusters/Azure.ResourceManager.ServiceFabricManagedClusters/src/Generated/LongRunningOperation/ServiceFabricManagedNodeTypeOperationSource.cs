@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         ServiceFabricManagedNodeTypeResource IOperationSource<ServiceFabricManagedNodeTypeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(document.RootElement);
+            var data = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(new BinaryData(response.ContentStream));
             return new ServiceFabricManagedNodeTypeResource(_client, data);
         }
 
         async ValueTask<ServiceFabricManagedNodeTypeResource> IOperationSource<ServiceFabricManagedNodeTypeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(document.RootElement);
-            return new ServiceFabricManagedNodeTypeResource(_client, data);
+            var data = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ServiceFabricManagedNodeTypeResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

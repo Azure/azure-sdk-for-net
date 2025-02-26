@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         AssociationResource IOperationSource<AssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AssociationData.DeserializeAssociationData(document.RootElement);
+            var data = ModelReaderWriter.Read<AssociationData>(new BinaryData(response.ContentStream));
             return new AssociationResource(_client, data);
         }
 
         async ValueTask<AssociationResource> IOperationSource<AssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AssociationData.DeserializeAssociationData(document.RootElement);
-            return new AssociationResource(_client, data);
+            var data = ModelReaderWriter.Read<AssociationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new AssociationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

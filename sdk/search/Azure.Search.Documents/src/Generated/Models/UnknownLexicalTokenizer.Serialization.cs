@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownLexicalTokenizer FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownLexicalTokenizer(document.RootElement);
         }
 
