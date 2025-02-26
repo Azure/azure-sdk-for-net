@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         /// <summary> The 7.5 API version. </summary>
         V75,
-        /// <summary> The 7.6-preview.1 API version. </summary>
-        V76Preview1
+        /// <summary> The 7.6-preview.2 API version. </summary>
+        V76Preview2
     }
 }

@@ -13,47 +13,6 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Model factory for models. </summary>
     public static partial class KeyVaultAdministrationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultSetting"/>. </summary>
-        /// <param name="name"> The account setting to be updated. </param>
-        /// <param name="content"> The value of the pool setting. </param>
-        /// <param name="settingType"> The type specifier of the value. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
-        public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType? settingType = null)
-        {
-            return new KeyVaultSetting(name, content, settingType);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Administration.GetSettingsResult"/>. </summary>
-        /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
-        /// <returns> A new <see cref="Administration.GetSettingsResult"/> instance for mocking. </returns>
-        public static GetSettingsResult GetSettingsResult(IEnumerable<KeyVaultSetting> settings = null)
-        {
-            settings ??= new List<KeyVaultSetting>();
-
-            return new GetSettingsResult(settings?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignment"/>. </summary>
-        /// <param name="id"> The role assignment ID. </param>
-        /// <param name="name"> The role assignment name. </param>
-        /// <param name="type"> The role assignment type. </param>
-        /// <param name="properties"> Role assignment properties. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultRoleAssignment"/> instance for mocking. </returns>
-        public static KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, KeyVaultRoleAssignmentProperties properties = null)
-        {
-            return new KeyVaultRoleAssignment(id, name, type, properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignmentProperties"/>. </summary>
-        /// <param name="scope"> The role scope. </param>
-        /// <param name="roleDefinitionId"> The role definition ID. </param>
-        /// <param name="principalId"> The principal ID. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultRoleAssignmentProperties"/> instance for mocking. </returns>
-        public static KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope = null, string roleDefinitionId = null, string principalId = null)
-        {
-            return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
@@ -78,6 +37,47 @@ namespace Azure.Security.KeyVault.Administration
                 roleType,
                 permissions?.ToList(),
                 assignableScopes?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignment"/>. </summary>
+        /// <param name="id"> The role assignment ID. </param>
+        /// <param name="name"> The role assignment name. </param>
+        /// <param name="type"> The role assignment type. </param>
+        /// <param name="properties"> Role assignment properties. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultRoleAssignment"/> instance for mocking. </returns>
+        public static KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, KeyVaultRoleAssignmentProperties properties = null)
+        {
+            return new KeyVaultRoleAssignment(id, name, type, properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignmentProperties"/>. </summary>
+        /// <param name="scope"> The role scope. </param>
+        /// <param name="roleDefinitionId"> The role definition ID. </param>
+        /// <param name="principalId"> The principal ID. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultRoleAssignmentProperties"/> instance for mocking. </returns>
+        public static KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope = null, string roleDefinitionId = null, string principalId = null)
+        {
+            return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultSetting"/>. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="content"> The value of the pool setting. </param>
+        /// <param name="settingType"> The type specifier of the value. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
+        public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType? settingType = null)
+        {
+            return new KeyVaultSetting(name, content, settingType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Administration.GetSettingsResult"/>. </summary>
+        /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
+        /// <returns> A new <see cref="Administration.GetSettingsResult"/> instance for mocking. </returns>
+        public static GetSettingsResult GetSettingsResult(IEnumerable<KeyVaultSetting> settings = null)
+        {
+            settings ??= new List<KeyVaultSetting>();
+
+            return new GetSettingsResult(settings?.ToList());
         }
     }
 }

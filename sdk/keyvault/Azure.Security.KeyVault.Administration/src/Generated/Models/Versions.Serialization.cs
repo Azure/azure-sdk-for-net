@@ -14,14 +14,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         public static string ToSerialString(this Versions value) => value switch
         {
             Versions.V75 => "7.5",
-            Versions.V76Preview1 => "7.6-preview.1",
+            Versions.V76Preview2 => "7.6-preview.2",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Versions value.")
         };
 
         public static Versions ToVersions(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "7.5")) return Versions.V75;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "7.6-preview.1")) return Versions.V76Preview1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "7.6-preview.2")) return Versions.V76Preview2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Versions value.");
         }
     }

@@ -14,11 +14,10 @@ namespace Azure.Security.KeyVault.Administration
     /// The KeyVaultAccessControlClient provides synchronous and asynchronous methods to view and manage Role Based Access for the Azure Key Vault.
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
-    public class KeyVaultAccessControlClient
+    [CodeGenModel("KeyVaultAccessControlRestClient")]
+    public partial class KeyVaultAccessControlClient
     {
         private readonly ClientDiagnostics _diagnostics;
-        private readonly RoleDefinitions _definitionsRestClient;
-        private readonly RoleAssignments _assignmentsRestClient;
 
         /// <summary>
         /// Gets the vault URI.
@@ -64,8 +63,11 @@ namespace Azure.Security.KeyVault.Administration
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _diagnostics = new ClientDiagnostics(options, true);
-            _definitionsRestClient = new RoleDefinitions(_diagnostics, pipeline, credential, VaultUri, apiVersion);
-            _assignmentsRestClient = new RoleAssignments(_diagnostics, pipeline, credential, VaultUri, apiVersion);
+            ClientDiagnostics = _diagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = credential;
+            _endpoint = vaultUri;
+            _apiVersion = apiVersion;
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _definitionsRestClient.GetRoleDefinitions(scope: roleScope.ToString(), cancellationToken: cancellationToken);
+                return GetRoleDefinitions(scope: roleScope.ToString(), cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -103,7 +105,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _definitionsRestClient.GetRoleDefinitionsAsync(scope: roleScope.ToString(), cancellationToken: cancellationToken);
+                return GetRoleDefinitionsAsync(scope: roleScope.ToString(), cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -126,7 +128,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _definitionsRestClient.GetRoleDefinition(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken: cancellationToken);
+                return GetRoleDefinition(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -149,7 +151,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _definitionsRestClient.GetRoleDefinitionAsync(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await GetRoleDefinitionAsync(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -198,7 +200,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 RoleDefinitionCreateParameters parameters = options.ToParameters(KeyVaultRoleType.CustomRole);
 
-                return await _definitionsRestClient.CreateOrUpdateAsync(
+                return await CreateOrUpdateRoleDefinitionAsync(
                     scope: options.RoleScope != default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
                     roleDefinitionName: options.RoleDefinitionName.ToString(),
                     parameters: parameters,
@@ -230,7 +232,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 RoleDefinitionCreateParameters parameters = options.ToParameters(KeyVaultRoleType.CustomRole);
 
-                return _definitionsRestClient.CreateOrUpdate(
+                return CreateOrUpdateRoleDefinition(
                     scope: options.RoleScope != default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
                     roleDefinitionName: options.RoleDefinitionName.ToString(),
                     parameters: parameters,
@@ -257,7 +259,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return (await _definitionsRestClient.DeleteAsync(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await DeleteRoleDefinitionAsync(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -285,7 +287,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response<KeyVaultRoleDefinition> response = _definitionsRestClient.Delete(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken);
+                Response<KeyVaultRoleDefinition> response = DeleteRoleDefinition(scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken);
                 return response.GetRawResponse();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -314,7 +316,7 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Start();
                 try
                 {
-                return _assignmentsRestClient.GetForScopes(scope: roleScope.ToString(), cancellationToken: cancellationToken);
+                return GetRoleAssignments(scope: roleScope.ToString(), cancellationToken: cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -333,11 +335,11 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual AsyncPageable<KeyVaultRoleAssignment> GetRoleAssignmentsAsync(KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignments)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignmentsAsync)}");
             scope.Start();
             try
             {
-                return _assignmentsRestClient.GetForScopesAsync(scope: roleScope.ToString(), cancellationToken: cancellationToken);
+                return GetRoleAssignmentsAsync(scope: roleScope.ToString(), cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -371,7 +373,7 @@ namespace Azure.Security.KeyVault.Administration
                 var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
                 var properties = new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId);
 
-                return _assignmentsRestClient.Create(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
+                return CreateRoleAssignment(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -405,7 +407,7 @@ namespace Azure.Security.KeyVault.Administration
                 var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
                 var properties = new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId);
 
-                return await _assignmentsRestClient.CreateAsync(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
+                return await CreateRoleAssignmentAsync(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
                 .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -434,7 +436,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _assignmentsRestClient.GetRoleAssignment(roleScope.ToString(), roleAssignmentName, cancellationToken);
+                return GetRoleAssignment(roleScope.ToString(), roleAssignmentName, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -462,7 +464,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _assignmentsRestClient.GetRoleAssignmentAsync(roleScope.ToString(), roleAssignmentName, cancellationToken)
+                return await GetRoleAssignmentAsync(roleScope.ToString(), roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -491,7 +493,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response<KeyVaultRoleAssignment> response = _assignmentsRestClient.Delete(roleScope.ToString(), roleAssignmentName, cancellationToken);
+                Response<KeyVaultRoleAssignment> response = DeleteRoleAssignment(roleScope.ToString(), roleAssignmentName, cancellationToken);
                 return response.GetRawResponse();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -526,8 +528,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response<KeyVaultRoleAssignment> response = await _assignmentsRestClient
-                    .DeleteAsync(roleScope.ToString(), roleAssignmentName, cancellationToken)
+                Response<KeyVaultRoleAssignment> response = await DeleteRoleAssignmentAsync(roleScope.ToString(), roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
                 return response.GetRawResponse();
             }

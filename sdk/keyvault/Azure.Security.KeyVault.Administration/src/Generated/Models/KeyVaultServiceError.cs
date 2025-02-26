@@ -7,7 +7,7 @@
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The FullBackupOperationError. </summary>
+    /// <summary> The KeyVaultErrorError. </summary>
     internal partial class KeyVaultServiceError
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultServiceError"/>. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Client options for KeyVaultRestClient. </summary>
+    /// <summary> Client options for Azure.Security.KeyVault.Administration library clients. </summary>
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
     }
