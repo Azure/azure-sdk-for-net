@@ -6,12 +6,7 @@ function Invoke-ErrorFunction {
     Write-Host "AAPath doesn't exist. create template."
     $DotNetSupportChannelLink = 'DotNetSupportChannelLink';
     $serviceA = 'serviceA';
-    try {
-        Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request." -ErrorAction SilentlyContinue
-    } catch {
-        Write-Output "ERROR: $($_.Exception.Message)"
-    }
-    Write-Error "[ERROR] BBThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request." 2>&1
+    Write-Error "[ERROR] BBThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request." -ErrorVariable
     exit(1)
 }
 
