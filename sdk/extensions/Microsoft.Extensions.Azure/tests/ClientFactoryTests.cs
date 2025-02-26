@@ -645,7 +645,7 @@ namespace Azure.Core.Extensions.Tests
             // This is a bug in the configuration system, but there's no commitment for when it will
             // be fixed.  See: https://github.com/dotnet/aspnetcore/issues/37680
             //
-            var factory = new WebApplicationFactory<Program>()
+            var factory = new WebApplicationFactory<AspNetHost>()
                 .WithWebHostBuilder(builder =>
                 {
                     var configuration = new ConfigurationBuilder()
@@ -656,6 +656,7 @@ namespace Azure.Core.Extensions.Tests
                          .Build();
 
                     builder.UseConfiguration(configuration);
+                    builder.UseContentRoot("./aspnet-host");
                 });
 
             var client = factory.CreateClient();
