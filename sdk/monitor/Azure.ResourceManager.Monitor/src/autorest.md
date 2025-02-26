@@ -522,6 +522,8 @@ directive:
             "read"
           ]
         };
+  # 2024-10-01-preview and later versions of pipeline group APIs are defined in pipelineGroups.json
+  # Removing older ones from azuremonitor.json to avoid conflicts
   - from: azuremonitor.json
     remove-operation-match: /.*pipelineGroups.*/i
 ```
