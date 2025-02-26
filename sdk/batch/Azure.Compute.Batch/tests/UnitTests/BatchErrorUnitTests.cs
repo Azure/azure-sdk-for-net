@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Compute.Batch.Tests.UnitTests
 {
-    public class BatchErrorTests
+    public class BatchErrorUnitTests
     {
         [Test]
         public void ExtractBatchErrorFromExeception_Standard_BatchError()

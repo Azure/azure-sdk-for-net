@@ -25,5 +25,11 @@ namespace Azure.Compute.Batch
 
         /// <summary> The results of the CreateTasks operation. </summary>
         public List<BatchTaskAddResult> BatchTaskAddResults { get; }
+
+        /// <summary> Gets or sets the number of successful task additions. </summary>
+        public int Pass { get; set; }
+
+        /// <summary> Gets or sets the number of failed task additions. </summary>
+        public int Fail { get; set; }
     }
 }

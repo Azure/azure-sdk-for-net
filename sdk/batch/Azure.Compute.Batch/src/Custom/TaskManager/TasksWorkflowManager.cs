@@ -36,6 +36,24 @@ namespace Azure.Compute.Batch
         private const int HasNotRun = 0;
         private const int HasRun = 1;
         private readonly ConcurrentBag<BatchTaskAddResult> _taskAddResults;
+        private readonly object _createTasksResultLock = new object();
+        private CreateTasksResult _createTasksResult;
+
+        private void increaseCreateTasksResultPass()
+        {
+            lock (_createTasksResultLock)
+            {
+                _createTasksResult.Pass++;
+            }
+        }
+
+        private void increaseCreateTasksResultFail()
+        {
+            lock (_createTasksResultLock)
+            {
+                _createTasksResult.Fail++;
+            }
+        }
 
         /// <summary>
         /// Creates the AddTasks workflow manager with the specified arguments.
@@ -69,6 +87,7 @@ namespace Azure.Compute.Batch
             _jobId = jobId;
             _remainingTasksToAdd = new ConcurrentQueue<TrackedBatchTask>();
             _taskAddResults = new ConcurrentBag<BatchTaskAddResult>();
+            _createTasksResult = new CreateTasksResult(new List<BatchTaskAddResult>());
             _hasRun = HasNotRun;
             _maxTasks = 100;
             _pendingAsyncOperations = new List<Task>();
@@ -176,7 +195,8 @@ namespace Azure.Compute.Batch
             // Wait for all pending operations to complete
             await Task.WhenAll(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
-            return new CreateTasksResult(_taskAddResults.ToList());
+            _createTasksResult.BatchTaskAddResults.AddRange(_taskAddResults.ToList());
+            return _createTasksResult;
         }
 
         /// <summary>
@@ -278,9 +298,16 @@ namespace Azure.Compute.Batch
                     //TODO: In that case maybe we should forcibly abort them after some # of attempts?
                     this._remainingTasksToAdd.Enqueue(trackedTask);
                 }
-                else
+                else if (status == CreateTaskResultStatus.Success)
                 {
+                    increaseCreateTasksResultPass();
                     //If the status is not retry, then we are done with this task
+                    _taskAddResults.Add(protoAddTaskResult);
+                }
+                else // passing
+                {
+                    //If the status is failure, then we are done with this task
+                    increaseCreateTasksResultFail();
                     _taskAddResults.Add(protoAddTaskResult);
                 }
             }
@@ -309,7 +336,7 @@ namespace Azure.Compute.Batch
         private async Task ProcessPendingOperationResults()
         {
             //Wait for any task to complete
-            Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
+           Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
             //Check for a task failure -- if there is one, we a-wait for all remaining tasks to complete (this will throw an exception since at least one of them failed).
             if (completedTask.IsFaulted)

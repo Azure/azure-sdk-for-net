@@ -23,6 +23,11 @@ namespace Azure.Compute.Batch
         Success,
 
         /// <summary>
+        /// Classifies the result as a failure and to not reprocess.
+        /// </summary>
+        Failure,
+
+        /// <summary>
         /// Classifies the result as requiring a retry.
         /// </summary>
         Retry
