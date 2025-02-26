@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element, options);
                     case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element, options);
                     case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element, options);
-                    case "LakeHouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
+                    case "Lakehouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
                     case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element, options);
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element, options);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element, options);
