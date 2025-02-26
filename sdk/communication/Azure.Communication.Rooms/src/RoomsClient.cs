@@ -157,7 +157,7 @@ namespace Azure.Communication.Rooms
             try
             {
                 var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(options?.Participants);
-                return await RoomsServiceClient.CreateAsync(options?.ValidFrom, options?.ValidUntil, participantDictionary, options?.PstnDialOutEnabled, cancellationToken).ConfigureAwait(false);
+                return await RoomsServiceClient.CreateAsync(options?.ValidFrom, options?.ValidUntil, options?.PstnDialOutEnabled, participantDictionary, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -190,7 +190,7 @@ namespace Azure.Communication.Rooms
             try
             {
                 var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(options?.Participants);
-                return RoomsServiceClient.Create(options?.ValidFrom, options?.ValidUntil, participantDictionary,options?.PstnDialOutEnabled, cancellationToken);
+                return RoomsServiceClient.Create(options?.ValidFrom, options?.ValidUntil, options?.PstnDialOutEnabled, participantDictionary, cancellationToken);
             }
             catch (Exception ex)
             {
