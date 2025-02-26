@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleDnsPrivateViewData(document.RootElement, options);
                     }
                 default:

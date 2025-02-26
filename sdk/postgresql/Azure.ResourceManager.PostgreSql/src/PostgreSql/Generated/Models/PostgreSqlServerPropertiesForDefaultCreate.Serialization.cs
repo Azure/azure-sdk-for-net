@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlServerPropertiesForDefaultCreate(document.RootElement, options);
                     }
                 default:

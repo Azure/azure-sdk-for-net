@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ProviderRegistrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderRegistrationData.DeserializeProviderRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ProviderRegistrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderRegistrationData.DeserializeProviderRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ProviderRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ProviderRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ProviderRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ProviderRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderRegistrationListResult.DeserializeProviderRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

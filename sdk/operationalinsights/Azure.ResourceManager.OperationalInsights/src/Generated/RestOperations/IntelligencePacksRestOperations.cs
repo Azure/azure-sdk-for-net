@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         IReadOnlyList<OperationalInsightsIntelligencePack> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<OperationalInsightsIntelligencePack> array = new List<OperationalInsightsIntelligencePack>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         IReadOnlyList<OperationalInsightsIntelligencePack> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<OperationalInsightsIntelligencePack> array = new List<OperationalInsightsIntelligencePack>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {

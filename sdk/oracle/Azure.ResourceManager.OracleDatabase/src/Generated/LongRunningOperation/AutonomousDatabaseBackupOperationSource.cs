@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.OracleDatabase
 
         AutonomousDatabaseBackupResource IOperationSource<AutonomousDatabaseBackupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AutonomousDatabaseBackupData.DeserializeAutonomousDatabaseBackupData(document.RootElement);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseBackupData>(new BinaryData(response.ContentStream));
             return new AutonomousDatabaseBackupResource(_client, data);
         }
 
         async ValueTask<AutonomousDatabaseBackupResource> IOperationSource<AutonomousDatabaseBackupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AutonomousDatabaseBackupData.DeserializeAutonomousDatabaseBackupData(document.RootElement);
-            return new AutonomousDatabaseBackupResource(_client, data);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseBackupData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new AutonomousDatabaseBackupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

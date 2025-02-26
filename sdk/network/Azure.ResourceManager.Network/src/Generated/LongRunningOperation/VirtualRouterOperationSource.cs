@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         VirtualRouterResource IOperationSource<VirtualRouterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VirtualRouterData.DeserializeVirtualRouterData(document.RootElement);
+            var data = ModelReaderWriter.Read<VirtualRouterData>(new BinaryData(response.ContentStream));
             return new VirtualRouterResource(_client, data);
         }
 
         async ValueTask<VirtualRouterResource> IOperationSource<VirtualRouterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VirtualRouterData.DeserializeVirtualRouterData(document.RootElement);
-            return new VirtualRouterResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualRouterData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new VirtualRouterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

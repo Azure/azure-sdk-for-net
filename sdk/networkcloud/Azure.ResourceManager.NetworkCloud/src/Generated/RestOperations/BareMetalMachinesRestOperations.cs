@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudBareMetalMachineData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudBareMetalMachineData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         BareMetalMachineList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BareMetalMachineList.DeserializeBareMetalMachineList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

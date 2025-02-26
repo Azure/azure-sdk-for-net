@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkGatewayConnectionResource IOperationSource<VirtualNetworkGatewayConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<VirtualNetworkGatewayConnectionData>(new BinaryData(response.ContentStream));
             return new VirtualNetworkGatewayConnectionResource(_client, data);
         }
 
         async ValueTask<VirtualNetworkGatewayConnectionResource> IOperationSource<VirtualNetworkGatewayConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(document.RootElement);
-            return new VirtualNetworkGatewayConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualNetworkGatewayConnectionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new VirtualNetworkGatewayConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudL2NetworkResource IOperationSource<NetworkCloudL2NetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(new BinaryData(response.ContentStream));
             return new NetworkCloudL2NetworkResource(_client, data);
         }
 
         async ValueTask<NetworkCloudL2NetworkResource> IOperationSource<NetworkCloudL2NetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
-            return new NetworkCloudL2NetworkResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkCloudL2NetworkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

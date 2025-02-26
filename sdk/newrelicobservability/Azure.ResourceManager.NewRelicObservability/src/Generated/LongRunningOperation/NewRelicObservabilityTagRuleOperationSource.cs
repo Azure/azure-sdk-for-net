@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         NewRelicObservabilityTagRuleResource IOperationSource<NewRelicObservabilityTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(new BinaryData(response.ContentStream));
             return new NewRelicObservabilityTagRuleResource(_client, data);
         }
 
         async ValueTask<NewRelicObservabilityTagRuleResource> IOperationSource<NewRelicObservabilityTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement);
-            return new NewRelicObservabilityTagRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NewRelicObservabilityTagRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

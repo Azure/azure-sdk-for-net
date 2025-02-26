@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxDeploymentApiKeyCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:

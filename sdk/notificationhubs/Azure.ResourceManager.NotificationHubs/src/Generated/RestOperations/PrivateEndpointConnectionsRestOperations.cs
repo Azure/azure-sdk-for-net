@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         NotificationHubPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         NotificationHubPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         PrivateEndpointConnectionResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionResourceListResult.DeserializePrivateEndpointConnectionResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         PrivateEndpointConnectionResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionResourceListResult.DeserializePrivateEndpointConnectionResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         NotificationHubsPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationHubsPrivateLinkResourceData.DeserializeNotificationHubsPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         NotificationHubsPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationHubsPrivateLinkResourceData.DeserializeNotificationHubsPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         NotificationHubsPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationHubsPrivateLinkResourceListResult.DeserializeNotificationHubsPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                     {
                         NotificationHubsPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationHubsPrivateLinkResourceListResult.DeserializeNotificationHubsPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

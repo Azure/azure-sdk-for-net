@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         ServiceEndpointPolicyDefinitionResource IOperationSource<ServiceEndpointPolicyDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(new BinaryData(response.ContentStream));
             return new ServiceEndpointPolicyDefinitionResource(_client, data);
         }
 
         async ValueTask<ServiceEndpointPolicyDefinitionResource> IOperationSource<ServiceEndpointPolicyDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
-            return new ServiceEndpointPolicyDefinitionResource(_client, data);
+            var data = ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ServiceEndpointPolicyDefinitionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
