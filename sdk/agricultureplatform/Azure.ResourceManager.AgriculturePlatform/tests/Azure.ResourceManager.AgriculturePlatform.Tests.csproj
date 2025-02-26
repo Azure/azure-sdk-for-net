@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.AgriculturePlatform.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+</Project>
