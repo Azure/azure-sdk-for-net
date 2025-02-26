@@ -5,6 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Azure.IoT.Hub.Service.Samples</RootNamespace>
     <IsPackable>false</IsPackable>
+    <!-- Transitive dependencies from deprecated storage references are causing errors.
+    This is a samples project so ignore until it can be migrated. -->
+    <WarningsNotAsErrors>NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
   </PropertyGroup>
 
   <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
@@ -13,9 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.2" />
-    <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.2.2" />
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.1.7" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>

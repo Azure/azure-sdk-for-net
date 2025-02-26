@@ -158,7 +158,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
+            int numBytesRead = await outputStream.ReadAsync(outputBytes, 0, size);
 
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);

@@ -66,7 +66,12 @@ namespace Azure.Identity.Tests
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
+
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(TestEnvironment.ServicePrincipalCertificatePfxPath, null);
+#else
             var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#endif
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
@@ -125,7 +130,12 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, new X509Certificate2(certPath), options));
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(certPath, null);
+#else
+            var cert = new X509Certificate2(certPath);
+#endif
+            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, cert, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
