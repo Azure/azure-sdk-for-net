@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // Load a filestream and put its content into the byte[]
             using (FileStream fs = fileInfo.OpenRead())
             {
+#if NET6_0_OR_GREATER
+                fs.ReadExactly(data, 0, data.Length);
+#else
                 fs.Read(data, 0, data.Length);
+#endif
             }
 
             var content = Convert.ToBase64String(data);
