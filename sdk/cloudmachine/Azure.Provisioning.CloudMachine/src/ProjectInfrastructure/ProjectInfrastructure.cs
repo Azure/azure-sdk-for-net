@@ -7,7 +7,6 @@ using Azure.Projects.Core;
 using Azure.Projects.EventGrid;
 using Azure.Projects.ServiceBus;
 using Azure.Projects.Storage;
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;

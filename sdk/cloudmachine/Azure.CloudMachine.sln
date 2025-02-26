@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Web", "Azure.CloudMachine.Web\src\Azure.CloudMachine.Web.csproj", "{D8C45D54-0DDC-AEC9-EE9F-91BEBB5C6A43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel", "..\core\System.ClientModel\src\System.ClientModel.csproj", "{CD107083-6815-4ECA-0260-31CA8E10A2E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{D8C45D54-0DDC-AEC9-EE9F-91BEBB5C6A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C45D54-0DDC-AEC9-EE9F-91BEBB5C6A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8C45D54-0DDC-AEC9-EE9F-91BEBB5C6A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

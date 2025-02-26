@@ -79,7 +79,8 @@ internal class BlobContainerFeature : AzureProjectFeature
     {
         ClientConnection connection = new(
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
-            $"https://{Parent.Account.Name}.blob.core.windows.net/{ContainerName}"
+            $"https://{Parent.Account.Name}.blob.core.windows.net/{ContainerName}",
+            ClientAuthenticationMethod.Credential
         );
         connections.Add(connection);
     }

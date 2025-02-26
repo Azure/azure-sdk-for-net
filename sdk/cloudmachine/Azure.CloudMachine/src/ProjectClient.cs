@@ -81,9 +81,35 @@ public partial class ProjectClient : ConnectionProvider
     public ProjectClient(IEnumerable<ClientConnection> connections = default, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
     {
-        if (connections != default)
+        if (connections != null)
         {
-            Connections.AddRange(connections);
+            foreach (ClientConnection connection in connections)
+            {
+                if (connection.Authentication == ClientAuthenticationMethod.Credential)
+                {
+                    if (connection.Credential == null)
+                    {
+                        var copy = new ClientConnection(connection.Id, connection.Locator, Credential);
+                        Connections.Add(copy);
+                    }
+                    else if (connection.Credential is ClientAuthenticationMethod)
+                    {
+                        var auth = (ClientAuthenticationMethod)connection.Credential;
+                        if (auth == ClientAuthenticationMethod.Credential)
+                        {
+                            var copy = new ClientConnection(connection.Id, connection.Locator, Credential);
+                            Connections.Add(copy);
+                            continue;
+                        }
+                        else
+                            throw new NotImplementedException();
+                    }
+                }
+                else
+                {
+                    Connections.Add(connection);
+                }
+            }
         }
 
         Id = AppConfigHelpers.ReadOrCreateProjectId();

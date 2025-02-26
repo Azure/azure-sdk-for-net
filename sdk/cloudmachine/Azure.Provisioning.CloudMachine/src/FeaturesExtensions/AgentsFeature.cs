@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Core;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using System;
 using Azure.Projects;

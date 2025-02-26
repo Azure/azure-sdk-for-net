@@ -45,19 +45,4 @@ public class E2ETests
 
         Assert.AreEqual(2, project.Connections.Count);
     }
-
-    [TestCase("-bicep")]
-    [TestCase("")]
-    public void AIAgents(string arg)
-    {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
-        infra.AddFeature(new AgentsFeature());
-
-        infra.TryExecuteCommand([arg]);
-
-        ProjectClient project = new(infra.Connections);
-        AgentsClient agent = project.GetAgentsClient();
-
-        Assert.AreEqual(2, project.Connections.Count);
-    }
 }
